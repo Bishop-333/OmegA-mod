@@ -69,6 +69,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define STAT_MINUS			10	// num frame for '-' stats digit
 
 #define	ICON_SIZE			48
+#define	AMMO_CHAR_WIDTH		16
+#define	AMMO_CHAR_HEIGHT		24
 #define	CHAR_WIDTH			32
 #define	CHAR_HEIGHT			48
 #define	TEXT_ICON_SPACE		4
@@ -228,6 +230,7 @@ typedef enum {
 	LE_FADE_RGB,
 	LE_SCALE_FADE,
 	LE_SCOREPLUM,
+	LE_DAMAGEPLUM,
 	LE_KAMIKAZE,
 	LE_INVULIMPACT,
 	LE_INVULJUICED,
@@ -726,6 +729,10 @@ typedef struct {
 	qhandle_t	harvesterBlueSkin;
 	qhandle_t	harvesterNeutralModel;
 
+	qhandle_t	healthCrossModel;
+	qhandle_t	healthSphereModel;
+	qhandle_t	healthIcon;
+
 	qhandle_t	armorModel;
 	qhandle_t	armorIcon;
 
@@ -756,6 +763,7 @@ typedef struct {
 	qhandle_t	lightningShader;
 
 	qhandle_t	friendShader;
+	qhandle_t	friendThroughWallsShader;
 
 	qhandle_t	balloonShader;
 	qhandle_t	connectionShader;
@@ -808,6 +816,12 @@ typedef struct {
 	qhandle_t	numberShaders[11];
 
 	qhandle_t	shadowMarkShader;
+	qhandle_t	shadowRedMarkShader;
+	qhandle_t	shadowYellowMarkShader;
+	qhandle_t	shadowGreenMarkShader;
+	qhandle_t	shadowCyanMarkShader;
+	qhandle_t	shadowBlueMarkShader;
+	qhandle_t	shadowPinkMarkShader;
 
 	qhandle_t	botSkillShaders[5];
 
@@ -830,11 +844,22 @@ typedef struct {
 	qhandle_t	hastePuffShader;
 	qhandle_t	redKamikazeShader;
 	qhandle_t	blueKamikazeShader;
+	qhandle_t transparentWeaponShader;
         
         // player overlays 
         qhandle_t       neutralOverlay;
         qhandle_t       redOverlay;
         qhandle_t       blueOverlay;
+
+        // bright players
+	qhandle_t       brightRedPlayers;
+	qhandle_t       brightYellowPlayers;
+	qhandle_t       brightGreenPlayers;
+	qhandle_t       brightCyanPlayers;
+	qhandle_t       brightBluePlayers;
+	qhandle_t       brightPinkPlayers;
+	qhandle_t       brightWhitePlayers;
+	qhandle_t       brightGreyPlayers;
 
 	// weapon effect models
 	qhandle_t	bulletFlashModel;
@@ -1375,6 +1400,30 @@ extern vmCvar_t                 cg_weaponOrder;
 extern vmCvar_t			cg_chatBeep;
 extern vmCvar_t			cg_teamChatBeep;
 
+//OmegA
+extern vmCvar_t	cg_bobgun;
+extern vmCvar_t	cg_brightPlayers;
+extern vmCvar_t	cg_damagePlums;
+extern vmCvar_t	cg_drawAccuracy;
+extern vmCvar_t	cg_drawItemTimer;
+extern vmCvar_t cg_drawFriendThroughWalls;
+extern vmCvar_t	cg_drawTeamBackground;
+extern vmCvar_t cg_enemyColor;
+extern vmCvar_t cg_teamColor;
+extern vmCvar_t cg_enemyModel;
+extern vmCvar_t cg_teamModel;
+extern vmCvar_t cg_omegaFlags;
+extern vmCvar_t	cg_screenshake;
+extern vmCvar_t cg_thinLightningBolt;
+extern vmCvar_t cg_timerHeight;
+extern vmCvar_t cg_timerWidth;
+extern vmCvar_t cg_timerX;
+extern vmCvar_t cg_timerY;
+extern vmCvar_t cg_transparentGun;
+extern vmCvar_t	cg_zoomAnim;
+extern vmCvar_t	cg_zoomAnimSpeed;
+extern vmCvar_t	cg_zoomToggle;
+
 //unlagged - cg_unlagged.c
 void CG_PredictWeaponEffects( centity_t *cent );
 //void CG_AddBoundingBox( centity_t *cent );
@@ -1410,6 +1459,8 @@ void SnapVectorTowards( vec3_t v, vec3_t to );
 
 void CG_FairCvars( void );
 
+void CG_SetDefaultsCvars( void );
+
 //
 // cg_view.c
 //
@@ -1419,6 +1470,8 @@ void CG_TestModelNextFrame_f (void);
 void CG_TestModelPrevFrame_f (void);
 void CG_TestModelNextSkin_f (void);
 void CG_TestModelPrevSkin_f (void);
+void CG_ZoomOut( void );
+void CG_ZoomIn( void );
 void CG_ZoomDown_f( void );
 void CG_ZoomUp_f( void );
 void CG_AddBufferedSound( sfxHandle_t sfx);
@@ -1573,6 +1626,8 @@ void CG_DrawWeaponBar4(int count, int bits, float *color);
 void CG_DrawWeaponBar5(int count, int bits, float *color);
 void CG_DrawWeaponBar6(int count, int bits, float *color);
 void CG_DrawWeaponBar7(int count, int bits, float *color);
+void CG_DrawWeaponBar8(int count, int bits, float *color);
+int CG_GetWeaponSelect( void );
 
 void CG_OutOfAmmoChange( void );	// should this be in pmove?
 
@@ -1622,6 +1677,7 @@ void CG_InvulnerabilityJuiced( vec3_t org );
 void CG_LightningBoltBeam( vec3_t start, vec3_t end );
 //#endif
 void CG_ScorePlum( int client, vec3_t org, int score );
+void CG_DamagePlum( int client, vec3_t org, int score );
 
 void CG_GibPlayer( vec3_t playerOrigin );
 void CG_BigExplode( vec3_t playerOrigin );

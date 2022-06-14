@@ -130,10 +130,6 @@ void CG_LoadingClient( int clientNum ) {
 	Q_strncpyz( personality, Info_ValueForKey( info, "n" ), sizeof(personality) );
 	Q_CleanStr( personality );
 
-	if( cgs.gametype == GT_SINGLE_PLAYER ) {
-		trap_S_RegisterSound( va( "sound/player/announce/%s.wav", personality ), qtrue );
-	}
-
 	CG_LoadingString( personality );
 }
 
@@ -153,6 +149,7 @@ void CG_DrawInformation( void ) {
 	int			value;
 	qhandle_t	levelshot;
 	qhandle_t	detail;
+	qhandle_t	omega;
 	char		buf[1024];
 
 	info = CG_ConfigString( CS_SERVERINFO );
@@ -169,6 +166,10 @@ void CG_DrawInformation( void ) {
 	// blend a detail texture over it
 	detail = trap_R_RegisterShader( "levelShotDetail" );
 	trap_R_DrawStretchPic( 0, 0, cgs.glconfig.vidWidth, cgs.glconfig.vidHeight, 0, 0, 2.5, 2, detail );
+
+	// draw OmegA icon
+	omega = trap_R_RegisterShaderNoMip( "gfx/2d/omega_icon" );
+	CG_DrawPic( 585, 425, ICON_SIZE, ICON_SIZE, omega );
 
 	// draw the icons of things as they are loaded
 	CG_DrawLoadingIcons();
@@ -201,7 +202,7 @@ void CG_DrawInformation( void ) {
 		s = Info_ValueForKey( sysInfo, "sv_pure" );
 		if ( s[0] == '1' ) {
 			UI_DrawProportionalString( 320, y, "Pure Server",
-				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
+				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorLtGrey );
 			y += PROP_HEIGHT;
 		}
 
@@ -209,7 +210,7 @@ void CG_DrawInformation( void ) {
 		s = CG_ConfigString( CS_MOTD );
 		if ( s[0] ) {
 			UI_DrawProportionalString( 320, y, s,
-				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
+				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorGreen );
 			y += PROP_HEIGHT;
 		}
 
@@ -229,7 +230,7 @@ void CG_DrawInformation( void ) {
 	s = Info_ValueForKey( sysInfo, "sv_cheats" );
 	if ( s[0] == '1' ) {
 		UI_DrawProportionalString( 320, y, "CHEATS ARE ENABLED",
-			UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
+			UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorRed );
 		y += PROP_HEIGHT;
 	}
 
@@ -289,24 +290,6 @@ void CG_DrawInformation( void ) {
 		UI_DrawProportionalString( 320, y, va( "timelimit %i", value ),
 			UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
 		y += PROP_HEIGHT;
-	}
-
-	if (cgs.gametype < GT_CTF || cgs.ffa_gt>0) {
-		value = atoi( Info_ValueForKey( info, "fraglimit" ) );
-		if ( value ) {
-			UI_DrawProportionalString( 320, y, va( "fraglimit %i", value ),
-				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
-			y += PROP_HEIGHT;
-		}
-	}
-
-	if (cgs.gametype >= GT_CTF && cgs.ffa_gt == 0) {
-		value = atoi( Info_ValueForKey( info, "capturelimit" ) );
-		if ( value ) {
-			UI_DrawProportionalString( 320, y, va( "capturelimit %i", value ),
-				UI_CENTER|UI_SMALLFONT|UI_DROPSHADOW, colorWhite );
-			y += PROP_HEIGHT;
-		}
 	}
 }
 

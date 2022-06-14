@@ -254,14 +254,6 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
 	le->color[3] = 1.0f;
 
 	AxisClear( re->axis );
- 
-	if (cg_oldRail.integer)
-	{
-		// nudge down a bit so it isn't exactly in center
-		re->origin[2] -= 8;
-		re->oldorigin[2] -= 8;
-		return;
-	}
 
 	VectorCopy (start, move);
 	VectorSubtract (end, start, vec);
@@ -348,7 +340,7 @@ static void CG_OldRocketTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	up[1] = 0;
 	up[2] = 0;
 
-	step = 50;
+	step = 3;
 
 	es = &ent->currentState;
 	startTime = ent->trailTime;
@@ -749,7 +741,7 @@ static void CG_PlasmaTrail( centity_t *ent, const weaponInfo_t *wi ) {
 
 
 static void CG_GrenadeTrail( centity_t *ent, const weaponInfo_t *wi ) {
-	CG_RocketTrail( ent, wi );
+	CG_OldRocketTrail( ent, wi );
 }
 
 	
@@ -850,7 +842,11 @@ void CG_RegisterWeapon( int weaponNum ) {
 		weaponInfo->firingSound = trap_S_RegisterSound( "sound/weapons/lightning/lg_hum.wav", qfalse );
 
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/lightning/lg_fire.wav", qfalse );
-		cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltNew");
+		if (cg_thinLightningBolt.integer) {
+			cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltThin");
+		} else {
+			cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltNew");
+		}
 		cgs.media.lightningExplosionModel = trap_R_RegisterModel( "models/weaphits/crackle.md3" );
 		cgs.media.sfx_lghit1 = trap_S_RegisterSound( "sound/weapons/lightning/lg_hit.wav", qfalse );
 		cgs.media.sfx_lghit2 = trap_S_RegisterSound( "sound/weapons/lightning/lg_hit2.wav", qfalse );
@@ -920,7 +916,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 //#ifdef MISSIONPACK
 	case WP_PROX_LAUNCHER:
 		weaponInfo->missileModel = trap_R_RegisterModel( "models/weaphits/proxmine.md3" );
-		weaponInfo->missileTrailFunc = CG_GrenadeTrail;
 		weaponInfo->wiTrailTime = 700;
 		weaponInfo->trailRadius = 32;
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.70f, 0 );
@@ -988,6 +983,30 @@ void CG_RegisterWeapon( int weaponNum ) {
 }
 
 /*
+==========================
+CG_GetFlagModel
+==========================
+*/
+const char *CG_GetFlagModel(gitem_t *item) {
+	if (item->giType == IT_TEAM && item->giTag == PW_REDFLAG && cg_omegaFlags.integer) {
+		const char *omgRedFlag = "models/flags_omega/r_flag.md3";
+		qhandle_t model = trap_R_RegisterModel(omgRedFlag);
+		if (model != 0) {
+			return omgRedFlag;
+		}
+	}
+	if (item->giType == IT_TEAM && item->giTag == PW_BLUEFLAG && cg_omegaFlags.integer) {
+		const char *omgBlueFlag = "models/flags_omega/b_flag.md3";
+		qhandle_t model = trap_R_RegisterModel(omgBlueFlag);
+		if (model != 0) {
+			return omgBlueFlag;
+		}
+	}
+
+	return item->world_model[0];
+}
+
+/*
 =================
 CG_RegisterItemVisuals
 
@@ -997,6 +1016,7 @@ The server says this item is used on this level
 void CG_RegisterItemVisuals( int itemNum ) {
 	itemInfo_t		*itemInfo;
 	gitem_t			*item;
+	const char *worldmodel = NULL;
 
 	if ( itemNum < 0 || itemNum >= bg_numItems ) {
 		CG_Error( "CG_RegisterItemVisuals: itemNum %d out of range [0-%d]", itemNum, bg_numItems-1 );
@@ -1012,7 +1032,12 @@ void CG_RegisterItemVisuals( int itemNum ) {
 	memset( itemInfo, 0, sizeof( &itemInfo ) );
 	itemInfo->registered = qtrue;
 
-	itemInfo->models[0] = trap_R_RegisterModel( item->world_model[0] );
+	worldmodel = item->world_model[0];
+	if (item->giType == IT_TEAM && (item->giTag == PW_REDFLAG || item->giTag == PW_BLUEFLAG)) {
+		worldmodel = CG_GetFlagModel(item);
+	}
+
+	itemInfo->models[0] = trap_R_RegisterModel( worldmodel );
 
 	itemInfo->icon = trap_R_RegisterShader( item->icon );
 
@@ -1082,6 +1107,10 @@ static void CG_CalculateWeaponPosition( vec3_t origin, vec3_t angles ) {
 
 	VectorCopy( cg.refdef.vieworg, origin );
 	VectorCopy( cg.refdefViewAngles, angles );
+
+	if (!cg_bobgun.integer) {
+		return;
+	}
 
 	// on odd legs, invert some angles
 	if ( cg.bobcycle & 1 ) {
@@ -1240,6 +1269,12 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 		angles[1] = rand() % 360;
 		angles[2] = rand() % 360;
 		AnglesToAxis( angles, beam.axis );
+
+		// scale down crackle
+		beam.nonNormalizedAxes = qtrue;
+		VectorScale(beam.axis[0], 0.5, beam.axis[0]);
+		VectorScale(beam.axis[1], 0.5, beam.axis[1]);
+		VectorScale(beam.axis[2], 0.5, beam.axis[2]);
 		trap_R_AddRefEntityToScene( &beam );
 	}
 }
@@ -1374,13 +1409,17 @@ static float	CG_MachinegunSpinAngle( centity_t *cent ) {
 CG_AddWeaponWithPowerups
 ========================
 */
-static void CG_AddWeaponWithPowerups( refEntity_t *gun, int powerups ) {
+static void CG_AddWeaponWithPowerups( refEntity_t *gun, int powerups, playerState_t *ps ) {
 	// add powerup effects
 	if ( powerups & ( 1 << PW_INVIS ) ) {
             if( (cgs.dmflags & DF_INVIS) == 0) {
 		gun->customShader = cgs.media.invisShader;
 		trap_R_AddRefEntityToScene( gun );
             }
+	}
+	if (ps && cg_transparentGun.integer) {
+		gun->customShader = cgs.media.transparentWeaponShader;
+		trap_R_AddRefEntityToScene( gun );
 	} else {
 		trap_R_AddRefEntityToScene( gun );
 
@@ -1478,7 +1517,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 	MatrixMultiply(lerped.axis, ((refEntity_t *)parent)->axis, gun.axis);
 	gun.backlerp = parent->backlerp;
 
-	CG_AddWeaponWithPowerups( &gun, cent->currentState.powerups );
+	CG_AddWeaponWithPowerups( &gun, cent->currentState.powerups, ps );
 
 	// add the spinning barrel
 	if ( weapon->barrelModel ) {
@@ -1495,7 +1534,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 
 		CG_PositionRotatedEntityOnTag( &barrel, &gun, weapon->weaponModel, "tag_barrel" );
 
-		CG_AddWeaponWithPowerups( &barrel, cent->currentState.powerups );
+		CG_AddWeaponWithPowerups( &barrel, cent->currentState.powerups, ps );
 	}
 
 	// make sure we aren't looking at cg.predictedPlayerEntity for LG
@@ -1660,6 +1699,11 @@ WEAPON SELECTION
 ==============================================================================
 */
 
+int CG_GetWeaponSelect( void ) {
+	return ((cg.snap->ps.pm_flags & PMF_FOLLOW) || cg.demoPlayback) ? 
+		cg.predictedPlayerState.weapon : cg.weaponSelect;
+}
+
 /*
 ===================
 CG_DrawWeaponSelect
@@ -1695,9 +1739,6 @@ void CG_DrawWeaponSelect( void ) {
 	}
 	trap_R_SetColor( color );
 
-	// showing weapon select clears pickup item display, but not the blend blob
-	cg.itemPickupTime = 0;
-
 	// count the number of weapons owned
 	bits = cg.snap->ps.stats[ STAT_WEAPONS ];
 	count = 0;
@@ -1731,6 +1772,9 @@ void CG_DrawWeaponSelect( void ) {
 			break;
 		case 7:
 			CG_DrawWeaponBar7(count,bits, color);
+			break;
+		case 8:
+			CG_DrawWeaponBar8(count,bits, color);
 			break;
 	}
 	trap_R_SetColor(NULL);
@@ -2451,6 +2495,74 @@ void CG_DrawWeaponBar7(int count, int bits, float *color){
                 //Sago: Undo mad change of weapons
                 if(i==10)
                         i=0;
+	}
+}
+
+/*
+===============
+CG_DrawWeaponBar8
+===============
+*/
+
+void CG_DrawWeaponBar8(int count, int bits, float *color)
+{
+
+	int y = 200 + count * 12;
+	int x = 0;
+	int i;
+	int w;
+	char *s;
+	float red[4];
+	float blue[4];
+
+	red[0] = 1.0f;
+	red[1] = 0;
+	red[2] = 0;
+	red[3] = 0.4f;
+
+	blue[0] = 0;
+	blue[1] = 0;
+	blue[2] = 1.0f;
+	blue[3] = 0.4f;
+
+	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
+		if ( !( bits & ( 1 << i ) ) ) {
+			if(i==10)
+				i=0;
+			continue;
+		}
+
+		if(cg.snap->ps.ammo[i]) {
+			if ( i == cg.weaponSelect) {
+				CG_FillRect( x, y, 50, 24, blue );
+			}
+		}
+		else {
+			if ( i == cg.weaponSelect) {
+				CG_FillRect( x, y, 50, 24, red );
+			}
+		}
+
+		CG_RegisterWeapon( i );
+		// draw weapon icon
+		CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
+
+		/** Draw Weapon Ammo **/
+		if(cg.snap->ps.ammo[ i ]!=-1) {
+			s = va("%i", cg.snap->ps.ammo[ i ] );
+			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+			CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
+		}
+
+		y -= 24;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 

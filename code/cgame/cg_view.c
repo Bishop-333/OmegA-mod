@@ -340,17 +340,19 @@ static void CG_OffsetFirstPersonView( void ) {
 	VectorAdd (angles, cg.kick_angles, angles);
 
 	// add angles based on damage kick
-	if ( cg.damageTime && cgs.gametype!=GT_ELIMINATION && cgs.gametype!=GT_CTF_ELIMINATION && cgs.gametype!=GT_LMS) {
-		ratio = cg.time - cg.damageTime;
-		if ( ratio < DAMAGE_DEFLECT_TIME ) {
-			ratio /= DAMAGE_DEFLECT_TIME;
-			angles[PITCH] += ratio * cg.v_dmg_pitch;
-			angles[ROLL] += ratio * cg.v_dmg_roll;
-		} else {
-			ratio = 1.0 - ( ratio - DAMAGE_DEFLECT_TIME ) / DAMAGE_RETURN_TIME;
-			if ( ratio > 0 ) {
+	if ( cg_screenshake.integer ) {
+		if ( cg.damageTime && cgs.gametype!=GT_ELIMINATION && cgs.gametype!=GT_CTF_ELIMINATION && cgs.gametype!=GT_LMS) {
+			ratio = cg.time - cg.damageTime;
+			if ( ratio < DAMAGE_DEFLECT_TIME ) {
+				ratio /= DAMAGE_DEFLECT_TIME;
 				angles[PITCH] += ratio * cg.v_dmg_pitch;
 				angles[ROLL] += ratio * cg.v_dmg_roll;
+			} else {
+				ratio = 1.0 - ( ratio - DAMAGE_DEFLECT_TIME ) / DAMAGE_RETURN_TIME;
+				if ( ratio > 0 ) {
+					angles[PITCH] += ratio * cg.v_dmg_pitch;
+					angles[ROLL] += ratio * cg.v_dmg_roll;
+				}
 			}
 		}
 	}
@@ -443,20 +445,39 @@ static void CG_OffsetFirstPersonView( void ) {
 
 //======================================================================
 
-void CG_ZoomDown_f( void ) { 
-	if ( cg.zoomed ) {
-		return;
-	}
+void CG_ZoomOut( void ) {
+	cg.zoomed = qfalse;
+	cg.zoomTime = cg.time;
+}
+
+void CG_ZoomIn( void ) {
 	cg.zoomed = qtrue;
 	cg.zoomTime = cg.time;
 }
 
+void CG_ZoomDown_f( void ) { 
+	if (cg_zoomToggle.integer) {
+		if (cg.zoomed) {
+			CG_ZoomOut();
+		} else {
+			CG_ZoomIn();
+		}
+		return;
+	}
+	if ( cg.zoomed ) {
+		return;
+	}
+	CG_ZoomIn();
+}
+
 void CG_ZoomUp_f( void ) { 
+	if (cg_zoomToggle.integer) {
+		return;
+	}
 	if ( !cg.zoomed ) {
 		return;
 	}
-	cg.zoomed = qfalse;
-	cg.zoomTime = cg.time;
+	CG_ZoomOut();
 }
 
 
@@ -517,15 +538,15 @@ static int CG_CalcFov( void ) {
                 }
 
 		if ( cg.zoomed ) {
-			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME;
-			if ( f > 1.0 ) {
+			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
+			if ( f > 1.0 || cg_zoomAnim.integer == 0) {
 				fov_x = zoomFov;
 			} else {
 				fov_x = fov_x + f * ( zoomFov - fov_x );
 			}
 		} else {
-			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME;
-			if ( f > 1.0 ) {
+			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
+			if ( f > 1.0 || cg_zoomAnim.integer == 0) {
 				fov_x = fov_x;
 			} else {
 				fov_x = zoomFov + f * ( fov_x - zoomFov );

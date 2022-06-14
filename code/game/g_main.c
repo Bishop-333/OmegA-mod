@@ -197,6 +197,32 @@ vmCvar_t        g_maxNameChanges;
 
 vmCvar_t        g_timestamp_startgame;
 
+//OmegA
+vmCvar_t        g_damagePlums;
+vmCvar_t        g_guidedRockets;
+vmCvar_t        g_headShotOnly;
+vmCvar_t        g_grenadeSpeed;
+vmCvar_t        g_rocketSpeed;
+vmCvar_t        g_gauntletDamage;
+vmCvar_t        g_lightningDamage;
+vmCvar_t        g_machinegunDamage;
+vmCvar_t        g_machinegunTeamDamage;
+vmCvar_t        g_railgunDamage;
+vmCvar_t        g_railJump;
+
+//ratmod delagMissile
+vmCvar_t        g_delagMissileMaxLatency;
+vmCvar_t        g_delagMissileDebug;
+vmCvar_t        g_delagMissiles;
+vmCvar_t        g_delagMissileLimitVariance;
+vmCvar_t        g_delagMissileLimitVarianceMs;
+vmCvar_t        g_delagMissileBaseNudge;
+vmCvar_t        g_delagMissileLatencyMode;
+vmCvar_t        g_delagMissileCorrectFrameOffset;
+vmCvar_t        g_delagMissileNudgeOnly;
+vmCvar_t        g_delagMissileImmediateRun;
+vmCvar_t        g_predictMissiles;
+
 // bk001129 - made static to avoid aliasing
 static cvarTable_t		gameCvarTable[] = {
 	// don't override the cheat state set by the system
@@ -252,7 +278,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue  },
 	{ &g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue  },
 	{ &g_weaponTeamRespawn, "g_weaponTeamRespawn", "30", 0, 0, qtrue },
-	{ &g_forcerespawn, "g_forcerespawn", "20", 0, 0, qtrue },
+	{ &g_forcerespawn, "g_forcerespawn", "60", 0, 0, qtrue },
         { &g_respawntime, "g_respawntime", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_inactivity, "g_inactivity", "0", 0, 0, qtrue },
 	{ &g_debugMove, "g_debugMove", "0", 0, 0, qfalse },
@@ -396,7 +422,33 @@ static cvarTable_t		gameCvarTable[] = {
 	    { &g_minNameChangePeriod, "g_minNameChangePeriod", "10", 0, 0, qfalse},
         { &g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse},
 
-        { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse}
+        { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse},
+
+	//OmegA
+	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
+	{ &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_grenadeSpeed, "g_grenadeSpeed", "1050", 0, 0, qtrue },
+	{ &g_rocketSpeed, "g_rocketSpeed", "1125", 0, 0, qtrue },
+	{ &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
+	{ &g_lightningDamage, "g_lightningDamage", "8", 0, 0, qtrue },
+	{ &g_machinegunDamage, "g_machinegunDamage", "10", 0, 0, qtrue },
+	{ &g_machinegunDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
+	{ &g_railgunDamage, "g_railgunDamage", "100", 0, 0, qtrue },
+	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
+
+	//ratmod delagMissile
+        { &g_delagMissileMaxLatency, "g_delagMissileMaxLatency", "500", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
+        { &g_delagMissileDebug, "g_delagMissileDebug", "0", 0, 0, qfalse },
+        { &g_delagMissiles, "g_delagMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileLimitVariance, "g_delagMissileLimitVariance", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileLimitVarianceMs, "g_delagMissileLimitVarianceMs", "25", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileLatencyMode, "g_delagMissileLatencyMode", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileCorrectFrameOffset, "g_delagMissileCorrectFrameOffset", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileNudgeOnly, "g_delagMissileNudgeOnly", "0", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileImmediateRun, "g_delagMissileImmediateRun", "2", CVAR_ARCHIVE, 0, qfalse },
+        { &g_predictMissiles, "g_predictMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileBaseNudge, "g_delagMissileBaseNudge", "10", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse }
         
 };
 
@@ -587,6 +639,14 @@ void G_RegisterCvars( void ) {
 	}
 
 	level.warmupModificationCount = g_warmup.modificationCount;
+}
+
+//ratmod delagMissile
+qboolean G_IsElimTeamGT(void) {
+	return BG_IsElimTeamGT(g_gametype.integer);
+}
+qboolean G_IsElimGT(void) {
+	return BG_IsElimGT(g_gametype.integer);
 }
 
 /*

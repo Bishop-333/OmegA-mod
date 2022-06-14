@@ -44,6 +44,23 @@ void ScorePlum( gentity_t *ent, vec3_t origin, int score ) {
 
 /*
 ============
+DamagePlum
+============
+*/
+void DamagePlum( gentity_t *ent, vec3_t origin, int score ) {
+	gentity_t *plum;
+
+	plum = G_TempEntity( origin, EV_DAMAGEPLUM );
+	// only send this temp entity to a single client
+	plum->r.svFlags |= SVF_SINGLECLIENT;
+	plum->r.singleClient = ent->s.number;
+	//
+	plum->s.otherEntityNum = ent->s.number;
+	plum->s.time = score;
+}
+
+/*
+============
 AddScore
 
 Adds score to both the client and his team
@@ -346,7 +363,8 @@ char	*modNames[] = {
 	"MOD_PROXIMITY_MINE",
 	"MOD_KAMIKAZE",
 	"MOD_JUICED",
-	"MOD_GRAPPLE"
+	"MOD_GRAPPLE",
+	"MOD_RAILJUMP"
 };
 
 /*
@@ -1023,6 +1041,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	int			asave;
 	int			knockback;
 	int			max;
+	float			z_ratio;
+	float			z_rel;
+	int			height;
+	float			targ_maxs2;
         
 	vec3_t		bouncedir, impactpoint;
 
@@ -1196,6 +1218,15 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		damage *= 0.5;
 	}
 
+	if (mod == MOD_RAILJUMP) {
+		if (attacker->client) {
+			return;
+		}
+		if (targ == attacker) {
+			return;
+		}
+	}
+
 	// add to the attacker's hit counter (if the target isn't a general entity like a prox mine)
 	if ( attacker->client && client
 			&& targ != attacker && targ->health > 0
@@ -1287,6 +1318,27 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		targ->client->lasthurt_mod = mod;
 	}
 
+	// See if the player hit the enemy head
+	if (targ->client && attacker->client && targ->health > 0)
+	{  
+		targ_maxs2 = targ->r.maxs[2];
+
+		// check if the target is crouched because it doesn't make the same height
+		if (targ->client->ps.pm_flags & PMF_DUCKED) {
+			height = (abs(targ->r.mins[2]) + targ_maxs2) * (0.75);
+		}
+		else
+			height = abs(targ->r.mins[2]) + targ_maxs2;  
+
+		z_rel = point[2] - targ->r.currentOrigin[2] + abs(targ->r.mins[2]);
+		z_ratio = z_rel / height;
+
+		if ( g_headShotOnly.integer ) {
+			if (z_ratio < 0.90)
+				take *= 0;
+		}
+	}
+
 	//If vampire is enabled, gain health but not from self or teammate, cannot steal more than targ has
 	if( g_vampire.value>0.0 && (targ != attacker) && take > 0 && 
                 !(OnSameTeam(targ, attacker)) && attacker->health > 0 && targ->health > 0 )
@@ -1297,6 +1349,16 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			attacker->health += (int)(((float)targ->health)*g_vampire.value);
 		if(attacker->health>g_vampireMaxHealth.integer)
 			attacker->health = g_vampireMaxHealth.integer;
+	}
+
+ 	if ( damage && targ->client && targ != attacker && g_damagePlums.integer && targ->health > 0 ) {
+		if ( !g_headShotOnly.integer || ( g_headShotOnly.integer && z_ratio > 0.90 ) ) {
+			if ( mod != MOD_SHOTGUN ) {
+				DamagePlum( attacker, targ->r.currentOrigin, damage );
+			}
+			else
+				targ->sumShotgunDamage += damage;
+		}
 	}
 
 	// do the damage

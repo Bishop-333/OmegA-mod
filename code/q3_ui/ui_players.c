@@ -474,7 +474,7 @@ static void UI_SwingAngles( float destination, float swingTolerance, float clamp
 
 	if ( !*swinging ) {
 		// see if a swing should be started
-		swing = AngleSubtract( *angle, destination );
+		swing = 0.0;
 		if ( swing > swingTolerance || swing < -swingTolerance ) {
 			*swinging = qtrue;
 		}
@@ -572,13 +572,17 @@ static float UI_MovedirAdjustment( playerInfo_t *pi ) {
 UI_PlayerAngles
 ===============
 */
-static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], vec3_t head[3] ) {
+static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], vec3_t head[3], qboolean rotate ) {
 	vec3_t		legsAngles, torsoAngles, headAngles;
 	float		dest;
 	float		adjust;
 
 	VectorCopy( pi->viewAngles, headAngles );
-	headAngles[YAW] = AngleMod( headAngles[YAW] );
+	if (rotate) {
+		headAngles[YAW] = AngleMod( headAngles[YAW] ) + uis.realtime / 32;
+	} else {
+		headAngles[YAW] = AngleMod( headAngles[YAW] ) + 32;
+	}
 	VectorClear( legsAngles );
 	VectorClear( torsoAngles );
 
@@ -595,16 +599,13 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 
 	// adjust legs for movement dir
 	adjust = UI_MovedirAdjustment( pi );
-	legsAngles[YAW] = headAngles[YAW] + adjust;
-	torsoAngles[YAW] = headAngles[YAW] + 0.25 * adjust;
+	legsAngles[YAW] = headAngles[YAW];
+	torsoAngles[YAW] = headAngles[YAW];
 
 
 	// torso
-	UI_SwingAngles( torsoAngles[YAW], 25, 90, SWINGSPEED, &pi->torso.yawAngle, &pi->torso.yawing );
-	UI_SwingAngles( legsAngles[YAW], 40, 90, SWINGSPEED, &pi->legs.yawAngle, &pi->legs.yawing );
-
-	torsoAngles[YAW] = pi->torso.yawAngle;
-	legsAngles[YAW] = pi->legs.yawAngle;
+	UI_SwingAngles( torsoAngles[YAW], 0, 90, SWINGSPEED, &pi->torso.yawAngle, &pi->torso.yawing );
+	UI_SwingAngles( legsAngles[YAW], 0, 90, SWINGSPEED, &pi->legs.yawAngle, &pi->legs.yawing );
 
 	// --------- pitch -------------
 
@@ -687,7 +688,7 @@ float	UI_MachinegunSpinAngle( playerInfo_t *pi ) {
 UI_DrawPlayer
 ===============
 */
-void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int time ) {
+void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int time, qboolean rotate ) {
 	refdef_t		refdef;
 	refEntity_t		legs;
 	refEntity_t		torso;
@@ -736,13 +737,13 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	refdef.width = w;
 	refdef.height = h;
 
-	refdef.fov_x = (int)((float)refdef.width / 640.0f * 90.0f);
-	xx = refdef.width / tan( refdef.fov_x / 360 * M_PI );
-	refdef.fov_y = atan2( refdef.height, xx );
+	refdef.fov_x = (int)((float)refdef.width / uis.xscale / 640.0f * 90.0f);
+	xx = refdef.width / uis.xscale / tan( refdef.fov_x / 360 * M_PI );
+	refdef.fov_y = atan2( refdef.height / uis.yscale, xx );
 	refdef.fov_y *= ( 360 / M_PI );
 
 	// calculate distance so the player nearly fills the box
-	len = 0.7 * ( maxs[2] - mins[2] );		
+	len = 0.65 * ( maxs[2] - mins[2] );		
 	origin[0] = len / tan( DEG2RAD(refdef.fov_x) * 0.5 );
 	origin[1] = 0.5 * ( mins[1] + maxs[1] );
 	origin[2] = -0.5 * ( mins[2] + maxs[2] );
@@ -750,13 +751,13 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	refdef.time = dp_realtime;
 
 	trap_R_ClearScene();
-
-	// get the rotation information
-	UI_PlayerAngles( pi, legs.axis, torso.axis, head.axis );
 	
-	// get the animation state (after rotation, to allow feet shuffle)
+	// get the animation state (before rotation, to avoid feet shuffle)
 	UI_PlayerAnimation( pi, &legs.oldframe, &legs.frame, &legs.backlerp,
 		 &torso.oldframe, &torso.frame, &torso.backlerp );
+
+	// get the rotation information
+	UI_PlayerAngles( pi, legs.axis, torso.axis, head.axis, rotate );
 
 	renderfx = RF_LIGHTING_ORIGIN | RF_NOSHADOW;
 
@@ -988,8 +989,6 @@ static qboolean UI_ParseAnimationFile( const char *filename, animation_t *animat
 			text_p = prev;	// unget the token
 			break;
 		}
-
-		Com_Printf( "unknown token '%s' is %s\n", token, filename );
 	}
 
 	// read information for each frame

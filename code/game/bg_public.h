@@ -206,6 +206,7 @@ typedef struct {
 
 	// for fixed msec Pmove
 	int			pmove_fixed;
+	int			guidedMissiles;
 	int			pmove_msec;
 
         //Sago's pmove
@@ -248,6 +249,8 @@ typedef enum {
 typedef enum {
 	PERS_SCORE,						// !!! MUST NOT CHANGE, SERVER AND GAME BOTH REFERENCE !!!
 	PERS_HITS,						// total points damage inflicted so damage beeps can sound on change
+	PERS_ACCURACY_HITS,
+	PERS_ACCURACY_SHOTS,
 	PERS_RANK,						// player rank or team rank
 	PERS_TEAM,						// player team
 	PERS_SPAWN_COUNT,				// incremented every respawn
@@ -469,6 +472,7 @@ typedef enum {
 
 	EV_GIB_PLAYER,			// gib a previously living player
 	EV_SCOREPLUM,			// score plum
+	EV_DAMAGEPLUM,			// damage plum
 
 	EV_PROXIMITY_MINE_STICK,
 	EV_PROXIMITY_MINE_TRIGGER,
@@ -643,7 +647,8 @@ typedef enum {
 	MOD_PROXIMITY_MINE,
 	MOD_KAMIKAZE,
 	MOD_JUICED,
-	MOD_GRAPPLE
+	MOD_GRAPPLE,
+	MOD_RAILJUMP
 } meansOfDeath_t;
 
 
@@ -821,5 +826,9 @@ qboolean	BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTim
 //KK-OAX
 //bg_misc.c
 char *BG_TeamName( team_t team );
+
+//ratmod delagMissile
+qboolean BG_IsElimTeamGT(gametype_t gametype);
+qboolean BG_IsElimGT(gametype_t gametype);
 
 #endif

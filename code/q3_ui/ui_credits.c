@@ -70,13 +70,13 @@ static void UI_CreditMenu_Draw( void ) {
 	y = 12;
 	UI_DrawProportionalString( 320, y, "Thank you for playing", UI_CENTER|UI_SMALLFONT, color_white );
 	y += PROP_HEIGHT * PROP_SMALL_SIZE_SCALE;
-	UI_DrawProportionalString( 320, y, "Open Arena", UI_CENTER|UI_SMALLFONT, color_white );
+	UI_DrawProportionalString( 320, y, "OmegA", UI_CENTER|UI_SMALLFONT, color_white );
 	
 	y += 228;
 	UI_DrawString( 320, y, "Terminating...", UI_CENTER|UI_SMALLFONT, color_red );
         
         y = 480 - PROP_HEIGHT * PROP_SMALL_SIZE_SCALE;
-	UI_DrawProportionalString( 320, y, "www.openarena.ws", UI_CENTER|UI_SMALLFONT, color_white );
+	UI_DrawProportionalString( 320, y, "moddb.com/mods/openarena-omega", UI_CENTER|UI_SMALLFONT, color_white );
 }
 
 

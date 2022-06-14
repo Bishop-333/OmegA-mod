@@ -24,6 +24,190 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define	MISSILE_PRESTEP_TIME	50
 
+//ratmod delagMissile
+int G_DelagLatency(gclient_t *client) {
+	int ping = 0;
+	switch (g_delagMissileLatencyMode.integer) {
+		case 2:
+			ping = client->ps.ping;
+			break;
+		case 3:
+			ping = client->pers.realPing;
+			break;
+		case 1:
+		default:
+			ping = level.previousTime + client->frameOffset - client->attackTime;
+			if (ping < 0) {
+				ping = 0;
+			}
+			break;
+	}
+	if (g_delagMissileLimitVariance.integer && g_delagMissileLimitVarianceMs.integer > 0 && g_truePing.integer) {
+		int maxping = client->pers.realPing + g_delagMissileLimitVarianceMs.integer;
+		int minping = client->pers.realPing - g_delagMissileLimitVarianceMs.integer;
+		qboolean limited = qfalse;
+		int oldping = ping;
+
+		if (minping < 0) {
+			minping = 0;
+		}
+		if (ping > maxping) {
+			ping = maxping;
+			limited = qtrue;
+		} else if (ping < minping) {
+			ping = minping;
+			limited = qtrue;
+		}
+		if (limited && g_delagMissileDebug.integer) {
+			Com_Printf("Limited projectile delag ping (c %i): %i -> %i, realPing: %i\n", client->ps.clientNum, oldping, ping, client->pers.realPing);
+		}
+	}
+	return MIN(g_delagMissileMaxLatency.integer, ping);
+}
+
+int G_MissileLagTime(gclient_t *client) {
+	int offset = 0;
+
+	if (!g_delagMissiles.integer) {
+		return MISSILE_PRESTEP_TIME;
+	}
+
+	if (g_delagMissileCorrectFrameOffset.integer) {
+		offset = level.time - (level.previousTime + client->frameOffset);
+		if (offset < 0) {
+			offset = 0;
+		}
+		if (offset > 1000/sv_fps.integer) {
+			offset = 1000/sv_fps.integer;
+		}
+	}
+	return offset + G_DelagLatency(client) + g_delagMissileBaseNudge.integer;
+}
+
+/*
+================
+G_MissileRunDelag
+================
+*/
+void G_MissileRunDelag(gentity_t *ent, int stepmsec) {
+	int prevTimeSaved;
+	int lvlTimeSaved;
+	int projectileDelagTime;
+
+	if (g_delagMissileNudgeOnly.integer
+			|| level.previousTime <= DELAG_MAX_BACKTRACK
+			|| stepmsec <= 0) {
+		return;
+	}
+
+	// if we see the missile late due to lag & PRESTEP
+	// compute the flight since it was launched, 
+	// shifting clients back accordingly
+	if ( !G_InUse(ent)
+			|| ent->freeAfterEvent
+			|| ent->s.eType != ET_MISSILE
+			|| !ent->needsDelag ) {
+		return;
+	}
+
+	prevTimeSaved = level.previousTime;
+	lvlTimeSaved = level.time;
+	projectileDelagTime = level.previousTime - (DELAG_MAX_BACKTRACK/stepmsec) * stepmsec;
+	while (projectileDelagTime < prevTimeSaved) {
+		if ( !G_InUse(ent) || ent->freeAfterEvent ) {
+			// make sure we don't run missile again
+			// if it exploded already
+			break;
+		}
+		if (projectileDelagTime >= ent->launchTime) {
+			int shiftTime = projectileDelagTime;
+			G_TimeShiftAllClients( shiftTime, ent->parent );
+			level.time = projectileDelagTime + stepmsec;
+			level.previousTime = projectileDelagTime;
+
+
+			G_RunMissile( ent );
+
+			level.time = lvlTimeSaved;
+			level.previousTime = prevTimeSaved;
+			G_UnTimeShiftAllClients( ent->parent );
+		}
+		projectileDelagTime += stepmsec;
+	}
+	ent->needsDelag = qfalse;
+}
+
+/*
+================
+G_ImmediateRunMissile
+================
+*/
+void G_ImmediateRunMissile(gentity_t *ent) {
+	if (ent->missileRan == 1) {
+		// missile was already run immediately after firing
+		return;
+	}
+
+	if (!g_delagMissileNudgeOnly.integer) {
+		int stepmsec = level.time - level.previousTime;
+		G_MissileRunDelag(ent, stepmsec);
+
+	}
+	if ( !G_InUse(ent) ) {
+		return;
+	}
+
+	// temporary entities don't think
+	if ( ent->freeAfterEvent ) {
+		return;
+	}
+
+	if ( ent->s.eType == ET_MISSILE ) {
+		G_RunMissile( ent );
+	}
+}
+
+/*
+================
+G_ImmediateLaunchMissile
+================
+*/
+void G_ImmediateLaunchMissile(gentity_t *ent) {
+	if (g_delagMissileImmediateRun.integer == 1) {
+		G_ImmediateRunMissile(ent);
+	} else if (g_delagMissileImmediateRun.integer >= 2) {
+		ent->missileRan = -g_delagMissileImmediateRun.integer+1;
+	}
+}
+
+/*
+================
+G_ImmediateRunClientMissiles
+================
+*/
+void G_ImmediateRunClientMissiles(gentity_t *client) {
+	gentity_t *ent;
+	int i;
+	if (g_delagMissileImmediateRun.integer <= 1) {
+		return;
+	}
+	for (i=0 ; i < level.num_entities ; ++i ) {
+		ent = &g_entities[i];
+		if ( !G_InUse(ent)
+				|| ent->freeAfterEvent
+				|| ent->s.eType != ET_MISSILE
+				|| ent->parent != client) {
+			continue;
+		}
+		if (ent->missileRan < 0) {
+			// this missile will be run later
+			ent->missileRan++;
+			continue;
+		}
+		G_ImmediateRunMissile(ent);
+	}
+}
+
 /*
 ================
 G_BounceMissile
@@ -551,6 +735,34 @@ void G_RunMissile( gentity_t *ent ) {
 	G_RunThink( ent );
 }
 
+/*
+=================
+G_ApplyMissileNudge
+=================
+*/
+void G_ApplyMissileNudge (gentity_t *self, gentity_t *bolt) {
+	if (!self->client) {
+		return;
+	}
+	bolt->s.pos.trTime -= G_MissileLagTime(self->client);
+	bolt->needsDelag = qtrue;
+	bolt->launchTime = bolt->s.pos.trTime;
+
+	if (G_IsElimGT() && level.time > level.roundStartTime - 1000*g_elimination_activewarmup.integer) {
+		if (bolt->launchTime < level.roundStartTime) {
+			int prestep = 0;
+			if (g_delagMissiles.integer) {
+				prestep = g_delagMissileBaseNudge.integer;
+			} else {
+				prestep = MISSILE_PRESTEP_TIME;
+			}
+			bolt->s.pos.trTime = level.roundStartTime-prestep;
+			bolt->launchTime = level.roundStartTime-prestep;
+
+		}
+	}
+}
+
 
 //=============================================================================
 
@@ -635,7 +847,7 @@ gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->s.pos.trType = TR_GRAVITY;
 	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
 	VectorCopy( start, bolt->s.pos.trBase );
-	VectorScale( dir, 700, bolt->s.pos.trDelta );
+	VectorScale( dir, g_grenadeSpeed.integer, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
 
 	VectorCopy (start, bolt->r.currentOrigin);
@@ -689,6 +901,52 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 
 //=============================================================================
 
+/*
+=================
+G_GuidedMissile
+=================
+*/
+void G_GuidedMissile (gentity_t *missile)
+{
+	vec3_t		forward, right, up; 
+	vec3_t		muzzle;
+	float		dist;
+	gentity_t	*player = missile->parent;
+
+	// Stop if the player released his attack button
+	if ( ! (player->client->buttons & BUTTON_ATTACK) ) {
+		return;
+	}
+
+	// Get the view angles of the player
+	AngleVectors( player->client->ps.viewangles, forward, right, up );
+
+	CalcMuzzlePoint( player, forward, right, up, muzzle );
+ 
+	VectorCopy( missile->r.currentOrigin, missile->s.pos.trBase );
+
+	missile->s.pos.trType = TR_LINEAR;
+	missile->s.pos.trTime = level.time - 50;
+
+	VectorSubtract( muzzle, missile->r.currentOrigin, muzzle );
+	
+	dist = VectorLength( muzzle ) + 400;
+	VectorScale( forward, dist, forward );
+
+	VectorAdd( forward, muzzle, muzzle );
+
+	VectorNormalize( muzzle );
+
+	VectorScale( muzzle, g_rocketSpeed.integer * 0.75, forward );
+	VectorCopy( forward, missile->s.pos.trDelta );
+
+	// Get the new angles
+	vectoangles( muzzle, missile->s.angles );
+
+	SnapVector( missile->s.pos.trDelta );
+
+	missile->nextthink = level.time + FRAMETIME;
+}
 
 /*
 =================
@@ -702,8 +960,13 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 
 	bolt = G_Spawn();
 	bolt->classname = "rocket";
-	bolt->nextthink = level.time + 15000;
-	bolt->think = G_ExplodeMissile;
+	if ( g_guidedRockets.integer ) {
+		bolt->nextthink = level.time + FRAMETIME;
+		bolt->think = G_GuidedMissile;
+	} else {
+		bolt->nextthink = level.time + 15000;
+		bolt->think = G_ExplodeMissile;
+	}
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;
 	bolt->s.weapon = WP_ROCKET_LAUNCHER;
@@ -724,7 +987,7 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->s.pos.trType = TR_LINEAR;
 	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;		// move a bit on the very first frame
 	VectorCopy( start, bolt->s.pos.trBase );
-	VectorScale( dir, 900, bolt->s.pos.trDelta );
+	VectorScale( dir, g_rocketSpeed.integer, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta );			// save net bandwidth
 	VectorCopy (start, bolt->r.currentOrigin);
 

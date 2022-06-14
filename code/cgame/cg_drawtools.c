@@ -752,7 +752,7 @@ UI_ProportionalSizeScale
 */
 float UI_ProportionalSizeScale( int style ) {
 	if(  style & UI_SMALLFONT ) {
-		return 0.75;
+		return 0.5;
 	}
 
 	return 1.00;

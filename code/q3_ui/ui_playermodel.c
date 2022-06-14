@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define MODEL_BACK0			"menu/art_blueish/back_0"
 #define MODEL_BACK1			"menu/art_blueish/back_1"
-#define MODEL_SELECT		"menu/art/opponents_select"
-#define MODEL_SELECTED		"menu/art/opponents_selected"
+#define MODEL_SELECT		"menu/art_blueish/maps_select"
+#define MODEL_SELECTED		"menu/art_blueish/maps_selected"
 #define MODEL_FRAMEL		"menu/art_blueish/frame1_l"
 #define MODEL_FRAMER		"menu/art_blueish/frame1_r"
 #define MODEL_PORTS			"menu/art_blueish/player_models_ports"
@@ -377,7 +377,7 @@ static void PlayerModel_DrawPlayer( void *self )
 		return;
 	}
 
-	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime/2 );
+	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime/2, qtrue );
 }
 
 /*
@@ -581,7 +581,6 @@ static void PlayerModel_MenuInit( void )
 			s_playermodel.pics[k].width  		   = 64;
 			s_playermodel.pics[k].height  		   = 64;
 			s_playermodel.pics[k].focuspic         = MODEL_SELECTED;
-			s_playermodel.pics[k].focuscolor       = colorRed;
 
 			s_playermodel.picbuttons[k].generic.type	 = MTYPE_BITMAP;
 			s_playermodel.picbuttons[k].generic.flags    = QMF_LEFT_JUSTIFY|QMF_NODEFAULTINIT|QMF_PULSEIFFOCUS;
@@ -596,7 +595,6 @@ static void PlayerModel_MenuInit( void )
 			s_playermodel.picbuttons[k].width  		     = 128;
 			s_playermodel.picbuttons[k].height  		 = 128;
 			s_playermodel.picbuttons[k].focuspic  		 = MODEL_SELECT;
-			s_playermodel.picbuttons[k].focuscolor  	 = colorRed;
 
 			x += 64+6;
 		}
@@ -613,7 +611,7 @@ static void PlayerModel_MenuInit( void )
 
 	s_playermodel.modelname.generic.type  = MTYPE_PTEXT;
 	s_playermodel.modelname.generic.flags = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.modelname.generic.x	  = 497;
+	s_playermodel.modelname.generic.x	  = 560;
 	s_playermodel.modelname.generic.y	  = 54;
 	s_playermodel.modelname.string	      = modelname;
 	s_playermodel.modelname.style		  = UI_CENTER;
@@ -621,7 +619,7 @@ static void PlayerModel_MenuInit( void )
 
 	s_playermodel.skinname.generic.type   = MTYPE_PTEXT;
 	s_playermodel.skinname.generic.flags  = QMF_CENTER_JUSTIFY|QMF_INACTIVE;
-	s_playermodel.skinname.generic.x	  = 497;
+	s_playermodel.skinname.generic.x	  = 560;
 	s_playermodel.skinname.generic.y	  = 394;
 	s_playermodel.skinname.string	      = skinname;
 	s_playermodel.skinname.style		  = UI_CENTER;
@@ -678,7 +676,6 @@ static void PlayerModel_MenuInit( void )
 	Menu_AddItem( &s_playermodel.menu,	&s_playermodel.framel );
 	Menu_AddItem( &s_playermodel.menu,	&s_playermodel.framer );
 	Menu_AddItem( &s_playermodel.menu,	&s_playermodel.ports );
-	Menu_AddItem( &s_playermodel.menu,	&s_playermodel.playername );
 	Menu_AddItem( &s_playermodel.menu,	&s_playermodel.modelname );
 	Menu_AddItem( &s_playermodel.menu,	&s_playermodel.skinname );
 

@@ -228,8 +228,6 @@ static void PlayerIntroSound( const char *modelAndSkin ) {
 	if( Q_stricmp( skin, "default" ) == 0 ) {
 		skin = model;
 	}
-
-	trap_SendConsoleCommand( EXEC_APPEND, va( "play sound/player/announce/%s.wav\n", skin ) );
 }
 
 /*

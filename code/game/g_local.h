@@ -27,6 +27,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "g_public.h"
 #include "challenges.h"
 
+//ratmod delagMissile
+#define MIN(x,y) (((x) < (y)) ? (x) : (y))
+
 //==================================================================
 
 // the "gameversion" client command will print this plus compile date
@@ -58,6 +61,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FL_NO_BOTS				0x00002000	// spawn point not for bot use
 #define FL_NO_HUMANS			0x00004000	// spawn point just for bots
 #define FL_FORCE_GESTURE		0x00008000	// force gesture on client
+
+//ratmod delagMissile
+#define	DELAG_MAX_BACKTRACK (g_delagMissileMaxLatency.integer + 1000/sv_fps.integer * 2)
 
 // movers are things like doors, plats, buttons, etc
 typedef enum {
@@ -154,6 +160,7 @@ struct gentity_s {
 	qboolean	takedamage;
 
 	int			damage;
+	int			sumShotgunDamage;
 	int			splashDamage;	// quad will increase this without increasing radius
 	int			splashRadius;
 	int			methodOfDeath;
@@ -180,6 +187,11 @@ struct gentity_s {
 	float		random;
 
 	gitem_t		*item;			// for bonus items
+
+	//ratmod delagMissile
+	qboolean	needsDelag;
+	int			launchTime;
+	int			missileRan;
 };
 
 
@@ -674,6 +686,9 @@ void G_SetOrigin( gentity_t *ent, vec3_t origin );
 void AddRemap(const char *oldShader, const char *newShader, float timeOffset);
 const char *BuildShaderStateConfig( void );
 
+//ratmod delagMissile
+qboolean G_InUse(gentity_t *ent);
+
 //
 // g_combat.c
 //
@@ -685,6 +700,7 @@ void body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int d
 void TossClientItems( gentity_t *self );
 void TossClientPersistantPowerups( gentity_t *self );
 void TossClientCubes( gentity_t *self );
+void DamagePlum( gentity_t *ent, vec3_t origin, int score );
 
 // damage flags
 #define DAMAGE_RADIUS				0x00000001	// damage was indirect
@@ -752,6 +768,9 @@ void G_UndoTimeShiftFor( gentity_t *ent );
 void G_UnTimeShiftClient( gentity_t *client );
 void G_PredictPlayerMove( gentity_t *ent, float frametime );
 //unlagged - g_unlagged.c
+
+//ratmod delagMissile
+qboolean G_IsElimGT(void);
 
 //
 // g_client.c
@@ -1147,6 +1166,31 @@ extern  vmCvar_t    g_warningExpire;
 extern  vmCvar_t    g_minNameChangePeriod;
 extern  vmCvar_t    g_maxNameChanges;
 
+//OmegA
+extern vmCvar_t g_damagePlums;
+extern vmCvar_t g_guidedRockets;
+extern vmCvar_t g_headShotOnly;
+extern vmCvar_t g_grenadeSpeed;
+extern vmCvar_t g_rocketSpeed;
+extern vmCvar_t g_gauntletDamage;
+extern vmCvar_t g_lightningDamage;
+extern vmCvar_t g_machinegunDamage;
+extern vmCvar_t g_machinegunTeamDamage;
+extern vmCvar_t g_railgunDamage;
+extern vmCvar_t g_railJump;
+
+//ratmod delagMissile
+extern vmCvar_t g_delagMissileMaxLatency;
+extern vmCvar_t g_delagMissileDebug;
+extern vmCvar_t g_delagMissiles;
+extern vmCvar_t g_delagMissileLimitVariance;
+extern vmCvar_t g_delagMissileLimitVarianceMs;
+extern vmCvar_t g_delagMissileBaseNudge;
+extern vmCvar_t g_delagMissileNudgeOnly;
+extern vmCvar_t g_delagMissileLatencyMode;
+extern vmCvar_t g_delagMissileCorrectFrameOffset;
+extern vmCvar_t g_delagMissileImmediateRun;
+extern vmCvar_t g_predictMissiles;
 
 void	trap_Printf( const char *fmt );
 void	trap_Error( const char *fmt ) __attribute__((noreturn));

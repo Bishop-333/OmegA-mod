@@ -30,6 +30,10 @@ static	vec3_t	forward, right, up;
 static	vec3_t	muzzle;
 
 #define NUM_NAILSHOTS 15
+#define MAX_SHOTGUN_COUNT 32
+
+static	gentity_t *oldTarg[MAX_SHOTGUN_COUNT], *oldAttacker;
+int	countTarg;
 
 /*
 ================
@@ -116,7 +120,7 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 	if(g_instantgib.integer)
 		damage = 500; //High damage in instant gib (normally enough to gib)
 	else
-		damage = 50 * s_quadFactor;
+		damage = g_gauntletDamage.integer * s_quadFactor;
 	G_Damage( traceEnt, ent, ent, forward, tr.endpos,
 		damage, 0, MOD_GAUNTLET );
 
@@ -186,8 +190,8 @@ void SnapVectorTowards( vec3_t v, vec3_t to ) {
 
 #define CHAINGUN_SPREAD		600.0
 #define MACHINEGUN_SPREAD	200
-#define	MACHINEGUN_DAMAGE	7
-#define	MACHINEGUN_TEAM_DAMAGE	5		// wimpier MG in teamplay
+#define	MACHINEGUN_DAMAGE	(g_machinegunDamage.integer)
+#define	MACHINEGUN_TEAM_DAMAGE	(g_machinegunTeamDamage.integer)
 
 void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 	trace_t		tr;
@@ -257,6 +261,7 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 //unlagged - attack prediction #2
 			if( LogAccuracyHit( traceEnt, ent ) ) {
 				ent->client->accuracy_hits++;
+				ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
 			}
 		} else {
 			tent = G_TempEntity( tr.endpos, EV_BULLET_HIT_WALL );
@@ -354,6 +359,11 @@ qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 		}
 
 		if ( traceEnt->takedamage) {
+			if ( oldTarg[countTarg-1] != traceEnt ) {
+				oldTarg[countTarg] = traceEnt;
+				oldTarg[countTarg]->sumShotgunDamage = 0;
+				countTarg++;
+			}
 			damage = DEFAULT_SHOTGUN_DAMAGE * s_quadFactor;
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
 				if (G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir )) {
@@ -401,7 +411,7 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
 	PerpendicularVector( right, forward );
 	CrossProduct( forward, right, up );
 
-	oldScore = ent->client->ps.persistant[PERS_SCORE];
+	countTarg = 0;
 
 //unlagged - backward reconciliation #2
 	// backward-reconcile the other clients
@@ -418,6 +428,12 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
 		if( ShotgunPellet( origin, end, ent ) && !hitClient ) {
 			hitClient = qtrue;
 			ent->client->accuracy_hits++;
+			ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
+		}
+	}
+	for ( i = 0 ; i < countTarg ; i++ ) {
+		if ( oldTarg[i]->sumShotgunDamage && oldTarg[i] != oldAttacker && g_damagePlums.integer ) {
+			DamagePlum( oldAttacker, oldTarg[i]->r.currentOrigin, oldTarg[i]->sumShotgunDamage );
 		}
 	}
         if( hitClient )
@@ -536,7 +552,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 	int			passent;
 	gentity_t	*unlinkedEntities[MAX_RAIL_HITS];
 
-	damage = 100 * s_quadFactor;
+	damage = g_railgunDamage.integer * s_quadFactor;
 	if(g_instantgib.integer)
 		damage = 800;
 
@@ -603,6 +619,9 @@ void weapon_railgun_fire (gentity_t *ent) {
 	for ( i = 0 ; i < unlinked ; i++ ) {
 		trap_LinkEntity( unlinkedEntities[i] );
 	}
+	if ( g_railJump.integer ) {
+		G_RadiusDamage( trace.endpos, ent, 100, 120, NULL, MOD_RAILJUMP );
+	}
 
 	// the final trace endpos will be the terminal point of the rail trail
 
@@ -648,6 +667,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 		}
 		ent->client->accuracy_hits++;
                 ent->client->accuracy[WP_RAILGUN][1]++;
+		ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
 	}
 
 }
@@ -708,7 +728,7 @@ void Weapon_LightningFire( gentity_t *ent ) {
 	gentity_t	*traceEnt, *tent;
 	int			damage, i, passent;
 
-	damage = 8 * s_quadFactor;
+	damage = g_lightningDamage.integer * s_quadFactor;
 
 	passent = ent->s.number;
 	for (i = 0; i < 10; i++) {
@@ -773,6 +793,7 @@ void Weapon_LightningFire( gentity_t *ent ) {
 			if( LogAccuracyHit( traceEnt, ent ) ) {
 				ent->client->accuracy_hits++;
                                 ent->client->accuracy[WP_LIGHTNING][1]++;
+				ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
 			}
 		} else if ( !( tr.surfaceFlags & SURF_NOIMPACT ) ) {
 			tent = G_TempEntity( tr.endpos, EV_MISSILE_MISS );
@@ -930,6 +951,7 @@ void FireWeapon( gentity_t *ent ) {
 			ent->client->accuracy_shots++;
                         ent->client->accuracy[ent->s.weapon][0]++;
 		}
+		ent->client->ps.persistant[PERS_ACCURACY_SHOTS]++;
 	}
 
 	// set aiming directions

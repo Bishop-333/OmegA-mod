@@ -1723,8 +1723,8 @@ void Menu_Cache( void )
 	uis.charsetPropGlow	= trap_R_RegisterShaderNoMip( "menu/art/font1_prop_glo.tga" );
 	uis.charsetPropB	= trap_R_RegisterShaderNoMip( "menu/art/font2_prop.tga" );
 	uis.cursor          = trap_R_RegisterShaderNoMip( "menu/art/3_cursor2" );
-	uis.rb_on           = trap_R_RegisterShaderNoMip( "menu/art/switch_on" );
-	uis.rb_off          = trap_R_RegisterShaderNoMip( "menu/art/switch_off" );
+	uis.rb_on           = trap_R_RegisterShaderNoMip( "menu/art_blueish/switch_on" );
+	uis.rb_off          = trap_R_RegisterShaderNoMip( "menu/art_blueish/switch_off" );
 
 	uis.whiteShader = trap_R_RegisterShaderNoMip( "white" );
 	if ( uis.glconfig.hardwareType == GLHW_RAGEPRO ) {
@@ -1745,7 +1745,7 @@ void Menu_Cache( void )
 	menu_null_sound = -1;
 
 	sliderBar = trap_R_RegisterShaderNoMip( "menu/art/slider2" );
-	sliderButton_0 = trap_R_RegisterShaderNoMip( "menu/art/sliderbutt_0" );
-	sliderButton_1 = trap_R_RegisterShaderNoMip( "menu/art/sliderbutt_1" );
+	sliderButton_0 = trap_R_RegisterShaderNoMip( "menu/art_blueish/sliderbutt_0" );
+	sliderButton_1 = trap_R_RegisterShaderNoMip( "menu/art_blueish/sliderbutt_1" );
 }
 	
