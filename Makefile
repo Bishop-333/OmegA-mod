@@ -30,7 +30,7 @@ endif
   BUILD_GAME_SO    = 1
   BUILD_GAME_QVM   = 1
 ifndef BUILD_MISSIONPACK
-  BUILD_MISSIONPACK=
+  BUILD_MISSIONPACK=0
 endif
 
 ifneq ($(PLATFORM),darwin)
@@ -397,7 +397,7 @@ ifeq ($(PLATFORM),darwin)
   CLIENT_LIBS += -framework Cocoa -framework IOKit -framework OpenGL \
     $(LIBSDIR)/macosx/libSDL-1.2.0.dylib
 
-  OPTIMIZE += -ffast-math -falign-loops=16
+  OPTIMIZE += -ffast-math
 
   ifneq ($(HAVE_VM_COMPILED),true)
     BASE_CFLAGS += -DNO_VM_COMPILED
