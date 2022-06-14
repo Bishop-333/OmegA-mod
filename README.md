@@ -8,24 +8,37 @@ List of the cvars/additions :
 
 - cg_bobgun
 - cg_brightPlayers
-- cg_drawItemTimer;
-- cg_drawTeamBackground;
+- cg_damagePlums
+- cg_drawAccuracy
+- cg_drawItemTimer
+- cg_drawFriendThroughWalls
+- cg_drawTeamBackground
 - cg_enemyColor (need cg_brightPlayers to be enabled)
 - cg_teamColor (need cg_brightPlayers to be enabled)
 - cg_enemyModel
 - cg_teamModel
 - cg_omegaFlags
 - cg_screenshake
-- cg_thinLightningBolt;
-- cg_timerHeight;
-- cg_timerWidth;
-- cg_timerX;
-- cg_timerY;
-- cg_transparentGun;
+- cg_thinLightningBolt
+- cg_timerHeight
+- cg_timerWidth
+- cg_timerX
+- cg_timerY
+- cg_transparentGun
 - cg_zoomAnim
 - cg_zoomAnimSpeed
 - cg_zoomToggle
 #
+- g_damagePlums
+- g_guidedRockets
+- g_headShotOnly
+- g_grenadeSpeed
+- g_rocketSpeed
+- g_gauntletDamage
+- g_lightningDamage
+- g_machinegunDamage
+- g_machinegunTeamDamage
+- g_railgunDamage
 - g_railJump
 
 //delagMissile are from Ratmod
@@ -51,6 +64,7 @@ List of the cvars/additions :
 - new skins
 - new sounds
 - new weapons sfx
+- new ui
 - upscalled weapon textures
 - a lot of fixes
 
