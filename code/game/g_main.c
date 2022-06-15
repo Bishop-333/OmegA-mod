@@ -450,9 +450,9 @@ static cvarTable_t		gameCvarTable[] = {
         { &g_delagMissileLimitVariance, "g_delagMissileLimitVariance", "1", CVAR_ARCHIVE, 0, qfalse },
         { &g_delagMissileLimitVarianceMs, "g_delagMissileLimitVarianceMs", "25", CVAR_ARCHIVE, 0, qfalse },
         { &g_delagMissileMaxLatency, "g_delagMissileMaxLatency", "500", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
-        { &g_delagMissileBaseNudge, "g_delagMissileBaseNudge", "10", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse }
+        { &g_delagMissileBaseNudge, "g_delagMissileBaseNudge", "10", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
         { &g_delagMissileNudgeOnly, "g_delagMissileNudgeOnly", "0", CVAR_ARCHIVE, 0, qfalse },
-        { &g_predictMissiles, "g_predictMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_predictMissiles, "g_predictMissiles", "1", CVAR_ARCHIVE, 0, qfalse }
         
 };
 

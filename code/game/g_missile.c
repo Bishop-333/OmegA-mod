@@ -72,7 +72,7 @@ int G_DelagLatency( gclient_t *client ) {
 G_MissileLagTime
 ================
 */
-int G_MissileLagTime( g client_t *client ) {
+int G_MissileLagTime( gclient_t *client ) {
 	int offset = 0;
 
 	if ( !g_delagMissiles.integer ) {

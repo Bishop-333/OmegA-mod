@@ -63,7 +63,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FL_FORCE_GESTURE		0x00008000	// force gesture on client
 
 //ratmod delagMissile
-#define	DELAG_MAX_BACKTRACK( g_delagMissileMaxLatency.integer + 1000 / sv_fps.integer * 2 )
+#define	DELAG_MAX_BACKTRACK ( g_delagMissileMaxLatency.integer + 1000 / sv_fps.integer * 2 )
 
 // movers are things like doors, plats, buttons, etc
 typedef enum {
