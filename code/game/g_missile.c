@@ -25,9 +25,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	MISSILE_PRESTEP_TIME	50
 
 //ratmod delagMissile
-int G_DelagLatency(gclient_t *client) {
+/*
+================
+G_DelagLatency
+================
+*/
+int G_DelagLatency( gclient_t *client ) {
 	int ping = 0;
-	switch (g_delagMissileLatencyMode.integer) {
+	switch ( g_delagMissileLatencyMode.integer ) {
 		case 2:
 			ping = client->ps.ping;
 			break;
@@ -42,46 +47,48 @@ int G_DelagLatency(gclient_t *client) {
 			}
 			break;
 	}
-	if (g_delagMissileLimitVariance.integer && g_delagMissileLimitVarianceMs.integer > 0 && g_truePing.integer) {
+	if ( g_delagMissileLimitVariance.integer && g_delagMissileLimitVarianceMs.integer > 0 && g_truePing.integer ) {
 		int maxping = client->pers.realPing + g_delagMissileLimitVarianceMs.integer;
 		int minping = client->pers.realPing - g_delagMissileLimitVarianceMs.integer;
 		qboolean limited = qfalse;
 		int oldping = ping;
 
-		if (minping < 0) {
+		if ( minping < 0 ) {
 			minping = 0;
 		}
-		if (ping > maxping) {
+		if ( ping > maxping ) {
 			ping = maxping;
 			limited = qtrue;
 		} else if (ping < minping) {
 			ping = minping;
 			limited = qtrue;
 		}
-		if (limited && g_delagMissileDebug.integer) {
-			Com_Printf("Limited projectile delag ping (c %i): %i -> %i, realPing: %i\n", client->ps.clientNum, oldping, ping, client->pers.realPing);
-		}
 	}
-	return MIN(g_delagMissileMaxLatency.integer, ping);
+	return MIN( g_delagMissileMaxLatency.integer, ping );
 }
 
-int G_MissileLagTime(gclient_t *client) {
+/*
+================
+G_MissileLagTime
+================
+*/
+int G_MissileLagTime( g client_t *client ) {
 	int offset = 0;
 
-	if (!g_delagMissiles.integer) {
+	if ( !g_delagMissiles.integer ) {
 		return MISSILE_PRESTEP_TIME;
 	}
 
-	if (g_delagMissileCorrectFrameOffset.integer) {
-		offset = level.time - (level.previousTime + client->frameOffset);
+	if ( g_delagMissileCorrectFrameOffset.integer ) {
+		offset = level.time - ( level.previousTime + client->frameOffset );
 		if (offset < 0) {
 			offset = 0;
 		}
-		if (offset > 1000/sv_fps.integer) {
-			offset = 1000/sv_fps.integer;
+		if ( offset > 1000 / sv_fps.integer ) {
+			offset = 1000 / sv_fps.integer;
 		}
 	}
-	return offset + G_DelagLatency(client) + g_delagMissileBaseNudge.integer;
+	return offset + G_DelagLatency( client ) + g_delagMissileBaseNudge.integer;
 }
 
 /*
@@ -89,14 +96,14 @@ int G_MissileLagTime(gclient_t *client) {
 G_MissileRunDelag
 ================
 */
-void G_MissileRunDelag(gentity_t *ent, int stepmsec) {
+void G_MissileRunDelag( gentity_t *ent, int stepmsec ) {
 	int prevTimeSaved;
 	int lvlTimeSaved;
 	int projectileDelagTime;
 
-	if (g_delagMissileNudgeOnly.integer
+	if ( g_delagMissileNudgeOnly.integer
 			|| level.previousTime <= DELAG_MAX_BACKTRACK
-			|| stepmsec <= 0) {
+			|| stepmsec <= 0 ) {
 		return;
 	}
 
@@ -112,14 +119,14 @@ void G_MissileRunDelag(gentity_t *ent, int stepmsec) {
 
 	prevTimeSaved = level.previousTime;
 	lvlTimeSaved = level.time;
-	projectileDelagTime = level.previousTime - (DELAG_MAX_BACKTRACK/stepmsec) * stepmsec;
+	projectileDelagTime = level.previousTime - (DELAG_MAX_BACKTRACK / stepmsec) * stepmsec;
 	while (projectileDelagTime < prevTimeSaved) {
 		if ( !G_InUse(ent) || ent->freeAfterEvent ) {
 			// make sure we don't run missile again
 			// if it exploded already
 			break;
 		}
-		if (projectileDelagTime >= ent->launchTime) {
+		if ( projectileDelagTime >= ent->launchTime ) {
 			int shiftTime = projectileDelagTime;
 			G_TimeShiftAllClients( shiftTime, ent->parent );
 			level.time = projectileDelagTime + stepmsec;
@@ -142,13 +149,13 @@ void G_MissileRunDelag(gentity_t *ent, int stepmsec) {
 G_ImmediateRunMissile
 ================
 */
-void G_ImmediateRunMissile(gentity_t *ent) {
-	if (ent->missileRan == 1) {
+void G_ImmediateRunMissile( gentity_t *ent ) {
+	if ( ent->missileRan == 1 ) {
 		// missile was already run immediately after firing
 		return;
 	}
 
-	if (!g_delagMissileNudgeOnly.integer) {
+	if ( !g_delagMissileNudgeOnly.integer ) {
 		int stepmsec = level.time - level.previousTime;
 		G_MissileRunDelag(ent, stepmsec);
 
@@ -172,39 +179,40 @@ void G_ImmediateRunMissile(gentity_t *ent) {
 G_ImmediateLaunchMissile
 ================
 */
-void G_ImmediateLaunchMissile(gentity_t *ent) {
-	if (g_delagMissileImmediateRun.integer == 1) {
-		G_ImmediateRunMissile(ent);
-	} else if (g_delagMissileImmediateRun.integer >= 2) {
-		ent->missileRan = -g_delagMissileImmediateRun.integer+1;
+void G_ImmediateLaunchMissile( gentity_t *ent ) {
+	if ( g_delagMissileImmediateRun.integer == 1 ) {
+		G_ImmediateRunMissile( ent );
+	} else if ( g_delagMissileImmediateRun.integer >= 2 ) {
+		ent->missileRan = -g_delagMissileImmediateRun.integer + 1;
 	}
 }
+//end ratmod delagMissile
 
 /*
 ================
 G_ImmediateRunClientMissiles
 ================
 */
-void G_ImmediateRunClientMissiles(gentity_t *client) {
+void G_ImmediateRunClientMissiles ( gentity_t *client ) {
 	gentity_t *ent;
 	int i;
-	if (g_delagMissileImmediateRun.integer <= 1) {
+	if ( g_delagMissileImmediateRun.integer <= 1 ) {
 		return;
 	}
-	for (i=0 ; i < level.num_entities ; ++i ) {
+	for ( i=0 ; i < level.num_entities ; ++i ) {
 		ent = &g_entities[i];
 		if ( !G_InUse(ent)
 				|| ent->freeAfterEvent
 				|| ent->s.eType != ET_MISSILE
-				|| ent->parent != client) {
+				|| ent->parent != client ) {
 			continue;
 		}
-		if (ent->missileRan < 0) {
+		if ( ent->missileRan < 0 ) {
 			// this missile will be run later
 			ent->missileRan++;
 			continue;
 		}
-		G_ImmediateRunMissile(ent);
+		G_ImmediateRunMissile( ent );
 	}
 }
 

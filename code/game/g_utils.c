@@ -691,6 +691,6 @@ int DebugLine(vec3_t start, vec3_t end, int color) {
 }
 
 //ratmod delagMissile
-qboolean G_InUse(gentity_t *ent) {
+qboolean G_InUse( gentity_t *ent ) {
 	return ent->inuse;
 }

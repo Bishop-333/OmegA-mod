@@ -828,7 +828,7 @@ qboolean	BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTim
 char *BG_TeamName( team_t team );
 
 //ratmod delagMissile
-qboolean BG_IsElimTeamGT(gametype_t gametype);
-qboolean BG_IsElimGT(gametype_t gametype);
+qboolean BG_IsElimGT( gametype_t gametype );
+qboolean BG_IsElimTeamGT( gametype_t gametype );
 
 #endif

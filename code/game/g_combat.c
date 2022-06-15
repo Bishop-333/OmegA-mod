@@ -1334,7 +1334,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		z_ratio = z_rel / height;
 
 		if ( g_headShotOnly.integer ) {
-			if (z_ratio < 0.90)
+			if ( z_ratio < 0.90 )
 				take *= 0;
 		}
 	}

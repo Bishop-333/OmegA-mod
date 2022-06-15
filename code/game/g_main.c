@@ -442,17 +442,17 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_teleportMissiles, "g_teleportMissiles", "0", CVAR_ARCHIVE, 0, qtrue },
 
 	//ratmod delagMissile
-        { &g_delagMissileMaxLatency, "g_delagMissileMaxLatency", "500", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
-        { &g_delagMissileDebug, "g_delagMissileDebug", "0", 0, 0, qfalse },
         { &g_delagMissiles, "g_delagMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileCorrectFrameOffset, "g_delagMissileCorrectFrameOffset", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileDebug, "g_delagMissileDebug", "0", 0, 0, qfalse },
+        { &g_delagMissileImmediateRun, "g_delagMissileImmediateRun", "2", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileLatencyMode, "g_delagMissileLatencyMode", "1", CVAR_ARCHIVE, 0, qfalse },
         { &g_delagMissileLimitVariance, "g_delagMissileLimitVariance", "1", CVAR_ARCHIVE, 0, qfalse },
         { &g_delagMissileLimitVarianceMs, "g_delagMissileLimitVarianceMs", "25", CVAR_ARCHIVE, 0, qfalse },
-        { &g_delagMissileLatencyMode, "g_delagMissileLatencyMode", "1", CVAR_ARCHIVE, 0, qfalse },
-        { &g_delagMissileCorrectFrameOffset, "g_delagMissileCorrectFrameOffset", "1", CVAR_ARCHIVE, 0, qfalse },
-        { &g_delagMissileNudgeOnly, "g_delagMissileNudgeOnly", "0", CVAR_ARCHIVE, 0, qfalse },
-        { &g_delagMissileImmediateRun, "g_delagMissileImmediateRun", "2", CVAR_ARCHIVE, 0, qfalse },
-        { &g_predictMissiles, "g_predictMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
+        { &g_delagMissileMaxLatency, "g_delagMissileMaxLatency", "500", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
         { &g_delagMissileBaseNudge, "g_delagMissileBaseNudge", "10", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse }
+        { &g_delagMissileNudgeOnly, "g_delagMissileNudgeOnly", "0", CVAR_ARCHIVE, 0, qfalse },
+        { &g_predictMissiles, "g_predictMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
         
 };
 
@@ -646,11 +646,11 @@ void G_RegisterCvars( void ) {
 }
 
 //ratmod delagMissile
-qboolean G_IsElimTeamGT(void) {
-	return BG_IsElimTeamGT(g_gametype.integer);
+qboolean G_IsElimGT( void ) {
+	return BG_IsElimGT( g_gametype.integer );
 }
-qboolean G_IsElimGT(void) {
-	return BG_IsElimGT(g_gametype.integer);
+qboolean G_IsElimTeamGT( void ) {
+	return BG_IsElimTeamGT( g_gametype.integer );
 }
 
 /*

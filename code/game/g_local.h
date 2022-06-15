@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "challenges.h"
 
 //ratmod delagMissile
-#define MIN(x,y) (((x) < (y)) ? (x) : (y))
+#define MIN( x, y ) ( ( (x) < (y) ) ? (x) : (y) )
 
 //==================================================================
 
@@ -63,7 +63,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FL_FORCE_GESTURE		0x00008000	// force gesture on client
 
 //ratmod delagMissile
-#define	DELAG_MAX_BACKTRACK (g_delagMissileMaxLatency.integer + 1000/sv_fps.integer * 2)
+#define	DELAG_MAX_BACKTRACK( g_delagMissileMaxLatency.integer + 1000 / sv_fps.integer * 2 )
 
 // movers are things like doors, plats, buttons, etc
 typedef enum {
@@ -190,8 +190,8 @@ struct gentity_s {
 
 	//ratmod delagMissile
 	qboolean	needsDelag;
-	int			launchTime;
-	int			missileRan;
+	int		launchTime;
+	int		missileRan;
 };
 
 
@@ -687,7 +687,7 @@ void AddRemap(const char *oldShader, const char *newShader, float timeOffset);
 const char *BuildShaderStateConfig( void );
 
 //ratmod delagMissile
-qboolean G_InUse(gentity_t *ent);
+qboolean G_InUse( gentity_t *ent );
 
 //
 // g_combat.c
@@ -770,7 +770,7 @@ void G_PredictPlayerMove( gentity_t *ent, float frametime );
 //unlagged - g_unlagged.c
 
 //ratmod delagMissile
-qboolean G_IsElimGT(void);
+qboolean G_IsElimGT( void );
 
 //
 // g_client.c
@@ -1182,16 +1182,16 @@ extern vmCvar_t g_railThroughWalls;
 extern vmCvar_t g_teleportMissiles; // from ratmod
 
 //ratmod delagMissile
-extern vmCvar_t g_delagMissileMaxLatency;
-extern vmCvar_t g_delagMissileDebug;
 extern vmCvar_t g_delagMissiles;
+extern vmCvar_t g_delagMissileBaseNudge;
+extern vmCvar_t g_delagMissileCorrectFrameOffset;
+extern vmCvar_t g_delagMissileDebug;
+extern vmCvar_t g_delagMissileImmediateRun;
+extern vmCvar_t g_delagMissileLatencyMode;
 extern vmCvar_t g_delagMissileLimitVariance;
 extern vmCvar_t g_delagMissileLimitVarianceMs;
-extern vmCvar_t g_delagMissileBaseNudge;
+extern vmCvar_t g_delagMissileMaxLatency;
 extern vmCvar_t g_delagMissileNudgeOnly;
-extern vmCvar_t g_delagMissileLatencyMode;
-extern vmCvar_t g_delagMissileCorrectFrameOffset;
-extern vmCvar_t g_delagMissileImmediateRun;
 extern vmCvar_t g_predictMissiles;
 
 void	trap_Printf( const char *fmt );
