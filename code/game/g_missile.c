@@ -585,40 +585,6 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 	int				eFlags;
 	other = &g_entities[trace->entityNum];
 
-	if ( other->s.eType == ET_ITEM || other->s.eType == ET_MISSILE ) {
-		ent->target_ent = other;
-		return;
-	} else if ( other->s.eType == ET_PLAYER && ent->r.ownerNum == other->s.number ) {
-		ent->target_ent = other;
-		return;
-	} else {
-		ent->target_ent = NULL;
-	}
-
-	// check if missile hit portal
-	if ( other->s.eType == ET_TELEPORT_TRIGGER ) {
-		if ( g_teleportMissiles.integer && other->target ) {
-			G_TeleportMissile( ent, trace, other );
-		}
-		return;
-	}
-
-	// check if grenade hit jumppad
-	if ( other->s.eType == ET_PUSH_TRIGGER ) {
-	       if ( g_jumppadGrenades.integer && other->target && strcmp( ent->classname, "grenade" ) == 0 ) {
-			G_PushGrenade( ent, trace, other );
-			return;
-	       }
-	       ent->target_ent = other;
-	       return;
-	}
-
-	if ( other->r.contents == CONTENTS_TRIGGER ) {
-		// check for equality, r.contents seems to not contain other FLAGS?
-		ent->target_ent = other;
-		return;
-	}
-
 	// check for bounce
 	if ( !other->takedamage &&
 		( ent->s.eFlags & ( EF_BOUNCE | EF_BOUNCE_HALF ) ) ) {
@@ -782,15 +748,23 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 	trap_LinkEntity( ent );
 }
 
+#define TELEMISSILE_MAX_TRIGGERS 32
+
 /*
 ================
 G_RunMissile
 ================
 */
 void G_RunMissile( gentity_t *ent ) {
+	gentity_t	*stuckIn;
+	gentity_t	*unlinkedEntities[TELEMISSILE_MAX_TRIGGERS];
 	vec3_t		origin;
 	trace_t		tr;
+	trace_t		tr2;
+	int		i;
 	int			passent;
+	int		telepushed = 0;
+	int		unlinked = 0;
 
 	// get current position
 	BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );
@@ -807,15 +781,61 @@ void G_RunMissile( gentity_t *ent ) {
 		// ignore interactions with the missile owner
 		passent = ent->r.ownerNum;
 	}
-	// trace a line from the previous position to the current position
-	trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, origin, passent, ent->clipmask );
+
+	if ( g_teleportMissiles.integer || g_jumppadGrenades.integer ) {
+		do {
+			// trace a line from the previous position to the current position
+			trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, origin, passent, ent->clipmask );
+			trap_Trace( &tr2, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, origin, passent, ent->clipmask | CONTENTS_TRIGGER );
+
+			if ( tr2.fraction == 1 ) {
+				break;
+			}
+
+			if ( tr2.entityNum == tr.entityNum ) {
+				break;
+			}
+
+			stuckIn = &g_entities[tr2.entityNum];
+			if ( stuckIn->s.eType == ET_TELEPORT_TRIGGER ) {
+				if ( g_teleportMissiles.integer && stuckIn->target ) {
+					G_TeleportMissile( ent, &tr2, stuckIn );
+					// make sure we don't impact
+					tr.fraction = 1;
+					telepushed = 1;
+					break;
+				}
+			} else if ( stuckIn->s.eType == ET_PUSH_TRIGGER ) {
+				if ( g_jumppadGrenades.integer && stuckIn->target && strcmp( ent->classname, "grenade" ) == 0 && ent->pushed_at + 200 <= level.time ) {
+					G_PushGrenade( ent, &tr2, stuckIn );
+					ent->pushed_at = level.time;
+					// make sure we don't impact
+					tr.fraction = 1;
+					telepushed = 1;
+					break;
+				}
+			}
+			// other trigger, unlink entity so next trace won't
+			// catch this
+			trap_UnlinkEntity( stuckIn );
+			unlinkedEntities[unlinked++] = stuckIn;
+
+		} while (unlinked < TELEMISSILE_MAX_TRIGGERS) ;
+		// link entities again
+		for ( i = 0 ; i < unlinked ; ++i ) {
+			trap_LinkEntity( unlinkedEntities[i] );
+		}
+	} else {
+		// trace a line from the previous position to the current position
+		trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, origin, passent, ent->clipmask );
+	}
 
 	if ( tr.startsolid || tr.allsolid ) {
 		// make sure the tr.entityNum is set to the entity we're stuck in
 		trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, ent->r.currentOrigin, passent, ent->clipmask );
 		tr.fraction = 0;
 	}
-	else {
+	else if (!telepushed) {
 		VectorCopy( tr.endpos, ent->r.currentOrigin );
 	}
 
@@ -908,7 +928,7 @@ gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->splashRadius = 20;
 	bolt->methodOfDeath = MOD_PLASMA;
 	bolt->splashMethodOfDeath = MOD_PLASMA_SPLASH;
-	bolt->clipmask = MASK_SHOT | CONTENTS_TRIGGER;
+	bolt->clipmask = MASK_SHOT;
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
@@ -955,9 +975,6 @@ gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_GRENADE;
 	bolt->splashMethodOfDeath = MOD_GRENADE_SPLASH;
 	bolt->clipmask = MASK_SHOT;
-	if ( g_teleportMissiles.integer || g_jumppadGrenades.integer ) {
-		bolt->clipmask |= CONTENTS_TRIGGER;
-	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_GRAVITY;
@@ -1003,9 +1020,6 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_BFG;
 	bolt->splashMethodOfDeath = MOD_BFG_SPLASH;
 	bolt->clipmask = MASK_SHOT;
-	if ( g_teleportMissiles.integer ) {
-		bolt->clipmask |= CONTENTS_TRIGGER;
-	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
@@ -1104,9 +1118,6 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_ROCKET;
 	bolt->splashMethodOfDeath = MOD_ROCKET_SPLASH;
 	bolt->clipmask = MASK_SHOT;
-	if ( g_teleportMissiles.integer ) {
-		bolt->clipmask |= CONTENTS_TRIGGER;
-	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
@@ -1206,9 +1217,6 @@ gentity_t *fire_nail( gentity_t *self, vec3_t start, vec3_t forward, vec3_t righ
 	bolt->damage = 20;
 	bolt->methodOfDeath = MOD_NAIL;
 	bolt->clipmask = MASK_SHOT;
-	if ( g_teleportMissiles.integer ) {
-		bolt->clipmask |= CONTENTS_TRIGGER;
-	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;

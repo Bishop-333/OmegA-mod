@@ -188,6 +188,8 @@ struct gentity_s {
 
 	gitem_t		*item;			// for bonus items
 
+	int		pushed_at;		// for jumppadGrenades
+
 	//ratmod delagMissile
 	qboolean	needsDelag;
 	int		launchTime;
