@@ -210,20 +210,20 @@ vmCvar_t        g_machinegunTeamDamage;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
 vmCvar_t        g_railThroughWalls;
-vmCvar_t        g_teleportMissiles; // from ratmod
-vmCvar_t        g_jumppadGrenades; // from ratmod
+vmCvar_t        g_teleportMissiles; //from ratmod
+vmCvar_t        g_jumppadGrenades; //from ratmod
 
 //ratmod delagMissile
-vmCvar_t        g_delagMissileMaxLatency;
-vmCvar_t        g_delagMissileDebug;
 vmCvar_t        g_delagMissiles;
+vmCvar_t        g_delagMissileBaseNudge;
+vmCvar_t        g_delagMissileCorrectFrameOffset;
+vmCvar_t        g_delagMissileDebug;
+vmCvar_t        g_delagMissileImmediateRun;
+vmCvar_t        g_delagMissileLatencyMode;
 vmCvar_t        g_delagMissileLimitVariance;
 vmCvar_t        g_delagMissileLimitVarianceMs;
-vmCvar_t        g_delagMissileBaseNudge;
-vmCvar_t        g_delagMissileLatencyMode;
-vmCvar_t        g_delagMissileCorrectFrameOffset;
+vmCvar_t        g_delagMissileMaxLatency;
 vmCvar_t        g_delagMissileNudgeOnly;
-vmCvar_t        g_delagMissileImmediateRun;
 vmCvar_t        g_predictMissiles;
 
 // bk001129 - made static to avoid aliasing
@@ -436,7 +436,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
 	{ &g_lightningDamage, "g_lightningDamage", "8", 0, 0, qtrue },
 	{ &g_machinegunDamage, "g_machinegunDamage", "10", 0, 0, qtrue },
-	{ &g_machinegunDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
+	{ &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "100", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },

@@ -40,18 +40,21 @@ List of the cvars/additions :
 - g_machinegunTeamDamage
 - g_railgunDamage
 - g_railJump
+- g_railThroughWalls
+- g_teleportMissiles //from ratmod
+- g_jumppadGrenades //from ratmod
 
 //delagMissile are from Ratmod
-- g_delagMissileMaxLatency
-- g_delagMissileDebug
 - g_delagMissiles
+- g_delagMissileBaseNudge
+- g_delagMissileCorrectFrameOffset
+- g_delagMissileDebug
+- g_delagMissileImmediateRun
+- g_delagMissileLatencyMode
 - g_delagMissileLimitVariance
 - g_delagMissileLimitVarianceMs
-- g_delagMissileBaseNudge
-- g_delagMissileLatencyMode
-- g_delagMissileCorrectFrameOffset
+- g_delagMissileMaxLatency
 - g_delagMissileNudgeOnly
-- g_delagMissileImmediateRun
 - g_predictMissiles
 #
 - new flags models
