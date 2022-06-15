@@ -209,6 +209,8 @@ vmCvar_t        g_machinegunDamage;
 vmCvar_t        g_machinegunTeamDamage;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
+vmCvar_t        g_railThroughWalls;
+vmCvar_t        g_teleportMissiles; // from ratmod
 
 //ratmod delagMissile
 vmCvar_t        g_delagMissileMaxLatency;
@@ -329,7 +331,7 @@ static cvarTable_t		gameCvarTable[] = {
         { &pmove_float, "pmove_float", "1", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
 
 //unlagged - server options
-	{ &g_delagHitscan, "g_delagHitscan", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+	{ &g_delagHitscan, "g_delagHitscan", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
 	{ &g_truePing, "g_truePing", "0", CVAR_ARCHIVE, 0, qtrue },
 	// it's CVAR_SYSTEMINFO so the client's sv_fps will be automagically set to its value
 	{ &sv_fps, "sv_fps", "20", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse },
@@ -436,6 +438,8 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_machinegunDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "100", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_teleportMissiles, "g_teleportMissiles", "0", CVAR_ARCHIVE, 0, qtrue },
 
 	//ratmod delagMissile
         { &g_delagMissileMaxLatency, "g_delagMissileMaxLatency", "500", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },

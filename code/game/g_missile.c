@@ -210,6 +210,66 @@ void G_ImmediateRunClientMissiles(gentity_t *client) {
 
 /*
 ================
+G_TeleportMissile
+================
+*/
+void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
+	gentity_t	*dest;
+	vec_t		length_norm, length_neg_norm;
+	vec3_t		newDirection;
+	vec3_t		portalInAngles;
+	vec3_t		portalInVec;
+	vec3_t		rotationAngles;
+	vec3_t		rotationMatrix[3];
+	vec3_t		tmp;
+	vec3_t 		velocity;
+	int		hitTime;
+
+	dest =  G_PickTarget( portal->target );
+	if (!dest) {
+		return;
+	}
+
+	// evaluate velocity vector at portal impact
+	hitTime = level.previousTime + ( level.time - level.previousTime ) * trace->fraction;
+        BG_EvaluateTrajectoryDelta( &ent->s.pos, hitTime, velocity );
+
+	// check orientation of normal vector
+	VectorAdd( trace->plane.normal, velocity, tmp );
+	length_norm = VectorLengthSquared(tmp);
+
+	VectorNegate( trace->plane.normal, portalInVec );
+	VectorAdd( portalInVec, velocity, tmp );
+	length_neg_norm = VectorLengthSquared(tmp);
+
+	vectoangles( portalInVec, portalInAngles );
+	if (length_norm > length_neg_norm) {
+		VectorSubtract( dest->s.angles, portalInAngles, rotationAngles );
+	} else {
+		VectorSubtract( portalInAngles, dest->s.angles, rotationAngles );
+	}
+
+	// create rotation matrix
+	AngleVectors( rotationAngles, rotationMatrix[0], rotationMatrix[1], rotationMatrix[2] );
+        VectorInverse( rotationMatrix[1] );
+
+	// rotate velocity vector
+	VectorRotate( velocity, rotationMatrix, ent->s.pos.trDelta );
+
+	SnapVector( ent->s.pos.trDelta );
+
+	// set flag to indicate missile teleport
+	ent->s.eFlags ^= EF_TELEPORT_BIT;
+
+	// set new origin
+	VectorCopy( dest->s.origin, ent->r.currentOrigin );
+	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
+
+	ent->s.pos.trTime = level.time;
+}
+
+/*
+================
 G_BounceMissile
 
 ================
@@ -506,6 +566,30 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 	int				eFlags;
 	other = &g_entities[trace->entityNum];
 
+	if ( other->s.eType == ET_ITEM || other->s.eType == ET_MISSILE ) {
+		ent->target_ent = other;
+		return;
+	} else if ( other->s.eType == ET_PLAYER && ent->r.ownerNum == other->s.number ) {
+		ent->target_ent = other;
+		return;
+	} else {
+		ent->target_ent = NULL;
+	}
+
+	// check if missile hit portal
+	if ( other->s.eType == ET_TELEPORT_TRIGGER ) {
+		if ( g_teleportMissiles.integer && other->target ) {
+			G_TeleportMissile( ent, trace, other );
+		}
+		return;
+	}
+
+	if ( other->r.contents == CONTENTS_TRIGGER ) {
+		// check for equality, r.contents seems to not contain other FLAGS?
+		ent->target_ent = other;
+		return;
+	}
+
 	// check for bounce
 	if ( !other->takedamage &&
 		( ent->s.eFlags & ( EF_BOUNCE | EF_BOUNCE_HALF ) ) ) {
@@ -795,7 +879,7 @@ gentity_t *fire_plasma (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->splashRadius = 20;
 	bolt->methodOfDeath = MOD_PLASMA;
 	bolt->splashMethodOfDeath = MOD_PLASMA_SPLASH;
-	bolt->clipmask = MASK_SHOT;
+	bolt->clipmask = MASK_SHOT | CONTENTS_TRIGGER;
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
@@ -842,6 +926,9 @@ gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_GRENADE;
 	bolt->splashMethodOfDeath = MOD_GRENADE_SPLASH;
 	bolt->clipmask = MASK_SHOT;
+	if ( g_teleportMissiles.integer ) {
+		bolt->clipmask |= CONTENTS_TRIGGER;
+	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_GRAVITY;
@@ -887,6 +974,9 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_BFG;
 	bolt->splashMethodOfDeath = MOD_BFG_SPLASH;
 	bolt->clipmask = MASK_SHOT;
+	if ( g_teleportMissiles.integer ) {
+		bolt->clipmask |= CONTENTS_TRIGGER;
+	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
@@ -913,12 +1003,16 @@ void G_GuidedMissile (gentity_t *missile)
 	float		dist;
 	gentity_t	*player = missile->parent;
 
+	if (!player)
+	{
+		return;
+	}
+
 	// Stop if the player released his attack button
 	if ( ! (player->client->buttons & BUTTON_ATTACK) ) {
 		return;
 	}
 
-	// Get the view angles of the player
 	AngleVectors( player->client->ps.viewangles, forward, right, up );
 
 	CalcMuzzlePoint( player, forward, right, up, muzzle );
@@ -940,7 +1034,6 @@ void G_GuidedMissile (gentity_t *missile)
 	VectorScale( muzzle, g_rocketSpeed.integer * 0.75, forward );
 	VectorCopy( forward, missile->s.pos.trDelta );
 
-	// Get the new angles
 	vectoangles( muzzle, missile->s.angles );
 
 	SnapVector( missile->s.pos.trDelta );
@@ -982,6 +1075,9 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_ROCKET;
 	bolt->splashMethodOfDeath = MOD_ROCKET_SPLASH;
 	bolt->clipmask = MASK_SHOT;
+	if ( g_teleportMissiles.integer ) {
+		bolt->clipmask |= CONTENTS_TRIGGER;
+	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
@@ -1081,6 +1177,9 @@ gentity_t *fire_nail( gentity_t *self, vec3_t start, vec3_t forward, vec3_t righ
 	bolt->damage = 20;
 	bolt->methodOfDeath = MOD_NAIL;
 	bolt->clipmask = MASK_SHOT;
+	if ( g_teleportMissiles.integer ) {
+		bolt->clipmask |= CONTENTS_TRIGGER;
+	}
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;

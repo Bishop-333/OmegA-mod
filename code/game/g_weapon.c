@@ -542,6 +542,7 @@ weapon_railgun_fire
 void weapon_railgun_fire (gentity_t *ent) {
 	vec3_t		end;
 	vec3_t impactpoint, bouncedir;
+	vec3_t		tracefrom;
 	trace_t		trace;
 	gentity_t	*tent;
 	gentity_t	*traceEnt;
@@ -557,6 +558,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 		damage = 800;
 
 	VectorMA (muzzle, 8192, forward, end);
+	VectorCopy (muzzle, tracefrom);
 
 //unlagged - backward reconciliation #2
 	// backward-reconcile the other clients
@@ -570,7 +572,12 @@ void weapon_railgun_fire (gentity_t *ent) {
 	do {
 		trap_Trace (&trace, tracefrom, NULL, NULL, end, ent->s.number, MASK_SHOT );
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
-			break;
+			if ( !g_railThroughWalls.integer || trace.surfaceFlags & SURF_SKY || trace.fraction == 1.0 ) {
+				break;
+			} else {
+				VectorMA (trace.endpos, 1, forward, tracefrom);
+				continue;
+			}
 		}
 		traceEnt = &g_entities[ trace.entityNum ];
 		if ( traceEnt->takedamage ) {
