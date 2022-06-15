@@ -285,6 +285,7 @@ void G_PushGrenade( gentity_t *ent, trace_t *trace, gentity_t *jumppad ) {
 	VectorCopy(ent->r.currentOrigin, ent->s.pos.trBase);
 	VectorCopy(jumppad->s.origin2, ent->s.pos.trDelta);
 	ent->s.pos.trTime = level.time;
+	G_AddEvent( ent, EV_JUMP_PAD, 0 );
 }
 
 /*
@@ -605,8 +606,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 	// check if grenade hit jumppad
 	if ( other->s.eType == ET_PUSH_TRIGGER ) {
 	       if ( g_jumppadGrenades.integer && other->target && strcmp( ent->classname, "grenade" ) == 0 ) {
-		       G_PushGrenade( ent, trace, other );
-		       return;
+			G_PushGrenade( ent, trace, other );
+			return;
 	       }
 	       ent->target_ent = other;
 	       return;
