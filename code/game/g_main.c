@@ -211,6 +211,7 @@ vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
 vmCvar_t        g_railThroughWalls;
 vmCvar_t        g_teleportMissiles; // from ratmod
+vmCvar_t        g_jumppadGrenades; // from ratmod
 
 //ratmod delagMissile
 vmCvar_t        g_delagMissileMaxLatency;
@@ -440,6 +441,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_teleportMissiles, "g_teleportMissiles", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_jumppadGrenades, "g_jumppadGrenades", "0", CVAR_ARCHIVE, 0, qtrue },
 
 	//ratmod delagMissile
         { &g_delagMissiles, "g_delagMissiles", "1", CVAR_ARCHIVE, 0, qfalse },

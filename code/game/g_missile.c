@@ -278,6 +278,17 @@ void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 
 /*
 ================
+G_PushGrenade
+================
+*/
+void G_PushGrenade( gentity_t *ent, trace_t *trace, gentity_t *jumppad ) {
+	VectorCopy(ent->r.currentOrigin, ent->s.pos.trBase);
+	VectorCopy(jumppad->s.origin2, ent->s.pos.trDelta);
+	ent->s.pos.trTime = level.time;
+}
+
+/*
+================
 G_BounceMissile
 
 ================
@@ -291,7 +302,7 @@ void G_BounceMissile( gentity_t *ent, trace_t *trace ) {
 	hitTime = level.previousTime + ( level.time - level.previousTime ) * trace->fraction;
 	BG_EvaluateTrajectoryDelta( &ent->s.pos, hitTime, velocity );
 	dot = DotProduct( velocity, trace->plane.normal );
-	VectorMA( velocity, -2*dot, trace->plane.normal, ent->s.pos.trDelta );
+	VectorMA( velocity, -2 * dot, trace->plane.normal, ent->s.pos.trDelta );
 
 	if ( ent->s.eFlags & EF_BOUNCE_HALF ) {
 		VectorScale( ent->s.pos.trDelta, 0.65, ent->s.pos.trDelta );
@@ -307,7 +318,6 @@ void G_BounceMissile( gentity_t *ent, trace_t *trace ) {
 	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
 	ent->s.pos.trTime = level.time;
 }
-
 
 /*
 ================
@@ -590,6 +600,16 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 			G_TeleportMissile( ent, trace, other );
 		}
 		return;
+	}
+
+	// check if grenade hit jumppad
+	if ( other->s.eType == ET_PUSH_TRIGGER ) {
+	       if ( g_jumppadGrenades.integer && other->target && strcmp( ent->classname, "grenade" ) == 0 ) {
+		       G_PushGrenade( ent, trace, other );
+		       return;
+	       }
+	       ent->target_ent = other;
+	       return;
 	}
 
 	if ( other->r.contents == CONTENTS_TRIGGER ) {
@@ -934,7 +954,7 @@ gentity_t *fire_grenade (gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->methodOfDeath = MOD_GRENADE;
 	bolt->splashMethodOfDeath = MOD_GRENADE_SPLASH;
 	bolt->clipmask = MASK_SHOT;
-	if ( g_teleportMissiles.integer ) {
+	if ( g_teleportMissiles.integer || g_jumppadGrenades.integer ) {
 		bolt->clipmask |= CONTENTS_TRIGGER;
 	}
 	bolt->target_ent = NULL;
