@@ -946,18 +946,32 @@ void CG_NewClientInfo( int clientNum ) {
 
 	// model
 	v = Info_ValueForKey( configstring, "model" );
+
+	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 ) {
+		if (local_team != newInfo.team)
+			enemy = 1;
+		else
+			enemy = 0;
+	} else {
+		if (cg.clientNum == clientNum) {
+			enemy = 0;
+		} else {
+			enemy = 1;
+		}
+	}
+
 	if ((enemy && cg_enemyModel.string[0]) || (!enemy && cg_teamModel.string[0])) {
 		if (enemy) {
-			Q_strncpyz( newInfo.headModelName, cg_enemyModel.string, sizeof( newInfo.headModelName ) );
+			Q_strncpyz( newInfo.modelName, cg_enemyModel.string, sizeof( newInfo.modelName ) );
 		} else {
-			Q_strncpyz( newInfo.headModelName, cg_teamModel.string, sizeof( newInfo.headModelName ) );
+			Q_strncpyz( newInfo.modelName, cg_teamModel.string, sizeof( newInfo.modelName ) );
 		}
 
-		slash = strchr( newInfo.headModelName, '/' );
+		slash = strchr( newInfo.modelName, '/' );
 		if ( !slash ) {
-			Q_strncpyz( newInfo.headSkinName, "default", sizeof( newInfo.headSkinName ) );
+			Q_strncpyz( newInfo.skinName, "default", sizeof( newInfo.skinName ) );
 		} else {
-			Q_strncpyz( newInfo.headSkinName, slash + 1, sizeof( newInfo.headSkinName ) );
+			Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
 			*slash = 0;
 		}
 	} else if (cg_forceModel.integer) {
@@ -1004,7 +1018,21 @@ void CG_NewClientInfo( int clientNum ) {
 
 	// head model
 	v = Info_ValueForKey( configstring, "hmodel" );
-	if ( cg_forceModel.integer ) {
+	if ((enemy && cg_enemyModel.string[0]) || (!enemy && cg_teamModel.string[0])) {
+		if (enemy) {
+			Q_strncpyz( newInfo.headModelName, cg_enemyModel.string, sizeof( newInfo.headModelName ) );
+		} else {
+			Q_strncpyz( newInfo.headModelName, cg_teamModel.string, sizeof( newInfo.headModelName ) );
+		}
+
+		slash = strchr( newInfo.headModelName, '/' );
+		if ( !slash ) {
+			Q_strncpyz( newInfo.headSkinName, "default", sizeof( newInfo.headSkinName ) );
+		} else {
+			Q_strncpyz( newInfo.headSkinName, slash + 1, sizeof( newInfo.headSkinName ) );
+			*slash = 0;
+		}
+	} else if ( cg_forceModel.integer ) {
 		// forcemodel makes everyone use a single model
 		// to prevent load hitches
 		char modelStr[MAX_QPATH];

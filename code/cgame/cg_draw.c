@@ -1381,21 +1381,6 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 //#endif
 }
 
-static float CG_DrawFollowMessage( float y ) {
-	char		*s;
-	int			w;	
-
-	if ( !(cg.snap->ps.pm_flags & PMF_FOLLOW) || ( ( cgs.elimflags & EF_NO_FREESPEC ) && (cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION ) ) ) {
-		return y;
-	}
-
-	s = va("USE_ITEM to stop following");
-	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-	CG_DrawSmallString( 635 - w, y + 2, s, 1.0F);
-
-	return y + SMALLCHAR_HEIGHT+4;
-}
-
 /*
 ==================
 CG_DrawAccuracy
@@ -1465,19 +1450,17 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 			y = CG_DrawEliminationDeathMessage( y);*/
 	}
 
-	y = CG_DrawFollowMessage( y );
-
 	if ( cg_drawTimer.integer) {
 		CG_DrawTimer( cg_timerX.integer, cg_timerY.integer, cg_timerWidth.integer, cg_timerHeight.integer );
-	}
-	if ( cg_drawAttacker.integer ) {
-		y = CG_DrawAttacker( y );
 	}
 	if ( cg_drawSpeed.integer ) {
 		y = CG_DrawSpeedMeter( y );
 	}
 	if ( cg_drawAccuracy.integer ) {
 		y = CG_DrawAccuracy( y );
+	}
+	if ( cg_drawAttacker.integer ) {
+		y = CG_DrawAttacker( y );
 	}
 
 }
@@ -3070,19 +3053,23 @@ static qboolean CG_DrawFollow( void ) {
 	if ( !(cg.snap->ps.pm_flags & PMF_FOLLOW) ) {
 		return qfalse;
 	}
+
+	if ( cg.scoreBoardShowing ) {
+		return qfalse;
+	}
 	color[0] = 1;
 	color[1] = 1;
 	color[2] = 1;
 	color[3] = 1;
 
 
-	CG_DrawBigString( 320 - 9 * 8, 24, "following", 1.0F );
-
 	name = cgs.clientinfo[ cg.snap->ps.clientNum ].name;
 
-	x = 0.5 * ( 640 - GIANT_WIDTH * CG_DrawStrlen( name ) );
+	x = 0.5 * ( 640 - SMALLCHAR_WIDTH * CG_DrawStrlen( name ) ) - SMALLCHAR_WIDTH * 3;
 
-	CG_DrawStringExt( x, 40, name, color, qtrue, qtrue, GIANT_WIDTH, GIANT_HEIGHT, 0 );
+	CG_DrawStringExt( x, 40, name, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+
+	CG_DrawSmallString( x + SMALLCHAR_WIDTH * CG_DrawStrlen( name ), 40, "'s view", 1.0F );
 
 	return qtrue;
 }
