@@ -440,8 +440,8 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_railgunDamage, "g_railgunDamage", "100", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_teleportMissiles, "g_teleportMissiles", "0", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_jumppadGrenades, "g_jumppadGrenades", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
 
 	//ratmod delagMissile
         { &g_delagMissiles, "g_delagMissiles", "1", CVAR_ARCHIVE, 0, qfalse },
