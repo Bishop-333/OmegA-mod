@@ -1402,27 +1402,27 @@ int ArenaServers_SetType( int type )
 ArenaServers_AddToFavorites
 =================
 */
-static void ArenaServers_AddToFavorites(void)
+static void ArenaServers_AddToFavorites( void )
 {
    servernode_t* servernodeptr;
    int i;
 
-   if (g_numfavoriteservers == MAX_FAVORITESERVERS)
+   if ( g_numfavoriteservers == MAX_FAVORITESERVERS )
       return;
 
    if (!g_arenaservers.list.numitems)
       return;
 
-   servernodeptr=g_arenaservers.table[g_arenaservers.list.curvalue].servernode;
-   for (i=0; i < g_numfavoriteservers; i++)
-   if (!Q_stricmp(g_arenaservers.favoriteaddresses[i],servernodeptr->adrstr))
+   servernodeptr = g_arenaservers.table[g_arenaservers.list.curvalue].servernode;
+   for ( i = 0; i < g_numfavoriteservers; i++ )
+   if ( !Q_stricmp( g_arenaservers.favoriteaddresses[i],servernodeptr->adrstr ) )
       return;
 
-   strcpy(g_arenaservers.favoriteaddresses[g_numfavoriteservers],
-      servernodeptr->adrstr);
+   strcpy( g_arenaservers.favoriteaddresses[g_numfavoriteservers],
+      servernodeptr->adrstr );
 
    memcpy( &g_favoriteserverlist[g_numfavoriteservers],
-      servernodeptr,sizeof(servernode_t));
+      servernodeptr,sizeof(servernode_t) );
 
    g_numfavoriteservers++;
    g_arenaservers.numfavoriteaddresses = g_numfavoriteservers;
@@ -1840,7 +1840,7 @@ static void ArenaServers_MenuInit( void ) {
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.up );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.down );
 
-	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.save);
+	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.save );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.remove );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.back );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.specify );

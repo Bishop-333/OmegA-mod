@@ -1218,11 +1218,11 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		damage *= 0.5;
 	}
 
-	if (mod == MOD_RAILJUMP) {
-		if (attacker->client) {
+	if ( mod == MOD_RAILJUMP ) {
+		if ( attacker->client ) {
 			return;
 		}
-		if (targ == attacker) {
+		if ( targ == attacker ) {
 			return;
 		}
 	}
@@ -1325,12 +1325,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 
 		// check if the target is crouched because it doesn't make the same height
 		if (targ->client->ps.pm_flags & PMF_DUCKED) {
-			height = (abs(targ->r.mins[2]) + targ_maxs2) * (0.75);
+			height = ( abs( targ->r.mins[2] ) + targ_maxs2 ) * 0.75;
 		}
 		else
-			height = abs(targ->r.mins[2]) + targ_maxs2;  
+			height = abs( targ->r.mins[2] ) + targ_maxs2;  
 
-		z_rel = point[2] - targ->r.currentOrigin[2] + abs(targ->r.mins[2]);
+		z_rel = point[2] - targ->r.currentOrigin[2] + abs( targ->r.mins[2] );
 		z_ratio = z_rel / height;
 
 		if ( g_headShotOnly.integer ) {

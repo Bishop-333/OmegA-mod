@@ -190,8 +190,8 @@ void SnapVectorTowards( vec3_t v, vec3_t to ) {
 
 #define CHAINGUN_SPREAD		600.0
 #define MACHINEGUN_SPREAD	200
-#define	MACHINEGUN_DAMAGE	(g_machinegunDamage.integer)
-#define	MACHINEGUN_TEAM_DAMAGE	(g_machinegunTeamDamage.integer)
+#define	MACHINEGUN_DAMAGE	( g_machinegunDamage.integer )
+#define	MACHINEGUN_TEAM_DAMAGE	( g_machinegunTeamDamage.integer )
 
 void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 	trace_t		tr;

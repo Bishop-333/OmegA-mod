@@ -888,7 +888,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		weaponInfo->firingSound = trap_S_RegisterSound( "sound/weapons/lightning/lg_hum.wav", qfalse );
 
 		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/lightning/lg_fire.wav", qfalse );
-		if (cg_thinLightningBolt.integer) {
+		if ( cg_thinLightningBolt.integer ) {
 			cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltThin");
 		} else {
 			cgs.media.lightningShader = trap_R_RegisterShader( "lightningBoltNew");
@@ -1033,18 +1033,18 @@ void CG_RegisterWeapon( int weaponNum ) {
 CG_GetFlagModel
 ==========================
 */
-const char *CG_GetFlagModel(gitem_t *item) {
-	if (item->giType == IT_TEAM && item->giTag == PW_REDFLAG && cg_omegaFlags.integer) {
+const char *CG_GetFlagModel( gitem_t *item ) {
+	if ( item->giType == IT_TEAM && item->giTag == PW_REDFLAG && cg_omegaFlags.integer ) {
 		const char *omgRedFlag = "models/flags_omega/r_flag.md3";
-		qhandle_t model = trap_R_RegisterModel(omgRedFlag);
-		if (model != 0) {
+		qhandle_t model = trap_R_RegisterModel( omgRedFlag );
+		if ( model != 0 ) {
 			return omgRedFlag;
 		}
 	}
-	if (item->giType == IT_TEAM && item->giTag == PW_BLUEFLAG && cg_omegaFlags.integer) {
+	if ( item->giType == IT_TEAM && item->giTag == PW_BLUEFLAG && cg_omegaFlags.integer ) {
 		const char *omgBlueFlag = "models/flags_omega/b_flag.md3";
-		qhandle_t model = trap_R_RegisterModel(omgBlueFlag);
-		if (model != 0) {
+		qhandle_t model = trap_R_RegisterModel( omgBlueFlag );
+		if ( model != 0 ) {
 			return omgBlueFlag;
 		}
 	}
@@ -1079,7 +1079,7 @@ void CG_RegisterItemVisuals( int itemNum ) {
 	itemInfo->registered = qtrue;
 
 	worldmodel = item->world_model[0];
-	if (item->giType == IT_TEAM && (item->giTag == PW_REDFLAG || item->giTag == PW_BLUEFLAG)) {
+	if ( item->giType == IT_TEAM && ( item->giTag == PW_REDFLAG || item->giTag == PW_BLUEFLAG ) ) {
 		worldmodel = CG_GetFlagModel(item);
 	}
 
@@ -1154,7 +1154,7 @@ static void CG_CalculateWeaponPosition( vec3_t origin, vec3_t angles ) {
 	VectorCopy( cg.refdef.vieworg, origin );
 	VectorCopy( cg.refdefViewAngles, angles );
 
-	if (!cg_bobgun.integer) {
+	if ( !cg_bobgun.integer ) {
 		return;
 	}
 
@@ -1463,7 +1463,7 @@ static void CG_AddWeaponWithPowerups( refEntity_t *gun, int powerups, playerStat
 		trap_R_AddRefEntityToScene( gun );
             }
 	}
-	if (ps && cg_transparentGun.integer) {
+	if ( ps && cg_transparentGun.integer ) {
 		gun->customShader = cgs.media.transparentWeaponShader;
 		trap_R_AddRefEntityToScene( gun );
 	} else {
@@ -1746,7 +1746,7 @@ WEAPON SELECTION
 */
 
 int CG_GetWeaponSelect( void ) {
-	return ((cg.snap->ps.pm_flags & PMF_FOLLOW) || cg.demoPlayback) ? 
+	return ( ( cg.snap->ps.pm_flags & PMF_FOLLOW ) || cg.demoPlayback ) ? 
 		cg.predictedPlayerState.weapon : cg.weaponSelect;
 }
 

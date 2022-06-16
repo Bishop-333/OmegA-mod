@@ -891,9 +891,9 @@ void CG_NewClientInfo( int clientNum ) {
 		return;		// player just left
 	}
 
-	local_config = CG_ConfigString(cg.clientNum + CS_PLAYERS);
-	v = Info_ValueForKey(local_config, "t");
-	local_team = atoi(v);
+	local_config = CG_ConfigString( cg.clientNum + CS_PLAYERS );
+	v = Info_ValueForKey( local_config, "t" );
+	local_team = atoi( v );
 
 	// build into a temp buffer so the defer checks can use
 	// the old value
@@ -948,20 +948,20 @@ void CG_NewClientInfo( int clientNum ) {
 	v = Info_ValueForKey( configstring, "model" );
 
 	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 ) {
-		if (local_team != newInfo.team)
+		if ( local_team != newInfo.team )
 			enemy = 1;
 		else
 			enemy = 0;
 	} else {
-		if (cg.clientNum == clientNum) {
+		if ( cg.clientNum == clientNum ) {
 			enemy = 0;
 		} else {
 			enemy = 1;
 		}
 	}
 
-	if ((enemy && cg_enemyModel.string[0]) || (!enemy && cg_teamModel.string[0])) {
-		if (enemy) {
+	if ( ( enemy && cg_enemyModel.string[0] ) || ( !enemy && cg_teamModel.string[0] ) ) {
+		if ( enemy ) {
 			Q_strncpyz( newInfo.modelName, cg_enemyModel.string, sizeof( newInfo.modelName ) );
 		} else {
 			Q_strncpyz( newInfo.modelName, cg_teamModel.string, sizeof( newInfo.modelName ) );
@@ -974,7 +974,7 @@ void CG_NewClientInfo( int clientNum ) {
 			Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
 			*slash = 0;
 		}
-	} else if (cg_forceModel.integer) {
+	} else if ( cg_forceModel.integer ) {
 		// forcemodel makes everyone use a single model
 		// to prevent load hitches
 		char modelStr[MAX_QPATH];
@@ -1018,8 +1018,8 @@ void CG_NewClientInfo( int clientNum ) {
 
 	// head model
 	v = Info_ValueForKey( configstring, "hmodel" );
-	if ((enemy && cg_enemyModel.string[0]) || (!enemy && cg_teamModel.string[0])) {
-		if (enemy) {
+	if ( ( enemy && cg_enemyModel.string[0] ) || ( !enemy && cg_teamModel.string[0] ) ) {
+		if ( enemy ) {
 			Q_strncpyz( newInfo.headModelName, cg_enemyModel.string, sizeof( newInfo.headModelName ) );
 		} else {
 			Q_strncpyz( newInfo.headModelName, cg_teamModel.string, sizeof( newInfo.headModelName ) );
@@ -2017,7 +2017,7 @@ static void CG_PlayerSprites( centity_t *cent ) {
 		cg.snap->ps.persistant[PERS_TEAM] == team &&
 		cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
 		if (cg_drawFriend.integer) {
-			if (cg_drawFriendThroughWalls.integer) {
+			if ( cg_drawFriendThroughWalls.integer ) {
 				CG_PlayerFloatSprite( cent, cgs.media.friendThroughWallsShader );
 			} else {
 				CG_PlayerFloatSprite( cent, cgs.media.friendShader );
@@ -2046,7 +2046,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
-	if (((team == TEAM_FREE) || ((team == TEAM_RED) && (myteam == TEAM_BLUE))) || ((team == TEAM_BLUE) && (myteam == TEAM_RED))) {
+	if ( ( ( team == TEAM_FREE ) || ( ( team == TEAM_RED ) && ( myteam == TEAM_BLUE ) ) ) || ( ( team == TEAM_BLUE ) && ( myteam == TEAM_RED ) ) ) {
 		enemy = 1;
 	} else {
 		enemy = 0;
@@ -2064,7 +2064,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 	}
 
 	//no shadows when dead
-	if (cent->currentState.eFlags & EF_DEAD) {
+	if ( cent->currentState.eFlags & EF_DEAD ) {
 		return qfalse;
 	}
 
@@ -2093,55 +2093,55 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 
 	// add the mark as a temporary, so it goes directly to the renderer
 	// without taking a spot in the cg_marks array
-	if (cg_brightPlayers.integer) {
-		if (enemy) {
-			if (Q_stricmp(cg_enemyColor.string, "red") == 0) {
+	if ( cg_brightPlayers.integer ) {
+		if ( enemy ) {
+			if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowRedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_enemyColor.string, "yellow") == 0) {
+			} else if ( Q_stricmp( cg_enemyColor.string, "yellow" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowYellowMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_enemyColor.string, "green") == 0) {
+			} else if ( Q_stricmp( cg_enemyColor.string, "green" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowGreenMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_enemyColor.string, "cyan") == 0) {
+			} else if ( Q_stricmp( cg_enemyColor.string, "cyan" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowCyanMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_enemyColor.string, "blue") == 0) {
+			} else if ( Q_stricmp( cg_enemyColor.string, "blue" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowBlueMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_enemyColor.string, "pink") == 0) {
+			} else if ( Q_stricmp( cg_enemyColor.string, "pink" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowPinkMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_enemyColor.string, "white") == 0) {
+			} else if ( Q_stricmp( cg_enemyColor.string, "white" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (team == TEAM_RED) {
+			} else if ( team == TEAM_RED ) {
 				CG_ImpactMark( cgs.media.shadowRedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (team == TEAM_BLUE) {
+			} else if ( team == TEAM_BLUE ) {
 				CG_ImpactMark( cgs.media.shadowBlueMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
 			} else {
 				CG_ImpactMark( cgs.media.shadowGreenMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
 			}
-		} else if (!enemy) {
-			if (Q_stricmp(cg_teamColor.string, "red") == 0) {
+		} else if ( !enemy ) {
+			if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowRedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_teamColor.string, "yellow") == 0) {
+			} else if ( Q_stricmp( cg_teamColor.string, "yellow" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowYellowMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_teamColor.string, "green") == 0) {
+			} else if ( Q_stricmp( cg_teamColor.string, "green" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowGreenMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_teamColor.string, "cyan") == 0) {
+			} else if ( Q_stricmp( cg_teamColor.string, "cyan" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowCyanMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_teamColor.string, "blue") == 0) {
+			} else if ( Q_stricmp( cg_teamColor.string, "blue" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowBlueMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_teamColor.string, "pink") == 0) {
+			} else if ( Q_stricmp( cg_teamColor.string, "pink" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowPinkMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (Q_stricmp(cg_teamColor.string, "white") == 0) {
+			} else if ( Q_stricmp( cg_teamColor.string, "white" ) == 0 ) {
 				CG_ImpactMark( cgs.media.shadowMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (team == TEAM_RED) {
+			} else if ( team == TEAM_RED ) {
 				CG_ImpactMark( cgs.media.shadowRedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-			} else if (team == TEAM_BLUE) {
+			} else if ( team == TEAM_BLUE ) {
 				CG_ImpactMark( cgs.media.shadowBlueMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
 			} else {
 				CG_ImpactMark( cgs.media.shadowGreenMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
 			}
 		}
-	} else if (team == TEAM_RED) {
+	} else if ( team == TEAM_RED ) {
 		CG_ImpactMark( cgs.media.shadowRedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
-	} else if (team == TEAM_BLUE) {
+	} else if ( team == TEAM_BLUE ) {
 		CG_ImpactMark( cgs.media.shadowBlueMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
 	} else {
 		CG_ImpactMark( cgs.media.shadowMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha,alpha,alpha,1, qfalse, 24, qtrue );
@@ -2254,7 +2254,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
-	if (((team == TEAM_FREE) || ((team == TEAM_RED) && (myteam == TEAM_BLUE))) || ((team == TEAM_BLUE) && (myteam == TEAM_RED))) {
+	if ( ( ( team == TEAM_FREE ) || ( ( team == TEAM_RED ) && ( myteam == TEAM_BLUE ) ) ) || ( ( team == TEAM_BLUE ) && ( myteam == TEAM_RED ) ) ) {
 		enemy = 1;
 	} else {
 		enemy = 0;
@@ -2277,75 +2277,75 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		else {*/
 			trap_R_AddRefEntityToScene( ent );
 		//}
-		if (!isMissile && cg_brightPlayers.integer && !(state->eFlags & EF_DEAD)) {
-			if (enemy) {
-				if (Q_stricmp(cg_enemyColor.string, "red") == 0) {
+		if (!isMissile && cg_brightPlayers.integer && !(state->eFlags & EF_DEAD)  ) {
+			if ( enemy ) {
+				if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
 					ent->customShader = cgs.media.brightRedPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_enemyColor.string, "yellow") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "yellow" ) == 0 ) {
 					ent->customShader = cgs.media.brightYellowPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_enemyColor.string, "green") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "green" ) == 0 ) {
 					ent->customShader = cgs.media.brightGreenPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_enemyColor.string, "cyan") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "cyan" ) == 0 ) {
 					ent->customShader = cgs.media.brightCyanPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_enemyColor.string, "blue") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "blue" ) == 0 ) {
 					ent->customShader = cgs.media.brightBluePlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_enemyColor.string, "pink") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "pink" ) == 0 ) {
 					ent->customShader = cgs.media.brightPinkPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_enemyColor.string, "white") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "white" ) == 0 ) {
 					ent->customShader = cgs.media.brightWhitePlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (team == TEAM_RED) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( team == TEAM_RED ) {
 					ent->customShader = cgs.media.brightRedPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (team == TEAM_BLUE) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( team == TEAM_BLUE ) {
 					ent->customShader = cgs.media.brightBluePlayers;
-					trap_R_AddRefEntityToScene(ent);
+					trap_R_AddRefEntityToScene( ent );
 				} else {
 					ent->customShader = cgs.media.brightGreenPlayers;
-					trap_R_AddRefEntityToScene(ent);
+					trap_R_AddRefEntityToScene( ent );
 				}
-			} else if (!enemy) {
-				if (Q_stricmp(cg_teamColor.string, "red") == 0) {
+			} else if ( !enemy ) {
+				if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
 					ent->customShader = cgs.media.brightRedPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_teamColor.string, "yellow") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "yellow" ) == 0 ) {
 					ent->customShader = cgs.media.brightYellowPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_teamColor.string, "green") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "green" ) == 0 ) {
 					ent->customShader = cgs.media.brightGreenPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_teamColor.string, "cyan") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "cyan" ) == 0 ) {
 					ent->customShader = cgs.media.brightCyanPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_teamColor.string, "blue") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "blue" ) == 0 ) {
 					ent->customShader = cgs.media.brightBluePlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_teamColor.string, "pink") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "pink" ) == 0 ) {
 					ent->customShader = cgs.media.brightPinkPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (Q_stricmp(cg_teamColor.string, "white") == 0) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "white" ) == 0 ) {
 					ent->customShader = cgs.media.brightWhitePlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (team == TEAM_RED) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( team == TEAM_RED ) {
 					ent->customShader = cgs.media.brightRedPlayers;
-					trap_R_AddRefEntityToScene(ent);
-				} else if (team == TEAM_BLUE) {
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( team == TEAM_BLUE ) {
 					ent->customShader = cgs.media.brightBluePlayers;
-					trap_R_AddRefEntityToScene(ent);
+					trap_R_AddRefEntityToScene( ent );
 				} else {
 					ent->customShader = cgs.media.brightGreenPlayers;
-					trap_R_AddRefEntityToScene(ent);
+					trap_R_AddRefEntityToScene( ent );
 				}
 			}
-		} else if (!isMissile && cg_brightPlayers.integer && (state->eFlags & EF_DEAD)) {
+		} else if (!isMissile && cg_brightPlayers.integer && (state->eFlags & EF_DEAD)  ) {
 				ent->customShader = cgs.media.brightGreyPlayers;
-				trap_R_AddRefEntityToScene(ent);
+				trap_R_AddRefEntityToScene( ent );
 		}
 
                         if(!isMissile && (cgs.dmflags & DF_PLAYER_OVERLAY) && !(state->eFlags & EF_DEAD)  ) {

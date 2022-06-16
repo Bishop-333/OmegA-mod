@@ -81,7 +81,7 @@ int G_MissileLagTime( gclient_t *client ) {
 
 	if ( g_delagMissileCorrectFrameOffset.integer ) {
 		offset = level.time - ( level.previousTime + client->frameOffset );
-		if (offset < 0) {
+		if ( offset < 0 ) {
 			offset = 0;
 		}
 		if ( offset > 1000 / sv_fps.integer ) {
@@ -110,7 +110,7 @@ void G_MissileRunDelag( gentity_t *ent, int stepmsec ) {
 	// if we see the missile late due to lag & PRESTEP
 	// compute the flight since it was launched, 
 	// shifting clients back accordingly
-	if ( !G_InUse(ent)
+	if ( !G_InUse( ent )
 			|| ent->freeAfterEvent
 			|| ent->s.eType != ET_MISSILE
 			|| !ent->needsDelag ) {
@@ -120,8 +120,8 @@ void G_MissileRunDelag( gentity_t *ent, int stepmsec ) {
 	prevTimeSaved = level.previousTime;
 	lvlTimeSaved = level.time;
 	projectileDelagTime = level.previousTime - (DELAG_MAX_BACKTRACK / stepmsec) * stepmsec;
-	while (projectileDelagTime < prevTimeSaved) {
-		if ( !G_InUse(ent) || ent->freeAfterEvent ) {
+	while ( projectileDelagTime < prevTimeSaved ) {
+		if ( !G_InUse( ent ) || ent->freeAfterEvent ) {
 			// make sure we don't run missile again
 			// if it exploded already
 			break;
@@ -160,7 +160,7 @@ void G_ImmediateRunMissile( gentity_t *ent ) {
 		G_MissileRunDelag(ent, stepmsec);
 
 	}
-	if ( !G_InUse(ent) ) {
+	if ( !G_InUse( ent ) ) {
 		return;
 	}
 
@@ -199,9 +199,9 @@ void G_ImmediateRunClientMissiles ( gentity_t *client ) {
 	if ( g_delagMissileImmediateRun.integer <= 1 ) {
 		return;
 	}
-	for ( i=0 ; i < level.num_entities ; ++i ) {
+	for ( i = 0 ; i < level.num_entities ; ++i ) {
 		ent = &g_entities[i];
-		if ( !G_InUse(ent)
+		if ( !G_InUse( ent )
 				|| ent->freeAfterEvent
 				|| ent->s.eType != ET_MISSILE
 				|| ent->parent != client ) {
@@ -251,7 +251,7 @@ void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 	length_neg_norm = VectorLengthSquared(tmp);
 
 	vectoangles( portalInVec, portalInAngles );
-	if (length_norm > length_neg_norm) {
+	if ( length_norm > length_neg_norm ) {
 		VectorSubtract( dest->s.angles, portalInAngles, rotationAngles );
 	} else {
 		VectorSubtract( portalInAngles, dest->s.angles, rotationAngles );
@@ -282,8 +282,8 @@ G_PushGrenade
 ================
 */
 void G_PushGrenade( gentity_t *ent, trace_t *trace, gentity_t *jumppad ) {
-	VectorCopy(ent->r.currentOrigin, ent->s.pos.trBase);
-	VectorCopy(jumppad->s.origin2, ent->s.pos.trDelta);
+	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
+	VectorCopy( jumppad->s.origin2, ent->s.pos.trDelta );
 	ent->s.pos.trTime = level.time;
 	G_AddEvent( ent, EV_JUMP_PAD, 0 );
 }
@@ -820,7 +820,7 @@ void G_RunMissile( gentity_t *ent ) {
 			trap_UnlinkEntity( stuckIn );
 			unlinkedEntities[unlinked++] = stuckIn;
 
-		} while (unlinked < TELEMISSILE_MAX_TRIGGERS) ;
+		} while ( unlinked < TELEMISSILE_MAX_TRIGGERS ) ;
 		// link entities again
 		for ( i = 0 ; i < unlinked ; ++i ) {
 			trap_LinkEntity( unlinkedEntities[i] );
@@ -835,7 +835,7 @@ void G_RunMissile( gentity_t *ent ) {
 		trap_Trace( &tr, ent->r.currentOrigin, ent->r.mins, ent->r.maxs, ent->r.currentOrigin, passent, ent->clipmask );
 		tr.fraction = 0;
 	}
-	else if (!telepushed) {
+	else if ( !telepushed ) {
 		VectorCopy( tr.endpos, ent->r.currentOrigin );
 	}
 
@@ -868,23 +868,24 @@ void G_RunMissile( gentity_t *ent ) {
 	G_RunThink( ent );
 }
 
+//ratmod delagMissile
 /*
 =================
 G_ApplyMissileNudge
 =================
 */
-void G_ApplyMissileNudge (gentity_t *self, gentity_t *bolt) {
-	if (!self->client) {
+void G_ApplyMissileNudge( gentity_t *self, gentity_t *bolt ) {
+	if ( !self->client ) {
 		return;
 	}
 	bolt->s.pos.trTime -= G_MissileLagTime(self->client);
 	bolt->needsDelag = qtrue;
 	bolt->launchTime = bolt->s.pos.trTime;
 
-	if (G_IsElimGT() && level.time > level.roundStartTime - 1000*g_elimination_activewarmup.integer) {
-		if (bolt->launchTime < level.roundStartTime) {
+	if ( G_IsElimGT() && level.time > level.roundStartTime - 1000*g_elimination_activewarmup.integer ) {
+		if ( bolt->launchTime < level.roundStartTime ) {
 			int prestep = 0;
-			if (g_delagMissiles.integer) {
+			if ( g_delagMissiles.integer ) {
 				prestep = g_delagMissileBaseNudge.integer;
 			} else {
 				prestep = MISSILE_PRESTEP_TIME;
@@ -1039,7 +1040,7 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 G_GuidedMissile
 =================
 */
-void G_GuidedMissile (gentity_t *missile)
+void G_GuidedMissile( gentity_t *missile )
 {
 	vec3_t		forward, right, up; 
 	vec3_t		muzzle;
@@ -1052,7 +1053,7 @@ void G_GuidedMissile (gentity_t *missile)
 	}
 
 	// Stop if the player released his attack button
-	if ( ! (player->client->buttons & BUTTON_ATTACK) ) {
+	if ( ! ( player->client->buttons & BUTTON_ATTACK ) ) {
 		return;
 	}
 

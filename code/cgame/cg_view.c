@@ -456,8 +456,8 @@ void CG_ZoomIn( void ) {
 }
 
 void CG_ZoomDown_f( void ) { 
-	if (cg_zoomToggle.integer) {
-		if (cg.zoomed) {
+	if ( cg_zoomToggle.integer ) {
+		if ( cg.zoomed ) {
 			CG_ZoomOut();
 		} else {
 			CG_ZoomIn();
@@ -471,7 +471,7 @@ void CG_ZoomDown_f( void ) {
 }
 
 void CG_ZoomUp_f( void ) { 
-	if (cg_zoomToggle.integer) {
+	if ( cg_zoomToggle.integer ) {
 		return;
 	}
 	if ( !cg.zoomed ) {
@@ -539,14 +539,14 @@ static int CG_CalcFov( void ) {
 
 		if ( cg.zoomed ) {
 			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
-			if ( f > 1.0 || cg_zoomAnim.integer == 0) {
+			if ( f > 1.0 || !cg_zoomAnim.integer ) {
 				fov_x = zoomFov;
 			} else {
 				fov_x = fov_x + f * ( zoomFov - fov_x );
 			}
 		} else {
 			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
-			if ( f > 1.0 || cg_zoomAnim.integer == 0) {
+			if ( f > 1.0 || !cg_zoomAnim.integer ) {
 				fov_x = fov_x;
 			} else {
 				fov_x = zoomFov + f * ( fov_x - zoomFov );

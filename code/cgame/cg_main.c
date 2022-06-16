@@ -510,7 +510,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "0", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE},
 	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE},
-	{ &cg_timerX, "cg_timerX", "289", CVAR_ARCHIVE},
+	{ &cg_timerX, "cg_timerX", "320", CVAR_ARCHIVE},
 	{ &cg_timerY, "cg_timerY", "2", CVAR_ARCHIVE},
 	{ &cg_transparentGun, "cg_transparentGun", "0", CVAR_ARCHIVE},
 	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE},
@@ -555,8 +555,8 @@ void CG_RegisterCvars( void ) {
 CG_Initialize
 ===================
  */
-void CG_Initialize(void)  {
-	if (cg_omegaInitialized.integer == 0) {
+void CG_Initialize( void )  {
+	if ( !cg_omegaInitialized.integer ) {
 		CG_SetDefaultsCvars();
 		trap_Cvar_Set( "cg_omegaInitialized", "1" );
 	}
@@ -658,11 +658,11 @@ void CG_UpdateCvars( void ) {
 		forceModelModificationCount = cg_forceModel.modificationCount;
 		CG_ForceModelChange();
 	}
-	if (enemyModelModificationCount != cg_enemyModel.modificationCount) {
+	if ( enemyModelModificationCount != cg_enemyModel.modificationCount ) {
 		enemyModelModificationCount = cg_enemyModel.modificationCount;
 		CG_ForceModelChange();
 	}
-	if (teamModelModificationCount != cg_teamModel.modificationCount) {
+	if ( teamModelModificationCount != cg_teamModel.modificationCount ) {
 		teamModelModificationCount = cg_teamModel.modificationCount;
 		CG_ForceModelChange();
 	}
@@ -1154,7 +1154,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.invisShader = trap_R_RegisterShader("powerups/invisibility" );
 	cgs.media.regenShader = trap_R_RegisterShader("powerups/regen" );
 	cgs.media.hastePuffShader = trap_R_RegisterShader("hasteSmokePuff" );
-	cgs.media.transparentWeaponShader = trap_R_RegisterShader("transparentWeapon");
+	cgs.media.transparentWeaponShader = trap_R_RegisterShader("transparentWeapon" );
 
 	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION|| cgs.gametype == GT_1FCTF || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
 		cgs.media.redCubeModel = trap_R_RegisterModel( "models/powerups/orb/r_orb.md3" );
@@ -1194,12 +1194,12 @@ static void CG_RegisterGraphics( void ) {
 	}
 
 	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_1FCTF || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
-		if (cg_omegaFlags.integer) {
-			cgs.media.redFlagModel = trap_R_RegisterModel("models/flags_omega/r_flag.md3");
-			cgs.media.blueFlagModel = trap_R_RegisterModel("models/flags_omega/b_flag.md3");
+		if ( cg_omegaFlags.integer ) {
+			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags_omega/r_flag.md3" );
+			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags_omega/b_flag.md3" );
 		} else {
-			cgs.media.redFlagModel = trap_R_RegisterModel("models/flags/r_flag.md3");
-			cgs.media.blueFlagModel = trap_R_RegisterModel("models/flags/b_flag.md3");
+			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags/r_flag.md3" );
+			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags/b_flag.md3" );
 		}
                 cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
 		cgs.media.redFlagShader[0] = trap_R_RegisterShaderNoMip( "icons/iconf_red1" );
@@ -1257,9 +1257,9 @@ static void CG_RegisterGraphics( void ) {
 	}
 	cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
 
-	cgs.media.healthCrossModel = trap_R_RegisterModel("models/powerups/health/small_cross.md3");
-	cgs.media.healthSphereModel = trap_R_RegisterModel("models/powerups/health/small_sphere.md3");
-	cgs.media.healthIcon = trap_R_RegisterShaderNoMip("icons/iconh_yellow");
+	cgs.media.healthCrossModel = trap_R_RegisterModel( "models/powerups/health/small_cross.md3" );
+	cgs.media.healthSphereModel = trap_R_RegisterModel( "models/powerups/health/small_sphere.md3" );
+	cgs.media.healthIcon = trap_R_RegisterShaderNoMip( "icons/iconh_green" );
 
 	cgs.media.armorModel = trap_R_RegisterModel( "models/powerups/armor/armor_yel.md3" );
 	cgs.media.armorIcon  = trap_R_RegisterShaderNoMip( "icons/iconr_yellow" );
