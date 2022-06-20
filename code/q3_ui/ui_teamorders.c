@@ -490,7 +490,6 @@ static void UI_TeamOrdersMenu_Init( void ) {
 	teamOrdersMenuInfo.back.height				= 64;
 	teamOrdersMenuInfo.back.focuspic			= ART_BACK1;
 
-	Menu_AddItem( &teamOrdersMenuInfo.menu, &teamOrdersMenuInfo.banner );
 	Menu_AddItem( &teamOrdersMenuInfo.menu, &teamOrdersMenuInfo.frame );
 	Menu_AddItem( &teamOrdersMenuInfo.menu, &teamOrdersMenuInfo.list );
 	Menu_AddItem( &teamOrdersMenuInfo.menu, &teamOrdersMenuInfo.back );

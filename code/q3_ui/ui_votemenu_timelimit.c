@@ -185,7 +185,6 @@ UI_VoteMenu_Timelimit_Draw
 =================
 */
 static void UI_VoteMenu_Timelimit_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE - TIMELIMIT", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -268,7 +267,6 @@ void UI_VoteTimelimitMenu( void ) {
         s_votemenu_Timelmit.max = atoi(Info_ValueForKey(serverinfo,"g_voteMaxTimelimit"));
         UI_VoteTimelimitMenuInternal();
 
-	Menu_AddItem( &s_votemenu_Timelmit.menu, (void*) &s_votemenu_Timelmit.banner );
 	Menu_AddItem( &s_votemenu_Timelmit.menu, (void*) &s_votemenu_Timelmit.back );
         Menu_AddItem( &s_votemenu_Timelmit.menu, (void*) &s_votemenu_Timelmit.go );
         Menu_AddItem( &s_votemenu_Timelmit.menu, (void*) &s_votemenu_Timelmit.bLimit10 );

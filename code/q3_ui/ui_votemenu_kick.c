@@ -170,7 +170,6 @@ UI_VoteKickMenu_Draw
 =================
 */
 static void UI_VoteKickMenu_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE KICK", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -318,7 +317,6 @@ void UI_VoteKickMenu( void ) {
 
     UI_VoteKickMenuInternal();
 
-    Menu_AddItem( &s_votemenu_kick.menu, (void*) &s_votemenu_kick.banner );
     Menu_AddItem( &s_votemenu_kick.menu, (void*) &s_votemenu_kick.back );
     Menu_AddItem( &s_votemenu_kick.menu, (void*) &s_votemenu_kick.go );
     Menu_AddItem( &s_votemenu_kick.menu, (void*) &s_votemenu_kick.arrows );

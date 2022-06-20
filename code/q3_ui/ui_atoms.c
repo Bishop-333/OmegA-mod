@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 **********************************************************************/
 #include "ui_local.h"
 
+#define ART_SELECTED		"menu/art_blueish/selected.tga"
+
 uiStatic_t		uis;
 qboolean		m_entersound;		// after a frame, so caching won't disrupt the sound
 
@@ -559,9 +561,14 @@ void UI_DrawProportionalString( int x, int y, const char* str, int style, vec4_t
 		drawcolor[2] = color[2];
 		drawcolor[3] = 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR );
 		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetPropGlow );
-		return;
-	}
 
+		if (style & UI_CENTER ) {
+			UI_DrawNamedPic( x - width / 2, y - sizeScale, width * 2, (float)PROP_HEIGHT * 1.25 * sizeScale, ART_SELECTED );
+		}
+
+		return;	
+	}
+	
 	UI_DrawProportionalString2( x, y, str, color, sizeScale, uis.charsetProp );
 }
 

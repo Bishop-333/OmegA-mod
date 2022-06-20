@@ -1089,7 +1089,7 @@ void CG_AddPacketEntities( void ) {
 		// we have data for them and they don't need to interpolate
 		for ( num = 0 ; num < cg.nextSnap->numEntities ; num++ ) {
 			cent = &cg_entities[ cg.nextSnap->entities[ num ].number ];
-			if ( cent->nextState.eType == ET_MISSILE || cent->nextState.eType == ET_GENERAL ) {
+			if ( cent->nextState.eType == ET_MISSILE || cent->nextState.eType == ET_GENERAL || cent->nextState.eType == ET_ITEM ) {
 				// transition it immediately and add it
 				CG_TransitionEntity( cent );
 				cent->interpolate = qtrue;
@@ -1103,7 +1103,8 @@ void CG_AddPacketEntities( void ) {
 	for ( num = 0 ; num < cg.snap->numEntities ; num++ ) {
 		cent = &cg_entities[ cg.snap->entities[ num ].number ];
 //unlagged - early transitioning
-		if ( !cg.nextSnap || (cent->nextState.eType != ET_MISSILE && cent->nextState.eType != ET_GENERAL) ) {
+		if ( !cg.nextSnap || 
+				(cent->nextState.eType != ET_MISSILE && cent->nextState.eType != ET_GENERAL && cent->nextState.eType != ET_ITEM ) ) {
 //unlagged - early transitioning
 			CG_AddCEntity( cent );
 		} //Also unlagged

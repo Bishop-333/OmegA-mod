@@ -142,7 +142,6 @@ UI_VoteMenu_Custom_Draw
 =================
 */
 static void UI_VoteMenu_Custom_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE CUSTOM", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -222,7 +221,6 @@ void UI_VoteCustomMenu( void ) {
         
         UI_VoteCustomMenuInternal();
 
-	Menu_AddItem( &s_votemenu_custom.menu, (void*) &s_votemenu_custom.banner );
 	Menu_AddItem( &s_votemenu_custom.menu, (void*) &s_votemenu_custom.back );
         Menu_AddItem( &s_votemenu_custom.menu, (void*) &s_votemenu_custom.go );
         for(i=0;i<CUSTOM_MENU_MAX_ENTRIES;i++)

@@ -3168,7 +3168,7 @@ static void CG_DrawWarmup( void ) {
 	if ( sec < 0 ) {
 		s = "Waiting for players";		
 		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
-		CG_DrawBigString(320 - w / 2, 24, s, 1.0F);
+		CG_DrawBigString(320 - w / 2, 36, s, 1.0F);
 		cg.warmupCount = 0;
 		return;
 	}

@@ -219,7 +219,6 @@ UI_VoteMenu_Draw
 =================
 */
 static void UI_VoteMenu_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -450,7 +449,6 @@ void UI_VoteMenuMenu( void ) {
         s_votemenu.g_doWarmupEnabled = atoi(Info_ValueForKey(serverinfo,"g_doWarmup"));
         UI_VoteMenuMenuInternal();
 
-	Menu_AddItem( &s_votemenu.menu, (void*) &s_votemenu.banner );
 	Menu_AddItem( &s_votemenu.menu, (void*) &s_votemenu.back );
         Menu_AddItem( &s_votemenu.menu, (void*) &s_votemenu.go );
 	Menu_AddItem( &s_votemenu.menu, (void*) &s_votemenu.bNextmap );

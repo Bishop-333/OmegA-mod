@@ -139,7 +139,6 @@ UI_VoteMapMenu_Draw
 =================
 */
 static void UI_VoteMapMenu_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE MAP", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -287,7 +286,6 @@ void UI_VoteMapMenu( void ) {
     trap_Cmd_ExecuteText( EXEC_APPEND,"getmappage 0" );
     trap_Cvar_Set( "cl_paused", "0" ); //We cannot send server commands while paused!
 
-    Menu_AddItem( &s_votemenu_map.menu, (void*) &s_votemenu_map.banner );
     Menu_AddItem( &s_votemenu_map.menu, (void*) &s_votemenu_map.info );
     Menu_AddItem( &s_votemenu_map.menu, (void*) &s_votemenu_map.back );
     Menu_AddItem( &s_votemenu_map.menu, (void*) &s_votemenu_map.go );

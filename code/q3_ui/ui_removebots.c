@@ -315,7 +315,6 @@ static void UI_RemoveBotsMenu_Init( void ) {
 	removeBotsMenuInfo.back.focuspic			= ART_BACK1;
 
 	Menu_AddItem( &removeBotsMenuInfo.menu, &removeBotsMenuInfo.background );
-	Menu_AddItem( &removeBotsMenuInfo.menu, &removeBotsMenuInfo.banner );
 	Menu_AddItem( &removeBotsMenuInfo.menu, &removeBotsMenuInfo.arrows );
 	Menu_AddItem( &removeBotsMenuInfo.menu, &removeBotsMenuInfo.up );
 	Menu_AddItem( &removeBotsMenuInfo.menu, &removeBotsMenuInfo.down );

@@ -1523,9 +1523,9 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	// announce it
 	//ratmod delagMissile
 	if ( g_delagMissiles.integer && g_delagMissileMaxLatency.integer > 0 ) {
-		trap_SendServerCommand( clientNum, "print \"Full lag compensation is ON, Missile delag is %s and up to %ims!\n\"" );
+		trap_SendServerCommand( clientNum, va( "print \"Hitscan de-lag is %s, projectile de-lag is ON up to %ims!\n\"", g_delagHitscan.integer ? "ON" : "OFF", g_delagMissileMaxLatency.integer ) );
 	} else {
-		trap_SendServerCommand( clientNum, "print \"Full lag compensation and Missile delag are OFF!\n\"" );
+		trap_SendServerCommand( clientNum, va( "print \"Hitscan de-lag is %s, projectile de-lag is OFF!\n\"", g_delagHitscan.integer ? "ON" : "OFF" ) );
 	}
 
 //unlagged - backward reconciliation #5

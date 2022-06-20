@@ -240,7 +240,6 @@ UI_VoteMenu_Gametype_Draw
 =================
 */
 static void UI_VoteMenu_Gametype_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE GAMETYPE", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -360,7 +359,6 @@ void UI_VoteGametypeMenu( void ) {
 
         UI_VoteGametypeMenuInternal();
 
-	Menu_AddItem( &s_votemenu_Gametype.menu, (void*) &s_votemenu_Gametype.banner );
 	Menu_AddItem( &s_votemenu_Gametype.menu, (void*) &s_votemenu_Gametype.back );
         Menu_AddItem( &s_votemenu_Gametype.menu, (void*) &s_votemenu_Gametype.go );
         Menu_AddItem( &s_votemenu_Gametype.menu, (void*) &s_votemenu_Gametype.bFFA );

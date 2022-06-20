@@ -186,7 +186,6 @@ UI_VoteMenu_Fraglimit_Draw
 =================
 */
 static void UI_VoteMenu_Fraglimit_Draw( void ) {
-	UI_DrawBannerString( 320, 16, "CALL VOTE - FRAGLIMIT", UI_CENTER, color_white );
 	UI_DrawNamedPic( 320-233, 240-166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
@@ -269,7 +268,6 @@ void UI_VoteFraglimitMenu( void ) {
         s_votemenu_fraglmit.max = atoi(Info_ValueForKey(serverinfo,"g_voteMaxFraglimit"));
         UI_VoteFraglimitMenuInternal();
 
-	Menu_AddItem( &s_votemenu_fraglmit.menu, (void*) &s_votemenu_fraglmit.banner );
 	Menu_AddItem( &s_votemenu_fraglmit.menu, (void*) &s_votemenu_fraglmit.back );
         Menu_AddItem( &s_votemenu_fraglmit.menu, (void*) &s_votemenu_fraglmit.go );
         Menu_AddItem( &s_votemenu_fraglmit.menu, (void*) &s_votemenu_fraglmit.bLimit10 );
