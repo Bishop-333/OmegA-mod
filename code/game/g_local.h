@@ -343,6 +343,8 @@ struct gclient_s {
 	clientPersistant_t	pers;
 	clientSession_t		sess;
 
+	qboolean	ready;		// wishes to start the game
+
 	qboolean	readyToExit;		// wishes to leave the intermission
 
 	qboolean	noclip;
@@ -519,6 +521,8 @@ typedef struct {
 	vec3_t		intermission_origin;	// also used for spectator spawns
 	vec3_t		intermission_angle;
 
+	int		readyMask;
+
 	qboolean	locationLinked;			// target_locations get linked
 	gentity_t	*locationHead;			// head of the location list
 	int			bodyQueIndex;			// dead bodies
@@ -599,6 +603,7 @@ void Cmd_FollowCycle_f( gentity_t *ent );  //KK-OAX Changed to match definition
 char *ConcatArgs( int start );  //KK-OAX This declaration moved from g_svccmds.c
 //KK-OAX Added this to make accessible from g_svcmds_ext.c
 void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ); 
+void SendReadymask( int clientnum );
 
 
 // KK-OAX Added these in a seperate file to keep g_cmds.c familiar. 
@@ -1181,6 +1186,8 @@ extern vmCvar_t g_machinegunTeamDamage;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railJump;
 extern vmCvar_t g_railThroughWalls;
+extern vmCvar_t g_selfDamage;
+extern vmCvar_t g_startWhenReady;
 extern vmCvar_t g_teleportMissiles; //from ratmod
 extern vmCvar_t g_jumppadGrenades; //from ratmod
 

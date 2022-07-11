@@ -677,6 +677,8 @@ typedef struct {
         
         int redObeliskHealth;
         int blueObeliskHealth;
+
+	int readyMask;
 } cg_t;
 
 
@@ -1207,6 +1209,8 @@ typedef struct {
 //unlagged - client options
 //KK-OAX For storing whether or not the server has multikills enabled. 
     int             altExcellent;
+
+    int             startWhenReady;
 } cgs_t;
 
 //==============================================================================

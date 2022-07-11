@@ -126,6 +126,13 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 					CG_DrawPic( iconx, y, 16, 16, cgs.media.botSkillShaders[ ci->botSkill - 1 ] );
 				}
 			}
+		} else if ( cg.warmup < 0 && ci->team != TEAM_SPECTATOR && cgs.startWhenReady ) {
+			if ( cg.readyMask & ( 1 << score->client ) ) {
+				color[0] = 0;
+				color[1] = 1;
+				color[2] = 0;
+				CG_DrawSmallStringColor(iconx, y, "READY", color);
+			}
 		} else if ( ci->handicap < 100 ) {
 			Com_sprintf( string, sizeof( string ), "%i", ci->handicap );
 			if ( cgs.gametype == GT_TOURNAMENT )

@@ -377,6 +377,9 @@ void CG_ParseServerinfo( void ) {
 	trap_Cvar_Set("g_delagHitscan", va("%i", cgs.delagHitscan));
 //unlagged - server options
 
+	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
+	trap_Cvar_Set("g_startWhenReady", va("%i", cgs.startWhenReady));
+
         //Copy allowed votes directly to the client:
         trap_Cvar_Set("cg_voteflags",Info_ValueForKey( info, "voteflags" ) );
 }
@@ -409,6 +412,33 @@ static void CG_ParseWarmup( void ) {
 	}
 
 	cg.warmup = warmup;
+}
+
+/*
+=================
+CG_ParseReadyMask
+=================
+*/
+
+static void CG_ParseReadyMask ( void ) {
+    int readyMask, i;
+    readyMask = atoi ( CG_Argv ( 1 ) );
+
+    if ( cg.warmup >= 0 )
+        return;
+
+    if ( readyMask != cg.readyMask ) {
+        for ( i = 0; i < 32 ; i++ ) {
+            if ( ( cg.readyMask & ( 1 << i ) ) != ( readyMask & ( 1 << i ) ) ) {
+
+                if ( readyMask & ( 1 << i ) )
+                    CG_CenterPrint ( va ( "%s ^2is ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
+                else
+                    CG_CenterPrint ( va ( "%s ^1is not ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
+            }
+        }
+        cg.readyMask = readyMask;
+    }
 }
 
 /*
@@ -669,6 +699,8 @@ static void CG_MapRestart( void ) {
 	cg.intermissionStarted = qfalse;
 
 	cgs.voteTime = 0;
+
+	cg.readyMask = 0;
 
 	cg.mapRestart = qtrue;
 
@@ -1357,6 +1389,11 @@ static void CG_ServerCommand( void ) {
             CG_ParseObeliskHealth();
             return;
         }
+
+	if ( !strcmp ( cmd, "readyMask" ) ) {
+		CG_ParseReadyMask();
+		return;
+	}
 
         if ( !strcmp( cmd, "respawn" ) ) {
 		CG_ParseRespawnTime();

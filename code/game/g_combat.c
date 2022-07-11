@@ -1194,6 +1194,38 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			}
 		}
 
+		if ( !g_selfDamage.integer ) {
+			if (mod == MOD_PLASMA_SPLASH) {
+				if (inflictor && inflictor->parent && OnSameTeam(targ, inflictor->parent)) {
+					return;
+				}
+				if (targ == attacker) {
+					return;
+				}
+			} else if (mod == MOD_GRENADE_SPLASH) {
+				if (inflictor && inflictor->parent && OnSameTeam(targ, inflictor->parent)) {
+					return;
+				}
+				if (targ == attacker) {
+					return;
+				}
+			} else if (mod == MOD_BFG_SPLASH) {
+				if (inflictor && inflictor->parent && OnSameTeam(targ, inflictor->parent)) {
+					return;
+				}
+				if (targ == attacker) {
+					return;
+				}
+			} else if (mod == MOD_ROCKET_SPLASH) {
+				if (inflictor && inflictor->parent && OnSameTeam(targ, inflictor->parent)) {
+					return;
+				}
+				if (targ == attacker) {
+					return;
+				}
+			}
+		}
+
 		// check for godmode
 		if ( targ->flags & FL_GODMODE ) {
 			return;
