@@ -199,6 +199,7 @@ vmCvar_t        g_timestamp_startgame;
 
 //OmegA
 vmCvar_t        g_damagePlums;
+vmCvar_t        g_easierPickup;
 vmCvar_t        g_guidedRockets;
 vmCvar_t        g_headShotOnly;
 vmCvar_t        g_grenadeSpeed;
@@ -431,6 +432,7 @@ static cvarTable_t		gameCvarTable[] = {
 
 	//OmegA
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
+	{ &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
 	{ &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_grenadeSpeed, "g_grenadeSpeed", "1050", 0, 0, qtrue },

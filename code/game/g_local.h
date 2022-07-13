@@ -1175,6 +1175,7 @@ extern  vmCvar_t    g_maxNameChanges;
 
 //OmegA
 extern vmCvar_t g_damagePlums;
+extern vmCvar_t g_easierPickup;
 extern vmCvar_t g_guidedRockets;
 extern vmCvar_t g_headShotOnly;
 extern vmCvar_t g_grenadeSpeed;

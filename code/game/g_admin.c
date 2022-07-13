@@ -2750,7 +2750,7 @@ qboolean G_admin_allready( gentity_t *ent, int skiparg )
 	    cl->ready = 1;
     }
   }
-  if (level.warmupTime < 0 ) {
+  if ( level.warmupTime < 0 ) {
 	  SendReadymask( -1 );
   }
   AP( va( "print \"^3!allready:^7 %s^7 says everyone is READY now\n\"",

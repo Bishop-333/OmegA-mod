@@ -377,6 +377,9 @@ void CG_ParseServerinfo( void ) {
 	trap_Cvar_Set("g_delagHitscan", va("%i", cgs.delagHitscan));
 //unlagged - server options
 
+	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
+	trap_Cvar_Set("g_easierPickup", va("%i", cgs.easierPickup));
+
 	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
 	trap_Cvar_Set("g_startWhenReady", va("%i", cgs.startWhenReady));
 
