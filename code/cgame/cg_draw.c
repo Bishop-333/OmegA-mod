@@ -801,6 +801,7 @@ static float CG_DrawSpeedMeter( float y ) {
 	int         w;
 	vec_t       *vel;
 	int         speed;
+	float       color[4];
 
 	/* speed meter can get in the way of the scoreboard */
 	if ( cg.scoreBoardShowing ) {
@@ -815,10 +816,13 @@ static float CG_DrawSpeedMeter( float y ) {
 
 	w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
 
+	color[0] = color[1] = color[2] = 1.0;
+	color[3] = 0.5;
+
 	if (cg_drawSpeed.integer == 1) {
 		/* top left-hand corner of screen */
-		CG_DrawBigString( 635 - w, y + 2, s, 1.0F);
-		return y + BIGCHAR_HEIGHT + 4;
+		CG_DrawStringExt( 635 - CG_DrawStrlen( s ) * SMALLCHAR_WIDTH, y + 2, s, color, qfalse, qtrue, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+		return y + SMALLCHAR_HEIGHT + 4;
 	} else {
 		/* center of screen */
 		CG_DrawBigString( 320 - w / 2, 300, s, 1.0F);
@@ -859,6 +863,7 @@ static float CG_DrawFPS( float y ) {
 	int		fps;
 	static	int	previous;
 	int		t, frameTime;
+	float		color[4];
 
 	// don't use serverTime, because that will be drifting to
 	// correct for internet lag changes, timescales, timedemos, etc
@@ -880,12 +885,15 @@ static float CG_DrawFPS( float y ) {
 		fps = 1000 * FPS_FRAMES / total;
 
 		s = va( "%ifps", fps );
-		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
+		w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
 
-		CG_DrawBigString( 635 - w, y + 2, s, 1.0F);
+		color[0] = color[1] = color[2] = 1.0;
+		color[3] = 0.5;
+
+		CG_DrawStringExt( 635 - w, y + 2, s, color, qfalse, qtrue, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
 	}
 
-	return y + BIGCHAR_HEIGHT + 4;
+	return y + SMALLCHAR_HEIGHT + 4;
 }
 
 /*
@@ -3188,9 +3196,9 @@ static void CG_DrawWarmup( void ) {
 	}
 
 	if ( sec < 0 ) {
-		s = "Waiting for players";		
+		s = "Warmup";		
 		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
-		CG_DrawBigString(320 - w / 2, 36, s, 1.0F);
+		CG_DrawStringExt(320 - w / 2, 27, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0);
 		cg.warmupCount = 0;
 		return;
 	}

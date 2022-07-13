@@ -213,6 +213,7 @@ vmCvar_t        g_railJump;
 vmCvar_t        g_railThroughWalls;
 vmCvar_t        g_selfDamage;
 vmCvar_t        g_startWhenReady;
+vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
 vmCvar_t        g_jumppadGrenades; //from ratmod
 
@@ -446,6 +447,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
         { &g_startWhenReady, "g_startWhenReady", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
+	{ &g_teamPush, "g_teamPush", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
 

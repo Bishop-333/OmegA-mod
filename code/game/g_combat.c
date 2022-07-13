@@ -1125,10 +1125,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	if ( knockback > 200 ) {
 		knockback = 200;
 	}
-	if ( targ->flags & FL_NO_KNOCKBACK ) {
+	if ( targ->flags & FL_NO_KNOCKBACK  ) {
 		knockback = 0;
 	}
 	if ( dflags & DAMAGE_NO_KNOCKBACK ) {
+		knockback = 0;
+	}
+	if ( !g_teamPush.integer && !(targ == attacker) && OnSameTeam (targ, attacker) ) {
 		knockback = 0;
 	}
 
