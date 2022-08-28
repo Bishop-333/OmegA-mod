@@ -41,6 +41,8 @@ List of the cvars/additions :
 - g_railgunDamage
 - g_railJump
 - g_railThroughWalls
+- g_selfDamage
+- g_waterDamage
 - g_teleportMissiles //from ratmod
 - g_jumppadGrenades //from ratmod
 

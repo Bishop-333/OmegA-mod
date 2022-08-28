@@ -118,8 +118,8 @@ void P_WorldEffects( gentity_t *ent ) {
 			ent->client->airOutTime = level.time + 10000;
 		}
 
-		// if out of air, start drowning
-		if ( ent->client->airOutTime < level.time) {
+		// if out of air and if g_waterDamage is enabled, start drowning
+		if ( ent->client->airOutTime < level.time && g_waterDamage.integer ) {
 			// drown!
 			ent->client->airOutTime += 1000;
 			if ( ent->health > 0 ) {
