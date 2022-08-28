@@ -2238,6 +2238,7 @@ commands_t cmds[ ] =
   // communication commands
   { "tell", CMD_MESSAGE, Cmd_Tell_f },
   { "callvote", CMD_MESSAGE, Cmd_CallVote_f },
+  { "cv", CMD_MESSAGE, Cmd_CallVote_f },
   { "callteamvote", CMD_MESSAGE|CMD_TEAM, Cmd_CallTeamVote_f },
   // can be used even during intermission
   { "say", CMD_MESSAGE|CMD_INTERMISSION, Cmd_Say_f },

@@ -32,7 +32,7 @@ static	vec3_t	muzzle;
 #define NUM_NAILSHOTS 15
 #define MAX_SHOTGUN_COUNT 32
 
-static	gentity_t *oldTarg[MAX_SHOTGUN_COUNT], *oldAttacker;
+static gentity_t *oldTarg[MAX_SHOTGUN_COUNT], *oldAttacker;
 int	countTarg;
 
 /*
@@ -653,6 +653,8 @@ void weapon_railgun_fire (gentity_t *ent) {
 		tent->s.eventParm = DirToByte( trace.plane.normal );
 	}
 	tent->s.clientNum = ent->s.clientNum;
+
+	tent->r.svFlags |= SVF_BROADCAST;
 
 	// give the shooter a reward sound if they have made two railgun hits in a row
 	if ( hits == 0 ) {

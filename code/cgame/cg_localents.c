@@ -1050,14 +1050,12 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 	re->radius = NUMBER_SIZE / 2;
 
 	VectorCopy(le->pos.trBase, origin);
-	//origin[2] += 110 - c * 100;
 	origin[2] += 49 - cos (c * 4.8) * 34;
 
 	VectorSubtract(cg.refdef.vieworg, origin, dir);
 	CrossProduct(dir, up, vec);
 	VectorNormalize(vec);
 
-	//VectorMA(origin, -10 + 20 * sin(c * 2 * M_PI), vec, origin);
 	VectorMA(origin, -8 + 6 * sin(c * 2 * M_PI), vec, origin);
 
 	// if the view would be "inside" the sprite, kill the sprite

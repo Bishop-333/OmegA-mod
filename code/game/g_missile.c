@@ -32,6 +32,7 @@ G_DelagLatency
 */
 int G_DelagLatency( gclient_t *client ) {
 	int ping = 0;
+
 	switch ( g_delagMissileLatencyMode.integer ) {
 		case 2:
 			ping = client->ps.ping;
@@ -194,8 +195,9 @@ G_ImmediateRunClientMissiles
 ================
 */
 void G_ImmediateRunClientMissiles ( gentity_t *client ) {
-	gentity_t *ent;
-	int i;
+	gentity_t	*ent;
+	int 		i;
+
 	if ( g_delagMissileImmediateRun.integer <= 1 ) {
 		return;
 	}
@@ -303,7 +305,7 @@ void G_BounceMissile( gentity_t *ent, trace_t *trace ) {
 	hitTime = level.previousTime + ( level.time - level.previousTime ) * trace->fraction;
 	BG_EvaluateTrajectoryDelta( &ent->s.pos, hitTime, velocity );
 	dot = DotProduct( velocity, trace->plane.normal );
-	VectorMA( velocity, -2 * dot, trace->plane.normal, ent->s.pos.trDelta );
+	VectorMA( velocity, -2*dot, trace->plane.normal, ent->s.pos.trDelta );
 
 	if ( ent->s.eFlags & EF_BOUNCE_HALF ) {
 		VectorScale( ent->s.pos.trDelta, 0.65, ent->s.pos.trDelta );
@@ -761,10 +763,10 @@ void G_RunMissile( gentity_t *ent ) {
 	vec3_t		origin;
 	trace_t		tr;
 	trace_t		tr2;
-	int		i;
+	int			i;
 	int			passent;
-	int		telepushed = 0;
-	int		unlinked = 0;
+	int			telepushed = 0;
+	int			unlinked = 0;
 
 	// get current position
 	BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );

@@ -821,8 +821,8 @@ static float CG_DrawSpeedMeter( float y ) {
 
 	if (cg_drawSpeed.integer == 1) {
 		/* top left-hand corner of screen */
-		CG_DrawStringExt( 635 - CG_DrawStrlen( s ) * SMALLCHAR_WIDTH, y + 2, s, color, qfalse, qtrue, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
-		return y + SMALLCHAR_HEIGHT + 4;
+		CG_DrawStringExt( 635 - CG_DrawStrlen( s ) * TINYCHAR_WIDTH, y + 2, s, color, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		return y + TINYCHAR_HEIGHT + 4;
 	} else {
 		/* center of screen */
 		CG_DrawBigString( 320 - w / 2, 300, s, 1.0F);
@@ -885,15 +885,15 @@ static float CG_DrawFPS( float y ) {
 		fps = 1000 * FPS_FRAMES / total;
 
 		s = va( "%ifps", fps );
-		w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+		w = CG_DrawStrlen( s ) * TINYCHAR_WIDTH;
 
 		color[0] = color[1] = color[2] = 1.0;
 		color[3] = 0.5;
 
-		CG_DrawStringExt( 635 - w, y + 2, s, color, qfalse, qtrue, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( 635 - w, y + 2, s, color, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 	}
 
-	return y + SMALLCHAR_HEIGHT + 4;
+	return y + TINYCHAR_HEIGHT + 4;
 }
 
 /*

@@ -1062,7 +1062,7 @@ The server says this item is used on this level
 void CG_RegisterItemVisuals( int itemNum ) {
 	itemInfo_t		*itemInfo;
 	gitem_t			*item;
-	const char *worldmodel = NULL;
+	const char		*worldmodel = NULL;
 
 	if ( itemNum < 0 || itemNum >= bg_numItems ) {
 		CG_Error( "CG_RegisterItemVisuals: itemNum %d out of range [0-%d]", itemNum, bg_numItems-1 );

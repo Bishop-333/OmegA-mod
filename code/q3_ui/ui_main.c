@@ -191,6 +191,9 @@ vmCvar_t        ui_browserOnlyHumans;
 //new in beta 37:
 vmCvar_t        ui_setupchecked;
 
+//OmegA
+vmCvar_t	ui_mapvote_filter;
+
 // bk001129 - made static to avoid aliasing.
 static cvarTable_t		cvarTable[] = {
 	{ &ui_ffa_fraglimit, "ui_ffa_fraglimit", "20", CVAR_ARCHIVE },
@@ -284,6 +287,9 @@ static cvarTable_t		cvarTable[] = {
 
         //new in beta 37:
         { &ui_setupchecked, "ui_setupchecked", "0", CVAR_ARCHIVE },
+
+	//OmegA
+	{ &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
 };
 
 // bk001129 - made static to avoid aliasing

@@ -129,6 +129,9 @@ extern vmCvar_t ui_setupchecked;
 //new in beta 23:
 extern vmCvar_t ui_browserOnlyHumans;
 
+//OmegA
+extern vmCvar_t	ui_mapvote_filter;
+
 //
 // ui_qmenu.c
 //
@@ -296,10 +299,11 @@ typedef struct
 } menutext_s;
 
 #define MAX_MAPNAME_LENGTH 32
+#define MAPPAGE_NUM 10
 
 typedef struct {
 	int pagenumber;
-	char mapname[10][MAX_MAPNAME_LENGTH];
+	char mapname[MAPPAGE_NUM][MAX_MAPNAME_LENGTH];
 } t_mappage;
 
 extern t_mappage mappage;
