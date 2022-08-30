@@ -3436,10 +3436,6 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 	CG_DrawLowerLeft();
 #endif
 
-	if ( !CG_DrawFollow() ) {
-		CG_DrawWarmup();
-	}
-
 	// don't draw center string if scoreboard is up
 	cg.scoreBoardShowing = CG_DrawScoreboard();
 	if ( !cg.scoreBoardShowing) {
@@ -3449,6 +3445,10 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 
 		if ( cgs.clientinfo[cg.clientNum].team != TEAM_SPECTATOR )
 			CG_DrawReady();
+
+		if ( !CG_DrawFollow() ) {
+			CG_DrawWarmup();
+		}
 	}
 
         cg.accBoardShowing = CG_DrawAccboard();

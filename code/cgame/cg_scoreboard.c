@@ -131,7 +131,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 				color[0] = 0;
 				color[1] = 1;
 				color[2] = 0;
-				CG_DrawSmallStringColor(iconx, y, "READY", color);
+				CG_DrawSmallStringColor(iconx - BIGCHAR_WIDTH, y, "READY", color);
 			}
 		} else if ( ci->handicap < 100 ) {
 			Com_sprintf( string, sizeof( string ), "%i", ci->handicap );
@@ -184,18 +184,18 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 			" connecting    %s", ci->name);
 	} else if ( ci->team == TEAM_SPECTATOR ) {
 		Com_sprintf(string, sizeof(string),
-			" SPECT %3i %4i %s", score->ping, score->time, ci->name);
+			" SPECT %3i %2i:%02i %s", score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
 	} else {
 		/*if(cgs.gametype == GT_LMS)
 			Com_sprintf(string, sizeof(string),
-				"%5i %4i %4i %s *%i*", score->score, score->ping, score->time, ci->name, ci->isDead);
+				"%5i %4i %2i:%02i %s *%i*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name, ci->isDead);
 		else*/
 		/*if(ci->isDead)
 			Com_sprintf(string, sizeof(string),
-				"%5i %4i %4i %s *DEAD*", score->score, score->ping, score->time, ci->name);
+				"%5i %4i %2i:%02i %s *DEAD*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
 		else*/
 			Com_sprintf(string, sizeof(string),
-				"%5i %4i %4i %s", score->score, score->ping, score->time, ci->name);
+				"%5i %4i %2i:%02i %s", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
 	}
 
 	// highlight your position
@@ -330,6 +330,12 @@ qboolean CG_DrawOldScoreboard( void ) {
 		fade = *fadeColor;
 	}
 
+	if ( cg.scoresRequestTime + 1000 < cg.time ) {
+		// the scores are more than one second out of data,
+		// so request new ones
+		cg.scoresRequestTime = cg.time;
+		trap_SendClientCommand( "score" );
+	}
 
 	// fragged by ... line
 	if ( cg.killerName[0] ) {

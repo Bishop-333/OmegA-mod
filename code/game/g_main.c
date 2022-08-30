@@ -448,7 +448,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
-        { &g_startWhenReady, "g_startWhenReady", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
+        { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
 	{ &g_teamPush, "g_teamPush", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
