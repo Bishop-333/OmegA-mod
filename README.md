@@ -30,6 +30,7 @@ List of the cvars/additions :
 - cg_zoomToggle
 #
 - g_damagePlums
+- g_easierPickup
 - g_guidedRockets
 - g_headShotOnly
 - g_grenadeSpeed
@@ -43,6 +44,8 @@ List of the cvars/additions :
 - g_railThroughWalls
 - g_selfDamage
 - g_waterDamage
+- g_startWhenReady
+- g_teamPush
 - g_teleportMissiles //from ratmod
 - g_jumppadGrenades //from ratmod
 
