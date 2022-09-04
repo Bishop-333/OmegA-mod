@@ -1030,17 +1030,17 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 		re->shaderRGBA[1] = 0xff;
 		re->shaderRGBA[2] = 0xff;
 	} else if (score < 30) {
-		re->shaderRGBA[0] = 0x9f;
+		re->shaderRGBA[0] = 0xff;
 		re->shaderRGBA[1] = 0xff;
-		re->shaderRGBA[2] = 0xfd;
+		re->shaderRGBA[2] = 0x50;
 	} else if (score < 50) {
-		re->shaderRGBA[0] = 0xfd;
-		re->shaderRGBA[1] = 0xff;
+		re->shaderRGBA[0] = 0xff;
+		re->shaderRGBA[1] = 0xb2;
 		re->shaderRGBA[2] = 0x50;
 	} else {
 		re->shaderRGBA[0] = 0xff;
-		re->shaderRGBA[1] = 0x8a;
-		re->shaderRGBA[2] = 0x8a;
+		re->shaderRGBA[1] = 0x50;
+		re->shaderRGBA[2] = 0x50;
 	}
 	if (c < 0.25)
 		re->shaderRGBA[3] = 0xff * 4 * c;

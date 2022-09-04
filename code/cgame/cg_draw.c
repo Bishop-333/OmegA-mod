@@ -2798,6 +2798,7 @@ CG_DrawCrosshairNames
 */
 static void CG_DrawCrosshairNames( void ) {
 	float		*color;
+	float		enemyColor[4];
 	char		*name;
 	float		w;
 
@@ -2815,7 +2816,7 @@ static void CG_DrawCrosshairNames( void ) {
 	CG_ScanForCrosshairEntity();
 
 	// draw the name of the player being looked at
-	color = CG_FadeColor( cg.crosshairClientTime, 1000 );
+	color = CG_FadeColor( cg.crosshairClientTime, 750 );
 	if ( !color ) {
 		trap_R_SetColor( NULL );
 		return;
@@ -2827,8 +2828,16 @@ static void CG_DrawCrosshairNames( void ) {
 	w = CG_Text_Width(name, 0.3f, 0);
 	CG_Text_Paint( 320 - w / 2, 190, 0.3f, color, name, 0, 0, ITEM_TEXTSTYLE_SHADOWED);
 #else
-	w = CG_DrawStrlen( name ) * BIGCHAR_WIDTH;
-	CG_DrawBigString( 320 - w / 2, 170, name, color[3] * 0.5f );
+	w = CG_DrawStrlen( name ) * SMALLCHAR_WIDTH;
+	if ( cgs.clientinfo[ cg.crosshairClientNum ].team == cg.snap->ps.persistant[PERS_TEAM] && cgs.clientinfo[ cg.crosshairClientNum ].team != TEAM_FREE ) {
+		CG_DrawSmallString( 320 - w / 2, 250, name, color[3] * 0.5f );
+	} else {
+		enemyColor[0] = 1.0f;
+		enemyColor[1] = 0.5f;
+		enemyColor[2] = 0.5f;
+		enemyColor[3] = 0.5f;
+		CG_DrawSmallStringColor( 320 - w / 2, 250, name, enemyColor );
+	}
 #endif
 	trap_R_SetColor( NULL );
 }
@@ -3224,54 +3233,15 @@ static void CG_DrawWarmup( void ) {
 			CG_Text_Paint(320 - w / 2, 60, 0.6f, colorWhite, s, 0, 0, ITEM_TEXTSTYLE_SHADOWEDMORE);
 #else
 			w = CG_DrawStrlen( s );
-			if ( w > 640 / GIANT_WIDTH ) {
+			if ( w > 640 / BIGCHAR_WIDTH ) {
 				cw = 640 / w;
 			} else {
-				cw = GIANT_WIDTH;
+				cw = BIGCHAR_WIDTH;
 			}
 			CG_DrawStringExt( 320 - w * cw/2, 20,s, colorWhite, 
 					qfalse, qtrue, cw, (int)(cw * 1.5f), 0 );
 #endif
 		}
-	} else {
-		if ( cgs.gametype == GT_FFA ) {
-			s = "Free For All";
-		} else if ( cgs.gametype == GT_TEAM ) {
-			s = "Team Deathmatch";
-		} else if ( cgs.gametype == GT_CTF ) {
-			s = "Capture the Flag";
-		} else if ( cgs.gametype == GT_ELIMINATION ) {
-			s = "Elimination";
-		} else if ( cgs.gametype == GT_CTF_ELIMINATION ) {
-			s = "CTF Elimination";
-		} else if ( cgs.gametype == GT_LMS ) {
-			s = "Last Man Standing";
-		} else if ( cgs.gametype == GT_DOUBLE_D ) {
-			s = "Double Domination";
-		} else if ( cgs.gametype == GT_1FCTF ) {
-			s = "One Flag CTF";
-		} else if ( cgs.gametype == GT_OBELISK ) {
-			s = "Overload";
-		} else if ( cgs.gametype == GT_HARVESTER ) {
-			s = "Harvester";
-                } else if ( cgs.gametype == GT_DOMINATION ) {
-			s = "Domination";
-		} else {
-			s = "";
-		}
-#ifdef MISSIONPACK
-		w = CG_Text_Width(s, 0.6f, 0);
-		CG_Text_Paint(320 - w / 2, 90, 0.6f, colorWhite, s, 0, 0, ITEM_TEXTSTYLE_SHADOWEDMORE);
-#else
-		w = CG_DrawStrlen( s );
-		if ( w > 640 / GIANT_WIDTH ) {
-			cw = 640 / w;
-		} else {
-			cw = GIANT_WIDTH;
-		}
-		CG_DrawStringExt( 320 - w * cw/2, 25,s, colorWhite, 
-				qfalse, qtrue, cw, (int)(cw * 1.1f), 0 );
-#endif
 	}
 
 	sec = ( sec - cg.time ) / 1000;
@@ -3321,7 +3291,7 @@ static void CG_DrawWarmup( void ) {
 		CG_Text_Paint(320 - w / 2, 125, scale, colorWhite, s, 0, 0, ITEM_TEXTSTYLE_SHADOWEDMORE);
 #else
 	w = CG_DrawStrlen( s );
-	CG_DrawStringExt( 320 - w * cw/2, 70, s, colorWhite, 
+	CG_DrawStringExt( 320 - w * cw/2, 27, s, colorWhite, 
 			qfalse, qtrue, cw, (int)(cw * 1.5), 0 );
 #endif
 }
