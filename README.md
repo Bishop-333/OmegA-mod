@@ -11,6 +11,7 @@ List of the cvars/additions :
 - cg_damagePlums
 - cg_drawAccuracy
 - cg_drawItemTimer
+- cg_drawEnemyThroughWalls
 - cg_drawFriendThroughWalls
 - cg_drawTeamBackground
 - cg_enemyColor (need cg_brightPlayers to be enabled)
@@ -29,6 +30,7 @@ List of the cvars/additions :
 - cg_zoomAnimSpeed
 - cg_zoomToggle
 #
+- g_beheading
 - g_damagePlums
 - g_easierPickup
 - g_guidedRockets
@@ -39,6 +41,7 @@ List of the cvars/additions :
 - g_lightningDamage
 - g_machinegunDamage
 - g_machinegunTeamDamage
+- g_plasmaBounce
 - g_railgunDamage
 - g_railJump
 - g_railThroughWalls
