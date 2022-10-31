@@ -280,6 +280,7 @@ vmCvar_t        cg_brightPlayers;
 vmCvar_t        cg_damagePlums;
 vmCvar_t        cg_drawAccuracy;
 vmCvar_t        cg_drawItemTimer;
+vmCvar_t        cg_drawEnemyThroughWalls;
 vmCvar_t        cg_drawFriendThroughWalls;
 vmCvar_t        cg_drawTeamBackground;
 vmCvar_t        cg_enemyColor;
@@ -498,6 +499,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
 	{ &cg_drawAccuracy, "cg_drawAccuracy", "1", CVAR_ARCHIVE},
 	{ &cg_drawItemTimer, "cg_drawItemTimer", "1", CVAR_ARCHIVE},
+	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
 	{ &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE},
 	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE},
@@ -1255,6 +1257,8 @@ static void CG_RegisterGraphics( void ) {
 		//cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" ); - moved outside, used by accuracy
 		cgs.media.blueKamikazeShader = trap_R_RegisterShader( "models/weaphits/kamikblu" );
 	}
+	cgs.media.enemyThroughWallsShader = trap_R_RegisterShader( "sprites/foe3.tga" );
+
 	cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
 
 	cgs.media.healthCrossModel = trap_R_RegisterModel( "models/powerups/health/small_cross.md3" );

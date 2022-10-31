@@ -437,7 +437,7 @@ static void CG_ParseReadyMask ( void ) {
                 if ( readyMask & ( 1 << i ) )
                     CG_CenterPrint ( va ( "%s ^2is ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
                 else
-                    CG_CenterPrint ( va ( "%s ^1is not ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
+                    CG_CenterPrint ( va ( "%s ^1is a chicken", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
             }
         }
         cg.readyMask = readyMask;

@@ -736,6 +736,7 @@ typedef struct {
         menuradiobutton_s	oneway;
         menuradiobutton_s	instantgib;
         menuradiobutton_s	rockets;
+        menuradiobutton_s	cheats;
         menulist_s			lmsMode;
 	menulist_s			botSkill;
 
@@ -850,6 +851,7 @@ static void ServerOptions_Start( void ) {
         int             lan;
         int             instantgib;
         int             rockets;
+        int             cheats;
         int             oneway;
         int             lmsMode;
 	int		skill;
@@ -868,6 +870,7 @@ static void ServerOptions_Start( void ) {
         pmove            = s_serveroptions.pmove.curvalue;
         instantgib       = s_serveroptions.instantgib.curvalue;
         rockets          = s_serveroptions.rockets.curvalue;
+        cheats           = s_serveroptions.cheats.curvalue;
         oneway		 = s_serveroptions.oneway.curvalue;
         //Sago: For some reason you need to add 1 to curvalue to get the UI to show the right thing (fixed?)
         lmsMode          = s_serveroptions.lmsMode.curvalue; //+1;
@@ -990,7 +993,11 @@ static void ServerOptions_Start( void ) {
 
 	// the wait commands will allow the dedicated to take effect
 	info = UI_GetArenaInfoByNumber( s_startserver.maplist[ s_startserver.currentmap ]);
-	trap_Cmd_ExecuteText( EXEC_APPEND, va( "wait ; wait ; map %s\n", Info_ValueForKey( info, "map" )));
+	if ( cheats == 1 ) {
+		trap_Cmd_ExecuteText( EXEC_APPEND, va( "wait ; wait ; devmap %s\n", Info_ValueForKey( info, "map" )));
+	} else {
+		trap_Cmd_ExecuteText( EXEC_APPEND, va( "wait ; wait ; map %s\n", Info_ValueForKey( info, "map" )));
+	}
 	
         // add bots
 	trap_Cmd_ExecuteText( EXEC_APPEND, "wait 3\n" );
@@ -1685,6 +1692,14 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	s_serveroptions.rockets.generic.y				= y;
 	s_serveroptions.rockets.generic.name			= "All rockets:";
         s_serveroptions.rockets.generic.statusbar  = ServerOptions_StatusBar_Allrockets;
+
+        //Cheats option
+        y += BIGCHAR_HEIGHT+2;
+	s_serveroptions.cheats.generic.type			= MTYPE_RADIOBUTTON;
+	s_serveroptions.cheats.generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_serveroptions.cheats.generic.x				= OPTIONS_X;
+	s_serveroptions.cheats.generic.y				= y;
+	s_serveroptions.cheats.generic.name			= "Cheats enabled:";
         
         if( s_serveroptions.gametype == GT_LMS ) {
             y += BIGCHAR_HEIGHT+2;
@@ -1832,6 +1847,7 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.pure );
         Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.instantgib );
         Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.rockets );
+        Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.cheats );
         if( s_serveroptions.gametype == GT_LMS) {
             Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.lmsMode );
         }

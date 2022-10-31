@@ -162,6 +162,8 @@ typedef struct {
 	float			barrelAngle;
 	int				barrelTime;
 	qboolean		barrelSpinning;
+
+	qboolean		noHead;
 } playerEntity_t;
 
 //=================================================
@@ -766,6 +768,7 @@ typedef struct {
 
 	qhandle_t	friendShader;
 	qhandle_t	friendThroughWallsShader;
+	qhandle_t	enemyThroughWallsShader;
 
 	qhandle_t	balloonShader;
 	qhandle_t	connectionShader;
@@ -1411,6 +1414,7 @@ extern vmCvar_t	cg_brightPlayers;
 extern vmCvar_t	cg_damagePlums;
 extern vmCvar_t	cg_drawAccuracy;
 extern vmCvar_t	cg_drawItemTimer;
+extern vmCvar_t cg_drawEnemyThroughWalls;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t	cg_drawTeamBackground;
 extern vmCvar_t cg_enemyColor;
@@ -1685,6 +1689,7 @@ void CG_ScorePlum( int client, vec3_t org, int score );
 void CG_DamagePlum( int client, vec3_t org, int score );
 
 void CG_GibPlayer( vec3_t playerOrigin );
+void CG_GibPlayerHeadshot( vec3_t playerOrigin );
 void CG_BigExplode( vec3_t playerOrigin );
 
 void CG_Bleed( vec3_t origin, int entityNum );

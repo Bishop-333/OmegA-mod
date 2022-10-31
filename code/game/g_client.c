@@ -488,6 +488,10 @@ void CopyToBodyQue( gentity_t *ent ) {
 		body->takedamage = qtrue;
 	}
 
+	if ( ent->client->noHead ) {
+		G_AddEvent( body, EV_BODY_NOHEAD, 0 );
+	}
+
 
 	VectorCopy ( body->s.pos.trBase, body->r.currentOrigin );
 	trap_LinkEntity (body);
@@ -2088,6 +2092,8 @@ else
 
 	// run the presend to set anything else
 	ClientEndFrame( ent );
+
+	ent->client->noHead = qfalse;
 
 	// clear entity state values
 	BG_PlayerStateToEntityState( &client->ps, &ent->s, qtrue );

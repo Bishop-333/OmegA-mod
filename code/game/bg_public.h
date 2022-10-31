@@ -471,6 +471,8 @@ typedef enum {
 	EV_POWERUP_REGEN,
 
 	EV_GIB_PLAYER,			// gib a previously living player
+	EV_GIB_PLAYER_HEADSHOT,
+	EV_BODY_NOHEAD,
 	EV_SCOREPLUM,			// score plum
 	EV_DAMAGEPLUM,			// damage plum
 
@@ -648,6 +650,7 @@ typedef enum {
 	MOD_KAMIKAZE,
 	MOD_JUICED,
 	MOD_GRAPPLE,
+	MOD_HEADSHOT,
 	MOD_RAILJUMP
 } meansOfDeath_t;
 

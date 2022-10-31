@@ -215,15 +215,28 @@ static void CG_Obituary( entityState_t *ent ) {
 	if ( attacker == cg.snap->ps.clientNum ) {
 		char	*s;
 
-		if ( cgs.gametype < GT_TEAM ) {
-			s = va("You fragged %s\n%s place with %i", targetName, 
-				CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
-				cg.snap->ps.persistant[PERS_SCORE] );
+		if ( mod == MOD_HEADSHOT ) {
+			if ( cgs.gametype < GT_TEAM ) {
+				s = va("^1Headshot!^7\nYou fragged %s\n%s place with %i", targetName, 
+					CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
+					cg.snap->ps.persistant[PERS_SCORE] );
+			} else {
+	                    if(ent->generic1)
+	                        s = va("^1Headshot!^7\nYou fragged your ^1TEAMMATE^7 %s\nTry aiming for the right heads", targetName );
+	                    else
+				s = va("^1Headshot!^7\nYou fragged %s", targetName );
+			}
 		} else {
-                    if(ent->generic1)
-                        s = va("You fragged your ^1TEAMMATE^7 %s", targetName );
-                    else
-			s = va("You fragged %s", targetName );
+			if ( cgs.gametype < GT_TEAM ) {
+				s = va("You fragged %s\n%s place with %i", targetName, 
+					CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
+					cg.snap->ps.persistant[PERS_SCORE] );
+			} else {
+	                    if(ent->generic1)
+	                        s = va("You fragged your ^1TEAMMATE^7 %s", targetName );
+	                    else
+				s = va("You fragged %s", targetName );
+			}
 		}
 #ifdef MISSIONPACK
 		if (!(cg_singlePlayerActive.integer && cg_cameraOrbit.integer)) {
@@ -341,6 +354,9 @@ static void CG_Obituary( entityState_t *ent ) {
                         message = "was crushed in";
                         message2 = "'s trap";
                         break;
+		case MOD_HEADSHOT:
+                        message = "was decapitated by";
+			break;
 		default:
 			message = "was killed by";
 			break;
@@ -1316,6 +1332,18 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
 		}
 		CG_GibPlayer( cent->lerpOrigin );
+		break;
+
+	case EV_GIB_PLAYER_HEADSHOT:
+		DEBUGNAME("EV_GIB_PLAYER_HEADSHOT");
+		trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
+		cent->pe.noHead = qtrue;
+		CG_GibPlayerHeadshot( cent->lerpOrigin );
+		break;
+
+	case EV_BODY_NOHEAD:
+		DEBUGNAME("EV_BODY_NOHEAD");
+		cent->pe.noHead = qtrue;
 		break;
 
 	case EV_STOPLOOPINGSOUND:

@@ -198,6 +198,7 @@ vmCvar_t        g_maxNameChanges;
 vmCvar_t        g_timestamp_startgame;
 
 //OmegA
+vmCvar_t        g_beheading;
 vmCvar_t        g_damagePlums;
 vmCvar_t        g_easierPickup;
 vmCvar_t        g_guidedRockets;
@@ -208,6 +209,7 @@ vmCvar_t        g_gauntletDamage;
 vmCvar_t        g_lightningDamage;
 vmCvar_t        g_machinegunDamage;
 vmCvar_t        g_machinegunTeamDamage;
+vmCvar_t        g_plasmaBounce;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
 vmCvar_t        g_railThroughWalls;
@@ -433,6 +435,7 @@ static cvarTable_t		gameCvarTable[] = {
         { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse},
 
 	//OmegA
+	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
 	{ &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
 	{ &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue },
@@ -443,6 +446,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_lightningDamage, "g_lightningDamage", "8", 0, 0, qtrue },
 	{ &g_machinegunDamage, "g_machinegunDamage", "10", 0, 0, qtrue },
 	{ &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
+	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "100", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },

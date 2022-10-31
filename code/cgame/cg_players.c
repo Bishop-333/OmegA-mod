@@ -2025,6 +2025,15 @@ static void CG_PlayerSprites( centity_t *cent ) {
 		}
 		return;
 	}
+
+	if ( !(cent->currentState.eFlags & EF_DEAD) && 
+		( (cg.snap->ps.persistant[PERS_TEAM] != team &&
+		cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) || team == TEAM_FREE ) ) {
+		if ( cg_drawEnemyThroughWalls.integer ) {
+			CG_PlayerFloatSprite( cent, cgs.media.enemyThroughWallsShader );
+		}
+		return;
+	}
 }
 
 /*
@@ -2755,20 +2764,22 @@ void CG_Player( centity_t *cent ) {
 	//
 	// add the head
 	//
-	head.hModel = ci->headModel;
-	if (!head.hModel) {
-		return;
+	if ( !cent->pe.noHead ) {
+		head.hModel = ci->headModel;
+		if (!head.hModel) {
+			return;
+		}
+		head.customSkin = ci->headSkin;
+
+		VectorCopy( cent->lerpOrigin, head.lightingOrigin );
+
+		CG_PositionRotatedEntityOnTag( &head, &torso, ci->torsoModel, "tag_head");
+
+		head.shadowPlane = shadowPlane;
+		head.renderfx = renderfx;
+
+		CG_AddRefEntityWithPowerups( &head, &cent->currentState, ci->team, qfalse );
 	}
-	head.customSkin = ci->headSkin;
-
-	VectorCopy( cent->lerpOrigin, head.lightingOrigin );
-
-	CG_PositionRotatedEntityOnTag( &head, &torso, ci->torsoModel, "tag_head");
-
-	head.shadowPlane = shadowPlane;
-	head.renderfx = renderfx;
-
-	CG_AddRefEntityWithPowerups( &head, &cent->currentState, ci->team, qfalse );
 
 	CG_BreathPuffs(cent, &head);
 
@@ -2817,6 +2828,8 @@ void CG_ResetPlayerEntity( centity_t *cent ) {
 	cent->pe.torso.yawing = qfalse;
 	cent->pe.torso.pitchAngle = cent->rawAngles[PITCH];
 	cent->pe.torso.pitching = qfalse;
+
+	cent->pe.noHead = qfalse;
 
 	if ( cg_debugPosition.integer ) {
 		CG_Printf("%i ResetPlayerEntity yaw=%i\n", cent->currentState.number, cent->pe.torso.yawAngle );

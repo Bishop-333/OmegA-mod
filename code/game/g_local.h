@@ -436,6 +436,8 @@ struct gclient_s {
         qboolean        spawnprotected;
 
         int			accuracy[WP_NUM_WEAPONS][2];
+
+	qboolean	noHead;
 };
 
 
@@ -1174,6 +1176,7 @@ extern  vmCvar_t    g_minNameChangePeriod;
 extern  vmCvar_t    g_maxNameChanges;
 
 //OmegA
+extern vmCvar_t g_beheading;
 extern vmCvar_t g_damagePlums;
 extern vmCvar_t g_easierPickup;
 extern vmCvar_t g_guidedRockets;
@@ -1184,6 +1187,7 @@ extern vmCvar_t g_gauntletDamage;
 extern vmCvar_t g_lightningDamage;
 extern vmCvar_t g_machinegunDamage;
 extern vmCvar_t g_machinegunTeamDamage;
+extern vmCvar_t g_plasmaBounce;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railJump;
 extern vmCvar_t g_railThroughWalls;

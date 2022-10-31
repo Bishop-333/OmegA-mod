@@ -317,6 +317,16 @@ void GibEntity( gentity_t *self, int killer ) {
 
 /*
 ==================
+GibEntity_Headshot
+==================
+*/
+void GibEntity_Headshot( gentity_t *self, int killer ) {
+	G_AddEvent( self, EV_GIB_PLAYER_HEADSHOT, 0 );
+	self->client->noHead = qtrue;
+}
+
+/*
+==================
 body_die
 ==================
 */
@@ -364,6 +374,7 @@ char	*modNames[] = {
 	"MOD_KAMIKAZE",
 	"MOD_JUICED",
 	"MOD_GRAPPLE",
+	"MOD_HEADSHOT",
 	"MOD_RAILJUMP"
 };
 
@@ -832,7 +843,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	// never gib in a nodrop
 	contents = trap_PointContents( self->r.currentOrigin, -1 );
 
-	if ( (self->health <= GIB_HEALTH && !(contents & CONTENTS_NODROP) && g_blood.integer) || meansOfDeath == MOD_SUICIDE) {
+	if ( (self->health <= GIB_HEALTH && !(contents & CONTENTS_NODROP) && g_blood.integer && meansOfDeath != MOD_HEADSHOT) || meansOfDeath == MOD_SUICIDE) {
 		// gib death
 		GibEntity( self, killer );
 	} else {
@@ -864,6 +875,12 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			( ( self->client->ps.torsoAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
 
 		G_AddEvent( self, EV_DEATH1 + i, killer );
+
+		if ( meansOfDeath == MOD_HEADSHOT ) {
+			GibEntity_Headshot( self, killer );
+		} else {
+			self->client->noHead = qfalse;
+		}
 
 		// the body can still be gibbed
 		self->die = body_die;
@@ -1368,9 +1385,16 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		z_rel = point[2] - targ->r.currentOrigin[2] + abs( targ->r.mins[2] );
 		z_ratio = z_rel / height;
 
-		if ( g_headShotOnly.integer ) {
-			if ( z_ratio < 0.90 )
+		if ( z_ratio < 0.90 ) {
+			if ( g_headShotOnly.integer ) {
 				take *= 0;
+			}
+		} else {
+			if ( g_beheading.integer ) {
+				if ( inflictor->s.weapon == WP_RAILGUN ) {
+					mod = MOD_HEADSHOT;
+				}
+			}
 		}
 	}
 
