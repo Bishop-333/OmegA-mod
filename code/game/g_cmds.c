@@ -794,19 +794,9 @@ void SetTeam( gentity_t *ent, char *s ) {
 	}
     //KK-OAX Check to make sure the team is not locked from Admin
     if ( !force ) {
-        if ( team == TEAM_RED && level.RedTeamLocked ) {
+        if ( g_teamLock.integer ) {
             trap_SendServerCommand( ent->client->ps.clientNum,
-            "cp \"The Red Team has been locked by the Admin! \n\"" );
-            return;    
-        }
-        if ( team == TEAM_BLUE && level.BlueTeamLocked ) {
-            trap_SendServerCommand( ent->client->ps.clientNum,
-            "cp \"The Blue Team has been locked by the Admin! \n\"" );
-            return;
-        }
-        if ( team == TEAM_FREE && level.FFALocked ) {
-            trap_SendServerCommand( ent->client->ps.clientNum,
-            "cp \"This Deathmatch has been locked by the Admin! \n\"" );
+            "cp \"Teams have been locked by the Admin! \n\"" );
             return;
         }
     }
@@ -1081,6 +1071,53 @@ void Cmd_FollowCycle_f( gentity_t *ent ) {
 	} while ( clientnum != original );
 
 	// leave it where it was
+}
+
+gentity_t *DropFlag( gentity_t *ent ) {
+	int		item = 0;
+
+	if ( !g_dropFlag.integer ) {
+		return NULL;
+	}
+
+	if ( ent->client->ps.pm_type == PM_DEAD ) {
+		return NULL;
+	}
+
+	if ( ent->client->ps.powerups[PW_REDFLAG] ) {
+		item = PW_REDFLAG;
+	} else if ( ent->client->ps.powerups[PW_BLUEFLAG] ) {
+		item = PW_BLUEFLAG;
+	} else if ( ent->client->ps.powerups[PW_NEUTRALFLAG] ) {
+		item = PW_NEUTRALFLAG;
+	} else {
+		return NULL;
+	}
+
+	ent->client->ps.powerups[item] = 0;
+
+	return Drop_Flag( ent, BG_FindItemForPowerup( item ), 0 );
+}
+
+#define DROP_PICKUPDELAY 500
+
+/*
+=================
+Cmd_Drop_f
+=================
+*/
+void Cmd_Drop_f( gentity_t *ent ) {
+	gentity_t	*item = NULL;
+
+	if ( g_dropFlag.integer && ( ent->client->ps.powerups[PW_REDFLAG] || ent->client->ps.powerups[PW_BLUEFLAG] || ent->client->ps.powerups[PW_NEUTRALFLAG] ) ) {
+		item = DropFlag( ent );
+	}
+
+	if (item != NULL) {
+		item->dropClientNum = ent->client->ps.clientNum;
+		item->dropPickupTime = level.time + DROP_PICKUPDELAY;
+		item->s.time = item->dropPickupTime;
+	}
 }
 
 /*
@@ -2282,7 +2319,9 @@ commands_t cmds[ ] =
   { "freespectator", CMD_NOTEAM, StopFollowing },
   { "getmappage", 0, Cmd_GetMappage_f },
   { "gc", 0, Cmd_GameCommand_f },
+
   //OmegA
+  { "drop", 0, Cmd_Drop_f },
   { "ready", 0, Cmd_Ready_f }
   
 };

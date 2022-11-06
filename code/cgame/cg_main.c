@@ -279,17 +279,18 @@ vmCvar_t        cg_bobgun;
 vmCvar_t        cg_brightPlayers;
 vmCvar_t        cg_damagePlums;
 vmCvar_t        cg_drawAccuracy;
-vmCvar_t        cg_drawItemTimer;
 vmCvar_t        cg_drawEnemyThroughWalls;
 vmCvar_t        cg_drawFriendThroughWalls;
+vmCvar_t        cg_drawItemTimer;
 vmCvar_t        cg_drawTeamBackground;
 vmCvar_t        cg_enemyColor;
-vmCvar_t        cg_teamColor;
 vmCvar_t        cg_enemyModel;
-vmCvar_t        cg_teamModel;
+vmCvar_t        cg_oldRailSound;
 vmCvar_t        cg_omegaFlags;
 vmCvar_t        cg_omegaInitialized;
 vmCvar_t        cg_screenshake;
+vmCvar_t        cg_teamColor;
+vmCvar_t        cg_teamModel;
 vmCvar_t        cg_thinLightningBolt;
 vmCvar_t        cg_timerHeight;
 vmCvar_t        cg_timerWidth;
@@ -498,17 +499,18 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_brightPlayers, "cg_brightPlayers", "0", CVAR_ARCHIVE},
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
 	{ &cg_drawAccuracy, "cg_drawAccuracy", "1", CVAR_ARCHIVE},
-	{ &cg_drawItemTimer, "cg_drawItemTimer", "1", CVAR_ARCHIVE},
 	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
+	{ &cg_drawItemTimer, "cg_drawItemTimer", "1", CVAR_ARCHIVE},
 	{ &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE},
 	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE},
-	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
 	{ &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE},
-	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
+	{ &cg_oldRailSound, "cg_oldRailSound", "0", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE},
 	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
+	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
+	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
 	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "0", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE},
 	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE},

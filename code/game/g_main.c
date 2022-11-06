@@ -200,25 +200,26 @@ vmCvar_t        g_timestamp_startgame;
 //OmegA
 vmCvar_t        g_beheading;
 vmCvar_t        g_damagePlums;
+vmCvar_t        g_dropFlag;
 vmCvar_t        g_easierPickup;
+vmCvar_t        g_gauntletDamage;
+vmCvar_t        g_grenadeSpeed;
 vmCvar_t        g_guidedRockets;
 vmCvar_t        g_headShotOnly;
-vmCvar_t        g_grenadeSpeed;
-vmCvar_t        g_rocketSpeed;
-vmCvar_t        g_gauntletDamage;
+vmCvar_t        g_jumppadGrenades; //from ratmod
 vmCvar_t        g_lightningDamage;
 vmCvar_t        g_machinegunDamage;
 vmCvar_t        g_machinegunTeamDamage;
 vmCvar_t        g_plasmaBounce;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
-vmCvar_t        g_railThroughWalls;
+vmCvar_t        g_rocketSpeed;
 vmCvar_t        g_selfDamage;
-vmCvar_t        g_waterDamage;
 vmCvar_t        g_startWhenReady;
+vmCvar_t        g_teamLock;
 vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
-vmCvar_t        g_jumppadGrenades; //from ratmod
+vmCvar_t        g_waterDamage;
 
 //ratmod delagMissile
 vmCvar_t        g_delagMissiles;
@@ -437,25 +438,26 @@ static cvarTable_t		gameCvarTable[] = {
 	//OmegA
 	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
+	{ &g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+	{ &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
+	{ &g_grenadeSpeed, "g_grenadeSpeed", "1050", 0, 0, qtrue },
 	{ &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_grenadeSpeed, "g_grenadeSpeed", "1050", 0, 0, qtrue },
-	{ &g_rocketSpeed, "g_rocketSpeed", "1125", 0, 0, qtrue },
-	{ &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
+	{ &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_lightningDamage, "g_lightningDamage", "8", 0, 0, qtrue },
 	{ &g_machinegunDamage, "g_machinegunDamage", "10", 0, 0, qtrue },
 	{ &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
 	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "100", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_rocketSpeed, "g_rocketSpeed", "1125", 0, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
         { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
+	{ &g_teamLock, "g_teamLock", "0", CVAR_NORESTART, 0, qfalse },
 	{ &g_teamPush, "g_teamPush", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
 
 	//ratmod delagMissile
         { &g_delagMissiles, "g_delagMissiles", "1", CVAR_ARCHIVE, 0, qfalse },

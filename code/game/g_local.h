@@ -168,6 +168,9 @@ struct gentity_s {
 
 	int			count;
 
+	int			dropClientNum;
+	int			dropPickupTime;
+
 	gentity_t	*chain;
 	gentity_t	*enemy;
 	gentity_t	*activator;
@@ -645,6 +648,7 @@ void RespawnItem( gentity_t *ent );
 void UseHoldableItem( gentity_t *ent );
 void PrecacheItem (gitem_t *it);
 gentity_t *Drop_Item( gentity_t *ent, gitem_t *item, float angle );
+gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle );
 gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity );
 void SetRespawn (gentity_t *ent, float delay);
 void G_SpawnItem (gentity_t *ent, gitem_t *item);
@@ -1178,25 +1182,26 @@ extern  vmCvar_t    g_maxNameChanges;
 //OmegA
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_damagePlums;
+extern vmCvar_t g_dropFlag;
 extern vmCvar_t g_easierPickup;
+extern vmCvar_t g_gauntletDamage;
+extern vmCvar_t g_grenadeSpeed;
 extern vmCvar_t g_guidedRockets;
 extern vmCvar_t g_headShotOnly;
-extern vmCvar_t g_grenadeSpeed;
-extern vmCvar_t g_rocketSpeed;
-extern vmCvar_t g_gauntletDamage;
+extern vmCvar_t g_jumppadGrenades; //from ratmod
 extern vmCvar_t g_lightningDamage;
 extern vmCvar_t g_machinegunDamage;
 extern vmCvar_t g_machinegunTeamDamage;
 extern vmCvar_t g_plasmaBounce;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railJump;
-extern vmCvar_t g_railThroughWalls;
+extern vmCvar_t g_rocketSpeed;
 extern vmCvar_t g_selfDamage;
-extern vmCvar_t g_waterDamage;
 extern vmCvar_t g_startWhenReady;
+extern vmCvar_t g_teamLock;
 extern vmCvar_t g_teamPush;
 extern vmCvar_t g_teleportMissiles; //from ratmod
-extern vmCvar_t g_jumppadGrenades; //from ratmod
+extern vmCvar_t g_waterDamage;
 
 //ratmod delagMissile
 extern vmCvar_t g_delagMissiles;

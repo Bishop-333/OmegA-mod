@@ -1006,7 +1006,11 @@ void CG_RegisterWeapon( int weaponNum ) {
 	case WP_RAILGUN:
 		weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/railgun/rg_hum.wav", qfalse );
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.5f, 0 );
-		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
+		if ( cg_oldRailSound.integer ) {
+			weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
+		} else {
+			weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1b.wav", qfalse );
+		}
 		cgs.media.railExplosionShader = trap_R_RegisterShader( "railExplosion" );
 		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
 		cgs.media.railCoreShader = trap_R_RegisterShader( "railCore" );
