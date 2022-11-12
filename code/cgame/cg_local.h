@@ -162,8 +162,6 @@ typedef struct {
 	float			barrelAngle;
 	int				barrelTime;
 	qboolean		barrelSpinning;
-
-	qboolean		noHead;
 } playerEntity_t;
 
 //=================================================
@@ -1002,6 +1000,7 @@ typedef struct {
 	sfxHandle_t humiliationSound;
 	sfxHandle_t assistSound;
 	sfxHandle_t defendSound;
+	sfxHandle_t headshotSound;
 	sfxHandle_t firstImpressiveSound;
 	sfxHandle_t firstExcellentSound;
 	sfxHandle_t firstHumiliationSound;

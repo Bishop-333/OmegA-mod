@@ -589,7 +589,7 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 
 	// check for bounce
 	if ( !other->takedamage &&
-		( ent->s.eFlags & ( EF_BOUNCE | EF_BOUNCE_HALF ) ) ) {
+		( ent->s.eFlags & EF_BOUNCE_HALF ) ) {
 		G_BounceMissile( ent, trace );
 		G_AddEvent( ent, EV_GRENADE_BOUNCE, 0 );
 		return;

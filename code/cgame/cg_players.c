@@ -2769,22 +2769,22 @@ void CG_Player( centity_t *cent ) {
 	//
 	// add the head
 	//
-	if ( !cent->pe.noHead ) {
-		head.hModel = ci->headModel;
-		if (!head.hModel) {
-			return;
-		}
-		head.customSkin = ci->headSkin;
+	if ( cent->currentState.eFlags & EF_BODY_NOHEAD ) return;
 
-		VectorCopy( cent->lerpOrigin, head.lightingOrigin );
-
-		CG_PositionRotatedEntityOnTag( &head, &torso, ci->torsoModel, "tag_head");
-
-		head.shadowPlane = shadowPlane;
-		head.renderfx = renderfx;
-
-		CG_AddRefEntityWithPowerups( &head, &cent->currentState, ci->team, qfalse );
+	head.hModel = ci->headModel;
+	if (!head.hModel) {
+		return;
 	}
+	head.customSkin = ci->headSkin;
+
+	VectorCopy( cent->lerpOrigin, head.lightingOrigin );
+
+	CG_PositionRotatedEntityOnTag( &head, &torso, ci->torsoModel, "tag_head");
+
+	head.shadowPlane = shadowPlane;
+	head.renderfx = renderfx;
+
+	CG_AddRefEntityWithPowerups( &head, &cent->currentState, ci->team, qfalse );
 
 	CG_BreathPuffs(cent, &head);
 
@@ -2833,8 +2833,6 @@ void CG_ResetPlayerEntity( centity_t *cent ) {
 	cent->pe.torso.yawing = qfalse;
 	cent->pe.torso.pitchAngle = cent->rawAngles[PITCH];
 	cent->pe.torso.pitching = qfalse;
-
-	cent->pe.noHead = qfalse;
 
 	if ( cg_debugPosition.integer ) {
 		CG_Printf("%i ResetPlayerEntity yaw=%i\n", cent->currentState.number, cent->pe.torso.yawAngle );

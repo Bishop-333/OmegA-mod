@@ -415,7 +415,11 @@ void CopyToBodyQue( gentity_t *ent ) {
         }
 
 	body->s = ent->s;
-	body->s.eFlags = EF_DEAD;		// clear EF_TALK, etc
+	if ( body->s.eFlags & EF_BODY_NOHEAD ) {
+		body->s.eFlags = EF_DEAD | EF_BODY_NOHEAD;
+	} else {
+		body->s.eFlags = EF_DEAD;		// clear EF_TALK, etc
+	}
 	if ( ent->s.eFlags & EF_KAMIKAZE ) {
                 ent->s.eFlags &= ~EF_KAMIKAZE;
 		body->s.eFlags |= EF_KAMIKAZE;
@@ -486,10 +490,6 @@ void CopyToBodyQue( gentity_t *ent ) {
 		body->takedamage = qfalse;
 	} else {
 		body->takedamage = qtrue;
-	}
-
-	if ( ent->client->noHead ) {
-		G_AddEvent( body, EV_BODY_NOHEAD, 0 );
 	}
 
 
@@ -2092,8 +2092,6 @@ else
 
 	// run the presend to set anything else
 	ClientEndFrame( ent );
-
-	ent->client->noHead = qfalse;
 
 	// clear entity state values
 	BG_PlayerStateToEntityState( &client->ps, &ent->s, qtrue );

@@ -343,6 +343,11 @@ void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops ) {
 		reward = qtrue;
 		//Com_Printf("capture\n");
 	}
+	if (ps->persistant[PERS_HEADSHOT_COUNT] != ops->persistant[PERS_HEADSHOT_COUNT]) {
+		pushReward(cgs.media.headshotSound, cgs.media.medalHeadshot, ps->persistant[PERS_HEADSHOT_COUNT]);
+		reward = qtrue;
+		//Com_Printf("headshot\n");
+	}
 	if (ps->persistant[PERS_IMPRESSIVE_COUNT] != ops->persistant[PERS_IMPRESSIVE_COUNT]) {
 #ifdef MISSIONPACK
 		if (ps->persistant[PERS_IMPRESSIVE_COUNT] == 1) {
@@ -398,11 +403,6 @@ void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops ) {
 		pushReward(cgs.media.assistSound, cgs.media.medalAssist, ps->persistant[PERS_ASSIST_COUNT]);
 		reward = qtrue;
 		//Com_Printf("assist\n");
-	}
-	if (ps->persistant[PERS_HEADSHOT_COUNT] != ops->persistant[PERS_HEADSHOT_COUNT]) {
-		pushReward(cgs.media.holyShitSound, cgs.media.medalHeadshot, ps->persistant[PERS_HEADSHOT_COUNT]);
-		reward = qtrue;
-		//Com_Printf("headshot\n");
 	}
 	// if any of the player event bits changed
 	if (ps->persistant[PERS_PLAYEREVENTS] != ops->persistant[PERS_PLAYEREVENTS]) {

@@ -275,7 +275,7 @@ typedef enum {
 #define	EF_TELEPORT_BIT		0x00000004		// toggled every time the origin abruptly changes
 #define	EF_AWARD_EXCELLENT	0x00000008		// draw an excellent sprite
 #define EF_PLAYER_EVENT		0x00000010
-#define	EF_BOUNCE			0x00000010		// for missiles
+#define	EF_BODY_NOHEAD			0x00000010		// for missiles
 #define	EF_BOUNCE_HALF		0x00000020		// for missiles
 #define	EF_AWARD_GAUNTLET	0x00000040		// draw a gauntlet sprite
 #define	EF_NODRAW			0x00000080		// may have an event, but no model (unspawned items)
@@ -474,7 +474,6 @@ typedef enum {
 
 	EV_GIB_PLAYER,			// gib a previously living player
 	EV_GIB_PLAYER_HEADSHOT,
-	EV_BODY_NOHEAD,
 	EV_SCOREPLUM,			// score plum
 	EV_DAMAGEPLUM,			// damage plum
 

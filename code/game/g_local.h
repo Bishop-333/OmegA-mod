@@ -439,8 +439,6 @@ struct gclient_s {
         qboolean        spawnprotected;
 
         int			accuracy[WP_NUM_WEAPONS][2];
-
-	qboolean	noHead;
 };
 
 
