@@ -261,7 +261,7 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 //unlagged - attack prediction #2
 			if( LogAccuracyHit( traceEnt, ent ) ) {
 				ent->client->accuracy_hits++;
-				ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
+				ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 			}
 		} else {
 			tent = G_TempEntity( tr.endpos, EV_BULLET_HIT_WALL );
@@ -428,7 +428,7 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
 		if( ShotgunPellet( origin, end, ent ) && !hitClient ) {
 			hitClient = qtrue;
 			ent->client->accuracy_hits++;
-			ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
+			ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 		}
 	}
 	for ( i = 0 ; i < countTarg ; i++ ) {
@@ -661,13 +661,13 @@ void weapon_railgun_fire (gentity_t *ent) {
                         if(!level.hadBots) //There has not been any bots
                             ChallengeMessage(ent,AWARD_IMPRESSIVE);
                         // add the sprite over the player's head
-			ent->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+			ent->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
 			ent->client->ps.eFlags |= EF_AWARD_IMPRESSIVE;
 			ent->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 		}
 		ent->client->accuracy_hits++;
                 ent->client->accuracy[WP_RAILGUN][1]++;
-		ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
+		ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 	}
 
 }
@@ -793,7 +793,7 @@ void Weapon_LightningFire( gentity_t *ent ) {
 			if( LogAccuracyHit( traceEnt, ent ) ) {
 				ent->client->accuracy_hits++;
                                 ent->client->accuracy[WP_LIGHTNING][1]++;
-				ent->client->ps.persistant[PERS_ACCURACY_HITS]++;
+				ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 			}
 		} else if ( !( tr.surfaceFlags & SURF_NOIMPACT ) ) {
 			tent = G_TempEntity( tr.endpos, EV_MISSILE_MISS );
@@ -951,7 +951,7 @@ void FireWeapon( gentity_t *ent ) {
 			ent->client->accuracy_shots++;
                         ent->client->accuracy[ent->s.weapon][0]++;
 		}
-		ent->client->ps.persistant[PERS_ACCURACY_SHOTS]++;
+		ent->client->ps.stats[STAT_ACCURACY_SHOTS]++;
 	}
 
 	// set aiming directions

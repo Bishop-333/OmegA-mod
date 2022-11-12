@@ -1397,8 +1397,8 @@ static float CG_DrawAccuracy( float y ) {
 	int			w;
 	int			hits, shots;
 
-	hits = cg.snap->ps.persistant[PERS_ACCURACY_HITS];
-	shots = cg.snap->ps.persistant[PERS_ACCURACY_SHOTS];
+	hits = cg.snap->ps.stats[STAT_ACCURACY_HITS];
+	shots = cg.snap->ps.stats[STAT_ACCURACY_SHOTS];
 
 	if ( !hits || !shots ) {
 		s = "0%";

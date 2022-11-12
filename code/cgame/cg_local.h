@@ -914,6 +914,7 @@ typedef struct {
 	qhandle_t	medalDefend;
 	qhandle_t	medalAssist;
 	qhandle_t	medalCapture;
+	qhandle_t	medalHeadshot;
 
 	// sounds
 	sfxHandle_t	quadSound;

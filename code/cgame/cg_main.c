@@ -1320,6 +1320,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.medalDefend = trap_R_RegisterShaderNoMip( "medal_defend" );
 	cgs.media.medalAssist = trap_R_RegisterShaderNoMip( "medal_assist" );
 	cgs.media.medalCapture = trap_R_RegisterShaderNoMip( "medal_capture" );
+	cgs.media.medalHeadshot = trap_R_RegisterShaderNoMip( "medal_headshot" );
 
 	// LEILEI SHADERS
 	cgs.media.lsmkShader1 = trap_R_RegisterShader("leismoke1" );

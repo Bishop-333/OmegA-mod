@@ -238,7 +238,9 @@ typedef enum {
 	STAT_ARMOR,				
 	STAT_DEAD_YAW,					// look this direction when dead (FIXME: get rid of?)
 	STAT_CLIENTS_READY,				// bit mask of clients wishing to exit the intermission (FIXME: configstring?)
-	STAT_MAX_HEALTH					// health / armor limit, changable by handicap
+	STAT_MAX_HEALTH,				// health / armor limit, changable by handicap
+	STAT_ACCURACY_HITS,
+	STAT_ACCURACY_SHOTS
 } statIndex_t;
 
 
@@ -249,8 +251,6 @@ typedef enum {
 typedef enum {
 	PERS_SCORE,						// !!! MUST NOT CHANGE, SERVER AND GAME BOTH REFERENCE !!!
 	PERS_HITS,						// total points damage inflicted so damage beeps can sound on change
-	PERS_ACCURACY_HITS,
-	PERS_ACCURACY_SHOTS,
 	PERS_RANK,						// player rank or team rank
 	PERS_TEAM,						// player team
 	PERS_SPAWN_COUNT,				// incremented every respawn
@@ -264,7 +264,8 @@ typedef enum {
 	PERS_DEFEND_COUNT,				// defend awards
 	PERS_ASSIST_COUNT,				// assist awards
 	PERS_GAUNTLET_FRAG_COUNT,		// kills with the guantlet
-	PERS_CAPTURES					// captures
+	PERS_CAPTURES,					// captures
+	PERS_HEADSHOT_COUNT				// headshot awards
 } persEnum_t;
 
 
@@ -289,6 +290,7 @@ typedef enum {
 #define	EF_AWARD_DEFEND		0x00010000		// draw a defend sprite
 #define	EF_AWARD_ASSIST		0x00020000		// draw a assist sprite
 #define EF_AWARD_DENIED		0x00040000		// denied
+#define EF_AWARD_HEADSHOT		0x00040000		// draw a headshot sprite
 #define EF_TEAMVOTED		0x00080000		// already cast a team vote
 
 // NOTE: may not have more than 16

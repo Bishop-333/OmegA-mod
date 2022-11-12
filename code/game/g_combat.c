@@ -598,12 +598,27 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
                                 G_LogPrintf( "Award: %i %i: %s gained the %s award!\n", attacker->client->ps.clientNum, 0, attacker->client->pers.netname, "GAUNTLET" );
 
 				// add the sprite over the player's head
-				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT);
 				attacker->client->ps.eFlags |= EF_AWARD_GAUNTLET;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 
 				// also play humiliation on target
 				self->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_GAUNTLETREWARD;
+			}
+
+			if( meansOfDeath == MOD_HEADSHOT ) {
+
+				// Attack gets a challenge complete:
+				if(!(attacker->r.svFlags & SVF_BOT) && !(self->r.svFlags & SVF_BOT))
+					ChallengeMessage(attacker,AWARD_HEADSHOT);
+		
+				attacker->client->ps.persistant[PERS_HEADSHOT_COUNT]++;
+                                G_LogPrintf( "Award: %i %i: %s gained the %s award!\n", attacker->client->ps.clientNum, 0, attacker->client->pers.netname, "HEADSHOT" );
+
+				// add the sprite over the player's head
+				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
+				attacker->client->ps.eFlags |= EF_AWARD_HEADSHOT;
+				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 			}
 
                         //If neither attacker or taget is bots and not the same
@@ -743,7 +758,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
                                 if(!level.hadBots) //There has not been any bots
                                     ChallengeMessage(attacker,AWARD_EXCELLENT);
 				// add the sprite over the player's head
-				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP );
+				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
 				attacker->client->ps.eFlags |= EF_AWARD_EXCELLENT;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 			} else { 

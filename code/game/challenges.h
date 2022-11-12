@@ -76,6 +76,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define AWARD_CAPTURE           303
 #define AWARD_ASSIST            304
 #define AWARD_DEFENCE           305
+#define AWARD_HEADSHOT          306
 
 //Powerups
 #define POWERUP_QUAD_KILL       401
