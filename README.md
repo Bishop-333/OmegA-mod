@@ -10,16 +10,18 @@ List of the cvars/additions :
 - cg_brightPlayers
 - cg_damagePlums
 - cg_drawAccuracy
-- cg_drawItemTimer
 - cg_drawEnemyThroughWalls
 - cg_drawFriendThroughWalls
+- cg_drawItemTimer
 - cg_drawTeamBackground
-- cg_enemyColor (need cg_brightPlayers to be enabled)
-- cg_teamColor (need cg_brightPlayers to be enabled)
+- cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel
-- cg_teamModel
+- cg_oldRailSound
 - cg_omegaFlags
+- cg_omegaInitialized
 - cg_screenshake
+- cg_teamColor //need cg_brightPlayers to be enabled
+- cg_teamModel
 - cg_thinLightningBolt
 - cg_timerHeight
 - cg_timerWidth
@@ -32,25 +34,25 @@ List of the cvars/additions :
 #
 - g_beheading
 - g_damagePlums
+- g_dropFlag
 - g_easierPickup
+- g_gauntletDamage
+- g_grenadeSpeed
 - g_guidedRockets
 - g_headShotOnly
-- g_grenadeSpeed
-- g_rocketSpeed
-- g_gauntletDamage
+- g_jumppadGrenades //from ratmod
 - g_lightningDamage
 - g_machinegunDamage
 - g_machinegunTeamDamage
 - g_plasmaBounce
 - g_railgunDamage
 - g_railJump
-- g_railThroughWalls
+- g_rocketSpeed
 - g_selfDamage
-- g_waterDamage
 - g_startWhenReady
 - g_teamPush
 - g_teleportMissiles //from ratmod
-- g_jumppadGrenades //from ratmod
+- g_waterDamage
 
 //delagMissile are from Ratmod
 - g_delagMissiles
