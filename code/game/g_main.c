@@ -216,7 +216,6 @@ vmCvar_t        g_railJump;
 vmCvar_t        g_rocketSpeed;
 vmCvar_t        g_selfDamage;
 vmCvar_t        g_startWhenReady;
-vmCvar_t        g_teamLock;
 vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
 vmCvar_t        g_waterDamage;
@@ -454,7 +453,6 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_rocketSpeed, "g_rocketSpeed", "1125", 0, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
         { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
-	{ &g_teamLock, "g_teamLock", "0", CVAR_NORESTART, 0, qfalse },
 	{ &g_teamPush, "g_teamPush", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },

@@ -2974,8 +2974,17 @@ qboolean G_admin_lock( gentity_t *ent, int skiparg )
 
   if( G_SayArgc() < 2 + skiparg )
   {
-    ADMP( "^3!lock: ^7usage: !lock [r|b|f]\n" );
-    return qfalse;
+    if( level.RedTeamLocked & level.BlueTeamLocked & level.FFALocked )
+    {
+      ADMP( "^3!lock: ^7Teams are already locked\n" );
+      return qfalse;
+    }
+    AP( va( "print \"^3!lock: ^7Teams have been locked by %s\n\"",
+      ( ent ) ? ent->client->pers.netname : "console" ) );
+    level.RedTeamLocked = qtrue;
+    level.BlueTeamLocked = qtrue;
+    level.FFALocked = qtrue;
+    return qtrue;
   }
   G_SayArgv( 1 + skiparg, teamName, sizeof( teamName ) );
   team = G_TeamFromString( teamName );
@@ -3024,8 +3033,17 @@ qboolean G_admin_unlock( gentity_t *ent, int skiparg )
 
   if( G_SayArgc() < 2 + skiparg )
   {
-    ADMP( "^3!unlock: ^7usage: !unlock [r|b|f]\n" );
-    return qfalse;
+    if( !level.RedTeamLocked & !level.BlueTeamLocked & !level.FFALocked )
+    {
+      ADMP( "^3!lock: ^7Teams are not currently locked\n" );
+      return qfalse;
+    }
+    AP( va( "print \"^3!unlock: ^7Teams have been unlocked by %s\n\"",
+      ( ent ) ? ent->client->pers.netname : "console" ) );
+    level.RedTeamLocked = qfalse;
+    level.BlueTeamLocked = qfalse;
+    level.FFALocked = qfalse;
+    return qtrue;
   }
   G_SayArgv( 1 + skiparg, teamName, sizeof( teamName ) );
   team = G_TeamFromString( teamName );

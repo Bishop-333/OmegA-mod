@@ -1196,7 +1196,6 @@ extern vmCvar_t g_railJump;
 extern vmCvar_t g_rocketSpeed;
 extern vmCvar_t g_selfDamage;
 extern vmCvar_t g_startWhenReady;
-extern vmCvar_t g_teamLock;
 extern vmCvar_t g_teamPush;
 extern vmCvar_t g_teleportMissiles; //from ratmod
 extern vmCvar_t g_waterDamage;

@@ -798,9 +798,19 @@ void SetTeam( gentity_t *ent, char *s ) {
 	}
     //KK-OAX Check to make sure the team is not locked from Admin
     if ( !force ) {
-        if ( g_teamLock.integer ) {
+        if ( team == TEAM_RED && level.RedTeamLocked ) {
             trap_SendServerCommand( ent->client->ps.clientNum,
-            "cp \"Teams have been locked by the Admin! \n\"" );
+            "cp \"The Red Team has been locked by the Admin! \n\"" );
+            return;    
+        }
+        if ( team == TEAM_BLUE && level.BlueTeamLocked ) {
+            trap_SendServerCommand( ent->client->ps.clientNum,
+            "cp \"The Blue Team has been locked by the Admin! \n\"" );
+            return;
+        }
+        if ( team == TEAM_FREE && level.FFALocked ) {
+            trap_SendServerCommand( ent->client->ps.clientNum,
+            "cp \"This Deathmatch has been locked by the Admin! \n\"" );
             return;
         }
     }
