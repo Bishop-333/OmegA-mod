@@ -2979,6 +2979,8 @@ qboolean G_admin_lock( gentity_t *ent, int skiparg )
       ADMP( "^3!lock: ^7Teams are already locked\n" );
       return qfalse;
     }
+    AP( va( "cp \"Teams have been ^1locked ^7by %s\n\"",
+      ( ent ) ? ent->client->pers.netname : "console" ) );
     AP( va( "print \"^3!lock: ^7Teams have been locked by %s\n\"",
       ( ent ) ? ent->client->pers.netname : "console" ) );
     level.RedTeamLocked = qtrue;
@@ -3038,6 +3040,8 @@ qboolean G_admin_unlock( gentity_t *ent, int skiparg )
       ADMP( "^3!lock: ^7Teams are not currently locked\n" );
       return qfalse;
     }
+    AP( va( "cp \"Teams have been ^2unlocked ^7by %s\n\"",
+      ( ent ) ? ent->client->pers.netname : "console" ) );
     AP( va( "print \"^3!unlock: ^7Teams have been unlocked by %s\n\"",
       ( ent ) ? ent->client->pers.netname : "console" ) );
     level.RedTeamLocked = qfalse;
