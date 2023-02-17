@@ -240,7 +240,10 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 
 	// add the "ready" marker for intermission exiting
 	if ( cg.snap->ps.stats[ STAT_CLIENTS_READY ] & ( 1 << score->client ) ) {
-		CG_DrawBigStringColor( iconx, y, "READY", color );
+		color[0] = 0;
+		color[1] = 1;
+		color[2] = 0;
+		CG_DrawSmallStringColor(iconx - BIGCHAR_WIDTH, y, "READY", color);;
 	} else
         if(cgs.gametype == GT_LMS) {
             CG_DrawBigStringColor( iconx-50, y, va("*%i*",ci->isDead), color );

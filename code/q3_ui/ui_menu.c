@@ -232,7 +232,7 @@ static void Main_MenuDraw( void ) {
 		Menu_Draw( &s_main.menu );		
 	}
 
-		UI_DrawString( 320, 386, "OmegA(c) 2021-2022 EddieBrrrock Ekip", UI_CENTER|UI_SMALLFONT, color );
+		UI_DrawString( 320, 386, "OmegA(c) 2021-2023 Ekip", UI_CENTER|UI_SMALLFONT, color );
 		UI_DrawString( 320, 400, "based on OpenArena(c) 2005-2012 OpenArena Team", UI_CENTER|UI_SMALLFONT, color );
 		UI_DrawString( 320, 414, "OmegA/OpenArena comes with ABSOLUTELY NO WARRANTY; this is free software", UI_CENTER|UI_SMALLFONT, color );
 		UI_DrawString( 320, 428, "and you are welcome to redistribute it under certain conditions;", UI_CENTER|UI_SMALLFONT, color );
