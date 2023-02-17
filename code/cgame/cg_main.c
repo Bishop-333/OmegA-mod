@@ -496,7 +496,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 
 	//OmegA
 	{ &cg_bobgun, "cg_bobgun", "0", CVAR_ARCHIVE},
-	{ &cg_brightPlayers, "cg_brightPlayers", "0", CVAR_ARCHIVE},
+	{ &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE},
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
 	{ &cg_drawAccuracy, "cg_drawAccuracy", "1", CVAR_ARCHIVE},
 	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },
