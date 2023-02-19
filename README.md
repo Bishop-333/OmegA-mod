@@ -1,5 +1,7 @@
 # OmegA gamecode
 
+[![Build](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/build.yml/badge.svg)](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/build.yml)
+
 ![OmegA Logo](omega_logo.svg)
 
 OmegA is a mod for OpenArena which have for goal to fix bugs and add cool features for competitive gameplay. It takes inspiration from different mods like Aftershock or Ratmod.
