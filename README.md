@@ -52,6 +52,7 @@ List of the cvars/additions :
 - g_startWhenReady
 - g_teamPush
 - g_teleportMissiles //from ratmod
+- - g_vulnerableRockets
 - g_waterDamage
 
 //delagMissile are from Ratmod
