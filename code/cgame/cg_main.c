@@ -311,7 +311,7 @@ typedef struct {
 
 static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_ignore, "cg_ignore", "0", 0 },	// used for debugging
-	{ &cg_autoswitch, "cg_autoswitch", "1", CVAR_ARCHIVE },
+	{ &cg_autoswitch, "cg_autoswitch", "0", CVAR_ARCHIVE },
 	{ &cg_drawGun, "cg_drawGun", "1", CVAR_ARCHIVE },
 	{ &cg_zoomFov, "cg_zoomfov", "22.5", CVAR_ARCHIVE },
 	{ &cg_fov, "cg_fov", "115", CVAR_ARCHIVE },
@@ -511,7 +511,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
 	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
-	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "0", CVAR_ARCHIVE | CVAR_LATCH },
+	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "1", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE},
 	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE},
 	{ &cg_timerX, "cg_timerX", "320", CVAR_ARCHIVE},

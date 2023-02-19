@@ -333,6 +333,8 @@ void G_ExplodeMissile( gentity_t *ent ) {
 	vec3_t		dir;
 	vec3_t		origin;
 
+	ent->takedamage = qfalse;
+
 	BG_EvaluateTrajectory( &ent->s.pos, level.time, origin );
 	SnapVector( origin );
 	G_SetOrigin( ent, origin );
@@ -356,6 +358,21 @@ void G_ExplodeMissile( gentity_t *ent ) {
 	}
 
 	trap_LinkEntity( ent );
+}
+
+/*
+================
+G_RocketDie
+================
+*/
+void G_RocketDie( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod ) {
+        if (inflictor == self) {
+                return;
+	}
+
+        self->takedamage = qfalse;
+        self->think = G_ExplodeMissile;
+        self->nextthink = level.time + 10;
 }
 
 /*
@@ -594,6 +611,8 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 		G_AddEvent( ent, EV_GRENADE_BOUNCE, 0 );
 		return;
 	}
+
+	ent->takedamage = qfalse;
 
 	if ( other->takedamage ) {
 		if ( ent->s.weapon != WP_PROX_LAUNCHER ) {
@@ -1108,6 +1127,16 @@ gentity_t *fire_rocket (gentity_t *self, vec3_t start, vec3_t dir) {
 	} else {
 		bolt->nextthink = level.time + 15000;
 		bolt->think = G_ExplodeMissile;
+	}
+	if ( g_vulnerableRockets.integer ) {
+		bolt->health = 1;
+		bolt->takedamage = qtrue;
+		bolt->die = G_RocketDie;
+		bolt->r.contents = CONTENTS_BODY;
+		VectorSet( bolt->r.mins, -10, -3, 0 );
+		VectorCopy( bolt->r.mins, bolt->r.absmin );
+		VectorSet( bolt->r.maxs, 10, 3, 6 );
+		VectorCopy( bolt->r.maxs, bolt->r.absmax );
 	}
 	bolt->s.eType = ET_MISSILE;
 	bolt->r.svFlags = SVF_USE_CURRENT_ORIGIN;

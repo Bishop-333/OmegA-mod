@@ -1835,11 +1835,12 @@ static int CG_DrawPickupItem( int y ) {
 		if ( fadeColor ) {
 			CG_RegisterItemVisuals( value );
 			trap_R_SetColor( fadeColor );
-			CG_DrawPic( 8, y, ICON_SIZE / 2, ICON_SIZE / 2, cg_items[ value ].icon );
 			if ( cg_drawTimer.integer & cg_drawItemTimer.integer ) {
-				CG_DrawSmallString( ICON_SIZE / 2.25 + 16, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75), s, fadeColor[0] );
-			CG_DrawSmallString( ICON_SIZE / 1.75 + 16 + strlen ( s ) * SMALLCHAR_WIDTH, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75 ), bg_itemlist[ value ].pickup_name, fadeColor[0] );
+				CG_DrawSmallString( 8, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75), s, fadeColor[0] );
+				CG_DrawPic( 13.5 + strlen ( s ) * SMALLCHAR_WIDTH, y, ICON_SIZE / 2, ICON_SIZE / 2, cg_items[ value ].icon );
+				CG_DrawSmallString( ICON_SIZE / 1.75 + 16 + strlen ( s ) * SMALLCHAR_WIDTH, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75 ), bg_itemlist[ value ].pickup_name, fadeColor[0] );
 			} else {
+				CG_DrawPic( 8, y, ICON_SIZE / 2, ICON_SIZE / 2, cg_items[ value ].icon );
 				CG_DrawSmallString( ICON_SIZE / 2.25 + 16, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75), bg_itemlist[ value ].pickup_name, fadeColor[0] );
 			}
 			trap_R_SetColor( NULL );
