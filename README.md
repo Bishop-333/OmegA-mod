@@ -1,6 +1,6 @@
 # OmegA gamecode
 
-[![Build](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/build.yml/badge.svg)](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/build.yml)
+[![Build](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/main.yml/badge.svg)](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/main.yml)
 
 ![OmegA Logo](omega_logo.svg)
 
