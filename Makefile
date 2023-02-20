@@ -214,10 +214,6 @@ LIB=lib
 INSTALL=install
 MKDIR=mkdir
 
-ifneq (,$(findstring "$(COMPILE_PLATFORM)", "linux" "gnu_kfreebsd" "kfreebsd-gnu" "gnu"))
-  TOOLS_CFLAGS += -DARCH_STRING=\"$(COMPILE_ARCH)\"
-endif
-
 ifeq ($(PLATFORM),linux)
 
   ifeq ($(ARCH),alpha)
@@ -237,8 +233,7 @@ ifeq ($(PLATFORM),linux)
   endif
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes \
-    -pipe -DUSE_ICON -DARCH_STRING=\\\"$(ARCH)\\\"
-  CLIENT_CFLAGS += $(SDL_CFLAGS)
+    -pipe -DUSE_ICON $(SDL_CFLAGS)
 
   ifeq ($(USE_OPENAL),1)
     BASE_CFLAGS += -DUSE_OPENAL
