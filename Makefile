@@ -237,7 +237,8 @@ ifeq ($(PLATFORM),linux)
   endif
 
   BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes \
-    -pipe -DUSE_ICON $(SDL_CFLAGS)
+    -pipe -DUSE_ICON -DARCH_STRING=\\\"$(ARCH)\\\"
+  CLIENT_CFLAGS += $(SDL_CFLAGS)
 
   ifeq ($(USE_OPENAL),1)
     BASE_CFLAGS += -DUSE_OPENAL
