@@ -214,6 +214,10 @@ LIB=lib
 INSTALL=install
 MKDIR=mkdir
 
+ifneq (,$(findstring "$(COMPILE_PLATFORM)", "linux" "gnu_kfreebsd" "kfreebsd-gnu" "gnu"))
+  TOOLS_CFLAGS += -DARCH_STRING=\"$(COMPILE_ARCH)\"
+endif
+
 ifeq ($(PLATFORM),linux)
 
   ifeq ($(ARCH),alpha)
