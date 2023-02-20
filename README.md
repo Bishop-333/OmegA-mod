@@ -48,6 +48,7 @@ List of the cvars/additions :
 - g_plasmaBounce
 - g_railgunDamage
 - g_railJump
+- g_railPush
 - g_rocketSpeed
 - g_selfDamage
 - g_startWhenReady
