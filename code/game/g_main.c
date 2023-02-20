@@ -213,6 +213,7 @@ vmCvar_t        g_machinegunTeamDamage;
 vmCvar_t        g_plasmaBounce;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
+vmCvar_t        g_railPush;
 vmCvar_t        g_rocketSpeed;
 vmCvar_t        g_selfDamage;
 vmCvar_t        g_startWhenReady;
@@ -451,6 +452,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_railPush, "g_railPush", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_rocketSpeed, "g_rocketSpeed", "900", 0, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
         { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },

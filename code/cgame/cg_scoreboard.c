@@ -296,10 +296,14 @@ qboolean CG_DrawOldScoreboard( void ) {
 	int		x, y, w, i, n1, n2;
 	float	fade;
 	float	*fadeColor;
+	float	color[4];
 	char	*s;
 	int maxClients;
 	int lineHeight;
 	int topBorderSize, bottomBorderSize;
+
+	color[0] = color[1] = color[2] = 1.0;
+	color[3] = fade;
 
 	// don't draw amuthing if the menu or console is up
 	if ( cg_paused.integer ) {
@@ -343,10 +347,10 @@ qboolean CG_DrawOldScoreboard( void ) {
 	// fragged by ... line
 	if ( cg.killerName[0] ) {
 		s = va("Fragged by %s", cg.killerName );
-		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
+		w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 		x = ( SCREEN_WIDTH - w ) / 2;
 		y = 40;
-		CG_DrawBigString( x, y, s, fade );
+		CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
 	}
 
 	// current rank
@@ -355,10 +359,10 @@ qboolean CG_DrawOldScoreboard( void ) {
 			s = va("%s place with %i",
 				CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
 				cg.snap->ps.persistant[PERS_SCORE] );
-			w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
+			w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 			x = ( SCREEN_WIDTH - w ) / 2;
 			y = 60;
-			CG_DrawBigString( x, y, s, fade );
+			CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
 		}
 	} else {
 		if ( cg.teamScores[0] == cg.teamScores[1] ) {
@@ -369,10 +373,10 @@ qboolean CG_DrawOldScoreboard( void ) {
 			s = va("Blue leads %i to %i",cg.teamScores[1], cg.teamScores[0] );
 		}
 
-		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
+		w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 		x = ( SCREEN_WIDTH - w ) / 2;
 		y = 60;
-		CG_DrawBigString( x, y, s, fade );
+		CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
 	}
 
 	// scoreboard

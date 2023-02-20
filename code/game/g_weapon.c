@@ -570,6 +570,11 @@ void weapon_railgun_fire (gentity_t *ent) {
 	do {
 		trap_Trace (&trace, muzzle, NULL, NULL, end, passent, MASK_SHOT );
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
+			if ( g_railPush.integer ) {
+				G_RadiusDamage( trace.endpos, ent, 100, 120, NULL, MOD_RAILJUMP );
+			} else if ( g_railJump.integer ) {
+				G_RailJump( trace.endpos, ent );
+			}
 			break;
 		}
 		traceEnt = &g_entities[ trace.entityNum ];
@@ -602,6 +607,12 @@ void weapon_railgun_fire (gentity_t *ent) {
 			}
 		}
 		if ( trace.contents & CONTENTS_SOLID ) {
+			if ( g_railPush.integer ) {
+				G_RadiusDamage( trace.endpos, ent, 100, 120, NULL, MOD_RAILJUMP );
+			} else if ( g_railJump.integer ) {
+				G_RailJump( trace.endpos, ent );
+			}
+
 			break;		// we hit something solid enough to stop the beam
 		}
 		// unlink this entity, so the next trace will go past it
@@ -618,9 +629,6 @@ void weapon_railgun_fire (gentity_t *ent) {
 	// link back in any entities we unlinked
 	for ( i = 0 ; i < unlinked ; i++ ) {
 		trap_LinkEntity( unlinkedEntities[i] );
-	}
-	if ( g_railJump.integer ) {
-		G_RadiusDamage( trace.endpos, ent, 100, 120, NULL, MOD_RAILJUMP );
 	}
 
 	// the final trace endpos will be the terminal point of the rail trail
