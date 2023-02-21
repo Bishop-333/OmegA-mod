@@ -17,6 +17,7 @@ List of the cvars/additions :
 - cg_drawTeamBackground
 - cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel
+- cg_obituaryOutput
 - cg_oldRailSound
 - cg_omegaFlags
 - cg_omegaInitialized
