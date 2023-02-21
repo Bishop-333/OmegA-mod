@@ -78,6 +78,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	TEAMCHAT_WIDTH		80
 #define TEAMCHAT_HEIGHT		8
 
+#define FRAGMSG_MAX		5
+#define	FRAGMSG_X		3
+#define	FRAGMSG_Y		375
+#define	FRAGMSG_FADETIME	7000
+
 // very large characters.pk
 #define	GIANT_WIDTH			32
 #define	GIANT_HEIGHT		48
@@ -914,6 +919,24 @@ typedef struct {
 	qhandle_t	medalCapture;
 	qhandle_t	medalHeadshot;
 
+	// frag message icon shaders
+	qhandle_t	bfgShader;
+	qhandle_t	chaingunShader;
+	qhandle_t	gauntletShader;
+	qhandle_t	grapplehookShader;
+	qhandle_t	grenadeShader;
+	qhandle_t	kamikazeShader;
+	qhandle_t	lightninggunShader;
+	qhandle_t	machinegunShader;
+	qhandle_t	nailgunShader;
+	qhandle_t	plasmaShader;
+	qhandle_t	proxlauncherShader;
+	qhandle_t	railgunShader;
+	qhandle_t	rocketShader;
+	qhandle_t	shotgunShader;
+	qhandle_t	skullShader;
+	qhandle_t	headshotShader;
+
 	// sounds
 	sfxHandle_t	quadSound;
 	sfxHandle_t	tracerSound;
@@ -1091,6 +1114,15 @@ typedef struct {
 
 } cgMedia_t;
 
+typedef struct {
+	char		targetName[32];
+	char		attackerName[32];
+	qhandle_t	causeShader;
+	int		fragTime;
+	qboolean	teamFrag;
+	char		message[200];
+} fragInfo_t;
+
 
 // The client game static (cgs) structure hold everything
 // loaded or calculated from the gamestate.  It will NOT
@@ -1192,6 +1224,8 @@ typedef struct {
 	qboolean sizingHud;
 	void *capturedItem;
 	qhandle_t activeCursor;
+
+	fragInfo_t fragMsg[FRAGMSG_MAX];
 
 	// orders
 	int currentOrder;
@@ -1299,6 +1333,7 @@ extern	vmCvar_t		cg_teamChatsOnly;
 extern	vmCvar_t		cg_noVoiceChats;
 extern	vmCvar_t		cg_noVoiceText;
 extern  vmCvar_t		cg_scorePlum;
+extern	vmCvar_t		cg_obituaryOutput;
 //unlagged - smooth clients #2
 // this is done server-side now
 //extern	vmCvar_t		cg_smoothClients;

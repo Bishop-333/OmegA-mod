@@ -129,7 +129,7 @@ void CG_Text_PaintChar(float x, float y, float width, float height, float scale,
 }
 
 void CG_Text_Paint(float x, float y, float scale, vec4_t color, const char *text, float adjust, int limit, int style) {
-  int len, count;
+	int len, count;
 	vec4_t newColor;
 	glyphInfo_t *glyph;
 	float useScale;
@@ -140,21 +140,20 @@ void CG_Text_Paint(float x, float y, float scale, vec4_t color, const char *text
 		font = &cgDC.Assets.bigFont;
 	}
 	useScale = scale * font->glyphScale;
-  if (text) {
+	if (text) {
 // TTimo: FIXME
 //		const unsigned char *s = text;
 		const char *s = text;
 		trap_R_SetColor( color );
 		memcpy(&newColor[0], &color[0], sizeof(vec4_t));
-    len = strlen(text);
+		len = strlen(text);
 		if (limit > 0 && len > limit) {
 			len = limit;
 		}
 		count = 0;
+
 		while (s && *s && count < len) {
 			glyph = &font->glyphs[(int)*s]; // TTimo: FIXME: getting nasty warnings without the cast, hopefully this doesn't break the VM build
-      //int yadj = Assets.textFont.glyphs[text[i]].bottom + Assets.textFont.glyphs[text[i]].top;
-      //float yadj = scale * (Assets.textFont.glyphs[text[i]].imageHeight - Assets.textFont.glyphs[text[i]].height);
 			if ( Q_IsColorString( s ) ) {
 				memcpy( newColor, g_color_table[ColorIndex(*(s+1))], sizeof( newColor ) );
 				newColor[3] = color[3];
@@ -167,10 +166,10 @@ void CG_Text_Paint(float x, float y, float scale, vec4_t color, const char *text
 					int ofs = style == ITEM_TEXTSTYLE_SHADOWED ? 1 : 2;
 					colorBlack[3] = newColor[3];
 					trap_R_SetColor( colorBlack );
-					CG_Text_PaintChar(x + ofs, y - yadj + ofs, 
+					CG_Text_PaintChar(x + ofs, y - yadj + ofs,
 														glyph->imageWidth,
 														glyph->imageHeight,
-														useScale, 
+														useScale,
 														glyph->s,
 														glyph->t,
 														glyph->s2,
@@ -179,10 +178,11 @@ void CG_Text_Paint(float x, float y, float scale, vec4_t color, const char *text
 					colorBlack[3] = 1.0;
 					trap_R_SetColor( newColor );
 				}
-				CG_Text_PaintChar(x, y - yadj, 
+				CG_Text_PaintChar(x, y - yadj,
 													glyph->imageWidth,
 													glyph->imageHeight,
-													useScale, 
+
+	useScale,
 													glyph->s,
 													glyph->t,
 													glyph->s2,
@@ -193,9 +193,9 @@ void CG_Text_Paint(float x, float y, float scale, vec4_t color, const char *text
 				s++;
 				count++;
 			}
-    }
-	  trap_R_SetColor( NULL );
-  }
+		}
+		trap_R_SetColor( NULL );
+	}
 }
 
 
@@ -1385,6 +1385,131 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 
 	return ret_y;
 //#endif
+}
+
+static void CG_DrawFragMsgIcons(fragInfo_t fi, int i) {
+	int	x_offset;
+	int	spacing;
+	int	h;
+#ifdef MISSIONPACK
+	float	*color;
+	int imageWidth = 10;
+	int imageHeight = 10;
+#else
+	vec4_t	hcolor;
+#endif
+
+	h = (cgs.teamChatPos - cgs.teamLastChatPos) * TINYCHAR_HEIGHT;
+
+#ifdef MISSIONPACK
+	color = CG_FadeColor(fi.fragTime, FRAGMSG_FADETIME);
+	if (!color) {
+		trap_R_SetColor(NULL);
+		return;
+	}
+	trap_R_SetColor(color);
+
+	spacing = 3;
+	imageWidth = 10;
+
+	if (fi.attackerName[0] != '\0') {
+		CG_Text_Paint(FRAGMSG_X, FRAGMSG_Y + (i * 16) - h, 0.20, color,
+				fi.attackerName, 0, 0, ITEM_TEXTSTYLE_SHADOWED);
+		x_offset = CG_Text_Width(fi.attackerName, 0.20, 0) + spacing;
+	} else x_offset = 0;
+
+	CG_DrawPic(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * 16) - imageHeight - h,
+			imageWidth, imageHeight, fi.causeShader);
+
+			x_offset += imageWidth + spacing;
+
+		CG_Text_Paint(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * 16) - h, 0.20, color,
+			fi.targetName, 0, 0, ITEM_TEXTSTYLE_SHADOWED);
+
+	if (fi.teamFrag) {
+		x_offset += CG_Text_Width(fi.targetName, 0.20, 0) + spacing;
+		CG_Text_Paint(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * 16) - h, 0.20, color,
+				"(^1TEAMMATE^7)", 0, 0, ITEM_TEXTSTYLE_SHADOWED);
+	}
+#else
+	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0;
+	trap_R_SetColor(hcolor);
+	spacing = 3;
+
+	if (fi.attackerName[0] != '\0') {
+		CG_DrawStringExt(FRAGMSG_X, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+				fi.attackerName, hcolor, qfalse, qfalse,
+				TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+		x_offset = CG_DrawStrlen(fi.attackerName) * TINYCHAR_WIDTH + spacing;
+	} else x_offset = 0;
+
+	CG_DrawPic(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+			TINYCHAR_WIDTH, TINYCHAR_HEIGHT, fi.causeShader);
+
+	x_offset += TINYCHAR_WIDTH + spacing;
+
+	CG_DrawStringExt(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+			fi.targetName, hcolor, qfalse, qfalse,
+			TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+
+	if (fi.teamFrag) {
+		x_offset += CG_DrawStrlen(fi.targetName) * TINYCHAR_WIDTH + spacing;
+		CG_DrawStringExt(FRAGMSG_X + x_offset,
+			FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h, "(^1TEAMMATE^7)", hcolor,
+			qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+	}
+
+#endif
+	trap_R_SetColor(NULL);
+}
+
+static void CG_DrawFragMsgText(char *msg, int i) {
+#ifdef MISSIONPACK
+	float	*color;
+#else
+	vec4_t	hcolor;
+#endif
+	int	h;
+
+	h = (cgs.teamChatPos - cgs.teamLastChatPos) * TINYCHAR_HEIGHT;
+
+#ifdef MISSIONPACK
+	color = CG_FadeColor(cgs.fragMsg[i].fragTime, FRAGMSG_FADETIME);
+	if (!color) {
+		trap_R_SetColor(NULL);
+		return;
+	}
+	trap_R_SetColor(color);
+	CG_Text_Paint(FRAGMSG_X, FRAGMSG_Y + (i * 13) - h, 0.20, color, msg, 0, 0,
+			ITEM_TEXTSTYLE_SHADOWED);
+#else
+	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0;
+	trap_R_SetColor(hcolor);
+
+	CG_DrawStringExt(FRAGMSG_X, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+			msg, hcolor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+#endif
+	trap_R_SetColor(NULL);
+}
+
+static void CG_DrawFragMessage( void ) {
+	int	i;
+	for (i = FRAGMSG_MAX - 1; i >= 0; i--) {
+		if (cgs.fragMsg[i].targetName[0] != '\0') {
+			// remove frag message after elapsed time
+			if (cg.time > cgs.fragMsg[i].fragTime + FRAGMSG_FADETIME) {
+				memset(&cgs.fragMsg[i], 0, sizeof(fragInfo_t));
+			}
+		}
+		if (cgs.fragMsg[i].targetName[0] != '\0') {
+			if (cg_obituaryOutput.integer == 2) {
+				CG_DrawFragMsgText(cgs.fragMsg[i].message, i);
+			}
+			else if (cg_obituaryOutput.integer >= 3) {
+				CG_DrawFragMsgIcons(cgs.fragMsg[i], i);
+			}
+		}
+	}
 }
 
 /*
@@ -3416,6 +3541,8 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 
 		if ( cgs.clientinfo[cg.clientNum].team != TEAM_SPECTATOR )
 			CG_DrawReady();
+
+		CG_DrawFragMessage();
 
 		if ( !CG_DrawFollow() ) {
 			CG_DrawWarmup();
