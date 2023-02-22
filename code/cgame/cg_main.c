@@ -279,7 +279,6 @@ vmCvar_t	cg_teamChatBeep;
 vmCvar_t        cg_bobgun;
 vmCvar_t        cg_brightPlayers;
 vmCvar_t        cg_damagePlums;
-vmCvar_t        cg_drawAccuracy;
 vmCvar_t        cg_drawEnemyThroughWalls;
 vmCvar_t        cg_drawFriendThroughWalls;
 vmCvar_t        cg_drawItemTimer;
@@ -500,7 +499,6 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_bobgun, "cg_bobgun", "0", CVAR_ARCHIVE},
 	{ &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE},
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
-	{ &cg_drawAccuracy, "cg_drawAccuracy", "1", CVAR_ARCHIVE},
 	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
 	{ &cg_drawItemTimer, "cg_drawItemTimer", "1", CVAR_ARCHIVE},

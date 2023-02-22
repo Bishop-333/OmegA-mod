@@ -1513,32 +1513,6 @@ static void CG_DrawFragMessage( void ) {
 }
 
 /*
-==================
-CG_DrawAccuracy
-==================
-*/
-static float CG_DrawAccuracy( float y ) {
-	char		*s;
-	int			w;
-	int			hits, shots;
-
-	hits = cg.snap->ps.stats[STAT_ACCURACY_HITS];
-	shots = cg.snap->ps.stats[STAT_ACCURACY_SHOTS];
-
-	if ( !hits || !shots ) {
-		s = "0%";
-	} else { 
-		s = va( "%i%s", (int)(hits * 100 / shots), "%" );
-	}
-
-	w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
-
-	CG_DrawBigString( 635 - w, y + 2, s, 1.0F);
-
-	return y + BIGCHAR_HEIGHT + 4;
-}
-
-/*
 =====================
 CG_DrawUpperRight
 
@@ -1586,9 +1560,6 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 	}
 	if ( cg_drawSpeed.integer ) {
 		y = CG_DrawSpeedMeter( y );
-	}
-	if ( cg_drawAccuracy.integer ) {
-		y = CG_DrawAccuracy( y );
 	}
 	if ( cg_drawAttacker.integer ) {
 		y = CG_DrawAttacker( y );

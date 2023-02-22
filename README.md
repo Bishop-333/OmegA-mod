@@ -10,14 +10,12 @@ List of the cvars/additions :
 - cg_bobgun
 - cg_brightPlayers
 - cg_damagePlums
-- cg_drawAccuracy
 - cg_drawEnemyThroughWalls
 - cg_drawFriendThroughWalls
 - cg_drawItemTimer
 - cg_drawTeamBackground
 - cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel
-- cg_obituaryOutput
 - cg_oldRailSound
 - cg_omegaFlags
 - cg_omegaInitialized
@@ -49,13 +47,11 @@ List of the cvars/additions :
 - g_plasmaBounce
 - g_railgunDamage
 - g_railJump
-- g_railPush
 - g_rocketSpeed
 - g_selfDamage
 - g_startWhenReady
 - g_teamPush
 - g_teleportMissiles //from ratmod
-- - g_vulnerableRockets
 - g_waterDamage
 
 //delagMissile are from Ratmod

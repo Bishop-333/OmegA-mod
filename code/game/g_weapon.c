@@ -261,7 +261,6 @@ void Bullet_Fire (gentity_t *ent, float spread, int damage ) {
 //unlagged - attack prediction #2
 			if( LogAccuracyHit( traceEnt, ent ) ) {
 				ent->client->accuracy_hits++;
-				ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 			}
 		} else {
 			tent = G_TempEntity( tr.endpos, EV_BULLET_HIT_WALL );
@@ -428,7 +427,6 @@ void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
 		if( ShotgunPellet( origin, end, ent ) && !hitClient ) {
 			hitClient = qtrue;
 			ent->client->accuracy_hits++;
-			ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 		}
 	}
 	for ( i = 0 ; i < countTarg ; i++ ) {
@@ -675,7 +673,6 @@ void weapon_railgun_fire (gentity_t *ent) {
 		}
 		ent->client->accuracy_hits++;
                 ent->client->accuracy[WP_RAILGUN][1]++;
-		ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 	}
 
 }
@@ -801,7 +798,6 @@ void Weapon_LightningFire( gentity_t *ent ) {
 			if( LogAccuracyHit( traceEnt, ent ) ) {
 				ent->client->accuracy_hits++;
                                 ent->client->accuracy[WP_LIGHTNING][1]++;
-				ent->client->ps.stats[STAT_ACCURACY_HITS]++;
 			}
 		} else if ( !( tr.surfaceFlags & SURF_NOIMPACT ) ) {
 			tent = G_TempEntity( tr.endpos, EV_MISSILE_MISS );
@@ -959,7 +955,6 @@ void FireWeapon( gentity_t *ent ) {
 			ent->client->accuracy_shots++;
                         ent->client->accuracy[ent->s.weapon][0]++;
 		}
-		ent->client->ps.stats[STAT_ACCURACY_SHOTS]++;
 	}
 
 	// set aiming directions
