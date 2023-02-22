@@ -1123,8 +1123,17 @@ Cmd_Drop_f
 void Cmd_Drop_f( gentity_t *ent ) {
 	gentity_t	*item = NULL;
 
-	if ( g_dropFlag.integer && ( ent->client->ps.powerups[PW_REDFLAG] || ent->client->ps.powerups[PW_BLUEFLAG] || ent->client->ps.powerups[PW_NEUTRALFLAG] ) ) {
-		item = DropFlag( ent );
+	if ( g_dropFlag.integer ) {
+		if ( ent->client->ps.powerups[PW_REDFLAG] ) {
+			trap_SendServerCommand( ent-g_entities, "print \"Red flag has been dropped\n\"" );
+			item = DropFlag( ent );
+		} else if ( ent->client->ps.powerups[PW_BLUEFLAG] ) {
+			trap_SendServerCommand( ent-g_entities, "print \"Blue flag has been dropped\n\"" );
+			item = DropFlag( ent );
+		} else if ( ent->client->ps.powerups[PW_NEUTRALFLAG] ) {
+			trap_SendServerCommand( ent-g_entities, "print \"Flag has been dropped\n\"" );
+			item = DropFlag( ent );
+		}
 	}
 
 	if (item != NULL) {

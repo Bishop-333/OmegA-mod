@@ -350,7 +350,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 		w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 		x = ( SCREEN_WIDTH - w ) / 2;
 		y = 40;
-		CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
+		CG_DrawMediumString( x, y, s, fade );
 	}
 
 	// current rank
@@ -362,7 +362,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 			w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 			x = ( SCREEN_WIDTH - w ) / 2;
 			y = 60;
-			CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
+			CG_DrawMediumString( x, y, s, fade );
 		}
 	} else {
 		if ( cg.teamScores[0] == cg.teamScores[1] ) {
@@ -376,7 +376,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 		w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 		x = ( SCREEN_WIDTH - w ) / 2;
 		y = 60;
-		CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
+		CG_DrawMediumString( x, y, s, fade );
 	}
 
 	// scoreboard
