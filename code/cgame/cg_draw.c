@@ -42,6 +42,8 @@ char systemChat[256];
 char teamChat1[256];
 char teamChat2[256];
 
+static int CG_DrawPickupItem( int y );
+
 #ifdef MISSIONPACK
 
 int CG_Text_Width(const char *text, float scale, int limit) {
@@ -1561,6 +1563,9 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 	if ( cg_drawSpeed.integer ) {
 		y = CG_DrawSpeedMeter( y );
 	}
+	if ( cg_drawItemPickup.integer ) {
+		y = CG_DrawPickupItem( y );
+	}
 	if ( cg_drawAttacker.integer ) {
 		y = CG_DrawAttacker( y );
 	}
@@ -1904,41 +1909,22 @@ CG_DrawPickupItem
 #ifndef MISSIONPACK
 static int CG_DrawPickupItem( int y ) {
 	int		value;
+	int w;
 	float	*fadeColor;
-	char *s;
-	int mins, seconds, tens;
-	int msec;
-
-	msec = cg.itemPickupBlendTime - cgs.levelStartTime;
-
-	seconds = msec / 1000;
-	mins = seconds / 60;
-	seconds -= mins * 60;
-	tens = seconds / 10;
-	seconds -= tens * 10;
-
-	s = va( "%i:%i%i", mins, tens, seconds );
 
 	if ( cg.snap->ps.stats[STAT_HEALTH] <= 0 ) {
 		return y;
 	}
 
-	y -= ICON_SIZE;
-
 	value = cg.itemPickup;
+	w = CG_DrawStrlen( bg_itemlist[ value ].pickup_name ) * TINYCHAR_WIDTH;
 	if ( value ) {
 		fadeColor = CG_FadeColor( cg.itemPickupTime, 3000 );
 		if ( fadeColor ) {
 			CG_RegisterItemVisuals( value );
 			trap_R_SetColor( fadeColor );
-			if ( cg_drawTimer.integer & cg_drawItemTimer.integer ) {
-				CG_DrawSmallString( 8, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75), s, fadeColor[0] );
-				CG_DrawPic( 13.5 + strlen ( s ) * SMALLCHAR_WIDTH, y, ICON_SIZE / 2, ICON_SIZE / 2, cg_items[ value ].icon );
-				CG_DrawSmallString( ICON_SIZE / 1.75 + 16 + strlen ( s ) * SMALLCHAR_WIDTH, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75 ), bg_itemlist[ value ].pickup_name, fadeColor[0] );
-			} else {
-				CG_DrawPic( 8, y, ICON_SIZE / 2, ICON_SIZE / 2, cg_items[ value ].icon );
-				CG_DrawSmallString( ICON_SIZE / 2.25 + 16, y + (ICON_SIZE / 6.75 - BIGCHAR_HEIGHT / 6.75), bg_itemlist[ value ].pickup_name, fadeColor[0] );
-			}
+			CG_DrawPic( 625, y, ICON_SIZE/4, ICON_SIZE/4, cg_items[ value ].icon );
+			CG_DrawStringExt( 622 - w, y + 2.5, bg_itemlist[ value ].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 			trap_R_SetColor( NULL );
 		}
 	}
@@ -1962,9 +1948,6 @@ static void CG_DrawLowerLeft( void ) {
 	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 && cg_drawTeamOverlay.integer == 3 ) {
 		y = CG_DrawTeamOverlay( y, qfalse, qfalse );
 	} 
-
-
-	y = CG_DrawPickupItem( y + 12 );
 }
 #endif // MISSIONPACK
 
@@ -2176,7 +2159,7 @@ static void CG_DrawReady ( void ) {
 		s = "^1Type \"\\ready\" to ready up";
 	}
 	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-	CG_DrawSmallString( 320 - w / 2, 72, s, 1.0F );
+	CG_DrawSmallString( 320 - w / 2, 47, s, 1.0F );
 }
 
 
@@ -2950,10 +2933,10 @@ CG_DrawSpectator
 static void CG_DrawSpectator(void) {
 	CG_DrawBigString(320 - 9 * 8, 440, "SPECTATOR", 1.0F);
 	if ( cgs.gametype == GT_TOURNAMENT ) {
-		CG_DrawBigString(320 - 15 * 8, 460, "waiting to play", 1.0F);
+		CG_DrawMediumString(320 - 15 * 6, 460, "waiting to play", 1.0F);
 	}
 	else if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
-		CG_DrawBigString(320 - 39 * 8, 460, "press ESC and use the JOIN menu to play", 1.0F);
+		CG_DrawMediumString(320 - 39 * 6, 460, "press ESC and use the JOIN menu to play", 1.0F);
 	}
 }
 
@@ -2984,10 +2967,10 @@ static void CG_DrawVote(void) {
 	s = va("VOTE(%i):%s yes:%i no:%i", sec, cgs.voteString, cgs.voteYes, cgs.voteNo);
 	CG_DrawSmallString( 0, 58, s, 1.0F );
 	s = "or press ESC then click Vote";
-	CG_DrawSmallString( 0, 58 + SMALLCHAR_HEIGHT + 2, s, 1.0F );
+	CG_DrawSmallString( 0, 67 + SMALLCHAR_HEIGHT + 2, s, 1.0F );
 #else
 	s = va("VOTE(%i):%s yes:%i no:%i", sec, cgs.voteString, cgs.voteYes, cgs.voteNo );
-	CG_DrawSmallString( 0, 58, s, 1.0F );
+	CG_DrawSmallString( 0, 67, s, 1.0F );
 #endif
 }
 

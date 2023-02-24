@@ -53,11 +53,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SB_SCORELINE_X		112
 
 #define SB_RATING_WIDTH	    (6 * BIGCHAR_WIDTH) // width 6
-#define SB_SCORE_X			(SB_SCORELINE_X + BIGCHAR_WIDTH) // width 6
-#define SB_RATING_X			(SB_SCORELINE_X + 6 * BIGCHAR_WIDTH) // width 6
-#define SB_PING_X			(SB_SCORELINE_X + 12 * BIGCHAR_WIDTH + 8) // width 5
-#define SB_TIME_X			(SB_SCORELINE_X + 17 * BIGCHAR_WIDTH + 8) // width 5
-#define SB_NAME_X			(SB_SCORELINE_X + 22 * BIGCHAR_WIDTH) // width 15
+#define SB_SCORE_X			(SB_SCORELINE_X + BIGCHAR_WIDTH + 2) // width 5
+#define SB_RATING_X			(SB_SCORELINE_X + 5 * BIGCHAR_WIDTH) // width 6
+#define SB_PING_X			(SB_SCORELINE_X + 11 * BIGCHAR_WIDTH + 17) // width 5
+#define SB_TIME_X			(SB_SCORELINE_X + 16 * BIGCHAR_WIDTH + 18) // width 5
+#define SB_ACCURACY_X			(SB_SCORELINE_X + 21 * BIGCHAR_WIDTH + 26) // width 5
+#define SB_NAME_X			(SB_SCORELINE_X + 26 * BIGCHAR_WIDTH + 18) // width 15
 
 // The new and improved score board
 //
@@ -181,21 +182,21 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	// draw the score line
 	if ( score->ping == -1 ) {
 		Com_sprintf(string, sizeof(string),
-			" connecting    %s", ci->name);
+			" connecting          %s", ci->name);
 	} else if ( ci->team == TEAM_SPECTATOR ) {
 		Com_sprintf(string, sizeof(string),
-			" SPECT %3i %2i:%02i %s", score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
+			" SPEC %3i %2i:%02i      %s", score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
 	} else {
 		/*if(cgs.gametype == GT_LMS)
 			Com_sprintf(string, sizeof(string),
-				"%5i %4i %2i:%02i %s *%i*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name, ci->isDead);
+				"%4i %4i %2i:%02i %3i%% %s *%i*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name, ci->isDead);
 		else*/
 		/*if(ci->isDead)
 			Com_sprintf(string, sizeof(string),
-				"%5i %4i %2i:%02i %s *DEAD*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
+				"%4i %4i %2i:%02i %3i%% %s *DEAD*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
 		else*/
 			Com_sprintf(string, sizeof(string),
-				"%5i %4i %2i:%02i %s", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
+				"%4i %4i %2i:%02i %3i%% %s", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
 	}
 
 	// highlight your position
@@ -382,10 +383,15 @@ qboolean CG_DrawOldScoreboard( void ) {
 	// scoreboard
 	y = SB_HEADER;
 
-	CG_DrawPic( SB_SCORE_X + (SB_RATING_WIDTH / 2), y, 64, 32, cgs.media.scoreboardScore );
-	CG_DrawPic( SB_PING_X - (SB_RATING_WIDTH / 2), y, 64, 32, cgs.media.scoreboardPing );
-	CG_DrawPic( SB_TIME_X - (SB_RATING_WIDTH / 2), y, 64, 32, cgs.media.scoreboardTime );
-	CG_DrawPic( SB_NAME_X - (SB_RATING_WIDTH / 2), y, 64, 32, cgs.media.scoreboardName );
+	color[0] = 0.0;
+	color[1] = 0.5;
+	color[2] = 1.0;
+	color[3] = 0.5;
+	CG_DrawMediumStringColor( SB_SCORE_X + (SB_RATING_WIDTH / 2), y + 10, "Score", color );
+	CG_DrawMediumStringColor( SB_PING_X - (SB_RATING_WIDTH / 2), y + 10, "Ping", color );
+	CG_DrawMediumStringColor( SB_TIME_X - (SB_RATING_WIDTH / 2), y + 10, "Time", color );
+	CG_DrawMediumStringColor( SB_ACCURACY_X - (SB_RATING_WIDTH / 2), y + 10, "Acc", color );
+	CG_DrawMediumStringColor( SB_NAME_X - (SB_RATING_WIDTH / 2), y + 10, "Name", color );
 
 	y = SB_TOP;
 

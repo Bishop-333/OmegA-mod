@@ -12,7 +12,7 @@ List of the cvars/additions :
 - cg_damagePlums
 - cg_drawEnemyThroughWalls
 - cg_drawFriendThroughWalls
-- cg_drawItemTimer
+- cg_drawItemPickup
 - cg_drawTeamBackground
 - cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel

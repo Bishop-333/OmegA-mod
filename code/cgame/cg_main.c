@@ -281,7 +281,7 @@ vmCvar_t        cg_brightPlayers;
 vmCvar_t        cg_damagePlums;
 vmCvar_t        cg_drawEnemyThroughWalls;
 vmCvar_t        cg_drawFriendThroughWalls;
-vmCvar_t        cg_drawItemTimer;
+vmCvar_t        cg_drawItemPickup;
 vmCvar_t        cg_drawTeamBackground;
 vmCvar_t        cg_enemyColor;
 vmCvar_t        cg_enemyModel;
@@ -501,7 +501,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
 	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
-	{ &cg_drawItemTimer, "cg_drawItemTimer", "1", CVAR_ARCHIVE},
+	{ &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE},
 	{ &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE},
 	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE},
 	{ &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE},

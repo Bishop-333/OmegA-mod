@@ -234,6 +234,10 @@ void CG_DrawMediumString( int x, int y, const char *s, float alpha ) {
 	CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
 }
 
+void CG_DrawMediumStringColor( int x, int y, const char *s, vec4_t color ) {
+	CG_DrawStringExt( x, y, s, color, qtrue, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
+}
+
 void CG_DrawSmallString( int x, int y, const char *s, float alpha ) {
 	float	color[4];
 
@@ -244,6 +248,14 @@ void CG_DrawSmallString( int x, int y, const char *s, float alpha ) {
 
 void CG_DrawSmallStringColor( int x, int y, const char *s, vec4_t color ) {
 	CG_DrawStringExt( x, y, s, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+}
+
+void CG_DrawTinyString( int x, int y, const char *s, float alpha ) {
+	float	color[4];
+
+	color[0] = color[1] = color[2] = 1.0;
+	color[3] = alpha;
+	CG_DrawStringExt( x, y, s, color, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 }
 
 /*

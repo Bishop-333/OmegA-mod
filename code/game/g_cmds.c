@@ -1980,7 +1980,7 @@ void Cmd_CallVote_f( gentity_t *ent ) {
 	}
 
         ent->client->pers.voteCount++;
-	trap_SendServerCommand( -1, va("print \"%s called a vote.\n\"", ent->client->pers.netname ) );
+	trap_SendServerCommand( -1, va("print \"%s ^7called a vote.\n\"", ent->client->pers.netname ) );
 
 	// start the voting, the caller autoamtically votes yes
 	level.voteTime = level.time;
@@ -2149,7 +2149,7 @@ void Cmd_CallTeamVote_f( gentity_t *ent ) {
 		if ( level.clients[i].pers.connected == CON_DISCONNECTED )
 			continue;
 		if (level.clients[i].sess.sessionTeam == team)
-			trap_SendServerCommand( i, va("print \"%s called a team vote.\n\"", ent->client->pers.netname ) );
+			trap_SendServerCommand( i, va("print \"%s ^7called a team vote.\n\"", ent->client->pers.netname ) );
 	}
 
 	// start the voting, the caller autoamtically votes yes
