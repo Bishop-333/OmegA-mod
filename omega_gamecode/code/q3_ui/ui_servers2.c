@@ -1402,30 +1402,32 @@ int ArenaServers_SetType( int type )
 ArenaServers_AddToFavorites
 =================
 */
-static void ArenaServers_AddToFavorites( void )
-{
-   servernode_t* servernodeptr;
-   int i;
+static void ArenaServers_AddToFavorites( void ) {
+	int			i;
+	servernode_t*	servernodeptr;
 
-   if ( g_numfavoriteservers == MAX_FAVORITESERVERS )
-      return;
+	if ( g_numfavoriteservers == MAX_FAVORITESERVERS ) {
+		return;
+	}
 
-   if (!g_arenaservers.list.numitems)
-      return;
+	if (!g_arenaservers.list.numitems) {
+		return;
+	}
 
-   servernodeptr = g_arenaservers.table[g_arenaservers.list.curvalue].servernode;
-   for ( i = 0; i < g_numfavoriteservers; i++ )
-   if ( !Q_stricmp( g_arenaservers.favoriteaddresses[i],servernodeptr->adrstr ) )
-      return;
+	servernodeptr = g_arenaservers.table[g_arenaservers.list.curvalue].servernode;
 
-   strcpy( g_arenaservers.favoriteaddresses[g_numfavoriteservers],
-      servernodeptr->adrstr );
+	for ( i=0; i < g_numfavoriteservers; i++ ) {
+		if ( !Q_stricmp( g_arenaservers.favoriteaddresses[i],servernodeptr->adrstr ) ) {
+			return;
+		}
 
-   memcpy( &g_favoriteserverlist[g_numfavoriteservers],
-      servernodeptr,sizeof(servernode_t) );
+		strcpy( g_arenaservers.favoriteaddresses[g_numfavoriteservers], servernodeptr->adrstr );
 
-   g_numfavoriteservers++;
-   g_arenaservers.numfavoriteaddresses = g_numfavoriteservers;
+		memcpy( &g_favoriteserverlist[g_numfavoriteservers], servernodeptr, sizeof(servernode_t) );
+
+		g_numfavoriteservers++;
+		g_arenaservers.numfavoriteaddresses = g_numfavoriteservers;
+	}
 }
 
 /*

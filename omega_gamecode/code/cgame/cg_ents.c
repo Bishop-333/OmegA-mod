@@ -1103,8 +1103,7 @@ void CG_AddPacketEntities( void ) {
 	for ( num = 0 ; num < cg.snap->numEntities ; num++ ) {
 		cent = &cg_entities[ cg.snap->entities[ num ].number ];
 //unlagged - early transitioning
-		if ( !cg.nextSnap || 
-				(cent->nextState.eType != ET_MISSILE && cent->nextState.eType != ET_GENERAL && cent->nextState.eType != ET_ITEM ) ) {
+		if ( !cg.nextSnap || (cent->nextState.eType != ET_MISSILE && cent->nextState.eType != ET_GENERAL && cent->nextState.eType != ET_ITEM ) ) {
 //unlagged - early transitioning
 			CG_AddCEntity( cent );
 		} //Also unlagged

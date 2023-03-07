@@ -656,9 +656,9 @@ Drop_Flag
 ================
 */
 gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle ) {
-	vec3_t	forward, right, up;
-	vec3_t	muzzle;
 	gentity_t	*item_ent;
+	vec3_t		forward, right, up;
+	vec3_t		muzzle;
 
 	if ( !ent->client ) {
 		return NULL;

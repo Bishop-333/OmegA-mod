@@ -2751,7 +2751,7 @@ qboolean G_admin_allready( gentity_t *ent, int skiparg )
     }
   }
   if ( level.warmupTime < 0 ) {
-	  SendReadymask( -1 );
+	  SendReadyMask( -1 );
   }
   AP( va( "print \"^3!allready:^7 %s^7 says everyone is READY now\n\"",
      ( ent ) ? ent->client->pers.netname : "console" ) );

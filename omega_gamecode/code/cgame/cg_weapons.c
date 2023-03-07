@@ -1045,6 +1045,7 @@ const char *CG_GetFlagModel( gitem_t *item ) {
 			return omgRedFlag;
 		}
 	}
+
 	if ( item->giType == IT_TEAM && item->giTag == PW_BLUEFLAG && cg_omegaFlags.integer ) {
 		const char *omgBlueFlag = "models/flags_omega/b_flag.md3";
 		qhandle_t model = trap_R_RegisterModel( omgBlueFlag );
@@ -1052,7 +1053,6 @@ const char *CG_GetFlagModel( gitem_t *item ) {
 			return omgBlueFlag;
 		}
 	}
-
 	return item->world_model[0];
 }
 

@@ -206,7 +206,6 @@ typedef struct {
 
 	// for fixed msec Pmove
 	int			pmove_fixed;
-	int			guidedMissiles;
 	int			pmove_msec;
 
         //Sago's pmove
@@ -220,8 +219,8 @@ typedef struct {
 	void		(*trace)( trace_t *results, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int passEntityNum, int contentMask );
 	int			(*pointcontents)( const vec3_t point, int passEntityNum );
 
-	//OmegA
         int                     pmove_autohop;
+	int			guidedMissiles;
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles

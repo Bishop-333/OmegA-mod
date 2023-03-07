@@ -422,26 +422,27 @@ static void CG_ParseWarmup( void ) {
 CG_ParseReadyMask
 =================
 */
+static void CG_ParseReadyMask( void ) {
+	int		readyMask, i;
 
-static void CG_ParseReadyMask ( void ) {
-    int readyMask, i;
-    readyMask = atoi ( CG_Argv ( 1 ) );
+	readyMask = atoi( CG_Argv ( 1 ) );
 
-    if ( cg.warmup >= 0 )
-        return;
+	if ( cg.warmup >= 0 ) {
+		return;
+	}
 
-    if ( readyMask != cg.readyMask ) {
-        for ( i = 0; i < 32 ; i++ ) {
-            if ( ( cg.readyMask & ( 1 << i ) ) != ( readyMask & ( 1 << i ) ) ) {
-
-                if ( readyMask & ( 1 << i ) )
-                    CG_CenterPrint ( va ( "%s ^7is ^2ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
-                else
-                    CG_CenterPrint ( va ( "%s ^7is ^1not ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
-            }
-        }
-        cg.readyMask = readyMask;
-    }
+	if ( readyMask != cg.readyMask ) {
+		for( i = 0; i < 32 ; i++ ) {
+			if ( ( cg.readyMask & ( 1 << i ) ) != ( readyMask & ( 1 << i ) ) ) {
+				if ( readyMask & ( 1 << i ) ) {
+					CG_CenterPrint ( va ( "%s ^7is ^2ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
+                		} else {
+                    			CG_CenterPrint ( va ( "%s ^7is ^1not ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
+				}
+			}
+		}
+		cg.readyMask = readyMask;
+	}
 }
 
 /*

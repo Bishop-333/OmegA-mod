@@ -1145,17 +1145,17 @@ void Cmd_Drop_f( gentity_t *ent ) {
 
 /*
 ==================
-SendReadymask
+SendReadyMask
 sends the readymask to the player with clientnum, if clientnum = -1 its send to every player
 ==================
 */
 
-void SendReadymask( int clientnum ) {
-	int			ready, notReady, playerCount;
-	int			i;
-	gclient_t	*cl;
-	int			readyMask;
+void SendReadyMask( int clientnum ) {
 	char		entry[16];
+	int			i;
+	int			ready, notReady, playerCount;
+	int			readyMask;
+	gclient_t	*cl;
 
 	if ( !level.warmupTime ) {
 		return;
@@ -1167,7 +1167,7 @@ void SendReadymask( int clientnum ) {
 	readyMask = 0;
 	playerCount = 0;
 
-	for ( i = 0; i < g_maxclients.integer; i++ ) {
+	for ( i = 0 ; i < g_maxclients.integer ; i++ ) {
 		cl = level.clients + i;
 		if ( cl->pers.connected != CON_CONNECTED || cl->sess.sessionTeam == TEAM_SPECTATOR ) {
 			continue;
@@ -1207,7 +1207,7 @@ void Cmd_Ready_f( gentity_t *ent ) {
 
 	ent->client->ready = !ent->client->ready;
 
-	SendReadymask( -1 );
+	SendReadyMask( -1 );
 }
 
 

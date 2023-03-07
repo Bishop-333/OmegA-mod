@@ -606,7 +606,6 @@ void weapon_railgun_fire (gentity_t *ent) {
 			if ( g_railJump.integer ) {
 				G_RailJump( trace.endpos, ent );
 			}
-
 			break;		// we hit something solid enough to stop the beam
 		}
 		// unlink this entity, so the next trace will go past it

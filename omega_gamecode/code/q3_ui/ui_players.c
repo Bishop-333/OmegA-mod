@@ -578,11 +578,13 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 	float		adjust;
 
 	VectorCopy( pi->viewAngles, headAngles );
+
 	if (rotate) {
 		headAngles[YAW] = AngleMod( headAngles[YAW] ) + uis.realtime / 32;
 	} else {
 		headAngles[YAW] = AngleMod( headAngles[YAW] ) + 32;
 	}
+
 	VectorClear( legsAngles );
 	VectorClear( torsoAngles );
 

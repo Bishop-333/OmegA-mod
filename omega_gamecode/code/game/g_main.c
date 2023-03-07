@@ -2581,10 +2581,10 @@ void CheckTournament( void ) {
 			return;
 		}
 	} else if ( g_gametype.integer != GT_SINGLE_PLAYER && level.warmupTime != 0 ) {
+		int		clientsReady = 0;
 		int		counts[TEAM_NUM_TEAMS];
+		int		i;
 		qboolean	notEnough = qfalse;
-		int i;
-		int clientsReady = 0;
 
 		if ( g_gametype.integer > GT_TEAM && !g_ffa_gt ) {
 			counts[TEAM_BLUE] = TeamCount( -1, TEAM_BLUE );

@@ -1685,7 +1685,7 @@ void ClientBegin( int clientNum ) {
         if(strlen(custom_vote_info))
             SendCustomVoteCommands(clientNum);
 
-	SendReadymask( ent - g_entities );
+	SendReadyMask( ent - g_entities );
 }
 
 /*
@@ -2223,7 +2223,7 @@ void ClientDisconnect( int clientNum ) {
 		BotAIShutdownClient( clientNum, qfalse );
 	}
 
-	SendReadymask( -1 );
+	SendReadyMask( -1 );
 }
 
 

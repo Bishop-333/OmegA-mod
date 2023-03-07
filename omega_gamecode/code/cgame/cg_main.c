@@ -591,8 +591,8 @@ CG_SetDefaultsCvars
 =================
  */
 void CG_SetDefaultsCvars( void ) {
-	int i;
-	cvarTable_t *cv;
+	int			i;
+	cvarTable_t	*cv;
 
 	for ( i = 0, cv = cvarTable ; i < cvarTableSize ; i++, cv++ ) {
 		trap_Cvar_Set( cv->cvarName, cv->defaultString );

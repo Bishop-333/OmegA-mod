@@ -31,7 +31,7 @@ G_DelagLatency
 ================
 */
 int G_DelagLatency( gclient_t *client ) {
-	int ping = 0;
+	int			ping = 0;
 
 	switch ( g_delagMissileLatencyMode.integer ) {
 		case 2:
@@ -48,10 +48,11 @@ int G_DelagLatency( gclient_t *client ) {
 			}
 			break;
 	}
+
 	if ( g_delagMissileLimitVariance.integer && g_delagMissileLimitVarianceMs.integer > 0 && g_truePing.integer ) {
+		qboolean limited = qfalse;
 		int maxping = client->pers.realPing + g_delagMissileLimitVarianceMs.integer;
 		int minping = client->pers.realPing - g_delagMissileLimitVarianceMs.integer;
-		qboolean limited = qfalse;
 		int oldping = ping;
 
 		if ( minping < 0 ) {
@@ -74,7 +75,7 @@ G_MissileLagTime
 ================
 */
 int G_MissileLagTime( gclient_t *client ) {
-	int offset = 0;
+	int			offset = 0;
 
 	if ( !g_delagMissiles.integer ) {
 		return MISSILE_PRESTEP_TIME;
@@ -98,46 +99,45 @@ G_MissileRunDelag
 ================
 */
 void G_MissileRunDelag( gentity_t *ent, int stepmsec ) {
-	int prevTimeSaved;
-	int lvlTimeSaved;
-	int projectileDelagTime;
+	int			lvlTimeSaved;
+	int			prevTimeSaved;
+	int			projectileDelagTime;
 
-	if ( g_delagMissileNudgeOnly.integer
-			|| level.previousTime <= DELAG_MAX_BACKTRACK
-			|| stepmsec <= 0 ) {
+	if ( g_delagMissileNudgeOnly.integer || level.previousTime <= DELAG_MAX_BACKTRACK || stepmsec <= 0 ) {
 		return;
 	}
 
 	// if we see the missile late due to lag & PRESTEP
 	// compute the flight since it was launched, 
 	// shifting clients back accordingly
-	if ( !G_InUse( ent )
-			|| ent->freeAfterEvent
-			|| ent->s.eType != ET_MISSILE
-			|| !ent->needsDelag ) {
+	if ( !G_InUse( ent ) || ent->freeAfterEvent || ent->s.eType != ET_MISSILE || !ent->needsDelag ) {
 		return;
 	}
 
 	prevTimeSaved = level.previousTime;
 	lvlTimeSaved = level.time;
-	projectileDelagTime = level.previousTime - (DELAG_MAX_BACKTRACK / stepmsec) * stepmsec;
+	projectileDelagTime = level.previousTime - ( DELAG_MAX_BACKTRACK / stepmsec ) * stepmsec;
+
 	while ( projectileDelagTime < prevTimeSaved ) {
 		if ( !G_InUse( ent ) || ent->freeAfterEvent ) {
 			// make sure we don't run missile again
 			// if it exploded already
 			break;
 		}
+
 		if ( projectileDelagTime >= ent->launchTime ) {
 			int shiftTime = projectileDelagTime;
+
 			G_TimeShiftAllClients( shiftTime, ent->parent );
+
 			level.time = projectileDelagTime + stepmsec;
 			level.previousTime = projectileDelagTime;
-
 
 			G_RunMissile( ent );
 
 			level.time = lvlTimeSaved;
 			level.previousTime = prevTimeSaved;
+
 			G_UnTimeShiftAllClients( ent->parent );
 		}
 		projectileDelagTime += stepmsec;
@@ -158,9 +158,10 @@ void G_ImmediateRunMissile( gentity_t *ent ) {
 
 	if ( !g_delagMissileNudgeOnly.integer ) {
 		int stepmsec = level.time - level.previousTime;
-		G_MissileRunDelag(ent, stepmsec);
 
+		G_MissileRunDelag(ent, stepmsec);
 	}
+
 	if ( !G_InUse( ent ) ) {
 		return;
 	}
@@ -196,24 +197,25 @@ G_ImmediateRunClientMissiles
 */
 void G_ImmediateRunClientMissiles ( gentity_t *client ) {
 	gentity_t	*ent;
-	int 		i;
+	int			i;
 
 	if ( g_delagMissileImmediateRun.integer <= 1 ) {
 		return;
 	}
+
 	for ( i = 0 ; i < level.num_entities ; ++i ) {
 		ent = &g_entities[i];
-		if ( !G_InUse( ent )
-				|| ent->freeAfterEvent
-				|| ent->s.eType != ET_MISSILE
-				|| ent->parent != client ) {
+
+		if ( !G_InUse( ent ) || ent->freeAfterEvent || ent->s.eType != ET_MISSILE || ent->parent != client ) {
 			continue;
 		}
+
 		if ( ent->missileRan < 0 ) {
 			// this missile will be run later
 			ent->missileRan++;
 			continue;
 		}
+
 		G_ImmediateRunMissile( ent );
 	}
 }
@@ -233,7 +235,7 @@ void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 	vec3_t		rotationMatrix[3];
 	vec3_t		tmp;
 	vec3_t 		velocity;
-	int		hitTime;
+	int			hitTime;
 
 	dest =  G_PickTarget( portal->target );
 	if (!dest) {
@@ -286,7 +288,9 @@ G_PushGrenade
 void G_PushGrenade( gentity_t *ent, trace_t *trace, gentity_t *jumppad ) {
 	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
 	VectorCopy( jumppad->s.origin2, ent->s.pos.trDelta );
+
 	ent->s.pos.trTime = level.time;
+
 	G_AddEvent( ent, EV_JUMP_PAD, 0 );
 }
 
@@ -321,6 +325,7 @@ void G_BounceMissile( gentity_t *ent, trace_t *trace ) {
 	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
 	ent->s.pos.trTime = level.time;
 }
+
 
 /*
 ================
@@ -769,13 +774,14 @@ void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 	trap_LinkEntity( ent );
 }
 
-#define TELEMISSILE_MAX_TRIGGERS 32
 
 /*
 ================
 G_RunMissile
 ================
 */
+#define TELEMISSILE_MAX_TRIGGERS 32
+
 void G_RunMissile( gentity_t *ent ) {
 	gentity_t	*stuckIn;
 	gentity_t	*unlinkedEntities[TELEMISSILE_MAX_TRIGGERS];
@@ -899,6 +905,7 @@ void G_ApplyMissileNudge( gentity_t *self, gentity_t *bolt ) {
 	if ( !self->client ) {
 		return;
 	}
+
 	bolt->s.pos.trTime -= G_MissileLagTime(self->client);
 	bolt->needsDelag = qtrue;
 	bolt->launchTime = bolt->s.pos.trTime;
@@ -906,14 +913,15 @@ void G_ApplyMissileNudge( gentity_t *self, gentity_t *bolt ) {
 	if ( G_IsElimGT() && level.time > level.roundStartTime - 1000*g_elimination_activewarmup.integer ) {
 		if ( bolt->launchTime < level.roundStartTime ) {
 			int prestep = 0;
+
 			if ( g_delagMissiles.integer ) {
 				prestep = g_delagMissileBaseNudge.integer;
 			} else {
 				prestep = MISSILE_PRESTEP_TIME;
 			}
+
 			bolt->s.pos.trTime = level.roundStartTime-prestep;
 			bolt->launchTime = level.roundStartTime-prestep;
-
 		}
 	}
 }
@@ -1064,12 +1072,11 @@ gentity_t *fire_bfg (gentity_t *self, vec3_t start, vec3_t dir) {
 G_GuidedMissile
 =================
 */
-void G_GuidedMissile( gentity_t *missile )
-{
+void G_GuidedMissile( gentity_t *missile ) {
+	gentity_t	*player = missile->parent;
 	vec3_t		forward, right, up; 
 	vec3_t		muzzle;
 	float		dist;
-	gentity_t	*player = missile->parent;
 
 	if (!player)
 	{
@@ -1093,12 +1100,10 @@ void G_GuidedMissile( gentity_t *missile )
 	VectorSubtract( muzzle, missile->r.currentOrigin, muzzle );
 	
 	dist = VectorLength( muzzle ) + 400;
+
 	VectorScale( forward, dist, forward );
-
 	VectorAdd( forward, muzzle, muzzle );
-
 	VectorNormalize( muzzle );
-
 	VectorScale( muzzle, g_rocketSpeed.integer * 0.75, forward );
 	VectorCopy( forward, missile->s.pos.trDelta );
 

@@ -588,7 +588,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
                                 G_LogPrintf( "Award: %i %i: %s gained the %s award!\n", attacker->client->ps.clientNum, 0, attacker->client->pers.netname, "GAUNTLET" );
 
 				// add the sprite over the player's head
-				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT);
+				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
 				attacker->client->ps.eFlags |= EF_AWARD_GAUNTLET;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 
@@ -1062,10 +1062,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	int			asave;
 	int			knockback;
 	int			max;
-	float			z_ratio;
-	float			z_rel;
 	int			height;
 	float			targ_maxs2;
+	float			z_ratio;
+	float			z_rel;
         
 	vec3_t		bouncedir, impactpoint;
 
@@ -1146,7 +1146,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	if ( knockback > 200 ) {
 		knockback = 200;
 	}
-	if ( targ->flags & FL_NO_KNOCKBACK  ) {
+	if ( targ->flags & FL_NO_KNOCKBACK ) {
 		knockback = 0;
 	}
 	if ( dflags & DAMAGE_NO_KNOCKBACK ) {
@@ -1375,16 +1375,15 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	}
 
 	// See if the player hit the enemy head
-	if (targ->client && attacker->client && targ->health > 0)
-	{  
+	if (targ->client && attacker->client && targ->health > 0) {  
 		targ_maxs2 = targ->r.maxs[2];
 
 		// check if the target is crouched because it doesn't make the same height
 		if (targ->client->ps.pm_flags & PMF_DUCKED) {
 			height = ( abs( targ->r.mins[2] ) + targ_maxs2 ) * 0.75;
-		}
-		else
+		} else {
 			height = abs( targ->r.mins[2] ) + targ_maxs2;  
+		}
 
 		z_rel = point[2] - targ->r.currentOrigin[2] + abs( targ->r.mins[2] );
 		z_ratio = z_rel / height;
@@ -1418,9 +1417,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		if ( !g_headShotOnly.integer || ( g_headShotOnly.integer && z_ratio > 0.90 ) ) {
 			if ( mod != MOD_SHOTGUN ) {
 				DamagePlum( attacker, targ->r.currentOrigin, damage );
-			}
-			else
+			} else {
 				targ->sumShotgunDamage += damage;
+			}
 		}
 	}
 
@@ -1577,12 +1576,13 @@ qboolean G_RadiusDamage ( vec3_t origin, gentity_t *attacker, float damage, floa
 	return hitClient;
 }
 
-#define RAILJUMP_TIME	800
 /*
 ============
 G_RailJump
 ============
 */
+#define RAILJUMP_TIME	800
+
 qboolean G_RailJump ( vec3_t origin, gentity_t *attacker) {
 	float		points, dist;
 	float		damage = 100;

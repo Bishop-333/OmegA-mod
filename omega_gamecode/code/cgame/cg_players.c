@@ -874,14 +874,14 @@ CG_NewClientInfo
 ======================
 */
 void CG_NewClientInfo( int clientNum ) {
-	int local_team;
+	int		local_team;
 	clientInfo_t *ci;
 	clientInfo_t newInfo;
 	const char	*configstring;
 	const char	*local_config;
 	const char	*v;
 	char		*slash;
-	qboolean enemy = qfalse;
+	qboolean	enemy = qfalse;
 
 	ci = &cgs.clientinfo[clientNum];
 
@@ -946,12 +946,12 @@ void CG_NewClientInfo( int clientNum ) {
 
 	// model
 	v = Info_ValueForKey( configstring, "model" );
-
 	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 ) {
-		if ( local_team != newInfo.team )
+		if ( local_team != newInfo.team ) {
 			enemy = 1;
-		else
+		} else {
 			enemy = 0;
+		}
 	} else {
 		if ( cg.clientNum == clientNum ) {
 			enemy = 0;
@@ -2055,8 +2055,8 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 	vec3_t		end, mins = {-15, -15, 0}, maxs = {15, 15, 2};
 	trace_t		trace;
 	float		alpha;
-	int		myteam;
 	int		enemy;
+	int		myteam;
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
@@ -2263,8 +2263,8 @@ Also called by CG_Missile for quad rockets, but nobody can tell...
 ===============
 */
 void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int team, qboolean isMissile ) {
-	int myteam;
-	int enemy;
+	int	enemy;
+	int	myteam;
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
