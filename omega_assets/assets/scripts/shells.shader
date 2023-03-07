@@ -331,13 +331,3 @@ brightWhitePlayers
 		blendfunc add
 	}
 }
-
-brightGreyPlayers
-{
-	nopicmip
-	{
-		map textures/suction/solid_white
-		blendfunc add
-		rgbGen wave sin 0.5 0 0 0
-	}
-}

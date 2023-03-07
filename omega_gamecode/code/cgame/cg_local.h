@@ -867,7 +867,6 @@ typedef struct {
 	qhandle_t       brightBluePlayers;
 	qhandle_t       brightPinkPlayers;
 	qhandle_t       brightWhitePlayers;
-	qhandle_t       brightGreyPlayers;
 
 	// weapon effect models
 	qhandle_t	bulletFlashModel;

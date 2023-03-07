@@ -239,6 +239,21 @@ yellowArmor
 	}
 }
 
+greenArmor
+{
+	{
+		map models/powerups/armor/greenarmor.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map gfx/fx/spec/spots.tga
+		blendfunc gl_src_alpha gl_one
+		rgbGen lightingDiffuse
+		tcGen environment 
+		alphaGen lightingSpecular
+	}
+}
+
 textures/base_floor/metfloor1
 {
 	surfaceparm metalsteps
@@ -282,8 +297,8 @@ console
 	nopicmip
 	nomipmaps
         {
-		map textures/omega/comp3textd.jpg
-		blendFunc gl_one gl_one
+		map textures/omega/comp3textd.tga
+		blendFunc blend
 		tcMod scroll 7.1  0.2
 		tcmod scale .8 1
 	}

@@ -1148,6 +1148,9 @@ static float CG_DrawEliminationTimer( float y ) {
 /***
 Lots of stuff
 ****/
+	if ( cg.scoreBoardShowing ) {
+		return;
+	}
 	if(cg.warmup == 0)
 	{
 		st = va( "Round in: %i", sec + 1 );
@@ -1301,12 +1304,12 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 		hcolor[0] = 1.0f;
 		hcolor[1] = 0.0f;
 		hcolor[2] = 0.0f;
-		hcolor[3] = 0.33f;
+		hcolor[3] = 0.25f;
 	} else { // if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE )
 		hcolor[0] = 0.0f;
 		hcolor[1] = 0.0f;
 		hcolor[2] = 1.0f;
-		hcolor[3] = 0.33f;
+		hcolor[3] = 0.25f;
 	}
 	trap_R_SetColor( hcolor );
 	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBar );

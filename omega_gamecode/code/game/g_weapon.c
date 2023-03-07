@@ -568,9 +568,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 	do {
 		trap_Trace (&trace, muzzle, NULL, NULL, end, passent, MASK_SHOT );
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
-			if ( g_railPush.integer ) {
-				G_RadiusDamage( trace.endpos, ent, 100, 120, NULL, MOD_RAILJUMP );
-			} else if ( g_railJump.integer ) {
+			if ( g_railJump.integer ) {
 				G_RailJump( trace.endpos, ent );
 			}
 			break;
@@ -605,9 +603,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 			}
 		}
 		if ( trace.contents & CONTENTS_SOLID ) {
-			if ( g_railPush.integer ) {
-				G_RadiusDamage( trace.endpos, ent, 100, 120, NULL, MOD_RAILJUMP );
-			} else if ( g_railJump.integer ) {
+			if ( g_railJump.integer ) {
 				G_RailJump( trace.endpos, ent );
 			}
 

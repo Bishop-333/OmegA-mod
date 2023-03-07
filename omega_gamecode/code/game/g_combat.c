@@ -1250,6 +1250,15 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			}
 		}
 
+		if (mod == MOD_RAILJUMP) {
+			if (inflictor && inflictor->parent && OnSameTeam(targ, inflictor->parent)) {
+				return;
+			}
+			if (targ == attacker) {
+				return;
+			}
+		}
+
 		// check for godmode
 		if ( targ->flags & FL_GODMODE ) {
 			return;
@@ -1272,15 +1281,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			return;
 		}
 		damage *= 0.5;
-	}
-
-	if ( mod == MOD_RAILJUMP ) {
-		if ( attacker->client ) {
-			return;
-		}
-		if ( targ == attacker ) {
-			return;
-		}
 	}
 
 	// add to the attacker's hit counter (if the target isn't a general entity like a prox mine)
@@ -1614,7 +1614,7 @@ qboolean G_RailJump ( vec3_t origin, gentity_t *attacker) {
 		// push the center of mass higher than the origin so players
 		// get knocked into the air more
 		dir[2] += 24;
-		G_Damage (attacker, attacker, attacker, dir, origin, (int)points, DAMAGE_RADIUS, MOD_RAILGUN);
+		G_Damage (attacker, attacker, attacker, dir, origin, (int)points, DAMAGE_RADIUS, MOD_RAILJUMP);
 		if ( attacker->client && attacker->client->ps.weaponTime > RAILJUMP_TIME ) {
 			attacker->client->ps.weaponTime = RAILJUMP_TIME;
 		}

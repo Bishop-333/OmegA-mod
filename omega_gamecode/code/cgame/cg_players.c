@@ -2357,9 +2357,6 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 					trap_R_AddRefEntityToScene( ent );
 				}
 			}
-		} else if (!isMissile && cg_brightPlayers.integer && (state->eFlags & EF_DEAD)  ) {
-				ent->customShader = cgs.media.brightGreyPlayers;
-				trap_R_AddRefEntityToScene( ent );
 		}
 
                         if(!isMissile && (cgs.dmflags & DF_PLAYER_OVERLAY) && !(state->eFlags & EF_DEAD)  ) {

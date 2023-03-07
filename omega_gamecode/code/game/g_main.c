@@ -199,6 +199,7 @@ vmCvar_t        g_timestamp_startgame;
 
 //OmegA
 vmCvar_t        g_beheading;
+vmCvar_t        g_beheading;
 vmCvar_t        g_damagePlums;
 vmCvar_t        g_dropFlag;
 vmCvar_t        g_easierPickup;
@@ -213,7 +214,6 @@ vmCvar_t        g_machinegunTeamDamage;
 vmCvar_t        g_plasmaBounce;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railJump;
-vmCvar_t        g_railPush;
 vmCvar_t        g_rocketSpeed;
 vmCvar_t        g_selfDamage;
 vmCvar_t        g_startWhenReady;
@@ -221,6 +221,7 @@ vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
 vmCvar_t        g_vulnerableRockets;
 vmCvar_t        g_waterDamage;
+vmCvar_t        pmove_autohop;
 
 //ratmod delagMissile
 vmCvar_t        g_delagMissiles;
@@ -452,7 +453,6 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_railPush, "g_railPush", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_rocketSpeed, "g_rocketSpeed", "900", 0, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
         { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
@@ -460,6 +460,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
 
 	//ratmod delagMissile
         { &g_delagMissiles, "g_delagMissiles", "1", CVAR_ARCHIVE, 0, qfalse },

@@ -386,7 +386,9 @@ static qboolean PM_CheckJump( void ) {
 
 	pml.groundPlane = qfalse;		// jumping away
 	pml.walking = qfalse;
-	pm->ps->pm_flags |= PMF_JUMP_HELD;
+	if ( !pm->pmove_autohop ) {
+		pm->ps->pm_flags |= PMF_JUMP_HELD;
+	}
 
 	pm->ps->groundEntityNum = ENTITYNUM_NONE;
 	pm->ps->velocity[2] = JUMP_VELOCITY;

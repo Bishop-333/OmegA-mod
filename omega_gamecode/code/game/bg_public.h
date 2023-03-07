@@ -219,6 +219,9 @@ typedef struct {
 	// these will be different functions during game and cgame
 	void		(*trace)( trace_t *results, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int passEntityNum, int contentMask );
 	int			(*pointcontents)( const vec3_t point, int passEntityNum );
+
+	//OmegA
+        int                     pmove_autohop;
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles
@@ -828,6 +831,9 @@ qboolean	BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTim
 //KK-OAX
 //bg_misc.c
 char *BG_TeamName( team_t team );
+
+//OmegA
+extern vmCvar_t	autohop;
 
 //ratmod delagMissile
 qboolean BG_IsElimGT( gametype_t gametype );

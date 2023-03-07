@@ -1200,7 +1200,6 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.brightBluePlayers = trap_R_RegisterShader( "brightBluePlayers");
 	cgs.media.brightPinkPlayers = trap_R_RegisterShader( "brightPinkPlayers");
 	cgs.media.brightWhitePlayers = trap_R_RegisterShader( "brightWhitePlayers");
-	cgs.media.brightGreyPlayers = trap_R_RegisterShader( "brightGreyPlayers");
 
 //For Double Domination:
 	if ( cgs.gametype == GT_DOUBLE_D ) {
