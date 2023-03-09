@@ -378,12 +378,12 @@ oalogo
 menubacknologo_blueish
 {
 	{
-		map gfx/fx/detail/d_sand.tga
+		map textures/liquids/pool3d_3e
 		rgbGen const ( 0.627451 0.5 0.796079 )
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map gfx/fx/detail/d_sand.tga
+		map textures/liquids/pool3d_3e
 		blendfunc gl_dst_color gl_src_color
 		rgbGen const ( 0.247059 0.6 0.721569 )
 		tcMod scroll -0.02 0.05
@@ -406,12 +406,12 @@ menubacknologo_blueish
 menuback_blueish
 {
 	{
-		map gfx/fx/detail/d_sand.tga
+		map textures/liquids/pool3d_3e
 		rgbGen const ( 0.627451 0.5 0.796079 )
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map gfx/fx/detail/d_sand.tga
+		map textures/liquids/pool3d_3e
 		blendfunc gl_dst_color gl_src_color
 		rgbGen const ( 0.247059 0.6 0.721569 )
 		tcMod scroll -0.02 0.05
@@ -533,32 +533,6 @@ hasteSmokePuff
 		blendfunc blend
 		tcMod rotate 64
 		alphaGen Vertex
-	}
-}
-
-redSmokePuff
-{
-	nopicmip
-	cull disable
-	{
-		clampmap gfx/misc/smokepuff3.tga
-		blendfunc blend
-		rgbGen const ( 1 0 0 )
-		tcMod rotate -45
-		alphaGen entity
-	}
-}
-
-greenSmokePuff
-{
-	nopicmip
-	cull disable
-	{
-		clampmap gfx/misc/smokepuff3.tga
-		blendfunc blend
-		rgbGen const ( 0 1 0 )
-		tcMod rotate -45
-		alphaGen entity
 	}
 }
 

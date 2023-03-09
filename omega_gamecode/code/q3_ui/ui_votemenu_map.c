@@ -87,18 +87,18 @@ t_mappage mappage;
 // XXX: must be multiple of MAX_MAPSPERPAGE
 #define MAX_MAP_NUMBER 1000
 
-typedef struct {
+struct maplist_s {
 	int		loaded_all;
 	int		num_cmds;
 	int		num_maps;
 	int		num_sent_cmds;
 	int		reset;
 	char		mapname[MAX_MAP_NUMBER][MAX_MAPNAME_LENGTH];
-} maplist_s;
+};
 
-maplist_s filtered_list;
-maplist_s maplists;
-maplist_s *current_list;
+struct maplist_s *current_list;
+struct maplist_s filtered_list;
+struct maplist_s maplists;
 
 static void InitMappage( void ) {
 	int		i;
@@ -187,7 +187,7 @@ static void ResetMaplist( void ) {
 void Maplist_RequestNextPage( struct maplist_s *list ) {
 	int		mappage;
 
-	if (list->loaded_all) {
+	if ( list->loaded_all ) {
 		return;
 	}
 
@@ -328,7 +328,7 @@ static void VoteMapMenu_LevelshotDraw( void *self ) {
 	y += 4;
 	n = s_votemenu_map.pagenum * MAX_MAPSPERPAGE + b->generic.id - ID_PICTURES;
 
-	if (n > MAX_MAP_NUMBER) {
+	if ( n > MAX_MAP_NUMBER ) {
 		n = MAX_MAP_NUMBER;
 	}
 
@@ -422,7 +422,7 @@ void UI_VoteMapMenu_Update( void ) {
 
 	i = filtered_list.num_maps / MAX_MAPSPERPAGE + ((filtered_list.num_maps % MAX_MAPSPERPAGE == 0) ? 0 : 1);
 
-	if (i <= 0) {
+	if ( i <= 0 ) {
 		i = 1;
 	}
 
@@ -475,7 +475,7 @@ void UI_VoteMapMenuInternal( void )
 		}
 	}
 
-	if (uis.activemenu != &s_votemenu_map.menu) {
+	if ( uis.activemenu != &s_votemenu_map.menu ) {
 		// menu not showing anymore, ignore
 		ResetMaplist();
 		return;
@@ -483,7 +483,7 @@ void UI_VoteMapMenuInternal( void )
 
 	current_list->num_cmds++;
 
-	if (!current_list->loaded_all) {
+	if ( !current_list->loaded_all ) {
 		for( i = 0; i < CountMappageMaps(); i++ ) {
 			Q_strncpyz(current_list->mapname[current_list->num_maps], mappage.mapname[i], MAX_MAPNAME_LENGTH);
 			if (current_list->num_maps < MAX_MAP_NUMBER) {

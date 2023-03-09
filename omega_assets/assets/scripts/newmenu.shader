@@ -3,8 +3,13 @@ logoTitle
 	nopicmip
 	cull disable
 	{
-		map textures/oafx/orangechrm_2.jpg
-		blendfunc add
+		clampmap textures/base_wall/chrome_env2.jpg
+		tcGen environment 
+	}
+	{
+		map textures/effects/tinfx.tga
+		rgbGen const ( 0.5 0.75 1 )
+		tcGen environment 
 	}
 	{
 		map textures/omega/electric.tga
@@ -18,35 +23,13 @@ logoEmblem
 	nopicmip
 	cull disable
 	{
-		map textures/oafx/orangechrm_2.jpg
-		tcMod rotate 7
+		clampmap textures/base_wall/chrome_env2.jpg
 		tcGen environment 
 	}
-}
-
-logoHalo
-{
-	nopicmip
-	deformVertexes autosprite
 	{
-		clampmap textures/oafx/flare.tga
-		blendfunc add
-		rgbGen const ( 0.1019 0.3176 0.4941 )
-		tcMod rotate -7
-	}
-	{
-		clampmap textures/oafx/flare.tga
-		blendfunc add
-		rgbGen const ( 0.1019 0.3176 0.4941 )
-		tcMod rotate 3
-		tcMod stretch sin 1 -0.5 0 0.3 
-	}
-	{
-		clampmap textures/oafx/flare.tga
-		blendfunc add
-		rgbGen const ( 0.1019 0.3176 0.4941 )
-		tcMod rotate 9
-		tcMod stretch sin 1 0.4 0 0.6 
+		map textures/effects/tinfx.tga
+		rgbGen const ( 0.5 0.75 1 )
+		tcGen environment 
 	}
 }
 
