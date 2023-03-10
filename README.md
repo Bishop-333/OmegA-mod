@@ -16,10 +16,10 @@ List of the cvars/additions :
 - cg_drawTeamBackground
 - cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel
-- cg_oldRailSound
 - cg_omegaFlags
 - cg_omegaInitialized
 - cg_screenshake
+- cg_statusBarStyle
 - cg_teamColor //need cg_brightPlayers to be enabled
 - cg_teamModel
 - cg_thinLightningBolt

@@ -743,6 +743,8 @@ typedef struct {
 	qhandle_t	armorModel;
 	qhandle_t	armorIcon;
 
+	qhandle_t	omegaModel;
+
 	qhandle_t	teamStatusBar;
 
 	qhandle_t	deferShader;
@@ -1452,9 +1454,9 @@ extern vmCvar_t	cg_drawItemPickup;
 extern vmCvar_t	cg_drawTeamBackground;
 extern vmCvar_t cg_enemyColor;
 extern vmCvar_t cg_enemyModel;
-extern vmCvar_t cg_oldRailSound;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
+extern vmCvar_t	cg_statusBarStyle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;
 extern vmCvar_t cg_thinLightningBolt;

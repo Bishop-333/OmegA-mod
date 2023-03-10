@@ -472,8 +472,12 @@ static void CG_DrawStatusBarHead( float x ) {
 	angles[YAW] = cg.headStartYaw + ( cg.headEndYaw - cg.headStartYaw ) * frac;
 	angles[PITCH] = cg.headStartPitch + ( cg.headEndPitch - cg.headStartPitch ) * frac;
 
-	CG_DrawHead( x, 480 - size, size, size, 
+	if ( cg_statusBarStyle.integer == 2 ) {
+		return;
+	} else {
+		CG_DrawHead( x, 480 - size, size, size, 
 				cg.snap->ps.clientNum, angles );
+	}
 }
 #endif // MISSIONPACK
 
@@ -654,7 +658,17 @@ static void CG_DrawStatusBar( void ) {
 				trap_R_SetColor( CG_GetWeaponColor( weaponSelect ) );
 			}
 			
-			CG_DrawField (0, 455, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT);
+			if ( cg_statusBarStyle.integer == 2 ) {
+				if ( value >= 100 ) {
+					CG_DrawField (295, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT);
+				} else if ( value >= 10 ) {
+					CG_DrawField (287, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT);
+				} else {
+					CG_DrawField (279, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT);
+				}
+			} else {
+				CG_DrawField (0, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT);
+			}
 			trap_R_SetColor( NULL );
 
 			// draw a 2D icon for ammo
@@ -663,7 +677,11 @@ static void CG_DrawStatusBar( void ) {
 
 				icon = cg_weapons[ weaponSelect ].ammoIcon;
 				if ( icon ) {
-					CG_DrawPic( AMMO_CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 455, ICON_SIZE / 2, ICON_SIZE / 2, icon );
+					if ( cg_statusBarStyle.integer == 2 ) {
+						CG_DrawPic( 307, 422, ICON_SIZE / 2, ICON_SIZE / 2, icon );
+					} else {
+						CG_DrawPic( AMMO_CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 452, ICON_SIZE / 2, ICON_SIZE / 2, icon );
+					}
 				}
 			}
 		}
@@ -685,7 +703,7 @@ static void CG_DrawStatusBar( void ) {
 	}
 
 	// stretch the health up when taking damage
-	CG_DrawField ( 185, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT);
+	CG_DrawField ( 185, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT);
 	CG_ColorForHealth( hcolor );
 	trap_R_SetColor( hcolor );
 	// if we didn't draw a 3D icon, draw a 2D icon for health
@@ -700,7 +718,7 @@ static void CG_DrawStatusBar( void ) {
 	value = ps->stats[STAT_ARMOR];
 	if (value > 100 ) {
 		trap_R_SetColor( colors[0] );
-		CG_DrawField (355, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT);
+		CG_DrawField (355, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT);
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
@@ -708,7 +726,7 @@ static void CG_DrawStatusBar( void ) {
 		}
 	} else if (value > 0 ) {
 		trap_R_SetColor( colors[3] ); // white
-		CG_DrawField(355, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT);
+		CG_DrawField(355, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT);
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {

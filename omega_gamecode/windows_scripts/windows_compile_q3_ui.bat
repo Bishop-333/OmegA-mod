@@ -25,7 +25,6 @@ cd windows\build\q3_ui
 %cc%  ../../../code/q3_ui/ui_confirm.c
 %cc%  ../../../code/q3_ui/ui_connect.c
 %cc%  ../../../code/q3_ui/ui_controls2.c
-%cc%  ../../../code/q3_ui/ui_credits.c
 %cc%  ../../../code/q3_ui/ui_demo2.c
 %cc%  ../../../code/q3_ui/ui_display.c
 %cc%  ../../../code/q3_ui/ui_firstconnect.c

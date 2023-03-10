@@ -224,7 +224,7 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
  
 #define RADIUS   4
 #define ROTATION 1
-#define SPACING  5
+#define SPACING  3
  
 	start[2] -= 4;
  
@@ -327,7 +327,7 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
 			le->leFlags = LEF_PUFF_DONT_SCALE;
 			le->leType = LE_MOVE_SCALE_FADE;
 			le->startTime = cg.time;
-			le->endTime = cg.time + (i>>1) + 600;
+			le->endTime = cg.time + (i>>1) + cg_railTrailTime.value;
 			le->lifeRate = 1.0 / (le->endTime - le->startTime);
 
 			re->shaderTime = cg.time / 1000.0f;
@@ -335,14 +335,14 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
 			re->radius = 1.1f;
 			re->customShader = cgs.media.railRingsShader;
 
-			re->shaderRGBA[0] = ci->color2[0] * 255;
-			re->shaderRGBA[1] = ci->color2[1] * 255;
-			re->shaderRGBA[2] = ci->color2[2] * 255;
+			re->shaderRGBA[0] = ci->color1[0] * 255;
+			re->shaderRGBA[1] = ci->color1[1] * 255;
+			re->shaderRGBA[2] = ci->color1[2] * 255;
 			re->shaderRGBA[3] = 255;
 
-			le->color[0] = ci->color2[0] * 0.75;
-			le->color[1] = ci->color2[1] * 0.75;
-			le->color[2] = ci->color2[2] * 0.75;
+			le->color[0] = ci->color1[0] * 0.75;
+			le->color[1] = ci->color1[1] * 0.75;
+			le->color[2] = ci->color1[2] * 0.75;
 			le->color[3] = 1.0f;
 
 			le->pos.trType = TR_LINEAR;
@@ -1006,11 +1006,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 	case WP_RAILGUN:
 		weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/railgun/rg_hum.wav", qfalse );
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.5f, 0 );
-		if ( cg_oldRailSound.integer ) {
-			weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
-		} else {
-			weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1b.wav", qfalse );
-		}
+		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1b.wav", qfalse );
 		cgs.media.railExplosionShader = trap_R_RegisterShader( "railExplosion" );
 		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
 		cgs.media.railCoreShader = trap_R_RegisterShader( "railCore" );
@@ -2562,18 +2558,34 @@ void CG_DrawWeaponBar8(int count, int bits, float *color)
 	int i;
 	int w;
 	char *s;
-	float red[4];
+	float black[4];
 	float blue[4];
+	float orange[4];
+	float red[4];
+
+	black[0] = 0;
+	black[1] = 0;
+	black[2] = 0;
+	black[3] = 0.33f;
+
+	blue[0] = 0;
+	blue[1] = 0.5f;
+	blue[2] = 1.0f;
+	blue[3] = 0.5f;
+
+	orange[0] = 1.0f;
+	orange[1] = 0.5f;
+	orange[2] = 0;
+	orange[3] = 0.5f;
 
 	red[0] = 1.0f;
 	red[1] = 0;
 	red[2] = 0;
-	red[3] = 0.4f;
+	red[3] = 0.5f;
 
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
+
+
+
 
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2587,19 +2599,26 @@ void CG_DrawWeaponBar8(int count, int bits, float *color)
 			continue;
 		}
 
-		if(cg.snap->ps.ammo[i]) {
-			if ( i == cg.weaponSelect) {
-				CG_FillRect( x, y, 50, 24, blue );
+		if ( i == cg.weaponSelect) {
+			if( cg.lowAmmoWarning == 1 ) {
+				CG_FillRect( x, y+2, 50, 20, orange );
+			}
+			else if (cg.snap->ps.ammo[i]) {
+				CG_FillRect( x, y+2, 50, 20, blue );
+			}
+			else {
+				CG_FillRect( x, y+2, 50, 20, red );
 			}
 		}
 		else {
-			if ( i == cg.weaponSelect) {
-				CG_FillRect( x, y, 50, 24, red );
-			}
+			CG_FillRect( x, y+2, 50, 20, black );
 		}
 
 		CG_RegisterWeapon( i );
 		// draw weapon icon
+		if(!cg.snap->ps.ammo[i]) {
+			CG_DrawPic( x+2, y+4, 16, 16, cgs.media.noammoShader );
+		}
 		CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
 
 		/** Draw Weapon Ammo **/

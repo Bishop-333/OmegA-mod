@@ -1848,7 +1848,6 @@ Q3UIOBJ_ = \
   $(B)/omega/ui/ui_confirm.o \
   $(B)/omega/ui/ui_connect.o \
   $(B)/omega/ui/ui_controls2.o \
-  $(B)/omega/ui/ui_credits.o \
   $(B)/omega/ui/ui_demo2.o \
   $(B)/omega/ui/ui_display.o \
   $(B)/omega/ui/ui_firstconnect.o \

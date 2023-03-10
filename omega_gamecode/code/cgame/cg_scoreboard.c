@@ -82,6 +82,8 @@ CG_DrawScoreboard
 static void CG_DrawClientScore( int y, score_t *score, float *color, float fade, qboolean largeFormat ) {
 	char	string[1024];
 	vec3_t	headAngles;
+	vec3_t	angles;
+	vec3_t	origin;
 	clientInfo_t	*ci;
 	int iconx, headx;
 	float		frac;
@@ -151,6 +153,13 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	frac = frac * frac * ( 3 - 2 * frac );
 	headAngles[YAW] = cg.headStartYaw + ( cg.headEndYaw - cg.headStartYaw ) * frac;
 	CG_DrawHead( headx, y, BIGCHAR_HEIGHT+1, BIGCHAR_HEIGHT+1, score->client, headAngles );
+
+	// draw omega logo
+	origin[0] = 90;
+	origin[1] = 0;
+	origin[2] = -10;
+	angles[YAW] = cg.time * 360 / 2048.0;
+	CG_Draw3DModel( 585, 425, ICON_SIZE, ICON_SIZE, cgs.media.omegaModel, 0, origin, angles );
 
 #ifdef MISSIONPACK
 	// draw the team task

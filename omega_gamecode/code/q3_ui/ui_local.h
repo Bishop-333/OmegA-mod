@@ -374,11 +374,6 @@ extern void UI_UpdateCvars( void );
 extern void UI_SetDefaultCvar(const char* cvar, const char* value);
 
 //
-// ui_credits.c
-//
-extern void UI_CreditMenu( void );
-
-//
 // ui_ingame.c
 //
 extern void InGame_Cache( void );

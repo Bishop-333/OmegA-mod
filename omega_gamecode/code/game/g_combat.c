@@ -1066,6 +1066,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	float			targ_maxs2;
 	float			z_ratio;
 	float			z_rel;
+	qboolean	hit = qfalse;
         
 	vec3_t		bouncedir, impactpoint;
 
@@ -1288,7 +1289,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			&& targ != attacker && targ->health > 0
 			&& targ->s.eType != ET_MISSILE
 			&& targ->s.eType != ET_GENERAL) {
-		if ( OnSameTeam( targ, attacker ) ) {
+		if ( OnSameTeam( targ, attacker ) || !hit ) {
 			attacker->client->ps.persistant[PERS_HITS]--;
 		} else {
 			attacker->client->ps.persistant[PERS_HITS]++;
@@ -1391,11 +1392,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		if ( z_ratio < 0.90 ) {
 			if ( g_headShotOnly.integer ) {
 				take *= 0;
+				hit = qfalse;
 			}
 		} else {
 			if ( g_beheading.integer ) {
 				if ( inflictor->s.weapon == WP_RAILGUN ) {
 					mod = MOD_HEADSHOT;
+					hit = qtrue;
 				}
 			}
 		}

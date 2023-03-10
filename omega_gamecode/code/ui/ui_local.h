@@ -372,11 +372,6 @@ extern void UI_RegisterCvars( void );
 extern void UI_UpdateCvars( void );
 
 //
-// ui_credits.c
-//
-extern void UI_CreditMenu( void );
-
-//
 // ui_ingame.c
 //
 extern void InGame_Cache( void );

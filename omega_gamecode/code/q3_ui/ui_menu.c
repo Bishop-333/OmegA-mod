@@ -82,7 +82,6 @@ MainMenu_ExitAction
 		return;
 	}
 	UI_PopMenu();
-	//UI_CreditMenu();
         trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
 }*/
 
@@ -136,8 +135,7 @@ void Main_MenuEvent (void* ptr, int event) {
 		break;
 
 	case ID_EXIT:
-		//UI_ConfirmMenu( "EXIT GAME?", 0, MainMenu_ExitAction );
-                UI_CreditMenu();
+        	trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
 		break;
 	}
 }
@@ -239,7 +237,7 @@ static void Main_MenuDraw( void ) {
 		UI_DrawString( 320, 444, "read COPYING for details.", UI_CENTER|UI_SMALLFONT, color );
                 
                 //Draw version.
-                UI_DrawString( 640-40, 480-20, "^73.0", UI_SMALLFONT, color );
+                UI_DrawString( 640-40, 480-20, "^73.1", UI_SMALLFONT, color );
                 if((int)trap_Cvar_VariableValue("protocol")!=71)
                     UI_DrawString( 0, 480-14, va("^7Protocol: %i",(int)trap_Cvar_VariableValue("protocol")), UI_SMALLFONT, color);
 }

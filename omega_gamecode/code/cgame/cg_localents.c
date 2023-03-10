@@ -574,7 +574,12 @@ static void CG_AddMoveScaleFade( localEntity_t *le ) {
 		c = ( le->endTime - cg.time ) * le->lifeRate;
 	}
 
-	re->shaderRGBA[3] = 0xff * c * le->color[3];
+	c *= 0xff;
+
+	re->shaderRGBA[0] = le->color[0] * c;
+	re->shaderRGBA[1] = le->color[1] * c;
+	re->shaderRGBA[2] = le->color[2] * c;
+	re->shaderRGBA[3] = le->color[3] * c;
 
 	if ( !( le->leFlags & LEF_PUFF_DONT_SCALE ) ) {
 		re->radius = le->radius * ( 1.0 - c ) + 8;
@@ -1155,6 +1160,7 @@ void CG_AddLocalEntities( void ) {
 		case LE_SCOREPLUM:
 			CG_AddScorePlum( le );
 			break;
+
                 case LE_DAMAGEPLUM:
                         CG_AddDamagePlum( le );
                         break;
