@@ -159,7 +159,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	origin[1] = 0;
 	origin[2] = -10;
 	angles[YAW] = cg.time * 360 / 2048.0;
-	CG_Draw3DModel( 585, 425, ICON_SIZE, ICON_SIZE, cgs.media.omegaModel, 0, origin, angles );
+	CG_Draw3DModel( 592, 432, ICON_SIZE, ICON_SIZE, cgs.media.omegaModel, 0, origin, angles );
 
 #ifdef MISSIONPACK
 	// draw the team task

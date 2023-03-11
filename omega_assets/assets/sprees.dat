@@ -4,7 +4,7 @@
 [kspree]
 level = 1
 printpos = 2
-message = [n] is on a killing spree with [k] kills
+message = [n] ^7is on a killing spree with [k] kills
 sound = sound/feedback/excellent.wav
 
 //Add more kill sprees here (level 2,3,4 etc.)
