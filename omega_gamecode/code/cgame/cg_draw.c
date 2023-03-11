@@ -617,8 +617,8 @@ static void CG_DrawStatusBar( void ) {
 		origin[1] = 0;
 		origin[2] = -10;
 		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
-		CG_Draw3DModel( 185 - CHAR_WIDTH * 1.25 - TEXT_ICON_SPACE, 432 - CHAR_HEIGHT / 4.75, ICON_SIZE, ICON_SIZE, cgs.media.healthCrossModel, 0, origin, angles );
-		CG_Draw3DModel( 185 - CHAR_WIDTH * 1.25 - TEXT_ICON_SPACE, 432 - CHAR_HEIGHT / 4.75, ICON_SIZE, ICON_SIZE, cgs.media.healthSphereModel, 0, origin, angles );
+		CG_Draw3DModel( 185 - CHAR_WIDTH * 1.25 - TEXT_ICON_SPACE, 429 - CHAR_HEIGHT / 4.75, ICON_SIZE, ICON_SIZE, cgs.media.healthCrossModel, 0, origin, angles );
+		CG_Draw3DModel( 185 - CHAR_WIDTH * 1.25 - TEXT_ICON_SPACE, 429 - CHAR_HEIGHT / 4.75, ICON_SIZE, ICON_SIZE, cgs.media.healthSphereModel, 0, origin, angles );
 	}
 
 	if ( ps->stats[ STAT_ARMOR ] ) {
@@ -626,7 +626,7 @@ static void CG_DrawStatusBar( void ) {
 		origin[1] = 0;
 		origin[2] = -10;
 		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
-		CG_Draw3DModel( 355 + CHAR_WIDTH*3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE,
+		CG_Draw3DModel( 355 + CHAR_WIDTH*3 + TEXT_ICON_SPACE, 429, ICON_SIZE, ICON_SIZE,
 					   cgs.media.armorModel, 0, origin, angles );
 	}
         

@@ -1006,7 +1006,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 	case WP_RAILGUN:
 		weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/railgun/rg_hum.wav", qfalse );
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.5f, 0 );
-		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1b.wav", qfalse );
+		weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
 		cgs.media.railExplosionShader = trap_R_RegisterShader( "railExplosion" );
 		cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
 		cgs.media.railCoreShader = trap_R_RegisterShader( "railCore" );
@@ -1491,6 +1491,7 @@ sound should only be done on the world model case.
 =============
 */
 void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent, int team ) {
+	clientInfo_t	*ci;
 	refEntity_t	gun;
 	refEntity_t	barrel;
 	refEntity_t	flash;
@@ -1499,6 +1500,8 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 	weaponInfo_t	*weapon;
 	centity_t	*nonPredictedCent;
 	orientation_t	lerped;
+
+	ci = &cgs.clientinfo[ cent->currentState.clientNum ];
 
 	weaponNum = cent->currentState.weapon;
 
@@ -1518,13 +1521,13 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 			float	f;
 
 			f = (float)cg.predictedPlayerState.weaponTime / 1500;
-			gun.shaderRGBA[1] = 0;
-			gun.shaderRGBA[0] = 
-			gun.shaderRGBA[2] = 255 * ( 1.0 - f );
+			gun.shaderRGBA[0] = ci->color1[0] * 51;
+			gun.shaderRGBA[1] = ci->color1[1] * 51;
+			gun.shaderRGBA[2] = ci->color1[2] * 51;
 		} else {
-			gun.shaderRGBA[0] = 255;
-			gun.shaderRGBA[1] = 255;
-			gun.shaderRGBA[2] = 255;
+			gun.shaderRGBA[0] = ci->color1[0] * 255;
+			gun.shaderRGBA[1] = ci->color1[1] * 255;
+			gun.shaderRGBA[2] = ci->color1[2] * 255;
 			gun.shaderRGBA[3] = 255;
 		}
 	}
