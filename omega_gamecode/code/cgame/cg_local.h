@@ -1238,6 +1238,11 @@ typedef struct {
 	int acceptLeader;
 	char acceptVoice[MAX_NAME_LENGTH];
 
+	// player sounds
+	sfxHandle_t	selfSounds[MAX_CUSTOM_SOUNDS];
+	sfxHandle_t	enemySounds[MAX_CUSTOM_SOUNDS];
+	sfxHandle_t	teamSounds[MAX_CUSTOM_SOUNDS];
+
 	// media
 	cgMedia_t		media;
 
@@ -1454,11 +1459,14 @@ extern vmCvar_t	cg_drawItemPickup;
 extern vmCvar_t	cg_drawTeamBackground;
 extern vmCvar_t cg_enemyColor;
 extern vmCvar_t cg_enemyModel;
+extern vmCvar_t cg_enemySounds;
+extern vmCvar_t cg_selfSounds;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
 extern vmCvar_t	cg_statusBarStyle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;
+extern vmCvar_t cg_teamSounds;
 extern vmCvar_t cg_thinLightningBolt;
 extern vmCvar_t cg_timerHeight;
 extern vmCvar_t cg_timerWidth;
@@ -1608,6 +1616,7 @@ void CG_ResetPlayerEntity( centity_t *cent );
 void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int team, qboolean isMissile );
 void CG_NewClientInfo( int clientNum );
 sfxHandle_t	CG_CustomSound( int clientNum, const char *soundName );
+void CG_ForceSoundsChange( void );
 
 //
 // cg_predict.c
