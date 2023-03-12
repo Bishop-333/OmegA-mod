@@ -16,12 +16,15 @@ List of the cvars/additions :
 - cg_drawTeamBackground
 - cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel
+- cg_enemySounds
 - cg_omegaFlags
 - cg_omegaInitialized
 - cg_screenshake
+- cg_selfSounds
 - cg_statusBarStyle
 - cg_teamColor //need cg_brightPlayers to be enabled
 - cg_teamModel
+- cg_teamSounds
 - cg_thinLightningBolt
 - cg_timerHeight
 - cg_timerWidth

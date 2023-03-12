@@ -289,10 +289,10 @@ vmCvar_t        cg_drawTeamBackground;
 vmCvar_t        cg_enemyColor;
 vmCvar_t        cg_enemyModel;
 vmCvar_t        cg_enemySounds;
-vmCvar_t	cg_selfSounds;
 vmCvar_t        cg_omegaFlags;
 vmCvar_t        cg_omegaInitialized;
 vmCvar_t        cg_screenshake;
+vmCvar_t	cg_selfSounds;
 vmCvar_t        cg_statusBarStyle;
 vmCvar_t        cg_teamColor;
 vmCvar_t        cg_teamModel;
@@ -512,10 +512,10 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE},
 	{ &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE},
 	{ &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE},
-	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
 	{ &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE},
 	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
+	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
 	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE},
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
 	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
