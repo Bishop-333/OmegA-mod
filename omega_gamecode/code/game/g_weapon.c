@@ -346,6 +346,7 @@ qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 	vec3_t		tr_start, tr_end;
 
 	passent = ent->s.number;
+	oldAttacker = ent;
 	VectorCopy( start, tr_start );
 	VectorCopy( end, tr_end );
 	for (i = 0; i < 10; i++) {

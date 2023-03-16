@@ -1525,11 +1525,11 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 //Sago: Changed the message
 //unlagged - backward reconciliation #5
 	// announce it
-	//ratmod delagMissile
-	if ( g_delagMissiles.integer && g_delagMissileMaxLatency.integer > 0 ) {
-		trap_SendServerCommand( clientNum, va( "print \"Hitscan de-lag is %s, projectile de-lag is ON up to %ims!\n\"", g_delagHitscan.integer ? "ON" : "OFF", g_delagMissileMaxLatency.integer ) );
-	} else {
-		trap_SendServerCommand( clientNum, va( "print \"Hitscan de-lag is %s, projectile de-lag is OFF!\n\"", g_delagHitscan.integer ? "ON" : "OFF" ) );
+	if ( g_delagHitscan.integer ) {
+		trap_SendServerCommand( clientNum, "print \"Full lag compensation is ON!\n\"" );
+	}
+	else {
+		trap_SendServerCommand( clientNum, "print \"Full lag compensation is OFF!\n\"" );
 	}
 
 //unlagged - backward reconciliation #5

@@ -722,7 +722,7 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
         else
             trap_Cvar_SetValue( "r_ext_texture_filter_anisotropic", qfalse );
         
-        trap_Cvar_SetValue( "com_hunkmegs", 128 );
+        trap_Cvar_SetValue( "com_hunkmegs", 256 );
         
         
 	if ( s_graphicsoptions.geometry.curvalue == 3 )

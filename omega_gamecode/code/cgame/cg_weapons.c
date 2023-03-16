@@ -255,49 +255,11 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
 
 	AxisClear( re->axis );
 
-	if (cg_oldRail.integer) {
-		// leilei - reimplementing the rail discs that were removed in 1.30
-		if (cg_oldRail.integer > 1) {
-
-			le = CG_AllocLocalEntity();
-			re = &le->refEntity;
-
-			VectorCopy(start, re->origin);
-			VectorCopy(end, re->oldorigin);
-			le->leType = LE_FADE_RGB;
-			le->startTime = cg.time;
-			le->endTime = cg.time + cg_railTrailTime.value;
-			le->lifeRate = 1.0 / (le->endTime - le->startTime);
-
-			re->shaderTime = cg.time / 1000.0f;
-			re->reType = RT_RAIL_RINGS;
-			re->customShader = cgs.media.railRingsShader;
-			re->shaderRGBA[0] = ci->color1[0] * 255;
-			re->shaderRGBA[1] = ci->color1[1] * 255;
-			re->shaderRGBA[2] = ci->color1[2] * 255;
-			re->shaderRGBA[3] = 255;
-
-			le->color[0] = ci->color1[0] * 0.75;
-			le->color[1] = ci->color1[1] * 0.75;
-			le->color[2] = ci->color1[2] * 0.75;
-			le->color[3] = 1.0f;
-
-			re->origin[2] -= 8;
-			re->oldorigin[2] -= 8;
-
-			if (cg_oldRail.integer > 2) {		// use the secondary color instead
-				re->shaderRGBA[0] = ci->color2[0] * 255;
-				re->shaderRGBA[1] = ci->color2[1] * 255;
-				re->shaderRGBA[2] = ci->color2[2] * 255;
-				re->shaderRGBA[3] = 255;
-
-				le->color[0] = ci->color2[0] * 0.75;
-				le->color[1] = ci->color2[1] * 0.75;
-				le->color[2] = ci->color2[2] * 0.75;
-				le->color[3] = 1.0f;
-			}
-
-		}
+	if (cg_oldRail.integer)
+	{
+		// nudge down a bit so it isn't exactly in center
+		re->origin[2] -= 8;
+		re->oldorigin[2] -= 8;
 		return;
 	}
 

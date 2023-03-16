@@ -834,8 +834,4 @@ char *BG_TeamName( team_t team );
 //OmegA
 extern vmCvar_t	autohop;
 
-//ratmod delagMissile
-qboolean BG_IsElimGT( gametype_t gametype );
-qboolean BG_IsElimTeamGT( gametype_t gametype );
-
 #endif

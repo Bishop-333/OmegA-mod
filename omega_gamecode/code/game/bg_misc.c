@@ -1818,12 +1818,3 @@ char *BG_TeamName( team_t team )
     return "Free For All";
   return "<team>";
 }
-
-//ratmod delagMissile
-qboolean BG_IsElimGT( gametype_t gametype ) {
-	return BG_IsElimTeamGT( gametype ) || gametype == GT_LMS;
-}
-
-qboolean BG_IsElimTeamGT( gametype_t gametype ) {
-	return gametype == GT_ELIMINATION || gametype == GT_CTF_ELIMINATION;
-}

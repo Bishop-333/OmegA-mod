@@ -689,8 +689,3 @@ int DebugLine(vec3_t start, vec3_t end, int color) {
 
 	return trap_DebugPolygonCreate(color, 4, points);
 }
-
-//ratmod delagMissile
-qboolean G_InUse( gentity_t *ent ) {
-	return ent->inuse;
-}

@@ -666,14 +666,6 @@ void G_RegisterCvars( void ) {
 	level.warmupModificationCount = g_warmup.modificationCount;
 }
 
-//ratmod delagMissile
-qboolean G_IsElimGT( void ) {
-	return BG_IsElimGT( g_gametype.integer );
-}
-qboolean G_IsElimTeamGT( void ) {
-	return BG_IsElimTeamGT( g_gametype.integer );
-}
-
 /*
 =================
 G_UpdateCvars
@@ -2692,7 +2684,7 @@ void SetLeader(int team, int client) {
 	}
 	level.clients[client].sess.teamLeader = qtrue;
 	ClientUserinfoChanged( client );
-	PrintTeam(team, va("print \"%s is the new team leader\n\"", level.clients[client].pers.netname) );
+	PrintTeam(team, va("print \"%s" S_COLOR_WHITE " is the new team leader\n\"", level.clients[client].pers.netname) );
 }
 
 /*
