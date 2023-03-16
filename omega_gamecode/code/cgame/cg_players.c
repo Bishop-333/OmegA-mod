@@ -2348,7 +2348,10 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		//}
 		if (!isMissile && cg_brightPlayers.integer && !(state->eFlags & EF_DEAD)  ) {
 			if ( enemy ) {
-				if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
+				if ( cg_wallhack.integer ) {
+					ent->customShader = cgs.media.wallhackEnemy;
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
 					ent->customShader = cgs.media.brightRedPlayers;
 					trap_R_AddRefEntityToScene( ent );
 				} else if ( Q_stricmp( cg_enemyColor.string, "yellow" ) == 0 ) {
@@ -2380,7 +2383,10 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 					trap_R_AddRefEntityToScene( ent );
 				}
 			} else if ( !enemy ) {
-				if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
+				if ( cg_wallhack.integer ) {
+					ent->customShader = cgs.media.wallhackFriend;
+					trap_R_AddRefEntityToScene( ent );
+				} else if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
 					ent->customShader = cgs.media.brightRedPlayers;
 					trap_R_AddRefEntityToScene( ent );
 				} else if ( Q_stricmp( cg_teamColor.string, "yellow" ) == 0 ) {

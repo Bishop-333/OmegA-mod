@@ -324,10 +324,6 @@ void CG_DrawHead( float x, float y, float w, float h, int clientNum, vec3_t head
 	vec3_t			origin;
 	vec3_t			mins, maxs;
 
-
-	if (target < 0 || target >= MAX_CLIENTS) {
-		CG_Error("CG_Obituary: target out of range");
-	}
 	ci = &cgs.clientinfo[ clientNum ];
 
 	if ( cg_draw3dIcons.integer ) {

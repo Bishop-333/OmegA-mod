@@ -303,6 +303,7 @@ vmCvar_t        cg_timerWidth;
 vmCvar_t        cg_timerX;
 vmCvar_t        cg_timerY;
 vmCvar_t        cg_transparentGun;
+vmCvar_t        cg_wallhack;
 vmCvar_t        cg_zoomAnim;
 vmCvar_t        cg_zoomAnimSpeed;
 vmCvar_t        cg_zoomToggle;
@@ -322,7 +323,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_zoomFov, "cg_zoomfov", "22.5", CVAR_ARCHIVE },
 	{ &cg_fov, "cg_fov", "115", CVAR_ARCHIVE },
 	{ &cg_viewsize, "cg_viewsize", "100", CVAR_ARCHIVE },
-	{ &cg_shadows, "cg_shadows", "1", CVAR_ARCHIVE  },
+	{ &cg_shadows, "cg_shadows", "0", CVAR_ARCHIVE  },
 	{ &cg_gibs, "cg_gibs", "1", CVAR_ARCHIVE  },
 	{ &cg_draw2D, "cg_draw2D", "1", CVAR_ARCHIVE  },
 	{ &cg_drawStatus, "cg_drawStatus", "1", CVAR_ARCHIVE  },
@@ -526,6 +527,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_timerX, "cg_timerX", "320", CVAR_ARCHIVE},
 	{ &cg_timerY, "cg_timerY", "2", CVAR_ARCHIVE},
 	{ &cg_transparentGun, "cg_transparentGun", "0", CVAR_ARCHIVE},
+	{ &cg_wallhack, "cg_wallhack", "0", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE},
 	{ &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE},
 	{ &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE},
@@ -1223,6 +1225,8 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.brightBluePlayers = trap_R_RegisterShader( "brightBluePlayers");
 	cgs.media.brightPinkPlayers = trap_R_RegisterShader( "brightPinkPlayers");
 	cgs.media.brightWhitePlayers = trap_R_RegisterShader( "brightWhitePlayers");
+	cgs.media.wallhackEnemy = trap_R_RegisterShader( "textures/suction/solid_red.tga");
+	cgs.media.wallhackFriend = trap_R_RegisterShader( "textures/suction/solid_blue.tga");
 
 //For Double Domination:
 	if ( cgs.gametype == GT_DOUBLE_D ) {

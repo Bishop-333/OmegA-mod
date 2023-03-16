@@ -869,6 +869,8 @@ typedef struct {
 	qhandle_t       brightBluePlayers;
 	qhandle_t       brightPinkPlayers;
 	qhandle_t       brightWhitePlayers;
+	qhandle_t       wallhackEnemy;
+	qhandle_t       wallhackFriend;
 
 	// weapon effect models
 	qhandle_t	bulletFlashModel;
@@ -1473,6 +1475,7 @@ extern vmCvar_t cg_timerWidth;
 extern vmCvar_t cg_timerX;
 extern vmCvar_t cg_timerY;
 extern vmCvar_t cg_transparentGun;
+extern vmCvar_t cg_wallhack;
 extern vmCvar_t	cg_zoomAnim;
 extern vmCvar_t	cg_zoomAnimSpeed;
 extern vmCvar_t	cg_zoomToggle;
