@@ -1037,6 +1037,8 @@ void ClientThink_real( gentity_t *ent ) {
         pm.pmove_flags = g_dmflags.integer;
         pm.pmove_autohop = pmove_autohop.integer;
 
+        pm.railgunSpeed = g_railgunSpeed.integer;
+
 	VectorCopy( client->ps.origin, client->oldOrigin );
 
         #ifdef MISSIONPACK

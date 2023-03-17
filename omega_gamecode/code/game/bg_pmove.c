@@ -1690,7 +1690,7 @@ static void PM_Weapon( void ) {
 		addTime = 100;
 		break;
 	case WP_RAILGUN:
-		addTime = 1500;
+		addTime = 3000 - pm->railgunSpeed;
 		break;
 	case WP_BFG:
 		addTime = 200;
