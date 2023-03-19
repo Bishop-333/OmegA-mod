@@ -50,8 +50,8 @@ List of the cvars/additions :
 - g_machinegunTeamDamage
 - g_plasmaBounce
 - g_railgunDamage
-- g_railJump
 - g_railgunSpeed
+- g_railJump
 - g_rocketSpeed
 - g_selfDamage
 - g_startWhenReady
