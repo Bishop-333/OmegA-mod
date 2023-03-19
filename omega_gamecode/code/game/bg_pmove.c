@@ -1646,7 +1646,9 @@ static void PM_Weapon( void ) {
 		}
 		PM_StartTorsoAnim( TORSO_ATTACK2 );
 	} else {
-		PM_StartTorsoAnim( TORSO_ATTACK );
+		if ( pm->ps->ammo[ pm->ps->weapon ] ) {
+			PM_StartTorsoAnim( TORSO_ATTACK );
+		}
 	}
 
 	pm->ps->weaponstate = WEAPON_FIRING;
@@ -1654,7 +1656,6 @@ static void PM_Weapon( void ) {
 	// check for out of ammo
 	if ( ! pm->ps->ammo[ pm->ps->weapon ] ) {
 		PM_AddEvent( EV_NOAMMO );
-		pm->ps->weaponTime += 500;
 		return;
 	}
 

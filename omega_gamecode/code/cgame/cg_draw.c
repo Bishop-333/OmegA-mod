@@ -2184,7 +2184,7 @@ static void CG_DrawReady ( void ) {
 		s = "^1Type \"\\ready\" to ready up";
 	}
 	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-	CG_DrawSmallString( 320 - w / 2, 47, s, 1.0F );
+	CG_DrawSmallString( 320 - w / 2, 45, s, 1.0F );
 }
 
 
