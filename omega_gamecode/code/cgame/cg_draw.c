@@ -2994,7 +2994,7 @@ static void CG_DrawVote(void) {
 	s = "or press ESC then click Vote";
 	CG_DrawSmallString( 0, 67 + SMALLCHAR_HEIGHT + 2, s, 1.0F );
 #else
-	s = va("VOTE(%i):%s yes:%i no:%i", sec, cgs.voteString, cgs.voteYes, cgs.voteNo );
+	s = va("VOTE(%i):%s yes(F1):%i no(F2):%i", sec, cgs.voteString, cgs.voteYes, cgs.voteNo );
 	CG_DrawSmallString( 0, 67, s, 1.0F );
 #endif
 }

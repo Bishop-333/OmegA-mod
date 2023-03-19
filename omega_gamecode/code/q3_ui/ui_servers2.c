@@ -1606,15 +1606,7 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.menu.draw       = ArenaServers_MenuDraw;
 	g_arenaservers.menu.key        = ArenaServers_MenuKey;
 
-	g_arenaservers.banner.generic.type  = MTYPE_BTEXT;
-	g_arenaservers.banner.generic.flags = QMF_CENTER_JUSTIFY;
-	g_arenaservers.banner.generic.x	    = 320;
-	g_arenaservers.banner.generic.y	    = 16;
-	g_arenaservers.banner.string  		= "ARENA SERVERS";
-	g_arenaservers.banner.style  	    = UI_CENTER;
-	g_arenaservers.banner.color  	    = color_white;
-
-	y = 80-SMALLCHAR_HEIGHT;
+	y = 25-SMALLCHAR_HEIGHT;
 	g_arenaservers.master.generic.type			= MTYPE_SPINCONTROL;
 	g_arenaservers.master.generic.name			= "Servers:";
 	g_arenaservers.master.generic.flags			= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
@@ -1686,9 +1678,9 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.list.generic.id				= ID_LIST;
 	g_arenaservers.list.generic.callback		= ArenaServers_Event;
 	g_arenaservers.list.generic.x				= 22;
-	g_arenaservers.list.generic.y				= y;
+	g_arenaservers.list.generic.y				= y - 3;
 	g_arenaservers.list.width					= MAX_LISTBOXWIDTH;
-	g_arenaservers.list.height					= 11;
+	g_arenaservers.list.height					= 15;
 	g_arenaservers.list.itemnames				= (const char **)g_arenaservers.items;
 	for( i = 0; i < MAX_LISTBOXITEMS; i++ ) {
 		g_arenaservers.items[i] = g_arenaservers.table[i].buff;
@@ -1697,7 +1689,7 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.mappic.generic.type			= MTYPE_BITMAP;
 	g_arenaservers.mappic.generic.flags			= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
 	g_arenaservers.mappic.generic.x				= 72;
-	g_arenaservers.mappic.generic.y				= 80;
+	g_arenaservers.mappic.generic.y				= 25;
 	g_arenaservers.mappic.width					= 128;
 	g_arenaservers.mappic.height				= 96;
 	g_arenaservers.mappic.errorpic				= ART_UNKNOWNMAP;
@@ -1734,7 +1726,7 @@ static void ArenaServers_MenuInit( void ) {
 	y = 376;
 	g_arenaservers.status.generic.type		= MTYPE_TEXT;
 	g_arenaservers.status.generic.x			= 320;
-	g_arenaservers.status.generic.y			= y;
+	g_arenaservers.status.generic.y			= y + 10;
 	g_arenaservers.status.string			= statusbuffer;
 	g_arenaservers.status.style				= UI_CENTER|UI_SMALLFONT;
 	g_arenaservers.status.color				= menu_text_color;
@@ -1742,7 +1734,7 @@ static void ArenaServers_MenuInit( void ) {
 	y += SMALLCHAR_HEIGHT;
 	g_arenaservers.statusbar.generic.type   = MTYPE_TEXT;
 	g_arenaservers.statusbar.generic.x	    = 320;
-	g_arenaservers.statusbar.generic.y	    = y;
+	g_arenaservers.statusbar.generic.y	    = y + 10;
 	g_arenaservers.statusbar.string	        = "";
 	g_arenaservers.statusbar.style	        = UI_CENTER|UI_SMALLFONT;
 	g_arenaservers.statusbar.color	        = text_color_normal;
@@ -1753,7 +1745,7 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.save.generic.callback	= ArenaServers_Event;
 	g_arenaservers.save.generic.id			= ID_SAVE;
 	g_arenaservers.save.generic.x			= 450;
-	g_arenaservers.save.generic.y			= 86;
+	g_arenaservers.save.generic.y			= 42;
 	g_arenaservers.save.width				= 96;
 	g_arenaservers.save.height				= 48;
 	g_arenaservers.save.focuspic			= ART_SAVE1;
@@ -1824,8 +1816,6 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.go.height				= 64;
 	g_arenaservers.go.focuspic				= ART_CONNECT1;
 	
-	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.banner );
-
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.master );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.gametype );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.sortkey );

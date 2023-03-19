@@ -1125,6 +1125,9 @@ void ClientThink_real( gentity_t *ent ) {
 		// In Last man standing, we force a quick respawn, since
 		// the player must be able to loose health
 		// pressing attack or use is the normal respawn method
+		if ( level.warmupTime ) {
+			ClientRespawn( ent );
+		}
 		if ( level.time - client->respawnTime  > g_forcerespawn.integer * 1000 ) {
 			client->sess.sessionTeam = TEAM_SPECTATOR;
 		}

@@ -325,12 +325,11 @@ qboolean CG_DrawOldScoreboard( void ) {
 	} else {
 		fadeColor = CG_FadeColor( cg.scoreFadeTime, FADE_TIME );
 		
-		if ( !fadeColor ) {
-			// next time scoreboard comes up, don't print killer
-			cg.deferredPlayerLoading = 0;
-			cg.killerName[0] = 0;
-			return qfalse;
-		}
+		// next time scoreboard comes up, don't print killer
+		cg.deferredPlayerLoading = 0;
+		cg.killerName[0] = 0;
+		return qfalse;
+
 		fade = *fadeColor;
 	}
 

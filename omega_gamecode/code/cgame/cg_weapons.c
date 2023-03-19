@@ -2581,10 +2581,12 @@ void CG_DrawWeaponBar8(int count, int bits, float *color)
 
 		CG_RegisterWeapon( i );
 		// draw weapon icon
-		if(!cg.snap->ps.ammo[i]) {
-			CG_DrawPic( x+2, y+4, 16, 16, cgs.media.noammoShader );
-		}
 		CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
+
+		// no ammo cross on top
+		if ( !cg.snap->ps.ammo[ i ] ) {
+			  CG_DrawPic( x+2, y+4, 16, 16, cgs.media.noammoShader );
+		}
 
 		/** Draw Weapon Ammo **/
 		if(cg.snap->ps.ammo[ i ]!=-1) {
