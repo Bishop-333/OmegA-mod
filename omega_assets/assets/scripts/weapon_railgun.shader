@@ -62,11 +62,11 @@ models/weapons2/railgun/energy
 		tcMod scroll -1 0
 	}
 	{
-		clampmap gfx/fx/flares/wide.tga
+		map models/weapons2/railgun/railcore.tga
 		blendfunc gl_dst_color gl_src_color
 		rgbGen const ( 0.52549 0.533333 0.858824 )
 		tcMod scale 1.1 1
-		tcMod stretch sin 1 0.2 0 1 
+		tcMod scroll -3 0
 	}
 }
 
