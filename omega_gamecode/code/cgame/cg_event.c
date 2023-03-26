@@ -1304,6 +1304,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 								CG_AddBufferedSound( cgs.media.yourTeamTookTheFlagSound );
 							else
 //#endif
+						 	CG_AddBufferedSound( cgs.media.takenOpponentSound );
 						 	CG_AddBufferedSound( cgs.media.enemyTookYourFlagSound );
 						}
 						else if (cgs.clientinfo[cg.clientNum].team == TEAM_RED) {
@@ -1327,6 +1328,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 								CG_AddBufferedSound( cgs.media.yourTeamTookTheFlagSound );
 							else
 //#endif
+							CG_AddBufferedSound( cgs.media.takenOpponentSound );
 							CG_AddBufferedSound( cgs.media.enemyTookYourFlagSound );
 						}
 						else if (cgs.clientinfo[cg.clientNum].team == TEAM_BLUE) {

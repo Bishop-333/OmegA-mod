@@ -269,7 +269,6 @@ typedef struct {
 	menulist_s  	fs;
 	menulist_s  	lighting;
         menulist_s  	flares;
-        menulist_s  	bloom;
 	menulist_s  	allow_extensions;
 	menulist_s  	texturebits;
 	menulist_s  	geometry;
@@ -290,7 +289,6 @@ typedef struct
 	int tq;
 	int lighting;
         qboolean flares;
-        qboolean bloom;
 	qboolean drawfps;
 	int texturebits;
 	int geometry;
@@ -483,7 +481,6 @@ static void GraphicsOptions_GetInitialVideo( void )
 	s_ivo.tq          = s_graphicsoptions.tq.curvalue;
 	s_ivo.lighting    = s_graphicsoptions.lighting.curvalue;
         s_ivo.flares      = s_graphicsoptions.flares.curvalue;
-        s_ivo.bloom      = s_graphicsoptions.bloom.curvalue;
 	s_ivo.drawfps	= s_graphicsoptions.drawfps.curvalue;
 	s_ivo.geometry    = s_graphicsoptions.geometry.curvalue;
 	s_ivo.filter      = s_graphicsoptions.filter.curvalue;
@@ -543,8 +540,6 @@ static void GraphicsOptions_CheckConfig( void )
 		if ( s_ivo_templates[i].lighting != s_graphicsoptions.lighting.curvalue )
 			continue;
                 if ( s_ivo_templates[i].flares != s_graphicsoptions.flares.curvalue )
-			continue;
-                if ( s_ivo_templates[i].bloom != s_graphicsoptions.bloom.curvalue )
 			continue;
                 if ( s_ivo_templates[i].drawfps != s_graphicsoptions.drawfps.curvalue )
 			continue;
@@ -614,10 +609,6 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
         if ( s_ivo.flares != s_graphicsoptions.flares.curvalue )
-	{
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
-	}
-        if ( s_ivo.bloom != s_graphicsoptions.bloom.curvalue )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
@@ -710,7 +701,6 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 	trap_Cvar_SetValue( "r_vertexLight", s_graphicsoptions.lighting.curvalue );
         trap_Cvar_SetValue( "cg_autovertex", s_graphicsoptions.lighting.curvalue );
         trap_Cvar_SetValue( "r_flares", s_graphicsoptions.flares.curvalue );
-        trap_Cvar_SetValue( "r_bloom", s_graphicsoptions.bloom.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
 	trap_Cvar_SetValue( "r_ext_multisample", s_graphicsoptions.anti.curvalue*2 );
         
@@ -800,7 +790,6 @@ static void GraphicsOptions_Event( void* ptr, int event ) {
                 s_graphicsoptions.anti.curvalue       = ivo->anti;
 		s_graphicsoptions.fs.curvalue          = ivo->fullscreen;
                 s_graphicsoptions.flares.curvalue      = ivo->flares;
-                s_graphicsoptions.bloom.curvalue      = ivo->bloom;
 		s_graphicsoptions.drawfps.curvalue	= ivo->drawfps;
 		break;
 
@@ -899,7 +888,6 @@ static void GraphicsOptions_SetMenuItems( void )
 	s_graphicsoptions.fs.curvalue = trap_Cvar_VariableValue("r_fullscreen");
 	s_graphicsoptions.allow_extensions.curvalue = trap_Cvar_VariableValue("r_allowExtensions");
         s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue("r_flares");
-        s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue("r_bloom");
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue("cg_drawFPS");
 	s_graphicsoptions.anti.curvalue = trap_Cvar_VariableValue("r_ext_multisample")/2;
         if(trap_Cvar_VariableValue("r_ext_texture_filter_anisotropic")) {
@@ -1208,15 +1196,6 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.flares.generic.y	      = y;
 	s_graphicsoptions.flares.itemnames	      = enabled_names;
 	y += BIGCHAR_HEIGHT+2;
-        
-        // references/modifies "r_bloom"
-	s_graphicsoptions.bloom.generic.type     = MTYPE_SPINCONTROL;
-	s_graphicsoptions.bloom.generic.name	  = "Bloom:";
-	s_graphicsoptions.bloom.generic.flags	  = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_graphicsoptions.bloom.generic.x	      = 400;
-	s_graphicsoptions.bloom.generic.y	      = y;
-	s_graphicsoptions.bloom.itemnames	      = enabled_names;
-	y += BIGCHAR_HEIGHT+2;
 
 	s_graphicsoptions.drawfps.generic.type  = MTYPE_SPINCONTROL;
 	s_graphicsoptions.drawfps.generic.name = "Draw FPS:";
@@ -1329,7 +1308,6 @@ void GraphicsOptions_MenuInit( void )
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.fs );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.lighting );
         Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.flares );
-        Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.bloom );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.drawfps );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.geometry );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.tq );

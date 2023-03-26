@@ -31,12 +31,10 @@ List of the cvars/additions :
 - cg_timerX
 - cg_timerY
 - cg_transparentGun
-- cg_wallhack
 - cg_zoomAnim
 - cg_zoomAnimSpeed
 - cg_zoomToggle
 #
-- g_autohop
 - g_beheading
 - g_damagePlums
 - g_dropFlag
@@ -51,7 +49,6 @@ List of the cvars/additions :
 - g_machinegunTeamDamage
 - g_plasmaBounce
 - g_railgunDamage
-- g_railgunSpeed
 - g_railJump
 - g_rocketSpeed
 - g_selfDamage
@@ -59,6 +56,19 @@ List of the cvars/additions :
 - g_teamPush
 - g_teleportMissiles //from ratmod
 - g_waterDamage
+
+//delagMissile are from Ratmod
+- g_delagMissiles
+- g_delagMissileBaseNudge
+- g_delagMissileCorrectFrameOffset
+- g_delagMissileDebug
+- g_delagMissileImmediateRun
+- g_delagMissileLatencyMode
+- g_delagMissileLimitVariance
+- g_delagMissileLimitVarianceMs
+- g_delagMissileMaxLatency
+- g_delagMissileNudgeOnly
+- g_predictMissiles
 #
 - new flags models
 - new font

@@ -1139,7 +1139,7 @@ static float CG_DrawEliminationTimer( float y ) {
 
 	rst = cgs.roundStartTime;
 
-        if(cg.time>rst && !cgs.roundtime) {
+        if(cg.time>rst && !cgs.roundtime || cg.scoreBoardShowing) {
             return y;
         }
 
@@ -1166,9 +1166,6 @@ static float CG_DrawEliminationTimer( float y ) {
 /***
 Lots of stuff
 ****/
-	if ( cg.scoreBoardShowing ) {
-		return;
-	}
 	if(cg.warmup == 0)
 	{
 		st = va( "Round in: %i", sec + 1 );

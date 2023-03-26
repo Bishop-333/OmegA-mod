@@ -265,7 +265,9 @@ transparentWeapon
 
 brightRedPlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
@@ -275,7 +277,9 @@ brightRedPlayers
 
 brightYellowPlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
@@ -285,7 +289,9 @@ brightYellowPlayers
 
 brightGreenPlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
@@ -295,7 +301,9 @@ brightGreenPlayers
 
 brightCyanPlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
@@ -305,7 +313,9 @@ brightCyanPlayers
 
 brightBluePlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
@@ -315,7 +325,9 @@ brightBluePlayers
 
 brightPinkPlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
@@ -325,7 +337,9 @@ brightPinkPlayers
 
 brightWhitePlayers
 {
-	nopicmip
+	cull disable
+	deformVertexes wave 100 sin 0.5 0 0 0
+	cull back
 	{
 		map textures/suction/solid_white
 		blendfunc add
