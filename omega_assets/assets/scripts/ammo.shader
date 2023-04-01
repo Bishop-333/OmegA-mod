@@ -19,7 +19,7 @@ models/powerups/ammo/machammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/machammo2.tga
@@ -47,7 +47,7 @@ models/powerups/ammo/shotammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/shotammo2.tga
@@ -75,7 +75,7 @@ models/powerups/ammo/grenammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/grenammo2.tga
@@ -103,7 +103,7 @@ models/powerups/ammo/lighammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/lighammo2.tga
@@ -131,7 +131,7 @@ models/powerups/ammo/plasammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/plasammo2.tga
@@ -159,7 +159,7 @@ models/powerups/ammo/rockammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/rockammo2.tga
@@ -187,7 +187,7 @@ models/powerups/ammo/railammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/railammo2.tga
@@ -215,7 +215,7 @@ models/powerups/ammo/bfgammo2
 {
 	{
 		map textures/base_wall/metalfloor_wall_14.tga
-		rgbGen const ( 0.1 0.1 0.1 )
+		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
 		map models/powerups/ammo/bfgammo2.tga

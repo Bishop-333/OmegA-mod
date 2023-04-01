@@ -56,19 +56,8 @@ List of the cvars/additions :
 - g_teamPush
 - g_teleportMissiles //from ratmod
 - g_waterDamage
-
-//delagMissile are from Ratmod
-- g_delagMissiles
-- g_delagMissileBaseNudge
-- g_delagMissileCorrectFrameOffset
-- g_delagMissileDebug
-- g_delagMissileImmediateRun
-- g_delagMissileLatencyMode
-- g_delagMissileLimitVariance
-- g_delagMissileLimitVarianceMs
-- g_delagMissileMaxLatency
-- g_delagMissileNudgeOnly
-- g_predictMissiles
+#
+- pmove_autohop
 #
 - new flags models
 - new font

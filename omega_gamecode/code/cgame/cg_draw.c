@@ -444,7 +444,7 @@ CG_DrawStatusBarHead
 
 static void CG_DrawStatusBarHead( float x ) {
 	vec3_t		angles;
-	float		size, stretch;
+	float		size;
 	float		frac;
 
 	VectorClear( angles );
@@ -1139,7 +1139,7 @@ static float CG_DrawEliminationTimer( float y ) {
 
 	rst = cgs.roundStartTime;
 
-        if(cg.time>rst && !cgs.roundtime || cg.scoreBoardShowing) {
+        if((cg.time>rst && !cgs.roundtime) || cg.scoreBoardShowing) {
             return y;
         }
 
@@ -1188,15 +1188,15 @@ Lots of stuff
 		scale = 0.45f;
 		switch ( cg.warmupCount ) {
 		case 0:
-			cw = 28;
+			cw = 22;
 			scale = 0.54f;
 			break;
 		case 1:
-			cw = 24;
+			cw = 20;
 			scale = 0.51f;
 			break;
 		case 2:
-			cw = 20;
+			cw = 18;
 			scale = 0.48f;
 			break;
 		default:
@@ -1585,9 +1585,11 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 	if ( cg_drawSpeed.integer ) {
 		y = CG_DrawSpeedMeter( y );
 	}
+#ifndef MISSIONPACK
 	if ( cg_drawItemPickup.integer ) {
 		y = CG_DrawPickupItem( y );
 	}
+#endif
 	if ( cg_drawAttacker.integer ) {
 		y = CG_DrawAttacker( y );
 	}
@@ -3371,15 +3373,15 @@ static void CG_DrawWarmup( void ) {
 	scale = 0.45f;
 	switch ( cg.warmupCount ) {
 	case 0:
-		cw = 28;
+		cw = 22;
 		scale = 0.54f;
 		break;
 	case 1:
-		cw = 24;
+		cw = 20;
 		scale = 0.51f;
 		break;
 	case 2:
-		cw = 20;
+		cw = 18;
 		scale = 0.48f;
 		break;
 	default:

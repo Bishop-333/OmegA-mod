@@ -105,12 +105,6 @@ models/flags/bflagface
 	{
 		clampmap models/flags_omega/bflagface1.jpg
 		blendfunc add
-		rgbgen identity
-	}
-	{
-		map models/flags_omega/flagface2.tga
-		blendfunc blend
-		rgbGen wave triangle 0.95 0.05 1 15
 	}
 }
 
@@ -122,12 +116,6 @@ models/flags/rflagface
 	{
 		clampmap models/flags_omega/rflagface1.jpg
 		blendfunc add
-		rgbgen identity
-	}
-	{
-		map models/flags_omega/flagface2.tga
-		blendfunc blend
-		rgbGen wave triangle 0.95 0.05 1 15
 	}
 }
 

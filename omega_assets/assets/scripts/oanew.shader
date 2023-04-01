@@ -817,3 +817,27 @@ lightningBoltThin
 	}
 }
 
+textures/sfx/logo512
+{
+	cull disable
+	surfaceparm alphashadow
+	surfaceparm trans	
+	surfaceparm nomarks
+	surfaceparm noimpact
+	surfaceparm nonsolid
+	tessSize 64
+	deformVertexes wave 32 sin 0 1 0 .2
+	deformVertexes wave 96 sin 0 2 0 .125
+     	{
+		map textures/sfx/logo512.tga
+		alphaFunc GE128
+		depthWrite
+	}
+	{
+		map $lightmap
+		rgbGen identity
+		blendFunc filter
+		depthFunc equal
+	}
+}
+
