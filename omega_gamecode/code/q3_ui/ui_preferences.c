@@ -573,8 +573,8 @@ static void Preferences_MenuInit( void ) {
 	Menu_AddItem( &s_preferences.menu, &s_preferences.drawteamoverlay );
         Menu_AddItem( &s_preferences.menu, &s_preferences.delaghitscan );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.allowdownload );
-        Menu_AddItem( &s_preferences.menu, &s_preferences.teamchatbeep );
         Menu_AddItem( &s_preferences.menu, &s_preferences.chatbeep );
+        Menu_AddItem( &s_preferences.menu, &s_preferences.teamchatbeep );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
 
 	Menu_AddItem( &s_preferences.menu, &s_preferences.back );

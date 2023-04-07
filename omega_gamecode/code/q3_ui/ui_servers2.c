@@ -854,7 +854,7 @@ static void ArenaServers_Insert( char* adrstr, char* info, int pingtime )
 
 	Q_strncpyz( servernodeptr->hostname, Info_ValueForKey( info, "hostname"), MAX_HOSTNAMELENGTH );
 	Q_CleanStrWithColor( servernodeptr->hostname );
-	Q_strupr( servernodeptr->hostname );
+	//Q_strupr( servernodeptr->hostname );
 
 	Q_strncpyz( servernodeptr->mapname, Info_ValueForKey( info, "mapname"), MAX_MAPNAMELENGTH );
 	Q_CleanStr( servernodeptr->mapname );
