@@ -35,6 +35,7 @@ List of the cvars/additions :
 - cg_zoomAnimSpeed
 - cg_zoomToggle
 #
+- g_allowDuplicateGuid
 - g_beheading
 - g_damagePlums
 - g_dropFlag

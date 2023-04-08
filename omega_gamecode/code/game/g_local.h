@@ -1162,6 +1162,7 @@ extern  vmCvar_t    g_minNameChangePeriod;
 extern  vmCvar_t    g_maxNameChanges;
 
 //OmegA
+extern vmCvar_t g_allowDuplicateGuid;
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_damagePlums;
 extern vmCvar_t g_dropFlag;

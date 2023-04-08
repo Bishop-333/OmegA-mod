@@ -198,6 +198,7 @@ vmCvar_t        g_maxNameChanges;
 vmCvar_t        g_timestamp_startgame;
 
 //OmegA
+vmCvar_t        g_allowDuplicateGuid;
 vmCvar_t        g_beheading;
 vmCvar_t        g_beheading;
 vmCvar_t        g_damagePlums;
@@ -439,6 +440,7 @@ static cvarTable_t		gameCvarTable[] = {
         { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse},
 
 	//OmegA
+	{ &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
 	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
 	{ &g_dropFlag, "g_dropFlag", "0", CVAR_ARCHIVE, 0, qtrue },
