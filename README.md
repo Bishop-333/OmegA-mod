@@ -87,4 +87,4 @@ It even work on arm machines !
 # Links
 Mod DB page : https://www.moddb.com/mods/openarena-omega
 
-Custom OmegA engine : https://github.com/EddieBrrrock/OmegA-engine
+Custom OmegA engine : https://github.com/EddieBrrrock/OmegAe
