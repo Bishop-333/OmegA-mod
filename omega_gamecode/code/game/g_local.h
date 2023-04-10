@@ -1163,6 +1163,7 @@ extern  vmCvar_t    g_maxNameChanges;
 
 //OmegA
 extern vmCvar_t g_allowDuplicateGuid;
+extern vmCvar_t g_botChat;
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_damagePlums;
 extern vmCvar_t g_dropFlag;
@@ -1176,6 +1177,7 @@ extern vmCvar_t g_jumppadGrenades; //from ratmod
 extern vmCvar_t g_lightningDamage;
 extern vmCvar_t g_machinegunDamage;
 extern vmCvar_t g_machinegunTeamDamage;
+extern vmCvar_t g_muteSpectators;
 extern vmCvar_t g_plasmaBounce;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railJump;

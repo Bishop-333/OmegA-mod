@@ -201,6 +201,7 @@ vmCvar_t        g_timestamp_startgame;
 vmCvar_t        g_allowDuplicateGuid;
 vmCvar_t        g_beheading;
 vmCvar_t        g_beheading;
+vmCvar_t        g_botChat;
 vmCvar_t        g_damagePlums;
 vmCvar_t        g_dropFlag;
 vmCvar_t        g_easierPickup;
@@ -212,6 +213,7 @@ vmCvar_t        g_jumppadGrenades; //from ratmod
 vmCvar_t        g_lightningDamage;
 vmCvar_t        g_machinegunDamage;
 vmCvar_t        g_machinegunTeamDamage;
+vmCvar_t        g_muteSpectators;
 vmCvar_t        g_plasmaBounce;
 vmCvar_t        g_railgunDamage;
 vmCvar_t        g_railgunSpeed;
@@ -293,7 +295,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue  },
 	{ &g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue  },
 	{ &g_weaponTeamRespawn, "g_weaponTeamRespawn", "30", 0, 0, qtrue },
-	{ &g_forcerespawn, "g_forcerespawn", "60", 0, 0, qtrue },
+	{ &g_forcerespawn, "g_forcerespawn", "120", 0, 0, qtrue },
         { &g_respawntime, "g_respawntime", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_inactivity, "g_inactivity", "0", 0, 0, qtrue },
 	{ &g_debugMove, "g_debugMove", "0", 0, 0, qfalse },
@@ -442,6 +444,7 @@ static cvarTable_t		gameCvarTable[] = {
 	//OmegA
 	{ &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
 	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_botChat, "g_botChat", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
 	{ &g_dropFlag, "g_dropFlag", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
@@ -453,6 +456,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue },
 	{ &g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue },
 	{ &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
+	{ &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
 	{ &g_railgunSpeed, "g_railgunSpeed", "1500", 0, 0, qtrue },

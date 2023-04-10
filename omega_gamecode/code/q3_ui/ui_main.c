@@ -248,7 +248,7 @@ static cvarTable_t		cvarTable[] = {
 	{ &ui_spScores5, "g_spScores5", "", CVAR_ARCHIVE | CVAR_ROM },
 	{ &ui_spAwards, "g_spAwards", "", CVAR_ARCHIVE | CVAR_ROM },
 	{ &ui_spVideos, "g_spVideos", "", CVAR_ARCHIVE | CVAR_ROM },
-	{ &ui_spSkill, "g_spSkill", "2", CVAR_ARCHIVE | CVAR_LATCH },
+	{ &ui_spSkill, "g_spSkill", "3", CVAR_ARCHIVE | CVAR_LATCH },
 
 	{ &ui_spSelection, "ui_spSelection", "", CVAR_ROM },
 

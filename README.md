@@ -37,6 +37,7 @@ List of the cvars/additions :
 #
 - g_allowDuplicateGuid
 - g_beheading
+- g_botChat
 - g_damagePlums
 - g_dropFlag
 - g_easierPickup
@@ -48,6 +49,7 @@ List of the cvars/additions :
 - g_lightningDamage
 - g_machinegunDamage
 - g_machinegunTeamDamage
+- g_muteSpectators
 - g_plasmaBounce
 - g_railgunDamage
 - g_railJump
