@@ -433,7 +433,7 @@ static void CG_ParseReadyMask( void ) {
 
 	if ( readyMask != cg.readyMask ) {
 		for( i = 0; i < 32 ; i++ ) {
-			if ( ( cg.readyMask & ( 1 << i ) ) != ( readyMask & ( 1 << i ) ) ) {
+			if ( ( cg.readyMask & ( 1 << i ) ) != ( readyMask & ( 1 << i ) ) && !cgs.clientinfo[ i ].botSkill ) {
 				if ( readyMask & ( 1 << i ) ) {
 					CG_CenterPrint ( va ( "%s ^7is ^2ready", cgs.clientinfo[ i ].name ), 120, BIGCHAR_WIDTH );
                 		} else {

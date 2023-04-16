@@ -2585,14 +2585,14 @@ void CheckTournament( void ) {
 		
 		if ( g_startWhenReady.integer ) {
 			for ( i = 0; i < level.numPlayingClients; i++ ) {
-				if ( ( g_entities[level.sortedClients[i]].client->ready || g_entities[level.sortedClients[i]].r.svFlags & SVF_BOT ) && g_entities[level.sortedClients[i]].inuse )
+				if ( ( g_entities[level.sortedClients[i]].client->ready ) && g_entities[level.sortedClients[i]].inuse )
 					clientsReady++;
 			}
 		}
 
-		if ( g_doWarmup.integer && g_startWhenReady.integer == 1 && ( clientsReady < level.numPlayingClients / 2 + 1 ) ) {
+		if ( g_doWarmup.integer && g_startWhenReady.integer == 1 && ( clientsReady < g_humanplayers.integer / 2 + 1 ) ) {
 			notEnough = qtrue;
-		} else if ( g_doWarmup.integer && g_startWhenReady.integer == 2 && ( clientsReady < level.numPlayingClients ) ) {
+		} else if ( g_doWarmup.integer && g_startWhenReady.integer == 2 && ( clientsReady < g_humanplayers.integer ) ) {
 			notEnough = qtrue;
 		}
 

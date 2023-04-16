@@ -1066,7 +1066,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 	float			targ_maxs2;
 	float			z_ratio;
 	float			z_rel;
-	qboolean	hit = qtrue;
         
 	vec3_t		bouncedir, impactpoint;
 
@@ -1284,49 +1283,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		damage *= 0.5;
 	}
 
-	// See if the player hit the enemy head
-	if (targ->client && attacker->client && targ->health > 0) {  
-		targ_maxs2 = targ->r.maxs[2];
-
-		// check if the target is crouched because it doesn't make the same height
-		if (targ->client->ps.pm_flags & PMF_DUCKED) {
-			height = ( abs( targ->r.mins[2] ) + targ_maxs2 ) * 0.75;
-		} else {
-			height = abs( targ->r.mins[2] ) + targ_maxs2;  
-		}
-
-		z_rel = point[2] - targ->r.currentOrigin[2] + abs( targ->r.mins[2] );
-		z_ratio = z_rel / height;
-
-		if ( z_ratio < 0.90 ) {
-			if ( g_headShotOnly.integer ) {
-				take *= 0;
-				hit = qfalse;
-			} else {
-				hit = qtrue;
-			}
-		} else {
-			if ( g_beheading.integer ) {
-				if ( inflictor->s.weapon == WP_RAILGUN ) {
-					mod = MOD_HEADSHOT;
-				}
-			}
-		}
-	}
-
-	// add to the attacker's hit counter (if the target isn't a general entity like a prox mine)
-	if ( attacker->client && client
-			&& targ != attacker && targ->health > 0
-			&& targ->s.eType != ET_MISSILE
-			&& targ->s.eType != ET_GENERAL) {
-		if ( OnSameTeam( targ, attacker ) || !hit ) {
-			attacker->client->ps.persistant[PERS_HITS]--;
-		} else {
-			attacker->client->ps.persistant[PERS_HITS]++;
-		}
-		attacker->client->ps.persistant[PERS_ATTACKEE_ARMOR] = (targ->health<<8)|(client->ps.stats[STAT_ARMOR]);
-	}
-
 	// always give half damage if hurting self
 	// calculated after knockback, so rocket jumping works
 	if ( targ == attacker) {
@@ -1403,6 +1359,40 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		// set the last client who damaged the target
 		targ->client->lasthurt_client = attacker->s.number;
 		targ->client->lasthurt_mod = mod;
+	}
+
+	// See if the player hit the enemy head
+	if (targ->client && attacker->client && targ->health > 0) {  
+		targ_maxs2 = targ->r.maxs[2];
+
+		// check if the target is crouched because it doesn't make the same height
+		if (targ->client->ps.pm_flags & PMF_DUCKED) {
+			height = ( abs( targ->r.mins[2] ) + targ_maxs2 ) * 0.75;
+		} else {
+			height = abs( targ->r.mins[2] ) + targ_maxs2;  
+		}
+
+		z_rel = point[2] - targ->r.currentOrigin[2] + abs( targ->r.mins[2] );
+		z_ratio = z_rel / height;
+
+		if ( z_ratio < 0.90 && g_headShotOnly.integer ) {
+			take *= 0;
+		} else if ( g_beheading.integer && inflictor->s.weapon == WP_RAILGUN ) {
+			mod = MOD_HEADSHOT;
+		}
+	}
+
+	// add to the attacker's hit counter (if the target isn't a general entity like a prox mine)
+	if ( attacker->client && client
+			&& targ != attacker && targ->health > 0
+			&& targ->s.eType != ET_MISSILE
+			&& targ->s.eType != ET_GENERAL) {
+		if ( OnSameTeam( targ, attacker ) || !take ) {
+			attacker->client->ps.persistant[PERS_HITS]--;
+		} else {
+			attacker->client->ps.persistant[PERS_HITS]++;
+		}
+		attacker->client->ps.persistant[PERS_ATTACKEE_ARMOR] = (targ->health<<8)|(client->ps.stats[STAT_ARMOR]);
 	}
 
 	//If vampire is enabled, gain health but not from self or teammate, cannot steal more than targ has
