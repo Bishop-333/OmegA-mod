@@ -76,7 +76,8 @@ List of the cvars/additions :
 - upscalled weapon textures
 - a lot of fixes
 
-# Building
+## Building
+
 Simply go to your terminal and type :
 
 ```sh
@@ -84,7 +85,12 @@ make
 ```
 It even work on arm machines !
 
-# Links
-Mod DB page : https://www.moddb.com/mods/openarena-omega
+## Links
 
-Custom OmegA engine : https://github.com/EddieBrrrock/OmegAe
+* Mod DB page : https://www.moddb.com/mods/openarena-omega
+* Custom OmegA engine : https://github.com/EddieBrrrock/OmegA-engine
+
+## Donate
+
+I develop during my freetime, if you like my engine or my mod, please consider supporting me by donating to the following paypal ;)
+* paypal.me/fatsakura
