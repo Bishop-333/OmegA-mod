@@ -92,5 +92,5 @@ It even work on arm machines !
 
 ## Donate
 
-I develop during my freetime, if you like my engine or my mod, please consider supporting me by donating to the following paypal ;)
+I develop during my freetime, if you enjoyed my engine or my mod please consider supporting me by donating through the following paypal ;)
 * paypal.me/fatsakura
