@@ -596,6 +596,7 @@ char *ConcatArgs( int start );  //KK-OAX This declaration moved from g_svccmds.c
 //KK-OAX Added this to make accessible from g_svcmds_ext.c
 void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ); 
 void SendReadyMask( int clientnum );
+void G_SendSpawnpoints( gentity_t *ent );
 
 
 // KK-OAX Added these in a seperate file to keep g_cmds.c familiar. 
@@ -1163,6 +1164,7 @@ extern  vmCvar_t    g_maxNameChanges;
 
 //OmegA
 extern vmCvar_t g_allowDuplicateGuid;
+extern vmCvar_t g_ambientSound;
 extern vmCvar_t g_botChat;
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_damagePlums;

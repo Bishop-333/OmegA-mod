@@ -3331,7 +3331,7 @@ static void CG_DrawWarmup( void ) {
 		}
 
 		if ( ci1 && ci2 ) {
-			s = va( "%s vs %s", ci1->name, ci2->name );
+			s = va( "%s^7 vs %s", ci1->name, ci2->name );
 #ifdef MISSIONPACK
 			w = CG_Text_Width(s, 0.6f, 0);
 			CG_Text_Paint(320 - w / 2, 60, 0.6f, colorWhite, s, 0, 0, ITEM_TEXTSTYLE_SHADOWEDMORE);
@@ -3342,7 +3342,7 @@ static void CG_DrawWarmup( void ) {
 			} else {
 				cw = BIGCHAR_WIDTH;
 			}
-			CG_DrawStringExt( 320 - w * cw/2, 20,s, colorWhite, 
+			CG_DrawStringExt( 320 - w * cw/2, 27,s, colorWhite, 
 					qfalse, qtrue, cw, (int)(cw * 1.5f), 0 );
 #endif
 		}
@@ -3390,14 +3390,15 @@ static void CG_DrawWarmup( void ) {
 		break;
 	}
 
-#ifdef MISSIONPACK
-		w = CG_Text_Width(s, scale, 0);
-		CG_Text_Paint(320 - w / 2, 125, scale, colorWhite, s, 0, 0, ITEM_TEXTSTYLE_SHADOWEDMORE);
-#else
-	w = CG_DrawStrlen( s );
-	CG_DrawStringExt( 320 - w * cw/2, 27, s, colorWhite, 
-			qfalse, qtrue, cw, (int)(cw * 1.5), 0 );
-#endif
+	if ( cgs.gametype == GT_TOURNAMENT ) {
+		w = CG_DrawStrlen( s );
+		CG_DrawStringExt( 320 - w * cw/2, 57, s, colorWhite, 
+				qfalse, qtrue, cw, (int)(cw * 1.5), 0 );
+	} else {
+		w = CG_DrawStrlen( s );
+		CG_DrawStringExt( 320 - w * cw/2, 27, s, colorWhite, 
+				qfalse, qtrue, cw, (int)(cw * 1.5), 0 );
+	}
 }
 
 //==================================================================================

@@ -119,20 +119,17 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 			}
 		} else if ( ci->handicap < 100 ) {
 			Com_sprintf( string, sizeof( string ), "%i", ci->handicap );
-			if ( cgs.gametype == GT_TOURNAMENT )
-				CG_DrawSmallStringColor( iconx, y - SMALLCHAR_HEIGHT/2, string, color );
-			else
-				CG_DrawSmallStringColor( iconx, y, string, color );
+			CG_DrawSmallStringColor( iconx+10, y, string, color );
 		}
 
 		// draw the wins / losses
-		if ( cgs.gametype == GT_TOURNAMENT ) {
+		if ( cgs.gametype == GT_TOURNAMENT && !cg.warmup ) {
 			Com_sprintf( string, sizeof( string ), "%i/%i", ci->wins, ci->losses );
-			if( ci->handicap < 100 && !ci->botSkill ) {
-				CG_DrawSmallStringColor( iconx, y + SMALLCHAR_HEIGHT/2, string, color );
+			if( ci->handicap < 100 || ci->botSkill ) {
+				CG_DrawSmallStringColor( iconx-20, y, string, color );
 			}
 			else {
-				CG_DrawSmallStringColor( iconx, y, string, color );
+				CG_DrawSmallStringColor( iconx+5, y, string, color );
 			}
 		}
 	}
@@ -181,18 +178,18 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 			"   connecting                              %s", ci->name);
 	} else if ( ci->team == TEAM_SPECTATOR ) {
 		Com_sprintf(string, sizeof(string),
-			"    SPEC      %3i      %2i:%02i               %s", score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
+			"    SPEC      %3i     %3i:%02i               %s", score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
 	} else {
 		/*if(cgs.gametype == GT_LMS)
 			Com_sprintf(string, sizeof(string),
-				"     %4i     %4i     %2i:%02i      %3i%%     %s *%i*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name, ci->isDead);
+				"     %4i     %4i    %3i:%02i      %3i%%     %s *%i*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name, ci->isDead);
 		else*/
 		/*if(ci->isDead)
 			Com_sprintf(string, sizeof(string),
-				"     %4i     %4i     %2i:%02i      %3i%%     %s *DEAD*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
+				"     %4i     %4i    %3i:%02i      %3i%%     %s *DEAD*", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
 		else*/
 			Com_sprintf(string, sizeof(string),
-				"     %4i     %4i     %2i:%02i      %3i%%     %s", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
+				"     %4i     %4i    %3i:%02i      %3i%%     %s", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
 	}
 
 	// highlight your position

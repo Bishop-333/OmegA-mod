@@ -729,6 +729,10 @@ void CG_GibPlayer( vec3_t playerOrigin ) {
 		CG_LaunchGib( origin, velocity, cgs.media.gibBrain );
 	}
 
+	if ( cg.warmup != 0 ) {
+		return;
+	}
+
 	// allow gibs to be turned off for speed
 	if ( !cg_gibs.integer ) {
 		return;

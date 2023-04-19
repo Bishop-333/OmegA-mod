@@ -399,6 +399,10 @@ void CopyToBodyQue( gentity_t *ent ) {
 
 	trap_UnlinkEntity (ent);
 
+	if ( level.warmupTime != 0 ) {
+		return;
+	}
+
 	// if client is in a nodrop area, don't leave the body
 	contents = trap_PointContents( ent->s.origin, -1 );
 	if ( (contents & CONTENTS_NODROP) && !(ent->s.eFlags & EF_KAMIKAZE) ) { //the check for kamikaze is a workaround for ctf4ish
@@ -1688,6 +1692,8 @@ void ClientBegin( int clientNum ) {
             SendCustomVoteCommands(clientNum);
 
 	SendReadyMask( ent - g_entities );
+
+	G_SendSpawnpoints( ent );
 }
 
 /*

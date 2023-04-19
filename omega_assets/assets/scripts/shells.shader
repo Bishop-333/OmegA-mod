@@ -1,19 +1,6 @@
 powerups/invisibility
 {
 	cull disable
-	{
-		map gfx/damage/shadow.tga
-		blendfunc blend
-		tcMod rotate 86
-		tcGen environment 
-		alphaGen wave sin 0.03 0 0 0 
-	}
-}
-
-//too invisible
-powerups/invisibilityOLD
-{
-	cull disable
 	deformVertexes wave 64 sin 0 1 0 1 
 	{
 		map textures/oafx/inviso.tga
@@ -263,7 +250,7 @@ transparentWeapon
 	}
 }
 
-brightRedPlayers
+brightPlayers
 {
 	cull disable
 	deformVertexes wave 100 sin 0.5 0 0 0
@@ -271,77 +258,29 @@ brightRedPlayers
 	{
 		map textures/suction/solid_white
 		blendfunc add
-		rgbGen const ( 1 0 0 )
+		rgbGen entity
 	}
 }
 
-brightYellowPlayers
+brightPlayers2
 {
-	cull disable
-	deformVertexes wave 100 sin 0.5 0 0 0
-	cull back
+	nopicmip
 	{
 		map textures/suction/solid_white
 		blendfunc add
-		rgbGen const ( 1 1 0 )
+		rgbGen entity
 	}
 }
 
-brightGreenPlayers
+spawnPoint
 {
 	cull disable
-	deformVertexes wave 100 sin 0.5 0 0 0
-	cull back
 	{
-		map textures/suction/solid_white
-		blendfunc add
-		rgbGen const ( 0 1 0 )
-	}
-}
-
-brightCyanPlayers
-{
-	cull disable
-	deformVertexes wave 100 sin 0.5 0 0 0
-	cull back
-	{
-		map textures/suction/solid_white
-		blendfunc add
-		rgbGen const ( 0 1 1 )
-	}
-}
-
-brightBluePlayers
-{
-	cull disable
-	deformVertexes wave 100 sin 0.5 0 0 0
-	cull back
-	{
-		map textures/suction/solid_white
-		blendfunc add
-		rgbGen const ( 0 0 1 )
-	}
-}
-
-brightPinkPlayers
-{
-	cull disable
-	deformVertexes wave 100 sin 0.5 0 0 0
-	cull back
-	{
-		map textures/suction/solid_white
-		blendfunc add
-		rgbGen const ( 1 0 1 )
-	}
-}
-
-brightWhitePlayers
-{
-	cull disable
-	deformVertexes wave 100 sin 0.5 0 0 0
-	cull back
-	{
-		map textures/suction/solid_white
-		blendfunc add
+		map gfx/damage/shadow.tga
+		rgbGen entity
+		blendfunc blend
+		tcMod rotate 86
+		tcGen environment 
+		alphaGen wave sin 0.5 0 0 0 
 	}
 }

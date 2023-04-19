@@ -293,6 +293,7 @@ vmCvar_t        cg_omegaFlags;
 vmCvar_t        cg_omegaInitialized;
 vmCvar_t        cg_screenshake;
 vmCvar_t	cg_selfSounds;
+vmCvar_t        cg_showSpawns;
 vmCvar_t        cg_statusBarStyle;
 vmCvar_t        cg_teamColor;
 vmCvar_t        cg_teamModel;
@@ -518,6 +519,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE},
 	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
 	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
+	{ &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE},
 	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE},
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
 	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
@@ -1203,6 +1205,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.invisShader = trap_R_RegisterShader("powerups/invisibility" );
 	cgs.media.regenShader = trap_R_RegisterShader("powerups/regen" );
 	cgs.media.hastePuffShader = trap_R_RegisterShader("hasteSmokePuff" );
+	cgs.media.spawnPointShader = trap_R_RegisterShader("spawnPoint" );
 	cgs.media.transparentWeaponShader = trap_R_RegisterShader("transparentWeapon" );
 
 	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION|| cgs.gametype == GT_1FCTF || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
@@ -1220,13 +1223,8 @@ static void CG_RegisterGraphics( void ) {
         }
 
 	// bright players shader
-	cgs.media.brightRedPlayers = trap_R_RegisterShader( "brightRedPlayers");
-	cgs.media.brightYellowPlayers = trap_R_RegisterShader( "brightYellowPlayers");
-	cgs.media.brightGreenPlayers = trap_R_RegisterShader( "brightGreenPlayers");
-	cgs.media.brightCyanPlayers = trap_R_RegisterShader( "brightCyanPlayers");
-	cgs.media.brightBluePlayers = trap_R_RegisterShader( "brightBluePlayers");
-	cgs.media.brightPinkPlayers = trap_R_RegisterShader( "brightPinkPlayers");
-	cgs.media.brightWhitePlayers = trap_R_RegisterShader( "brightWhitePlayers");
+	cgs.media.brightPlayers = trap_R_RegisterShader( "brightPlayers");
+	cgs.media.brightPlayers2 = trap_R_RegisterShader( "brightPlayers2");
 	cgs.media.wallhackEnemy = trap_R_RegisterShader( "textures/suction/solid_red.tga");
 	cgs.media.wallhackFriend = trap_R_RegisterShader( "textures/suction/solid_blue.tga");
 

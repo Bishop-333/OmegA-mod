@@ -384,7 +384,7 @@ static void CG_OldRocketTrail( centity_t *ent, const weaponInfo_t *wi ) {
 					  wi->wiTrailTime, 
 					  t,
 					  0,
-					  0, 
+					  LEF_PUFF_DONT_SCALE, 
 					  cgs.media.smokePuffShader );
 		// use the optimized local entity add
 		smoke->leType = LE_SCALE_FADE;
@@ -912,7 +912,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 		weaponInfo->missileTrailFunc = CG_RocketTrail;
 		weaponInfo->missileDlight = 200;
 		weaponInfo->wiTrailTime = 2000;
-		weaponInfo->trailRadius = 64;
+		weaponInfo->trailRadius = 6;
 		
 		MAKERGB( weaponInfo->missileDlightColor, 1, 0.75f, 0 );
 		MAKERGB( weaponInfo->flashDlightColor, 1, 0.75f, 0 );

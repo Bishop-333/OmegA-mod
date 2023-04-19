@@ -1224,6 +1224,33 @@ static void CG_RemoveChatEscapeChar( char *text ) {
 
 /*
 =================
+CG_ParseSpawnpoints
+=================
+*/
+static void CG_ParseSpawnpoints( void ) {
+	int i;
+
+	cg.numSpawnpoints = atoi( CG_Argv(1) );
+
+	if ( cg.numSpawnpoints > MAX_SPAWNPOINTS ) {
+		cg.numSpawnpoints = MAX_SPAWNPOINTS;
+	} else if ( cg.numSpawnpoints < 0 ) {
+		cg.numSpawnpoints = 0;
+	}
+
+	for( i = 0; i < cg.numSpawnpoints; i++ ){
+		cg.spawnpoints[i].origin[0] = atoi( CG_Argv( 2 + i*7 ) );
+		cg.spawnpoints[i].origin[1] = atoi( CG_Argv( 3 + i*7 ) );
+		cg.spawnpoints[i].origin[2] = atoi( CG_Argv( 4 + i*7 ) );
+		cg.spawnpoints[i].angle[0] = atoi( CG_Argv( 5 + i*7 ) );
+		cg.spawnpoints[i].angle[1] = atoi( CG_Argv( 6 + i*7 ) );
+		cg.spawnpoints[i].angle[2] = atoi( CG_Argv( 7 + i*7 ) );
+		cg.spawnpoints[i].team = atoi( CG_Argv( 8 + i*7 ) );
+	}
+}
+
+/*
+=================
 CG_ServerCommand
 
 The string has been tokenized and can be retrieved with
@@ -1401,6 +1428,11 @@ static void CG_ServerCommand( void ) {
 
         if ( !strcmp( cmd, "respawn" ) ) {
 		CG_ParseRespawnTime();
+		return;
+	}
+
+        if ( !strcmp( cmd, "spawnPoints" ) ) {
+		CG_ParseSpawnpoints();
 		return;
 	}
 

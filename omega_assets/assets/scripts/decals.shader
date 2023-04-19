@@ -92,7 +92,7 @@ markShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 	}
 }
@@ -103,7 +103,7 @@ markRedShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 		rgbGen const ( 1 0 0 )
 	}
@@ -115,7 +115,7 @@ markYellowShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 		rgbGen const ( 1 1 0 )
 	}
@@ -127,7 +127,7 @@ markGreenShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 		rgbGen const ( 0 1 0 )
 	}
@@ -139,7 +139,7 @@ markCyanShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 		rgbGen const ( 0 1 1 )
 	}
@@ -151,7 +151,7 @@ markBlueShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 		rgbGen const ( 0 0 1 )
 	}
@@ -163,7 +163,7 @@ markPinkShadow
 	nomipmaps
 	polygonoffset
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/omg_shadow.tga
 		blendfunc gl_one gl_one
 		rgbGen const ( 1 0 1 )
 	}

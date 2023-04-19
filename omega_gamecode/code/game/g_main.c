@@ -199,6 +199,7 @@ vmCvar_t        g_timestamp_startgame;
 
 //OmegA
 vmCvar_t        g_allowDuplicateGuid;
+vmCvar_t        g_ambientSound;
 vmCvar_t        g_beheading;
 vmCvar_t        g_beheading;
 vmCvar_t        g_botChat;
@@ -443,6 +444,7 @@ static cvarTable_t		gameCvarTable[] = {
 
 	//OmegA
 	{ &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
+	{ &g_ambientSound, "g_ambientSound", "1", CVAR_ARCHIVE| CVAR_LATCH, 0, qtrue },
 	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_botChat, "g_botChat", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },

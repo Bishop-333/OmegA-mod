@@ -104,6 +104,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define DEFAULT_REDTEAM_NAME		"Vim supporters"
 #define DEFAULT_BLUETEAM_NAME		"Emacs supporters"
 
+#define MAX_SPAWNPOINTS		32
+
 typedef enum {
 	FOOTSTEP_NORMAL,
 	FOOTSTEP_BOOT,
@@ -121,6 +123,12 @@ typedef enum {
 	IMPACTSOUND_METAL,
 	IMPACTSOUND_FLESH
 } impactSound_t;
+
+typedef struct {
+	vec3_t origin;
+	vec3_t angle;
+	int team;
+} spawnpoint_t;
 
 //=================================================
 
@@ -684,6 +692,8 @@ typedef struct {
         int blueObeliskHealth;
 
 	int readyMask;
+	int numSpawnpoints;
+	spawnpoint_t spawnpoints[MAX_SPAWNPOINTS];
 } cg_t;
 
 
@@ -854,6 +864,7 @@ typedef struct {
 	qhandle_t	hastePuffShader;
 	qhandle_t	redKamikazeShader;
 	qhandle_t	blueKamikazeShader;
+	qhandle_t	spawnPointShader;
 	qhandle_t	transparentWeaponShader;
         
         // player overlays 
@@ -862,13 +873,8 @@ typedef struct {
         qhandle_t       blueOverlay;
 
         // bright players
-	qhandle_t       brightRedPlayers;
-	qhandle_t       brightYellowPlayers;
-	qhandle_t       brightGreenPlayers;
-	qhandle_t       brightCyanPlayers;
-	qhandle_t       brightBluePlayers;
-	qhandle_t       brightPinkPlayers;
-	qhandle_t       brightWhitePlayers;
+	qhandle_t       brightPlayers;
+	qhandle_t       brightPlayers2;
 	qhandle_t       wallhackEnemy;
 	qhandle_t       wallhackFriend;
 
@@ -1465,6 +1471,7 @@ extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
 extern vmCvar_t cg_selfSounds;
+extern vmCvar_t	cg_showSpawns;
 extern vmCvar_t	cg_statusBarStyle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;
