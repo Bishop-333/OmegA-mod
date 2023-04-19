@@ -293,7 +293,7 @@ vmCvar_t        cg_omegaFlags;
 vmCvar_t        cg_omegaInitialized;
 vmCvar_t        cg_screenshake;
 vmCvar_t	cg_selfSounds;
-vmCvar_t        cg_showSpawns;
+vmCvar_t        cg_showSpawns; //from ratmod
 vmCvar_t        cg_statusBarStyle;
 vmCvar_t        cg_teamColor;
 vmCvar_t        cg_teamModel;
@@ -308,6 +308,7 @@ vmCvar_t        cg_wallhack;
 vmCvar_t        cg_zoomAnim;
 vmCvar_t        cg_zoomAnimSpeed;
 vmCvar_t        cg_zoomToggle;
+vmCvar_t        clipWalls;
 vmCvar_t        com_maxfps;
 vmCvar_t        pmove_autohop;
 
@@ -534,6 +535,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE},
 	{ &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE},
 	{ &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE},
+	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE},
 	{ &com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE },
 	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO}
 };

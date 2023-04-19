@@ -21,6 +21,7 @@ List of the cvars/additions :
 - cg_omegaInitialized
 - cg_screenshake
 - cg_selfSounds
+- cg_showSpawns
 - cg_statusBarStyle
 - cg_teamColor //need cg_brightPlayers to be enabled
 - cg_teamModel
@@ -60,6 +61,7 @@ List of the cvars/additions :
 - g_teleportMissiles //from ratmod
 - g_waterDamage
 #
+- clipWalls
 - pmove_autohop
 #
 - new flags models

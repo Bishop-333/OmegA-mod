@@ -1190,6 +1190,7 @@ extern vmCvar_t g_teamPush;
 extern vmCvar_t g_teleportMissiles; //from ratmod
 extern vmCvar_t g_vulnerableRockets;
 extern vmCvar_t g_waterDamage;
+extern vmCvar_t clipWalls;
 extern vmCvar_t pmove_autohop;
 
 void	trap_Printf( const char *fmt );

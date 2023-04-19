@@ -226,20 +226,8 @@ vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
 vmCvar_t        g_vulnerableRockets;
 vmCvar_t        g_waterDamage;
+vmCvar_t        clipWalls;
 vmCvar_t        pmove_autohop;
-
-//ratmod delagMissile
-vmCvar_t        g_delagMissiles;
-vmCvar_t        g_delagMissileBaseNudge;
-vmCvar_t        g_delagMissileCorrectFrameOffset;
-vmCvar_t        g_delagMissileDebug;
-vmCvar_t        g_delagMissileImmediateRun;
-vmCvar_t        g_delagMissileLatencyMode;
-vmCvar_t        g_delagMissileLimitVariance;
-vmCvar_t        g_delagMissileLimitVarianceMs;
-vmCvar_t        g_delagMissileMaxLatency;
-vmCvar_t        g_delagMissileNudgeOnly;
-vmCvar_t        g_predictMissiles;
 
 // bk001129 - made static to avoid aliasing
 static cvarTable_t		gameCvarTable[] = {
@@ -470,6 +458,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
 };
 

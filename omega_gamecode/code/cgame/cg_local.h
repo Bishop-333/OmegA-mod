@@ -1471,7 +1471,7 @@ extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
 extern vmCvar_t cg_selfSounds;
-extern vmCvar_t	cg_showSpawns;
+extern vmCvar_t	cg_showSpawns; //from ratmod
 extern vmCvar_t	cg_statusBarStyle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;
@@ -1486,6 +1486,7 @@ extern vmCvar_t cg_wallhack;
 extern vmCvar_t	cg_zoomAnim;
 extern vmCvar_t	cg_zoomAnimSpeed;
 extern vmCvar_t	cg_zoomToggle;
+extern vmCvar_t clipWalls;
 extern vmCvar_t	pmove_autohop;
 
 //unlagged - cg_unlagged.c
