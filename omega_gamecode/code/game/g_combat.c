@@ -1375,8 +1375,10 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		z_rel = point[2] - targ->r.currentOrigin[2] + abs( targ->r.mins[2] );
 		z_ratio = z_rel / height;
 
-		if ( z_ratio < 0.90 && g_headShotOnly.integer ) {
-			take *= 0;
+		if ( z_ratio < 0.90 ) {
+			if ( g_headShotOnly.integer ) {
+				take *= 0;
+			}
 		} else if ( g_beheading.integer && inflictor->s.weapon == WP_RAILGUN ) {
 			mod = MOD_HEADSHOT;
 		}

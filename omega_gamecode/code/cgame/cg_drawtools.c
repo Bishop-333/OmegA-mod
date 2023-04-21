@@ -184,7 +184,7 @@ void CG_DrawStringExt( int x, int y, const char *string, const float *setColor,
 				s += 2;
 				continue;
 			}
-			CG_DrawChar( xx + 2, y + 2, charWidth, charHeight, *s );
+			CG_DrawChar( xx + 1, y + 1, charWidth, charHeight, *s );
 			cnt++;
 			xx += charWidth;
 			s++;

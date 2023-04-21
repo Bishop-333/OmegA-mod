@@ -388,7 +388,7 @@ void CG_DrawFlagModel( float x, float y, float w, float h, int team, qboolean fo
 		len = 0.55 * ( maxs[2] - mins[2] );		
 		origin[0] = len / 0.268;	// len / tan( fov/2 )
 
-		angles[YAW] = 60 * sin( cg.time / 2000.0 );;
+		angles[YAW] = cg.time * 45 / 2048.0;;
 
 		if( team == TEAM_RED ) {
 			handle = cgs.media.redFlagModel;
@@ -2126,41 +2126,13 @@ static void CG_DrawReward( void ) {
 
 	trap_R_SetColor( color );
 
-	/*
-	count = cg.rewardCount[0]/10;				// number of big rewards to draw
-
-	if (count) {
-		y = 4;
-		x = 320 - count * ICON_SIZE;
-		for ( i = 0 ; i < count ; i++ ) {
-			CG_DrawPic( x, y, (ICON_SIZE*2)-4, (ICON_SIZE*2)-4, cg.rewardShader[0] );
-			x += (ICON_SIZE*2);
-		}
-	}
-
-	count = cg.rewardCount[0] - count*10;		// number of small rewards to draw
-	*/
-
-	if ( cg.rewardCount[0] >= 10 ) {
-		y = 56;
-		x = 320 - ICON_SIZE/2;
-		CG_DrawPic( x, y, ICON_SIZE-4, ICON_SIZE-4, cg.rewardShader[0] );
-		Com_sprintf(buf, sizeof(buf), "%d", cg.rewardCount[0]);
-		x = ( SCREEN_WIDTH - SMALLCHAR_WIDTH * CG_DrawStrlen( buf ) ) / 2;
-		CG_DrawStringExt( x, y+ICON_SIZE, buf, color, qfalse, qtrue,
-								SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
-	}
-	else {
-
-		count = cg.rewardCount[0];
-
-		y = 56;
-		x = 320 - count * ICON_SIZE/2;
-		for ( i = 0 ; i < count ; i++ ) {
-			CG_DrawPic( x, y, ICON_SIZE-4, ICON_SIZE-4, cg.rewardShader[0] );
-			x += ICON_SIZE;
-		}
-	}
+	y = 66;
+	x = 320 - ICON_SIZE/2;
+	CG_DrawPic( x, y, ICON_SIZE-4, ICON_SIZE-4, cg.rewardShader[0] );
+	Com_sprintf(buf, sizeof(buf), "%d", cg.rewardCount[0]);
+	x = ( SCREEN_WIDTH - SMALLCHAR_WIDTH * CG_DrawStrlen( buf ) - 4 ) / 2;
+	CG_DrawStringExt( x, y+ICON_SIZE, buf, color, qfalse, qtrue,
+							SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
 	trap_R_SetColor( NULL );
 }
 
