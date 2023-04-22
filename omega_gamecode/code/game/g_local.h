@@ -241,6 +241,9 @@ typedef struct {
 	int			spectatorClient;	// for chasecam and follow mode
 	int			wins, losses;		// tournament stats
 	qboolean	teamLeader;			// true when this client is a team leader
+
+        int	        kills;
+        int	        deaths;
 } clientSession_t;
 
 //

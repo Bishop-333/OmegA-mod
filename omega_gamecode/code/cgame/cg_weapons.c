@@ -380,7 +380,7 @@ static void CG_OldRocketTrail( centity_t *ent, const weaponInfo_t *wi ) {
 
 		smoke = CG_SmokePuff( lastPos, up, 
 					  wi->trailRadius, 
-					  1, 1, 1, 0.33f,
+					  1, 1, 1, 0.165f,
 					  wi->wiTrailTime, 
 					  t,
 					  0,

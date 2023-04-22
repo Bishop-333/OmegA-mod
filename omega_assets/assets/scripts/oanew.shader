@@ -512,6 +512,12 @@ smokePuff
 		tcMod rotate -55
 		alphaGen Vertex
 	}
+	{
+		map gfx/misc/smokepuff3.tga
+		blendfunc blend
+		tcMod rotate 66
+		alphaGen Vertex
+	}
 }
 
 smokePuffRagePro

@@ -44,8 +44,8 @@ levelShotDetail
 {
 	nopicmip
 	{
-		map textures/sfx/detail.tga
-	        blendFunc GL_DST_COLOR GL_SRC_COLOR
+		map textures/omega/detail.tga
+        	blendFunc GL_DST_COLOR GL_SRC_COLOR
 		rgbgen identity
 	}
 }

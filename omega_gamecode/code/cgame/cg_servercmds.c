@@ -86,7 +86,7 @@ static void CG_ParseScores( void ) {
 
 	memset( cg.scores, 0, sizeof( cg.scores ) );
 
-#define NUM_DATA 15
+#define NUM_DATA 17
 #define FIRST_DATA 4
 
 	for ( i = 0 ; i < cg.numScores ; i++ ) {
@@ -106,6 +106,8 @@ static void CG_ParseScores( void ) {
 		cg.scores[i].perfect = atoi(CG_Argv(i * NUM_DATA + FIRST_DATA + 13));
 		cg.scores[i].captures = atoi(CG_Argv(i * NUM_DATA + FIRST_DATA + 14));
 		cg.scores[i].isDead = atoi(CG_Argv(i * NUM_DATA + FIRST_DATA + 15));
+		cg.scores[i].kills = atoi(CG_Argv(i * NUM_DATA + FIRST_DATA + 16));
+		cg.scores[i].deaths = atoi(CG_Argv(i * NUM_DATA + FIRST_DATA + 17));
 		//cgs.roundStartTime = 
 
 		if ( cg.scores[i].client < 0 || cg.scores[i].client >= MAX_CLIENTS ) {

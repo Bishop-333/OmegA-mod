@@ -53,12 +53,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SB_SCORELINE_X		28
 
 #define SB_RATING_WIDTH	    (6 * BIGCHAR_WIDTH) // width 6
-#define SB_SCORE_X			(SB_SCORELINE_X + BIGCHAR_WIDTH + 2) // width 5
-#define SB_RATING_X			(SB_SCORELINE_X + 5 * BIGCHAR_WIDTH) // width 6
-#define SB_PING_X			(SB_SCORELINE_X + 11 * BIGCHAR_WIDTH + 17) // width 5
-#define SB_TIME_X			(SB_SCORELINE_X + 16 * BIGCHAR_WIDTH + 18) // width 5
-#define SB_ACCURACY_X			(SB_SCORELINE_X + 21 * BIGCHAR_WIDTH + 26) // width 5
-#define SB_NAME_X			(SB_SCORELINE_X + 26 * BIGCHAR_WIDTH + 18) // width 15
+#define SB_SCORE_X			(SB_SCORELINE_X + 7 * BIGCHAR_WIDTH) // width 5
+#define SB_TIME_X			(SB_SCORELINE_X + 12 * BIGCHAR_WIDTH) // width 5
+#define SB_NAME_X			(SB_SCORELINE_X + 17 * BIGCHAR_WIDTH) // width 12
+#define SB_ACCURACY_X			(SB_SCORELINE_X + 29 * BIGCHAR_WIDTH) // width 4
+#define SB_RATIO_X			(SB_SCORELINE_X + 33 * BIGCHAR_WIDTH) // width 4
+#define SB_PING_X			(SB_SCORELINE_X + 37 * BIGCHAR_WIDTH) // width 4
 
 // The new and improved score board
 //
@@ -114,10 +114,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 			}
 		} else if ( cg.warmup < 0 && ci->team != TEAM_SPECTATOR && cgs.startWhenReady ) {
 			if ( cg.readyMask & ( 1 << score->client ) ) {
-				color[0] = 0;
-				color[1] = 1;
-				color[2] = 0;
-				CG_DrawSmallStringColor(iconx - BIGCHAR_WIDTH - 5, y+6, "READY", color);
+				CG_DrawSmallStringColor(iconx - BIGCHAR_WIDTH - 5, y+6, "READY", colorGreen);
 			}
 		} else if ( ci->handicap < 100 ) {
 			Com_sprintf( string, sizeof( string ), "%i", ci->handicap );
@@ -141,10 +138,15 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	headAngles[YAW] = 180 + 60 * sin( cg.time / 2000.0 );
 	CG_DrawHead( headx, y, BIGCHAR_HEIGHT+11, BIGCHAR_HEIGHT+11, score->client, headAngles );
 
+	// draw the server name
+	info = CG_ConfigString( CS_SERVERINFO );
+	s = Info_ValueForKey( info, "sv_hostname" );
+	CG_DrawStringExt( 5, 470, s, colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+
 	// draw the map name
 	info = CG_ConfigString( CS_SERVERINFO );
 	s = Info_ValueForKey( info, "mapname" );
-	CG_DrawStringExt( 5, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( 5 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, s, colorLtGrey, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw omega logo
 	VectorClear( angles );
@@ -168,16 +170,17 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		}
 	}
 #endif
+
 	// draw the score line
 	if ( score->ping == -1 ) {
 		Com_sprintf(string, sizeof(string),
-			"  connecting                %s", ci->name);
+			"  connecting   %s", ci->name);
 	} else if ( ci->team == TEAM_SPECTATOR ) {
 		Com_sprintf(string, sizeof(string),
-			"  SPEC   %3i %3i:%02i         %s", score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, ci->name);
+			"  SPEC         %s", ci->name);
 	} else {
 		Com_sprintf(string, sizeof(string),
-			"  %4i  %4i %3i:%02i   %3i%%  %s", score->score, score->ping, score->time / 60, score->time - ( score->time / 60 ) * 60, score->accuracy, ci->name);
+			"  %4i         %s", score->score, ci->name);
 	}
 
 	// highlight your position
@@ -220,18 +223,51 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 
 	CG_DrawMediumString( SB_SCORELINE_X + (SB_RATING_WIDTH / 2), y+6, string, fade );
 
+	// draw ping
+	if ( !( score->ping == -1 || ci->botSkill ) ) {
+		Com_sprintf(string, sizeof(string),
+			"%3i", score->ping);
+		if ( score->ping >= 300 ) {
+			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorRed );
+		} else if ( score->ping >= 200 ) {
+			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorOrange );
+		} else if ( score->ping >= 100 ) {
+			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorYellow );
+		} else {
+			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorGreen );
+		}
+	}
+
+	// draw time
+	if ( score->ping != -1 ) {
+		Com_sprintf(string, sizeof(string),
+			"%3i:%02i", score->time / 60, score->time - ( score->time / 60 ) * 60);
+		CG_DrawSmallStringColor( SB_TIME_X - 55, y+6, string, colorMdGrey );
+	}
+
+	// draw accuracy
+	if ( score->ping != -1 ) {
+		Com_sprintf(string, sizeof(string),
+			"%3i%%", score->accuracy);
+		CG_DrawSmallStringColor( SB_ACCURACY_X - 45, y+6, string, colorMdGrey );
+	}
+
+	// draw ratio
+	if ( !( score->ping == -1 || ci->team == TEAM_SPECTATOR ) ) {
+		Com_sprintf(string, sizeof(string),
+			"%2i/%-2i", score->kills, score->deaths);
+		CG_DrawSmallString( SB_RATIO_X - 50, y+6, string, fade );
+	}
+
 	// add the "ready" marker for intermission exiting
 	if ( cg.snap->ps.stats[ STAT_CLIENTS_READY ] & ( 1 << score->client ) ) {
-		color[0] = 0;
-		color[1] = 1;
-		color[2] = 0;
-		CG_DrawSmallStringColor(iconx - BIGCHAR_WIDTH - 5, y+6, "READY", color);
+		CG_DrawSmallStringColor(iconx - BIGCHAR_WIDTH - 5, y+6, "READY", colorGreen);
 	} else
         if(cgs.gametype == GT_LMS) {
-            CG_DrawSmallStringColor( iconx-25, y, va("*%i*",ci->isDead), color );
+            CG_DrawSmallStringColor( iconx-30, y+6, va("*%i*",ci->isDead), color );
         } else
         if(ci->isDead) {
-            CG_DrawSmallStringColor( iconx-30, y, "DEAD", color );
+            CG_DrawSmallStringColor( iconx-35, y+6, "DEAD", color );
         }
 }
 
@@ -369,11 +405,12 @@ qboolean CG_DrawOldScoreboard( void ) {
 	color[1] = 0.5;
 	color[2] = 1.0;
 	color[3] = 0.5;
-	CG_DrawMediumStringColor( SB_SCORE_X + (SB_RATING_WIDTH / 2), y + 10, "Score", color );
+	CG_DrawMediumStringColor( SB_SCORE_X - (SB_RATING_WIDTH / 2), y + 10, "Score", color );
 	CG_DrawMediumStringColor( SB_PING_X - (SB_RATING_WIDTH / 2), y + 10, "Ping", color );
 	CG_DrawMediumStringColor( SB_TIME_X - (SB_RATING_WIDTH / 2), y + 10, "Time", color );
-	CG_DrawMediumStringColor( SB_ACCURACY_X - (SB_RATING_WIDTH / 2), y + 10, "Acc", color );
 	CG_DrawMediumStringColor( SB_NAME_X - (SB_RATING_WIDTH / 2), y + 10, "Name", color );
+	CG_DrawMediumStringColor( SB_ACCURACY_X - (SB_RATING_WIDTH / 2), y + 10, "Acc", color );
+	CG_DrawMediumStringColor( SB_RATIO_X - (SB_RATING_WIDTH / 2), y + 10, "K/D", color );
 
 	y = SB_TOP;
 

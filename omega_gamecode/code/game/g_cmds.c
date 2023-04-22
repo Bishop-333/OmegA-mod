@@ -69,7 +69,7 @@ void DeathmatchScoreboardMessage( gentity_t *ent ) {
 
 		if(g_gametype.integer == GT_LMS) {
 			Com_sprintf (entry, sizeof(entry),
-				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i", level.sortedClients[i],
+				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i", level.sortedClients[i],
 				cl->ps.persistant[PERS_SCORE], ping, (level.time - cl->pers.enterTime)/1000,
 				scoreFlags, g_entities[level.sortedClients[i]].s.powerups, accuracy, 
 				cl->ps.persistant[PERS_IMPRESSIVE_COUNT],
@@ -79,11 +79,13 @@ void DeathmatchScoreboardMessage( gentity_t *ent ) {
 				cl->ps.persistant[PERS_ASSIST_COUNT], 
 				perfect,
 				cl->ps.persistant[PERS_CAPTURES],
-				cl->pers.livesLeft + (cl->isEliminated?0:1));
+				cl->pers.livesLeft + (cl->isEliminated?0:1),
+				cl->sess.kills,
+				cl->sess.deaths);
 		}
 		else {
 			Com_sprintf (entry, sizeof(entry),
-				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i", level.sortedClients[i],
+				" %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i %i", level.sortedClients[i],
 				cl->ps.persistant[PERS_SCORE], ping, (level.time - cl->pers.enterTime)/1000,
 				scoreFlags, g_entities[level.sortedClients[i]].s.powerups, accuracy, 
 				cl->ps.persistant[PERS_IMPRESSIVE_COUNT],
@@ -93,7 +95,9 @@ void DeathmatchScoreboardMessage( gentity_t *ent ) {
 				cl->ps.persistant[PERS_ASSIST_COUNT], 
 				perfect,
 				cl->ps.persistant[PERS_CAPTURES],
-				cl->isEliminated);
+				cl->isEliminated,
+				cl->sess.kills,
+				cl->sess.deaths);
 		}
 		j = strlen(entry);
 		if (stringlength + j > 1024)
@@ -739,6 +743,7 @@ void Cmd_Kill_f( gentity_t *ent ) {
 	}
 	ent->flags &= ~FL_GODMODE;
 	ent->client->ps.stats[STAT_HEALTH] = ent->health = -999;
+	ent->client->sess.kills -= 1;
         if(ent->client->lastSentFlying>-1)
             //If player is in the air because of knockback we give credit to the person who sent it flying
             player_die (ent, ent, &g_entities[ent->client->lastSentFlying], 100000, MOD_FALLING);

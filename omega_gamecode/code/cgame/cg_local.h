@@ -320,6 +320,8 @@ typedef struct {
 	qboolean	perfect;
 	int				team;
 	int			isDead;
+	int				kills;
+	int				deaths;
 } score_t;
 
 // each client has an associated clientInfo_t
