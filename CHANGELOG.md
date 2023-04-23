@@ -16,7 +16,7 @@
 - bot can be muted with `g_botChat` instead of `bot_nochat` who was in the engine code
 
 ## 3.2.2
-- `g_ambientSounds`
+- `g_ambientSound`
 - pass through invisible / clip walls (ty ratmod) with `clipWalls`
 - show spawn during warmup (ty ratmod again) with `cg_showSpawns`
 - better pul1ctf textures (ty ratmod again again)
