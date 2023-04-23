@@ -141,12 +141,12 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	// draw the server name
 	info = CG_ConfigString( CS_SERVERINFO );
 	s = Info_ValueForKey( info, "sv_hostname" );
-	CG_DrawStringExt( 5, 470, s, colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( 5, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw the map name
 	info = CG_ConfigString( CS_SERVERINFO );
 	s = Info_ValueForKey( info, "mapname" );
-	CG_DrawStringExt( 5 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, s, colorLtGrey, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( 5 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, s, colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw omega logo
 	VectorClear( angles );
@@ -368,7 +368,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 		s = va("Fragged by %s", cg.killerName );
 		w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 		x = ( SCREEN_WIDTH - w ) / 2;
-		y = 15;
+		y = 28;
 		CG_DrawMediumString( x, y, s, fade );
 	}
 
@@ -385,17 +385,16 @@ qboolean CG_DrawOldScoreboard( void ) {
 		}
 	} else {
 		x = ( SCREEN_WIDTH - 2 * MEDIUMCHAR_WIDTH ) / 2;
-		CG_DrawMediumString( x, 60, "to", fade );
+		CG_DrawMediumString( x, 67, "to", fade );
 
-		s1 = va("%2i", cg.teamScores[0] );
-		w1 = CG_DrawStrlen( s1 ) * GIANTCHAR_WIDTH;
-		x1 = ( SCREEN_WIDTH - w1 - 106 ) / 2;
-		CG_DrawStringExt( x1, 40, s1, colorRed, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
+		s1 = va("%i", cg.teamScores[0] );
+		w1 = CG_DrawStrlen( s1 ) * GIANTCHAR_WIDTH * 2;
+		x1 = ( SCREEN_WIDTH - w1 ) / 2 - 21;
+		CG_DrawStringExt( x1, 47, s1, colorRed, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
 
-		s2 = va("%2i", cg.teamScores[1] );
-		w2 = CG_DrawStrlen( s2 ) * GIANTCHAR_WIDTH;
-		x2 = ( SCREEN_WIDTH - w2 + 44 ) / 2;
-		CG_DrawStringExt( x2, 40, s2, colorBlue, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
+		s2 = va("%i", cg.teamScores[1] );
+		x2 = SCREEN_WIDTH / 2 + 22;
+		CG_DrawStringExt( x2, 47, s2, colorBlue, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
 	}
 
 	// scoreboard

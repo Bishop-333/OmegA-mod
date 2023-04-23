@@ -940,7 +940,7 @@ static float CG_DrawTimer( int x, int y, int w, int h ) {
 
 	s = va( "%i:%i%i", mins, tens, seconds );
 
-	CG_DrawStringExt( x - CG_DrawStrlen( s ) * w / 2, y, s, colorWhite, qfalse, qfalse, w, h, 0 );
+	CG_DrawStringExt( x - CG_DrawStrlen( s ) * w / 2, y, s, colorWhite, qtrue, qtrue, w, h, 0 );
 
 	return y;
 }
