@@ -26,3 +26,4 @@
 - `g_startWhenReady` don't listen to bot anymore. It means if you are not ready and there are bots, it will not start the game.
 - small ui changes (map select and map loading levelshot)
 - `cg_brightPlayers` has now 2 types of skins which can be set with 1 or 2
+- new skull icons (displayed in frag messages)
