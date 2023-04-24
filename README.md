@@ -22,6 +22,7 @@ List of the cvars/additions :
 - cg_screenshake
 - cg_selfSounds
 - cg_showSpawns
+- cg_showSpecZoom
 - cg_statusBarStyle
 - cg_teamColor //need cg_brightPlayers to be enabled
 - cg_teamModel
@@ -37,6 +38,7 @@ List of the cvars/additions :
 - cg_zoomToggle
 #
 - g_allowDuplicateGuid
+- g_ambientSounds
 - g_beheading
 - g_botChat
 - g_damagePlums
