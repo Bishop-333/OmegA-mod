@@ -448,11 +448,17 @@ static void CG_OffsetFirstPersonView( void ) {
 void CG_ZoomOut( void ) {
 	cg.zoomed = qfalse;
 	cg.zoomTime = cg.time;
+	if ( cg_showSpecZoom.integer ) {
+		trap_SendClientCommand( "unzoom" );
+	}
 }
 
 void CG_ZoomIn( void ) {
 	cg.zoomed = qtrue;
 	cg.zoomTime = cg.time;
+	if ( cg_showSpecZoom.integer ) {
+		trap_SendClientCommand( "zoom" );
+	}
 }
 
 void CG_ZoomDown_f( void ) { 
@@ -850,6 +856,42 @@ void CG_AddSpawnpoints( void ) {
 	}
 }
 
+/*
+=====================
+CG_SpecZooming
+=====================
+*/
+void CG_SpecZooming(void) {
+	qboolean oldzoomed;
+
+	if ( cg.specZoomed ) {
+		if ( !cg_showSpecZoom.integer || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR || !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
+			// reset zoom if we are a free spectator;
+			cg.zoomed = qfalse;
+			cg.specZoomed = qfalse;
+			cg.zoomTime = cg.time;
+			return;
+		}
+		if ( !( cg.snap->ps.stats[STAT_SPEC_ZOOM] & ZOOMING ) ) {
+			cg.zoomed = qfalse;
+			cg.specZoomed = qfalse;
+			cg.zoomTime = cg.time;
+		}
+	}
+
+	if ( !cg_showSpecZoom.integer || !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
+		return;
+	}
+
+	if ( cg.snap->ps.stats[STAT_SPEC_ZOOM] & ZOOMING ) {
+		if ( !cg.zoomed ) {
+			cg.specZoomed = qtrue;
+			cg.zoomTime = cg.time;
+		}
+		cg.zoomed = qtrue;
+	}
+}
+
 //=========================================================================
 
 /*
@@ -903,6 +945,8 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 
 	// decide on third person view
 	cg.renderingThirdPerson = cg_thirdPerson.integer || (cg.snap->ps.stats[STAT_HEALTH] <= 0);
+
+	CG_SpecZooming();
 
 	// build cg.refdef
 	inwater = CG_CalcViewValues();

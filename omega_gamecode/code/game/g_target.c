@@ -228,7 +228,7 @@ void SP_target_speaker( gentity_t *ent ) {
 
 	// check for prestarted looping sound
 	if ( ent->spawnflags & 1 ) {
-		if ( g_ambientSound.integer ) {
+		if ( g_ambientSounds.integer ) {
 			ent->s.loopSound = ent->noise_index;
 		}
 	}

@@ -220,8 +220,9 @@ typedef struct {
 	int			(*pointcontents)( const vec3_t point, int passEntityNum );
 
 	//OmegA
-        int                     pmove_autohop;
+	int			clipWalls;
 	int			guidedMissiles;
+        int                     pmove_autohop;
 	int			railgunSpeed;
 } pmove_t;
 
@@ -242,7 +243,8 @@ typedef enum {
 	STAT_ARMOR,				
 	STAT_DEAD_YAW,					// look this direction when dead (FIXME: get rid of?)
 	STAT_CLIENTS_READY,				// bit mask of clients wishing to exit the intermission (FIXME: configstring?)
-	STAT_MAX_HEALTH				// health / armor limit, changable by handicap
+	STAT_MAX_HEALTH,				// health / armor limit, changable by handicap
+	STAT_SPEC_ZOOM
 } statIndex_t;
 
 
@@ -269,6 +271,9 @@ typedef enum {
 	PERS_CAPTURES,					// captures
 	PERS_HEADSHOT_COUNT				// headshot awards
 } persEnum_t;
+
+
+#define ZOOMING	1
 
 
 // entityState_t->eFlags

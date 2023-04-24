@@ -2273,7 +2273,7 @@ static void CG_DrawLagometer( void ) {
 	int		color;
 	float	vscale;
 
-	if ( !cg_lagometer.integer || cgs.localServer ) {
+	if ( !cg_lagometer.integer || cgs.localServer || cg.scoreBoardShowing ) {
 		CG_DrawDisconnect();
 		return;
 	}

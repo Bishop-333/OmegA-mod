@@ -86,6 +86,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	vec3_t	headAngles;
 	vec3_t	angles;
 	vec3_t	origin;
+	centity_t	*cent;
 	clientInfo_t	*ci;
 	int iconx, headx;
 	float		frac;
@@ -95,6 +96,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		return;
 	}
 	
+	cent = &cg_entities[score->client];
 	ci = &cgs.clientinfo[score->client];
 
 	iconx = SB_BOTICON_X + (SB_RATING_WIDTH / 2);
@@ -108,7 +110,9 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	} else if ( ci->powerups & ( 1 << PW_BLUEFLAG ) ) {
 		CG_DrawFlagModel( iconx-3, y, 26, 26, TEAM_BLUE, qfalse );
 	} else {
-		if ( ci->botSkill > 0 && ci->botSkill <= 5 ) {
+		if ( ci->team != TEAM_SPECTATOR && cent->currentState.eFlags & EF_TALK ) {
+				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.balloonShader );
+		} else if ( ci->botSkill > 0 && ci->botSkill <= 5 ) {
 			if ( cg_drawIcons.integer ) {
 				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.botSkillShaders[ ci->botSkill - 1 ] );
 			}
@@ -134,9 +138,13 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 
 	// draw the face
-	VectorClear( headAngles );
-	headAngles[YAW] = 180 + 60 * sin( cg.time / 2000.0 );
-	CG_DrawHead( headx, y, BIGCHAR_HEIGHT+11, BIGCHAR_HEIGHT+11, score->client, headAngles );
+	if ( cent->currentState.eFlags & EF_DEAD ) {
+		CG_DrawPic( headx, y, BIGCHAR_HEIGHT+11, BIGCHAR_HEIGHT+11, cgs.media.skullShader );
+	} else {
+		VectorClear( headAngles );
+		headAngles[YAW] = 180 + 60 * sin( cg.time / 2000.0 );
+		CG_DrawHead( headx, y, BIGCHAR_HEIGHT+11, BIGCHAR_HEIGHT+11, score->client, headAngles );
+	}
 
 	// draw the server name
 	info = CG_ConfigString( CS_SERVERINFO );

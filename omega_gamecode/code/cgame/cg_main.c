@@ -294,6 +294,7 @@ vmCvar_t        cg_omegaInitialized;
 vmCvar_t        cg_screenshake;
 vmCvar_t	cg_selfSounds;
 vmCvar_t        cg_showSpawns; //from ratmod
+vmCvar_t        cg_showSpecZoom;
 vmCvar_t        cg_statusBarStyle;
 vmCvar_t        cg_teamColor;
 vmCvar_t        cg_teamModel;
@@ -517,6 +518,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
 	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
 	{ &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE},
+	{ &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE},
 	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE},
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
 	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
@@ -531,7 +533,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE},
 	{ &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE},
 	{ &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE},
-	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE},
+	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE },
 	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO}
 };

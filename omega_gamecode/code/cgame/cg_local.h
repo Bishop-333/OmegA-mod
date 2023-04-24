@@ -554,6 +554,7 @@ typedef struct {
 	qboolean	zoomed;
 	int			zoomTime;
 	float		zoomSensitivity;
+	float		specZoomed;
 
 	// information screen text during loading
 	char		infoScreenText[MAX_STRING_CHARS];
@@ -1474,6 +1475,7 @@ extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
 extern vmCvar_t cg_selfSounds;
 extern vmCvar_t	cg_showSpawns; //from ratmod
+extern vmCvar_t	cg_showSpecZoom;
 extern vmCvar_t	cg_statusBarStyle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;

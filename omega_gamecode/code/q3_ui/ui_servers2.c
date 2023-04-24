@@ -59,8 +59,6 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define ART_UNKNOWNMAP			"menu/art_blueish/unknownmap"
 #define ART_REMOVE0			"menu/art_blueish/delete_0"
 #define ART_REMOVE1			"menu/art_blueish/delete_1"
-#define ART_SAVE0   			"menu/art_blueish/save_0"
-#define ART_SAVE1   			"menu/art_blueish/save_1"
 
 #define ID_MASTER			10
 #define ID_GAMETYPE			11
@@ -77,11 +75,10 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define ID_CREATE			21
 #define ID_CONNECT			22
 #define ID_REMOVE			23
-#define ID_SAVE				24
 
 //Beta 23
-#define ID_ONLY_HUMANS                  25
-#define ID_HIDE_PRIVATE                 26
+#define ID_ONLY_HUMANS                  24
+#define ID_HIDE_PRIVATE                 25
 
 #define GR_LOGO				30
 #define GR_LETTERS			31
@@ -230,7 +227,6 @@ typedef struct {
         menuradiobutton_s	hideprivate;
 
 	menulist_s			list;
-	menubitmap_s			save;
 	menubitmap_s		mappic;
 	menubitmap_s		arrows;
 	menubitmap_s		up;
@@ -512,7 +508,6 @@ static void ArenaServers_UpdateMenu( void ) {
 		}
 		else {
 			// all servers pinged - enable controls
-			g_arenaservers.save.generic.flags	&= ~QMF_GRAYED;
 			g_arenaservers.master.generic.flags		&= ~QMF_GRAYED; 
 			g_arenaservers.gametype.generic.flags	&= ~QMF_GRAYED;
 			g_arenaservers.sortkey.generic.flags	&= ~QMF_GRAYED;
@@ -541,7 +536,6 @@ static void ArenaServers_UpdateMenu( void ) {
 			g_arenaservers.statusbar.string = "Press SPACE to stop";
 
 			// disable controls during refresh
-			g_arenaservers.save.generic.flags	|= QMF_GRAYED;
 			g_arenaservers.master.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.gametype.generic.flags	|= QMF_GRAYED;
 			g_arenaservers.sortkey.generic.flags	|= QMF_GRAYED;
@@ -570,7 +564,6 @@ static void ArenaServers_UpdateMenu( void ) {
 			}
 
 			// end of refresh - set control state
-			g_arenaservers.save.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.master.generic.flags		&= ~QMF_GRAYED;
 			g_arenaservers.gametype.generic.flags	&= ~QMF_GRAYED;
 			g_arenaservers.sortkey.generic.flags	&= ~QMF_GRAYED;
@@ -1354,7 +1347,6 @@ int ArenaServers_SetType( int type )
 	switch( type ) {
 	default:
 	case UIAS_LOCAL:
-		g_arenaservers.save.generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
 		g_arenaservers.remove.generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		g_arenaservers.serverlist = g_localserverlist;
 		g_arenaservers.numservers = &g_numlocalservers;
@@ -1366,7 +1358,6 @@ int ArenaServers_SetType( int type )
 	case UIAS_GLOBAL3:
 	case UIAS_GLOBAL4:
 	case UIAS_GLOBAL5:
-		g_arenaservers.save.generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
 		g_arenaservers.remove.generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		g_arenaservers.serverlist = g_globalserverlist;
 		g_arenaservers.numservers = &g_numglobalservers;
@@ -1374,7 +1365,6 @@ int ArenaServers_SetType( int type )
 		break;
 
 	case UIAS_FAVORITES:
-		g_arenaservers.save.generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		g_arenaservers.remove.generic.flags &= ~(QMF_INACTIVE|QMF_HIDDEN);
 		g_arenaservers.serverlist = g_favoriteserverlist;
 		g_arenaservers.numservers = &g_numfavoriteservers;
@@ -1395,39 +1385,6 @@ int ArenaServers_SetType( int type )
 	}
 	
 	return type;
-}
-
-/*
-=================
-ArenaServers_AddToFavorites
-=================
-*/
-static void ArenaServers_AddToFavorites( void ) {
-	int			i;
-	servernode_t*	servernodeptr;
-
-	if ( g_numfavoriteservers == MAX_FAVORITESERVERS ) {
-		return;
-	}
-
-	if (!g_arenaservers.list.numitems) {
-		return;
-	}
-
-	servernodeptr = g_arenaservers.table[g_arenaservers.list.curvalue].servernode;
-
-	for ( i=0; i < g_numfavoriteservers; i++ ) {
-		if ( !Q_stricmp( g_arenaservers.favoriteaddresses[i],servernodeptr->adrstr ) ) {
-			return;
-		}
-
-		strcpy( g_arenaservers.favoriteaddresses[g_numfavoriteservers], servernodeptr->adrstr );
-
-		memcpy( &g_favoriteserverlist[g_numfavoriteservers], servernodeptr, sizeof(servernode_t) );
-
-		g_numfavoriteservers++;
-		g_arenaservers.numfavoriteaddresses = g_numfavoriteservers;
-	}
 }
 
 /*
@@ -1526,11 +1483,6 @@ static void ArenaServers_Event( void* ptr, int event ) {
 		ArenaServers_Remove();
 		ArenaServers_UpdateMenu();
 		break;
-
-	case ID_SAVE:
-   		ArenaServers_AddToFavorites();
-   		ArenaServers_SaveChanges();
-   		break;
 	}
 }
 
@@ -1739,17 +1691,6 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.statusbar.style	        = UI_CENTER|UI_SMALLFONT;
 	g_arenaservers.statusbar.color	        = text_color_normal;
 
-	g_arenaservers.save.generic.type		= MTYPE_BITMAP;
-	g_arenaservers.save.generic.name		= ART_SAVE0;
-	g_arenaservers.save.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
-	g_arenaservers.save.generic.callback	= ArenaServers_Event;
-	g_arenaservers.save.generic.id			= ID_SAVE;
-	g_arenaservers.save.generic.x			= 450;
-	g_arenaservers.save.generic.y			= 42;
-	g_arenaservers.save.width				= 96;
-	g_arenaservers.save.height				= 48;
-	g_arenaservers.save.focuspic			= ART_SAVE1;
-
 	g_arenaservers.remove.generic.type		= MTYPE_BITMAP;
 	g_arenaservers.remove.generic.name		= ART_REMOVE0;
 	g_arenaservers.remove.generic.flags		= QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -1832,7 +1773,6 @@ static void ArenaServers_MenuInit( void ) {
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.up );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.down );
 
-	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.save );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.remove );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.back );
 	Menu_AddItem( &g_arenaservers.menu, (void*) &g_arenaservers.specify );
@@ -1880,8 +1820,6 @@ ArenaServers_Cache
 =================
 */
 void ArenaServers_Cache( void ) {
-   	trap_R_RegisterShaderNoMip( ART_SAVE0 );
-   	trap_R_RegisterShaderNoMip( ART_SAVE1 );
 	trap_R_RegisterShaderNoMip( ART_BACK0 );
 	trap_R_RegisterShaderNoMip( ART_BACK1 );
 	trap_R_RegisterShaderNoMip( ART_CREATE0 );

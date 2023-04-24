@@ -481,6 +481,20 @@ int ClientNumberFromString( gentity_t *to, char *s ) {
 	return -1;
 }
 
+void Cmd_Zoom_f (gentity_t *ent) {
+	if (!ent || !ent->client) {
+		return;
+	}
+	ent->client->ps.stats[STAT_SPEC_ZOOM] |= ZOOMING;
+}
+
+void Cmd_UnZoom_f (gentity_t *ent) {
+	if (!ent || !ent->client) {
+		return;
+	}
+	ent->client->ps.stats[STAT_SPEC_ZOOM] &= ~ZOOMING;
+}
+
 /*
 ==================
 Cmd_Give_f
@@ -2394,6 +2408,9 @@ commands_t cmds[ ] =
   /*{ "m", CMD_MESSAGE|CMD_INTERMISSION, Cmd_PrivateMessage_f },
   { "mt", CMD_MESSAGE|CMD_INTERMISSION, Cmd_PrivateMessage_f },
   { "a", CMD_MESSAGE|CMD_INTERMISSION, Cmd_AdminMessage_f },*/
+
+  { "zoom", 0, Cmd_Zoom_f },
+  { "unzoom", 0, Cmd_UnZoom_f },
 
   { "score", CMD_INTERMISSION, Cmd_Score_f },
   { "acc", CMD_INTERMISSION, Cmd_Acc_f},
