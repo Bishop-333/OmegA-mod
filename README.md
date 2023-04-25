@@ -21,6 +21,7 @@ List of the cvars/additions :
 - cg_omegaInitialized
 - cg_screenshake
 - cg_selfSounds
+- cg_shotgunSparks
 - cg_showSpawns
 - cg_showSpecZoom
 - cg_statusBarStyle
