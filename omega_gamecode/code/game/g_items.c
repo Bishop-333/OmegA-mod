@@ -416,7 +416,7 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 	qboolean	predict;
 
 	//instant gib
-	if ((g_instantgib.integer || g_rockets.integer || g_weaponArena.string || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer)
+	if ((g_instantgib.integer || g_rockets.integer || g_weaponArena.integer || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer)
                 && ent->item->giType != IT_TEAM)
 		return;
 
@@ -744,7 +744,7 @@ void FinishSpawningItem( gentity_t *ent ) {
 	
 	// powerups don't spawn in for a while (but not in elimination)
 	if(g_gametype.integer != GT_ELIMINATION && g_gametype.integer != GT_CTF_ELIMINATION && g_gametype.integer != GT_LMS 
-                && !g_instantgib.integer && !g_elimination_allgametypes.integer && !g_rockets.integer && !g_weaponArena.string )
+                && !g_instantgib.integer && !g_elimination_allgametypes.integer && !g_rockets.integer && !g_weaponArena.integer )
 	if ( ent->item->giType == IT_POWERUP ) {
 		float	respawn;
 
@@ -853,56 +853,56 @@ ClearRegisteredItems
 void ClearRegisteredItems( void ) {
 	memset( itemRegistered, 0, sizeof( itemRegistered ) );
 
-	if( g_instantgib.integer || Q_stricmp( g_weaponArena.string, "railgun" ) == 0 ) {
+	if( g_instantgib.integer || g_weaponArena.integer == 7 ) {
             if(g_instantgib.integer & 2)
                 RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
             //RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
             RegisterItem( BG_FindItemForWeapon( WP_RAILGUN ) );
 	}
         else
-	if( g_rockets.integer || Q_stricmp( g_weaponArena.string, "rocket" ) == 0 ) {
+	if( g_rockets.integer || g_weaponArena.integer == 5 ) {
 		//RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
 		//RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 		RegisterItem( BG_FindItemForWeapon( WP_ROCKET_LAUNCHER ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "gauntlet" ) == 0) {
+	if(g_weaponArena.integer == 1) {
 		RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "machinegun" ) == 0) {
+	if(g_weaponArena.integer == 2) {
 		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "shotgun" ) == 0) {
+	if(g_weaponArena.integer == 3) {
 		RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "grenade" ) == 0) {
+	if(g_weaponArena.integer == 4) {
 		RegisterItem( BG_FindItemForWeapon( WP_GRENADE_LAUNCHER ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "lightning" ) == 0) {
+	if(g_weaponArena.integer == 6) {
 		RegisterItem( BG_FindItemForWeapon( WP_LIGHTNING ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "plasmagun" ) == 0) {
+	if(g_weaponArena.integer == 8) {
 		RegisterItem( BG_FindItemForWeapon( WP_PLASMAGUN ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "bfg" ) == 0) {
+	if(g_weaponArena.integer == 9) {
 		RegisterItem( BG_FindItemForWeapon( WP_BFG ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "nailgun" ) == 0) {
+	if(g_weaponArena.integer == 10) {
 		RegisterItem( BG_FindItemForWeapon( WP_NAILGUN ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "prox" ) == 0) {
+	if(g_weaponArena.integer == 11) {
 		RegisterItem( BG_FindItemForWeapon( WP_PROX_LAUNCHER ) );
 	}
         else
-	if(Q_stricmp( g_weaponArena.string, "chaingun" ) == 0) {
+	if(g_weaponArena.integer == 12) {
 		RegisterItem( BG_FindItemForWeapon( WP_CHAINGUN ) );
 	}
 	else

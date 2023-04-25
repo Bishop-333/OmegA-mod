@@ -2012,7 +2012,7 @@ else
 	//	ent->health = client->ps.stats[STAT_HEALTH] = 0;
 }
 	//Instantgib mode, replace weapons with rail (and maybe gauntlet)
-	if( g_instantgib.integer || Q_stricmp( g_weaponArena.string, "railgun" ) == 0 )
+	if( g_instantgib.integer || g_weaponArena.integer == 7 )
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_RAILGUN );
 		client->ps.ammo[WP_RAILGUN] = 999; //Don't display any ammo
@@ -2024,66 +2024,66 @@ else
 	}
 
 	//nexuiz style rocket arena (rocket launcher only)
-	if( g_rockets.integer || Q_stricmp( g_weaponArena.string, "rocket" ) == 0 ) 
+	if( g_rockets.integer || g_weaponArena.integer == 5 ) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_ROCKET_LAUNCHER );
 		client->ps.ammo[WP_ROCKET_LAUNCHER] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "gauntlet" ) == 0) 
+	if(g_weaponArena.integer == 1) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_GAUNTLET );
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "machinegun" ) == 0) 
+	if(g_weaponArena.integer == 2) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_MACHINEGUN );
 		client->ps.ammo[WP_MACHINEGUN] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "shotgun" ) == 0) 
+	if(g_weaponArena.integer == 3) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_SHOTGUN );
 		client->ps.ammo[WP_SHOTGUN] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "grenade" ) == 0) 
+	if(g_weaponArena.integer == 4) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_GRENADE_LAUNCHER );
 		client->ps.ammo[WP_GRENADE_LAUNCHER] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "lightning" ) == 0) 
+	if(g_weaponArena.integer == 6) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_LIGHTNING );
 		client->ps.ammo[WP_LIGHTNING] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "plasmagun" ) == 0) 
+	if(g_weaponArena.integer == 8) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_PLASMAGUN );
 		client->ps.ammo[WP_PLASMAGUN] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "bfg" ) == 0) 
+	if(g_weaponArena.integer == 9) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_BFG );
 		client->ps.ammo[WP_BFG] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "nailgun" ) == 0) 
+	if(g_weaponArena.integer == 10) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_NAILGUN );
 		client->ps.ammo[WP_NAILGUN] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "prox" ) == 0) 
+	if(g_weaponArena.integer == 11) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_PROX_LAUNCHER );
 		client->ps.ammo[WP_PROX_LAUNCHER] = 999;
 	}
 
-	if(Q_stricmp( g_weaponArena.string, "chaingun" ) == 0) 
+	if(g_weaponArena.integer == 12) 
 	{
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_CHAINGUN );
 		client->ps.ammo[WP_CHAINGUN] = 999;

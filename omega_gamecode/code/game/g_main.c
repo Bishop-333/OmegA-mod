@@ -459,7 +459,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_weaponArena, "g_weaponArena", "", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
+	{ &g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
 	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
 };
@@ -770,7 +770,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
         {
             g_instantgib.integer = 0;
             g_rockets.integer = 0;
-            memset( g_weaponArena.string, 0, sizeof( g_weaponArena.string ) );
+            g_weaponArena.integer = 0;
             g_vampire.value = 0.0f;
         }
 
