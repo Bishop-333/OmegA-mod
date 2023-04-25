@@ -875,6 +875,7 @@ void ClearRegisteredItems( void ) {
 	}
         else
 	if(g_weaponArena.integer == 3) {
+		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 		RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 	}
         else
