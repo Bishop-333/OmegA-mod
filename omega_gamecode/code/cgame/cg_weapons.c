@@ -455,7 +455,7 @@ static void CG_LeiSmokeTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	else	if (therando == 2)	smoke = CG_SmokePuff( lastPos, up, 27, 1, 1, 1, 0.9f, wi->wiTrailTime,  t, 0, 0,  cgs.media.lsmkShader3 );
 	else				smoke = CG_SmokePuff( lastPos, up, 27, 1, 1, 1, 0.9f, wi->wiTrailTime,  t, 0, 0,  cgs.media.lsmkShader4 );
 		// use the optimized local entity add
-		smoke->leType = LE_MOVE_SCALE_FADE;
+		smoke->leType = LE_SCALE_FADE;
 		//smoke->trType = TR_GRAVITY;
 	}
 
@@ -3282,8 +3282,12 @@ CG_MissileHitPlayer
 */
 void CG_MissileHitPlayer( int weapon, vec3_t origin, vec3_t dir, int entityNum ) {
 // LEILEI ENHANCEMENT
-	if (cg_leiEnhancement.integer) {
-		CG_SmokePuff( origin, dir, 22, 1, 1, 1, 1.0f, 900, cg.time, 0, 0,  cgs.media.lbldShader1 );
+	localEntity_t	*blood;
+
+	if ( cg_leiEnhancement.integer || cg_blood.integer == 1 ) {
+		blood = CG_SmokePuff( origin, dir, 22, 1, 1, 1, 1.0f, 900, cg.time, 0, 0,  cgs.media.lbldShader1 );
+		// use the optimized local entity add
+		blood->leType = LE_SCALE_FADE;
 		CG_SpurtBlood( origin, dir, 1);
 //		CG_SpurtBlood( origin, dir, 4);
 //		CG_SpurtBlood( origin, dir, -12);
@@ -3415,17 +3419,21 @@ static void CG_ShotgunPellet( vec3_t start, vec3_t end, int skipNum ) {
 			CG_MissileHitWall( WP_SHOTGUN, 0, tr.endpos, tr.plane.normal, IMPACTSOUND_DEFAULT );
 	
 // LEILEI ENHANCEMENT
-				if (cg_leiEnhancement.integer) {
+				if ( cg_leiEnhancement.integer || cg_shotgunSparks.integer ) {
 					VectorCopy( tr.plane.normal, kapow );
 
 					kapow[0] = kapow[0] * (crandom() * 65 + 37);
 					kapow[1] = kapow[1] * (crandom() * 65 + 37);
 					kapow[2] = kapow[2] * (crandom() * 65 + 37);
-					CG_LeiSparks(tr.endpos, tr.plane.normal, 800, 0, 0, 7);
-					CG_LeiSparks(tr.endpos, tr.plane.normal, 800, 0, 0, 2);
+					CG_LeiSparks(tr.endpos, tr.plane.normal, 1600, 0, 0, 7);
+					CG_LeiSparks(tr.endpos, tr.plane.normal, 1600, 0, 0, 2);
 					
-					smoke = CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lsmkShader2 );
-					//smoke = CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lbumShader1 );
+					if (cg_leiEnhancement.integer) {
+						smoke = CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lsmkShader2 );
+						//smoke = CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lbumShader1 );
+						// use the optimized local entity add
+						smoke->leType = LE_SCALE_FADE;
+					}
 #if 0
 					CG_LeiPuff(tr.endpos, kapow, 500, 0, 0, 177, 6);
 					CG_LeiPuff(tr.endpos, tr.plane.normal, 500, 0, 0, 127, 12);
@@ -3667,6 +3675,7 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 	int sourceContentType, destContentType;
 	vec3_t		start;
 // LEILEI ENHACNEMENT
+	localEntity_t	*blood;
 	localEntity_t	*smoke;
 	vec3_t	kapew;	
 	vec3_t  kapow;
@@ -3739,7 +3748,7 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 	// impact splash and mark
 	if ( flesh ) {
 // LEILEI ENHANCEMENT
-	if (cg_leiEnhancement.integer) {
+	if ( cg_leiEnhancement.integer || cg_blood.integer == 1 ) {
 
 		
 						// Blood Hack
@@ -3754,7 +3763,9 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 				kapew[1] = kapew[1] * (crandom() * 2 + 37);
 				kapew[2] = kapew[2] * (crandom() * 2 + 37);
 
-		CG_SmokePuff( end, kapow, 6, 1, 1, 1, 1.0f, 600, cg.time, 0, 0,  cgs.media.lbldShader1 );
+		blood = CG_SmokePuff( end, kapow, 6, 1, 1, 1, 1.0f, 600, cg.time, 0, 0,  cgs.media.lbldShader1 );
+		// use the optimized local entity add
+		blood->leType = LE_SCALE_FADE;
 //		CG_SpurtBlood( end, kapow, 2);
 		CG_SpurtBlood( end, kapew, 1);
 		//CG_Particle_Bleed(cgs.media.lbldShader1,kapew,'0 0 0', 0, 100);
@@ -3788,6 +3799,8 @@ if (cg_leiSuperGoreyAwesome.integer) {
 
 
 					smoke = CG_SmokePuff( end, kapow, 14, 1, 1, 1, 1.0f, 600, cg.time, 0, 0,  cgs.media.lsmkShader1 );
+					// use the optimized local entity add
+					smoke->leType = LE_SCALE_FADE;
 			//		CG_LeiSparks(end, normal, 600, 0, 0, 177);
 			//		CG_LeiSparks(end, normal, 600, 0, 0, 155);
 			//		CG_LeiSparks(end, normal, 600, 0, 0, 444);

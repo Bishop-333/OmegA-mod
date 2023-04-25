@@ -925,7 +925,7 @@ static float CG_DrawFPS( float y ) {
 CG_DrawTimer
 =================
 */
-static float CG_DrawTimer( int x, int y, int w, int h ) {
+static float CG_DrawTimer( int y ) {
 	char		*s;
 	int			mins, seconds, tens;
 	int			msec;
@@ -940,9 +940,20 @@ static float CG_DrawTimer( int x, int y, int w, int h ) {
 
 	s = va( "%i:%i%i", mins, tens, seconds );
 
-	CG_DrawStringExt( x - CG_DrawStrlen( s ) * w / 2, y, s, colorWhite, qtrue, qtrue, w, h, 0 );
+	if (cg_drawTimer.integer == 1) {
+		/* customizable timer */
+		CG_DrawStringExt( cg_timerX.integer - CG_DrawStrlen( s ) * cg_timerWidth.integer / 2, cg_timerY.integer, s, colorWhite, qfalse, qtrue, cg_timerWidth.integer, cg_timerHeight.integer, 0 );
+		return y;
+	} else if (cg_drawTimer.integer == 2) {
+		/* top of screen */
+		CG_DrawStringExt( 318 - CG_DrawStrlen( s ) * 25 / 2, 2, s, colorWhite, qfalse, qtrue, 25, 25, 0);
+		return y;
+	} else {
+		/* top right-hand corner of screen */
+		CG_DrawStringExt( 619 - CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 2, y + 2, s, colorWhite, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		return y + TINYCHAR_HEIGHT + 4;
 
-	return y;
+	}
 }
 
 /*
@@ -1579,11 +1590,11 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 			y = CG_DrawEliminationDeathMessage( y);*/
 	}
 
-	if ( cg_drawTimer.integer) {
-		CG_DrawTimer( cg_timerX.integer, cg_timerY.integer, cg_timerWidth.integer, cg_timerHeight.integer );
-	}
 	if ( cg_drawSpeed.integer ) {
 		y = CG_DrawSpeedMeter( y );
+	}
+	if ( cg_drawTimer.integer ) {
+		y = CG_DrawTimer( y );
 	}
 #ifndef MISSIONPACK
 	if ( cg_drawItemPickup.integer ) {
@@ -1638,7 +1649,7 @@ static float CG_DrawScores( float y ) {
 		color[0] = 0.0f;
 		color[1] = 0.0f;
 		color[2] = 1.0f;
-		color[3] = 0.33f;
+		color[3] = 0.5f;
 		s = va( "%2i", s2 );
 		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH + 8;
 		x -= w;
@@ -1646,7 +1657,7 @@ static float CG_DrawScores( float y ) {
 		if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE ) {
 			CG_DrawPic( x, y-4, w, BIGCHAR_HEIGHT+8, cgs.media.selectShader );
 		}
-		CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 
 		if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION) {
 			// Display flag status
@@ -1672,7 +1683,7 @@ static float CG_DrawScores( float y ) {
 		color[0] = 1.0f;
 		color[1] = 0.0f;
 		color[2] = 0.0f;
-		color[3] = 0.33f;
+		color[3] = 0.5f;
 		s = va( "%2i", s1 );
 		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH + 8;
 		x -= w;
@@ -1680,7 +1691,7 @@ static float CG_DrawScores( float y ) {
 		if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_RED ) {
 			CG_DrawPic( x, y-4, w, BIGCHAR_HEIGHT+8, cgs.media.selectShader );
 		}
-		CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 
 		if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION ) {
 			// Display flag status
@@ -1729,7 +1740,7 @@ static float CG_DrawScores( float y ) {
 			s = va( "%2i", v );
 			w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH + 8;
 			x -= w;
-			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 		}
 
 	} else {
@@ -1749,19 +1760,19 @@ static float CG_DrawScores( float y ) {
 			x -= w;
 			if ( !spectator && score == s2 && score != s1 ) {
 				color[0] = 1.0f;
-				color[1] = 0.0f;
+				color[1] = 0.5f;
 				color[2] = 0.0f;
-				color[3] = 0.33f;
+				color[3] = 0.5f;
 				CG_FillRect( x, y-4,  w, BIGCHAR_HEIGHT+8, color );
 				CG_DrawPic( x, y-4, w, BIGCHAR_HEIGHT+8, cgs.media.selectShader );
 			} else {
 				color[0] = 0.5f;
 				color[1] = 0.5f;
 				color[2] = 0.5f;
-				color[3] = 0.33f;
+				color[3] = 0.5f;
 				CG_FillRect( x, y-4,  w, BIGCHAR_HEIGHT+8, color );
 			}	
-			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 		}
 
 		// first place
@@ -1771,26 +1782,26 @@ static float CG_DrawScores( float y ) {
 			x -= w;
 			if ( !spectator && score == s1 ) {
 				color[0] = 0.0f;
-				color[1] = 0.0f;
+				color[1] = 0.5f;
 				color[2] = 1.0f;
-				color[3] = 0.33f;
+				color[3] = 0.5f;
 				CG_FillRect( x, y-4,  w, BIGCHAR_HEIGHT+8, color );
 				CG_DrawPic( x, y-4, w, BIGCHAR_HEIGHT+8, cgs.media.selectShader );
 			} else {
-				color[0] = 0.5f;
-				color[1] = 0.5f;
-				color[2] = 0.5f;
-				color[3] = 0.33f;
+				color[0] = 0.25f;
+				color[1] = 0.25f;
+				color[2] = 0.25f;
+				color[3] = 0.5f;
 				CG_FillRect( x, y-4,  w, BIGCHAR_HEIGHT+8, color );
 			}	
-			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 		}
 
 		if ( cgs.fraglimit ) {
 			s = va( "%2i", cgs.fraglimit );
 			w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH + 8;
 			x -= w;
-			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qfalse, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 		}
 
 	}

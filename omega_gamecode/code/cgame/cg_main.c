@@ -293,6 +293,7 @@ vmCvar_t        cg_omegaFlags;
 vmCvar_t        cg_omegaInitialized;
 vmCvar_t        cg_screenshake;
 vmCvar_t	cg_selfSounds;
+vmCvar_t	cg_shotgunSparks;
 vmCvar_t        cg_showSpawns; //from ratmod
 vmCvar_t        cg_showSpecZoom;
 vmCvar_t        cg_statusBarStyle;
@@ -392,7 +393,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	// but we also reference them here
 	{ &cg_buildScript, "com_buildScript", "0", 0 },	// force loading of all possible data amd error on failures
 	{ &cg_paused, "cl_paused", "0", CVAR_ROM },
-	{ &cg_blood, "com_blood", "1", CVAR_ARCHIVE },
+	{ &cg_blood, "com_blood", "2", CVAR_ARCHIVE },
 	{ &cg_alwaysWeaponBar, "cg_alwaysWeaponBar", "1", CVAR_ARCHIVE},	//Elimination
         { &cg_hitsound, "cg_hitsound", "0", CVAR_ARCHIVE},
         { &cg_voip_teamonly, "cg_voipTeamOnly", "1", CVAR_ARCHIVE},
@@ -518,6 +519,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
 	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
 	{ &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE},
+	{ &cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE},
 	{ &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE},
 	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE},
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
@@ -526,7 +528,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "1", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE},
 	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE},
-	{ &cg_timerX, "cg_timerX", "320", CVAR_ARCHIVE},
+	{ &cg_timerX, "cg_timerX", "318", CVAR_ARCHIVE},
 	{ &cg_timerY, "cg_timerY", "2", CVAR_ARCHIVE},
 	{ &cg_transparentGun, "cg_transparentGun", "0", CVAR_ARCHIVE},
 	{ &cg_wallhack, "cg_wallhack", "0", CVAR_ARCHIVE | CVAR_CHEAT },
@@ -959,10 +961,8 @@ static void CG_RegisterSounds( void ) {
             cgs.media.hitSound = trap_S_RegisterSound( "sound/feedback/hit1.wav", qfalse );
         };
 
-#ifdef MISSIONPACK
 	cgs.media.hitSoundHighArmor = trap_S_RegisterSound( "sound/feedback/hithi.wav", qfalse );
 	cgs.media.hitSoundLowArmor = trap_S_RegisterSound( "sound/feedback/hitlo.wav", qfalse );
-#endif
 
 	cgs.media.impressiveSound = trap_S_RegisterSound( "sound/feedback/impressive.wav", qtrue );
 	cgs.media.excellentSound = trap_S_RegisterSound( "sound/feedback/excellent.wav", qtrue );
@@ -1184,7 +1184,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.railgunShader = trap_R_RegisterShader( "icons/iconw_railgun" );
 	cgs.media.rocketShader = trap_R_RegisterShader( "icons/iconw_rocket" );
 	cgs.media.shotgunShader = trap_R_RegisterShader( "icons/iconw_shotgun" );
-	cgs.media.skullShader = trap_R_RegisterShader( "icons/skull_red" );
+	cgs.media.skullShader = trap_R_RegisterShader( "icons/skull" );
 	cgs.media.headshotShader = trap_R_RegisterShader( "menu/medals/medal_headshot" );
 
 	for (i = 0; i < NUM_CROSSHAIRS; i++ ) {

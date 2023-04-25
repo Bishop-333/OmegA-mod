@@ -280,6 +280,7 @@ static void CG_Obituary( entityState_t *ent ) {
 					s = va("You fragged %s", targetName );
 			}
 		}
+		trap_S_StartLocalSound( cgs.media.hitSoundHighArmor, CHAN_LOCAL_SOUND );
 #ifdef MISSIONPACK
 		if (!(cg_singlePlayerActive.integer && cg_cameraOrbit.integer)) {
 			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );

@@ -1474,6 +1474,7 @@ extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
 extern vmCvar_t cg_selfSounds;
+extern vmCvar_t	cg_shotgunSparks;
 extern vmCvar_t	cg_showSpawns; //from ratmod
 extern vmCvar_t	cg_showSpecZoom;
 extern vmCvar_t	cg_statusBarStyle;

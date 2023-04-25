@@ -139,7 +139,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 
 	// draw the face
 	if ( cent->currentState.eFlags & EF_DEAD ) {
-		CG_DrawPic( headx, y, BIGCHAR_HEIGHT+11, BIGCHAR_HEIGHT+11, cgs.media.skullShader );
+		CG_DrawPic( headx+2, y+2, BIGCHAR_HEIGHT+7, BIGCHAR_HEIGHT+7, cgs.media.skullShader );
 	} else {
 		VectorClear( headAngles );
 		headAngles[YAW] = 180 + 60 * sin( cg.time / 2000.0 );
@@ -250,14 +250,14 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	if ( score->ping != -1 ) {
 		Com_sprintf(string, sizeof(string),
 			"%3i:%02i", score->time / 60, score->time - ( score->time / 60 ) * 60);
-		CG_DrawSmallStringColor( SB_TIME_X - 55, y+6, string, colorMdGrey );
+		CG_DrawStringExt( SB_TIME_X - 46, y+6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH/1.25, SMALLCHAR_HEIGHT, 0 );
 	}
 
 	// draw accuracy
 	if ( score->ping != -1 ) {
 		Com_sprintf(string, sizeof(string),
 			"%3i%%", score->accuracy);
-		CG_DrawSmallStringColor( SB_ACCURACY_X - 45, y+6, string, colorMdGrey );
+		CG_DrawStringExt( SB_ACCURACY_X - 38, y+6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH/1.25, SMALLCHAR_HEIGHT, 0 );
 	}
 
 	// draw ratio
