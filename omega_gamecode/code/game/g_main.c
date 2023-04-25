@@ -226,6 +226,7 @@ vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
 vmCvar_t        g_vulnerableRockets;
 vmCvar_t        g_waterDamage;
+vmCvar_t        g_weaponArena;
 vmCvar_t        clipWalls;
 vmCvar_t        pmove_autohop;
 
@@ -458,6 +459,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_weaponArena, "g_weaponArena", "", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
 	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
 };
@@ -677,7 +679,7 @@ void G_UpdateCvars( void ) {
                                     VoteParseCustomVotes();
 
                                 //Here comes the cvars that must trigger a map_restart
-                                if (cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets  ||  cv->vmCvar == &g_elimination_allgametypes) {
+                                if (cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets || cv->vmCvar == &g_weaponArena  ||  cv->vmCvar == &g_elimination_allgametypes) {
                                     trap_Cvar_Set("sv_dorestart","1");
                                 }
                                 
@@ -768,6 +770,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
         {
             g_instantgib.integer = 0;
             g_rockets.integer = 0;
+            memset( g_weaponArena.string, 0, sizeof( g_weaponArena.string ) );
             g_vampire.value = 0.0f;
         }
 

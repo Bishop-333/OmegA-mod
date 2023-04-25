@@ -1681,10 +1681,30 @@ void BotChooseWeapon(bot_state_t *bs) {
 		trap_EA_SelectWeapon(bs->client, bs->weaponnum);
 	}
 	else {
-                if(g_instantgib.integer)
+                if( g_instantgib.integer || Q_stricmp( g_weaponArena.string, "railgun" ) == 0 )
                     newweaponnum = WP_RAILGUN;
-                else if(g_rockets.integer)
+                else if( g_rockets.integer || Q_stricmp( g_weaponArena.string, "rocket" ) == 0 )
                     newweaponnum = WP_ROCKET_LAUNCHER;
+                else if(Q_stricmp( g_weaponArena.string, "gauntlet" ) == 0)
+                    newweaponnum = WP_GAUNTLET;
+                else if(Q_stricmp( g_weaponArena.string, "machinegun" ) == 0)
+                    newweaponnum = WP_MACHINEGUN;
+                else if(Q_stricmp( g_weaponArena.string, "shotgun" ) == 0)
+                    newweaponnum = WP_SHOTGUN;
+                else if(Q_stricmp( g_weaponArena.string, "grenade" ) == 0)
+                    newweaponnum = WP_GRENADE_LAUNCHER;
+                else if(Q_stricmp( g_weaponArena.string, "lightning" ) == 0)
+                    newweaponnum = WP_LIGHTNING;
+                else if(Q_stricmp( g_weaponArena.string, "plasmagun" ) == 0)
+                    newweaponnum = WP_PLASMAGUN;
+                else if(Q_stricmp( g_weaponArena.string, "bfg" ) == 0)
+                    newweaponnum = WP_BFG;
+                else if(Q_stricmp( g_weaponArena.string, "nailgun" ) == 0)
+                    newweaponnum = WP_NAILGUN;
+                else if(Q_stricmp( g_weaponArena.string, "prox" ) == 0)
+                    newweaponnum = WP_PROX_LAUNCHER;
+                else if(Q_stricmp( g_weaponArena.string, "chaingun" ) == 0)
+                    newweaponnum = WP_CHAINGUN;
                 else
                     newweaponnum = trap_BotChooseBestFightWeapon(bs->ws, bs->inventory);
 		if (bs->weaponnum != newweaponnum) bs->weaponchange_time = FloatTime();

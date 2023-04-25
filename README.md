@@ -63,6 +63,7 @@ List of the cvars/additions :
 - g_teamPush
 - g_teleportMissiles //from ratmod
 - g_waterDamage
+- g_weaponArena
 #
 - clipWalls
 - pmove_autohop
