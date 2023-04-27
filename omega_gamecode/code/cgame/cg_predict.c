@@ -678,7 +678,6 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_msec = pmove_msec.integer;
         cg_pmove.pmove_float = pmove_float.integer;
         cg_pmove.pmove_flags = cgs.dmflags;
-        cg_pmove.pmove_autohop = pmove_autohop.integer;
 
         cg_pmove.clipWalls = clipWalls.integer;
         

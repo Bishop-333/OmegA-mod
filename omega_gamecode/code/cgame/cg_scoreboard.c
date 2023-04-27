@@ -263,8 +263,8 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	// draw ratio
 	if ( !( score->ping == -1 || ci->team == TEAM_SPECTATOR ) ) {
 		Com_sprintf(string, sizeof(string),
-			"%2i/%-2i", score->kills, score->deaths);
-		CG_DrawSmallString( SB_RATIO_X - 50, y+6, string, fade );
+			"%3i/%-3i", score->kills, score->deaths);
+		CG_DrawSmallString( SB_RATIO_X - 57, y+6, string, fade );
 	}
 
 	// add the "ready" marker for intermission exiting

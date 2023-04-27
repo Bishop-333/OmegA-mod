@@ -2078,7 +2078,15 @@ static void CG_PlayerSprites( centity_t *cent ) {
 		cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
 		if (cg_drawFriend.integer) {
 			if ( cg_drawFriendThroughWalls.integer ) {
-				CG_PlayerFloatSprite( cent, cgs.media.friendThroughWallsShader );
+				if ( cent->currentState.powerups & ( 1 << PW_REDFLAG ) ) {
+					CG_PlayerFloatSprite( cent, cgs.media.redFlagShader[0] );
+				} else if ( cent->currentState.powerups & ( 1 << PW_BLUEFLAG ) ) {
+					CG_PlayerFloatSprite( cent, cgs.media.blueFlagShader[0] );
+				} else if ( cent->currentState.powerups & ( 1 << PW_NEUTRALFLAG ) ) {
+					CG_PlayerFloatSprite( cent, cgs.media.flagShader[0] );
+				} else {
+					CG_PlayerFloatSprite( cent, cgs.media.friendThroughWallsShader );
+				}
 			} else {
 				CG_PlayerFloatSprite( cent, cgs.media.friendShader );
 			}	

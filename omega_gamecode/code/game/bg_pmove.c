@@ -193,7 +193,7 @@ static void PM_Friction( void ) {
 
 	// apply ground friction
 	if ( pm->waterlevel <= 1 ) {
-		if ( pml.walking && !(pml.groundTrace.surfaceFlags & SURF_SLICK) ) {
+		if ( pml.walking && !(pml.groundTrace.surfaceFlags & SURF_SLICK) && !pm->slickGround ) {
 			// if getting knocked back, no friction
 			if ( ! (pm->ps->pm_flags & PMF_TIME_KNOCKBACK) ) {
 				control = speed < pm_stopspeed ? pm_stopspeed : speed;
@@ -386,7 +386,7 @@ static qboolean PM_CheckJump( void ) {
 
 	pml.groundPlane = qfalse;		// jumping away
 	pml.walking = qfalse;
-	if (!(pm->pmove_autohop)) {
+	if ( !pm->autohop ) {
 		pm->ps->pm_flags |= PMF_JUMP_HELD;
 	}
 
@@ -645,7 +645,11 @@ static void PM_AirMove( void ) {
 	wishspeed *= scale;
 
 	// not on ground, so little effect on velocity
-	PM_Accelerate (wishdir, wishspeed, pm_airaccelerate);
+	if ( pm->airControl ) {
+		PM_Accelerate (wishdir, wishspeed, pm_accelerate);
+	} else {
+		PM_Accelerate (wishdir, wishspeed, pm_airaccelerate);
+	}
 
 	// we may have a ground plane that is very steep, even
 	// though we don't have a groundentity
@@ -780,7 +784,7 @@ static void PM_WalkMove( void ) {
 
 	// when a player gets hit, they temporarily lose
 	// full control, which allows them to be moved a bit
-	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->ps->pm_flags & PMF_TIME_KNOCKBACK ) {
+	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->slickGround || pm->ps->pm_flags & PMF_TIME_KNOCKBACK ) {
 		accelerate = pm_airaccelerate;
 	} else {
 		accelerate = pm_accelerate;
@@ -791,7 +795,7 @@ static void PM_WalkMove( void ) {
 	//Com_Printf("velocity = %1.1f %1.1f %1.1f\n", pm->ps->velocity[0], pm->ps->velocity[1], pm->ps->velocity[2]);
 	//Com_Printf("velocity1 = %1.1f\n", VectorLength(pm->ps->velocity));
 
-	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->ps->pm_flags & PMF_TIME_KNOCKBACK ) {
+	if ( ( pml.groundTrace.surfaceFlags & SURF_SLICK ) || pm->slickGround || pm->ps->pm_flags & PMF_TIME_KNOCKBACK ) {
 		pm->ps->velocity[2] -= pm->ps->gravity * pml.frametime;
 	} else {
 		// don't reset the z velocity for slopes

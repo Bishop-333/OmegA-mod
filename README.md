@@ -38,8 +38,10 @@ List of the cvars/additions :
 - cg_zoomAnimSpeed
 - cg_zoomToggle
 #
+- g_airControl
 - g_allowDuplicateGuid
 - g_ambientSounds
+- g_autohop
 - g_beheading
 - g_botChat
 - g_damagePlums
@@ -59,6 +61,7 @@ List of the cvars/additions :
 - g_railJump
 - g_rocketSpeed
 - g_selfDamage
+- g_slikGround
 - g_startWhenReady
 - g_teamPush
 - g_teleportMissiles //from ratmod
@@ -66,7 +69,6 @@ List of the cvars/additions :
 - g_weaponArena
 #
 - clipWalls
-- pmove_autohop
 #
 - new flags models
 - new font

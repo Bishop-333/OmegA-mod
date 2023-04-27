@@ -312,7 +312,6 @@ vmCvar_t        cg_zoomAnimSpeed;
 vmCvar_t        cg_zoomToggle;
 vmCvar_t        clipWalls;
 vmCvar_t        com_maxfps;
-vmCvar_t        pmove_autohop;
 
 typedef struct {
 	vmCvar_t	*vmCvar;
@@ -504,40 +503,39 @@ static cvarTable_t cvarTable[] = { // bk001129
         {&cg_teamChatBeep, "cg_teamChatBeep", "1", CVAR_ARCHIVE },
 
 	//OmegA
-	{ &cg_bobgun, "cg_bobgun", "0", CVAR_ARCHIVE},
-	{ &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE},
+	{ &cg_bobgun, "cg_bobgun", "0", CVAR_ARCHIVE },
+	{ &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE },
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
 	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },
 	{ &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
 	{ &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE},
-	{ &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE},
-	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE},
-	{ &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE},
-	{ &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE},
+	{ &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE },
+	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },
+	{ &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE },
+	{ &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE },
 	{ &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
-	{ &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE},
-	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
-	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
-	{ &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE},
-	{ &cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE},
-	{ &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE},
-	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE},
-	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE},
-	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE},
-	{ &cg_teamSounds, "cg_teamSounds", "", CVAR_ARCHIVE},
+	{ &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
+	{ &cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE },
+	{ &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE },
+	{ &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE },
+	{ &cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE },
+	{ &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE },
+	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE },
+	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE },
+	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE },
+	{ &cg_teamSounds, "cg_teamSounds", "", CVAR_ARCHIVE },
 	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "1", CVAR_ARCHIVE | CVAR_LATCH },
-	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE},
-	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE},
-	{ &cg_timerX, "cg_timerX", "318", CVAR_ARCHIVE},
-	{ &cg_timerY, "cg_timerY", "2", CVAR_ARCHIVE},
-	{ &cg_transparentGun, "cg_transparentGun", "0", CVAR_ARCHIVE},
+	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE },
+	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE },
+	{ &cg_timerX, "cg_timerX", "318", CVAR_ARCHIVE },
+	{ &cg_timerY, "cg_timerY", "2", CVAR_ARCHIVE },
+	{ &cg_transparentGun, "cg_transparentGun", "0", CVAR_ARCHIVE },
 	{ &cg_wallhack, "cg_wallhack", "0", CVAR_ARCHIVE | CVAR_CHEAT },
-	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE},
-	{ &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE},
-	{ &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE},
-	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE | CVAR_CHEAT },
-	{ &com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE },
-	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO}
+	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE },
+	{ &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE },
+	{ &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE },
+	{ &clipWalls, "clipWalls", "1", CVAR_SYSTEMINFO },
+	{ &com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE }
 };
 
 static int  cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );

@@ -1041,9 +1041,11 @@ void ClientThink_real( gentity_t *ent ) {
 	pm.pmove_msec = pmove_msec.integer;
         pm.pmove_float = pmove_float.integer;
         pm.pmove_flags = g_dmflags.integer;
-        pm.pmove_autohop = pmove_autohop.integer;
 
+        pm.autohop = g_autohop.integer;
+        pm.airControl = g_airControl.integer;
         pm.railgunSpeed = g_railgunSpeed.integer;
+        pm.slickGround = g_slickGround.integer;
 
 	VectorCopy( client->ps.origin, client->oldOrigin );
 

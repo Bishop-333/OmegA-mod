@@ -198,6 +198,8 @@ vmCvar_t        g_maxNameChanges;
 vmCvar_t        g_timestamp_startgame;
 
 //OmegA
+vmCvar_t        g_autohop;
+vmCvar_t        g_airControl;
 vmCvar_t        g_allowDuplicateGuid;
 vmCvar_t        g_ambientSounds;
 vmCvar_t        g_beheading;
@@ -221,6 +223,7 @@ vmCvar_t        g_railgunSpeed;
 vmCvar_t        g_railJump;
 vmCvar_t        g_rocketSpeed;
 vmCvar_t        g_selfDamage;
+vmCvar_t        g_slickGround;
 vmCvar_t        g_startWhenReady;
 vmCvar_t        g_teamPush;
 vmCvar_t        g_teleportMissiles; //from ratmod
@@ -228,7 +231,6 @@ vmCvar_t        g_vulnerableRockets;
 vmCvar_t        g_waterDamage;
 vmCvar_t        g_weaponArena;
 vmCvar_t        clipWalls;
-vmCvar_t        pmove_autohop;
 
 // bk001129 - made static to avoid aliasing
 static cvarTable_t		gameCvarTable[] = {
@@ -279,7 +281,7 @@ static cvarTable_t		gameCvarTable[] = {
 
 	{ &g_speed, "g_speed", "320", 0, 0, qtrue  },
 	{ &g_gravity, "g_gravity", "800", 0, 0, qtrue  },
-	{ &g_gravityModifier, "g_gravityModifier", "1", 0, 0, qtrue  },
+	{ &g_gravityModifier, "g_gravityModifier", "0.940", 0, 0, qtrue  },
         { &g_damageModifier, "g_damageModifier", "0", 0, 0, qtrue },
 	{ &g_knockback, "g_knockback", "1000", 0, 0, qtrue  },
 	{ &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue  },
@@ -432,8 +434,10 @@ static cvarTable_t		gameCvarTable[] = {
         { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse},
 
 	//OmegA
+	{ &g_airControl, "g_airControl", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
 	{ &g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE| CVAR_LATCH, 0, qtrue },
+	{ &g_autohop, "g_autohop", "0", CVAR_ARCHIVE, 0, qfalse },
 	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_botChat, "g_botChat", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
@@ -454,14 +458,14 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_rocketSpeed, "g_rocketSpeed", "900", 0, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_slickGround, "g_slickGround", "0", CVAR_ARCHIVE, 0, qtrue },
         { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
 	{ &g_teamPush, "g_teamPush", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
-	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
+	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE, 0, qtrue }
 };
 
 // bk001129 - made static to avoid aliasing
