@@ -37,10 +37,12 @@ vec3_t	axisDefault[3] = { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
 
 vec4_t		colorBlack	= {0, 0, 0, 1};
 vec4_t		colorRed	= {1, 0, 0, 1};
+vec4_t		colorTtGreen	= {0, 1, 0, 0.5};
 vec4_t		colorGreen	= {0, 1, 0, 1};
 vec4_t		colorBlue	= {0, 0, 1, 1};
 vec4_t		colorYellow	= {1, 1, 0, 1};
-vec4_t		colorMagenta= {1, 0, 1, 1};
+vec4_t		colorMagenta	= {1, 0, 1, 1};
+vec4_t		colorTtCyan	= {0, 1, 1, 0.5};
 vec4_t		colorCyan	= {0, 1, 1, 1};
 vec4_t		colorOrange	= {1, 0.5, 0, 1};
 vec4_t		colorWhite	= {1, 1, 1, 1};

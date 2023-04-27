@@ -151,10 +151,47 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	s = Info_ValueForKey( info, "sv_hostname" );
 	CG_DrawStringExt( 5, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
+	// draw the slashs
+	CG_DrawStringExt( -1 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( 1 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+
+	// draw gametype
+	if ( cgs.gametype == GT_FFA ) {
+		s = "Free For All";
+	} else if ( cgs.gametype == GT_TOURNAMENT ) {
+		s = "Tournament";
+	} else if ( cgs.gametype == GT_TEAM ) {
+		s = "Team Deathmatch";
+	} else if ( cgs.gametype == GT_CTF ) {
+		s = "Capture the Flag";
+	} else if ( cgs.gametype == GT_ELIMINATION ) {
+		s = "Elimination";
+	} else if ( cgs.gametype == GT_CTF_ELIMINATION ) {
+		s = "CTF Elimination";
+	} else if ( cgs.gametype == GT_LMS ) {
+		s = "Last Man Standing";
+	} else if ( cgs.gametype == GT_DOUBLE_D ) {
+		s = "Double Domination";
+	} else if ( cgs.gametype == GT_1FCTF ) {
+		s = "One Flag CTF";
+	} else if ( cgs.gametype == GT_OBELISK ) {
+		s = "Overload";
+	} else if ( cgs.gametype == GT_HARVESTER ) {
+		s = "Harvester";
+	} else if ( cgs.gametype == GT_DOMINATION ) {
+		s = "Domination";
+	} else {
+		s = "";
+	}
+	CG_DrawStringExt( 8 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+
+	// draw the slashs
+	CG_DrawStringExt( 43 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( 45 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+
 	// draw the map name
 	info = CG_ConfigString( CS_SERVERINFO );
-	s = Info_ValueForKey( info, "mapname" );
-	CG_DrawStringExt( 5 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, s, colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( 7 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + CG_DrawStrlen( s ) + 2 ) * ( TINYCHAR_WIDTH/1.25 ), 470, Info_ValueForKey( info, "mapname" ), color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw omega logo
 	VectorClear( angles );

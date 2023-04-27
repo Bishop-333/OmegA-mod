@@ -521,7 +521,7 @@ void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team )
 		hcolor[0] = 0;
 		hcolor[1] = 0;
 		hcolor[2] = 0;
-		hcolor[3] = 0.33;
+		hcolor[3] = alpha;
 	}
 	trap_R_SetColor( hcolor );
 	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBar );
@@ -591,9 +591,9 @@ static void CG_DrawStatusBar( void ) {
 
 	// draw the team background
 	if ( !(cg.snap->ps.pm_flags & PMF_FOLLOW) ) //If not following anybody:
-		CG_DrawTeamBackground( 0, 420, 640, 60, 0.25f, cg.snap->ps.persistant[PERS_TEAM] );
+		CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cg.snap->ps.persistant[PERS_TEAM] );
 	else //Sago: If we follow find the teamcolor of the guy we follow. It might not be our own team!
-		CG_DrawTeamBackground( 0, 420, 640, 60, 0.25f, cgs.clientinfo[ cg.snap->ps.clientNum ].team );
+		CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cgs.clientinfo[ cg.snap->ps.clientNum ].team );
 
 	cent = &cg_entities[cg.snap->ps.clientNum];
 	ps = &cg.snap->ps;
@@ -1330,12 +1330,12 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 		hcolor[0] = 1.0f;
 		hcolor[1] = 0.0f;
 		hcolor[2] = 0.0f;
-		hcolor[3] = 0.25f;
+		hcolor[3] = 0.33f;
 	} else { // if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE )
 		hcolor[0] = 0.0f;
 		hcolor[1] = 0.0f;
 		hcolor[2] = 1.0f;
-		hcolor[3] = 0.25f;
+		hcolor[3] = 0.33f;
 	}
 	trap_R_SetColor( hcolor );
 	CG_DrawPic( x, y, w, h, cgs.media.teamStatusBar );
@@ -3120,7 +3120,7 @@ qboolean CG_DrawAccboard( void ) {
                         i++;
         }
 
-        CG_DrawTeamBackground( ACCBOARD_XPOS, ACCBOARD_YPOS, ACCBOARD_WIDTH, ACCBOARD_HEIGHT*(i + 1), 0.25f, TEAM_BLUE );
+        CG_DrawTeamBackground( ACCBOARD_XPOS, ACCBOARD_YPOS, ACCBOARD_WIDTH, ACCBOARD_HEIGHT*(i + 1), 0.33f, TEAM_BLUE );
 
         i = 0;
 

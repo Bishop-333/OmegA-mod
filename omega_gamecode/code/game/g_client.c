@@ -379,7 +379,7 @@ void BodySink( gentity_t *ent ) {
 		ent->physicsObject = qfalse;
 		return;	
 	}
-	ent->nextthink = level.time + 100;
+	ent->nextthink = level.time / 1.33 + 100;
 	ent->s.pos.trBase[2] -= 1;
 }
 

@@ -240,16 +240,6 @@ powerups/regen
 	}
 }
 
-transparentWeapon
-{
-	nopicmip
-	{
-		map textures/omega/transparent.tga
-		blendfunc add
-		tcGen environment
-	}
-}
-
 brightPlayers
 {
 	cull disable
@@ -282,5 +272,15 @@ spawnPoint
 		tcMod rotate 86
 		tcGen environment 
 		alphaGen wave sin 0.5 0 0 0 
+	}
+}
+
+transparentWeapon
+{
+	nopicmip
+	{
+		map textures/omega/transparent
+		blendfunc add
+		tcGen environment
 	}
 }
