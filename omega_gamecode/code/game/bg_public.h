@@ -245,7 +245,8 @@ typedef enum {
 	STAT_DEAD_YAW,					// look this direction when dead (FIXME: get rid of?)
 	STAT_CLIENTS_READY,				// bit mask of clients wishing to exit the intermission (FIXME: configstring?)
 	STAT_MAX_HEALTH,				// health / armor limit, changable by handicap
-	STAT_SPEC_ZOOM
+	STAT_SPEC_ZOOM,
+	STAT_TEAM_LOCKED
 } statIndex_t;
 
 
@@ -275,6 +276,7 @@ typedef enum {
 
 
 #define ZOOMING	1
+#define LOCKED	2
 
 
 // entityState_t->eFlags

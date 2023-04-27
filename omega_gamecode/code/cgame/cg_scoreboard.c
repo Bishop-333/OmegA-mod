@@ -146,6 +146,10 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		CG_DrawHead( headx, y, BIGCHAR_HEIGHT+11, BIGCHAR_HEIGHT+11, score->client, headAngles );
 	}
 
+	if ( cg.snap->ps.stats[STAT_TEAM_LOCKED] & LOCKED ) {
+		CG_DrawTinyString( 260, 92, "Teams are locked", 0.5 );
+	}
+
 	// draw the server name
 	info = CG_ConfigString( CS_SERVERINFO );
 	s = Info_ValueForKey( info, "sv_hostname" );
@@ -216,18 +220,6 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 #endif
 
-	// draw the score line
-	if ( score->ping == -1 ) {
-		Com_sprintf(string, sizeof(string),
-			"  connecting   %s", ci->name);
-	} else if ( ci->team == TEAM_SPECTATOR ) {
-		Com_sprintf(string, sizeof(string),
-			"  SPEC         %s", ci->name);
-	} else {
-		Com_sprintf(string, sizeof(string),
-			"  %4i         %s", score->score, ci->name);
-	}
-
 	// highlight your position
 	if ( score->client == cg.snap->ps.clientNum ) {
 		float	hcolor[4];
@@ -266,42 +258,58 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 			640 - SB_SCORELINE_X - BIGCHAR_WIDTH, BIGCHAR_HEIGHT+11, hcolor );
 	}
 
-	CG_DrawMediumString( SB_SCORELINE_X + (SB_RATING_WIDTH / 2), y+6, string, fade );
-
-	// draw ping
-	if ( !( score->ping == -1 || ci->botSkill ) ) {
+	// draw score
+	if ( score->ping == -1 ) {
 		Com_sprintf(string, sizeof(string),
-			"%3i", score->ping);
-		if ( score->ping >= 300 ) {
-			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorRed );
-		} else if ( score->ping >= 200 ) {
-			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorOrange );
-		} else if ( score->ping >= 100 ) {
-			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorYellow );
-		} else {
-			CG_DrawSmallStringColor( SB_PING_X - 35, y+6, string, colorGreen );
-		}
+			"connecting");
+	} else if ( ci->team == TEAM_SPECTATOR ) {
+		Com_sprintf(string, sizeof(string),
+			"SPEC");
+	} else {
+		Com_sprintf(string, sizeof(string),
+			"%4i", score->score);
 	}
+	CG_DrawSmallString( SB_SCORE_X - 44, y+6, string, fade );
 
 	// draw time
 	if ( score->ping != -1 ) {
 		Com_sprintf(string, sizeof(string),
 			"%3i:%02i", score->time / 60, score->time - ( score->time / 60 ) * 60);
-		CG_DrawStringExt( SB_TIME_X - 46, y+6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH/1.25, SMALLCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( SB_TIME_X - 54, y+6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH/1.25, SMALLCHAR_HEIGHT, 0 );
 	}
+
+	// draw name
+	Com_sprintf(string, sizeof(string),
+		"%s", ci->name);
+	CG_DrawMediumString( SB_NAME_X - 49, y+6, string, fade );
 
 	// draw accuracy
 	if ( score->ping != -1 ) {
 		Com_sprintf(string, sizeof(string),
 			"%3i%%", score->accuracy);
-		CG_DrawStringExt( SB_ACCURACY_X - 38, y+6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH/1.25, SMALLCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( SB_ACCURACY_X - 48, y+6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH/1.25, SMALLCHAR_HEIGHT, 0 );
 	}
 
 	// draw ratio
 	if ( !( score->ping == -1 || ci->team == TEAM_SPECTATOR ) ) {
 		Com_sprintf(string, sizeof(string),
 			"%3i/%-3i", score->kills, score->deaths);
-		CG_DrawSmallString( SB_RATIO_X - 57, y+6, string, fade );
+		CG_DrawSmallString( SB_RATIO_X - 64, y+6, string, fade );
+	}
+
+	// draw ping
+	if ( !( score->ping == -1 || ci->botSkill ) ) {
+		Com_sprintf(string, sizeof(string),
+			"%3i", score->ping);
+		if ( score->ping >= 300 ) {
+			CG_DrawSmallStringColor( SB_PING_X - 44, y+6, string, colorRed );
+		} else if ( score->ping >= 200 ) {
+			CG_DrawSmallStringColor( SB_PING_X - 44, y+6, string, colorOrange );
+		} else if ( score->ping >= 100 ) {
+			CG_DrawSmallStringColor( SB_PING_X - 44, y+6, string, colorYellow );
+		} else {
+			CG_DrawSmallStringColor( SB_PING_X - 44, y+6, string, colorGreen );
+		}
 	}
 
 	// add the "ready" marker for intermission exiting
@@ -426,7 +434,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 			w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
 			x = ( SCREEN_WIDTH - w ) / 2;
 			y = 60;
-			CG_DrawMediumString( x, y, s, fade );
+			CG_DrawMediumString( x, y+5, s, fade );
 		}
 	} else {
 		x = ( SCREEN_WIDTH - 2 * MEDIUMCHAR_WIDTH ) / 2;
@@ -449,12 +457,12 @@ qboolean CG_DrawOldScoreboard( void ) {
 	color[1] = 0.5;
 	color[2] = 1.0;
 	color[3] = 0.5;
-	CG_DrawMediumStringColor( SB_SCORE_X - (SB_RATING_WIDTH / 2), y + 10, "Score", color );
-	CG_DrawMediumStringColor( SB_PING_X - (SB_RATING_WIDTH / 2), y + 10, "Ping", color );
-	CG_DrawMediumStringColor( SB_TIME_X - (SB_RATING_WIDTH / 2), y + 10, "Time", color );
-	CG_DrawMediumStringColor( SB_NAME_X - (SB_RATING_WIDTH / 2), y + 10, "Name", color );
-	CG_DrawMediumStringColor( SB_ACCURACY_X - (SB_RATING_WIDTH / 2), y + 10, "Acc", color );
-	CG_DrawMediumStringColor( SB_RATIO_X - (SB_RATING_WIDTH / 2), y + 10, "K/D", color );
+	CG_DrawSmallStringColor( SB_SCORE_X - (SB_RATING_WIDTH / 2), y + 15, "Score", color );
+	CG_DrawSmallStringColor( SB_PING_X - (SB_RATING_WIDTH / 2), y + 15, "Ping", color );
+	CG_DrawSmallStringColor( SB_TIME_X - (SB_RATING_WIDTH / 2), y + 15, "Time", color );
+	CG_DrawSmallStringColor( SB_NAME_X - (SB_RATING_WIDTH / 2), y + 15, "Name", color );
+	CG_DrawSmallStringColor( SB_ACCURACY_X - (SB_RATING_WIDTH / 2), y + 15, "Acc", color );
+	CG_DrawSmallStringColor( SB_RATIO_X - (SB_RATING_WIDTH / 2), y + 15, "K/D", color );
 
 	y = SB_TOP;
 
