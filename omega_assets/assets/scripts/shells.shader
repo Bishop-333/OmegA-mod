@@ -112,7 +112,7 @@ powerups/quadi
 
 powerups/quad
 {
-	deformVertexes wave 100 sin 0.5 0 0 0 
+	deformVertexes wave 100 sin 0.25 0 0 0 
 	{
 		map textures/oafx/quadshell.tga
 		blendfunc add
@@ -170,7 +170,7 @@ powerups/quadWeapong
 
 powerups/quadWeapon
 {
-	deformVertexes wave 100 sin 1 0 0 0 
+	deformVertexes wave 100 sin 0.75 0 0 0 
 	{
 		map textures/oafx/quadshell.tga
 		blendfunc add
@@ -181,11 +181,11 @@ powerups/quadWeapon
 
 powerups/battleSuit
 {
+	deformVertexes wave 100 sin 0.25 0 0 0 
 	{
 		map textures/oafx/suitshell
 		blendfunc add
-		rgbGen identity
-		tcmod turb 0 0.12 0 0.27
+		tcMod turb 0 0.12 0 0.27
 	}
 	{
 		map gfx/fx/spec/skin.tga
@@ -201,11 +201,11 @@ powerups/battleSuit
 
 powerups/battleWeapon
 {
+	deformVertexes wave 100 sin 0.75 0 0 0 
 	{
 		map textures/oafx/suitshell
 		blendfunc add
-		rgbGen identity
-		tcmod turb 0 0.12 0 0.27
+		tcMod turb 0 0.12 0 0.27
 	}
 	{
 		map gfx/fx/spec/skin.tga
