@@ -3288,7 +3288,9 @@ void CG_MissileHitPlayer( int weapon, vec3_t origin, vec3_t dir, int entityNum )
 		blood = CG_SmokePuff( origin, dir, 22, 1, 1, 1, 1.0f, 900, cg.time, 0, 0,  cgs.media.lbldShader1 );
 		// use the optimized local entity add
 		blood->leType = LE_SCALE_FADE;
-		CG_SpurtBlood( origin, dir, 1);
+		if (cg_leiEnhancement.integer) {
+			CG_SpurtBlood( origin, dir, 1);
+		}
 //		CG_SpurtBlood( origin, dir, 4);
 //		CG_SpurtBlood( origin, dir, -12);
 		}
