@@ -89,6 +89,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	centity_t	*cent;
 	clientInfo_t	*ci;
 	int iconx, headx;
+	int x;
 	float		frac;
 
 	if ( score->client < 0 || score->client >= cgs.maxclients ) {
@@ -150,14 +151,18 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		CG_DrawTinyString( 260, 92, "Teams are locked", 0.5 );
 	}
 
+	x = 5;
+
 	// draw the server name
 	info = CG_ConfigString( CS_SERVERINFO );
 	s = Info_ValueForKey( info, "sv_hostname" );
-	CG_DrawStringExt( 5, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH/1.33;
 
 	// draw the slashs
-	CG_DrawStringExt( -1 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
-	CG_DrawStringExt( 1 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+2, 470, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+4, 470, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw gametype
 	if ( cgs.gametype == GT_FFA ) {
@@ -187,15 +192,17 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	} else {
 		s = "";
 	}
-	CG_DrawStringExt( 8 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+12, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH/1.25;
 
 	// draw the slashs
-	CG_DrawStringExt( 43 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
-	CG_DrawStringExt( 45 + ( CG_DrawStrlen( s ) + 1 ) * ( TINYCHAR_WIDTH/1.25 ), 470, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+11, 470, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+13, 470, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw the map name
 	info = CG_ConfigString( CS_SERVERINFO );
-	CG_DrawStringExt( 7 + ( CG_DrawStrlen( Info_ValueForKey( info, "sv_hostname" ) ) + CG_DrawStrlen( s ) + 2 ) * ( TINYCHAR_WIDTH/1.25 ), 470, Info_ValueForKey( info, "mapname" ), color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+21, 470, Info_ValueForKey( info, "mapname" ), color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw omega logo
 	VectorClear( angles );
