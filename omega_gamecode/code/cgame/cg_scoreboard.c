@@ -194,15 +194,15 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 	CG_DrawStringExt( x+12, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH/1.25;
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH/1.33;
 
 	// draw the slashs
-	CG_DrawStringExt( x+11, 470, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
-	CG_DrawStringExt( x+13, 470, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+15, 470, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+17, 470, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw the map name
 	info = CG_ConfigString( CS_SERVERINFO );
-	CG_DrawStringExt( x+21, 470, Info_ValueForKey( info, "mapname" ), color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
+	CG_DrawStringExt( x+25, 470, Info_ValueForKey( info, "mapname" ), color, qfalse, qfalse, TINYCHAR_WIDTH/1.25, TINYCHAR_HEIGHT/1.25, 0 );
 
 	// draw omega logo
 	VectorClear( angles );
