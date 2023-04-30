@@ -27,3 +27,16 @@
 - small ui changes (map select and map loading levelshot)
 - `cg_brightPlayers` has now 2 types of skins which can be set with 1 or 2
 - new skull icons (displayed in frag messages)
+
+## 3.2.3
+- `cg_showSpecZoom`
+- display in the scoreboard when someone is dead or typing
+- `cg_shotgunSparks`
+- be able to choose if you want to play with only one weapon with `g_weaponArena` it's displayed when you want to create a server instead of `g_rockets`
+- new blood effect and fix `cg_leiEnhancement`
+- when `g_botchat` = 0, bots don't even stop to type an empty message
+- new numbers
+- Server name, map name, gametype and lockteam when teams are locked are displayed in the scoreboard
+- new shell shaders for quaddamage and battlesuit powerup (we can see the bright outline now)
+- be able to search servers by mod, no more "OmegA gametype"
+- add a Local+Internet filter for servers
