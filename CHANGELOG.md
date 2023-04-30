@@ -29,14 +29,14 @@
 - new skull icons (displayed in frag messages)
 
 ## 3.2.3
-- `cg_showSpecZoom`
+- show to spectators when the people they watch is zooming  with `cg_showSpecZoom`
 - display in the scoreboard when someone is dead or typing
-- `cg_shotgunSparks`
-- be able to choose if you want to play with only one weapon with `g_weaponArena` it's displayed when you want to create a server instead of `g_rockets`
+- small particle effect with the shotgun, disable with `cg_shotgunSparks`
+- be able to choose if you want to play with only one weapon with `g_weaponArena`, it's displayed when you want to create a server instead of `g_rockets`
 - new blood effect and fix `cg_leiEnhancement`
 - when `g_botchat` = 0, bots don't even stop to type an empty message
 - new numbers
 - Server name, map name, gametype and lockteam when teams are locked are displayed in the scoreboard
 - new shell shaders for quaddamage and battlesuit powerup (we can see the bright outline now)
-- be able to search servers by mod, no more "OmegA gametype"
+- be able to search servers by mod, no more OmegA in the gametype filter
 - add a Local+Internet filter for servers
