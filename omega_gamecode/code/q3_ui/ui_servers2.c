@@ -106,21 +106,13 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define GAMES_TEAMPLAY                  2
 #define GAMES_TOURNEY                   3
 #define GAMES_CTF			4
-#define GAMES_1FCTF                     5
-#define GAMES_OBELISK                   6
-#define GAMES_HARVESTER                 7
-#define GAMES_ELIMINATION		8
-#define GAMES_CTF_ELIMINATION		9
-#define GAMES_LMS			10
-#define GAMES_DOUBLE_D			11
-#define GAMES_DOM                       12
 
 #define MOD_ALL				0
 #define MOD_OMEGA			1
 #define MOD_N2F				2
-#define MOD_RATMOD			3
-#define MOD_AFTERSHOCK			4
-#define MOD_GENIUS			5
+#define MOD_FAILMOD			3
+#define MOD_RATMOD			4
+#define MOD_AFTERSHOCK			5
 #define MOD_DEFRAG			6
 
 
@@ -143,14 +135,6 @@ static const char *servertype_items[] = {
 	"Team Deathmatch",
 	"Tournament",
 	"Capture the Flag",
-        "One Flag Capture",
-        "Overload",
-        "Harvester",
-	"Elimination",
-	"CTF Elimination",
-	"Last Man Standing",
-	"Double Domination",
-        "Domination",
 	NULL
 };
 
@@ -158,9 +142,9 @@ static const char *servermod_items[] = {
 	"All",
 	"OmegA",
 	"n2f",
-	"Ratmod",
+        "FailMod",
+	"RatMod",
 	"AfterShock",
-        "Genius",
         "Defrag",
 	NULL
 };
@@ -701,54 +685,6 @@ static void ArenaServers_UpdateMenu( void ) {
 				continue;
 			}
 			break;
-
-                case GAMES_1FCTF:
-			if( servernodeptr->gametype != GT_1FCTF ) {
-				continue;
-			}
-			break;
-
-                case GAMES_OBELISK:
-			if( servernodeptr->gametype != GT_OBELISK ) {
-				continue;
-			}
-			break;
-
-                case GAMES_HARVESTER:
-			if( servernodeptr->gametype != GT_HARVESTER ) {
-				continue;
-			}
-			break;
-
-		case GAMES_ELIMINATION:
-			if( servernodeptr->gametype != GT_ELIMINATION ) {
-				continue;
-			}
-			break;
-		
-		case GAMES_CTF_ELIMINATION:
-			if( servernodeptr->gametype != GT_CTF_ELIMINATION ) {
-				continue;
-			}
-			break;
-
-		case GAMES_LMS:
-			if( servernodeptr->gametype != GT_LMS ) {
-				continue;
-			}
-			break;
-
-		case GAMES_DOUBLE_D:
-			if( servernodeptr->gametype != GT_DOUBLE_D ) {
-				continue;
-			}
-			break;
-
-                case GAMES_DOM:
-			if( servernodeptr->gametype != GT_DOMINATION ) {
-				continue;
-			}
-			break;
 		}
 
 		switch( g_mod ) {
@@ -767,6 +703,12 @@ static void ArenaServers_UpdateMenu( void ) {
 			}
 			break;
 
+                case MOD_FAILMOD:
+			if( strstr( servernodeptr->hostname, ":F" ) == 0 ) {
+				continue;
+			}
+			break;
+
                 case MOD_RATMOD:
 			if( strcmp( servernodeptr->gamename, "rat" ) != 0 ) {
 				continue;
@@ -775,12 +717,6 @@ static void ArenaServers_UpdateMenu( void ) {
 
                 case MOD_AFTERSHOCK:
 			if( strcmp( servernodeptr->gamename, "aftershock" ) != 0 ) {
-				continue;
-			}
-			break;
-
-                case MOD_GENIUS:
-			if( strcmp( servernodeptr->gamename, "CTF" ) != 0 ) {
 				continue;
 			}
 			break;
@@ -984,8 +920,8 @@ static void ArenaServers_Insert( char* adrstr, char* info, int pingtime )
 	if( i < 0 ) {
 		i = 0;
 	}
-	else if( i > 11 ) {
-		i = 12;
+	else if( i > 5 ) {
+		i = 6;
 	}
 	if( *s ) {
 		servernodeptr->gametype = i;//-1;
@@ -1362,26 +1298,6 @@ static void ArenaServers_StartRefreshNoClearList( void )
 		case GAMES_CTF:
 			strcpy( myargs, " ctf" );
 			break;
-
-		case GAMES_ELIMINATION:
-			strcpy( myargs, " elimination" );
-			break;
-
-		case GAMES_CTF_ELIMINATION:
-			strcpy( myargs, " ctfelimination" );
-			break;
-
-		case GAMES_LMS:
-			strcpy( myargs, " lms" );
-			break;
-		
-		case GAMES_DOUBLE_D:
-			strcpy( myargs, " dd" );
-			break;
-
-                case GAMES_DOM:
-                    strcpy( myargs, " dom" );
-                    break;
 		}
 
 		switch( g_arenaservers.mod.curvalue ) {
@@ -1404,10 +1320,6 @@ static void ArenaServers_StartRefreshNoClearList( void )
 
 		case MOD_AFTERSHOCK:
 			strcpy( myargs, " aftershock" );
-			break;
-
-		case MOD_GENIUS:
-			strcpy( myargs, " CTF" );
 			break;
 
 		case MOD_DEFRAG:
@@ -1938,10 +1850,10 @@ static void ArenaServers_MenuInit( void ) {
 	//	value--;
 	g_arenaservers.master.curvalue = g_servertype;
 
-	g_gametype = Com_Clamp( 0, 12, ui_browserGameType.integer );
+	g_gametype = Com_Clamp( 0, 4, ui_browserGameType.integer );
 	g_arenaservers.gametype.curvalue = g_gametype;
 
-	g_mod = Com_Clamp( 0, 12, ui_browserMod.integer );
+	g_mod = Com_Clamp( 0, 6, ui_browserMod.integer );
 	g_arenaservers.mod.curvalue = g_mod;
 
 	g_sortkey = Com_Clamp( 0, 5, ui_browserSortKey.integer );
