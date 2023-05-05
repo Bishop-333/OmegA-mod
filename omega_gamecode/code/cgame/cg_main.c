@@ -310,7 +310,6 @@ vmCvar_t        cg_wallhack;
 vmCvar_t        cg_zoomAnim;
 vmCvar_t        cg_zoomAnimSpeed;
 vmCvar_t        cg_zoomToggle;
-vmCvar_t        clipWalls;
 vmCvar_t        com_maxfps;
 
 typedef struct {
@@ -534,7 +533,6 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE },
 	{ &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE },
 	{ &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE },
-	{ &clipWalls, "clipWalls", "1", CVAR_SYSTEMINFO },
 	{ &com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE }
 };
 

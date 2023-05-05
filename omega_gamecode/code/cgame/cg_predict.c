@@ -629,9 +629,6 @@ void CG_PredictPlayerState( void ) {
 	if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
 		cg_pmove.tracemask &= ~CONTENTS_BODY;	// spectators can fly through bodies
 	}
-	if ( !clipWalls.integer ) {
-		cg_pmove.tracemask &= ~CONTENTS_PLAYERCLIP;
-	}
 	cg_pmove.noFootsteps = ( cgs.dmflags & DF_NO_FOOTSTEPS ) > 0;
 
 	// save the state before the pmove so we can detect transitions
@@ -678,8 +675,6 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_msec = pmove_msec.integer;
         cg_pmove.pmove_float = pmove_float.integer;
         cg_pmove.pmove_flags = cgs.dmflags;
-
-        cg_pmove.clipWalls = clipWalls.integer;
         
 
 //unlagged - optimized prediction

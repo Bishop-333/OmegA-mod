@@ -221,7 +221,6 @@ typedef struct {
 
 	//OmegA
 	int			airControl;
-	int			clipWalls;
         int                     autohop;
 	int			railgunSpeed;
 	int			slickGround;

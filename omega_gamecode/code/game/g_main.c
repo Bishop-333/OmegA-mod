@@ -230,7 +230,6 @@ vmCvar_t        g_teleportMissiles; //from ratmod
 vmCvar_t        g_vulnerableRockets;
 vmCvar_t        g_waterDamage;
 vmCvar_t        g_weaponArena;
-vmCvar_t        clipWalls;
 
 // bk001129 - made static to avoid aliasing
 static cvarTable_t		gameCvarTable[] = {
@@ -464,8 +463,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
-	{ &clipWalls, "clipWalls", "1", CVAR_ARCHIVE, 0, qtrue }
+	{ &g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse }
 };
 
 // bk001129 - made static to avoid aliasing

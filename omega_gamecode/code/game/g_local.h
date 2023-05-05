@@ -1197,7 +1197,6 @@ extern vmCvar_t g_teleportMissiles; //from ratmod
 extern vmCvar_t g_vulnerableRockets;
 extern vmCvar_t g_waterDamage;
 extern vmCvar_t g_weaponArena;
-extern vmCvar_t clipWalls;
 
 void	trap_Printf( const char *fmt );
 void	trap_Error( const char *fmt ) __attribute__((noreturn));
