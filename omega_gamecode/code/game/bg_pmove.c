@@ -1749,13 +1749,13 @@ static void PM_Weapon( void ) {
 		addTime = 800;
 		break;
 	case WP_ROCKET_LAUNCHER:
-		addTime = 800;
+		addTime = 1600 - pm->rocketFireRate;
 		break;
 	case WP_PLASMAGUN:
 		addTime = 100;
 		break;
 	case WP_RAILGUN:
-		addTime = 3000 - pm->railgunSpeed;
+		addTime = 3000 - pm->railgunFireRate;
 		break;
 	case WP_BFG:
 		addTime = 200;

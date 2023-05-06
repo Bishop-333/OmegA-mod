@@ -219,8 +219,9 @@ vmCvar_t        g_machinegunTeamDamage;
 vmCvar_t        g_muteSpectators;
 vmCvar_t        g_plasmaBounce;
 vmCvar_t        g_railgunDamage;
-vmCvar_t        g_railgunSpeed;
+vmCvar_t        g_railgunFireRate;
 vmCvar_t        g_railJump;
+vmCvar_t        g_rocketFireRate;
 vmCvar_t        g_rocketSpeed;
 vmCvar_t        g_selfDamage;
 vmCvar_t        g_slickGround;
@@ -453,8 +454,9 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
-	{ &g_railgunSpeed, "g_railgunSpeed", "1500", 0, 0, qtrue },
+	{ &g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue },
 	{ &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_rocketFireRate, "g_rocketFireRate", "800", 0, 0, qtrue },
 	{ &g_rocketSpeed, "g_rocketSpeed", "900", 0, 0, qtrue },
 	{ &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_slickGround, "g_slickGround", "0", CVAR_ARCHIVE, 0, qtrue },

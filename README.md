@@ -58,7 +58,9 @@ List of the cvars/additions :
 - g_muteSpectators
 - g_plasmaBounce
 - g_railgunDamage
+- g_railgunFireRate
 - g_railJump
+- g_rocketFireRate
 - g_rocketSpeed
 - g_selfDamage
 - g_slikGround
@@ -67,8 +69,6 @@ List of the cvars/additions :
 - g_teleportMissiles //from ratmod
 - g_waterDamage
 - g_weaponArena
-#
-- clipWalls
 #
 - new flags models
 - new font
