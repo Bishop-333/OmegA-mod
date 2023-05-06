@@ -40,3 +40,10 @@
 - new shell shaders for quaddamage and battlesuit powerup (we can see the bright outline now)
 - be able to search servers by mod, no more OmegA in the gametype filter
 - add a Local+Internet filter for servers
+
+## 3.2.4
+- remove `clipWalls` as it have bugs
+- `g_railgunSpeed` -> `g_railgunFireRate`
+- add `rocketFireRate`
+- `g_airControl` does the CPM air control instead of just control the movement in air
+- some textures alpha channels fix (like some OmegA logos who have the OpenArena logo hidden in the alpha channel)
