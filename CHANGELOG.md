@@ -47,3 +47,4 @@
 - add `rocketFireRate`
 - `g_airControl` does the CPM air control instead of just control the movement in air
 - some textures alpha channels fix (like some OmegA logos who have the OpenArena logo hidden in the alpha channel)
+- add credits.txt
