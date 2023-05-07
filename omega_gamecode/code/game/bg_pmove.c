@@ -47,7 +47,6 @@ float	pm_flightfriction = 3.0f;
 float	pm_spectatorfriction = 5.0f;
 
 // CPM Air Control
-float	pm_cpm_airstopaccelerate = 2.5f;
 float	pm_cpm_aircontrol = 150.0f;
 float	pm_cpm_strafeaccelerate = 70.0f;
 float	pm_cpm_wishspeed = 30.0f;
@@ -691,14 +690,9 @@ static void PM_AirMove( void ) {
 	// not on ground, so little effect on velocity
 	PM_Accelerate (wishdir, wishspeed, pm_airaccelerate);
 
-	if ( pm->airControl ) {
+	if ( pm->airControl && !fmove ) {
 		wishspeed2 = wishspeed;
-
-		if ( DotProduct(pm->ps->velocity, wishdir) < 0 ) {
-			accel = pm_cpm_airstopaccelerate;
-		} else {
-			accel = pm_airaccelerate;
-		}
+		accel = pm_airaccelerate;
 
 		if( ( pm->ps->movementDir == 2 || pm->ps->movementDir == -2 || pm->ps->movementDir == 10 ) || ( pm->ps->movementDir == 6 || pm->ps->movementDir == -6 || pm->ps->movementDir == 14 ) ) {
 			if( wishspeed > pm_cpm_wishspeed ) {
