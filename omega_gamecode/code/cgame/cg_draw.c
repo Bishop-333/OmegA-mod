@@ -2942,7 +2942,7 @@ static void CG_DrawSpectator(void) {
 	if ( cgs.gametype == GT_TOURNAMENT ) {
 		CG_DrawMediumString(320 - 15 * 6, 460, "waiting to play", 1.0F);
 	}
-	else if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
+	else if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 && !cg.scoreBoardShowing ) {
 		CG_DrawStringExt(320 - 39 * 4, 460, "press ESC and use the JOIN menu to play", colorWhite, qfalse, qtrue, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
 	}
 }
