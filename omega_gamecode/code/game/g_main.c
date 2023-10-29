@@ -211,6 +211,7 @@ vmCvar_t        g_easierPickup;
 vmCvar_t        g_gauntletDamage;
 vmCvar_t        g_grenadeSpeed;
 vmCvar_t        g_guidedRockets;
+vmCvar_t        g_headDamageMultiplicator;
 vmCvar_t        g_headShotOnly;
 vmCvar_t        g_jumppadGrenades; //from ratmod
 vmCvar_t        g_lightningDamage;
@@ -446,6 +447,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
 	{ &g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue },
 	{ &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue },
 	{ &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue },

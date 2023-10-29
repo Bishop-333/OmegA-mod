@@ -48,3 +48,8 @@
 - `g_airControl` does the CPM air control instead of just control the movement in air
 - some textures alpha channels fix (like some OmegA logos who have the OpenArena logo hidden in the alpha channel)
 - add credits.txt
+
+## 3.2.5
+- higher quality menu buttons
+- `g_headDamageMultiplicator` if you shoot in the head, damage will be multiplicated by the value you've set
+- `cg_killSound` you can now disable the high pitch hitsound when you frag someone

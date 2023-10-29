@@ -1384,8 +1384,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 			if ( g_headShotOnly.integer ) {
 				take *= 0;
 			}
-		} else if ( g_beheading.integer && inflictor->s.weapon == WP_RAILGUN ) {
-			mod = MOD_HEADSHOT;
+		} else {
+			if ( g_beheading.integer && inflictor->s.weapon == WP_RAILGUN ) {
+				mod = MOD_HEADSHOT;
+			}
+			damage *= g_headDamageMultiplicator.integer;
+			take *= g_headDamageMultiplicator.integer;
 		}
 	}
 

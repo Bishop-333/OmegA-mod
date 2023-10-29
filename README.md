@@ -51,6 +51,7 @@ List of the cvars/additions :
 - g_gauntletDamage
 - g_grenadeSpeed
 - g_guidedRockets
+- g_headDamageMultiplicator
 - g_headShotOnly
 - g_jumppadGrenades //from ratmod
 - g_lightningDamage
