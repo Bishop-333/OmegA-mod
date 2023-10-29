@@ -35,6 +35,7 @@ global pain sound events for all clients.
 ===============
 */
 void P_DamageFeedback( gentity_t *player ) {
+	pmove_t	pm;
 	gclient_t	*client;
 	float	count;
 	vec3_t	angles;
@@ -42,6 +43,14 @@ void P_DamageFeedback( gentity_t *player ) {
 	client = player->client;
 	if ( client->ps.pm_type == PM_DEAD ) {
 		return;
+	}
+
+	if ( level.time < client->respawnTime + g_spawnprotect.integer && client->spawnprotected ) {
+		client->ps.powerups[PW_BATTLESUIT] = -1;
+		pm.overbounce = 0;
+	} else {
+		client->ps.powerups[PW_BATTLESUIT] = 0;
+		pm.overbounce = 1;
 	}
 
 	// total points of damage shot at the player this frame
