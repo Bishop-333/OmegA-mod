@@ -17,6 +17,7 @@ List of the cvars/additions :
 - cg_enemyColor //need cg_brightPlayers to be enabled
 - cg_enemyModel
 - cg_enemySounds
+- cg_killSound
 - cg_omegaFlags
 - cg_omegaInitialized
 - cg_screenshake

@@ -1471,6 +1471,7 @@ extern vmCvar_t	cg_drawTeamBackground;
 extern vmCvar_t cg_enemyColor;
 extern vmCvar_t cg_enemyModel;
 extern vmCvar_t cg_enemySounds;
+extern vmCvar_t cg_killSound;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t	cg_screenshake;
 extern vmCvar_t cg_selfSounds;
