@@ -45,7 +45,7 @@ void P_DamageFeedback( gentity_t *player ) {
 		return;
 	}
 
-	if ( level.time < client->respawnTime + g_spawnprotect.integer && client->spawnprotected ) {
+	if ( level.time < client->respawnTime + g_spawnprotect.integer * 1000 && client->spawnprotected ) {
 		client->ps.powerups[PW_BATTLESUIT] = -1;
 		pm.overbounce = 0;
 	} else {

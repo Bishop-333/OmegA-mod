@@ -1270,7 +1270,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker,
 		}
 
                 if(targ->client && targ->client->spawnprotected) {
-                   if(level.time>targ->client->respawnTime+g_spawnprotect.integer)
+                   if(level.time>targ->client->respawnTime+g_spawnprotect.integer*1000)
                        targ->client->spawnprotected = qfalse;
                    else
                        if( (mod > MOD_UNKNOWN && mod < MOD_WATER) || mod == MOD_TELEFRAG || mod>MOD_TRIGGER_HURT)
