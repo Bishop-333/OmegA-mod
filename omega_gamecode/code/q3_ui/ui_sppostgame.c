@@ -553,7 +553,6 @@ void UI_SPPostgameMenu_f( void ) {
 	awardValues[AWARD_GAUNTLET] = atoi( UI_Argv( 6 ) );
 	awardValues[AWARD_FRAGS] = atoi( UI_Argv( 7 ) );
 	awardValues[AWARD_PERFECT] = atoi( UI_Argv( 8 ) );
-	awardValues[AWARD_HEADSHOT] = atoi( UI_Argv( 9 ) );
 
 	postgameMenuInfo.numAwards = 0;
 
@@ -582,13 +581,6 @@ void UI_SPPostgameMenu_f( void ) {
 		UI_LogAwardData( AWARD_GAUNTLET, awardValues[AWARD_GAUNTLET] );
 		postgameMenuInfo.awardsEarned[postgameMenuInfo.numAwards] = AWARD_GAUNTLET;
 		postgameMenuInfo.awardsLevels[postgameMenuInfo.numAwards] = awardValues[AWARD_GAUNTLET];
-		postgameMenuInfo.numAwards++;
-	}
-
-	if( awardValues[AWARD_HEADSHOT] ) {
-		UI_LogAwardData( AWARD_HEADSHOT, awardValues[AWARD_HEADSHOT] );
-		postgameMenuInfo.awardsEarned[postgameMenuInfo.numAwards] = AWARD_HEADSHOT;
-		postgameMenuInfo.awardsLevels[postgameMenuInfo.numAwards] = awardValues[AWARD_HEADSHOT];
 		postgameMenuInfo.numAwards++;
 	}
 

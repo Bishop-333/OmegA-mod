@@ -314,15 +314,13 @@ static void UI_Challenges_Init( void ) {
                 challenges.entry[3].string          = "Capture";
                 challenges.entry[4].string          = "Assist";
                 challenges.entry[5].string          = "Defend";
-                challenges.entry[6].string          = "Headshot";
-                challenges.numberOfEntries = 7;
+                challenges.numberOfEntries = 6;
                 challenges.entryInt[0]              = getChallenge(WEAPON_GAUNTLET_KILLS);
                 challenges.entryInt[1]              = getChallenge(AWARD_IMPRESSIVE);
                 challenges.entryInt[2]              = getChallenge(AWARD_EXCELLENT);
                 challenges.entryInt[3]              = getChallenge(AWARD_CAPTURE);
                 challenges.entryInt[4]              = getChallenge(AWARD_ASSIST);
                 challenges.entryInt[5]              = getChallenge(AWARD_DEFENCE);
-                challenges.entryInt[6]              = getChallenge(AWARD_HEADSHOT);
                 challenges.awards.generic.flags     = QMF_RIGHT_JUSTIFY|QMF_INACTIVE;
                 break;
             case 4:
