@@ -288,7 +288,11 @@ static void CG_Obituary( entityState_t *ent ) {
 			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
 		} 
 #else
-		CG_CenterPrint( s, SCREEN_HEIGHT * 0.30, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
+		if ( mod == MOD_HEADSHOT && cgs.gametype < GT_TEAM ) {
+			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30 + 10, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
+		} else {
+			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
+		}
 #endif
 
 		// print the text message as well
