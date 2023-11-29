@@ -2137,7 +2137,7 @@ static void CG_DrawReward( void ) {
 
 	trap_R_SetColor( color );
 
-	y = 66;
+	y = 56;
 	x = 320 - ICON_SIZE/2;
 	CG_DrawPic( x, y, ICON_SIZE-4, ICON_SIZE-4, cg.rewardShader[0] );
 	Com_sprintf(buf, sizeof(buf), "%d", cg.rewardCount[0]);
