@@ -2354,7 +2354,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		else {*/
 			trap_R_AddRefEntityToScene( ent );
 		//}
-		if (!isMissile && !(state->eFlags & EF_DEAD)  ) {
+		if (!isMissile && !(state->eFlags & EF_DEAD) && cg_brightPlayers.integer  ) {
 			if ( enemy ) {
 				if ( cg_wallhack.integer ) {
 					ent->customShader = cgs.media.wallhackEnemy;
