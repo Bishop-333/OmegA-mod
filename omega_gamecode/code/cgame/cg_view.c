@@ -694,10 +694,15 @@ static int CG_CalcViewValues( void ) {
 	VectorCopy( ps->origin, cg.refdef.vieworg );
 	VectorCopy( ps->viewangles, cg.refdefViewAngles );
 
-	if (cg_cameraOrbit.integer) {
+	if ( cg_cameraOrbit.integer || trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) {
 		if (cg.time > cg.nextOrbitTime) {
-			cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
-			cg_thirdPersonAngle.value += cg_cameraOrbit.value;
+			if ( cg_cameraOrbit.integer ) {
+				cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
+				cg_thirdPersonAngle.value += cg_cameraOrbit.value;
+			} else {
+				cg.nextOrbitTime = cg.time;
+				cg_thirdPersonAngle.value += 0.1;
+			}
 		}
 	}
 	// add error decay
@@ -944,7 +949,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 	CG_PredictPlayerState();
 
 	// decide on third person view
-	cg.renderingThirdPerson = cg_thirdPerson.integer || (cg.snap->ps.stats[STAT_HEALTH] <= 0);
+	cg.renderingThirdPerson = cg_thirdPerson.integer || (cg.snap->ps.stats[STAT_HEALTH] <= 0) || trap_Key_GetCatcher() & KEYCATCH_CONSOLE;
 
 	CG_SpecZooming();
 
