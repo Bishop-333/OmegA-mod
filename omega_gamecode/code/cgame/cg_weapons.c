@@ -3284,7 +3284,7 @@ void CG_MissileHitPlayer( int weapon, vec3_t origin, vec3_t dir, int entityNum )
 // LEILEI ENHANCEMENT
 	localEntity_t	*blood;
 
-	if ( cg_leiEnhancement.integer ) {
+	if ( cg_leiEnhancement.integer || cg_blood.integer == 2 ) {
 		blood = CG_SmokePuff( origin, dir, 22, 1, 1, 1, 1.0f, 900, cg.time, 0, 0,  cgs.media.lbldShader1 );
 		// use the optimized local entity add
 		blood->leType = LE_SCALE_FADE;
@@ -3750,7 +3750,7 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 	// impact splash and mark
 	if ( flesh ) {
 // LEILEI ENHANCEMENT
-	if ( cg_leiEnhancement.integer || cg_blood.integer == 1 ) {
+	if ( cg_leiEnhancement.integer || cg_blood.integer == 2 ) {
 
 		
 						// Blood Hack
@@ -3769,7 +3769,9 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 		// use the optimized local entity add
 		blood->leType = LE_SCALE_FADE;
 //		CG_SpurtBlood( end, kapow, 2);
-		CG_SpurtBlood( end, kapew, 1);
+		if (cg_leiEnhancement.integer) {
+			CG_SpurtBlood( end, kapew, 1);
+		}
 		//CG_Particle_Bleed(cgs.media.lbldShader1,kapew,'0 0 0', 0, 100);
 //		CG_Particle_Bleed(cgs.media.lbldShader1,kapew,kapow, 0, 100);
 //		CG_Particle_BloodCloud(self,end,'0 0 0');

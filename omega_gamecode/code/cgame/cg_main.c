@@ -503,7 +503,7 @@ static cvarTable_t cvarTable[] = { // bk001129
         {&cg_teamChatBeep, "cg_teamChatBeep", "1", CVAR_ARCHIVE },
 
 	//OmegA
-	{ &cg_bobgun, "cg_bobgun", "0", CVAR_ARCHIVE },
+	{ &cg_bobgun, "cg_bobgun", "1", CVAR_ARCHIVE },
 	{ &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE },
 	{ &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
 	{ &cg_drawEnemyThroughWalls, "cg_enemyThroughWalls", "0", CVAR_ARCHIVE | CVAR_CHEAT },

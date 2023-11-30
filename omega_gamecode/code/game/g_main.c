@@ -296,7 +296,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_debugAlloc, "g_debugAlloc", "0", 0, 0, qfalse },
 	{ &g_motd, "g_motd", "", 0, 0, qfalse },
         { &g_motdfile, "g_motdfile", "motd.cfg", 0, 0, qfalse },
-	{ &g_blood, "com_blood", "1", 0, 0, qfalse },
+	{ &g_blood, "com_blood", "2", 0, 0, qfalse },
 
 	{ &g_podiumDist, "g_podiumDist", "80", 0, 0, qfalse },
 	{ &g_podiumDrop, "g_podiumDrop", "70", 0, 0, qfalse },
