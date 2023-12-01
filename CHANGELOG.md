@@ -53,3 +53,11 @@
 - higher quality menu buttons
 - `g_headDamageMultiplicator` if you shoot in the head, damage will be multiplicated by the value you've set
 - `cg_killSound` you can now disable the high pitch hitsound when you frag someone
+
+## 3.2.6
+- new blood effects (screen blood and hit blood)
+- `cg_bobgun` activated by default
+- fix "Headshot!" message position
+- fix SinglePlayer stuck at tutorial
+- when you're spawnprotected, you have a battlesuit shell
+- `cg_brightPlayers` now deactivable
