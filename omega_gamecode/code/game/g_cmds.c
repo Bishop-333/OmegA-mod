@@ -331,7 +331,7 @@ void AttackingTeamMessage( gentity_t *ent ) {
  
  */
 
-void ObeliskHealthMessage() {
+void ObeliskHealthMessage( void ) {
     if(level.MustSendObeliskHealth) {
         trap_SendServerCommand( -1, va("oh %i %i",level.healthRedObelisk,level.healthBlueObelisk) );
         level.MustSendObeliskHealth = qfalse;
@@ -1242,7 +1242,7 @@ sends the readymask to the player with clientnum, if clientnum = -1 its send to 
 void SendReadyMask( int clientnum ) {
 	char		entry[16];
 	int			i;
-	int			ready, notReady, playerCount;
+	int			ready  __attribute__ ((unused)), notReady  __attribute__ ((unused)), playerCount  __attribute__ ((unused));
 	int			readyMask;
 	gclient_t	*cl;
 
@@ -1508,7 +1508,7 @@ static void G_VoiceTo( gentity_t *ent, gentity_t *other, int mode, const char *i
 		return;
 	}
 	// no chatting to players in tournements
-	if ( (g_gametype.integer == GT_TOURNAMENT )) {
+	if ( g_gametype.integer == GT_TOURNAMENT ) {
 		return;
 	}
 

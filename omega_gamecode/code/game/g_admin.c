@@ -972,7 +972,7 @@ qboolean G_admin_cmd_check( gentity_t *ent, qboolean say )
   return qfalse;
 }
 
-void G_admin_namelog_cleanup( )
+void G_admin_namelog_cleanup( void )
 {
   int i;
 
@@ -1032,7 +1032,7 @@ void G_admin_namelog_update( gclient_t *client, qboolean disconnect )
     return;
   }
   namelog = BG_Alloc( sizeof( g_admin_namelog_t ) );
-  memset( namelog, 0, sizeof( namelog ) );
+  memset( namelog, 0, sizeof( *namelog ) );
   for( j = 0; j < MAX_ADMIN_NAMELOG_NAMES; j++ )
     namelog->name[ j ][ 0 ] = '\0';
   Q_strncpyz( namelog->ip, client->pers.ip, sizeof( namelog->ip ) );
@@ -3445,7 +3445,7 @@ void G_admin_print( gentity_t *ent, char *m )
   }
 }
 
-void G_admin_buffer_begin()
+void G_admin_buffer_begin( void )
 {
   g_bfb[ 0 ] = '\0';
 }
@@ -3467,7 +3467,7 @@ void G_admin_buffer_print( gentity_t *ent, char *m )
 }
 
 
-void G_admin_cleanup()
+void G_admin_cleanup( void )
 {
   int i = 0;
 
