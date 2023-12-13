@@ -694,7 +694,7 @@ static int CG_CalcViewValues( void ) {
 	VectorCopy( ps->origin, cg.refdef.vieworg );
 	VectorCopy( ps->viewangles, cg.refdefViewAngles );
 
-	if ( cg_cameraOrbit.integer || trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) {
+	if ( cg_cameraOrbit.integer || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) ) {
 		if (cg.time > cg.nextOrbitTime) {
 			if ( cg_cameraOrbit.integer ) {
 				cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
