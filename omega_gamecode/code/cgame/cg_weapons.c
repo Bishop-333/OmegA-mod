@@ -1177,7 +1177,7 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 //unlagged - attack prediction #1
 	// if the entity is us, unlagged is on server-side, and we've got it on for the lightning gun
 	if ( (cent->currentState.number == cg.predictedPlayerState.clientNum) && cgs.delagHitscan &&
-			( cg_delag.integer & 1 || cg_delag.integer & 8 ) ) {
+			( cg_delag.integer & 8 ) ) {
 		// always shoot straight forward from our current position
 		AngleVectors( cg.predictedPlayerState.viewangles, forward, NULL, NULL );
 		VectorCopy( cg.predictedPlayerState.origin, muzzlePoint );

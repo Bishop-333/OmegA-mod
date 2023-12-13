@@ -458,7 +458,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 //	{ &cg_latentCmds, "cg_latentCmds", "0", CVAR_USERINFO | CVAR_CHEAT },
 //	{ &cg_plOut, "cg_plOut", "0", CVAR_USERINFO | CVAR_CHEAT },
 //unlagged - client options
-	{ &cg_trueLightning, "cg_trueLightning", "1.0", CVAR_ARCHIVE},
+	{ &cg_trueLightning, "cg_trueLightning", "0.9", CVAR_ARCHIVE},
         { &cg_music, "cg_music", "", CVAR_ARCHIVE},
 //	{ &cg_pmove_fixed, "cg_pmove_fixed", "0", CVAR_USERINFO | CVAR_ARCHIVE }
 
@@ -525,7 +525,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE },
 	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE },
 	{ &cg_teamSounds, "cg_teamSounds", "", CVAR_ARCHIVE },
-	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "1", CVAR_ARCHIVE | CVAR_LATCH },
+	{ &cg_thinLightningBolt, "cg_thinLightningBolt", "0", CVAR_ARCHIVE | CVAR_LATCH },
 	{ &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE },
 	{ &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE },
 	{ &cg_timerX, "cg_timerX", "318", CVAR_ARCHIVE },
