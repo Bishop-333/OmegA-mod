@@ -61,3 +61,8 @@
 - fix SinglePlayer stuck at tutorial
 - when you're spawnprotected, you have a battlesuit shell
 - `cg_brightPlayers` now deactivable
+
+## 3.2.7
+- no more orbital view when spectating just thirdperson
+- clean a lot of warnings (during compiling)
+- `cg_trueLightning` enabled by default
