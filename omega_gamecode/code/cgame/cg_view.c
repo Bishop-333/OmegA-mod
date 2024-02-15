@@ -694,15 +694,15 @@ static int CG_CalcViewValues( void ) {
 	VectorCopy( ps->origin, cg.refdef.vieworg );
 	VectorCopy( ps->viewangles, cg.refdefViewAngles );
 
-	if ( cg_cameraOrbit.integer || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) ) {
-		if (cg.time > cg.nextOrbitTime) {
-			if ( cg_cameraOrbit.integer ) {
-				cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
-				cg_thirdPersonAngle.value += cg_cameraOrbit.value;
-			} else {
-				cg.nextOrbitTime = cg.time;
-				cg_thirdPersonAngle.value += 0.1;
-			}
+	if ( cg.time > cg.nextOrbitTime && !cg_thirdPersonAngle.integer ) {
+		if ( cg_cameraOrbit.integer ) {
+			cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
+			cg_thirdPersonAngle.value += cg_cameraOrbit.value;			
+		} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
+			cg.nextOrbitTime = cg.time;
+			cg_thirdPersonAngle.value += 0.1;
+		} else {
+			cg_thirdPersonAngle.value = 0;
 		}
 	}
 	// add error decay
