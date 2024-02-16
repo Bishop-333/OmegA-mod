@@ -2122,7 +2122,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
-	if ( ( ( team == TEAM_FREE ) || ( ( team == TEAM_RED ) && ( myteam == TEAM_BLUE ) ) ) || ( ( team == TEAM_BLUE ) && ( myteam == TEAM_RED ) ) ) {
+	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE ) && ( myteam == TEAM_RED ) ) {
 		enemy = 1;
 	} else {
 		enemy = 0;
@@ -2330,7 +2330,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
-	if ( ( ( team == TEAM_FREE ) || ( ( team == TEAM_RED ) && ( myteam == TEAM_BLUE ) ) ) || ( ( team == TEAM_BLUE ) && ( myteam == TEAM_RED ) ) ) {
+	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE && myteam == TEAM_RED ) ) {
 		enemy = 1;
 	} else {
 		enemy = 0;
@@ -2353,15 +2353,18 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		else {*/
 			trap_R_AddRefEntityToScene( ent );
 		//}
-		if (!isMissile && !(state->eFlags & EF_DEAD) && cg_brightPlayers.integer  ) {
+		if (!isMissile && !(state->eFlags & EF_DEAD) ) {
+			if ( cg_wallhack.integer && team != TEAM_FREE ) {
+				ent->customShader = cgs.media.brightPlayers2;
+				ent->renderfx = RF_DEPTHHACK;
+			} else if ( cg_wallhack.integer ) {
+				ent->customShader = cgs.media.wallhackShader;
+			} else if ( cg_brightPlayers.integer == 2 ) {
+				ent->customShader = cgs.media.brightPlayers2;
+			} else if ( cg_brightPlayers.integer ) {
+				ent->customShader = cgs.media.brightPlayers;
+			}
 			if ( enemy ) {
-				if ( cg_wallhack.integer ) {
-					ent->customShader = cgs.media.wallhackEnemy;
-				} else if ( cg_brightPlayers.integer == 2 ) {
-					ent->customShader = cgs.media.brightPlayers2;
-				} else {
-					ent->customShader = cgs.media.brightPlayers;
-				}
 				if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
 					ent->shaderRGBA[0] = 255;
 					ent->shaderRGBA[1] = 0;
@@ -2404,13 +2407,6 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 					ent->shaderRGBA[2] = 0;
 				}
 			} else if ( !enemy ) {
-				if ( cg_wallhack.integer ) {
-					ent->customShader = cgs.media.wallhackFriend;
-				} else if ( cg_brightPlayers.integer == 2 ) {
-					ent->customShader = cgs.media.brightPlayers2;
-				} else {
-					ent->customShader = cgs.media.brightPlayers;
-				}
 				if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
 					ent->shaderRGBA[0] = 255;
 					ent->shaderRGBA[1] = 0;

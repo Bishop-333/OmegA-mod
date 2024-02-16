@@ -1223,8 +1223,7 @@ static void CG_RegisterGraphics( void ) {
 	// bright players shader
 	cgs.media.brightPlayers = trap_R_RegisterShader( "brightPlayers");
 	cgs.media.brightPlayers2 = trap_R_RegisterShader( "brightPlayers2");
-	cgs.media.wallhackEnemy = trap_R_RegisterShader( "textures/suction/solid_red.tga");
-	cgs.media.wallhackFriend = trap_R_RegisterShader( "textures/suction/solid_blue.tga");
+	cgs.media.wallhackShader = trap_R_RegisterShader( "textures/suction/neon_green.tga");
 
 //For Double Domination:
 	if ( cgs.gametype == GT_DOUBLE_D ) {

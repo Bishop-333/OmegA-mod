@@ -270,7 +270,7 @@ static void CG_OffsetThirdPersonView( void ) {
 			VectorCopy( trace.endpos, view );
 			view[2] += (1.0 - trace.fraction) * 32;
 			// try another trace to this position, because a tunnel may have the ceiling
-			// close enogh that this is poking out
+			// close enough that this is poking out
 
 			CG_Trace( &trace, cg.refdef.vieworg, mins, maxs, view, cg.predictedPlayerState.clientNum, MASK_SOLID );
 			VectorCopy( trace.endpos, view );
@@ -698,7 +698,7 @@ static int CG_CalcViewValues( void ) {
 		if ( cg_cameraOrbit.integer ) {
 			cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
 			cg_thirdPersonAngle.value += cg_cameraOrbit.value;			
-		} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
+		} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
 			cg.nextOrbitTime = cg.time;
 			cg_thirdPersonAngle.value += 0.1;
 		} else {

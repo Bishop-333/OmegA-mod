@@ -878,8 +878,7 @@ typedef struct {
         // bright players
 	qhandle_t       brightPlayers;
 	qhandle_t       brightPlayers2;
-	qhandle_t       wallhackEnemy;
-	qhandle_t       wallhackFriend;
+	qhandle_t       wallhackShader;
 
 	// weapon effect models
 	qhandle_t	bulletFlashModel;
