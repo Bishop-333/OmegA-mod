@@ -2324,11 +2324,19 @@ Adds a piece with modifications or duplications for powerups
 Also called by CG_Missile for quad rockets, but nobody can tell...
 ===============
 */
-void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int team, qboolean isMissile ) {
+void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int team, qboolean isMissile, int clientNum ) {
+	clientInfo_t *ci;
+	clientInfo_t *self;
 	int	enemy;
 	int	myteam;
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
+	self = &cgs.clientinfo[cg.clientNum];
+
+	if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
+		clientNum = 0;
+	}
+	ci = &cgs.clientinfo[ clientNum ];
 
 	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE && myteam == TEAM_RED ) ) {
 		enemy = 1;
@@ -2354,11 +2362,9 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 			trap_R_AddRefEntityToScene( ent );
 		//}
 		if (!isMissile && !(state->eFlags & EF_DEAD) ) {
-			if ( cg_wallhack.integer && team != TEAM_FREE ) {
+			if ( cg_wallhack.integer && ci != self ) {
 				ent->customShader = cgs.media.brightPlayers2;
 				ent->renderfx = RF_DEPTHHACK;
-			} else if ( cg_wallhack.integer ) {
-				ent->customShader = cgs.media.wallhackShader;
 			} else if ( cg_brightPlayers.integer == 2 ) {
 				ent->customShader = cgs.media.brightPlayers2;
 			} else if ( cg_brightPlayers.integer ) {
@@ -2627,7 +2633,7 @@ void CG_Player( centity_t *cent ) {
 	legs.renderfx = renderfx;
 	VectorCopy (legs.origin, legs.oldorigin);	// don't positionally lerp at all
 
-	CG_AddRefEntityWithPowerups( &legs, &cent->currentState, ci->team, qfalse );
+	CG_AddRefEntityWithPowerups( &legs, &cent->currentState, ci->team, qfalse, cent->currentState.number );
 
 	// if the model failed, allow the default nullmodel to be displayed
 	if (!legs.hModel) {
@@ -2651,7 +2657,7 @@ void CG_Player( centity_t *cent ) {
 	torso.shadowPlane = shadowPlane;
 	torso.renderfx = renderfx;
 
-	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse );
+	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse, cent->currentState.number );
 
 	if ( cent->currentState.eFlags & EF_KAMIKAZE ) {
 
@@ -2874,7 +2880,7 @@ void CG_Player( centity_t *cent ) {
 	head.shadowPlane = shadowPlane;
 	head.renderfx = renderfx;
 
-	CG_AddRefEntityWithPowerups( &head, &cent->currentState, ci->team, qfalse );
+	CG_AddRefEntityWithPowerups( &head, &cent->currentState, ci->team, qfalse, cent->currentState.number );
 
 	CG_BreathPuffs(cent, &head);
 
