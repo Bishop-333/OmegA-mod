@@ -276,6 +276,7 @@ typedef struct {
 	menulist_s  	filter;
         menulist_s  	aniso;
         menulist_s  	anti;
+        menulist_s  	supersample;
 	menulist_s	drawfps;
 	menutext_s		driverinfo;
 
@@ -297,6 +298,7 @@ typedef struct
 	int filter;
         int aniso;
         int anti;
+        int supersample;
 	int driver;
 	qboolean extensions;
 } InitialVideoOptions_s;
@@ -503,6 +505,7 @@ static void GraphicsOptions_GetInitialVideo( void )
 	s_ivo.filter      = s_graphicsoptions.filter.curvalue;
         s_ivo.aniso      = s_graphicsoptions.aniso.curvalue;
 	s_ivo.anti	= s_graphicsoptions.anti.curvalue;
+	s_ivo.supersample	= s_graphicsoptions.supersample.curvalue;
 	s_ivo.texturebits = s_graphicsoptions.texturebits.curvalue;
 }
 
@@ -569,6 +572,8 @@ static void GraphicsOptions_CheckConfig( void )
                 if ( s_ivo_templates[i].aniso != s_graphicsoptions.aniso.curvalue )
 			continue;
                 if ( s_ivo_templates[i].anti != s_graphicsoptions.anti.curvalue )
+			continue;
+                if ( s_ivo_templates[i].supersample != s_graphicsoptions.supersample.curvalue )
 			continue;
 //		if ( s_ivo_templates[i].texturebits != s_graphicsoptions.texturebits.curvalue )
 //			continue;
@@ -663,6 +668,10 @@ static void GraphicsOptions_UpdateMenuItems( void )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
+        if ( s_ivo.supersample != s_graphicsoptions.supersample.curvalue )
+	{
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+	}
 
 	GraphicsOptions_CheckConfig();
 }	
@@ -727,6 +736,7 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
         trap_Cvar_SetValue( "r_bloom", s_graphicsoptions.bloom.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
 	trap_Cvar_SetValue( "r_ext_multisample", s_graphicsoptions.anti.curvalue*2 );
+	trap_Cvar_SetValue( "r_ext_supersample", s_graphicsoptions.supersample.curvalue );
         
         //r_ext_texture_filter_anisotropic is special
         if(s_graphicsoptions.aniso.curvalue) {
@@ -811,7 +821,8 @@ static void GraphicsOptions_Event( void* ptr, int event ) {
 		s_graphicsoptions.geometry.curvalue    = ivo->geometry;
 		s_graphicsoptions.filter.curvalue      = ivo->filter;
                 s_graphicsoptions.aniso.curvalue       = ivo->aniso;
-                s_graphicsoptions.anti.curvalue       = ivo->anti;
+                s_graphicsoptions.supersample.curvalue       = ivo->anti;
+                s_graphicsoptions.anti.curvalue       = ivo->supersample;
 		s_graphicsoptions.fs.curvalue          = ivo->fullscreen;
                 s_graphicsoptions.flares.curvalue      = ivo->flares;
                 s_graphicsoptions.bloom.curvalue      = ivo->bloom;
@@ -916,6 +927,7 @@ static void GraphicsOptions_SetMenuItems( void )
         s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue("r_bloom");
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue("cg_drawFPS");
 	s_graphicsoptions.anti.curvalue = trap_Cvar_VariableValue("r_ext_multisample")/2;
+	s_graphicsoptions.supersample.curvalue = trap_Cvar_VariableValue("r_ext_supersample");
         if(trap_Cvar_VariableValue("r_ext_texture_filter_anisotropic")) {
             s_graphicsoptions.aniso.curvalue = trap_Cvar_VariableValue("r_ext_max_anisotropy")/2;
         }
@@ -1041,6 +1053,13 @@ void GraphicsOptions_MenuInit( void )
 		"Off",
 		"2x",
                 "4x",
+		NULL
+	};
+
+        static const char *supersample_names[] =
+	{
+		"Off",
+		"On",
 		NULL
 	};
 
@@ -1277,14 +1296,22 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.aniso.generic.x	    = 400;
 	s_graphicsoptions.aniso.generic.y	    = y;
 	s_graphicsoptions.aniso.itemnames      = aniso_names;
-	y += 2*BIGCHAR_HEIGHT;
+	y += 2+BIGCHAR_HEIGHT;
 
         s_graphicsoptions.anti.generic.type   = MTYPE_SPINCONTROL;
 	s_graphicsoptions.anti.generic.name	= "Anti-Aliasing:";
 	s_graphicsoptions.anti.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
 	s_graphicsoptions.anti.generic.x	    = 400;
-	s_graphicsoptions.anti.generic.y	    = y - PROP_HEIGHT / 2;
+	s_graphicsoptions.anti.generic.y	    = y;
 	s_graphicsoptions.anti.itemnames      = anti_names;
+	y += 2+BIGCHAR_HEIGHT;
+
+        s_graphicsoptions.supersample.generic.type   = MTYPE_SPINCONTROL;
+	s_graphicsoptions.supersample.generic.name	= "Supersampling:";
+	s_graphicsoptions.supersample.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_graphicsoptions.supersample.generic.x	    = 400;
+	s_graphicsoptions.supersample.generic.y	    = y;
+	s_graphicsoptions.supersample.itemnames      = supersample_names;
 	y += 2*BIGCHAR_HEIGHT;
 
 	s_graphicsoptions.driverinfo.generic.type     = MTYPE_PTEXT;
@@ -1344,8 +1371,8 @@ void GraphicsOptions_MenuInit( void )
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.filter );
         Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.aniso );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.anti );
+	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.supersample );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.driverinfo );
-
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.back );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.apply );
 
