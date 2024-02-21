@@ -729,6 +729,11 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	legs.renderfx = renderfx;
 	VectorCopy (legs.origin, legs.oldorigin);
 
+	legs.shaderRGBA[0] = trap_Cvar_VariableValue( "r_customHeight");
+	legs.shaderRGBA[1] = trap_Cvar_VariableValue( "cg_plightgreen");
+	legs.shaderRGBA[2] = trap_Cvar_VariableValue( "cg_plightblue");
+	legs.shaderRGBA[3] = 255;
+
 	trap_R_AddRefEntityToScene( &legs );
 
 	if (!legs.hModel) {
