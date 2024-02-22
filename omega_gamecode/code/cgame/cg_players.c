@@ -2361,7 +2361,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		else {*/
 			trap_R_AddRefEntityToScene( ent );
 		//}
-		if (!isMissile && !(state->eFlags & EF_DEAD) ) {
+		if (!isMissile && !(state->eFlags & EF_DEAD) && cg_brightPlayers.integer || cg_wallhack.integer ) {
 			if ( cg_wallhack.integer && ci != self ) {
 				ent->customShader = cgs.media.brightPlayers2;
 				ent->renderfx = RF_DEPTHHACK;
@@ -2625,6 +2625,10 @@ void CG_Player( centity_t *cent ) {
 	//
 	legs.hModel = ci->legsModel;
 	legs.customSkin = ci->legsSkin;
+	legs.shaderRGBA[0] = ci->color2[0] * 255;
+	legs.shaderRGBA[1] = ci->color2[1] * 255;
+	legs.shaderRGBA[2] = ci->color2[2] * 255;
+	legs.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, legs.origin );
 
@@ -2649,6 +2653,10 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	torso.customSkin = ci->torsoSkin;
+	torso.shaderRGBA[0] = ci->color2[0] * 255;
+	torso.shaderRGBA[1] = ci->color2[1] * 255;
+	torso.shaderRGBA[2] = ci->color2[2] * 255;
+	torso.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, torso.lightingOrigin );
 
@@ -2872,6 +2880,10 @@ void CG_Player( centity_t *cent ) {
 		return;
 	}
 	head.customSkin = ci->headSkin;
+	head.shaderRGBA[0] = ci->color2[0] * 255;
+	head.shaderRGBA[1] = ci->color2[1] * 255;
+	head.shaderRGBA[2] = ci->color2[2] * 255;
+	head.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, head.lightingOrigin );
 
