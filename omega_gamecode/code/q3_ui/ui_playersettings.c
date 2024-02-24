@@ -47,36 +47,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_NAMELENGTH	20
 
 
-typedef struct {
-	menuframework_s		menu;
-
-	menutext_s			banner;
-	menubitmap_s		framel;
-	menubitmap_s		framer;
-	menubitmap_s		player;
-
-	menufield_s			name;
-	menulist_s			handicap;
-	menulist_s			effects;
-        
-        //Added in beta 29
-        menulist_s              effects2;
-
-	menubitmap_s		back;
-	menubitmap_s		model;
-	menubitmap_s		item_null;
-
-	qhandle_t			fxBasePic;
-	qhandle_t			fxPic[7];
-	playerInfo_t		playerinfo;
-	int					current_fx;
-	char				playerModel[MAX_QPATH];
-} playersettings_t;
-
-static playersettings_t	s_playersettings;
+playersettings_t	s_playersettings;
 
 static int gamecodetoui[] = {4,2,3,0,5,1,6};
 static int uitogamecode[] = {4,6,2,3,1,5,7};
+static int effectscolor[] = {1,3,2,5,4,6,7};
 
 static const char *handicap_items[] = {
 	"100",
@@ -223,6 +198,8 @@ static void PlayerSettings_DrawEffects( void *self ) {
 	}
 
 	UI_DrawProportionalString( item->generic.x, item->generic.y, "Effects", style, color );
+	UI_DrawString( item->generic.x, 336, "Railgun", UI_SMALLFONT, g_color_table[effectscolor[s_playersettings.effects.curvalue]] );
+	UI_DrawString( item->generic.x, 363, "PM Skin", UI_SMALLFONT, g_color_table[effectscolor[s_playersettings.effects2.curvalue]] );
 
 	UI_DrawHandlePic( item->generic.x + 64, item->generic.y + PROP_HEIGHT + 8, 128, 8, s_playersettings.fxBasePic );
 	UI_DrawHandlePic( item->generic.x + 64 + item->curvalue * 16 + 8, item->generic.y + PROP_HEIGHT + 6, 16, 12, s_playersettings.fxPic[item->curvalue] );

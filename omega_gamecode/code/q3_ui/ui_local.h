@@ -448,12 +448,6 @@ extern void UI_PlayerModelMenu( void );
 extern void PlayerModel_Cache( void );
 
 //
-// ui_playersettings.c
-//
-extern void UI_PlayerSettingsMenu( void );
-extern void PlayerSettings_Cache( void );
-
-//
 // ui_preferences.c
 //
 extern void UI_PreferencesMenu( void );
@@ -626,6 +620,40 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 void UI_PlayerInfo_SetModel( playerInfo_t *pi, const char *model );
 void UI_PlayerInfo_SetInfo( playerInfo_t *pi, int legsAnim, int torsoAnim, vec3_t viewAngles, vec3_t moveAngles, weapon_t weaponNum, qboolean chat );
 qboolean UI_RegisterClientModelname( playerInfo_t *pi, const char *modelSkinName );
+
+//
+// ui_playersettings.c
+//
+extern void UI_PlayerSettingsMenu( void );
+extern void PlayerSettings_Cache( void );
+
+typedef struct {
+	menuframework_s		menu;
+
+	menutext_s			banner;
+	menubitmap_s		framel;
+	menubitmap_s		framer;
+	menubitmap_s		player;
+
+	menufield_s			name;
+	menulist_s			handicap;
+	menulist_s			effects;
+        
+        //Added in beta 29
+        menulist_s              effects2;
+
+	menubitmap_s		back;
+	menubitmap_s		model;
+	menubitmap_s		item_null;
+
+	qhandle_t			fxBasePic;
+	qhandle_t			fxPic[7];
+	playerInfo_t		playerinfo;
+	int					current_fx;
+	char				playerModel[MAX_QPATH];
+} playersettings_t;
+
+extern playersettings_t	s_playersettings;
 
 //
 // ui_atoms.c

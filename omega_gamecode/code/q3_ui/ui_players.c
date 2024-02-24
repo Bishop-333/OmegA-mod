@@ -658,6 +658,7 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	vec3_t			maxs = {16, 16, 32};
 	float			len;
 	float			xx;
+	int			color[] = {1,3,2,5,4,6,7};
 
 	if ( !pi->legsModel || !pi->torsoModel || !pi->headModel || !pi->animations[0].numFrames ) {
 		return;
@@ -722,6 +723,35 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	//
 	legs.hModel = pi->legsModel;
 	legs.customSkin = pi->legsSkin;
+	if ( color[s_playersettings.effects2.curvalue] == 1 ) {
+		legs.shaderRGBA[0] = 255;
+		legs.shaderRGBA[1] = 0;
+		legs.shaderRGBA[2] = 0;
+	} else if ( color[s_playersettings.effects2.curvalue] == 3 ) {
+		legs.shaderRGBA[0] = 255;
+		legs.shaderRGBA[1] = 255;
+		legs.shaderRGBA[2] = 0;
+	} else if ( color[s_playersettings.effects2.curvalue] == 4 ) {
+		legs.shaderRGBA[0] = 0;
+		legs.shaderRGBA[1] = 0;
+		legs.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 5 ) {
+		legs.shaderRGBA[0] = 0;
+		legs.shaderRGBA[1] = 255;
+		legs.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 6 ) {
+		legs.shaderRGBA[0] = 255;
+		legs.shaderRGBA[1] = 0;
+		legs.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 7 ) {
+		legs.shaderRGBA[0] = 255;
+		legs.shaderRGBA[1] = 255;
+		legs.shaderRGBA[2] = 255;
+	} else {
+		legs.shaderRGBA[0] = 0;
+		legs.shaderRGBA[1] = 255;
+		legs.shaderRGBA[2] = 0;
+	}
 
 	VectorCopy( origin, legs.origin );
 
@@ -744,6 +774,35 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	}
 
 	torso.customSkin = pi->torsoSkin;
+	if ( color[s_playersettings.effects2.curvalue] == 1 ) {
+		torso.shaderRGBA[0] = 255;
+		torso.shaderRGBA[1] = 0;
+		torso.shaderRGBA[2] = 0;
+	} else if ( color[s_playersettings.effects2.curvalue] == 3 ) {
+		torso.shaderRGBA[0] = 255;
+		torso.shaderRGBA[1] = 255;
+		torso.shaderRGBA[2] = 0;
+	} else if ( color[s_playersettings.effects2.curvalue] == 4 ) {
+		torso.shaderRGBA[0] = 0;
+		torso.shaderRGBA[1] = 0;
+		torso.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 5 ) {
+		torso.shaderRGBA[0] = 0;
+		torso.shaderRGBA[1] = 255;
+		torso.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 6 ) {
+		torso.shaderRGBA[0] = 255;
+		torso.shaderRGBA[1] = 0;
+		torso.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 7 ) {
+		torso.shaderRGBA[0] = 255;
+		torso.shaderRGBA[1] = 255;
+		torso.shaderRGBA[2] = 255;
+	} else {
+		torso.shaderRGBA[0] = 0;
+		torso.shaderRGBA[1] = 255;
+		torso.shaderRGBA[2] = 0;
+	}
 
 	VectorCopy( origin, torso.lightingOrigin );
 
@@ -761,6 +820,35 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 		return;
 	}
 	head.customSkin = pi->headSkin;
+	if ( color[s_playersettings.effects2.curvalue] == 1 ) {
+		head.shaderRGBA[0] = 255;
+		head.shaderRGBA[1] = 0;
+		head.shaderRGBA[2] = 0;
+	} else if ( color[s_playersettings.effects2.curvalue] == 3 ) {
+		head.shaderRGBA[0] = 255;
+		head.shaderRGBA[1] = 255;
+		head.shaderRGBA[2] = 0;
+	} else if ( color[s_playersettings.effects2.curvalue] == 4 ) {
+		head.shaderRGBA[0] = 0;
+		head.shaderRGBA[1] = 0;
+		head.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 5 ) {
+		head.shaderRGBA[0] = 0;
+		head.shaderRGBA[1] = 255;
+		head.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 6 ) {
+		head.shaderRGBA[0] = 255;
+		head.shaderRGBA[1] = 0;
+		head.shaderRGBA[2] = 255;
+	} else if ( color[s_playersettings.effects2.curvalue] == 7 ) {
+		head.shaderRGBA[0] = 255;
+		head.shaderRGBA[1] = 255;
+		head.shaderRGBA[2] = 255;
+	} else {
+		head.shaderRGBA[0] = 0;
+		head.shaderRGBA[1] = 255;
+		head.shaderRGBA[2] = 0;
+	}
 
 	VectorCopy( origin, head.lightingOrigin );
 
