@@ -1,3 +1,41 @@
+models/players/tony/headvito
+{
+	cull disable
+	{
+		map models/players/tony/headvito.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/tony/headvito.tga
+		blendfunc gl_src_alpha gl_one
+		rgbGen lightingDiffuse
+		alphaGen lightingSpecular
+		detail
+	}
+}
+
+models/players/tony/pm_head
+{
+	cull disable
+	{
+		map models/players/tony/head.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/tony/head.tga
+		blendfunc gl_src_alpha gl_one
+		rgbGen lightingDiffuse
+		alphaGen lightingSpecular
+		detail
+	}
+	{
+		map models/players/tony/pm_head.tga
+		blendFunc gl_one gl_zero
+		alphaFunc GE128
+		rgbGen entity
+	}
+}
+
 models/players/tony/headred
 {
 	cull disable
@@ -23,22 +61,6 @@ models/players/tony/headblue
 	}
 	{
 		map models/players/tony/headblue.tga
-		blendfunc gl_src_alpha gl_one
-		rgbGen lightingDiffuse
-		alphaGen lightingSpecular
-		detail
-	}
-}
-
-models/players/tony/headvito
-{
-	cull disable
-	{
-		map models/players/tony/headvito.tga
-		rgbGen lightingDiffuse
-	}
-	{
-		map models/players/tony/headvito.tga
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		alphaGen lightingSpecular
@@ -123,5 +145,27 @@ models/players/tony/vitosuit
 		rgbGen lightingDiffuse
 		alphaGen lightingSpecular
 		detail
+	}
+}
+
+models/players/tony/pm_suit
+{
+	cull disable
+	{
+		map models/players/tony/suit.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/tony/suit.tga
+		blendfunc gl_src_alpha gl_one
+		rgbGen lightingDiffuse
+		alphaGen lightingSpecular
+		detail
+	}
+	{
+		map models/players/tony/pm_suit.tga
+		blendFunc gl_one gl_zero
+		alphaFunc GE128
+		rgbGen entity
 	}
 }

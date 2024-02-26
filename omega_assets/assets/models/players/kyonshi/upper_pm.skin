@@ -1,0 +1,7 @@
+u_torso,models/players/kyonshi/pm_torso.tga
+u_hands,models/players/kyonshi/pm_skin.tga
+u_sleeve,models/players/kyonshi/sleeve.tga
+
+tag_head
+tag_weapon
+tag_torso

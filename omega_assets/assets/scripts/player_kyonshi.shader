@@ -395,89 +395,83 @@ models/players/kyonshi/skinblue
 }
 
 // ---------------------------------------------------------
-// YOKAI SKIN !!!!
+// PM SKIN !!!!
 // ---------------------------------------------------------
-models/players/kyonshi/hairyokai
+models/players/kyonshi/pm_torso
 {
-	cull disable
 	{
-		map models/players/kyonshi/hairyokai.tga
+		map models/players/kyonshi/torso.tga
 		rgbGen lightingDiffuse
+	}
+	{
+		map textures/effects/envmapgold.tga
+		blendfunc add
+		rgbGen lightingDiffuse
+		tcGen environment 
+	}
+	{
+		map models/players/kyonshi/torso.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/kyonshi/pm_torso.tga
+		blendFunc gl_one gl_zero
 		alphaFunc GE128
+		rgbGen entity
 	}
 }
 
-models/players/kyonshi/torsoyokai
+models/players/kyonshi/pm_lower
 {
 	{
-		map models/players/kyonshi/torsoyokai.tga
+		map models/players/kyonshi/lower.tga
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/tinfx2d.tga
+		map textures/effects/envmapgold.tga
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/torsoyokai.tga
+		map models/players/kyonshi/lower.tga
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
-}
-
-models/players/kyonshi/loweryokai
-{
 	{
-		map models/players/kyonshi/loweryokai.tga
-		rgbGen lightingDiffuse
-	}
-	{
-		map textures/effects/tinfx2d.tga
-		blendfunc add
-		rgbGen lightingDiffuse
-		tcGen environment 
-	}
-	{
-		map models/players/kyonshi/loweryokai.tga
-		blendfunc blend
-		rgbGen lightingDiffuse
+		map models/players/kyonshi/pm_lower.tga
+		blendFunc gl_one gl_zero
+		alphaFunc GE128
+		rgbGen entity
 	}
 }
 
-models/players/kyonshi/eyesyokai
+models/players/kyonshi/pm_eyes
 {
 	{
-		map models/players/kyonshi/eyesyokai.tga
+		map models/players/kyonshi/eyes.tga
+		blendFunc gl_one gl_zero
 		rgbGen lightingDiffuse
-	}
-	{
-		clampmap textures/effects/skinspecmult.tga
-		blendfunc gl_dst_color gl_src_color
-		tcGen environment 
-	}
-	{
-		clampmap textures/effects/skinspecmult.tga
-		blendfunc gl_dst_color gl_src_color
-		tcGen environment 
 	}
 	{
 		clampmap textures/effects/skinspecmulttin.tga
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
+	{
+		map models/players/kyonshi/pm_eyes.tga
+		blendFunc gl_one gl_zero
+		alphaFunc GE128
+		rgbGen entity
+	}
 }
 
-models/players/kyonshi/skinyokai
+models/players/kyonshi/pm_skin
 {
 	{
-		map models/players/kyonshi/skinyokai.tga
+		map models/players/kyonshi/skin.tga
 		rgbGen lightingDiffuse
-	}
-	{
-		map textures/effects/skinspecmult2.tga
-		blendfunc gl_dst_color gl_src_color
-		tcGen environment 
 	}
 	{
 		map textures/effects/skinspecmult.tga
@@ -485,14 +479,15 @@ models/players/kyonshi/skinyokai
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmulttin.tga
-		blendfunc gl_dst_color gl_src_color
-		tcGen environment 
-	}
-	{
-		map models/players/kyonshi/skinyokai.tga
+		map models/players/kyonshi/skin.tga
 		blendfunc blend
 		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/kyonshi/pm_skin.tga
+		blendFunc gl_one gl_zero
+		alphaFunc GE128
+		rgbGen entity
 	}
 }
 
@@ -610,3 +605,106 @@ models/players/kyonshi/hairbeh
 		rgbGen lightingDiffuse
 	}
 }
+
+// ---------------------------------------------------------
+// YOKAI SKIN !!!!
+// ---------------------------------------------------------
+models/players/kyonshi/hairyokai
+{
+	cull disable
+	{
+		map models/players/kyonshi/hairyokai.tga
+		rgbGen lightingDiffuse
+		alphaFunc GE128
+	}
+}
+
+models/players/kyonshi/torsoyokai
+{
+	{
+		map models/players/kyonshi/torsoyokai.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map textures/effects/tinfx2d.tga
+		blendfunc add
+		rgbGen lightingDiffuse
+		tcGen environment 
+	}
+	{
+		map models/players/kyonshi/torsoyokai.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
+	}
+}
+
+models/players/kyonshi/loweryokai
+{
+	{
+		map models/players/kyonshi/loweryokai.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map textures/effects/tinfx2d.tga
+		blendfunc add
+		rgbGen lightingDiffuse
+		tcGen environment 
+	}
+	{
+		map models/players/kyonshi/loweryokai.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
+	}
+}
+
+models/players/kyonshi/eyesyokai
+{
+	{
+		map models/players/kyonshi/eyesyokai.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		clampmap textures/effects/skinspecmult.tga
+		blendfunc gl_dst_color gl_src_color
+		tcGen environment 
+	}
+	{
+		clampmap textures/effects/skinspecmult.tga
+		blendfunc gl_dst_color gl_src_color
+		tcGen environment 
+	}
+	{
+		clampmap textures/effects/skinspecmulttin.tga
+		blendfunc gl_dst_color gl_src_color
+		tcGen environment 
+	}
+}
+
+models/players/kyonshi/skinyokai
+{
+	{
+		map models/players/kyonshi/skinyokai.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map textures/effects/skinspecmult2.tga
+		blendfunc gl_dst_color gl_src_color
+		tcGen environment 
+	}
+	{
+		map textures/effects/skinspecmult.tga
+		blendfunc gl_dst_color gl_src_color
+		tcGen environment 
+	}
+	{
+		map textures/effects/skinspecmulttin.tga
+		blendfunc gl_dst_color gl_src_color
+		tcGen environment 
+	}
+	{
+		map models/players/kyonshi/skinyokai.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
+	}
+}
+

@@ -15,11 +15,6 @@ models/players/gargoyle/buh
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/gargoyle/goblin.tga
-		blendfunc add
-		rgbGen lightingDiffuse
-	}
-	{
 		map textures/effects/skinspecmult.tga
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
@@ -90,22 +85,6 @@ models/players/gargoyle/bared
 	}
 	{
 		map models/players/gargoyle/bared.tga
-		blendfunc gl_src_alpha gl_one
-		rgbGen lightingDiffuse
-		alphaGen lightingSpecular
-		detail
-	}
-}
-
-models/players/gargoyle/goblin
-{
-	{
-		map models/players/gargoyle/goblin.tga
-		rgbGen lightingDiffuse
-		alphaFunc GE128
-	}
-	{
-		map models/players/gargoyle/goblin.tga
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		alphaGen lightingSpecular
@@ -241,6 +220,45 @@ models/players/gargoyle/morphedwings_red
 	{
 		map models/players/gargoyle/morphedwings_red.tga
 		blendfunc add
+	}
+}
+
+// PM SKIN
+models/players/gargoyle/pm
+{
+	{
+		map models/players/gargoyle/bared.tga
+		rgbGen lightingDiffuse
+	}
+	{
+		map models/players/gargoyle/bared.tga
+		blendfunc gl_src_alpha gl_one
+		rgbGen lightingDiffuse
+		alphaGen lightingSpecular
+		detail
+	}
+	{
+		map models/players/gargoyle/pm.tga
+		blendFunc gl_one gl_zero
+		alphaFunc GE128
+		rgbGen entity
+	}
+}
+
+models/players/gargoyle/pm_membranecray
+{
+	cull disable
+	{
+		map models/players/gargoyle/pm_wings.tga
+		blendfunc blend
+		rgbGen entity
+	}
+	{
+		map models/players/gargoyle/specwing.tga
+		blendfunc gl_src_alpha gl_one
+		rgbGen lightingDiffuse
+		alphaGen lightingSpecular
+		detail
 	}
 }
 
