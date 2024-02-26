@@ -749,8 +749,7 @@ typedef struct {
 	qhandle_t	harvesterBlueSkin;
 	qhandle_t	harvesterNeutralModel;
 
-	qhandle_t	healthCrossModel;
-	qhandle_t	healthSphereModel;
+	qhandle_t	smallCrossModel;
 	qhandle_t	healthIcon;
 
 	qhandle_t	armorModel;
