@@ -34,6 +34,7 @@ models/weapons2/shotgun/shotgun_laser
 	{
 		map models/weapons2/shotgun/shotgun_laser.tga
 		blendfunc add
+		tcMod scroll 0.3 0
 	}
 }
 
