@@ -39,18 +39,16 @@ mediumcrossEnv
 	// the crosses bounce with a 0.93 frequency and they're down in the 0.5 phase, but doesn't really matter since they respawn with random a start
 	cull disable
 	{
-		map textures/effects/mediumhelth
+		map textures/effects/envmap2
 		blendfunc gl_src_alpha gl_one
 		tcMod scroll 1 0.2
-		tcMod scale 0.5 0.5
 		tcGen environment 
 		alphaGen wave sin 0.3 0.2 0.5 0
 	}
 	{
-		map textures/effects/mediumhelth_spec
+		map textures/effects/envmapmach
 		blendfunc gl_src_alpha gl_one
 		tcMod scroll 1 0.2
-		tcMod scale 0.5 0.5
 		tcGen environment 
 		alphaGen lightingSpecular
 	}
@@ -70,7 +68,7 @@ largecrossEnv
 		alphaGen wave sin 0.3 0.2 0.5 0
 	}
 	{
-		map textures/effects/largehelth_spec
+		map textures/effects/largehelth
 		blendfunc gl_src_alpha gl_one
 		tcMod scroll 1 0.2
 		tcMod scale 0.5 0.5

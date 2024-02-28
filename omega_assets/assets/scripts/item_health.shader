@@ -1,7 +1,7 @@
 smallCross
 {
 	{
-		map textures/liquids/slime9.jpg
+		map textures/liquids/slime9.tga
 		tcMod rotate -76
 		tcGen environment 
 	}
@@ -30,12 +30,12 @@ mediumCross
 largeCross
 {
 	{
-		map textures/oafx/orangechrm.tga
+		map textures/effects/envmapgold
 		tcMod rotate -76
 		tcGen environment 
 	}
 	{
-		map textures/oafx/orangechrm.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		tcMod rotate 54
 		tcGen environment 
