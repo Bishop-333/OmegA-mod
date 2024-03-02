@@ -66,3 +66,11 @@
 - no more orbital view when spectating just thirdperson
 - clean a lot of warnings (during compiling)
 - `cg_trueLightning` enabled by default
+
+## 3.2.8
+- new health models/effects
+- shotgun laser animation
+- new pm skins
+- change the impact of effect color bars (first one is for railgun color, second one is for pm skins color)
+- better `cg_wallhack`
+- `r_ext_supersample` available in graphic settings as "supersampling"
