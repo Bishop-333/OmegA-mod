@@ -74,3 +74,4 @@
 - change the impact of effect color bars (first one is for railgun color, second one is for pm skins color)
 - better `cg_wallhack`
 - `r_ext_supersample` available in graphic settings as "supersampling"
+- teleport missile sound
