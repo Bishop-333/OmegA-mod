@@ -31,6 +31,7 @@ G_TeleportMissile
 */
 void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 	gentity_t	*dest;
+	gentity_t	*tmp_ent;
 	vec_t		length_norm, length_neg_norm;
 	vec3_t		portalInAngles;
 	vec3_t		portalInVec;
@@ -44,6 +45,8 @@ void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 	if (!dest) {
 		return;
 	}
+
+	G_TempEntity( ent->r.currentOrigin, EV_PLAYER_TELEPORT_OUT );
 
 	// evaluate velocity vector at portal impact
 	hitTime = level.previousTime + ( level.time - level.previousTime ) * trace->fraction;
@@ -81,6 +84,9 @@ void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
 
 	ent->s.pos.trTime = level.time;
+
+	tmp_ent = G_TempEntity( ent->r.currentOrigin, EV_PLAYER_TELEPORT_OUT );
+	tmp_ent->r.svFlags |= SVF_BROADCAST;
 }
 
 /*

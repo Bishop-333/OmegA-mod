@@ -1067,7 +1067,6 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 	case EV_PLAYER_TELEPORT_OUT:
 		DEBUGNAME("EV_PLAYER_TELEPORT_OUT");
 		trap_S_StartSound (NULL, es->number, CHAN_AUTO, cgs.media.teleOutSound );
-		CG_SpawnEffect(  position);
 		break;
 
 	case EV_ITEM_POP:
