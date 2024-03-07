@@ -553,7 +553,7 @@ static int CG_CalcFov( void ) {
 		} else {
 			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
 			if ( f > 1.0 || !cg_zoomAnim.integer ) {
-				fov_x = fov_x;
+				fov_x = cg_fov.value;
 			} else {
 				fov_x = zoomFov + f * ( fov_x - zoomFov );
 			}

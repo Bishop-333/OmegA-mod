@@ -343,18 +343,18 @@ void UI_VoteGametypeMenu( void ) {
             s_votemenu_Gametype.DOUBLED = qtrue;
             s_votemenu_Gametype.DOM = qtrue;
         } else {
-            s_votemenu_Gametype.FFA = (qboolean)Q_stristr(gametypeinfo,"/0/");
-            s_votemenu_Gametype.Tourney = (qboolean)Q_stristr(gametypeinfo,"/1/");
-            s_votemenu_Gametype.TDM = (qboolean)Q_stristr(gametypeinfo,"/3/");
-            s_votemenu_Gametype.CTF = (qboolean)Q_stristr(gametypeinfo,"/4/");
-            s_votemenu_Gametype._1FCTF = (qboolean)Q_stristr(gametypeinfo,"/5/");
-            s_votemenu_Gametype.Overload = (qboolean)Q_stristr(gametypeinfo,"/6/");
-            s_votemenu_Gametype.Harvester = (qboolean)Q_stristr(gametypeinfo,"/7/");
-            s_votemenu_Gametype.Elimination = (qboolean)Q_stristr(gametypeinfo,"/8/");
-            s_votemenu_Gametype.CTFe = (qboolean)Q_stristr(gametypeinfo,"/9/");
-            s_votemenu_Gametype.LMS = (qboolean)Q_stristr(gametypeinfo,"/10/");
-            s_votemenu_Gametype.DOUBLED = (qboolean)Q_stristr(gametypeinfo,"/11/");
-            s_votemenu_Gametype.DOM = (qboolean)Q_stristr(gametypeinfo,"/12/");
+            s_votemenu_Gametype.FFA = (Q_stristr(gametypeinfo, "/0/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.Tourney = (Q_stristr(gametypeinfo, "/1/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.TDM = (Q_stristr(gametypeinfo, "/3/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.CTF = (Q_stristr(gametypeinfo, "/4/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype._1FCTF = (Q_stristr(gametypeinfo, "/5/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.Overload = (Q_stristr(gametypeinfo, "/6/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.Harvester = (Q_stristr(gametypeinfo, "/7/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.Elimination = (Q_stristr(gametypeinfo, "/8/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.CTFe = (Q_stristr(gametypeinfo, "/9/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.LMS = (Q_stristr(gametypeinfo, "/10/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.DOUBLED = (Q_stristr(gametypeinfo, "/11/") != NULL) ? qtrue : qfalse;
+            s_votemenu_Gametype.DOM = (Q_stristr(gametypeinfo, "/12/") != NULL) ? qtrue : qfalse;
         }
 
         UI_VoteGametypeMenuInternal();

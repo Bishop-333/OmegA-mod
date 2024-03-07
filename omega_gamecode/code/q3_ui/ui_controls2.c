@@ -396,7 +396,7 @@ Controls_InitCvars
 */
 static void Controls_InitCvars( void )
 {
-	int				i;
+	int				i __attribute__((unused));
 	configcvar_t*	cvarptr;
 
 	cvarptr = g_configcvars;
@@ -425,7 +425,7 @@ Controls_GetCvarDefault
 static float Controls_GetCvarDefault( char* name )
 {
 	configcvar_t*	cvarptr;
-	int				i;
+	int				i __attribute__((unused));
 
 	cvarptr = g_configcvars;
 	for (i=0; ;i++,cvarptr++)
@@ -448,7 +448,7 @@ Controls_GetCvarValue
 static float Controls_GetCvarValue( char* name )
 {
 	configcvar_t*	cvarptr;
-	int				i;
+	int				i __attribute__((unused));
 
 	cvarptr = g_configcvars;
 	for (i=0; ;i++,cvarptr++)
@@ -845,7 +845,7 @@ Controls_GetConfig
 */
 static void Controls_GetConfig( void )
 {
-	int		i;
+	int		i __attribute__((unused));
 	int		twokeys[2];
 	bind_t*	bindptr;
 
@@ -882,7 +882,7 @@ Controls_SetConfig
 */
 static void Controls_SetConfig( void )
 {
-	int		i;
+	int		i __attribute__((unused));
 	bind_t*	bindptr;
 
 	// set the bindings from the local store
@@ -926,7 +926,7 @@ Controls_SetDefaults
 */
 static void Controls_SetDefaults( void )
 {
-	int	i;
+	int	i __attribute__((unused));
 	bind_t*	bindptr;
 
 	// set the bindings from the local store
@@ -961,7 +961,7 @@ Controls_MenuKey
 static sfxHandle_t Controls_MenuKey( int key )
 {
 	int			id;
-	int			i;
+	int			i __attribute__((unused));
 	qboolean	found;
 	bind_t*		bindptr;
 	found = qfalse;

@@ -2122,7 +2122,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 
 	myteam = cg.snap->ps.persistant[PERS_TEAM];
 
-	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE ) && ( myteam == TEAM_RED ) ) {
+	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE && myteam == TEAM_RED ) ) {
 		enemy = 1;
 	} else {
 		enemy = 0;
@@ -2361,7 +2361,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		else {*/
 			trap_R_AddRefEntityToScene( ent );
 		//}
-		if (!isMissile && !(state->eFlags & EF_DEAD) && cg_brightPlayers.integer || cg_wallhack.integer ) {
+		if (!isMissile && !(state->eFlags & EF_DEAD) && ( cg_brightPlayers.integer || cg_wallhack.integer ) ) {
 			if ( cg_wallhack.integer && ci != self ) {
 				ent->customShader = cgs.media.brightPlayers2;
 				ent->renderfx = RF_DEPTHHACK;
