@@ -3,7 +3,7 @@
 
 ![OmegA Logo](omega_logo.svg)
 
-OmegA is a mod for OpenArena which have for goal to fix bugs and add cool features for competitive gameplay. It takes inspiration from different mods like Aftershock or Ratmod.
+OmegA is a mod for OpenArena which has for goal to fix bugs and add cool features for competitive gameplay. It takes inspiration from different mods like Aftershock or Ratmod.
 
 List of the cvars/additions :
 
@@ -78,12 +78,11 @@ List of the cvars/additions :
 - new icons
 - new medals
 - new menu
-- new music (can be listened in slimefac)
+- new music (can be heared in slimefac)
 - new skins
 - new sounds
 - new weapons sfx
 - new ui
-- upscalled weapon textures
 - a lot of fixes
 
 ## Building
@@ -93,7 +92,6 @@ Simply go to your terminal and type :
 ```sh
 make
 ```
-It even work on arm machines !
 
 ## Links
 
@@ -102,5 +100,5 @@ It even work on arm machines !
 
 ## Donate
 
-I develop during my freetime, if you enjoyed my engine or my mod please consider supporting me by donating through the following paypal ;)
+I develop during my freetime, if you enjoyed my engine/fork or my mod please consider supporting me by donating !
 * paypal.me/fatsakura
