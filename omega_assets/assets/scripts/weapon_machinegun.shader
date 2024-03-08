@@ -103,10 +103,9 @@ models/weapons2/machinegun/skin
 	}
 	{
 		map models/weapons2/machinegun/mgun.tga
-		blendfunc gl_dst_color gl_dst_alpha
+		blendFunc gl_one gl_zero
+		alphaFunc LT128
 		rgbGen lightingDiffuse
-		alphaGen lightingSpecular
-		detail
 	}
 }
 
