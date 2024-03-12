@@ -698,7 +698,7 @@ static int CG_CalcViewValues( void ) {
 		if ( cg_cameraOrbit.integer ) {
 			cg.nextOrbitTime = cg.time + cg_cameraOrbitDelay.integer;
 			cg_thirdPersonAngle.value += cg_cameraOrbit.value;			
-		} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
+		} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) && !( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) ) {
 			cg.nextOrbitTime = cg.time;
 			cg_thirdPersonAngle.value += 0.1;
 		} else {
