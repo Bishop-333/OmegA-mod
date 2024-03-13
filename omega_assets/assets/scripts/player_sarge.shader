@@ -7,6 +7,7 @@ models/players/grism/neon
 	{
 		AnimMap 48 models/players/grism/lum1.tga models/players/grism/lum2.tga models/players/grism/lum3.tga models/players/grism/lum2.tga
 		blendfunc add
+		rgbGen entity
 	}
 }
 
