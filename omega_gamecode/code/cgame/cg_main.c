@@ -327,7 +327,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_zoomFov, "cg_zoomfov", "22.5", CVAR_ARCHIVE },
 	{ &cg_fov, "cg_fov", "115", CVAR_ARCHIVE },
 	{ &cg_viewsize, "cg_viewsize", "100", CVAR_ARCHIVE },
-	{ &cg_shadows, "cg_shadows", "0", CVAR_ARCHIVE  },
+	{ &cg_shadows, "cg_shadows", "1", CVAR_ARCHIVE  },
 	{ &cg_gibs, "cg_gibs", "1", CVAR_ARCHIVE  },
 	{ &cg_draw2D, "cg_draw2D", "1", CVAR_ARCHIVE  },
 	{ &cg_drawStatus, "cg_drawStatus", "1", CVAR_ARCHIVE  },
@@ -1409,12 +1409,13 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.holeMarkShader = trap_R_RegisterShader( "gfx/damage/hole_lg_mrk" );
 	cgs.media.energyMarkShader = trap_R_RegisterShader( "gfx/damage/plasma_mrk" );
 	cgs.media.shadowMarkShader = trap_R_RegisterShader( "markShadow" );
-	cgs.media.shadowRedMarkShader = trap_R_RegisterShader( "markRedShadow" );
-	cgs.media.shadowYellowMarkShader = trap_R_RegisterShader( "markYellowShadow" );
-	cgs.media.shadowGreenMarkShader = trap_R_RegisterShader( "markGreenShadow" );
-	cgs.media.shadowCyanMarkShader = trap_R_RegisterShader( "markCyanShadow" );
-	cgs.media.shadowBlueMarkShader = trap_R_RegisterShader( "markBlueShadow" );
-	cgs.media.shadowPinkMarkShader = trap_R_RegisterShader( "markPinkShadow" );
+	cgs.media.shadow2MarkShader = trap_R_RegisterShader( "markShadow2" );
+	cgs.media.shadow2RedMarkShader = trap_R_RegisterShader( "markRedShadow2" );
+	cgs.media.shadow2YellowMarkShader = trap_R_RegisterShader( "markYellowShadow2" );
+	cgs.media.shadow2GreenMarkShader = trap_R_RegisterShader( "markGreenShadow2" );
+	cgs.media.shadow2CyanMarkShader = trap_R_RegisterShader( "markCyanShadow2" );
+	cgs.media.shadow2BlueMarkShader = trap_R_RegisterShader( "markBlueShadow2" );
+	cgs.media.shadow2PinkMarkShader = trap_R_RegisterShader( "markPinkShadow2" );
 	cgs.media.wakeMarkShader = trap_R_RegisterShader( "wake" );
 	cgs.media.bloodMarkShader = trap_R_RegisterShader( "bloodMark" );
 
@@ -2438,11 +2439,6 @@ void CG_FairCvars( void ) {
         if(atoi( rendererinfos ) > 80 ) {
             trap_Cvar_Set("r_subdivisions","80");
             vid_restart_required = qtrue;
-        }
-
-        trap_Cvar_VariableStringBuffer("cg_shadows",rendererinfos,sizeof(rendererinfos) );
-        if (atoi( rendererinfos )!=0 && atoi( rendererinfos )!=1 ) {
-            trap_Cvar_Set("cg_shadows","1");
         }
     }
 
