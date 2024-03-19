@@ -575,8 +575,14 @@ CG_Initialize
 ===================
  */
 void CG_Initialize( void )  {
+	int			i;
+	cvarTable_t	*cv;
+
 	if ( !cg_omegaInitialized.integer ) {
-		CG_SetDefaultsCvars();
+		for ( i = 0, cv = cvarTable ; i < cvarTableSize ; i++, cv++ ) {
+			trap_Cvar_Set( cv->cvarName, cv->defaultString );
+			trap_Cvar_Update( cv->vmCvar );
+		}
 		trap_Cvar_Set( "cg_omegaInitialized", "1" );
 	}
 }
@@ -597,21 +603,6 @@ static void CG_ForceModelChange( void ) {
 			continue;
 		}
 		CG_NewClientInfo( i );
-	}
-}
-
-/*
-=================
-CG_SetDefaultsCvars
-=================
- */
-void CG_SetDefaultsCvars( void ) {
-	int			i;
-	cvarTable_t	*cv;
-
-	for ( i = 0, cv = cvarTable ; i < cvarTableSize ; i++, cv++ ) {
-		trap_Cvar_Set( cv->cvarName, cv->defaultString );
-		trap_Cvar_Update( cv->vmCvar );
 	}
 }
 

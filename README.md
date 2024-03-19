@@ -58,6 +58,7 @@ List of the cvars/additions :
 - g_machinegunDamage
 - g_machinegunTeamDamage
 - g_muteSpectators
+- g_omegaInitialized
 - g_plasmaBounce
 - g_railgunDamage
 - g_railgunFireRate
