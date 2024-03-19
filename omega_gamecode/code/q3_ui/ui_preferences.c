@@ -49,7 +49,7 @@ GAME OPTIONS MENU
 #define ID_SYNCEVERYFRAME		134
 #define ID_FORCEMODEL			135
 #define ID_DRAWTEAMOVERLAY		136
-#define ID_ALLOWDOWNLOAD			137
+#define ID_AUTOSWITCH			137
 #define ID_BACK					138
 //Elimination
 #define ID_WEAPONBAR                    139
@@ -60,7 +60,6 @@ GAME OPTIONS MENU
 #define ID_CROSSHAIRHEALTH      144
 #define ID_CHATBEEP             145
 #define ID_TEAMCHATBEEP         146
-#define ID_AUTOSWITCH		147
 
 #define	NUM_CROSSHAIRS			99
 
@@ -91,10 +90,9 @@ typedef struct {
 	menuradiobutton_s	forcemodel;
 	menulist_s			drawteamoverlay;
         menuradiobutton_s	delaghitscan;
-	menuradiobutton_s	allowdownload;
+	menuradiobutton_s	autoswitch;
         menuradiobutton_s       chatbeep;
         menuradiobutton_s       teamchatbeep;
-	menuradiobutton_s	autoswitch;
 	menubitmap_s		back;
 
 	qhandle_t			crosshairShader[NUM_CROSSHAIRS];
@@ -127,11 +125,10 @@ static void Preferences_SetMenuItems( void ) {
 	s_preferences.synceveryframe.curvalue	= trap_Cvar_VariableValue( "r_finish" ) != 0;
 	s_preferences.forcemodel.curvalue		= trap_Cvar_VariableValue( "cg_forcemodel" ) != 0;
 	s_preferences.drawteamoverlay.curvalue	= Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawTeamOverlay" ) );
-	s_preferences.allowdownload.curvalue	= trap_Cvar_VariableValue( "cl_allowDownload" ) != 0;
+	s_preferences.autoswitch.curvalue	= trap_Cvar_VariableValue( "cg_autoswitch" ) != 0;
         s_preferences.delaghitscan.curvalue	= trap_Cvar_VariableValue( "cg_delag" ) != 0;
         s_preferences.chatbeep.curvalue         = trap_Cvar_VariableValue( "cg_chatBeep" ) != 0;
         s_preferences.teamchatbeep.curvalue     = trap_Cvar_VariableValue( "cg_teamChatBeep" ) != 0;
-	s_preferences.autoswitch.curvalue	= trap_Cvar_VariableValue( "cg_autoswitch" ) != 0;
 }
 
 static void Preferences_Event( void* ptr, int notification ) {
@@ -218,9 +215,8 @@ static void Preferences_Event( void* ptr, int notification ) {
 		trap_Cvar_SetValue( "cg_drawTeamOverlay", s_preferences.drawteamoverlay.curvalue );
 		break;
 
-	case ID_ALLOWDOWNLOAD:
-		trap_Cvar_SetValue( "cl_allowDownload", s_preferences.allowdownload.curvalue );
-		trap_Cvar_SetValue( "sv_allowDownload", s_preferences.allowdownload.curvalue );
+	case ID_AUTOSWITCH:
+		trap_Cvar_SetValue( "cg_autoswitch", s_preferences.autoswitch.curvalue );
 		break;
                
         case ID_DELAGHITSCAN:
@@ -235,10 +231,6 @@ static void Preferences_Event( void* ptr, int notification ) {
         case ID_TEAMCHATBEEP:
                 trap_Cvar_SetValue( "cg_teamChatBeep", s_preferences.teamchatbeep.curvalue );
                 break;
-
-	case ID_AUTOSWITCH:
-		trap_Cvar_SetValue( "cg_autoswitch", s_preferences.autoswitch.curvalue );
-		break;
 
 	case ID_BACK:
 		UI_PopMenu();
@@ -504,14 +496,14 @@ static void Preferences_MenuInit( void ) {
 	s_preferences.delaghitscan.generic.x	       = PREFERENCES_X_POS;
 	s_preferences.delaghitscan.generic.y	       = y;
         
-	y += BIGCHAR_HEIGHT+2;
-	s_preferences.allowdownload.generic.type     = MTYPE_RADIOBUTTON;
-	s_preferences.allowdownload.generic.name	   = "Automatic Downloading:";
-	s_preferences.allowdownload.generic.flags	   = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_preferences.allowdownload.generic.callback = Preferences_Event;
-	s_preferences.allowdownload.generic.id       = ID_ALLOWDOWNLOAD;
-	s_preferences.allowdownload.generic.x	       = PREFERENCES_X_POS;
-	s_preferences.allowdownload.generic.y	       = y;
+        y += BIGCHAR_HEIGHT+2;
+	s_preferences.autoswitch.generic.type     = MTYPE_RADIOBUTTON;
+	s_preferences.autoswitch.generic.name	   = "Automatic Weapons Switching:";
+	s_preferences.autoswitch.generic.flags	   = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_preferences.autoswitch.generic.callback = Preferences_Event;
+	s_preferences.autoswitch.generic.id       = ID_AUTOSWITCH;
+	s_preferences.autoswitch.generic.x	       = PREFERENCES_X_POS;
+	s_preferences.autoswitch.generic.y	       = y;
         
         y += BIGCHAR_HEIGHT+2;
 	s_preferences.chatbeep.generic.type     = MTYPE_RADIOBUTTON;
@@ -530,15 +522,6 @@ static void Preferences_MenuInit( void ) {
 	s_preferences.teamchatbeep.generic.id       = ID_TEAMCHATBEEP;
 	s_preferences.teamchatbeep.generic.x	       = PREFERENCES_X_POS;
 	s_preferences.teamchatbeep.generic.y	       = y;
-
-        y += BIGCHAR_HEIGHT+2;
-	s_preferences.autoswitch.generic.type     = MTYPE_RADIOBUTTON;
-	s_preferences.autoswitch.generic.name	   = "Automatic Weapons Switching:";
-	s_preferences.autoswitch.generic.flags	   = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_preferences.autoswitch.generic.callback = Preferences_Event;
-	s_preferences.autoswitch.generic.id       = ID_AUTOSWITCH;
-	s_preferences.autoswitch.generic.x	       = PREFERENCES_X_POS;
-	s_preferences.autoswitch.generic.y	       = y;
 
 	y += BIGCHAR_HEIGHT+2;
 	s_preferences.back.generic.type	    = MTYPE_BITMAP;
@@ -572,10 +555,9 @@ static void Preferences_MenuInit( void ) {
 	Menu_AddItem( &s_preferences.menu, &s_preferences.forcemodel );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.drawteamoverlay );
         Menu_AddItem( &s_preferences.menu, &s_preferences.delaghitscan );
-	Menu_AddItem( &s_preferences.menu, &s_preferences.allowdownload );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
         Menu_AddItem( &s_preferences.menu, &s_preferences.chatbeep );
         Menu_AddItem( &s_preferences.menu, &s_preferences.teamchatbeep );
-	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
 
 	Menu_AddItem( &s_preferences.menu, &s_preferences.back );
 
