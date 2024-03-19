@@ -267,7 +267,6 @@ typedef struct {
 	menulist_s		driver;
 	menuslider_s	tq;
 	menulist_s  	fs;
-	menulist_s  	lighting;
         menulist_s  	flares;
         menulist_s  	bloom;
 	menulist_s  	allow_extensions;
@@ -289,7 +288,6 @@ typedef struct
 	int mode;
 	qboolean fullscreen;
 	int tq;
-	int lighting;
         qboolean flares;
         qboolean bloom;
 	qboolean drawfps;
@@ -497,7 +495,6 @@ static void GraphicsOptions_GetInitialVideo( void )
 	s_ivo.fullscreen  = s_graphicsoptions.fs.curvalue;
 	s_ivo.extensions  = s_graphicsoptions.allow_extensions.curvalue;
 	s_ivo.tq          = s_graphicsoptions.tq.curvalue;
-	s_ivo.lighting    = s_graphicsoptions.lighting.curvalue;
         s_ivo.flares      = s_graphicsoptions.flares.curvalue;
         s_ivo.bloom      = s_graphicsoptions.bloom.curvalue;
 	s_ivo.drawfps	= s_graphicsoptions.drawfps.curvalue;
@@ -556,8 +553,6 @@ static void GraphicsOptions_CheckConfig( void )
 		if ( s_ivo_templates[i].fullscreen != s_graphicsoptions.fs.curvalue )
 			continue;
 		if ( s_ivo_templates[i].tq != s_graphicsoptions.tq.curvalue )
-			continue;
-		if ( s_ivo_templates[i].lighting != s_graphicsoptions.lighting.curvalue )
 			continue;
                 if ( s_ivo_templates[i].flares != s_graphicsoptions.flares.curvalue )
 			continue;
@@ -625,10 +620,6 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 	if ( s_ivo.tq != s_graphicsoptions.tq.curvalue )
-	{
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
-	}
-	if ( s_ivo.lighting != s_graphicsoptions.lighting.curvalue )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
@@ -730,8 +721,6 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 	trap_Cvar_SetValue( "r_colorbits", 0 );
 	trap_Cvar_SetValue( "r_depthbits", 0 );
 	trap_Cvar_SetValue( "r_stencilbits", 0 );
-	trap_Cvar_SetValue( "r_vertexLight", s_graphicsoptions.lighting.curvalue );
-        trap_Cvar_SetValue( "cg_autovertex", s_graphicsoptions.lighting.curvalue );
         trap_Cvar_SetValue( "r_flares", s_graphicsoptions.flares.curvalue );
         trap_Cvar_SetValue( "r_bloom", s_graphicsoptions.bloom.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
@@ -816,7 +805,6 @@ static void GraphicsOptions_Event( void* ptr, int event ) {
 		s_graphicsoptions.mode.curvalue        = GraphicsOptions_FindDetectedResolution(ivo->mode);
                 s_graphicsoptions.ratio.curvalue       = resToRatio[ s_graphicsoptions.mode.curvalue ];
 		s_graphicsoptions.tq.curvalue          = ivo->tq;
-		s_graphicsoptions.lighting.curvalue    = ivo->lighting;
 		s_graphicsoptions.texturebits.curvalue = ivo->texturebits;
 		s_graphicsoptions.geometry.curvalue    = ivo->geometry;
 		s_graphicsoptions.filter.curvalue      = ivo->filter;
@@ -941,7 +929,6 @@ static void GraphicsOptions_SetMenuItems( void )
 		s_graphicsoptions.tq.curvalue = 3;
 	}
 
-	s_graphicsoptions.lighting.curvalue = trap_Cvar_VariableValue( "r_vertexLight" ) != 0;
 	switch ( ( int ) trap_Cvar_VariableValue( "r_texturebits" ) )
 	{
 	default:
@@ -1018,14 +1005,6 @@ void GraphicsOptions_MenuInit( void )
 		"Custom",
 		NULL
 	};
-
-	static const char *lighting_names[] =
-	{
-		"Lightmap (Normal)",
-		"Vertex (Low)",
-		NULL
-	};
-
 
 	static const char *filter_names[] =
 	{
@@ -1216,15 +1195,6 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.fs.generic.y	      = y;
 	s_graphicsoptions.fs.itemnames	      = enabled_names;
 	y += BIGCHAR_HEIGHT+2;
-
-	// references/modifies "r_vertexLight"
-	s_graphicsoptions.lighting.generic.type  = MTYPE_SPINCONTROL;
-	s_graphicsoptions.lighting.generic.name	 = "Lighting:";
-	s_graphicsoptions.lighting.generic.flags = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_graphicsoptions.lighting.generic.x	 = 400;
-	s_graphicsoptions.lighting.generic.y	 = y;
-	s_graphicsoptions.lighting.itemnames     = lighting_names;
-	y += BIGCHAR_HEIGHT+2;
         
         // references/modifies "r_flares"
 	s_graphicsoptions.flares.generic.type     = MTYPE_SPINCONTROL;
@@ -1361,7 +1331,6 @@ void GraphicsOptions_MenuInit( void )
         Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.ratio );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.mode );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.fs );
-	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.lighting );
         Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.flares );
         Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.bloom );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.drawfps );
