@@ -255,7 +255,7 @@ static void Main_MenuDraw( void ) {
 UI_TeamArenaExists
 ===============
 */
-static qboolean UI_TeamArenaExists( void )
+/*static qboolean UI_TeamArenaExists( void )
 {
 	int		numdirs;
 	char	dirlist[2048];
@@ -275,7 +275,7 @@ static qboolean UI_TeamArenaExists( void )
 		dirptr += dirlen + strlen(descptr) + 1;
 	}
 	return qfalse;
-}
+}*/
 
 
 /*
@@ -289,7 +289,7 @@ and that local cinematics are killed
 */
 void UI_MainMenu( void ) {
 	int		y;
-	qboolean teamArena = qfalse;
+	//qboolean teamArena = qfalse;
 	int		style = UI_CENTER | UI_DROPSHADOW;
 
 	trap_Cvar_Set( "sv_killserver", "1" );

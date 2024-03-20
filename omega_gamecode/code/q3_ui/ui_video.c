@@ -240,7 +240,7 @@ GRAPHICS OPTIONS MENU
 
 #define ID_BACK2		101
 #define ID_FULLSCREEN	102
-#define ID_LIST			103
+#define ID_DESKTOP              103
 #define ID_MODE			104
 #define ID_DRIVERINFO	105
 #define ID_GRAPHICS		106
@@ -261,7 +261,7 @@ typedef struct {
 	menutext_s		sound;
 	menutext_s		network;
 
-	menulist_s		list;
+	menulist_s  	desktop;
         menulist_s              ratio;
 	menulist_s		mode;
 	menuslider_s	tq;
@@ -299,34 +299,11 @@ typedef struct
         int anti;
         int supersample;
 	qboolean extensions;
+	qboolean desktop;
 } InitialVideoOptions_s;
 
 static InitialVideoOptions_s	s_ivo;
 static graphicsoptions_t		s_graphicsoptions;	
-
-static InitialVideoOptions_s s_ivo_templates[] =
-{
-	{
-		6, qtrue, 3, 0, qfalse,qfalse, 2, 2, 1, 0, 0, qtrue
-	},
-	{
-		4, qtrue, 2, 0, qfalse,qfalse, 2, 1, 1, 0, 0, qtrue	// JDC: this was tq 3
-	},
-	{
-		3, qtrue, 2, 0, qfalse,qfalse, 0, 1, 0, 0, 0, qtrue
-	},
-	{
-		2, qtrue, 1, 0, qfalse,qfalse, 0, 0, 0, 0, 0, qtrue
-	},
-	{
-		2, qtrue, 1, 1, qfalse,qfalse, 0, 0, 0, 0, 0, qtrue
-	},
-	{
-		3, qtrue, 1, 0, qfalse,qfalse, 0, 1, 0, 0, 0, qtrue
-	}
-};
-
-#define NUM_IVO_TEMPLATES ( sizeof( s_ivo_templates ) / sizeof( s_ivo_templates[0] ) )
 
 static const char *builtinResolutions[ ] =
 {
@@ -494,6 +471,7 @@ static void GraphicsOptions_GetInitialVideo( void )
 	s_ivo.mode        = s_graphicsoptions.mode.curvalue;
 	s_ivo.fullscreen  = s_graphicsoptions.fs.curvalue;
 	s_ivo.extensions  = s_graphicsoptions.allow_extensions.curvalue;
+	s_ivo.desktop  = s_graphicsoptions.desktop.curvalue;
 	s_ivo.tq          = s_graphicsoptions.tq.curvalue;
         s_ivo.flares      = s_graphicsoptions.flares.curvalue;
         s_ivo.bloom      = s_graphicsoptions.bloom.curvalue;
@@ -538,51 +516,6 @@ static void GraphicsOptions_GetResolutions( void )
 
 /*
 =================
-GraphicsOptions_CheckConfig
-=================
-*/
-static void GraphicsOptions_CheckConfig( void )
-{
-	int i;
-
-	for ( i = 0; i < NUM_IVO_TEMPLATES-1; i++ )
-	{
-		if ( GraphicsOptions_FindDetectedResolution(s_ivo_templates[i].mode) != s_graphicsoptions.mode.curvalue )
-			continue;
-		if ( s_ivo_templates[i].fullscreen != s_graphicsoptions.fs.curvalue )
-			continue;
-		if ( s_ivo_templates[i].tq != s_graphicsoptions.tq.curvalue )
-			continue;
-                if ( s_ivo_templates[i].flares != s_graphicsoptions.flares.curvalue )
-			continue;
-                if ( s_ivo_templates[i].bloom != s_graphicsoptions.bloom.curvalue )
-			continue;
-                if ( s_ivo_templates[i].drawfps != s_graphicsoptions.drawfps.curvalue )
-			continue;
-		if ( s_ivo_templates[i].geometry != s_graphicsoptions.geometry.curvalue )
-			continue;
-		if ( s_ivo_templates[i].shadows != s_graphicsoptions.shadows.curvalue )
-			continue;
-		if ( s_ivo_templates[i].filter != s_graphicsoptions.filter.curvalue )
-			continue;
-                if ( s_ivo_templates[i].aniso != s_graphicsoptions.aniso.curvalue )
-			continue;
-                if ( s_ivo_templates[i].anti != s_graphicsoptions.anti.curvalue )
-			continue;
-                if ( s_ivo_templates[i].supersample != s_graphicsoptions.supersample.curvalue )
-			continue;
-//		if ( s_ivo_templates[i].texturebits != s_graphicsoptions.texturebits.curvalue )
-//			continue;
-		s_graphicsoptions.list.curvalue = i;
-		return;
-	}
-
-	// return 'Custom' ivo template
-	s_graphicsoptions.list.curvalue = NUM_IVO_TEMPLATES - 1;
-}
-
-/*
-=================
 GraphicsOptions_UpdateMenuItems
 =================
 */
@@ -596,6 +529,17 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		}
 	}
 
+	if ( s_graphicsoptions.desktop.curvalue == 1 )
+	{
+		s_graphicsoptions.ratio.generic.flags |= QMF_GRAYED;
+		s_graphicsoptions.mode.generic.flags |= QMF_GRAYED;
+	}
+	else
+	{
+		s_graphicsoptions.ratio.generic.flags &= ~QMF_GRAYED;
+		s_graphicsoptions.mode.generic.flags &= ~QMF_GRAYED;
+	}
+
 	s_graphicsoptions.apply.generic.flags |= QMF_HIDDEN|QMF_INACTIVE;
 
 	if ( s_ivo.mode != s_graphicsoptions.mode.curvalue )
@@ -607,6 +551,10 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 	if ( s_ivo.extensions != s_graphicsoptions.allow_extensions.curvalue )
+	{
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+	}
+	if ( s_ivo.desktop != s_graphicsoptions.desktop.curvalue )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
@@ -654,8 +602,6 @@ static void GraphicsOptions_UpdateMenuItems( void )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
-
-	GraphicsOptions_CheckConfig();
 }	
 
 /*
@@ -682,8 +628,11 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 	}
 	trap_Cvar_SetValue( "r_picmip", 3 - s_graphicsoptions.tq.curvalue );
 	trap_Cvar_SetValue( "r_allowExtensions", s_graphicsoptions.allow_extensions.curvalue );
-
-	if( resolutionsDetected )
+	if ( s_graphicsoptions.desktop.curvalue == 1 )
+	{
+		trap_Cvar_SetValue( "r_mode", -2 );
+	}
+	else if( resolutionsDetected )
 	{
 		// search for builtin mode that matches the detected mode
 		int mode;
@@ -790,7 +739,6 @@ GraphicsOptions_Event
 =================
 */
 static void GraphicsOptions_Event( void* ptr, int event ) {
-	InitialVideoOptions_s *ivo;
 
 	if( event != QM_ACTIVATED ) {
 	 	return;
@@ -803,25 +751,6 @@ static void GraphicsOptions_Event( void* ptr, int event ) {
 	case ID_MODE:
 		// clamp 3dfx video modes
                 s_graphicsoptions.ratio.curvalue = resToRatio[ s_graphicsoptions.mode.curvalue ];
-		break;
-
-	case ID_LIST:
-		ivo = &s_ivo_templates[s_graphicsoptions.list.curvalue];
-
-		s_graphicsoptions.mode.curvalue        = GraphicsOptions_FindDetectedResolution(ivo->mode);
-                s_graphicsoptions.ratio.curvalue       = resToRatio[ s_graphicsoptions.mode.curvalue ];
-		s_graphicsoptions.tq.curvalue          = ivo->tq;
-		s_graphicsoptions.texturebits.curvalue = ivo->texturebits;
-		s_graphicsoptions.geometry.curvalue    = ivo->geometry;
-		s_graphicsoptions.shadows.curvalue    = ivo->shadows;
-		s_graphicsoptions.filter.curvalue      = ivo->filter;
-                s_graphicsoptions.aniso.curvalue       = ivo->aniso;
-                s_graphicsoptions.supersample.curvalue       = ivo->anti;
-                s_graphicsoptions.anti.curvalue       = ivo->supersample;
-		s_graphicsoptions.fs.curvalue          = ivo->fullscreen;
-                s_graphicsoptions.flares.curvalue      = ivo->flares;
-                s_graphicsoptions.bloom.curvalue      = ivo->bloom;
-		s_graphicsoptions.drawfps.curvalue	= ivo->drawfps;
 		break;
 
 	case ID_DRIVERINFO:
@@ -918,6 +847,11 @@ static void GraphicsOptions_SetMenuItems( void )
 	}
 	s_graphicsoptions.fs.curvalue = trap_Cvar_VariableValue("r_fullscreen");
 	s_graphicsoptions.allow_extensions.curvalue = trap_Cvar_VariableValue("r_allowExtensions");
+	if ( trap_Cvar_VariableValue("r_mode") == -2 ) {
+		s_graphicsoptions.desktop.curvalue = 1;
+	} else {
+		s_graphicsoptions.desktop.curvalue = 0;
+	}
         s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue("r_flares");
         s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue("r_bloom");
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue("cg_drawFPS");
@@ -993,17 +927,6 @@ void GraphicsOptions_MenuInit( void )
 		"Default",
 		"16 bit",
 		"32 bit",
-		NULL
-	};
-
-	static const char *s_graphics_options_names[] =
-	{
-		"Very High Quality",
-		"High Quality",
-		"Normal",
-		"Fast",
-		"Fastest",
-		"Custom",
 		NULL
 	};
 
@@ -1148,16 +1071,6 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.network.color				= color_red;
 
 	y = 240 - 7 * (BIGCHAR_HEIGHT + 2);
-	s_graphicsoptions.list.generic.type     = MTYPE_SPINCONTROL;
-	s_graphicsoptions.list.generic.name     = "Graphics Settings:";
-	s_graphicsoptions.list.generic.flags    = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_graphicsoptions.list.generic.x        = 400;
-	s_graphicsoptions.list.generic.y        = y;
-	s_graphicsoptions.list.generic.callback = GraphicsOptions_Event;
-	s_graphicsoptions.list.generic.id       = ID_LIST;
-	s_graphicsoptions.list.itemnames        = s_graphics_options_names;
-	y += 2 * ( BIGCHAR_HEIGHT + 2 );
-
 	// references/modifies "r_allowExtensions"
 	s_graphicsoptions.allow_extensions.generic.type     = MTYPE_SPINCONTROL;
 	s_graphicsoptions.allow_extensions.generic.name	    = "GL Extensions:";
@@ -1165,6 +1078,14 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.allow_extensions.generic.x	    = 400;
 	s_graphicsoptions.allow_extensions.generic.y	    = y;
 	s_graphicsoptions.allow_extensions.itemnames        = enabled_names;
+	y += BIGCHAR_HEIGHT+2;
+
+	s_graphicsoptions.desktop.generic.type   = MTYPE_SPINCONTROL;
+	s_graphicsoptions.desktop.generic.name   = "Use Desktop Resolution:";
+	s_graphicsoptions.desktop.generic.flags  = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_graphicsoptions.desktop.generic.x      = 400;
+	s_graphicsoptions.desktop.generic.y      = y;
+	s_graphicsoptions.desktop.itemnames      = enabled_names;
 	y += BIGCHAR_HEIGHT+2;
 
         s_graphicsoptions.ratio.generic.type     = MTYPE_SPINCONTROL;
@@ -1336,8 +1257,8 @@ void GraphicsOptions_MenuInit( void )
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.sound );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.network );
 
-	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.list );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.allow_extensions );
+	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.desktop );
         Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.ratio );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.mode );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.fs );
