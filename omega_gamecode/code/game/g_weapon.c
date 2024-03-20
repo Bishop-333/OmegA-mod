@@ -540,6 +540,7 @@ weapon_railgun_fire
 void weapon_railgun_fire (gentity_t *ent) {
 	vec3_t		end;
 	vec3_t impactpoint, bouncedir;
+	vec3_t tracefrom;
 	trace_t		trace;
 	gentity_t	*tent;
 	gentity_t	*traceEnt;
@@ -555,6 +556,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 		damage = 800;
 
 	VectorMA (muzzle, 8192, forward, end);
+	VectorCopy (muzzle, tracefrom);
 
 //unlagged - backward reconciliation #2
 	// backward-reconcile the other clients
@@ -566,12 +568,25 @@ void weapon_railgun_fire (gentity_t *ent) {
 	hits = 0;
 	passent = ent->s.number;
 	do {
-		trap_Trace (&trace, muzzle, NULL, NULL, end, passent, MASK_SHOT );
+		if ( g_railThroughWalls.integer ) {
+			trap_Trace (&trace, tracefrom, NULL, NULL, end, ent->s.number, MASK_SHOT );
+		} else {
+			trap_Trace (&trace, muzzle, NULL, NULL, end, passent, MASK_SHOT );
+		}
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
 			if ( g_railJump.integer ) {
 				G_RailJump( trace.endpos, ent );
+				break;
+			} else if ( g_railThroughWalls.integer ) {
+				if ( trace.surfaceFlags & SURF_SKY || trace.fraction == 1.0 ) {
+					break;
+				} else {
+					VectorMA (trace.endpos, 1, forward, tracefrom);
+					continue;
+				}
+			} else {
+				break;
 			}
-			break;
 		}
 		traceEnt = &g_entities[ trace.entityNum ];
 		if ( traceEnt->takedamage ) {
@@ -647,6 +662,7 @@ void weapon_railgun_fire (gentity_t *ent) {
 		tent->s.eventParm = DirToByte( trace.plane.normal );
 	}
 	tent->s.clientNum = ent->s.clientNum;
+	tent->r.svFlags |= SVF_BROADCAST;
 
 	// give the shooter a reward sound if they have made two railgun hits in a row
 	if ( hits == 0 ) {

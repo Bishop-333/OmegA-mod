@@ -1189,6 +1189,7 @@ extern vmCvar_t g_plasmaBounce;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railgunFireRate;
 extern vmCvar_t g_railJump;
+extern vmCvar_t g_railThroughWalls;
 extern vmCvar_t g_rocketFireRate;
 extern vmCvar_t g_rocketSpeed;
 extern vmCvar_t g_selfDamage;
