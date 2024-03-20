@@ -127,6 +127,7 @@ typedef struct
 #define ID_JOYTHRESHOLD	45
 #define ID_SMOOTHMOUSE	46
 #define ID_VOIP_TEAMONLY 47
+#define ID_FOV		48
 
 
 
@@ -214,6 +215,7 @@ typedef struct
 	menuradiobutton_s	invertmouse;
 	menuslider_s		sensitivity;
 	menuradiobutton_s	smoothmouse;
+	menuslider_s		fov;
 	menuradiobutton_s	alwaysrun;
 	menuaction_s		showscores;
 	menulist_s              autoswitch;
@@ -309,6 +311,7 @@ static configcvar_t g_configcvars[] =
 	{"m_pitch",			0,					0},
 	{"cg_autoswitch",	0,					0},
 	{"sensitivity",		0,					0},
+	{"cg_fov",		0,					0},
 	{"in_joystick",		0,					0},
 	{"joy_threshold",	0,					0},
 	{"m_filter",		0,					0},
@@ -358,6 +361,7 @@ static menucommon_s *g_looking_controls[] = {
 	(menucommon_s *)&s_controls.sensitivity,
 	(menucommon_s *)&s_controls.smoothmouse,
 	(menucommon_s *)&s_controls.invertmouse,
+	(menucommon_s *)&s_controls.fov,
 	(menucommon_s *)&s_controls.lookup,
 	(menucommon_s *)&s_controls.lookdown,
 	(menucommon_s *)&s_controls.mouselook,
@@ -869,6 +873,7 @@ static void Controls_GetConfig( void )
 	s_controls.alwaysrun.curvalue    = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "cl_run" ) );
 	s_controls.autoswitch.curvalue   = UI_ClampCvar( 0, 4, Controls_GetCvarValue( "cg_autoswitch" ) );
 	s_controls.sensitivity.curvalue  = UI_ClampCvar( 2, 30, Controls_GetCvarValue( "sensitivity" ) );
+	s_controls.fov.curvalue  = UI_ClampCvar( 90, 130, Controls_GetCvarValue( "cg_fov" ) );
 	s_controls.joyenable.curvalue    = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "in_joystick" ) );
 	s_controls.joythreshold.curvalue = UI_ClampCvar( 0.05f, 0.75f, Controls_GetCvarValue( "joy_threshold" ) );
 	s_controls.freelook.curvalue     = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "cl_freelook" ) );
@@ -912,6 +917,7 @@ static void Controls_SetConfig( void )
 	trap_Cvar_SetValue( "cl_run", s_controls.alwaysrun.curvalue );
 	trap_Cvar_SetValue( "cg_autoswitch", s_controls.autoswitch.curvalue );
 	trap_Cvar_SetValue( "sensitivity", s_controls.sensitivity.curvalue );
+	trap_Cvar_SetValue( "cg_fov", s_controls.fov.curvalue );
 	trap_Cvar_SetValue( "in_joystick", s_controls.joyenable.curvalue );
 	trap_Cvar_SetValue( "joy_threshold", s_controls.joythreshold.curvalue );
 	trap_Cvar_SetValue( "cl_freelook", s_controls.freelook.curvalue );
@@ -947,6 +953,7 @@ static void Controls_SetDefaults( void )
 	s_controls.alwaysrun.curvalue    = Controls_GetCvarDefault( "cl_run" );
 	s_controls.autoswitch.curvalue   = Controls_GetCvarDefault( "cg_autoswitch" );
 	s_controls.sensitivity.curvalue  = Controls_GetCvarDefault( "sensitivity" );
+        s_controls.fov.curvalue          = Controls_GetCvarDefault( "cg_fov");
 	s_controls.joyenable.curvalue    = Controls_GetCvarDefault( "in_joystick" );
 	s_controls.joythreshold.curvalue = Controls_GetCvarDefault( "joy_threshold" );
 	s_controls.freelook.curvalue     = Controls_GetCvarDefault( "cl_freelook" );
@@ -1177,6 +1184,7 @@ static void Controls_MenuEvent( void* ptr, int event )
 		case ID_MOUSESPEED:
 		case ID_INVERTMOUSE:
 		case ID_SMOOTHMOUSE:
+		case ID_FOV:
 		case ID_ALWAYSRUN:
 		case ID_AUTOSWITCH:
                 case ID_VOIP_TEAMONLY:
@@ -1592,6 +1600,16 @@ static void Controls_MenuInit( void )
 	s_controls.sensitivity.maxvalue		     = 30;
 	s_controls.sensitivity.generic.statusbar = Controls_StatusBar;
 
+	s_controls.fov.generic.type	     = MTYPE_SLIDER;
+	s_controls.fov.generic.x		 = SCREEN_WIDTH/2;
+	s_controls.fov.generic.flags	 = QMF_SMALLFONT;
+	s_controls.fov.generic.name	     = "Field of View";
+	s_controls.fov.generic.id 	     = ID_FOV;
+	s_controls.fov.generic.callback  = Controls_MenuEvent;
+	s_controls.fov.minvalue		     = 90;
+	s_controls.fov.maxvalue		     = 130;
+	s_controls.fov.generic.statusbar = Controls_StatusBar;
+
 	s_controls.gesture.generic.type	     = MTYPE_ACTION;
 	s_controls.gesture.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
 	s_controls.gesture.generic.callback  = Controls_ActionEvent;
@@ -1676,6 +1694,7 @@ static void Controls_MenuInit( void )
 	Menu_AddItem( &s_controls.menu, &s_controls.sensitivity );
 	Menu_AddItem( &s_controls.menu, &s_controls.smoothmouse );
 	Menu_AddItem( &s_controls.menu, &s_controls.invertmouse );
+	Menu_AddItem( &s_controls.menu, &s_controls.fov );
 	Menu_AddItem( &s_controls.menu, &s_controls.lookup );
 	Menu_AddItem( &s_controls.menu, &s_controls.lookdown );
 	Menu_AddItem( &s_controls.menu, &s_controls.mouselook );
