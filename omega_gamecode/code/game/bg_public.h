@@ -222,6 +222,7 @@ typedef struct {
 	//OmegA
 	int			airControl;
         int                     autohop;
+        int                     chaos;
 	int			overbounce;
 	int			railgunFireRate;
 	int			rocketFireRate;

@@ -1172,6 +1172,7 @@ extern vmCvar_t g_ambientSounds;
 extern vmCvar_t g_autohop;
 extern vmCvar_t g_botChat;
 extern vmCvar_t g_beheading;
+extern vmCvar_t g_chaos;
 extern vmCvar_t g_damagePlums;
 extern vmCvar_t g_dropFlag;
 extern vmCvar_t g_easierPickup;

@@ -1730,43 +1730,43 @@ static void PM_Weapon( void ) {
 	switch( pm->ps->weapon ) {
 	default:
 	case WP_GAUNTLET:
-		addTime = 400;
+		addTime = 400 - pm->chaos * 400;
 		break;
 	case WP_LIGHTNING:
-		addTime = 50;
+		addTime = 50 - pm->chaos * 50;
 		break;
 	case WP_SHOTGUN:
-		addTime = 1000;
+		addTime = 1000 - pm->chaos * 1000;
 		break;
 	case WP_MACHINEGUN:
-		addTime = 100;
+		addTime = 100 - pm->chaos * 100;
 		break;
 	case WP_GRENADE_LAUNCHER:
-		addTime = 800;
+		addTime = 800 - pm->chaos * 800;
 		break;
 	case WP_ROCKET_LAUNCHER:
-		addTime = 1600 - pm->rocketFireRate;
+		addTime = 1600 - pm->rocketFireRate - pm->chaos * 800;
 		break;
 	case WP_PLASMAGUN:
-		addTime = 100;
+		addTime = 100 - pm->chaos * 100;
 		break;
 	case WP_RAILGUN:
-		addTime = 3000 - pm->railgunFireRate;
+		addTime = 3000 - pm->railgunFireRate - pm->chaos * 1500;
 		break;
 	case WP_BFG:
-		addTime = 200;
+		addTime = 200 - pm->chaos * 200;
 		break;
 	case WP_GRAPPLING_HOOK:
 		addTime = 400;
 		break;
 	case WP_NAILGUN:
-		addTime = 1000;
+		addTime = 1000 - pm->chaos * 900;
 		break;
 	case WP_PROX_LAUNCHER:
-		addTime = 800;
+		addTime = 800 - pm->chaos * 800;
 		break;
 	case WP_CHAINGUN:
-		addTime = 30;
+		addTime = 30 - pm->chaos * 30;
 		break;
 	}
 

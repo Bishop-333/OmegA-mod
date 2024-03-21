@@ -45,6 +45,7 @@ List of the cvars/additions :
 - g_autohop
 - g_beheading
 - g_botChat
+- g_chaos
 - g_damagePlums
 - g_dropFlag
 - g_easierPickup
@@ -63,6 +64,7 @@ List of the cvars/additions :
 - g_railgunDamage
 - g_railgunFireRate
 - g_railJump
+- g_railThroughWalls
 - g_rocketFireRate
 - g_rocketSpeed
 - g_selfDamage
