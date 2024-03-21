@@ -2629,9 +2629,13 @@ void CG_Player( centity_t *cent ) {
 	//
 	legs.hModel = ci->legsModel;
 	legs.customSkin = ci->legsSkin;
-	legs.shaderRGBA[0] = ci->color2[0] * 255;
-	legs.shaderRGBA[1] = ci->color2[1] * 255;
-	legs.shaderRGBA[2] = ci->color2[2] * 255;
+	if ( cent->currentState.eFlags & EF_DEAD ) {
+		legs.shaderRGBA[0] = legs.shaderRGBA[1] = legs.shaderRGBA[2] = 25;
+	} else {
+		legs.shaderRGBA[0] = ci->color2[0] * 255;
+		legs.shaderRGBA[1] = ci->color2[1] * 255;
+		legs.shaderRGBA[2] = ci->color2[2] * 255;
+	}
 	legs.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, legs.origin );
@@ -2657,9 +2661,13 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	torso.customSkin = ci->torsoSkin;
-	torso.shaderRGBA[0] = ci->color2[0] * 255;
-	torso.shaderRGBA[1] = ci->color2[1] * 255;
-	torso.shaderRGBA[2] = ci->color2[2] * 255;
+	if ( cent->currentState.eFlags & EF_DEAD ) {
+		torso.shaderRGBA[0] = torso.shaderRGBA[1] = torso.shaderRGBA[2] = 25;
+	} else {
+		torso.shaderRGBA[0] = ci->color2[0] * 255;
+		torso.shaderRGBA[1] = ci->color2[1] * 255;
+		torso.shaderRGBA[2] = ci->color2[2] * 255;
+	}
 	torso.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, torso.lightingOrigin );
@@ -2884,9 +2892,13 @@ void CG_Player( centity_t *cent ) {
 		return;
 	}
 	head.customSkin = ci->headSkin;
-	head.shaderRGBA[0] = ci->color2[0] * 255;
-	head.shaderRGBA[1] = ci->color2[1] * 255;
-	head.shaderRGBA[2] = ci->color2[2] * 255;
+	if ( cent->currentState.eFlags & EF_DEAD ) {
+		head.shaderRGBA[0] = head.shaderRGBA[1] = head.shaderRGBA[2] = 25;
+	} else {
+		head.shaderRGBA[0] = ci->color2[0] * 255;
+		head.shaderRGBA[1] = ci->color2[1] * 255;
+		head.shaderRGBA[2] = ci->color2[2] * 255;
+	}
 	head.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, head.lightingOrigin );
