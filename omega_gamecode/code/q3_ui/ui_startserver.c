@@ -112,7 +112,7 @@ static const char *gametype_items[] = {
 };
 
 static const char *s_weapon_names[] = {
-	"All",
+	"Off",
 	"Gauntlet",
 	"Machinegun",
 	"Shotgun",
@@ -125,6 +125,7 @@ static const char *s_weapon_names[] = {
 	"Nailgun",
 	"Proximity Launcher",
         "Chaingun",
+	"All Weapons",
 	NULL
 };
 
@@ -1436,7 +1437,7 @@ static void ServerOptions_SetMenuItems( void ) {
 	Q_strncpyz( s_serveroptions.hostname.field.buffer, UI_Cvar_VariableString( "sv_hostname" ), sizeof( s_serveroptions.hostname.field.buffer ) );
 	s_serveroptions.pure.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "sv_pure" ) );
         s_serveroptions.instantgib.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "g_instantgib" ) );
-        s_serveroptions.weaponarena.curvalue = Com_Clamp( 0, 12, trap_Cvar_VariableValue( "g_weaponArena" ) );
+        s_serveroptions.weaponarena.curvalue = Com_Clamp( 0, 13, trap_Cvar_VariableValue( "g_weaponArena" ) );
         s_serveroptions.lmsMode.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue("g_lms_mode") );
         s_serveroptions.oneway.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "elimination_ctf_oneway" ) );
 

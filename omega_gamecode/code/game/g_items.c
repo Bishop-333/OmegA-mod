@@ -912,7 +912,7 @@ void ClearRegisteredItems( void ) {
 		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 		RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
 		if(g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION 
-                        || g_gametype.integer == GT_LMS || g_elimination_allgametypes.integer)
+                        || g_gametype.integer == GT_LMS || g_elimination_allgametypes.integer || g_weaponArena.integer == 13)
 		{
 			RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_GRENADE_LAUNCHER ) );
