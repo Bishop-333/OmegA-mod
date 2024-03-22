@@ -42,7 +42,10 @@ NETWORK OPTIONS MENU
 #define ID_NETWORK			13
 #define ID_RATE				14
 #define ID_ALLOWDOWNLOAD		15
-#define ID_BACK				16
+#define ID_FORWARDER			16
+#define ID_BACK				17
+
+#define MAX_ADDRLENGTH	30
 
 
 const char *rate_items[] = {
@@ -68,11 +71,79 @@ typedef struct {
 
 	menulist_s		rate;
 	menuradiobutton_s	allowdownload;
+	menuradiobutton_s	forwarder;
+	menufield_s		address;
 
 	menubitmap_s	back;
 } networkOptionsInfo_t;
 
 static networkOptionsInfo_t	networkOptionsInfo;
+
+
+/*
+=================
+Network_DrawAddress
+=================
+*/
+static void Network_DrawAddress( void *self ) {
+	menufield_s		*f;
+	qboolean		focus;
+	qboolean		forwarder;
+	int				style;
+	char			*txt;
+	char			c;
+	float			*color;
+	int				n;
+	int				basex, x, y;
+	char			address[32];
+
+	f = (menufield_s*)self;
+	basex = f->generic.x;
+	y = f->generic.y;
+	focus = (f->generic.parent->cursor == f->generic.menuPosition);
+	forwarder = (networkOptionsInfo.forwarder.curvalue == 1);
+
+	style = UI_LEFT|UI_SMALLFONT;
+	if ( forwarder ) {
+		color = text_color_normal;
+		if( focus ) {
+			style |= UI_PULSE;
+			color = text_color_highlight;
+		}
+	} else {
+		color = text_color_disabled;
+	}
+
+	// draw the actual address
+	basex += 48;
+	y += PROP_HEIGHT;
+	txt = f->field.buffer;
+	x = basex;
+	if ( forwarder ) {
+		while ( (c = *txt) != 0 ) {
+			UI_DrawChar( x, y, c, style, color );
+			txt++;
+			x += SMALLCHAR_WIDTH;
+			trap_Cvar_Set( "fwd_addr", networkOptionsInfo.address.field.buffer );
+		}
+	}
+
+	UI_DrawString( basex - 8 - SMALLCHAR_WIDTH, y, f->generic.name, UI_RIGHT|UI_SMALLFONT, color );
+
+	// draw cursor if we have focus
+	if( focus && forwarder ) {
+		if ( trap_Key_GetOverstrikeMode() ) {
+			c = 11;
+		} else {
+			c = 10;
+		}
+
+		style &= ~UI_PULSE;
+		style |= UI_BLINK;
+
+		UI_DrawChar( basex + f->field.cursor * SMALLCHAR_WIDTH, y, c, style, color );
+	}
+}
 
 
 /*
@@ -122,11 +193,14 @@ static void UI_NetworkOptionsMenu_Event( void* ptr, int event ) {
 		}
 		break;
 
-
 	case ID_ALLOWDOWNLOAD:
 		trap_Cvar_SetValue( "cl_allowDownload", networkOptionsInfo.allowdownload.curvalue );
 		trap_Cvar_SetValue( "cl_mapAutoDownload", networkOptionsInfo.allowdownload.curvalue );
 		trap_Cvar_SetValue( "sv_allowDownload", networkOptionsInfo.allowdownload.curvalue );
+		break;
+
+	case ID_FORWARDER:
+		trap_Cvar_SetValue( "fwd_use", networkOptionsInfo.forwarder.curvalue );
 		break;
 
 	case ID_BACK:
@@ -226,13 +300,36 @@ static void UI_NetworkOptionsMenu_Init( void ) {
 	networkOptionsInfo.rate.itemnames			= rate_items;
 
 	y += BIGCHAR_HEIGHT+2;
-	networkOptionsInfo.allowdownload.generic.type     = MTYPE_RADIOBUTTON;
-	networkOptionsInfo.allowdownload.generic.name	   = "Auto Downloading:";
-	networkOptionsInfo.allowdownload.generic.flags	   = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	networkOptionsInfo.allowdownload.generic.callback = UI_NetworkOptionsMenu_Event;
-	networkOptionsInfo.allowdownload.generic.id       = ID_ALLOWDOWNLOAD;
-	networkOptionsInfo.allowdownload.generic.x	       = 400;
-	networkOptionsInfo.allowdownload.generic.y	       = y;
+	networkOptionsInfo.allowdownload.generic.type		= MTYPE_RADIOBUTTON;
+	networkOptionsInfo.allowdownload.generic.name		= "Auto Downloading:";
+	networkOptionsInfo.allowdownload.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	networkOptionsInfo.allowdownload.generic.callback	= UI_NetworkOptionsMenu_Event;
+	networkOptionsInfo.allowdownload.generic.id		= ID_ALLOWDOWNLOAD;
+	networkOptionsInfo.allowdownload.generic.x		= 400;
+	networkOptionsInfo.allowdownload.generic.y		= y;
+
+	y += BIGCHAR_HEIGHT+2;
+	networkOptionsInfo.forwarder.generic.type	= MTYPE_RADIOBUTTON;
+	networkOptionsInfo.forwarder.generic.name	= "Forwarder:";
+	networkOptionsInfo.forwarder.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	networkOptionsInfo.forwarder.generic.callback	= UI_NetworkOptionsMenu_Event;
+	networkOptionsInfo.forwarder.generic.id		= ID_FORWARDER;
+	networkOptionsInfo.forwarder.generic.x		= 400;
+	networkOptionsInfo.forwarder.generic.y		= y;
+
+	y += BIGCHAR_HEIGHT+2;
+	networkOptionsInfo.address.generic.type		= MTYPE_FIELD;
+	networkOptionsInfo.address.generic.name		= "Address:";
+	networkOptionsInfo.address.generic.flags	= QMF_NODEFAULTINIT;
+	networkOptionsInfo.address.generic.ownerdraw	= Network_DrawAddress;
+	networkOptionsInfo.address.field.widthInChars	= MAX_ADDRLENGTH;
+	networkOptionsInfo.address.field.maxchars	= MAX_ADDRLENGTH;
+	networkOptionsInfo.address.generic.x		= 400 - 40;
+	networkOptionsInfo.address.generic.y		= y - 27;
+	networkOptionsInfo.address.generic.left		= 192 - 8;
+	networkOptionsInfo.address.generic.top		= y - 8;
+	networkOptionsInfo.address.generic.right	= 192 + 200;
+	networkOptionsInfo.address.generic.bottom	= y + 2 * PROP_HEIGHT;
 
 	networkOptionsInfo.back.generic.type		= MTYPE_BITMAP;
 	networkOptionsInfo.back.generic.name		= ART_BACK0;
@@ -254,6 +351,8 @@ static void UI_NetworkOptionsMenu_Init( void ) {
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.network );
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.rate );
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.allowdownload );
+	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.forwarder );
+	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.address );
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.back );
 
 	rate = trap_Cvar_VariableValue( "rate" );
@@ -273,7 +372,9 @@ static void UI_NetworkOptionsMenu_Init( void ) {
 		networkOptionsInfo.rate.curvalue = 4;
 	}
 
-	networkOptionsInfo.allowdownload.curvalue = ( trap_Cvar_VariableValue( "cl_allowDownload" ) || trap_Cvar_VariableValue( "cl_mapAutoDownload" ) ) != 0;
+	networkOptionsInfo.allowdownload.curvalue = trap_Cvar_VariableValue( "cl_allowDownload" ) != 0;
+	networkOptionsInfo.forwarder.curvalue = trap_Cvar_VariableValue( "fwd_use" ) != 0;
+	Q_strncpyz( networkOptionsInfo.address.field.buffer, UI_Cvar_VariableString("fwd_addr"), sizeof(networkOptionsInfo.address.field.buffer) );
 }
 
 
