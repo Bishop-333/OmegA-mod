@@ -120,7 +120,7 @@ static void Network_DrawAddress( void *self ) {
 	txt = f->field.buffer;
 	x = basex;
 	if ( forwarder ) {
-		while ( (c = *txt) != 0 ) {
+		while ( (c = *txt) != 30 ) {
 			UI_DrawChar( x, y, c, style, color );
 			txt++;
 			x += SMALLCHAR_WIDTH;
