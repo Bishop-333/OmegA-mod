@@ -662,7 +662,9 @@ void weapon_railgun_fire (gentity_t *ent) {
 		tent->s.eventParm = DirToByte( trace.plane.normal );
 	}
 	tent->s.clientNum = ent->s.clientNum;
-	tent->r.svFlags |= SVF_BROADCAST;
+	if ( g_railThroughWalls.integer ) {
+		tent->r.svFlags |= SVF_BROADCAST;
+	}
 
 	// give the shooter a reward sound if they have made two railgun hits in a row
 	if ( hits == 0 ) {
