@@ -203,11 +203,11 @@ static void UI_SoundOptionsMenu_Event( void* ptr, int event ) {
 		break;
 
 	case ID_HITSOUND:
-		trap_Cvar_SetValue( "cg_hitSound", soundOptionsInfo.hitSound.curvalue );
+		trap_Cvar_SetValue( "cg_hitsound", soundOptionsInfo.hitSound.curvalue );
 		break;
 
 	case ID_KILLSOUND:
-		trap_Cvar_SetValue( "cg_killSound", soundOptionsInfo.killSound.curvalue );
+		trap_Cvar_SetValue( "cg_killsound", soundOptionsInfo.killSound.curvalue );
 		break;
 
 	case ID_BACK:
@@ -447,8 +447,8 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.openal.curvalue = (int)trap_Cvar_VariableValue( "s_useopenal" );
 	soundOptionsInfo.chatBeep.curvalue = (int)trap_Cvar_VariableValue( "cg_chatBeep" );
 	soundOptionsInfo.teamChatBeep.curvalue = (int)trap_Cvar_VariableValue( "cg_teamChatBeep" );
-	soundOptionsInfo.hitSound.curvalue = (int)trap_Cvar_VariableValue( "cg_hitSound" );
-	soundOptionsInfo.killSound.curvalue = (int)trap_Cvar_VariableValue( "cg_killSound" );
+	soundOptionsInfo.hitSound.curvalue = (int)trap_Cvar_VariableValue( "cg_hitsound" );
+	soundOptionsInfo.killSound.curvalue = (int)trap_Cvar_VariableValue( "cg_killsound" );
 
 	UI_SoundOptions_GetInitialSound();
 }
