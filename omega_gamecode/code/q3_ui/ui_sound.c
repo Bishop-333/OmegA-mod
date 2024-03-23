@@ -44,16 +44,17 @@ SOUND OPTIONS MENU
 #define ID_NETWORK			13
 #define ID_EFFECTSVOLUME	14
 #define ID_MUSICVOLUME		15
-#define ID_QUALITY			16
-//#define ID_A3D				17
+#define ID_WORLDVOLUME		16
+#define ID_QUALITY			17
+//#define ID_A3D				18
 //Sago: Here I do some stuff!
-#define ID_OPENAL			18
-#define ID_CHATBEEP			19
-#define ID_TEAMCHATBEEP			20
-#define ID_HITSOUND			21
-#define ID_KILLSOUND			22
-#define ID_BACK				23
-#define ID_APPLY			24
+#define ID_OPENAL			19
+#define ID_CHATBEEP			20
+#define ID_TEAMCHATBEEP			21
+#define ID_HITSOUND			22
+#define ID_KILLSOUND			23
+#define ID_BACK				24
+#define ID_APPLY			25
 
 static const char *quality_items[] = {
 	"Low", "High", NULL
@@ -73,6 +74,8 @@ typedef struct {
 
 	menuslider_s		sfxvolume;
 	menuslider_s		musicvolume;
+	menuslider_s		worldvolume;
+
 	menulist_s			quality;
 //	menuradiobutton_s	a3d;
 	menuradiobutton_s	openal;
@@ -161,6 +164,10 @@ static void UI_SoundOptionsMenu_Event( void* ptr, int event ) {
 
 	case ID_MUSICVOLUME:
 		trap_Cvar_SetValue( "s_musicvolume", soundOptionsInfo.musicvolume.curvalue / 10 );
+		break;
+
+	case ID_WORLDVOLUME:
+		trap_Cvar_SetValue( "s_worldvolume", soundOptionsInfo.worldvolume.curvalue / 10 );
 		break;
 
 	case ID_QUALITY:
@@ -336,6 +343,17 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.musicvolume.maxvalue			= 10;
 
 	y += BIGCHAR_HEIGHT+2;
+	soundOptionsInfo.worldvolume.generic.type		= MTYPE_SLIDER;
+	soundOptionsInfo.worldvolume.generic.name		= "World Volume:";
+	soundOptionsInfo.worldvolume.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	soundOptionsInfo.worldvolume.generic.callback	= UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.worldvolume.generic.id			= ID_WORLDVOLUME;
+	soundOptionsInfo.worldvolume.generic.x			= 400;
+	soundOptionsInfo.worldvolume.generic.y			= y;
+	soundOptionsInfo.worldvolume.minvalue			= 0;
+	soundOptionsInfo.worldvolume.maxvalue			= 10;
+
+	y += BIGCHAR_HEIGHT+2;
 	soundOptionsInfo.quality.generic.type		= MTYPE_SPINCONTROL;
 	soundOptionsInfo.quality.generic.name		= "Sound Quality:";
 	soundOptionsInfo.quality.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
@@ -430,6 +448,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.network );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.sfxvolume );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.musicvolume );
+	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.worldvolume );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.quality );
 //	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.a3d );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.openal );
@@ -442,6 +461,9 @@ static void UI_SoundOptionsMenu_Init( void ) {
 
 	soundOptionsInfo.sfxvolume.curvalue = trap_Cvar_VariableValue( "s_volume" ) * 10;
 	soundOptionsInfo.musicvolume.curvalue = trap_Cvar_VariableValue( "s_musicvolume" ) * 10;
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		soundOptionsInfo.worldvolume.curvalue = trap_Cvar_VariableValue( "s_worldvolume" ) * 10;
+	}
 	soundOptionsInfo.quality.curvalue = !trap_Cvar_VariableValue( "s_compression" );
 //	soundOptionsInfo.a3d.curvalue = (int)trap_Cvar_VariableValue( "s_usingA3D" );
 	soundOptionsInfo.openal.curvalue = (int)trap_Cvar_VariableValue( "s_useopenal" );
