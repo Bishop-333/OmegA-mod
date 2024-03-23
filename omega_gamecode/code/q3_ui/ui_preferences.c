@@ -58,6 +58,7 @@ GAME OPTIONS MENU
 #define ID_COLORGREEN           142
 #define ID_COLORBLUE            143
 #define ID_CROSSHAIRHEALTH      144
+#define ID_DRAWGUN	        145
 
 #define	NUM_CROSSHAIRS			99
 
@@ -89,6 +90,7 @@ typedef struct {
 	menulist_s			drawteamoverlay;
         menuradiobutton_s	delaghitscan;
 	menuradiobutton_s	autoswitch;
+	menulist_s		drawgun;
 	menubitmap_s		back;
 
 	qhandle_t			crosshairShader[NUM_CROSSHAIRS];
@@ -102,6 +104,15 @@ static const char *teamoverlay_names[] =
 	"upper right",
 	"lower right",
 	"lower left",
+	NULL
+};
+
+static const char *drawgun_names[] =
+{
+	"off",
+	"right",
+	"left",
+	"center",
 	NULL
 };
 
@@ -123,6 +134,7 @@ static void Preferences_SetMenuItems( void ) {
 	s_preferences.drawteamoverlay.curvalue	= Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawTeamOverlay" ) );
 	s_preferences.autoswitch.curvalue	= trap_Cvar_VariableValue( "cg_autoswitch" ) != 0;
         s_preferences.delaghitscan.curvalue	= trap_Cvar_VariableValue( "cg_delag" ) != 0;
+	s_preferences.drawgun.curvalue	= Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawGun" ) );
 }
 
 static void Preferences_Event( void* ptr, int notification ) {
@@ -216,6 +228,10 @@ static void Preferences_Event( void* ptr, int notification ) {
         case ID_DELAGHITSCAN:
                 trap_Cvar_SetValue( "g_delagHitscan", s_preferences.delaghitscan.curvalue );
 		trap_Cvar_SetValue( "cg_delag", s_preferences.delaghitscan.curvalue );
+		break;
+
+        case ID_DRAWGUN:
+                trap_Cvar_SetValue( "cg_drawGun", s_preferences.drawgun.curvalue );
 		break;
 
 	case ID_BACK:
@@ -491,6 +507,16 @@ static void Preferences_MenuInit( void ) {
 	s_preferences.autoswitch.generic.x	       = PREFERENCES_X_POS;
 	s_preferences.autoswitch.generic.y	       = y;
 
+        y += BIGCHAR_HEIGHT+2;
+	s_preferences.drawgun.generic.type     = MTYPE_SPINCONTROL;
+	s_preferences.drawgun.generic.name	   = "Gun Position:";
+	s_preferences.drawgun.generic.flags	   = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_preferences.drawgun.generic.callback = Preferences_Event;
+	s_preferences.drawgun.generic.id       = ID_DRAWGUN;
+	s_preferences.drawgun.generic.x	       = PREFERENCES_X_POS;
+	s_preferences.drawgun.generic.y	       = y;
+	s_preferences.drawgun.itemnames        = drawgun_names;
+
 	y += BIGCHAR_HEIGHT+2;
 	s_preferences.back.generic.type	    = MTYPE_BITMAP;
 	s_preferences.back.generic.name     = ART_BACK0;
@@ -524,6 +550,7 @@ static void Preferences_MenuInit( void ) {
 	Menu_AddItem( &s_preferences.menu, &s_preferences.drawteamoverlay );
         Menu_AddItem( &s_preferences.menu, &s_preferences.delaghitscan );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.drawgun );
 
 	Menu_AddItem( &s_preferences.menu, &s_preferences.back );
 
