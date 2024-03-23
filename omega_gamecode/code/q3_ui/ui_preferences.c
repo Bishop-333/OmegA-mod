@@ -59,6 +59,7 @@ GAME OPTIONS MENU
 #define ID_COLORBLUE            143
 #define ID_CROSSHAIRHEALTH      144
 #define ID_DRAWGUN	        145
+#define ID_TRANSPARENTGUN       146
 
 #define	NUM_CROSSHAIRS			99
 
@@ -91,6 +92,7 @@ typedef struct {
         menuradiobutton_s	delaghitscan;
 	menuradiobutton_s	autoswitch;
 	menulist_s		drawgun;
+	menuradiobutton_s	transparentgun;
 	menubitmap_s		back;
 
 	qhandle_t			crosshairShader[NUM_CROSSHAIRS];
@@ -135,6 +137,7 @@ static void Preferences_SetMenuItems( void ) {
 	s_preferences.autoswitch.curvalue	= trap_Cvar_VariableValue( "cg_autoswitch" ) != 0;
         s_preferences.delaghitscan.curvalue	= trap_Cvar_VariableValue( "cg_delag" ) != 0;
 	s_preferences.drawgun.curvalue	= Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawGun" ) );
+        s_preferences.transparentgun.curvalue	= trap_Cvar_VariableValue( "cg_transparentGun" ) != 0;
 }
 
 static void Preferences_Event( void* ptr, int notification ) {
@@ -232,6 +235,10 @@ static void Preferences_Event( void* ptr, int notification ) {
 
         case ID_DRAWGUN:
                 trap_Cvar_SetValue( "cg_drawGun", s_preferences.drawgun.curvalue );
+		break;
+
+        case ID_TRANSPARENTGUN:
+                trap_Cvar_SetValue( "cg_transparentGun", s_preferences.transparentgun.curvalue );
 		break;
 
 	case ID_BACK:
@@ -517,6 +524,15 @@ static void Preferences_MenuInit( void ) {
 	s_preferences.drawgun.generic.y	       = y;
 	s_preferences.drawgun.itemnames        = drawgun_names;
 
+        y += BIGCHAR_HEIGHT+2;
+	s_preferences.transparentgun.generic.type     = MTYPE_RADIOBUTTON;
+	s_preferences.transparentgun.generic.name	   = "Transparent Gun:";
+	s_preferences.transparentgun.generic.flags	   = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_preferences.transparentgun.generic.callback = Preferences_Event;
+	s_preferences.transparentgun.generic.id       = ID_TRANSPARENTGUN;
+	s_preferences.transparentgun.generic.x	       = PREFERENCES_X_POS;
+	s_preferences.transparentgun.generic.y	       = y;
+
 	y += BIGCHAR_HEIGHT+2;
 	s_preferences.back.generic.type	    = MTYPE_BITMAP;
 	s_preferences.back.generic.name     = ART_BACK0;
@@ -551,6 +567,7 @@ static void Preferences_MenuInit( void ) {
         Menu_AddItem( &s_preferences.menu, &s_preferences.delaghitscan );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.drawgun );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.transparentgun );
 
 	Menu_AddItem( &s_preferences.menu, &s_preferences.back );
 
