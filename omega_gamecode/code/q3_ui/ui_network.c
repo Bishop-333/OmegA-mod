@@ -351,8 +351,10 @@ static void UI_NetworkOptionsMenu_Init( void ) {
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.network );
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.rate );
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.allowdownload );
-	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.forwarder );
-	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.address );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.forwarder );
+		Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.address );
+	}
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.back );
 
 	rate = trap_Cvar_VariableValue( "rate" );
