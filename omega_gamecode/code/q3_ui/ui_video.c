@@ -265,6 +265,7 @@ typedef struct {
         menulist_s              ratio;
 	menulist_s		mode;
 	menuslider_s	tq;
+	menulist_s	drawflat;
 	menulist_s  	fs;
         menulist_s  	flares;
         menulist_s  	bloom;
@@ -287,6 +288,7 @@ typedef struct
 {
 	int mode;
 	qboolean fullscreen;
+	qboolean drawflat;
 	int tq;
         qboolean flares;
         qboolean bloom;
@@ -472,6 +474,7 @@ static void GraphicsOptions_GetInitialVideo( void )
 	s_ivo.fullscreen  = s_graphicsoptions.fs.curvalue;
 	s_ivo.extensions  = s_graphicsoptions.allow_extensions.curvalue;
 	s_ivo.desktop  = s_graphicsoptions.desktop.curvalue;
+	s_ivo.drawflat	= s_graphicsoptions.drawflat.curvalue;
 	s_ivo.tq          = s_graphicsoptions.tq.curvalue;
         s_ivo.flares      = s_graphicsoptions.flares.curvalue;
         s_ivo.bloom      = s_graphicsoptions.bloom.curvalue;
@@ -540,6 +543,15 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		s_graphicsoptions.mode.generic.flags &= ~QMF_GRAYED;
 	}
 
+	if ( s_graphicsoptions.drawflat.curvalue == 1 )
+	{
+		s_graphicsoptions.tq.generic.flags |= QMF_GRAYED;
+	}
+	else
+	{
+		s_graphicsoptions.tq.generic.flags &= ~QMF_GRAYED;
+	}
+
 	s_graphicsoptions.apply.generic.flags |= QMF_HIDDEN|QMF_INACTIVE;
 
 	if ( s_ivo.mode != s_graphicsoptions.mode.curvalue )
@@ -555,6 +567,10 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
 	if ( s_ivo.desktop != s_graphicsoptions.desktop.curvalue )
+	{
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
+	}
+	if ( s_ivo.drawflat != s_graphicsoptions.drawflat.curvalue )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
@@ -626,6 +642,7 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 		trap_Cvar_SetValue( "r_texturebits", 32 );
 		break;
 	}
+	trap_Cvar_SetValue( "r_drawFlat", s_graphicsoptions.drawflat.curvalue );
 	trap_Cvar_SetValue( "r_picmip", 3 - s_graphicsoptions.tq.curvalue );
 	trap_Cvar_SetValue( "r_allowExtensions", s_graphicsoptions.allow_extensions.curvalue );
 	if ( s_graphicsoptions.desktop.curvalue == 1 )
@@ -861,6 +878,7 @@ static void GraphicsOptions_SetMenuItems( void )
         if(trap_Cvar_VariableValue("r_ext_texture_filter_anisotropic")) {
             s_graphicsoptions.aniso.curvalue = trap_Cvar_VariableValue("r_ext_max_anisotropy")/2;
         }
+	s_graphicsoptions.drawflat.curvalue = trap_Cvar_VariableValue("r_drawFlat");
 	s_graphicsoptions.tq.curvalue = 3-trap_Cvar_VariableValue( "r_picmip");
 	if ( s_graphicsoptions.tq.curvalue < 0 )
 	{
@@ -1163,6 +1181,15 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.shadows.itemnames      = shadows_names;
 	y += BIGCHAR_HEIGHT+2;
 
+	// references/modifies "r_drawFlat"
+	s_graphicsoptions.drawflat.generic.type  = MTYPE_SPINCONTROL;
+	s_graphicsoptions.drawflat.generic.name = "Draw Flat Textures:";
+	s_graphicsoptions.drawflat.generic.flags = QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_graphicsoptions.drawflat.generic.x	      = 400;
+	s_graphicsoptions.drawflat.generic.y	      = y;
+	s_graphicsoptions.drawflat.itemnames	      = enabled_names;
+	y += BIGCHAR_HEIGHT+2;
+
 	// references/modifies "r_picmip"
 	s_graphicsoptions.tq.generic.type	= MTYPE_SLIDER;
 	s_graphicsoptions.tq.generic.name	= "Texture Detail:";
@@ -1267,6 +1294,9 @@ void GraphicsOptions_MenuInit( void )
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.drawfps );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.geometry );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.shadows);
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.drawflat );
+	}
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.tq );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.texturebits );
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.filter );

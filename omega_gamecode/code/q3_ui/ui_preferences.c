@@ -149,14 +149,14 @@ static void Preferences_Event( void* ptr, int notification ) {
                 trap_Cvar_SetValue( "cg_crosshairHealth", s_preferences.crosshairHealth.curvalue );
                 if(s_preferences.crosshairHealth.curvalue) {
                     //If crosshairHealth is on: Don't allow color selection
-                    s_preferences.crosshairColorRed.generic.flags       |= QMF_INACTIVE;
-                    s_preferences.crosshairColorGreen.generic.flags     |= QMF_INACTIVE;
-                    s_preferences.crosshairColorBlue.generic.flags      |= QMF_INACTIVE;
+                    s_preferences.crosshairColorRed.generic.flags       |= QMF_INACTIVE|QMF_GRAYED;
+                    s_preferences.crosshairColorGreen.generic.flags     |= QMF_INACTIVE|QMF_GRAYED;
+                    s_preferences.crosshairColorBlue.generic.flags      |= QMF_INACTIVE|QMF_GRAYED;
                 } else {
                     //If crosshairHealth is off: Allow color selection
-                    s_preferences.crosshairColorRed.generic.flags       &= ~QMF_INACTIVE;
-                    s_preferences.crosshairColorGreen.generic.flags     &= ~QMF_INACTIVE;
-                    s_preferences.crosshairColorBlue.generic.flags      &= ~QMF_INACTIVE;
+                    s_preferences.crosshairColorRed.generic.flags       &= ~(QMF_INACTIVE| QMF_GRAYED);
+                    s_preferences.crosshairColorGreen.generic.flags     &= ~(QMF_INACTIVE| QMF_GRAYED);
+                    s_preferences.crosshairColorBlue.generic.flags      &= ~(QMF_INACTIVE| QMF_GRAYED);
                 }
                 break;
 
@@ -358,7 +358,7 @@ static void Preferences_MenuInit( void ) {
         y += BIGCHAR_HEIGHT;
         s_preferences.crosshairColorRed.generic.type		= MTYPE_SLIDER;
 	s_preferences.crosshairColorRed.generic.name		= "Crosshair red:";
-	s_preferences.crosshairColorRed.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_preferences.crosshairColorRed.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT|QMF_GRAYED;
 	s_preferences.crosshairColorRed.generic.callback	= Preferences_Event;
 	s_preferences.crosshairColorRed.generic.id		= ID_COLORRED;
 	s_preferences.crosshairColorRed.generic.x			= PREFERENCES_X_POS;
@@ -369,7 +369,7 @@ static void Preferences_MenuInit( void ) {
         y += BIGCHAR_HEIGHT+2;
         s_preferences.crosshairColorGreen.generic.type		= MTYPE_SLIDER;
 	s_preferences.crosshairColorGreen.generic.name		= "Crosshair green:";
-	s_preferences.crosshairColorGreen.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_preferences.crosshairColorGreen.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT|QMF_GRAYED;
 	s_preferences.crosshairColorGreen.generic.callback	= Preferences_Event;
 	s_preferences.crosshairColorGreen.generic.id		= ID_COLORGREEN;
 	s_preferences.crosshairColorGreen.generic.x			= PREFERENCES_X_POS;
@@ -380,7 +380,7 @@ static void Preferences_MenuInit( void ) {
         y += BIGCHAR_HEIGHT+2;
         s_preferences.crosshairColorBlue.generic.type		= MTYPE_SLIDER;
 	s_preferences.crosshairColorBlue.generic.name		= "Crosshair blue:";
-	s_preferences.crosshairColorBlue.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
+	s_preferences.crosshairColorBlue.generic.flags		= QMF_PULSEIFFOCUS|QMF_SMALLFONT|QMF_GRAYED;
 	s_preferences.crosshairColorBlue.generic.callback	= Preferences_Event;
 	s_preferences.crosshairColorBlue.generic.id		= ID_COLORBLUE;
 	s_preferences.crosshairColorBlue.generic.x			= PREFERENCES_X_POS;
