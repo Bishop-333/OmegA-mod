@@ -75,3 +75,29 @@
 - better `cg_wallhack`
 - `r_ext_supersample` available in graphic settings as "supersampling"
 - teleport missile sound
+
+## 3.2.8
+- new health models/effects
+- shotgun laser animation
+- new pm skins
+- change the impact of effect color bars (first one is for railgun color, second one is for pm skins color)
+- better `cg_wallhack`
+- `r_ext_supersample` available in graphic settings as "supersampling"
+- teleport missile sound
+
+## 3.2.8
+- `s_worldSound`, `cg_hitSound`, `cg_killSound` are in the sound settings menu now
+- `cg_transparentGun`, `cg_drawGun` in the preferences menu
+- `r_drawflat`, `r_mode -2` in the graphic settings menu
+- `fwd_use` and `fwd_address` in the network settings menu
+- `g_chaos` set every weapon fire-rate to maximum
+- `g_railThroughwalls` railgun can kill through a wall
+- dead cpm skins become grey
+- update defaults
+- fix flares with Quake3e/Omega-engine
+- `cg_shadows` have now 4 different types
+- cleanup (- 4 Mo)
+- switch up to openarena with a button in the main menu
+- remove statistics in the menu
+- new machinegun skin
+- sarge/neon neons colors change like cpm
