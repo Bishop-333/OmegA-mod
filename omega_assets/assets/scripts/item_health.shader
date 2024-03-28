@@ -1,7 +1,7 @@
 smallCross
 {
 	{
-		map textures/liquids/slime9.tga
+		map models/powerups/armor/shard_env2.jpg
 		tcMod rotate -76
 		tcGen environment 
 	}
@@ -9,51 +9,48 @@ smallCross
 		map models/powerups/health/cross.tga
 		blendfunc blend
 		rgbGen lightingDiffuse
-    }
+	}
 }
 
 mediumCross
 {
 	{
-		map textures/effects/envmapligh.tga
+		map textures/suction/solid_yellow.tga
 		tcMod rotate -76
 		tcGen environment 
 	}
 	{
-		map textures/effects/envmapyel.tga
-		blendfunc add
-		tcMod rotate 54
-		tcGen environment 
+		map models/powerups/health/cross.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
 	}
 }
 
 largeCross
 {
 	{
-		map textures/effects/envmapgold
+		map textures/suction/solid_red.tga
 		tcMod rotate -76
 		tcGen environment 
 	}
 	{
-		map textures/effects/envmapgold
-		blendfunc add
-		tcMod rotate 54
-		tcGen environment 
+		map models/powerups/health/cross.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
 	}
 }
 
 megaCross
 {
 	{
-		map textures/effects/envmapblue2.tga
+		map textures/effects/megahelth.tga
 		tcMod rotate -76
 		tcGen environment 
 	}
 	{
-		map textures/effects/megahelth.tga
-		blendfunc add
-		tcMod rotate 54
-		tcGen environment 
+		map models/powerups/health/cross.tga
+		blendfunc blend
+		rgbGen lightingDiffuse
 	}
 }
 
