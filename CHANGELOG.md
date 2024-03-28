@@ -101,3 +101,4 @@
 - remove statistics in the menu
 - new machinegun skin
 - sarge/neon neons colors change like cpm
+- new health models
