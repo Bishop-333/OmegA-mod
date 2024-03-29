@@ -2634,8 +2634,10 @@ void CG_NextWeapon_f( void ) {
 
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
 		cg.weaponSelect++;
-		if ( cg.weaponSelect == MAX_WEAPONS ) {
-			cg.weaponSelect = 0;
+		if ( cg_switchCycle.integer == 1 ) {
+			if ( cg.weaponSelect == MAX_WEAPONS ) {
+				cg.weaponSelect = 0;
+			}
 		}
 		if ( cg.weaponSelect == WP_GAUNTLET ) {
 			continue;		// never cycle to gauntlet
@@ -2685,8 +2687,10 @@ void CG_PrevWeapon_f( void ) {
 
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
 		cg.weaponSelect--;
-		if ( cg.weaponSelect == -1 ) {
-			cg.weaponSelect = MAX_WEAPONS - 1;
+		if ( cg_switchCycle.integer == 1 ) {
+			if ( cg.weaponSelect == -1 ) {
+				cg.weaponSelect = MAX_WEAPONS - 1;
+			}
 		}
 		if ( cg.weaponSelect == WP_GAUNTLET ) {
 			continue;		// never cycle to gauntlet

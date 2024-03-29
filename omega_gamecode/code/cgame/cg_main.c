@@ -298,6 +298,7 @@ vmCvar_t	cg_shotgunSparks;
 vmCvar_t        cg_showSpawns; //from ratmod
 vmCvar_t        cg_showSpecZoom;
 vmCvar_t        cg_statusBarStyle;
+vmCvar_t        cg_switchCycle;
 vmCvar_t        cg_teamColor;
 vmCvar_t        cg_teamModel;
 vmCvar_t        cg_teamSounds;
@@ -522,6 +523,7 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE },
 	{ &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE },
 	{ &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE },
+	{ &cg_switchCycle, "cg_switchCycle", "1", CVAR_ARCHIVE },
 	{ &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE },
 	{ &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE },
 	{ &cg_teamSounds, "cg_teamSounds", "", CVAR_ARCHIVE },

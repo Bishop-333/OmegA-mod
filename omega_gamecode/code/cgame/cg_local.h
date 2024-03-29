@@ -1478,6 +1478,7 @@ extern vmCvar_t	cg_shotgunSparks;
 extern vmCvar_t	cg_showSpawns; //from ratmod
 extern vmCvar_t	cg_showSpecZoom;
 extern vmCvar_t	cg_statusBarStyle;
+extern vmCvar_t	cg_switchCycle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;
 extern vmCvar_t cg_teamSounds;

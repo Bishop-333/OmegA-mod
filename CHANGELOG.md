@@ -102,3 +102,4 @@
 - new machinegun skin
 - sarge/neon neons colors change like cpm
 - new health models
+- `cg_switchCycle` if set to 0 weapon switch will not cycle

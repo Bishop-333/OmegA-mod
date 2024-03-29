@@ -26,6 +26,7 @@ List of the cvars/additions :
 - cg_showSpawns
 - cg_showSpecZoom
 - cg_statusBarStyle
+- cg_switchCycle
 - cg_teamColor //need cg_brightPlayers to be enabled
 - cg_teamModel
 - cg_teamSounds
