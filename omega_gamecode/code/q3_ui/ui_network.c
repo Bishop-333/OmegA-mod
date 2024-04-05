@@ -93,9 +93,7 @@ static void Network_DrawAddress( void *self ) {
 	char			*txt;
 	char			c;
 	float			*color;
-	int				n;
 	int				basex, x, y;
-	char			address[32];
 
 	f = (menufield_s*)self;
 	basex = f->generic.x;
