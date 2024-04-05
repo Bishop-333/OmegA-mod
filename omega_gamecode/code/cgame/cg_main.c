@@ -585,6 +585,8 @@ void CG_Initialize( void )  {
 			trap_Cvar_Set( cv->cvarName, cv->defaultString );
 			trap_Cvar_Update( cv->vmCvar );
 		}
+		trap_SendConsoleCommand( "unbind MOUSE2\n" );
+		trap_SendConsoleCommand( "bind MOUSE2 +zoom\n" );
 		trap_Cvar_Set( "cg_omegaInitialized", "1" );
 	}
 }
