@@ -54,7 +54,7 @@ START SERVER MENU *****
 //#define	MAX_SERVERSTEXT	8192
 
 #define MAX_SERVERMAPS	MAX_ARENAS
-#define MAX_NAMELENGTH	16
+#define MAX_NAMELENGTH	32
 
 #define ID_GAMETYPE				10
 #define ID_PICTURES				11	// 12, 13, 14, 15, 16, 17, 18
@@ -312,7 +312,7 @@ static void StartServer_Update( void ) {
 
 		// set the map name
 		info = UI_GetArenaInfoByNumber( s_startserver.maplist[ s_startserver.currentmap ]);
-		Q_strncpyz( s_startserver.mapname.string, Info_ValueForKey( info, "map" ), MAX_NAMELENGTH);
+		Q_strncpyz( s_startserver.mapname.string, Info_ValueForKey( info, "longname" ), MAX_NAMELENGTH);
 	}
 	
 	Q_strupr( s_startserver.mapname.string );
@@ -451,7 +451,7 @@ static void StartServer_LevelshotDraw( void *self ) {
 	x = b->generic.x;
 	y = b->generic.y;
 	w = b->width;
-	h =	b->height;
+	h = b->height;
 	if( b->shader ) {
 		UI_DrawHandlePic( x, y, w, h, b->shader );
 	}
@@ -470,7 +470,7 @@ static void StartServer_LevelshotDraw( void *self ) {
 	x = b->generic.x;
 	y = b->generic.y;
 	w = b->width;
-	h =	b->height + 28;
+	h = b->height + 28;
 	if( b->generic.flags & QMF_HIGHLIGHT ) {	
 		UI_DrawHandlePic( x, y, w, h, b->focusshader );
 	}
@@ -1235,11 +1235,10 @@ static void ServerOptions_LevelshotDraw( void *self ) {
 
 	x = b->generic.x;
 	y = b->generic.y + b->height;
-	UI_FillRect( x, y, b->width, 40, colorBlack );
 
 	x += b->width / 2;
 	y += 4;
-	UI_DrawString( x, y, s_serveroptions.mapnamebuffer, UI_CENTER|UI_SMALLFONT, color_orange );
+	UI_DrawString( x, y, s_serveroptions.mapnamebuffer, UI_CENTER|UI_MEDIUMFONT, color_orange );
 
 	y += SMALLCHAR_HEIGHT;
 	UI_DrawString( x, y, gametype_items[gametype_remap2[s_serveroptions.gametype]], UI_CENTER|UI_SMALLFONT, color_orange );
@@ -1536,22 +1535,21 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 
 	s_serveroptions.mappic.generic.type			= MTYPE_BITMAP;
 	s_serveroptions.mappic.generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
-	s_serveroptions.mappic.generic.x			= 352;
+	s_serveroptions.mappic.generic.x			= 342;
 	s_serveroptions.mappic.generic.y			= 80;
-	s_serveroptions.mappic.width				= 160;
-	s_serveroptions.mappic.height				= 120;
+	s_serveroptions.mappic.width				= 180;
+	s_serveroptions.mappic.height				= 140;
 	s_serveroptions.mappic.errorpic				= GAMESERVER_UNKNOWNMAP;
 	s_serveroptions.mappic.generic.ownerdraw	= ServerOptions_LevelshotDraw;
 
 	s_serveroptions.picframe.generic.type		= MTYPE_BITMAP;
-	s_serveroptions.picframe.generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE|QMF_HIGHLIGHT;
+	s_serveroptions.picframe.generic.flags		= QMF_LEFT_JUSTIFY|QMF_INACTIVE;
 	s_serveroptions.picframe.generic.x			= 352 - 38;
 	s_serveroptions.picframe.generic.y			= 80 - 40;
 	s_serveroptions.picframe.width  			= 320;
 	s_serveroptions.picframe.height  			= 320;
-	s_serveroptions.picframe.focuspic			= GAMESERVER_SELECT;
 
-	y = 268;
+	y = 278;
 	if( s_serveroptions.gametype < GT_CTF || s_serveroptions.gametype== GT_LMS) {
 		s_serveroptions.fraglimit.generic.type       = MTYPE_FIELD;
 		s_serveroptions.fraglimit.generic.name       = "Frag Limit:";
