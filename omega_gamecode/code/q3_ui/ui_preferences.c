@@ -118,6 +118,28 @@ static const char *drawgun_names[] =
 	NULL
 };
 
+
+/*
+=================
+Preferences_UpdateMenuItems
+=================
+*/
+static void Preferences_UpdateMenuItems( void )
+{
+	if(s_preferences.crosshairHealth.curvalue) {
+		//If crosshairHealth is on: Don't allow color selection
+		s_preferences.crosshairColorRed.generic.flags       |= QMF_INACTIVE|QMF_GRAYED;
+		s_preferences.crosshairColorGreen.generic.flags     |= QMF_INACTIVE|QMF_GRAYED;
+		s_preferences.crosshairColorBlue.generic.flags      |= QMF_INACTIVE|QMF_GRAYED;
+	} else {
+		//If crosshairHealth is off: Allow color selection
+		s_preferences.crosshairColorRed.generic.flags       &= ~(QMF_INACTIVE| QMF_GRAYED);
+		s_preferences.crosshairColorGreen.generic.flags     &= ~(QMF_INACTIVE| QMF_GRAYED);
+		s_preferences.crosshairColorBlue.generic.flags      &= ~(QMF_INACTIVE| QMF_GRAYED);
+	}
+}
+
+
 /*
 ================
 Preferences_MenuDraw
@@ -307,27 +329,6 @@ static void Crosshair_Draw( void *self ) {
         color4[3]=1.0f;
 	trap_R_SetColor( color4 );
 	UI_DrawHandlePic( x + SMALLCHAR_WIDTH, y - 4, 24, 24, s_preferences.crosshairShader[s->curvalue] );
-}
-
-
-/*
-=================
-Preferences_UpdateMenuItems
-=================
-*/
-static void Preferences_UpdateMenuItems( void )
-{
-	if(s_preferences.crosshairHealth.curvalue) {
-		//If crosshairHealth is on: Don't allow color selection
-		s_preferences.crosshairColorRed.generic.flags       |= QMF_INACTIVE|QMF_GRAYED;
-		s_preferences.crosshairColorGreen.generic.flags     |= QMF_INACTIVE|QMF_GRAYED;
-		s_preferences.crosshairColorBlue.generic.flags      |= QMF_INACTIVE|QMF_GRAYED;
-	} else {
-		//If crosshairHealth is off: Allow color selection
-		s_preferences.crosshairColorRed.generic.flags       &= ~(QMF_INACTIVE| QMF_GRAYED);
-		s_preferences.crosshairColorGreen.generic.flags     &= ~(QMF_INACTIVE| QMF_GRAYED);
-		s_preferences.crosshairColorBlue.generic.flags      &= ~(QMF_INACTIVE| QMF_GRAYED);
-	}
 }
 
 
