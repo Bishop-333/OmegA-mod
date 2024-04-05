@@ -293,7 +293,12 @@ models/powerups/ammo/proxammo
 models/powerups/ammo/vulcammo2
 {
 	{
+		map textures/base_wall/metalfloor_wall_14.tga
+		rgbGen const ( 0.25 0.25 0.25 )
+	}
+	{
 		map models/powerups/ammo/vulcammo.tga
+		blendfunc add
 		rgbGen identity
 	}
 }
@@ -301,7 +306,12 @@ models/powerups/ammo/vulcammo2
 models/powerups/ammo/nailammo2
 {
 	{
+		map textures/base_wall/metalfloor_wall_14.tga
+		rgbGen const ( 0.25 0.25 0.25 )
+	}
+	{
 		map models/powerups/ammo/nailammo.tga
+		blendfunc add
 		rgbGen identity
 	}
 }
@@ -309,7 +319,12 @@ models/powerups/ammo/nailammo2
 models/powerups/ammo/proxammo2
 {
 	{
+		map textures/base_wall/metalfloor_wall_14.tga
+		rgbGen const ( 0.25 0.25 0.25 )
+	}
+	{
 		map models/powerups/ammo/proxammo.tga
+		blendfunc add
 		rgbGen identity
 	}
 }
