@@ -453,6 +453,8 @@ static void CG_Obituary( entityState_t *ent ) {
 				memset( &cgs.fragMsg[FRAGMSG_MAX - 1], 0, sizeof(fragInfo_t) );
 
 				lastFrag->teamFrag = ent->generic1;
+				lastFrag->targetTeam = cgs.clientinfo[target].team;
+				lastFrag->attackerTeam = cgs.clientinfo[attacker].team;
 
 				Q_strncpyz(lastFrag->targetName, targetName,
 						sizeof(lastFrag->targetName));

@@ -1132,6 +1132,8 @@ typedef struct {
 	int		fragTime;
 	qboolean	teamFrag;
 	char		message[200];
+	int		targetTeam;
+	int		attackerTeam;
 } fragInfo_t;
 
 

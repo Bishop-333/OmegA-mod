@@ -561,7 +561,7 @@ void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team )
 		hcolor[3] = alpha;
 	} else if ( team == TEAM_BLUE ) {
 		hcolor[0] = 0;
-		hcolor[1] = 0;
+		hcolor[1] = 0.25;
 		hcolor[2] = 1;
 		hcolor[3] = alpha;
 	} else {
@@ -1379,7 +1379,7 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 		hcolor[3] = 0.33f;
 	} else { // if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE )
 		hcolor[0] = 0.0f;
-		hcolor[1] = 0.0f;
+		hcolor[1] = 0.25f;
 		hcolor[2] = 1.0f;
 		hcolor[3] = 0.33f;
 	}
@@ -1518,9 +1518,19 @@ static void CG_DrawFragMsgIcons(fragInfo_t fi, int i) {
 	spacing = 3;
 
 	if (fi.attackerName[0] != '\0') {
-		CG_DrawStringExt(FRAGMSG_X, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
-				fi.attackerName, hcolor, qfalse, qfalse,
-				TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+		if ( fi.attackerTeam == TEAM_RED ) {
+			CG_DrawStringExt(FRAGMSG_X, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+					fi.attackerName, colorCornellRed, qtrue, qfalse,
+					TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+		} else if ( fi.attackerTeam == TEAM_BLUE ) {
+			CG_DrawStringExt(FRAGMSG_X, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+					fi.attackerName, colorRoyalBlue, qtrue, qfalse,
+					TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+		} else {
+			CG_DrawStringExt(FRAGMSG_X, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+					fi.attackerName, hcolor, qfalse, qfalse,
+					TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+		}
 		x_offset = CG_DrawStrlen(fi.attackerName) * TINYCHAR_WIDTH + spacing;
 	} else x_offset = 0;
 
@@ -1529,9 +1539,19 @@ static void CG_DrawFragMsgIcons(fragInfo_t fi, int i) {
 
 	x_offset += TINYCHAR_WIDTH + spacing;
 
-	CG_DrawStringExt(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
-			fi.targetName, hcolor, qfalse, qfalse,
-			TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+	if ( fi.targetTeam == TEAM_RED ) {
+		CG_DrawStringExt(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+				fi.targetName, colorCornellRed, qtrue, qfalse,
+				TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+	} else if ( fi.targetTeam == TEAM_BLUE ) {
+		CG_DrawStringExt(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+				fi.targetName, colorRoyalBlue, qtrue, qfalse,
+				TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+	} else {
+		CG_DrawStringExt(FRAGMSG_X + x_offset, FRAGMSG_Y + (i * TINYCHAR_HEIGHT) - h,
+				fi.targetName, hcolor, qfalse, qfalse,
+				TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0);
+	}
 
 	if (fi.teamFrag) {
 		x_offset += CG_DrawStrlen(fi.targetName) * TINYCHAR_WIDTH + spacing;
@@ -1693,7 +1713,7 @@ static float CG_DrawScores( float y ) {
 	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
 		x = 640;
 		color[0] = 0.0f;
-		color[1] = 0.0f;
+		color[1] = 0.25f;
 		color[2] = 1.0f;
 		color[3] = 0.5f;
 		s = va( "%2i", s2 );
@@ -2081,7 +2101,7 @@ static void CG_DrawTeamInfo( void ) {
 			hcolor[3] = 0.33f;
 		} else if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE ) {
 			hcolor[0] = 0.0f;
-			hcolor[1] = 0.0f;
+			hcolor[1] = 0.25f;
 			hcolor[2] = 1.0f;
 			hcolor[3] = 0.33f;
 		} else {

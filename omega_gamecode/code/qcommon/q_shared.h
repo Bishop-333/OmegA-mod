@@ -352,9 +352,11 @@ extern	vec3_t	bytedirs[NUMVERTEXNORMALS];
 #define	GIANTCHAR_HEIGHT	48
 
 extern	vec4_t		colorBlack;
+extern	vec4_t		colorCornellRed;
 extern	vec4_t		colorRed;
 extern	vec4_t		colorTtGreen;
 extern	vec4_t		colorGreen;
+extern	vec4_t		colorRoyalBlue;
 extern	vec4_t		colorBlue;
 extern	vec4_t		colorYellow;
 extern	vec4_t		colorMagenta;

@@ -449,11 +449,11 @@ qboolean CG_DrawOldScoreboard( void ) {
 		s1 = va("%i", cg.teamScores[0] );
 		w1 = CG_DrawStrlen( s1 ) * GIANTCHAR_WIDTH * 2;
 		x1 = ( SCREEN_WIDTH - w1 ) / 2 - 21;
-		CG_DrawStringExt( x1, 47, s1, colorRed, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( x1, 47, s1, colorCornellRed, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
 
 		s2 = va("%i", cg.teamScores[1] );
 		x2 = SCREEN_WIDTH / 2 + 22;
-		CG_DrawStringExt( x2, 47, s2, colorBlue, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( x2, 47, s2, colorRoyalBlue, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
 	}
 
 	// scoreboard
