@@ -1,5 +1,5 @@
 # OmegA
-[![Build](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/main.yml/badge.svg)](https://github.com/EddieBrrrock/OmegA-gamecode/actions/workflows/main.yml)
+[![Build](https://github.com/Bishop-333/OmegA-mod/actions/workflows/main.yml/badge.svg)](https://github.com/Bishop-333/OmegA-mod/actions/workflows/main.yml)
 
 ![OmegA Logo](omega_logo.svg)
 
@@ -14,7 +14,7 @@ List of the cvars/additions :
 - cg_drawFriendThroughWalls
 - cg_drawItemPickup
 - cg_drawTeamBackground
-- cg_enemyColor //need cg_brightPlayers to be enabled
+- cg_enemyColor (needs cg_brightPlayers enabled)
 - cg_enemyModel
 - cg_enemySounds
 - cg_killsound
@@ -27,7 +27,7 @@ List of the cvars/additions :
 - cg_showSpecZoom
 - cg_statusBarStyle
 - cg_switchCycle
-- cg_teamColor //need cg_brightPlayers to be enabled
+- cg_teamColor (needs cg_brightPlayers enabled)
 - cg_teamModel
 - cg_teamSounds
 - cg_thinLightningBolt
@@ -55,7 +55,7 @@ List of the cvars/additions :
 - g_guidedRockets
 - g_headDamageMultiplicator
 - g_headShotOnly
-- g_jumppadGrenades //from ratmod
+- g_jumppadGrenades (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
 - g_lightningDamage
 - g_machinegunDamage
 - g_machinegunTeamDamage
@@ -72,7 +72,7 @@ List of the cvars/additions :
 - g_slikGround
 - g_startWhenReady
 - g_teamPush
-- g_teleportMissiles //from ratmod
+- g_teleportMissiles (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
 - g_waterDamage
 - g_weaponArena
 #
@@ -100,7 +100,7 @@ make
 ## Links
 
 * Mod DB page : https://www.moddb.com/mods/openarena-omega
-* Custom OmegA engine : https://github.com/EddieBrrrock/OmegA-engine
+* Custom OmegA engine : https://github.com/Bishop-333/OmegA-engine
 
 ## Donate
 
