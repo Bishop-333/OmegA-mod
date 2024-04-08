@@ -23,8 +23,6 @@ GAMECODE_DIR := omega_gamecode
 GAMECODE_QVM_DIR := $(GAMECODE_DIR)/build/release-$(COMPILE_PLATFORM)-$(COMPILE_ARCH)/omega/vm
 ASSETS_DIR := omega_assets
 
-GAMECODE_OPTS := WITH_MULTITOURNAMENT=1
-
 OUTPUT_DIR := build
 PK3_DIR := $(OUTPUT_DIR)/pk3
 
@@ -46,7 +44,7 @@ release: qvm $(OUTPUT_DIR)
 		$(TIMESTAMP) ../$(OMEGA_PK3) .
 
 qvm:
-	$(MAKE) -C $(GAMECODE_DIR) $(GAMECODE_OPTS) \
+	$(MAKE) -C $(GAMECODE_DIR) \
 		BUILD_GAME_SO=0 BUILD_GAME_QVM=1
 
 $(OUTPUT_DIR):
