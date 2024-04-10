@@ -360,7 +360,7 @@ static qboolean	CG_FindClientModelFile( char *filename, int length, clientInfo_t
 			if ( CG_FileExists( filename ) ) {
 				return qtrue;
 			}
-			if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
+			if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 && cg_forceTeamSkins.integer) {
 				if ( i == 0 && teamName && *teamName ) {
 					//								"models/players/characters/sergei/stroggs/lower_red.skin"
 					Com_sprintf( filename, length, "models/players/%s%s/%s%s_%s.%s", charactersFolder, modelName, teamName, base, team, ext );
@@ -440,7 +440,7 @@ static qboolean	CG_FindClientHeadFile( char *filename, int length, clientInfo_t 
 			if ( CG_FileExists( filename ) ) {
 				return qtrue;
 			}
-			if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) {
+			if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1 && cg_forceTeamSkins.integer) {
 				if ( i == 0 &&  teamName && *teamName ) {
 					Com_sprintf( filename, length, "models/players/%s%s/%s%s_%s.%s", headsFolder, headModelName, teamName, base, team, ext );
 				}

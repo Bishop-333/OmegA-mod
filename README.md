@@ -17,6 +17,7 @@ List of the cvars/additions :
 - cg_enemyColor (needs cg_brightPlayers enabled)
 - cg_enemyModel
 - cg_enemySounds
+- cg_forceTeamSkins
 - cg_killsound
 - cg_omegaFlags
 - cg_omegaInitialized

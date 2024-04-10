@@ -458,7 +458,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue },
 	{ &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
 	{ &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_omegaInitialized, "g_omegaInitialized", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_omegaInitialized, "g_omegaInitialized", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue },
 	{ &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
 	{ &g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue },
@@ -670,7 +670,7 @@ void G_RegisterCvars( void ) {
 G_Initialize
 ===================
  */
-void G_Initialize( void )  {
+static void G_Initialize( void )  {
 	int			i;
 	cvarTable_t	*cv;
 
