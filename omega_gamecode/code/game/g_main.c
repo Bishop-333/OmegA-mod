@@ -446,7 +446,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_botChat, "g_botChat", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
-	{ &g_dropFlag, "g_dropFlag", "0", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
 	{ &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
 	{ &g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue },

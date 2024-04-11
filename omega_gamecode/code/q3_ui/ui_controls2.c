@@ -116,6 +116,7 @@ typedef struct
 #define ID_CHAT3		36
 #define ID_CHAT4		37
 #define ID_VOIP_TALK		38
+#define ID_DROPFLAG		39
 
 // all others
 #define ID_FREELOOK		39
@@ -220,6 +221,7 @@ typedef struct
 	menuaction_s		showscores;
 	menulist_s              autoswitch;
 	menuaction_s		useitem;
+	menuaction_s		dropflag;
 	playerInfo_t		playerinfo;
 	qboolean			changesmade;
 	menuaction_s		chat;
@@ -302,6 +304,7 @@ static bind_t g_bindings[] =
 	{"messagemode3", 	"chat - target",	ID_CHAT3,		ANIM_CHAT,		-1,				-1,		-1, -1},
 	{"messagemode4", 	"chat - attacker",	ID_CHAT4,		ANIM_CHAT,		-1,				-1,		-1, -1},
         {"+voiprecord", 	"voice chat",           ID_VOIP_TALK,		ANIM_CHAT,		'q',				-1,		-1, -1},
+	{"drop",		"drop flag",		ID_DROPFLAG,		ANIM_IDLE,		-1,				-1,		-1, -1},
 	{(char*)NULL,		(char*)NULL,		0,				0,				-1,				-1,		-1,	-1},
 };
 
@@ -376,6 +379,7 @@ static menucommon_s *g_looking_controls[] = {
 static menucommon_s *g_misc_controls[] = {
 	(menucommon_s *)&s_controls.showscores, 
 	(menucommon_s *)&s_controls.useitem,
+	(menucommon_s *)&s_controls.dropflag,
 	(menucommon_s *)&s_controls.gesture,
 	(menucommon_s *)&s_controls.chat,
 	(menucommon_s *)&s_controls.chat2,
@@ -1551,6 +1555,12 @@ static void Controls_MenuInit( void )
 	s_controls.useitem.generic.ownerdraw = Controls_DrawKeyBinding;
 	s_controls.useitem.generic.id        = ID_USEITEM;
 
+	s_controls.dropflag.generic.type	     = MTYPE_ACTION;
+	s_controls.dropflag.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
+	s_controls.dropflag.generic.callback  = Controls_ActionEvent;
+	s_controls.dropflag.generic.ownerdraw = Controls_DrawKeyBinding;
+	s_controls.dropflag.generic.id        = ID_DROPFLAG;
+
 	s_controls.showscores.generic.type	    = MTYPE_ACTION;
 	s_controls.showscores.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
 	s_controls.showscores.generic.callback  = Controls_ActionEvent;
@@ -1736,6 +1746,7 @@ static void Controls_MenuInit( void )
 
 	Menu_AddItem( &s_controls.menu, &s_controls.showscores );
 	Menu_AddItem( &s_controls.menu, &s_controls.useitem );
+	Menu_AddItem( &s_controls.menu, &s_controls.dropflag );
 	Menu_AddItem( &s_controls.menu, &s_controls.gesture );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat2 );
