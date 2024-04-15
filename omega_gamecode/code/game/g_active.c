@@ -49,7 +49,6 @@ void P_DamageFeedback( gentity_t *player ) {
 		client->ps.powerups[PW_BATTLESUIT] = -1;
 		pm.overbounce = 0;
 	} else {
-		client->ps.powerups[PW_BATTLESUIT] = 0;
 		pm.overbounce = 1;
 	}
 
