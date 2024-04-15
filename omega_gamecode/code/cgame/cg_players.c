@@ -2677,8 +2677,6 @@ void CG_Player( centity_t *cent ) {
 	torso.shadowPlane = shadowPlane;
 	torso.renderfx = renderfx;
 
-	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse, cent->currentState.number );
-
 	if ( cent->currentState.eFlags & EF_KAMIKAZE ) {
 
 		memset( &skull, 0, sizeof(skull) );
@@ -2881,6 +2879,8 @@ void CG_Player( centity_t *cent ) {
 		}
 		trap_R_AddRefEntityToScene( &powerup );
 	}
+
+	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse, cent->currentState.number );
 
 	//
 	// add the head
