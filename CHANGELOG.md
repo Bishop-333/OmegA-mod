@@ -85,7 +85,7 @@
 - `r_ext_supersample` available in graphic settings as "supersampling"
 - teleport missile sound
 
-## 3.2.8
+## 3.2.9
 - `s_worldSound`, `cg_hitSound`, `cg_killSound` are in the sound settings menu now
 - `cg_transparentGun`, `cg_drawGun` in the preferences menu
 - `r_drawflat`, `r_mode -2` in the graphic settings menu
@@ -102,4 +102,14 @@
 - new machinegun skin
 - sarge/neon neons colors change like cpm
 - new health models
-- `cg_switchCycle` if set to 0 weapon switch will not cycle
+- `cg_switchCycle` if set to 0, weapon switch will not cycle
+
+## 3.3.0
+- better chat balloon
+- bind zoom to mouse2 by default
+- fix runes pickup sound
+- `cg_forceTeamSkins` if set to 0, you can choose the character color you want in team gametypes
+- drop flag keybind in the menu
+- fix battlesuit
+- fix runes effect with `cg_brightPlayers` enabled
+- `g_spawnProtect` is 1 second by default now
