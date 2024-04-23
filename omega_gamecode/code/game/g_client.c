@@ -484,9 +484,7 @@ void CopyToBodyQue( gentity_t *ent ) {
 	body->r.contents = CONTENTS_CORPSE;
 	body->r.ownerNum = ent->s.number;
 
-	if ( g_gametype.integer!=GT_ELIMINATION && g_gametype.integer!=GT_CTF_ELIMINATION && g_gametype.integer !=GT_LMS && !ent->client->isEliminated ) {
-		body->nextthink = level.time + 5000;
-	}
+	body->nextthink = level.time + 5000;
 	body->think = BodySink;
 
 	body->die = body_die;
