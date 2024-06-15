@@ -729,6 +729,7 @@ SERVER OPTIONS MENU *****
 //#define ID_DEDICATED			27
 #define ID_GO					28
 #define ID_BACK					29
+#define ID_DMFLAGS				30
 
 #define PLAYER_SLOTS			12
 
@@ -756,6 +757,7 @@ typedef struct {
         menulist_s			lmsMode;
         menuradiobutton_s	respawn;
 	menulist_s			botSkill;
+	menutext_s		dmflags;
 
 	menutext_s			player0;
 	menulist_s			playerType[PLAYER_SLOTS];
@@ -1136,6 +1138,12 @@ static void ServerOptions_Event( void* ptr, int event ) {
 	case ID_MAXCLIENTS:
 //	case ID_DEDICATED:
 		ServerOptions_SetPlayerItems();
+		break;
+	case ID_DMFLAGS:
+		if( event != QM_ACTIVATED ) {
+			break;
+		}
+		UI_DMflagsOptionsMenu();
 		break;
 	case ID_GO:
 		if( event != QM_ACTIVATED ) {
@@ -1723,6 +1731,17 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 		y += ( SMALLCHAR_HEIGHT + 4 );
 	}
 
+	y += SMALLCHAR_HEIGHT;
+	s_serveroptions.dmflags.generic.type			= MTYPE_CTEXT;
+	s_serveroptions.dmflags.string				= "Advanced Settings";
+	s_serveroptions.dmflags.generic.flags			= QMF_PULSEIFFOCUS;
+	s_serveroptions.dmflags.generic.callback		= ServerOptions_Event;
+	s_serveroptions.dmflags.generic.id	     		= ID_DMFLAGS;
+	s_serveroptions.dmflags.generic.x			= 40;
+	s_serveroptions.dmflags.generic.y			= y;
+	s_serveroptions.dmflags.style				= UI_SMALLFONT;
+	s_serveroptions.dmflags.color				= text_color_normal;
+
 	s_serveroptions.back.generic.type	  = MTYPE_BITMAP;
 	s_serveroptions.back.generic.name     = GAMESERVER_BACK0;
 	s_serveroptions.back.generic.flags    = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -1773,6 +1792,8 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 			Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.playerTeam[n] );
 		}
 	}
+
+	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.dmflags );
 
 	if( s_serveroptions.gametype < GT_CTF || s_serveroptions.gametype == GT_LMS ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.fraglimit );

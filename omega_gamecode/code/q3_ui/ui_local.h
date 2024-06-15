@@ -158,6 +158,7 @@ extern vmCvar_t	ui_mapvote_filter;
 #define MTYPE_SCROLLLIST		8
 #define MTYPE_PTEXT				9
 #define MTYPE_BTEXT				10
+#define MTYPE_CTEXT				11
 
 #define QMF_BLINK				(unsigned int)0x00000001
 #define QMF_SMALLFONT			(unsigned int)0x00000002
@@ -862,6 +863,12 @@ void UI_SoundOptionsMenu( void );
 //
 void UI_NetworkOptionsMenu_Cache( void );
 void UI_NetworkOptionsMenu( void );
+
+//
+// ui_dmflags.c
+//
+void UI_DMflagsOptionsMenu_Cache( void );
+void UI_DMflagsOptionsMenu( void );
 
 //
 // ui_gameinfo.c

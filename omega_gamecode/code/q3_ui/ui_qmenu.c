@@ -114,6 +114,10 @@ static void PText_Draw( menutext_s *b );
 static void BText_Init( menutext_s *b );
 static void BText_Draw( menutext_s *b );
 
+// clickable text widget
+static void CText_Init( menutext_s *b );
+static void CText_Draw( menutext_s *b );
+
 /*
 =================
 Text_Init
@@ -253,6 +257,76 @@ static void PText_Draw( menutext_s *t )
 	}
 
 	UI_DrawProportionalString( x, y, t->string, style, color );
+}
+
+/*
+=================
+CText_Init
+=================
+*/
+static void CText_Init( menutext_s *t )
+{
+	int	x;
+	int	y;
+	int	w;
+	int	h;
+	float	sizeScale;
+
+	sizeScale = UI_ProportionalSizeScale( t->style );
+
+	x = t->generic.x;
+	y = t->generic.y;
+	w = UI_ProportionalStringWidth( t->string ) * sizeScale;
+	h =	PROP_HEIGHT * sizeScale;
+
+	if( t->generic.flags & QMF_RIGHT_JUSTIFY ) {
+		x -= w;
+	}
+	else if( t->generic.flags & QMF_CENTER_JUSTIFY ) {
+		x -= w / 2;
+	}
+
+	t->generic.left   = x - PROP_GAP_WIDTH * sizeScale;
+	t->generic.right  = x + w + PROP_GAP_WIDTH * sizeScale;
+	t->generic.top    = y;
+	t->generic.bottom = y + h;
+}
+
+/*
+=================
+CText_Draw
+=================
+*/
+static void CText_Draw( menutext_s *t )
+{
+	int		x;
+	int		y;
+	float*	color;
+	int		style;
+
+	x = t->generic.x;
+	y = t->generic.y;
+		
+	if (t->generic.flags & QMF_GRAYED)
+		color = text_color_disabled;
+	else
+		color = t->color;
+
+	style = t->style;
+	if( t->generic.flags & QMF_PULSEIFFOCUS ) {
+		if( Menu_ItemAtCursor( t->generic.parent ) == t ) {
+			color = text_color_highlight;
+			style |= UI_PULSE;
+			UI_FillRect( t->generic.left+3, t->generic.top, t->generic.right-t->generic.left+1, t->generic.bottom-t->generic.top-3, listbar_color ); 
+
+		}
+		else {
+			color = t->color;
+			style |= UI_INVERSE;
+		}
+	}
+
+	UI_DrawString( x, y, t->string, style, color );
 }
 
 /*
@@ -1328,6 +1402,10 @@ void Menu_AddItem( menuframework_s *menu, void *item )
 				BText_Init((menutext_s*)item);
 				break;
 
+			case MTYPE_CTEXT:
+				CText_Init((menutext_s*)item);
+				break;
+
 			default:
 				trap_Error( va("Menu_Init: unknown type %d", itemptr->type) );
 		}
@@ -1519,6 +1597,11 @@ void Menu_Draw( menuframework_s *menu )
 				case MTYPE_BTEXT:
 					BText_Draw( (menutext_s*)itemptr );
 					break;
+
+				case MTYPE_CTEXT:
+					CText_Draw( (menutext_s*)itemptr );
+					break;
+
 
 				default:
 					trap_Error( va("Menu_Draw: unknown type %d", itemptr->type) );
