@@ -593,7 +593,7 @@ void respawnRound( gentity_t *ent ) {
 	//}
         
 
-	if(ent->client->ps.pm_type != PM_SPECTATOR && ent->client->ps.stats[STAT_HEALTH] > 0 && !g_survivorsRespawn.integer)
+	if(ent->client->sess.sessionTeam != TEAM_SPECTATOR && !ent->client->isEliminated && ent->client->ps.pm_type != PM_SPECTATOR && !g_survivorsRespawn.integer)
 		return;
         if(ent->client->hook)
                 Weapon_HookFree(ent->client->hook);
