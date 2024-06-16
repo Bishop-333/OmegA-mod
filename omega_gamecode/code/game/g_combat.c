@@ -833,7 +833,15 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	// don't allow respawn until the death anim is done
 	// g_forcerespawn may force spawning at some later time
 	self->client->respawnTime = level.time + 1700 +i;
-        if(g_respawntime.integer>0) {
+	if ( self->client->sess.sessionTeam == TEAM_BLUE && g_bluerespawntime.integer>0 ) {
+            for(i=0; self->client->respawnTime > i*g_bluerespawntime.integer*1000;i++);
+
+            self->client->respawnTime = i*g_bluerespawntime.integer*1000;
+	} else if ( self->client->sess.sessionTeam == TEAM_RED && g_redrespawntime.integer>0 ) {
+            for(i=0; self->client->respawnTime > i*g_redrespawntime.integer*1000;i++);
+
+            self->client->respawnTime = i*g_redrespawntime.integer*1000;
+	} else if(g_respawntime.integer>0) {
             for(i=0; self->client->respawnTime > i*g_respawntime.integer*1000;i++);
 
             self->client->respawnTime = i*g_respawntime.integer*1000;
