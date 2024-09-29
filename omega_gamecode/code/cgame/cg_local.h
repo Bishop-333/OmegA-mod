@@ -58,6 +58,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define	SINK_TIME			1000		// time for fragments to sink into ground before going away
 #define	ATTACKER_HEAD_TIME	10000
 #define	REWARD_TIME			3000
+#define	REWARD_SOUNDDELAY	750
 
 #define	PULSE_SCALE			1.5			// amount to scale up the icons when activating
 
@@ -616,8 +617,9 @@ typedef struct {
 
 	// reward medals
 	int			rewardStack;
-	int			rewardTime;
+	int			rewardTime[MAX_REWARDSTACK];
 	int			rewardCount[MAX_REWARDSTACK];
+	int			rewardSoundDelay[MAX_REWARDSTACK];
 	qhandle_t	rewardShader[MAX_REWARDSTACK];
 	qhandle_t	rewardSound[MAX_REWARDSTACK];
 
@@ -626,6 +628,12 @@ typedef struct {
 	int			soundBufferOut;
 	int			soundTime;
 	qhandle_t	soundBuffer[MAX_SOUNDBUFFER];
+
+	// sound buffer for reward sounds
+	int			rewardSoundBufferIn;
+	int			rewardSoundBufferOut;
+	int			rewardSoundTime;
+	qhandle_t	rewardSoundBuffer[MAX_REWARDSTACK];
 
 	// for voice chat buffer
 	int			voiceChatTime;
@@ -1548,6 +1556,7 @@ void CG_ZoomIn( void );
 void CG_ZoomDown_f( void );
 void CG_ZoomUp_f( void );
 void CG_AddBufferedSound( sfxHandle_t sfx);
+int CG_AddBufferedRewardSound( sfxHandle_t sfx );
 
 void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demoPlayback );
 
@@ -1575,6 +1584,7 @@ void CG_DrawTinyString( int x, int y, const char *s, float alpha );
 int CG_DrawStrlen( const char *str );
 
 float	*CG_FadeColor( int startMsec, int totalMsec );
+float	CG_FadeScale( int startMsec, int totalMsec );
 float *CG_TeamColor( int team );
 void CG_TileClear( void );
 void CG_ColorForHealth( vec4_t hcolor );
@@ -1625,6 +1635,7 @@ const char *CG_GameTypeString( void );
 qboolean CG_YourTeamHasFlag( void );
 qboolean CG_OtherTeamHasFlag( void );
 qhandle_t CG_StatusHandle(int task);
+int CG_RewardTime(int idx);
 
 
 
