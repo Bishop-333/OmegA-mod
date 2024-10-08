@@ -131,6 +131,8 @@ vmCvar_t	g_elimination_nail;
 
 vmCvar_t        g_elimination_lockspectator;
 
+vmCvar_t        g_elimination_items;
+
 vmCvar_t	g_rockets;
 
 //dmn_clowns suggestions (with my idea of implementing):
@@ -381,6 +383,8 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_elimination_ctf_oneway, "elimination_ctf_oneway", "0", CVAR_ARCHIVE| CVAR_NORESTART, 0, qtrue },
 
         { &g_elimination_lockspectator, "elimination_lockspectator", "0", CVAR_NORESTART, 0, qtrue },
+
+        { &g_elimination_items, "elimination_items", "0", CVAR_LATCH, 0, qtrue },
         
         { &g_awardpushing, "g_awardpushing", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
