@@ -420,15 +420,17 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
                 && ent->item->giType != IT_TEAM)
 		return;
 
-	//Cannot touch flag before round starts
-	if(g_gametype.integer == GT_CTF_ELIMINATION && level.roundNumber != level.roundNumberStarted)
+	//Cannot touch items before round starts
+	if((g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_ELIMINATION) && level.roundNumber != level.roundNumberStarted)
 		return;
 
 	//Cannot take ctf elimination oneway
-	if(g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer!=0 && (
-			(other->client->sess.sessionTeam==TEAM_BLUE && (level.eliminationSides+level.roundNumber)%2 == 0 ) ||
-			(other->client->sess.sessionTeam==TEAM_RED && (level.eliminationSides+level.roundNumber)%2 != 0 ) ))
-		return;
+	if(g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer != 0) {
+		if ( ( strcmp(ent->classname, "team_CTF_redflag") == 0 && other->client->sess.sessionTeam == TEAM_BLUE && (level.eliminationSides + level.roundNumber) % 2 == 0 ) ||
+		( strcmp(ent->classname, "team_CTF_blueflag") == 0 && other->client->sess.sessionTeam == TEAM_RED && (level.eliminationSides + level.roundNumber) % 2 != 0 )) {
+        		return;
+		}
+	}
 
 	if ( (g_gametype.integer == GT_ELIMINATION && !g_elimination_items.integer) || g_gametype.integer == GT_LMS)
 		return;		//nothing to pick up in elimination
