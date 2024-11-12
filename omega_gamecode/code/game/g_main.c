@@ -2435,7 +2435,7 @@ void CheckElimination(void) {
 		//This might be better placed another place:
 		if(g_elimination_activewarmup.integer<1)
 			g_elimination_activewarmup.integer=1; //We need at least 1 second to spawn all players
-		if(g_elimination_activewarmup.integer >= g_elimination_warmup.integer) //This must not be true
+		if(g_elimination_activewarmup.integer >= g_elimination_warmup.integer && level.numPlayingClients < 2) //This must not be true
 			g_elimination_warmup.integer = g_elimination_activewarmup.integer+1; //Increase warmup
 
 		//Force respawn
