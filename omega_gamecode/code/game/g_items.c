@@ -704,6 +704,7 @@ free fall from their spawn points
 void FinishSpawningItem( gentity_t *ent ) {
 	trace_t		tr;
 	vec3_t		dest;
+	qboolean	isEliminationMode = (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer);
 
 	VectorSet( ent->r.mins, -ITEM_RADIUS, -ITEM_RADIUS, -ITEM_RADIUS );
 	VectorSet( ent->r.maxs, ITEM_RADIUS, ITEM_RADIUS, ITEM_RADIUS );
@@ -745,18 +746,17 @@ void FinishSpawningItem( gentity_t *ent ) {
 
 	
 	// powerups don't spawn in for a while (but not in elimination)
-	if(g_gametype.integer != GT_ELIMINATION && g_gametype.integer != GT_CTF_ELIMINATION && g_gametype.integer != GT_LMS 
-                && !g_instantgib.integer && !g_elimination_allgametypes.integer && !g_rockets.integer && !g_weaponArena.integer )
-	if ( ent->item->giType == IT_POWERUP ) {
-		float	respawn;
+	if ( ( (isEliminationMode && g_elimination_items.integer) || !isEliminationMode) && g_gametype.integer != GT_LMS && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
+		if ( ent->item->giType == IT_POWERUP ) {
+			float	respawn;
 
-		respawn = 45 + crandom() * 15;
-		ent->s.eFlags |= EF_NODRAW;
-		ent->r.contents = 0;
-		ent->nextthink = level.time + respawn * 1000;
-		ent->think = RespawnItem;
-		return;
-	}
+			respawn = 45 + crandom() * 15;
+			ent->s.eFlags |= EF_NODRAW;
+			ent->r.contents = 0;
+			ent->nextthink = level.time + respawn * 1000;
+			ent->think = RespawnItem;
+			return;
+		}
 
 
 	trap_LinkEntity (ent);
