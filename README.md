@@ -51,6 +51,7 @@ List of the cvars/additions :
 - g_damagePlums
 - g_dropFlag
 - g_easierPickup
+- g_elimination_items
 - g_gauntletDamage
 - g_grenadeSpeed
 - g_guidedRockets
@@ -72,6 +73,7 @@ List of the cvars/additions :
 - g_selfDamage
 - g_slikGround
 - g_startWhenReady
+- g_survivorsRespawn
 - g_teamPush
 - g_teleportMissiles (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
 - g_waterDamage

@@ -76,15 +76,6 @@
 - `r_ext_supersample` available in graphic settings as "supersampling"
 - teleport missile sound
 
-## 3.2.8
-- new health models/effects
-- shotgun laser animation
-- new pm skins
-- change the impact of effect color bars (first one is for railgun color, second one is for pm skins color)
-- better `cg_wallhack`
-- `r_ext_supersample` available in graphic settings as "supersampling"
-- teleport missile sound
-
 ## 3.2.9
 - `s_worldSound`, `cg_hitSound`, `cg_killSound` are in the sound settings menu now
 - `cg_transparentGun`, `cg_drawGun` in the preferences menu
@@ -113,3 +104,9 @@
 - fix battlesuit
 - fix runes effect with `cg_brightPlayers` enabled
 - `g_spawnProtect` is 1 second by default now
+
+## 3.3.1
+- dmflags settings in the multiplayer menu
+- `g_bluerespawtime` and `g_redrespawntime` for team specific respawn time
+- new reward system imported from ratmod
+- `g_elimination_items` if set to 1, enable items pickup in elimination modes
