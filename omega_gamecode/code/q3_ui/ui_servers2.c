@@ -109,11 +109,10 @@ MULTIPLAYER MENU (SERVER BROWSER)
 
 #define MOD_ALL				0
 #define MOD_OMEGA			1
-#define MOD_N2F				2
-#define MOD_FAILMOD			3
-#define MOD_RATMOD			4
-#define MOD_AFTERSHOCK			5
-#define MOD_DEFRAG			6
+#define MOD_FAILMOD			2
+#define MOD_RATMOD			3
+#define MOD_AFTERSHOCK			4
+#define MOD_DEFRAG			5
 
 
 static const char *master_items[] = {
@@ -141,7 +140,6 @@ static const char *servertype_items[] = {
 static const char *servermod_items[] = {
 	"All",
 	"OmegA",
-	"n2f",
         "FailMod",
 	"RatMod",
 	"AfterShock",
@@ -693,12 +691,6 @@ static void ArenaServers_UpdateMenu( void ) {
 
                 case MOD_OMEGA:
 			if( strcmp( servernodeptr->gamename, "omega" ) != 0 ) {
-				continue;
-			}
-			break;
-
-                case MOD_N2F:
-			if( strcmp( servernodeptr->gamename, "n2f" ) != 0 ) {
 				continue;
 			}
 			break;
@@ -1308,10 +1300,6 @@ static void ArenaServers_StartRefreshNoClearList( void )
 
 		case MOD_OMEGA:
 			strcpy( myargs, " omega" );
-			break;
-
-		case MOD_N2F:
-			strcpy( myargs, " n2f" );
 			break;
 
 		case MOD_RATMOD:
