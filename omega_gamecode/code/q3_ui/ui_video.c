@@ -524,6 +524,8 @@ GraphicsOptions_UpdateMenuItems
 */
 static void GraphicsOptions_UpdateMenuItems( void )
 {
+	char buf[MAX_STRING_CHARS];
+
 	if ( s_graphicsoptions.allow_extensions.curvalue == 0 )
 	{
 		if ( s_graphicsoptions.texturebits.curvalue == 0 )
@@ -532,7 +534,8 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		}
 	}
 
-	if ( s_graphicsoptions.desktop.curvalue == 1 )
+	trap_Cvar_VariableStringBuffer("r_modeFullscreen", buf, sizeof(buf) );
+	if ( s_graphicsoptions.desktop.curvalue == 1 || ( trap_Cvar_VariableValue("r_fullscreen") == 1 && buf[0] ) )
 	{
 		s_graphicsoptions.ratio.generic.flags |= QMF_GRAYED;
 		s_graphicsoptions.mode.generic.flags |= QMF_GRAYED;
