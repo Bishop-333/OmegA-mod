@@ -290,7 +290,7 @@ and that local cinematics are killed
 void UI_MainMenu( void ) {
 	int		y;
 	//qboolean teamArena = qfalse;
-	int		style = UI_CENTER | UI_DROPSHADOW;
+	int		style = UI_CENTER | UI_DROPSHADOW | UI_SELECTED;
 
 	trap_Cvar_Set( "sv_killserver", "1" );
         trap_Cvar_SetValue( "handicap", 100 ); //Reset handicap during server change, it must be ser per game

@@ -562,7 +562,7 @@ void UI_DrawProportionalString( int x, int y, const char* str, int style, vec4_t
 		drawcolor[3] = 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR );
 		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetPropGlow );
 
-		if (style & UI_CENTER ) {
+		if (style & UI_SELECTED ) {
 			UI_DrawNamedPic( x - width / 2, y - sizeScale, width * 2, (float)PROP_HEIGHT * 1.25 * sizeScale, ART_SELECTED );
 		}
 
