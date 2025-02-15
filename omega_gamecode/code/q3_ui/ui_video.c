@@ -534,7 +534,14 @@ static void GraphicsOptions_UpdateMenuItems( void )
 		}
 	}
 
-	trap_Cvar_VariableStringBuffer("r_modeFullscreen", buf, sizeof(buf) );
+	s_graphicsoptions.ratio.curvalue = resToRatio[ s_graphicsoptions.mode.curvalue ];
+
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		trap_Cvar_VariableStringBuffer("r_modeFullscreen", buf, sizeof(buf) );
+	} else {
+		memset( buf, 0, sizeof(buf) );
+	}
+		
 	if ( s_graphicsoptions.desktop.curvalue == 1 || ( trap_Cvar_VariableValue("r_fullscreen") == 1 && buf[0] ) )
 	{
 		s_graphicsoptions.ratio.generic.flags |= QMF_GRAYED;
