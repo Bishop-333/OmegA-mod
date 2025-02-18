@@ -524,8 +524,6 @@ GraphicsOptions_UpdateMenuItems
 */
 static void GraphicsOptions_UpdateMenuItems( void )
 {
-	char buf[MAX_STRING_CHARS];
-
 	if ( s_graphicsoptions.allow_extensions.curvalue == 0 )
 	{
 		if ( s_graphicsoptions.texturebits.curvalue == 0 )
@@ -535,14 +533,8 @@ static void GraphicsOptions_UpdateMenuItems( void )
 	}
 
 	s_graphicsoptions.ratio.curvalue = resToRatio[ s_graphicsoptions.mode.curvalue ];
-
-	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
-		trap_Cvar_VariableStringBuffer("r_modeFullscreen", buf, sizeof(buf) );
-	} else {
-		memset( buf, 0, sizeof(buf) );
-	}
 		
-	if ( s_graphicsoptions.desktop.curvalue == 1 || ( trap_Cvar_VariableValue("r_fullscreen") == 1 && buf[0] ) )
+	if ( s_graphicsoptions.desktop.curvalue == 1 )
 	{
 		s_graphicsoptions.ratio.generic.flags |= QMF_GRAYED;
 		s_graphicsoptions.mode.generic.flags |= QMF_GRAYED;
@@ -655,9 +647,11 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 	trap_Cvar_SetValue( "r_drawFlat", s_graphicsoptions.drawflat.curvalue );
 	trap_Cvar_SetValue( "r_picmip", 3 - s_graphicsoptions.tq.curvalue );
 	trap_Cvar_SetValue( "r_allowExtensions", s_graphicsoptions.allow_extensions.curvalue );
+	trap_Cvar_Set( "r_modeFullscreen", "" );
 	if ( s_graphicsoptions.desktop.curvalue == 1 )
 	{
 		trap_Cvar_SetValue( "r_mode", -2 );
+		trap_Cvar_Set( "r_modeFullscreen", "-2" );
 	}
 	else if( resolutionsDetected )
 	{
@@ -842,6 +836,8 @@ GraphicsOptions_SetMenuItems
 */
 static void GraphicsOptions_SetMenuItems( void )
 {
+	char str[MAX_STRING_CHARS];
+
 	s_graphicsoptions.mode.curvalue =
 		GraphicsOptions_FindDetectedResolution( trap_Cvar_VariableValue( "r_mode" ) );
 
@@ -874,7 +870,14 @@ static void GraphicsOptions_SetMenuItems( void )
 	}
 	s_graphicsoptions.fs.curvalue = trap_Cvar_VariableValue("r_fullscreen");
 	s_graphicsoptions.allow_extensions.curvalue = trap_Cvar_VariableValue("r_allowExtensions");
-	if ( trap_Cvar_VariableValue("r_mode") == -2 ) {
+
+	if ( trap_Cvar_VariableValue("cl_omegaEngine") == 1 ) {
+		trap_Cvar_VariableStringBuffer("r_modeFullscreen", str, sizeof(str) );
+	} else {
+		memset( str, 0, sizeof(str) );
+	}
+
+	if ( trap_Cvar_VariableValue("r_mode") == -2 || strlen(str) > 0 ) {
 		s_graphicsoptions.desktop.curvalue = 1;
 	} else {
 		s_graphicsoptions.desktop.curvalue = 0;
