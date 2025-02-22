@@ -411,8 +411,6 @@ qboolean CG_DrawOldScoreboard( void ) {
 		cg.deferredPlayerLoading = 0;
 		cg.killerName[0] = 0;
 		return qfalse;
-
-		fade = *fadeColor;
 	}
 
 	if ( cg.scoresRequestTime + 1000 < cg.time ) {

@@ -173,7 +173,7 @@ ifeq ($(shell which pkg-config > /dev/null; echo $$?),0)
   OPENAL_CFLAGS=$(shell pkg-config --cflags openal)
   OPENAL_LIBS=$(shell pkg-config --libs openal)
   # FIXME: introduce CLIENT_CFLAGS
-  SDL_CFLAGS=$(shell pkg-config --cflags sdl|sed 's/-Dmain=SDL_main//')
+  # SDL_CFLAGS=$(shell pkg-config --cflags sdl|sed 's/-Dmain=SDL_main//')
   SDL_LIBS=$(shell pkg-config --libs sdl)
 endif
 # Use sdl-config if all else fails

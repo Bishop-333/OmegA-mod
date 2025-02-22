@@ -907,14 +907,6 @@ GraphicsOptions_MenuInit
 */
 void GraphicsOptions_MenuInit( void )
 {
-	static const char *tq_names[] =
-	{
-		"Default",
-		"16 bit",
-		"32 bit",
-		NULL
-	};
-
 	static const char *filter_names[] =
 	{
 		"Bilinear",
