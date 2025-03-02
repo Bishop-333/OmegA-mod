@@ -22,7 +22,7 @@ models/powerups/ammo/machammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/machammo2.tga
+		map models/powerups/ammo/machammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -50,7 +50,7 @@ models/powerups/ammo/shotammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/shotammo2.tga
+		map models/powerups/ammo/shotammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -78,7 +78,7 @@ models/powerups/ammo/grenammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/grenammo2.tga
+		map models/powerups/ammo/grenammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -106,7 +106,7 @@ models/powerups/ammo/lighammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/lighammo2.tga
+		map models/powerups/ammo/lighammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -134,7 +134,7 @@ models/powerups/ammo/plasammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/plasammo2.tga
+		map models/powerups/ammo/plasammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -162,7 +162,7 @@ models/powerups/ammo/rockammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/rockammo2.tga
+		map models/powerups/ammo/rockammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -190,7 +190,7 @@ models/powerups/ammo/railammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/railammo2.tga
+		map models/powerups/ammo/railammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}
@@ -218,7 +218,7 @@ models/powerups/ammo/bfgammo2
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
-		map models/powerups/ammo/bfgammo2.tga
+		map models/powerups/ammo/bfgammo2.jpg
 		blendfunc add
 		rgbGen identity
 	}

@@ -1805,9 +1805,9 @@ Menu_Cache
 void Menu_Cache( void )
 {
 	uis.charset			= trap_R_RegisterShaderNoMip( "gfx/2d/bigchars" );
-	uis.charsetProp		= trap_R_RegisterShaderNoMip( "menu/art/font1_prop.tga" );
-	uis.charsetPropGlow	= trap_R_RegisterShaderNoMip( "menu/art/font1_prop_glo.tga" );
-	uis.charsetPropB	= trap_R_RegisterShaderNoMip( "menu/art/font2_prop.tga" );
+	uis.charsetProp		= trap_R_RegisterShaderNoMip( "menu/art/font1_prop" );
+	uis.charsetPropGlow	= trap_R_RegisterShaderNoMip( "menu/art/font1_prop_glo" );
+	uis.charsetPropB	= trap_R_RegisterShaderNoMip( "menu/art/font2_prop" );
 	uis.cursor          = trap_R_RegisterShaderNoMip( "menu/art/3_cursor2" );
 	uis.rb_on           = trap_R_RegisterShaderNoMip( "menu/art_blueish/switch_on" );
 	uis.rb_off          = trap_R_RegisterShaderNoMip( "menu/art_blueish/switch_off" );

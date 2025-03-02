@@ -55,7 +55,7 @@ icons/teleporter
 {
 	nopicmip
 	{
-		map icons/teleporter.tga
+		map icons/teleporter
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -63,7 +63,7 @@ icons/medkit
 {
 	nopicmip
 	{
-		map icons/medkit.tga
+		map icons/medkit
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -72,7 +72,7 @@ icons/envirosuit
 {
 	nopicmip
 	{
-		map icons/envirosuit.tga
+		map icons/envirosuit
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -80,7 +80,7 @@ icons/quad
 {
 	nopicmip
 	{
-		map icons/quad.tga
+		map icons/quad
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -113,7 +113,7 @@ icons/flight
 {
 	nopicmip
 	{
-		map icons/flight.tga
+		map icons/flight
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -212,7 +212,7 @@ icons/iconw_gauntlet
 {
 	nopicmip
 	{
-		map icons/iconw_gauntlet.tga
+		map icons/iconw_gauntlet
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -220,7 +220,7 @@ icons/iconw_machinegun
 {
 	nopicmip
 	{
-		map icons/iconw_machinegun.tga
+		map icons/iconw_machinegun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -228,7 +228,7 @@ icons/iconw_rocket
 {
 	nopicmip
 	{
-		map icons/iconw_rocket.tga
+		map icons/iconw_rocket
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -237,7 +237,7 @@ icons/iconw_shotgun
 {
 	nopicmip
 	{
-		map icons/iconw_shotgun.tga
+		map icons/iconw_shotgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen identitylighting
 	}
@@ -247,7 +247,7 @@ icons/iconw_grenade
 {
 	nopicmip
 	{
-		map icons/iconw_grenade.tga
+		map icons/iconw_grenade
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -256,7 +256,7 @@ icons/iconw_lightning
 {
 	nopicmip
 	{
-		map icons/iconw_lightning.tga
+		map icons/iconw_lightning
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -265,7 +265,7 @@ icons/iconw_plasma
 {
 	nopicmip
 	{
-		map icons/iconw_plasma.tga
+		map icons/iconw_plasma
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -274,7 +274,7 @@ icons/iconw_railgun
 {
 	nopicmip
 	{
-		map icons/iconw_railgun.tga
+		map icons/iconw_railgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -283,7 +283,7 @@ icons/iconw_bfg
 {
 	nopicmip
 	{
-		map icons/iconw_bfg.tga
+		map icons/iconw_bfg
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -292,7 +292,7 @@ icons/iconw_grapple
 {
 	nopicmip
 	{
-		map icons/iconw_grapple.tga
+		map icons/iconw_grapple
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -301,7 +301,7 @@ icons/icona_machinegun
 {
 	nopicmip
 	{
-		map icons/icona_machinegun.tga
+		map icons/icona_machinegun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -309,7 +309,7 @@ icons/icona_rocket
 {
 	nopicmip
 	{
-		map icons/icona_rocket.tga
+		map icons/icona_rocket
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -318,7 +318,7 @@ icons/icona_shotgun
 {
 	nopicmip
 	{
-		map icons/icona_shotgun.tga
+		map icons/icona_shotgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen identitylighting
 	}
@@ -328,7 +328,7 @@ icons/icona_grenade
 {
 	nopicmip
 	{
-		map icons/icona_grenade.tga
+		map icons/icona_grenade
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -337,7 +337,7 @@ icons/icona_lightning
 {
 	nopicmip
 	{
-		map icons/icona_lightning.tga
+		map icons/icona_lightning
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -346,7 +346,7 @@ icons/icona_plasma
 {
 	nopicmip
 	{
-		map icons/icona_plasma.tga
+		map icons/icona_plasma
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -355,7 +355,7 @@ icons/icona_railgun
 {
 	nopicmip
 	{
-		map icons/icona_railgun.tga
+		map icons/icona_railgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -364,7 +364,7 @@ icons/icona_bfg
 {
 	nopicmip
 	{
-		map icons/icona_bfg.tga
+		map icons/icona_bfg
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -374,7 +374,7 @@ icons/iconr_shard
 {
 	nopicmip
 	{
-		map icons/iconr_shard.tga
+		map icons/iconr_shard
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -383,7 +383,7 @@ icons/iconr_yellow
 {
 	nopicmip
 	{
-		map icons/iconr_yellow.tga
+		map icons/iconr_yellow
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -392,7 +392,7 @@ icons/iconr_red
 {
 	nopicmip
 	{
-		map icons/iconr_red.tga
+		map icons/iconr_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -402,7 +402,7 @@ icons/iconh_green
 {
 	nopicmip
 	{
-		map icons/iconh_green.tga
+		map icons/iconh_green
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -411,7 +411,7 @@ icons/iconh_yellow
 {
 	nopicmip
 	{
-		map icons/iconh_yellow.tga
+		map icons/iconh_yellow
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -420,7 +420,7 @@ icons/iconh_red
 {
 	nopicmip
 	{
-		map icons/iconh_red.tga
+		map icons/iconh_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 
@@ -430,7 +430,7 @@ icons/iconh_mega
 {
 	nopicmip
 	{
-		map icons/iconh_mega.tga
+		map icons/iconh_mega
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -439,7 +439,7 @@ icons/iconf_red
 {
 	nopicmip
 	{
-		map icons/iconf_red.tga
+		map icons/iconf_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -448,7 +448,7 @@ icons/iconf_blu
 {
 	nopicmip
 	{
-		map icons/iconf_blu.tga
+		map icons/iconf_blu
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -619,7 +619,7 @@ gfx/2d/crosshair
 {
 	nopicmip
 	{
-		map gfx/2d/crosshair.tga          
+		map gfx/2d/crosshair
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA                
         	rgbGen vertex
 	}
@@ -629,7 +629,7 @@ gfx/2d/crosshairb
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairb.tga
+		map gfx/2d/crosshairb
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -639,7 +639,7 @@ gfx/2d/crosshairc
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairc.tga
+		map gfx/2d/crosshairc
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -649,7 +649,7 @@ gfx/2d/crosshaird
 {
 	nopicmip
 	{
-		map gfx/2d/crosshaird.tga
+		map gfx/2d/crosshaird
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -659,7 +659,7 @@ gfx/2d/crosshaire
 {
 	nopicmip
 	{
-		map gfx/2d/crosshaire.tga
+		map gfx/2d/crosshaire
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -669,7 +669,7 @@ gfx/2d/crosshairf
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairf.tga
+		map gfx/2d/crosshairf
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -679,7 +679,7 @@ gfx/2d/crosshairg
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairg.tga
+		map gfx/2d/crosshairg
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -689,7 +689,7 @@ gfx/2d/crosshairh
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairh.tga
+		map gfx/2d/crosshairh
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -699,7 +699,7 @@ gfx/2d/crosshairi
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairi.tga
+		map gfx/2d/crosshairi
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -709,7 +709,7 @@ gfx/2d/crosshairj
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairj.tga       
+		map gfx/2d/crosshairj
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -718,7 +718,7 @@ gfx/2d/crosshairk
 {
 	nopicmip
 	{
-		map gfx/2d/crosshairk.tga       
+		map gfx/2d/crosshairk
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen vertex
 	}
@@ -732,7 +732,7 @@ gfx/2d/bigchars
 	nopicmip
 	nomipmaps
 	{
-		map gfx/2d/bigchars.tga
+		map gfx/2d/bigchars
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -785,7 +785,7 @@ gfx/2d/numbers/zero_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/zero_32b.tga
+		map gfx/2d/numbers/zero_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -794,7 +794,7 @@ gfx/2d/numbers/one_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/one_32b.tga
+		map gfx/2d/numbers/one_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -803,7 +803,7 @@ gfx/2d/numbers/two_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/two_32b.tga
+		map gfx/2d/numbers/two_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -812,7 +812,7 @@ gfx/2d/numbers/three_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/three_32b.tga
+		map gfx/2d/numbers/three_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -821,7 +821,7 @@ gfx/2d/numbers/four_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/four_32b.tga
+		map gfx/2d/numbers/four_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -830,7 +830,7 @@ gfx/2d/numbers/five_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/five_32b.tga
+		map gfx/2d/numbers/five_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -839,7 +839,7 @@ gfx/2d/numbers/six_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/six_32b.tga
+		map gfx/2d/numbers/six_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -848,7 +848,7 @@ gfx/2d/numbers/seven_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/seven_32b.tga
+		map gfx/2d/numbers/seven_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -857,7 +857,7 @@ gfx/2d/numbers/eight_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/eight_32b.tga
+		map gfx/2d/numbers/eight_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -866,7 +866,7 @@ gfx/2d/numbers/nine_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/nine_32b.tga
+		map gfx/2d/numbers/nine_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -875,7 +875,7 @@ gfx/2d/numbers/minus_32b
 {
 	nopicmip
 	{
-		map gfx/2d/numbers/minus_32b.tga
+		map gfx/2d/numbers/minus_32b
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbgen vertex
 	}
@@ -888,7 +888,7 @@ icons/iconw_chaingun
 {
 	nopicmip
 	{
-		map icons/iconw_chaingun.tga
+		map icons/iconw_chaingun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -897,7 +897,7 @@ icons/iconw_chaingun_cl1
 {
 	nopicmip
 	{
-		map icons/iconw_chaingun_cl1.tga
+		map icons/iconw_chaingun_cl1
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -906,7 +906,7 @@ icons/iconw_chaingun_cl2
 {
 	nopicmip
 	{
-		map icons/iconw_chaingun_cl2.tga
+		map icons/iconw_chaingun_cl2
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -915,7 +915,7 @@ icons/iconw_grapple
 {
 	nopicmip
 	{
-		map icons/iconw_grapple.tga
+		map icons/iconw_grapple
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -924,7 +924,7 @@ icons/iconw_nailgun
 {
 	nopicmip
 	{
-		map icons/iconw_nailgun.tga
+		map icons/iconw_nailgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -933,7 +933,7 @@ icons/iconw_proxlauncher
 {
 	nopicmip
 	{
-		map icons/iconw_proxlauncher.tga
+		map icons/iconw_proxlauncher
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -942,7 +942,7 @@ icons/icona_chaingun
 {
 	nopicmip
 	{
-		map icons/icona_chaingun.tga
+		map icons/icona_chaingun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -952,7 +952,7 @@ icons/icona_proxlauncher
 {
 	nopicmip
 	{
-		map icons/icona_proxlauncher.tga
+		map icons/icona_proxlauncher
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -962,7 +962,7 @@ icons/icona_nailgun
 {
 	nopicmip
 	{
-		map icons/icona_nailgun.tga
+		map icons/icona_nailgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -972,7 +972,7 @@ icons/guard
 {
 	nopicmip
 	{
-		map icons/guard.tga
+		map icons/guard
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -981,7 +981,7 @@ icons/doubler
 {
 	nopicmip
 	{
-		map icons/doubler.tga
+		map icons/doubler
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -990,7 +990,7 @@ icons/ammo_regen
 {
 	nopicmip
 	{
-		map icons/ammo_regen.tga
+		map icons/ammo_regen
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -999,7 +999,7 @@ icons/scout
 {
 	nopicmip
 	{
-		map icons/scout.tga
+		map icons/scout
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1009,7 +1009,7 @@ icons/icona_red
 {
 	nopicmip
 	{
-		map icons/icona_red.tga
+		map icons/icona_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1018,7 +1018,7 @@ icons/icona_blue
 {
 	nopicmip
 	{
-		map icons/icona_blue.tga
+		map icons/icona_blue
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1027,7 +1027,7 @@ icons/icona_white
 {
 	nopicmip
 	{
-		map icons/icona_white.tga
+		map icons/icona_white
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1036,7 +1036,7 @@ icons/iconb_red
 {
 	nopicmip
 	{
-		map icons/iconb_red.tga
+		map icons/iconb_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1045,7 +1045,7 @@ icons/iconb_blue
 {
 	nopicmip
 	{
-		map icons/iconb_blue.tga
+		map icons/iconb_blue
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1054,7 +1054,7 @@ icons/iconb_white
 {
 	nopicmip
 	{
-		map icons/iconb_white.tga
+		map icons/iconb_white
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1063,7 +1063,7 @@ icons/icona_red
 {
 	nopicmip
 	{
-		map icons/icona_red.tga
+		map icons/icona_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1072,7 +1072,7 @@ icons/icona_blue
 {
 	nopicmip
 	{
-		map icons/icona_blue.tga
+		map icons/icona_blue
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1081,7 +1081,7 @@ icons/iconf_blu
 {
 	nopicmip
 	{
-		map icons/iconf_blu.tga
+		map icons/iconf_blu
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -1090,7 +1090,7 @@ icons/iconf_red
 {
 	nopicmip
 	{
-		map icons/iconf_red.tga
+		map icons/iconf_red
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }

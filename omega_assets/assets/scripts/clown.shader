@@ -11,7 +11,7 @@ textures/clown/blue_banner
 		rgbGen identity
 	}
 	{
-		clampmap textures/clown/blue_banner.tga
+		clampmap textures/clown/blue_banner.jpg
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 
@@ -31,7 +31,7 @@ textures/clown/red_banner
 		rgbGen identity
 	}
 	{
-		clampmap textures/clown/red_banner.tga
+		clampmap textures/clown/red_banner.jpg
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		

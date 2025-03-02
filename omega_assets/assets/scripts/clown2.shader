@@ -1158,7 +1158,7 @@ textures/ctf2/blue_banner02
 	cull none
 	nopicmip
 	{
-		map textures/ctf2/blue_banner02.tga
+		map textures/ctf2/blue_banner02.jpg
 		rgbgen identity
 	}
 	{
@@ -1173,7 +1173,7 @@ textures/ctf2/red_banner02
 	cull none
 	nopicmip
 	{
-		map textures/ctf2/red_banner02.tga
+		map textures/ctf2/red_banner02.jpg
 		rgbgen identity
 	}
 	{

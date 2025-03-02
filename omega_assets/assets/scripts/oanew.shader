@@ -160,7 +160,7 @@ textures/ctf_unified/floor_decal_red
 {
 	cull disable
 	{
-		map textures/symbols/redteam.tga
+		map textures/symbols/redteam.jpg
 		blendfunc add
 	}
 }
@@ -169,7 +169,7 @@ textures/ctf_unified/monologo_flash_blue
 {
 	cull disable
 	{
-		map textures/symbols/blueteam.tga
+		map textures/symbols/blueteam.jpg
 	}
 }
 
@@ -303,7 +303,7 @@ console
 		tcmod scale .8 1
 	}
         {
-		map textures/omega/logo256.tga
+		map textures/omega/logo256.jpg
 		blendFunc gl_one gl_one
 		rgbGen wave sin 0 1 0 0.5 
 	}
@@ -423,7 +423,7 @@ menuback_blueish
 		tcMod scale 2 2
 	}
 	{
-		map textures/sfx/logo256.tga
+		map textures/sfx/logo256.jpg
 		blendfunc filter
 		tcMod scale 0 1
 	}
@@ -507,13 +507,13 @@ smokePuff
 	nopicmip
 	cull disable
 	{
-		clampmap gfx/misc/smokepuff3.tga
+		clampmap gfx/misc/smokepuff3.jpg
 		blendfunc blend
 		tcMod rotate -55
 		alphaGen Vertex
 	}
 	{
-		map gfx/misc/smokepuff3.tga
+		map gfx/misc/smokepuff3.jpg
 		blendfunc blend
 		tcMod rotate 66
 		alphaGen Vertex
@@ -547,7 +547,7 @@ shotgunSmokePuff
 	nopicmip
 	cull disable
 	{
-		clampmap gfx/misc/smokepuff3.tga
+		clampmap gfx/misc/smokepuff3.jpg
 		blendfunc blend
 		tcMod rotate -45
 		alphaGen entity
