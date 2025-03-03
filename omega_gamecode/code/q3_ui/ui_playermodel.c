@@ -310,6 +310,7 @@ static void PlayerModel_PicEvent( void* ptr, int event )
 {
 	int				modelnum;
 	int				maxlen;
+	int				prefix = 5;
 	char*			buffptr;
 	char*			pdest;
 	int				i;
@@ -333,11 +334,16 @@ static void PlayerModel_PicEvent( void* ptr, int event )
 	modelnum = s_playermodel.modelpage*MAX_MODELSPERPAGE + i;
 	buffptr  = s_playermodel.modelnames[modelnum] + strlen("models/players/");
 	pdest    = strstr(buffptr,"icon_");
+	if (!pdest)
+	{
+		pdest = strstr(buffptr,"iconh_");
+		prefix = 6;
+	}
 	if (pdest)
 	{
 		// track the whole model/skin name
 		Q_strncpyz(s_playermodel.modelskin,buffptr,pdest-buffptr+1);
-		strcat(s_playermodel.modelskin,pdest + 5);
+		strcat(s_playermodel.modelskin,pdest + prefix);
 
 		// seperate the model name
 		maxlen = pdest-buffptr;
@@ -347,10 +353,10 @@ static void PlayerModel_PicEvent( void* ptr, int event )
 		Q_strupr( s_playermodel.modelname.string );
 
 		// seperate the skin name
-		maxlen = strlen(pdest+5)+1;
+		maxlen = strlen(pdest+prefix)+1;
 		if (maxlen > 16)
 			maxlen = 16;
-		Q_strncpyz( s_playermodel.skinname.string, pdest+5, maxlen );
+		Q_strncpyz( s_playermodel.skinname.string, pdest+prefix, maxlen );
 		Q_strupr( s_playermodel.skinname.string );
 
 		s_playermodel.selectedmodel = modelnum;
@@ -427,7 +433,7 @@ static void PlayerModel_BuildList( void )
 			COM_StripExtension(fileptr,skinname, sizeof(skinname));
 
 			// look for icon_????
-			if (!Q_stricmpn(skinname,"icon_",5))
+			if ( !Q_stricmpn(skinname,"icon_",5) || !Q_stricmpn(skinname,"iconh_",6) )
 			{
 				Com_sprintf( s_playermodel.modelnames[s_playermodel.nummodels++],
 					sizeof( s_playermodel.modelnames[s_playermodel.nummodels] ),
@@ -458,6 +464,7 @@ static void PlayerModel_SetMenuItems( void )
 {
 	int				i;
 	int				maxlen;
+	int				prefix = 5;
 	char			modelskin[64];
 	char*			buffptr;
 	char*			pdest;
@@ -480,10 +487,17 @@ static void PlayerModel_SetMenuItems( void )
 		// strip icon_
 		buffptr  = s_playermodel.modelnames[i] + strlen("models/players/");
 		pdest    = strstr(buffptr,"icon_");
+
+		if (!pdest)
+		{
+			pdest = strstr(buffptr,"iconh_");
+			prefix = 6;
+		}
+
 		if (pdest)
 		{
 			Q_strncpyz(modelskin,buffptr,pdest-buffptr+1);
-			strcat(modelskin,pdest + 5);
+			strcat(modelskin,pdest + prefix);
 		}
 		else
 			continue;
@@ -502,10 +516,10 @@ static void PlayerModel_SetMenuItems( void )
 			Q_strupr( s_playermodel.modelname.string );
 
 			// seperate the skin name
-			maxlen = strlen(pdest+5)+1;
+			maxlen = strlen(pdest+prefix)+1;
 			if (maxlen > 16)
 				maxlen = 16;
-			Q_strncpyz( s_playermodel.skinname.string, pdest+5, maxlen );
+			Q_strncpyz( s_playermodel.skinname.string, pdest+prefix, maxlen );
 			Q_strupr( s_playermodel.skinname.string );
 			break;
 		}

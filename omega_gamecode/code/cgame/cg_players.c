@@ -622,6 +622,9 @@ static qboolean CG_RegisterClientModelname( clientInfo_t *ci, const char *modelN
 	else if ( CG_FindClientHeadFile( filename, sizeof(filename), ci, teamName, headName, headSkinName, "icon", "tga" ) ) {
 		ci->modelIcon = trap_R_RegisterShaderNoMip( filename );
 	}
+	else if ( CG_FindClientHeadFile( filename, sizeof(filename), ci, teamName, headName, headSkinName, "iconh", "tga" ) ) {
+		ci->modelIcon = trap_R_RegisterShaderNoMip( filename );
+	}
 
 	if ( !ci->modelIcon ) {
 		return qfalse;
