@@ -5,32 +5,8 @@ models/players/grism/neon
 		rgbGen lightingDiffuse
 	}
 	{
-		AnimMap 48 models/players/grism/lum1.tga models/players/grism/lum2.tga models/players/grism/lum3.tga models/players/grism/lum2.tga
+		AnimMap 48 models/players/grism/lum1.jpg models/players/grism/lum2.jpg models/players/grism/lum3.jpg models/players/grism/lum2.jpg
 		blendfunc add
 		rgbGen entity
-	}
-}
-
-models/players/grism/neonblue
-{
-	{
-		map models/players/grism/neon.tga
-		rgbGen lightingDiffuse
-	}
-	{
-		AnimMap 48 models/players/grism/lumb1.tga models/players/grism/lumb2.tga models/players/grism/lumb3.tga models/players/grism/lumb2.tga
-		blendfunc add
-	}
-}
-
-models/players/grism/neonred
-{
-	{
-		map models/players/grism/neon.tga
-		rgbGen lightingDiffuse
-	}
-	{
-		AnimMap 48 models/players/grism/lumr1.tga models/players/grism/lumr2.tga models/players/grism/lumr3.tga models/players/grism/lumr2.tga
-		blendfunc add
 	}
 }

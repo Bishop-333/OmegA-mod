@@ -423,7 +423,7 @@ menuback_blueish
 		tcMod scale 2 2
 	}
 	{
-		map textures/sfx/logo256.jpg
+		map textures/sfx/logo256.tga
 		blendfunc filter
 		tcMod scale 0 1
 	}
