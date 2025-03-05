@@ -574,16 +574,16 @@ void weapon_railgun_fire (gentity_t *ent) {
 			trap_Trace (&trace, muzzle, NULL, NULL, end, passent, MASK_SHOT );
 		}
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
-			if ( g_railJump.integer ) {
-				G_RailJump( trace.endpos, ent );
-				break;
-			} else if ( g_railThroughWalls.integer ) {
+			if ( g_railThroughWalls.integer ) {
 				if ( trace.surfaceFlags & SURF_SKY || trace.fraction == 1.0 ) {
 					break;
 				} else {
 					VectorMA (trace.endpos, 1, forward, tracefrom);
 					continue;
 				}
+			} else if ( g_railJump.integer ) {
+				G_RailJump( trace.endpos, ent );
+				break;
 			} else {
 				break;
 			}
