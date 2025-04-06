@@ -601,8 +601,8 @@ static void PlayerModel_MenuInit( void )
 			s_playermodel.picbuttons[k].generic.flags    = QMF_LEFT_JUSTIFY|QMF_NODEFAULTINIT|QMF_PULSEIFFOCUS;
 			s_playermodel.picbuttons[k].generic.id	     = ID_PLAYERPIC0+k;
 			s_playermodel.picbuttons[k].generic.callback = PlayerModel_PicEvent;
-			s_playermodel.picbuttons[k].generic.x    	 = x - 16;
-			s_playermodel.picbuttons[k].generic.y		 = y - 16;
+			s_playermodel.picbuttons[k].generic.x    	 = x - 15;
+			s_playermodel.picbuttons[k].generic.y		 = y - 17;
 			s_playermodel.picbuttons[k].generic.left	 = x;
 			s_playermodel.picbuttons[k].generic.top		 = y;
 			s_playermodel.picbuttons[k].generic.right	 = x + 64;
