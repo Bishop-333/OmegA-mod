@@ -797,6 +797,8 @@ void RespawnAll(void)
 		client = g_entities + i;
 		client->client->ps.pm_type = PM_NORMAL;
 		client->client->pers.livesLeft = g_lms_lives.integer;
+		client->client->ps.powerups[PW_REDFLAG] = 0;
+		client->client->ps.powerups[PW_BLUEFLAG] = 0;
 		respawnRound(client);
 	}
 	return;
