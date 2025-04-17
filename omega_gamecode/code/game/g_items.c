@@ -432,7 +432,7 @@ void Touch_Item (gentity_t *ent, gentity_t *other, trace_t *trace) {
 		}
 	}
 
-	if ( (g_gametype.integer == GT_ELIMINATION && !g_elimination_items.integer) || g_gametype.integer == GT_LMS)
+	if ( (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_LMS) && !g_elimination_items.integer)
 		return;		//nothing to pick up in elimination
 
 	if (!other->client)
@@ -746,7 +746,7 @@ void FinishSpawningItem( gentity_t *ent ) {
 
 	
 	// powerups don't spawn in for a while (but not in elimination)
-	if ( ( (isEliminationMode && g_elimination_items.integer) || !isEliminationMode) && g_gametype.integer != GT_LMS && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
+	if ( ( (isEliminationMode && g_elimination_items.integer) || !isEliminationMode) && ( (g_gametype.integer == GT_LMS && g_elimination_items.integer) || g_gametype.integer != GT_LMS) && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
 		if ( ent->item->giType == IT_POWERUP ) {
 			float	respawn;
 
@@ -1022,7 +1022,7 @@ void G_SpawnItem (gentity_t *ent, gitem_t *item) {
 	if((item->giType == IT_TEAM && (g_instantgib.integer || g_rockets.integer || g_weaponArena.integer) ) || (!g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer) )
 	{
 		//Don't load pickups in Elimination (or maybe... gives warnings)
-		if ( ( (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION) && g_elimination_items.integer) || g_gametype.integer != GT_LMS)
+		if ( (g_gametype.integer != GT_ELIMINATION || g_gametype.integer != GT_CTF_ELIMINATION || g_gametype.integer != GT_LMS) || g_elimination_items.integer)
 			RegisterItem( item );
 		//Registrer flags anyway in CTF Elimination:
 		if (g_gametype.integer == GT_CTF_ELIMINATION && item->giType == IT_TEAM)
@@ -1041,7 +1041,7 @@ void G_SpawnItem (gentity_t *ent, gitem_t *item) {
 
 	ent->physicsBounce = 0.50;		// items are bouncy
 
-	if ( (g_gametype.integer == GT_ELIMINATION && !g_elimination_items.integer) || g_gametype.integer == GT_LMS || 
+	if ( ( (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_LMS) && !g_elimination_items.integer) || 
 			( item->giType != IT_TEAM && (g_instantgib.integer || g_rockets.integer || g_weaponArena.integer || ( (g_elimination_allgametypes.integer || g_gametype.integer==GT_CTF_ELIMINATION) && !g_elimination_items.integer) ) ) ) {
 		ent->s.eFlags |= EF_NODRAW; //Invisible in elimination
                 ent->r.svFlags |= SVF_NOCLIENT;  //Don't broadcast
