@@ -2696,6 +2696,50 @@ static void CG_DrawCenterDDString( void ) {
     #endif
 }
 
+/*
+===================
+CG_DrawCenterEliminationString
+===================
+*/
+void CG_DrawCenterEliminationString(void) {
+	int		x, y, w;
+	float		*color;
+	char		*line;
+	clientInfo_t	*ci;
+	int		myteam;
+	int		i;
+	int		living = 0;
+	static int	lastSurvivorTime = 0;
+
+	myteam = cg.snap->ps.persistant[PERS_TEAM];
+
+	if (cgs.gametype != GT_CTF_ELIMINATION || myteam == TEAM_SPECTATOR || cg.time < cgs.roundStartTime+1000)
+		return;
+
+	for ( i = 0; i < cgs.maxclients; i++ ) {
+		ci = &cgs.clientinfo[i];
+		if (ci->team == myteam && !ci->isDead)
+			living++;
+	}
+
+	if (living == 1) {
+		if (lastSurvivorTime == 0) {
+			lastSurvivorTime = cg.time;
+		}
+	} else {
+		lastSurvivorTime = 0;
+	}
+
+	if (lastSurvivorTime && lastSurvivorTime + 3000 > cg.time) {
+		line = va("You are the last one standing");
+		y = 100;
+		w = cg.centerPrintCharWidth * CG_DrawStrlen(line);
+		x = (SCREEN_WIDTH - w) / 2;
+		color = CG_FadeColor(lastSurvivorTime, 3000);
+		CG_DrawStringExt(x, y, line, color, qfalse, qtrue, cg.centerPrintCharWidth, (int)(cg.centerPrintCharWidth * 1.5), 0);
+	}	
+}
+
 
 /*
 ================================================================================
@@ -3577,6 +3621,7 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 	// don't draw center string if scoreboard is up
 	cg.scoreBoardShowing = CG_DrawScoreboard();
 	if ( !cg.scoreBoardShowing) {
+		CG_DrawCenterEliminationString();
                 CG_DrawCenterDDString();
                 CG_DrawCenter1FctfString();
 		CG_DrawCenterString();

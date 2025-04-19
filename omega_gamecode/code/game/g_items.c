@@ -1021,9 +1021,7 @@ void G_SpawnItem (gentity_t *ent, gitem_t *item) {
 
 	if((item->giType == IT_TEAM && (g_instantgib.integer || g_rockets.integer || g_weaponArena.integer) ) || (!g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer) )
 	{
-		//Don't load pickups in Elimination (or maybe... gives warnings)
-		if ( (g_gametype.integer != GT_ELIMINATION || g_gametype.integer != GT_CTF_ELIMINATION || g_gametype.integer != GT_LMS) || g_elimination_items.integer)
-			RegisterItem( item );
+		RegisterItem( item );
 		//Registrer flags anyway in CTF Elimination:
 		if (g_gametype.integer == GT_CTF_ELIMINATION && item->giType == IT_TEAM)
 			RegisterItem( item );
