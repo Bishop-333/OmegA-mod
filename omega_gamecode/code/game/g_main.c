@@ -2088,7 +2088,7 @@ void StartEliminationRound(void) {
         }
 	SendEliminationMessageToAllClients();
 	if(g_elimination_ctf_oneway.integer)
-		SendAttackingTeamMessageToAllClients(); //Ensure that evaryone know who should attack.
+		SendAttackingTeamMessageToAllClients(); //Ensure that everyone know who should attack.
 	EnableWeapons();
 }
 
@@ -2308,7 +2308,7 @@ void CheckElimination(void) {
 		return;
 	}	
 
-	//We don't want to do anything in itnermission
+	//We don't want to do anything in intermission
 	if(level.intermissiontime) {
 		if(level.roundRespawned)
 			RestartEliminationRound();

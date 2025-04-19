@@ -754,7 +754,7 @@ static void CG_DrawStatusBar( void ) {
 	trap_R_SetColor( hcolor );
 	// if we didn't draw a 3D icon, draw a 2D icon for health
 	if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
-		CG_DrawPic( 185 - CHAR_WIDTH * 1.5 - TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.healthIcon );
+		CG_DrawPic( 185 - CHAR_WIDTH * 1.5 - TEXT_ICON_SPACE, 428, ICON_SIZE, ICON_SIZE, cgs.media.healthIcon );
 	}
 
 
@@ -768,7 +768,7 @@ static void CG_DrawStatusBar( void ) {
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
-			CG_DrawPic( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
+			CG_DrawPic( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 428, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
 		}
 	} else if (value > 0 ) {
 		trap_R_SetColor( colors[3] ); // white
@@ -776,7 +776,7 @@ static void CG_DrawStatusBar( void ) {
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
-			CG_DrawPic( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
+			CG_DrawPic( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 428, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
 		}
 
 	}
@@ -1639,7 +1639,7 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 	if (cg_drawFPS.integer && (stereoFrame == STEREO_CENTER || stereoFrame == STEREO_RIGHT)) {
 		y = CG_DrawFPS( y );
 	}
-	if (cgs.gametype==GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype==GT_LMS) {
+	if ( (cgs.gametype==GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype==GT_LMS) && cg_elimination_activewarmup.integer >= 3 ){
 		y = CG_DrawEliminationTimer( y );
 		/*if (cgs.clientinfo[ cg.clientNum ].isDead)
 			y = CG_DrawEliminationDeathMessage( y);*/
