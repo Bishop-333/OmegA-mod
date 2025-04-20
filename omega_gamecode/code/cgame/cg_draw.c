@@ -1190,6 +1190,7 @@ static float CG_DrawEliminationTimer( float y ) {
 	const char	*st;
 	int cw;
 	int rst;
+	static qboolean fightPlayed = qfalse;
 
         
 
@@ -1264,6 +1265,12 @@ Lots of stuff
 /*
 Lots of stuff
 */
+	}
+
+	if (cg.time>rst && cg.time-rst<100 && !fightPlayed) {
+		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
+		CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH );
+		fightPlayed = qtrue;
 	}
 
 	seconds = msec / 1000;
@@ -2701,28 +2708,38 @@ static void CG_DrawCenterDDString( void ) {
 CG_DrawCenterEliminationString
 ===================
 */
-void CG_DrawCenterEliminationString(void) {
+void CG_DrawCenterEliminationString( void ) {
 	int		x, y, w;
 	float		*color;
 	char		*line;
-	clientInfo_t	*ci;
-	int		myteam;
 	int		i;
-	int		living = 0;
+	int		living;
+	int		plyrs;
+	clientInfo_t	*ci;
 	static int	lastSurvivorTime = 0;
 
-	myteam = cg.snap->ps.persistant[PERS_TEAM];
-
-	if (cgs.gametype != GT_CTF_ELIMINATION || myteam == TEAM_SPECTATOR || cg.time < cgs.roundStartTime+1000)
+	if ( cgs.gametype != GT_CTF_ELIMINATION || !cg_elimination_allgametypes.integer || cg.time < cgs.roundStartTime+1000 ) {
 		return;
-
-	for ( i = 0; i < cgs.maxclients; i++ ) {
-		ci = &cgs.clientinfo[i];
-		if (ci->team == myteam && !ci->isDead)
-			living++;
 	}
 
-	if (living == 1) {
+	if ( cg.snap->ps.persistant[PERS_TEAM] != TEAM_RED && cg.snap->ps.persistant[PERS_TEAM] != TEAM_BLUE ) {
+		return;
+	}
+
+	plyrs = 0;
+	living = 0;
+
+	for (i = 0; i < cgs.maxclients; i++) {
+		ci = &cgs.clientinfo[i];
+		if (ci->infoValid && ci->team == cg.snap->ps.persistant[PERS_TEAM]) {
+			plyrs++;
+			if (!ci->isDead) {
+				living++;
+			}
+		}
+	}
+
+	if (living == 1 && plyrs > 1) {
 		if (lastSurvivorTime == 0) {
 			lastSurvivorTime = cg.time;
 		}

@@ -1478,6 +1478,7 @@ extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t	cg_drawItemPickup;
 extern vmCvar_t	cg_drawTeamBackground;
 extern vmCvar_t cg_elimination_activewarmup;
+extern vmCvar_t cg_elimination_allgametypes;
 extern vmCvar_t cg_enemyColor;
 extern vmCvar_t cg_enemyModel;
 extern vmCvar_t cg_enemySounds;
