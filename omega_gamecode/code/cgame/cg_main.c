@@ -287,7 +287,6 @@ vmCvar_t        cg_drawFriendThroughWalls;
 vmCvar_t        cg_drawItemPickup;
 vmCvar_t        cg_drawTeamBackground;
 vmCvar_t        cg_elimination_activewarmup;
-vmCvar_t        cg_elimination_allgametypes;
 vmCvar_t        cg_enemyColor;
 vmCvar_t        cg_enemyModel;
 vmCvar_t        cg_enemySounds;
@@ -515,7 +514,6 @@ static cvarTable_t cvarTable[] = { // bk001129
 	{ &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE},
 	{ &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE },
 	{ &cg_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_SYSTEMINFO },
-        { &cg_elimination_allgametypes, "elimination", "0", CVAR_SYSTEMINFO },
 	{ &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },
 	{ &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE },
 	{ &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE },

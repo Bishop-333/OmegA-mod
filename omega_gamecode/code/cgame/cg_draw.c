@@ -1196,7 +1196,7 @@ static float CG_DrawEliminationTimer( float y ) {
 
 	rst = cgs.roundStartTime;
 
-        if((cg.time>rst && !cgs.roundtime) || cg.scoreBoardShowing) {
+        if((cg.time>rst && !cgs.roundtime) || cg.scoreBoardShowing || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR) {
             return y;
         }
 
@@ -1220,6 +1220,7 @@ static float CG_DrawEliminationTimer( float y ) {
 		memcpy(color,g_color_table[ColorIndex(COLOR_GREEN)],sizeof(color));
 		sec = msec/1000;
 		msec += 1000; //5-1 instead of 4-0
+		fightPlayed = qfalse;
 /***
 Lots of stuff
 ****/
@@ -2703,60 +2704,6 @@ static void CG_DrawCenterDDString( void ) {
     #endif
 }
 
-/*
-===================
-CG_DrawCenterEliminationString
-===================
-*/
-void CG_DrawCenterEliminationString( void ) {
-	int		x, y, w;
-	float		*color;
-	char		*line;
-	int		i;
-	int		living;
-	int		plyrs;
-	clientInfo_t	*ci;
-	static int	lastSurvivorTime = 0;
-
-	if ( cgs.gametype != GT_CTF_ELIMINATION || !cg_elimination_allgametypes.integer || cg.time < cgs.roundStartTime+1000 ) {
-		return;
-	}
-
-	if ( cg.snap->ps.persistant[PERS_TEAM] != TEAM_RED && cg.snap->ps.persistant[PERS_TEAM] != TEAM_BLUE ) {
-		return;
-	}
-
-	plyrs = 0;
-	living = 0;
-
-	for (i = 0; i < cgs.maxclients; i++) {
-		ci = &cgs.clientinfo[i];
-		if (ci->infoValid && ci->team == cg.snap->ps.persistant[PERS_TEAM]) {
-			plyrs++;
-			if (!ci->isDead) {
-				living++;
-			}
-		}
-	}
-
-	if (living == 1 && plyrs > 1) {
-		if (lastSurvivorTime == 0) {
-			lastSurvivorTime = cg.time;
-		}
-	} else {
-		lastSurvivorTime = 0;
-	}
-
-	if (lastSurvivorTime && lastSurvivorTime + 3000 > cg.time) {
-		line = va("You are the last one standing");
-		y = 100;
-		w = cg.centerPrintCharWidth * CG_DrawStrlen(line);
-		x = (SCREEN_WIDTH - w) / 2;
-		color = CG_FadeColor(lastSurvivorTime, 3000);
-		CG_DrawStringExt(x, y, line, color, qfalse, qtrue, cg.centerPrintCharWidth, (int)(cg.centerPrintCharWidth * 1.5), 0);
-	}	
-}
-
 
 /*
 ================================================================================
@@ -3638,7 +3585,6 @@ static void CG_Draw2D(stereoFrame_t stereoFrame)
 	// don't draw center string if scoreboard is up
 	cg.scoreBoardShowing = CG_DrawScoreboard();
 	if ( !cg.scoreBoardShowing) {
-		CG_DrawCenterEliminationString();
                 CG_DrawCenterDDString();
                 CG_DrawCenter1FctfString();
 		CG_DrawCenterString();

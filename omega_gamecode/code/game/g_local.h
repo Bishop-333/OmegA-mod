@@ -850,6 +850,7 @@ void FindIntermissionPoint( void );
 void SetLeader(int team, int client);
 void CheckTeamLeader( int team );
 void G_RunThink (gentity_t *ent);
+qboolean G_IsElimTeamGametype( void );
 void AddTournamentQueue(gclient_t *client);
 void ExitLevel( void );
 void QDECL G_LogPrintf( const char *fmt, ... );
@@ -889,6 +890,7 @@ qboolean CheckObeliskAttack( gentity_t *obelisk, gentity_t *attacker );
 void ShuffleTeams(void);
 //KK-OAX Added for Command Handling Changes (r24)
 team_t G_TeamFromString( char *str );
+void CheckTeamCount(void);
 
 //KK-OAX Removed these in Code in favor of bg_alloc.c from Tremulous
 // g_mem.c

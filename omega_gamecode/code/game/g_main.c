@@ -367,7 +367,7 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_elimination_roundtime, "elimination_roundtime", "120", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 	{ &g_elimination_warmup, "elimination_warmup", "7", CVAR_ARCHIVE | CVAR_NORESTART , 0, qtrue },
 	{ &g_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_ARCHIVE | CVAR_NORESTART | CVAR_SYSTEMINFO , 0, qtrue },
-        { &g_elimination_allgametypes, "elimination", "0", CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
+        { &g_elimination_allgametypes, "g_elimination", "0", CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
 
 	{ &g_elimination_machinegun, "elimination_machinegun", "500", CVAR_ARCHIVE| CVAR_NORESTART, 0, qtrue },
 	{ &g_elimination_shotgun, "elimination_shotgun", "500", CVAR_ARCHIVE| CVAR_NORESTART, 0, qtrue },
@@ -750,6 +750,16 @@ void G_UpdateCvars( void ) {
 		G_RemapTeamShaders();
 	}
 }
+
+/*
+=================
+G_IsElimTeamGametype
+=================
+*/
+qboolean G_IsElimTeamGametype( void ) {
+	return g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == 8;
+}
+
 
 /*
  Sets the cvar g_timestamp. Return 0 if success or !0 for errors.
@@ -2090,6 +2100,7 @@ void StartEliminationRound(void) {
 	if(g_elimination_ctf_oneway.integer)
 		SendAttackingTeamMessageToAllClients(); //Ensure that everyone know who should attack.
 	EnableWeapons();
+	CheckTeamCount();
 }
 
 //things to do at end of round:
@@ -2103,6 +2114,7 @@ void EndEliminationRound(void)
 	level.roundRespawned = qfalse;
 	if(g_elimination_ctf_oneway.integer)
 		SendAttackingTeamMessageToAllClients();
+	CheckTeamCount();
 }
 
 //Things to do if we don't want to move the roundNumber
@@ -2115,6 +2127,7 @@ void RestartEliminationRound(void) {
 	level.roundRespawned = qfalse;
 	if(g_elimination_ctf_oneway.integer)
 		SendAttackingTeamMessageToAllClients();
+	CheckTeamCount();
 }
 
 //Things to do during match warmup

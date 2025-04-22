@@ -2241,6 +2241,12 @@ void ClientDisconnect( int clientNum ) {
 		}
 	}
 
+	if ( G_IsElimTeamGametype() ) {
+		if ( ent->client->sess.sessionTeam != TEAM_SPECTATOR && !ent->client->isEliminated ) {
+			CheckTeamCount();
+		}
+	}
+
 	// send effect if they were completely connected
         /*
          *Sago: I have removed this. A little dangerous but I make him suicide in a moment.

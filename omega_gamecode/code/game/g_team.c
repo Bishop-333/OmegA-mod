@@ -1756,6 +1756,25 @@ void TeamplayInfoMessage( gentity_t *ent ) {
 	trap_SendServerCommand( ent-g_entities, va("tinfo %i %s", cnt, string) );
 }
 
+void CheckTeamCount(void) {
+	char		entry[1024];
+	int		i;
+	int		livingRed, livingBlue, totalRed, totalBlue;
+	gclient_t	*cl;
+
+	livingRed = TeamLivingCount( -1, TEAM_RED );
+	livingBlue = TeamLivingCount( -1, TEAM_BLUE );
+	totalRed = TeamCount( -1, TEAM_RED );
+	totalBlue = TeamCount( -1, TEAM_BLUE );
+
+	for (i = 0; i < level.maxclients; i++) {
+		cl = &level.clients[i];
+		if (cl->pers.connected == CON_CONNECTED)
+			Com_sprintf(entry, sizeof(entry), "%i %i %i %i", livingRed, livingBlue, totalRed, totalBlue );
+			trap_SendServerCommand( i, va("tcount %s", entry) );
+	}
+}
+
 void CheckTeamStatus(void) {
 	int i;
 	gentity_t *loc, *ent;

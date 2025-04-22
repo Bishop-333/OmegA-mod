@@ -299,6 +299,48 @@ static void CG_ParseAttackingTeam( void ) {
 
 /*
 =================
+CG_ParseTeamCount
+
+=================
+*/
+static void CG_ParseTeamCount( void ) {
+	int		livingRed, livingBlue, totalRed, totalBlue;
+	int		team = TEAM_SPECTATOR;
+	qboolean	isDead = qfalse;
+
+	if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR && cg.snap->ps.pm_flags & PMF_FOLLOW ) {
+		team = cg.snap->ps.persistant[PERS_TEAM];
+		isDead = ( cg.snap->ps.pm_type == PM_DEAD );
+	} else if ( cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR ) {
+		team = cg.predictedPlayerState.persistant[PERS_TEAM];
+		isDead = ( cg.predictedPlayerState.pm_type == PM_DEAD );
+	}
+
+	livingRed = atoi ( CG_Argv ( 1 ) );
+	livingBlue = atoi ( CG_Argv ( 2 ) );
+	totalRed = atoi ( CG_Argv ( 3 ) );
+	totalBlue = atoi ( CG_Argv ( 4 ) );
+
+	if ( cg.warmup < 0 ) {
+		cgs.redLivingCount = totalRed;
+		cgs.blueLivingCount = totalBlue;
+		return;
+	}
+
+	if ( team == TEAM_RED && totalRed > 1 && livingRed == 1 && livingRed != cgs.redLivingCount && !isDead ) {
+		CG_CenterPrint ( va ( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
+	}
+
+	if ( team == TEAM_BLUE && totalBlue != 1 && livingBlue == 1 && livingBlue != cgs.blueLivingCount && !isDead ) {
+		CG_CenterPrint ( va ( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
+	}
+
+	cgs.redLivingCount = livingRed;
+	cgs.blueLivingCount = livingBlue;
+}
+
+/*
+=================
 CG_ParseTeamInfo
 
 =================
@@ -1369,6 +1411,11 @@ static void CG_ServerCommand( void ) {
 
 	if ( !strcmp( cmd, "attackingteam" ) ) {
 		CG_ParseAttackingTeam();
+		return;
+	}
+
+	if ( !strcmp( cmd, "tcount" ) ) {
+		CG_ParseTeamCount();
 		return;
 	}
 

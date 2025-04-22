@@ -124,3 +124,4 @@
 - `g_railThroughwalls` now disables railjump
 - `elimination_items` now has an effect in LMS mode
 - fix issue with `g_survivorsRespawn` in Elimination CTF
+- draw a message when you're the last survivor in your team in elimination modes
