@@ -316,8 +316,6 @@ static void CG_ParseTeamCount( void ) {
 		isDead = ( cg.predictedPlayerState.pm_type == PM_DEAD );
 	}
 
-	livingRed = atoi ( CG_Argv ( 1 ) );
-	livingBlue = atoi ( CG_Argv ( 2 ) );
 	totalRed = atoi ( CG_Argv ( 3 ) );
 	totalBlue = atoi ( CG_Argv ( 4 ) );
 
@@ -326,6 +324,11 @@ static void CG_ParseTeamCount( void ) {
 		cgs.blueLivingCount = totalBlue;
 		return;
 	}
+
+	livingRed = atoi ( CG_Argv ( 1 ) );
+	livingBlue = atoi ( CG_Argv ( 2 ) );
+	totalRed = atoi ( CG_Argv ( 3 ) );
+	totalBlue = atoi ( CG_Argv ( 4 ) );
 
 	if ( team == TEAM_RED && totalRed > 1 && livingRed == 1 && livingRed != cgs.redLivingCount && !isDead ) {
 		CG_CenterPrint ( va ( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
