@@ -2217,7 +2217,10 @@ CheckLMS
 
 void CheckLMS(void) {
 	int mode;
+	int activeWarmup;
+
 	mode = g_lms_mode.integer;
+	activeWarmup = g_elimination_activewarmup.integer;
 	if ( level.numPlayingClients < 1 ) {
 		return;
 	}
@@ -2262,13 +2265,13 @@ void CheckLMS(void) {
 		}
 
 		//This might be better placed another place:
-		if(g_elimination_activewarmup.integer<2)
-			g_elimination_activewarmup.integer=2; //We need at least 2 seconds to spawn all players
-		if(g_elimination_activewarmup.integer >= g_elimination_warmup.integer) //This must not be true
-			g_elimination_warmup.integer = g_elimination_activewarmup.integer+1; //Increase warmup
+		if(activeWarmup<2)
+			activeWarmup=2; //We need at least 2 seconds to spawn all players
+		if(activeWarmup >= g_elimination_warmup.integer) //This must not be true
+			g_elimination_warmup.integer = activeWarmup+1; //Increase warmup
 
 		//Force respawn
-		if(level.roundNumber != level.roundNumberStarted && level.time>level.roundStartTime-1000*g_elimination_activewarmup.integer && !level.roundRespawned)
+		if(level.roundNumber != level.roundNumberStarted && level.time>level.roundStartTime-1000*activeWarmup && !level.roundRespawned)
 		{
 			level.roundRespawned = qtrue;
 			RespawnAll();
@@ -2276,7 +2279,7 @@ void CheckLMS(void) {
 			SendEliminationMessageToAllClients();
 		}
 
-		if(level.time<=level.roundStartTime && level.time>level.roundStartTime-1000*g_elimination_activewarmup.integer)
+		if(level.time<=level.roundStartTime && level.time>level.roundStartTime-1000*activeWarmup)
 		{
 			RespawnDead();
 			//DisableWeapons();
@@ -2314,6 +2317,10 @@ CheckElimination
 =============
 */
 void CheckElimination(void) {
+	int activeWarmup;
+
+	activeWarmup = g_elimination_activewarmup.integer;
+
 	if ( level.numPlayingClients < 1 ) {
 		if( (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION) &&
 			( level.time+1000*g_elimination_warmup.integer-500>level.roundStartTime ))
@@ -2446,20 +2453,20 @@ void CheckElimination(void) {
 		}
 
 		//This might be better placed another place:
-		if(g_elimination_activewarmup.integer<1)
-			g_elimination_activewarmup.integer=1; //We need at least 1 second to spawn all players
-		if(g_elimination_activewarmup.integer >= g_elimination_warmup.integer) //This must not be true
-			g_elimination_warmup.integer = g_elimination_activewarmup.integer+1; //Increase warmup
+		if(activeWarmup <1)
+			activeWarmup =1; //We need at least 1 second to spawn all players
+		if(activeWarmup >= g_elimination_warmup.integer) //This must not be true
+			g_elimination_warmup.integer = activeWarmup+1; //Increase warmup
 
 		//Force respawn
-		if(level.roundNumber!=level.roundNumberStarted && level.time>level.roundStartTime-1000*g_elimination_activewarmup.integer && !level.roundRespawned)
+		if(level.roundNumber!=level.roundNumberStarted && level.time>level.roundStartTime-1000*activeWarmup && !level.roundRespawned)
 		{
 			level.roundRespawned = qtrue;
 			RespawnAll();
 			SendEliminationMessageToAllClients();
 		}
 
-		if(level.time<=level.roundStartTime && level.time>level.roundStartTime-1000*g_elimination_activewarmup.integer)
+		if(level.time<=level.roundStartTime && level.time>level.roundStartTime-1000*activeWarmup)
 		{
 			RespawnDead();
 		}

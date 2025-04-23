@@ -861,8 +861,10 @@ void DisableWeapons(void)
                 if ( level.clients[i].pers.connected == CON_CONNECTING) {
                         continue;
                 }
-
 		if ( level.clients[i].sess.sessionTeam == TEAM_SPECTATOR ) {
+			continue;
+		}
+		if ( !g_elimination_activewarmup.integer ) {
 			continue;
 		}
 		client = g_entities + i;

@@ -1770,7 +1770,10 @@ void CheckTeamCount(void) {
 	for (i = 0; i < level.maxclients; i++) {
 		cl = &level.clients[i];
 
-		if (cl->pers.connected != CON_CONNECTED || cl->sess.sessionTeam == TEAM_SPECTATOR) {
+		if (cl->pers.connected != CON_CONNECTED) {
+			continue;
+		}
+		if (cl->sess.sessionTeam == TEAM_SPECTATOR) {
 			continue;
 		}
 

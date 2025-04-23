@@ -2788,7 +2788,7 @@ void CG_FireWeapon( centity_t *cent ) {
 	int				c;
 	weaponInfo_t	*weap;
 
-	if((cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION) && cgs.roundStartTime>=cg.time)
+	if((cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION) && cgs.roundStartTime>=cg.time && cg.snap->ps.pm_flags & PMF_ELIMWARMUP)
 		return; //if we havn't started in ELIMINATION then do not fire
 
 	ent = &cent->currentState;
