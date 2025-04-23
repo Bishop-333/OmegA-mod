@@ -1196,7 +1196,7 @@ static float CG_DrawEliminationTimer( float y ) {
 
 	rst = cgs.roundStartTime;
 
-        if((cg.time>rst && !cgs.roundtime) || cg.scoreBoardShowing || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR) {
+        if((cg.time>rst && !cgs.roundtime && cg.time -rst>100) || cg.scoreBoardShowing || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR) {
             return y;
         }
 
@@ -1268,9 +1268,9 @@ Lots of stuff
 */
 	}
 
-	if (cg.time>rst && cg.time-rst<100 && !fightPlayed) {
+	if (cg.time>rst && cg.time -rst<100 && !fightPlayed) {
 		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
-		CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH );
+		CG_CenterPrint( "FIGHT!", 80, 24 );
 		fightPlayed = qtrue;
 	}
 

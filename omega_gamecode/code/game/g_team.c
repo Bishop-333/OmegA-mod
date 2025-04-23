@@ -1769,9 +1769,13 @@ void CheckTeamCount(void) {
 
 	for (i = 0; i < level.maxclients; i++) {
 		cl = &level.clients[i];
-		if (cl->pers.connected == CON_CONNECTED)
-			Com_sprintf(entry, sizeof(entry), "%i %i %i %i", livingRed, livingBlue, totalRed, totalBlue );
-			trap_SendServerCommand( i, va("tcount %s", entry) );
+
+		if (cl->pers.connected != CON_CONNECTED || cl->sess.sessionTeam == TEAM_SPECTATOR) {
+			continue;
+		}
+
+		Com_sprintf(entry, sizeof(entry), "%i %i %i %i", livingRed, livingBlue, totalRed, totalBlue );
+		trap_SendServerCommand( i, va("tcount %s", entry) );
 	}
 }
 
