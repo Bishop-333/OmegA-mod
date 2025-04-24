@@ -1806,6 +1806,35 @@ static float CG_DrawScores( float y ) {
 			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 		}
 
+		if ( cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_ELIMINATION ) {
+			if ( cgs.gametype == GT_CTF_ELIMINATION ) {
+				y1 = y - BIGCHAR_HEIGHT - 34;
+			} else {
+				y1 = y - BIGCHAR_HEIGHT - 11;
+			}
+
+			color[0] = 0.0f;
+			color[1] = 0.25f;
+			color[2] = 1.0f;
+			color[3] = 0.5f;
+			x = 640;
+			s = va( "%i", cgs.blueLivingCount );
+			w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH + 8;
+			x -= w + 20;
+			CG_DrawPic( x, y1, 20, 20, cgs.media.blueCubeIcon );
+			CG_DrawStringExt( x+24, y1+2, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
+
+			color[0] = 1.0f;
+			color[1] = 0.0f;
+			color[2] = 0.0f;
+			color[3] = 0.5f;
+			x -= 40;
+			s = va( "%i", cgs.redLivingCount );
+			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH + 8;
+			CG_DrawPic( x, y1, 20, 20, cgs.media.redCubeIcon );
+			CG_DrawStringExt( x+24, y1+2, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
+		}
+
 	} else {
 		qboolean	spectator;
 
