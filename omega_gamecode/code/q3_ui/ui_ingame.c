@@ -68,6 +68,8 @@ typedef struct {
 
 static ingamemenu_t	s_ingame;
 
+static int		menuStartTime = 0;
+
 
 /*
 =================
@@ -158,6 +160,42 @@ void InGame_Event( void *ptr, int notification ) {
 
 /*
 =================
+InGame_MenuDraw
+=================
+*/
+static void InGame_MenuDraw( void ) {
+	int	elapsed;
+	float	fadeDuration;
+	float	alpha;
+	vec4_t	color;
+
+	if ( menuStartTime == 0) {
+		menuStartTime = uis.realtime;
+	}
+
+	elapsed = uis.realtime - menuStartTime;
+	fadeDuration = 90.0f;
+	alpha = (float)elapsed / fadeDuration;
+
+	if ( alpha > 1.0f ) {
+		alpha = 1.0f;
+	}
+
+	color[0] = 1.0f;
+	color[1] = 1.0f;
+	color[2] = 1.0f;
+	color[3] = alpha;
+
+	trap_R_SetColor( color );
+	UI_DrawHandlePic( s_ingame.frame.generic.x, s_ingame.frame.generic.y, s_ingame.frame.width, s_ingame.frame.height, trap_R_RegisterShaderNoMip( INGAME_FRAME ) );
+	trap_R_SetColor( NULL );
+
+	Menu_Draw( &s_ingame.menu );
+}
+
+
+/*
+=================
 InGame_MenuInit
 =================
 */
@@ -170,6 +208,9 @@ void InGame_MenuInit( void ) {
 	memset( &s_ingame, 0 ,sizeof(ingamemenu_t) );
 
 	InGame_Cache();
+
+	menuStartTime = 0;
+	s_ingame.menu.draw = InGame_MenuDraw;
 
 	s_ingame.menu.wrapAround = qtrue;
 	s_ingame.menu.fullscreen = qfalse;
@@ -328,7 +369,6 @@ void InGame_MenuInit( void ) {
 	s_ingame.quit.color					= color_red;
 	s_ingame.quit.style					= UI_CENTER|UI_SMALLFONT;
 
-	Menu_AddItem( &s_ingame.menu, &s_ingame.frame );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.team );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.addbots );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.removebots );
