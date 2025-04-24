@@ -332,10 +332,12 @@ static void CG_ParseTeamCount( void ) {
 
 	if ( team == TEAM_RED && totalRed > 1 && livingRed == 1 && livingRed != cgs.redLivingCount && !isDead ) {
 		CG_CenterPrint ( va ( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
+		CG_AddBufferedSound( cgs.media.takenOpponentSound );
 	}
 
 	if ( team == TEAM_BLUE && totalBlue != 1 && livingBlue == 1 && livingBlue != cgs.blueLivingCount && !isDead ) {
 		CG_CenterPrint ( va ( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
+		CG_AddBufferedSound( cgs.media.takenOpponentSound );
 	}
 
 	cgs.redLivingCount = livingRed;
