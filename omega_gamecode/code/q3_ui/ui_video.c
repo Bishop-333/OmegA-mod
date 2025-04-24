@@ -269,7 +269,6 @@ typedef struct {
 	menulist_s	fs;
         menulist_s	flares;
         menulist_s	bloom;
-        menulist_s	hdr;
 	menulist_s	allow_extensions;
 	menulist_s	geometry;
 	menulist_s	shadows;
@@ -292,7 +291,6 @@ typedef struct
 	int		tq;
         qboolean	flares;
         qboolean	bloom;
-        qboolean	hdr;
 	qboolean	drawfps;
 	int		geometry;
 	int		shadows;
@@ -464,7 +462,6 @@ static void GraphicsOptions_GetInitialVideo( void )
 	s_ivo.tq = s_graphicsoptions.tq.curvalue;
         s_ivo.flares = s_graphicsoptions.flares.curvalue;
         s_ivo.bloom = s_graphicsoptions.bloom.curvalue;
-        s_ivo.hdr = s_graphicsoptions.hdr.curvalue;
 	s_ivo.drawfps = s_graphicsoptions.drawfps.curvalue;
 	s_ivo.geometry = s_graphicsoptions.geometry.curvalue;
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
@@ -566,10 +563,6 @@ static void GraphicsOptions_UpdateMenuItems( void )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
 	}
-        if ( s_ivo.hdr != s_graphicsoptions.hdr.curvalue )
-	{
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
-	}
 	if ( s_ivo.drawfps != s_graphicsoptions.drawfps.curvalue )
 	{
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN|QMF_INACTIVE);
@@ -650,7 +643,6 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification )
 	trap_Cvar_SetValue( "r_stencilbits", 0 );
         trap_Cvar_SetValue( "r_flares", s_graphicsoptions.flares.curvalue );
         trap_Cvar_SetValue( "r_bloom", s_graphicsoptions.bloom.curvalue );
-        trap_Cvar_SetValue( "r_hdr", s_graphicsoptions.hdr.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
 	trap_Cvar_SetValue( "r_ext_multisample", s_graphicsoptions.anti.curvalue*2 );
 	trap_Cvar_SetValue( "r_ext_supersample", s_graphicsoptions.supersample.curvalue );
@@ -851,7 +843,6 @@ static void GraphicsOptions_SetMenuItems( void )
 	}
         s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue("r_flares");
         s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue("r_bloom");
-        s_graphicsoptions.hdr.curvalue = trap_Cvar_VariableValue("r_hdr");
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue("cg_drawFPS");
 	s_graphicsoptions.shadows.curvalue = trap_Cvar_VariableValue("cg_shadows");
 	s_graphicsoptions.anti.curvalue = trap_Cvar_VariableValue("r_ext_multisample")/2;
@@ -1116,15 +1107,6 @@ void GraphicsOptions_MenuInit( void )
 	s_graphicsoptions.bloom.itemnames	= enabled_names;
 	y += BIGCHAR_HEIGHT+2;
 
-        // references/modifies "r_hdr"
-	s_graphicsoptions.hdr.generic.type	= MTYPE_SPINCONTROL;
-	s_graphicsoptions.hdr.generic.name	= "HDR:";
-	s_graphicsoptions.hdr.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-	s_graphicsoptions.hdr.generic.x		= 400;
-	s_graphicsoptions.hdr.generic.y		= y;
-	s_graphicsoptions.hdr.itemnames		= enabled_names;
-	y += BIGCHAR_HEIGHT+2;
-
 	s_graphicsoptions.drawfps.generic.type	= MTYPE_SPINCONTROL;
 	s_graphicsoptions.drawfps.generic.name	= "Draw FPS:";
 	s_graphicsoptions.drawfps.generic.flags	= QMF_PULSEIFFOCUS|QMF_SMALLFONT;
@@ -1264,7 +1246,6 @@ void GraphicsOptions_MenuInit( void )
 	Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.apply );
 
 	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
-		Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.hdr );
 		Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.drawflat );
 		Menu_AddItem( &s_graphicsoptions.menu, ( void * ) &s_graphicsoptions.supersample );
 	}
