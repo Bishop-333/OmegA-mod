@@ -24,10 +24,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "cg_local.h"
 
-// for the voice chats
-#ifdef MISSIONPACK // bk001205
-#include "../../ui/menudef.h"
-#endif
 //==========================================================================
 
 /*
@@ -283,17 +279,11 @@ static void CG_Obituary( entityState_t *ent ) {
 		if ( cg_killsound.integer ) {
 			trap_S_StartLocalSound( cgs.media.hitSoundHighArmor, CHAN_LOCAL_SOUND );
 		}
-#ifdef MISSIONPACK
-		if (!(cg_singlePlayerActive.integer && cg_cameraOrbit.integer)) {
-			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
-		} 
-#else
 		if ( mod == MOD_HEADSHOT && cgs.gametype < GT_TEAM ) {
 			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30 + 10, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
 		} else {
 			CG_CenterPrint( s, SCREEN_HEIGHT * 0.30, (int)(MEDIUMCHAR_WIDTH * cg_fragmsgsize.value) );
 		}
-#endif
 
 		// print the text message as well
 	}
@@ -537,7 +527,6 @@ static void CG_UseItem( centity_t *cent ) {
 		trap_S_StartSound (NULL, es->number, CHAN_BODY, cgs.media.medkitSound );
 		break;
 
-//#ifdef MISSIONPACK
 	case HI_KAMIKAZE:
 		break;
 
@@ -546,7 +535,6 @@ static void CG_UseItem( centity_t *cent ) {
 	case HI_INVULNERABILITY:
 		trap_S_StartSound (NULL, es->number, CHAN_BODY, cgs.media.useInvulnerabilitySound );
 		break;
-//#endif
 	}
 
 }
@@ -863,32 +851,6 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 		DEBUGNAME("EV_TAUNT");
 		trap_S_StartSound (NULL, es->number, CHAN_VOICE, CG_CustomSound( es->number, "*taunt.wav" ) );
 		break;
-#ifdef MISSIONPACK
-	case EV_TAUNT_YES:
-		DEBUGNAME("EV_TAUNT_YES");
-		CG_VoiceChatLocal(SAY_TEAM, qfalse, es->number, COLOR_CYAN, VOICECHAT_YES);
-		break;
-	case EV_TAUNT_NO:
-		DEBUGNAME("EV_TAUNT_NO");
-		CG_VoiceChatLocal(SAY_TEAM, qfalse, es->number, COLOR_CYAN, VOICECHAT_NO);
-		break;
-	case EV_TAUNT_FOLLOWME:
-		DEBUGNAME("EV_TAUNT_FOLLOWME");
-		CG_VoiceChatLocal(SAY_TEAM, qfalse, es->number, COLOR_CYAN, VOICECHAT_FOLLOWME);
-		break;
-	case EV_TAUNT_GETFLAG:
-		DEBUGNAME("EV_TAUNT_GETFLAG");
-		CG_VoiceChatLocal(SAY_TEAM, qfalse, es->number, COLOR_CYAN, VOICECHAT_ONGETFLAG);
-		break;
-	case EV_TAUNT_GUARDBASE:
-		DEBUGNAME("EV_TAUNT_GUARDBASE");
-		CG_VoiceChatLocal(SAY_TEAM, qfalse, es->number, COLOR_CYAN, VOICECHAT_ONDEFENSE);
-		break;
-	case EV_TAUNT_PATROL:
-		DEBUGNAME("EV_TAUNT_PATROL");
-		CG_VoiceChatLocal(SAY_TEAM, qfalse, es->number, COLOR_CYAN, VOICECHAT_ONPATROL);
-		break;
-#endif
 	case EV_WATER_TOUCH:
 		DEBUGNAME("EV_WATER_TOUCH");
 		trap_S_StartSound (NULL, es->number, CHAN_AUTO, cgs.media.watrInSound );
@@ -1302,20 +1264,16 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 					}
 					else {
 					if (cgs.clientinfo[cg.clientNum].team == TEAM_BLUE) {
-//#ifdef MISSIONPACK
 							if (cgs.gametype == GT_1FCTF) 
 								CG_AddBufferedSound( cgs.media.yourTeamTookTheFlagSound );
 							else
-//#endif
 						 	CG_AddBufferedSound( cgs.media.takenOpponentSound );
 						 	CG_AddBufferedSound( cgs.media.enemyTookYourFlagSound );
 						}
 						else if (cgs.clientinfo[cg.clientNum].team == TEAM_RED) {
-//#ifdef MISSIONPACK
 							if (cgs.gametype == GT_1FCTF)
 								CG_AddBufferedSound( cgs.media.enemyTookTheFlagSound );
 							else
-//#endif
  							CG_AddBufferedSound( cgs.media.yourTeamTookEnemyFlagSound );
 						}
 					}
@@ -1326,20 +1284,16 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 					}
 					else {
 						if (cgs.clientinfo[cg.clientNum].team == TEAM_RED) {
-//#ifdef MISSIONPACK
 							if (cgs.gametype == GT_1FCTF)
 								CG_AddBufferedSound( cgs.media.yourTeamTookTheFlagSound );
 							else
-//#endif
 							CG_AddBufferedSound( cgs.media.takenOpponentSound );
 							CG_AddBufferedSound( cgs.media.enemyTookYourFlagSound );
 						}
 						else if (cgs.clientinfo[cg.clientNum].team == TEAM_BLUE) {
-//#ifdef MISSIONPACK
 							if (cgs.gametype == GT_1FCTF)
 								CG_AddBufferedSound( cgs.media.enemyTookTheFlagSound );
 							else
-//#endif
 							CG_AddBufferedSound( cgs.media.yourTeamTookEnemyFlagSound );
 						}
 					}

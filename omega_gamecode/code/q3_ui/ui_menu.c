@@ -39,7 +39,6 @@ MAIN MENU
 //#define ID_CINEMATICS			14
 //#define ID_CHALLENGES                 14
 #define ID_OPENARENA			14
-//#define ID_TEAMARENA			15
 #define ID_MODS				15
 #define ID_EXIT				16
 
@@ -56,7 +55,6 @@ typedef struct {
 	menutext_s		demos;
 	//menutext_s		cinematics;
         //menutext_s            challenges;
-	//menutext_s		teamArena;
 	menutext_s		openArena;
 	menutext_s		mods;
 	menutext_s		exit;
@@ -130,11 +128,6 @@ void Main_MenuEvent (void* ptr, int event) {
 	case ID_MODS:
 		UI_ModsMenu();
 		break;
-
-	/*case ID_TEAMARENA:
-		trap_Cvar_Set( "fs_game", "missionpack");
-		trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
-		break;*/
 
 	case ID_OPENARENA:
 		trap_Cvar_Set( "fs_game", "");
@@ -252,34 +245,6 @@ static void Main_MenuDraw( void ) {
 
 /*
 ===============
-UI_TeamArenaExists
-===============
-*/
-/*static qboolean UI_TeamArenaExists( void )
-{
-	int		numdirs;
-	char	dirlist[2048];
-	char	*dirptr;
-	char  *descptr;
-	int		i;
-	int		dirlen;
-
-	numdirs = trap_FS_GetFileList( "$modlist", "", dirlist, sizeof(dirlist) );
-	dirptr  = dirlist;
-	for( i = 0; i < numdirs; i++ ) {
-		dirlen = strlen( dirptr ) + 1;
-		descptr = dirptr + dirlen;
-		if ( Q_strequal(dirptr, "missionpack") ) {
-			return qtrue;
-		}
-		dirptr += dirlen + strlen(descptr) + 1;
-	}
-	return qfalse;
-}*/
-
-
-/*
-===============
 UI_MainMenu
 
 The main menu only comes up when not in a game,
@@ -289,7 +254,6 @@ and that local cinematics are killed
 */
 void UI_MainMenu( void ) {
 	int		y;
-	//qboolean teamArena = qfalse;
 	int		style = UI_CENTER | UI_DROPSHADOW | UI_SELECTED;
 
 	trap_Cvar_Set( "sv_killserver", "1" );
@@ -388,20 +352,6 @@ void UI_MainMenu( void ) {
 	s_main.challenges.color					= color_red;
 	s_main.challenges.style					= style;*/
 
-	/*if (UI_TeamArenaExists()) {
-		teamArena = qtrue;
-		y += MAIN_MENU_VERTICAL_SPACING;
-		s_main.teamArena.generic.type			= MTYPE_PTEXT;
-		s_main.teamArena.generic.flags			= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
-		s_main.teamArena.generic.x				= 320;
-		s_main.teamArena.generic.y				= y;
-		s_main.teamArena.generic.id				= ID_TEAMARENA;
-		s_main.teamArena.generic.callback		= Main_MenuEvent;
-		s_main.teamArena.string					= "MISSION PACK";
-		s_main.teamArena.color					= color_red;
-		s_main.teamArena.style					= style;
-	}*/
-
 	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.openArena.generic.type			= MTYPE_PTEXT;
 	s_main.openArena.generic.flags			= QMF_CENTER_JUSTIFY|QMF_PULSEIFFOCUS;
@@ -439,11 +389,6 @@ void UI_MainMenu( void ) {
 	Menu_AddItem( &s_main.menu,	&s_main.multiplayer );
 	Menu_AddItem( &s_main.menu,	&s_main.setup );
 	Menu_AddItem( &s_main.menu,	&s_main.demos );
-	//Menu_AddItem( &s_main.menu,	&s_main.cinematics );
-        //Menu_AddItem( &s_main.menu,	&s_main.challenges );
-	//if (teamArena) {
-	//	Menu_AddItem( &s_main.menu,	&s_main.teamArena );
-	//}
         Menu_AddItem( &s_main.menu,	&s_main.openArena );
 	Menu_AddItem( &s_main.menu,	&s_main.mods );
 	Menu_AddItem( &s_main.menu,	&s_main.exit );             
