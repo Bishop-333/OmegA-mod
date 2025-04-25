@@ -287,7 +287,6 @@ typedef enum {
 #define	EF_TELEPORT_BIT		0x00000004		// toggled every time the origin abruptly changes
 #define	EF_AWARD_EXCELLENT	0x00000008		// draw an excellent sprite
 #define EF_PLAYER_EVENT		0x00000010
-#define	EF_BODY_NOHEAD			0x00000010		// for missiles
 #define	EF_BOUNCE_HALF		0x00000020		// for missiles
 #define	EF_AWARD_GAUNTLET	0x00000040		// draw a gauntlet sprite
 #define	EF_NODRAW			0x00000080		// may have an event, but no model (unspawned items)
@@ -304,6 +303,7 @@ typedef enum {
 #define EF_AWARD_DENIED		0x00040000		// denied
 #define EF_AWARD_HEADSHOT	0x00040000		// draw a headshot sprite
 #define EF_TEAMVOTED		0x00080000		// already cast a team vote
+#define EF_BODY_NOHEAD      	0x00100000		// for beheading
 
 // NOTE: may not have more than 16
 typedef enum {
