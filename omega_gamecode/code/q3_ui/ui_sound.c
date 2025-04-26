@@ -448,7 +448,9 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.network );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.sfxvolume );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.musicvolume );
-	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.worldvolume );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.worldvolume );
+	}
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.quality );
 //	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.a3d );
 	Menu_AddItem( &soundOptionsInfo.menu, ( void * ) &soundOptionsInfo.openal );
@@ -461,9 +463,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 
 	soundOptionsInfo.sfxvolume.curvalue = trap_Cvar_VariableValue( "s_volume" ) * 10;
 	soundOptionsInfo.musicvolume.curvalue = trap_Cvar_VariableValue( "s_musicvolume" ) * 10;
-	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
-		soundOptionsInfo.worldvolume.curvalue = trap_Cvar_VariableValue( "s_worldvolume" ) * 10;
-	}
+	soundOptionsInfo.worldvolume.curvalue = trap_Cvar_VariableValue( "s_worldvolume" ) * 10;
 	soundOptionsInfo.quality.curvalue = !trap_Cvar_VariableValue( "s_compression" );
 //	soundOptionsInfo.a3d.curvalue = (int)trap_Cvar_VariableValue( "s_usingA3D" );
 	soundOptionsInfo.openal.curvalue = (int)trap_Cvar_VariableValue( "s_useopenal" );
