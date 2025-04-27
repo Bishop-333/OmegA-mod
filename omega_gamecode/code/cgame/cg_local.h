@@ -1053,6 +1053,8 @@ typedef struct {
 	sfxHandle_t firstExcellentSound;
 	sfxHandle_t firstHumiliationSound;
 
+	sfxHandle_t notificationSound;
+
 	sfxHandle_t takenLeadSound;
 	sfxHandle_t tiedLeadSound;
 	sfxHandle_t lostLeadSound;

@@ -1509,6 +1509,11 @@ static void CG_ServerCommand( void ) {
 		return;
 	}
 
+        if ( !strcmp (cmd, "notification") ) {
+            trap_S_StartLocalSound( cgs.media.notificationSound, CHAN_ANNOUNCER );
+            return;
+        }
+
 	CG_Printf( "Unknown client game command: %s\n", cmd );
 }
 

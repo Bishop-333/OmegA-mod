@@ -497,6 +497,38 @@ sprites/balloon3
 	}
 }
 
+sprites/happy
+{
+	{
+		map sprites/happy.tga
+		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+
+sprites/sad
+{
+	{
+		map sprites/sad.tga
+		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+
+sprites/angry
+{
+	{
+		map sprites/angry.tga
+		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+
+sprites/moon
+{
+	{
+		map sprites/moon.tga
+		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+
 viewBloodBlend
 {
 	sort	nearest

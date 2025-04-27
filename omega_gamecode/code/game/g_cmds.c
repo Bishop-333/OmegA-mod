@@ -1317,6 +1317,7 @@ void Cmd_DrawHappy_f( gentity_t *ent ) {
 	}
 
 	ent->client->ps.generic1 |= GEN_SMILEY_HAPPY;
+	trap_SendServerCommand(ent-g_entities,  va("notification"));
 	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
 }
 
@@ -1338,6 +1339,7 @@ void Cmd_DrawSad_f( gentity_t *ent ) {
 	}
 
 	ent->client->ps.generic1 |= GEN_SMILEY_SAD;
+	trap_SendServerCommand(ent-g_entities,  va("notification"));
 	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
 }
 
@@ -1359,6 +1361,7 @@ void Cmd_DrawAngry_f( gentity_t *ent ) {
 	}
 
 	ent->client->ps.generic1 |= GEN_SMILEY_ANGRY;
+	trap_SendServerCommand(ent-g_entities,  va("notification"));
 	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
 }
 
@@ -1380,6 +1383,7 @@ void Cmd_DrawMoon_f( gentity_t *ent ) {
 	}
 
 	ent->client->ps.generic1 |= GEN_SMILEY_MOON;
+	trap_SendServerCommand(ent-g_entities,  va("notification"));
 	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
 }
 

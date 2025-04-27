@@ -923,6 +923,22 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	}
 
 	//
+	// add the smileys icon
+	//
+	if ( pi->smiley == 1 ) {
+		UI_PlayerFloatSprite( pi, origin, trap_R_RegisterShaderNoMip( "sprites/happy" ) );
+	}
+	if ( pi->smiley == 2 ) {
+		UI_PlayerFloatSprite( pi, origin, trap_R_RegisterShaderNoMip( "sprites/sad" ) );
+	}
+	if ( pi->smiley == 3 ) {
+		UI_PlayerFloatSprite( pi, origin, trap_R_RegisterShaderNoMip( "sprites/angry" ) );
+	}
+	if ( pi->smiley == 4 ) {
+		UI_PlayerFloatSprite( pi, origin, trap_R_RegisterShaderNoMip( "sprites/moon" ) );
+	}
+
+	//
 	// add an accent light
 	//
 	origin[0] -= 100;	// + = behind, - = in front
@@ -1170,6 +1186,7 @@ void UI_PlayerInfo_SetModel( playerInfo_t *pi, const char *model ) {
 	pi->pendingWeapon = -1;
 	pi->weaponTimer = 0;
 	pi->chat = qfalse;
+	pi->smiley = 0;
 	pi->newModel = qtrue;
 	UI_PlayerInfo_SetWeapon( pi, pi->weapon );
 }
@@ -1180,11 +1197,12 @@ void UI_PlayerInfo_SetModel( playerInfo_t *pi, const char *model ) {
 UI_PlayerInfo_SetInfo
 ===============
 */
-void UI_PlayerInfo_SetInfo( playerInfo_t *pi, int legsAnim, int torsoAnim, vec3_t viewAngles, vec3_t moveAngles, weapon_t weaponNumber, qboolean chat ) {
+void UI_PlayerInfo_SetInfo( playerInfo_t *pi, int legsAnim, int torsoAnim, vec3_t viewAngles, vec3_t moveAngles, weapon_t weaponNumber, qboolean chat, int smiley ) {
 	int			currentAnim;
 	weapon_t	weaponNum;
 
 	pi->chat = chat;
+	pi->smiley = smiley;
 
 	// view angles
 	VectorCopy( viewAngles, pi->viewAngles );

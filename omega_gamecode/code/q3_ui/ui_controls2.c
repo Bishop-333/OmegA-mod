@@ -73,17 +73,17 @@ typedef struct
 #define ID_MISC			103
 #define ID_DEFAULTS		104
 #define ID_BACK			105
-#define ID_SAVEANDEXIT	106
+#define ID_SAVEANDEXIT		106
 #define ID_EXIT			107
 
 // bindable actions
-#define ID_SHOWSCORES	0
+#define ID_SHOWSCORES		0
 #define ID_USEITEM		1	
 #define ID_SPEED		2	
 #define ID_FORWARD		3	
-#define ID_BACKPEDAL	4
+#define ID_BACKPEDAL		4
 #define ID_MOVELEFT		5
-#define ID_MOVERIGHT	6
+#define ID_MOVERIGHT		6
 #define ID_MOVEUP		7	
 #define ID_MOVEDOWN		8
 #define ID_LEFT			9	
@@ -91,8 +91,8 @@ typedef struct
 #define ID_STRAFE		11	
 #define ID_LOOKUP		12	
 #define ID_LOOKDOWN		13
-#define ID_MOUSELOOK	14
-#define ID_CENTERVIEW	15
+#define ID_MOUSELOOK		14
+#define ID_CENTERVIEW		15
 #define ID_ZOOMVIEW		16
 #define ID_WEAPON1		17	
 #define ID_WEAPON2		18	
@@ -116,19 +116,25 @@ typedef struct
 #define ID_CHAT3		36
 #define ID_CHAT4		37
 #define ID_VOIP_TALK		38
+
+// omega
 #define ID_DROPFLAG		39
+#define ID_HAPPY		40
+#define ID_SAD			41
+#define ID_ANGRY		42
+#define ID_MOON			43
 
 // all others
 #define ID_FREELOOK		39
-#define ID_INVERTMOUSE	40
-#define ID_ALWAYSRUN	41
-#define ID_AUTOSWITCH	42
-#define ID_MOUSESPEED	43
-#define ID_JOYENABLE	44
-#define ID_JOYTHRESHOLD	45
-#define ID_SMOOTHMOUSE	46
-#define ID_VOIP_TEAMONLY 47
-#define ID_FOV		48
+#define ID_INVERTMOUSE		40
+#define ID_ALWAYSRUN		41
+#define ID_AUTOSWITCH		42
+#define ID_MOUSESPEED		43
+#define ID_JOYENABLE		44
+#define ID_JOYTHRESHOLD		45
+#define ID_SMOOTHMOUSE		46
+#define ID_VOIP_TEAMONLY	47
+#define ID_FOV			48
 
 
 
@@ -138,45 +144,49 @@ typedef struct
 #define ANIM_BACK		3
 #define ANIM_JUMP		4
 #define ANIM_CROUCH		5
-#define ANIM_STEPLEFT	6
-#define ANIM_STEPRIGHT	7
-#define ANIM_TURNLEFT	8
-#define ANIM_TURNRIGHT	9
+#define ANIM_STEPLEFT		6
+#define ANIM_STEPRIGHT		7
+#define ANIM_TURNLEFT		8
+#define ANIM_TURNRIGHT		9
 #define ANIM_LOOKUP		10
-#define ANIM_LOOKDOWN	11
-#define ANIM_WEAPON1	12
-#define ANIM_WEAPON2	13
-#define ANIM_WEAPON3	14
-#define ANIM_WEAPON4	15
-#define ANIM_WEAPON5	16
-#define ANIM_WEAPON6	17
-#define ANIM_WEAPON7	18
-#define ANIM_WEAPON8	19
-#define ANIM_WEAPON9	20
-#define ANIM_WEAPON10	21
+#define ANIM_LOOKDOWN		11
+#define ANIM_WEAPON1		12
+#define ANIM_WEAPON2		13
+#define ANIM_WEAPON3		14
+#define ANIM_WEAPON4		15
+#define ANIM_WEAPON5		16
+#define ANIM_WEAPON6		17
+#define ANIM_WEAPON7		18
+#define ANIM_WEAPON8		19
+#define ANIM_WEAPON9		20
+#define ANIM_WEAPON10		21
 #define ANIM_ATTACK		22
-#define ANIM_GESTURE	23
-#define ANIM_DIE		24
-#define ANIM_CHAT		25
+#define ANIM_GESTURE		23
+#define ANIM_HAPPY		24
+#define ANIM_SAD		25
+#define ANIM_ANGRY		26
+#define ANIM_MOON		27
+#define ANIM_DIE		28
+#define ANIM_CHAT		29
 
 //New in Beta 23
-#define ANIM_WEAPON11	26 //Nailgun
-#define ANIM_WEAPON12	27 //ProxMines
-#define ANIM_WEAPON13	28 //Chaingun
+#define ANIM_WEAPON11		30 //Nailgun
+#define ANIM_WEAPON12		31 //ProxMines
+#define ANIM_WEAPON13		32 //Chaingun
 
 typedef struct
 {
 	menuframework_s		menu;
 
-	menutext_s			banner;
+	menutext_s		banner;
 	menubitmap_s		framel;
 	menubitmap_s		framer;
 	menubitmap_s		player;
 
-	menutext_s			movement;
-	menutext_s			looking;
-	menutext_s			weapons;
-	menutext_s			misc;
+	menutext_s		movement;
+	menutext_s		looking;
+	menutext_s		weapons;
+	menutext_s		misc;
 
 	menuaction_s		walkforward;
 	menuaction_s		backpedal;
@@ -213,6 +223,10 @@ typedef struct
 	menuaction_s		centerview;
 	menuaction_s		zoomview;
 	menuaction_s		gesture;
+	menuaction_s		happy;
+	menuaction_s		sad;
+	menuaction_s		angry;
+	menuaction_s		moon;
 	menuradiobutton_s	invertmouse;
 	menuslider_s		sensitivity;
 	menuradiobutton_s	smoothmouse;
@@ -223,7 +237,7 @@ typedef struct
 	menuaction_s		useitem;
 	menuaction_s		dropflag;
 	playerInfo_t		playerinfo;
-	qboolean			changesmade;
+	qboolean		changesmade;
 	menuaction_s		chat;
 	menuaction_s		chat2;
 	menuaction_s		chat3;
@@ -232,18 +246,19 @@ typedef struct
         menuradiobutton_s	voip_teamonly;
 	menuradiobutton_s	joyenable;
 	menuslider_s		joythreshold;
-	int					section;
-	qboolean			waitingforkey;
-	char				playerModel[64];
-	vec3_t				playerViewangles;
-	vec3_t				playerMoveangles;
-	int					playerLegs;
-	int					playerTorso;
-	int					playerWeapon;
-	qboolean			playerChat;
+	int			section;
+	qboolean		waitingforkey;
+	char			playerModel[64];
+	vec3_t			playerViewangles;
+	vec3_t			playerMoveangles;
+	int			playerLegs;
+	int			playerTorso;
+	int			playerWeapon;
+	qboolean		playerChat;
+	int			playerSmiley;
 
 	menubitmap_s		back;
-	menutext_s			name;
+	menutext_s		name;
 } controls_t; 	
 
 static controls_t s_controls;
@@ -305,6 +320,10 @@ static bind_t g_bindings[] =
 	{"messagemode4", 	"chat - attacker",	ID_CHAT4,		ANIM_CHAT,		-1,				-1,		-1, -1},
         {"+voiprecord", 	"voice chat",           ID_VOIP_TALK,		ANIM_CHAT,		'q',				-1,		-1, -1},
 	{"drop",		"drop flag",		ID_DROPFLAG,		ANIM_IDLE,		-1,				-1,		-1, -1},
+	{"happy",		"happy smiley",		ID_HAPPY,		ANIM_HAPPY,		-1,				-1,		-1, -1},
+	{"sad",			"sad smiley",		ID_SAD,			ANIM_SAD,		-1,				-1,		-1, -1},
+	{"angry",		"angry smiley",		ID_ANGRY,		ANIM_ANGRY,		-1,				-1,		-1, -1},
+	{"moon",		"moon smiley",		ID_MOON,		ANIM_MOON,		-1,				-1,		-1, -1},
 	{(char*)NULL,		(char*)NULL,		0,				0,				-1,				-1,		-1,	-1},
 };
 
@@ -381,6 +400,10 @@ static menucommon_s *g_misc_controls[] = {
 	(menucommon_s *)&s_controls.useitem,
 	(menucommon_s *)&s_controls.dropflag,
 	(menucommon_s *)&s_controls.gesture,
+	(menucommon_s *)&s_controls.happy,
+	(menucommon_s *)&s_controls.sad,
+	(menucommon_s *)&s_controls.angry,
+	(menucommon_s *)&s_controls.moon,
 	(menucommon_s *)&s_controls.chat,
 	(menucommon_s *)&s_controls.chat2,
 	(menucommon_s *)&s_controls.chat3,
@@ -486,6 +509,7 @@ static void Controls_UpdateModel( int anim ) {
 	s_controls.playerTorso			 = TORSO_STAND;
 	s_controls.playerWeapon			 = -1;
 	s_controls.playerChat			 = qfalse;
+	s_controls.playerSmiley			 = 0;
 
 	switch( anim ) {
 	case ANIM_RUN:	
@@ -594,6 +618,22 @@ static void Controls_UpdateModel( int anim ) {
 		s_controls.playerTorso = TORSO_GESTURE;
 		break;
 
+	case ANIM_HAPPY:
+		s_controls.playerSmiley = 1;
+		break;
+
+	case ANIM_SAD:
+		s_controls.playerSmiley = 2;
+		break;
+
+	case ANIM_ANGRY:
+		s_controls.playerSmiley = 3;
+		break;
+
+	case ANIM_MOON:
+		s_controls.playerSmiley = 4;
+		break;
+
 	case ANIM_DIE:
 		s_controls.playerLegs = BOTH_DEATH1;
 		s_controls.playerTorso = BOTH_DEATH1;
@@ -608,7 +648,7 @@ static void Controls_UpdateModel( int anim ) {
 		break;
 	}
 
-	UI_PlayerInfo_SetInfo( &s_controls.playerinfo, s_controls.playerLegs, s_controls.playerTorso, s_controls.playerViewangles, s_controls.playerMoveangles, s_controls.playerWeapon, s_controls.playerChat );
+	UI_PlayerInfo_SetInfo( &s_controls.playerinfo, s_controls.playerLegs, s_controls.playerTorso, s_controls.playerViewangles, s_controls.playerMoveangles, s_controls.playerWeapon, s_controls.playerChat, s_controls.playerSmiley );
 }
 
 
@@ -1561,6 +1601,30 @@ static void Controls_MenuInit( void )
 	s_controls.dropflag.generic.ownerdraw = Controls_DrawKeyBinding;
 	s_controls.dropflag.generic.id        = ID_DROPFLAG;
 
+	s_controls.happy.generic.type	     = MTYPE_ACTION;
+	s_controls.happy.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
+	s_controls.happy.generic.callback  = Controls_ActionEvent;
+	s_controls.happy.generic.ownerdraw = Controls_DrawKeyBinding;
+	s_controls.happy.generic.id        = ID_HAPPY;
+
+	s_controls.sad.generic.type	     = MTYPE_ACTION;
+	s_controls.sad.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
+	s_controls.sad.generic.callback  = Controls_ActionEvent;
+	s_controls.sad.generic.ownerdraw = Controls_DrawKeyBinding;
+	s_controls.sad.generic.id        = ID_SAD;
+
+	s_controls.angry.generic.type	     = MTYPE_ACTION;
+	s_controls.angry.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
+	s_controls.angry.generic.callback  = Controls_ActionEvent;
+	s_controls.angry.generic.ownerdraw = Controls_DrawKeyBinding;
+	s_controls.angry.generic.id        = ID_ANGRY;
+
+	s_controls.moon.generic.type	     = MTYPE_ACTION;
+	s_controls.moon.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
+	s_controls.moon.generic.callback  = Controls_ActionEvent;
+	s_controls.moon.generic.ownerdraw = Controls_DrawKeyBinding;
+	s_controls.moon.generic.id        = ID_MOON;
+
 	s_controls.showscores.generic.type	    = MTYPE_ACTION;
 	s_controls.showscores.generic.flags     = QMF_LEFT_JUSTIFY|QMF_PULSEIFFOCUS|QMF_GRAYED|QMF_HIDDEN;
 	s_controls.showscores.generic.callback  = Controls_ActionEvent;
@@ -1748,6 +1812,10 @@ static void Controls_MenuInit( void )
 	Menu_AddItem( &s_controls.menu, &s_controls.useitem );
 	Menu_AddItem( &s_controls.menu, &s_controls.dropflag );
 	Menu_AddItem( &s_controls.menu, &s_controls.gesture );
+	Menu_AddItem( &s_controls.menu, &s_controls.happy );
+	Menu_AddItem( &s_controls.menu, &s_controls.sad );
+	Menu_AddItem( &s_controls.menu, &s_controls.angry );
+	Menu_AddItem( &s_controls.menu, &s_controls.moon );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat2 );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat3 );
