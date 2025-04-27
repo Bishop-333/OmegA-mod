@@ -954,6 +954,11 @@ void ClientThink_real( gentity_t *ent ) {
 		client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
 	}
 
+	// clear the smileys if time
+	if ( level.time > client->smileyTime ) {
+		client->ps.generic1 &= ~(GEN_SMILEY_HAPPY | GEN_SMILEY_SAD | GEN_SMILEY_ANGRY | GEN_SMILEY_MOON );
+	}
+
 	if ( client->noclip ) {
 		client->ps.pm_type = PM_NOCLIP;
 	} else if ( client->ps.stats[STAT_HEALTH] <= 0 ) {

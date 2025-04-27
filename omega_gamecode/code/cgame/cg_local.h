@@ -938,6 +938,12 @@ typedef struct {
 	qhandle_t	medalCapture;
 	qhandle_t	medalHeadshot;
 
+	// smiley sprites
+	qhandle_t	smileyHappy;
+	qhandle_t	smileySad;
+	qhandle_t	smileyAngry;
+	qhandle_t	smileyMoon;
+
 	// frag message icon shaders
 	qhandle_t	bfgShader;
 	qhandle_t	chaingunShader;

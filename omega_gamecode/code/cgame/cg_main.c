@@ -1363,6 +1363,11 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.medalCapture = trap_R_RegisterShaderNoMip( "medal_capture" );
 	cgs.media.medalHeadshot = trap_R_RegisterShaderNoMip( "medal_headshot" );
 
+	cgs.media.smileyHappy = trap_R_RegisterShader( "sprites/happy" );
+	cgs.media.smileySad = trap_R_RegisterShader( "sprites/sad" );
+	cgs.media.smileyAngry = trap_R_RegisterShader( "sprites/angry" );
+	cgs.media.smileyMoon = trap_R_RegisterShader( "sprites/moon" );
+
 	// LEILEI SHADERS
 	cgs.media.lsmkShader1 = trap_R_RegisterShader("leismoke1" );
 	cgs.media.lsmkShader2 = trap_R_RegisterShader("leismoke2" );

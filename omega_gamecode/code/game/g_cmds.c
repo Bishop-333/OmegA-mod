@@ -1301,6 +1301,90 @@ void Cmd_Ready_f( gentity_t *ent ) {
 
 
 /*
+=================
+Cmd_DrawHappy_f
+=================
+*/
+void Cmd_DrawHappy_f( gentity_t *ent ) {
+	if ( (ent->client->sess.sessionTeam == TEAM_SPECTATOR) || ent->client->isEliminated ) {
+		return;
+	}
+	if (ent->health <= 0) {
+		return;
+	}
+	if (ent->client->smileyTime > level.time) {
+		return;
+	}
+
+	ent->client->ps.generic1 |= GEN_SMILEY_HAPPY;
+	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
+}
+
+
+/*
+=================
+Cmd_DrawSad_f
+=================
+*/
+void Cmd_DrawSad_f( gentity_t *ent ) {
+	if ( (ent->client->sess.sessionTeam == TEAM_SPECTATOR) || ent->client->isEliminated ) {
+		return;
+	}
+	if (ent->health <= 0) {
+		return;
+	}
+	if (ent->client->smileyTime > level.time) {
+		return;
+	}
+
+	ent->client->ps.generic1 |= GEN_SMILEY_SAD;
+	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
+}
+
+
+/*
+=================
+Cmd_DrawAngry_f
+=================
+*/
+void Cmd_DrawAngry_f( gentity_t *ent ) {
+	if ( (ent->client->sess.sessionTeam == TEAM_SPECTATOR) || ent->client->isEliminated ) {
+		return;
+	}
+	if (ent->health <= 0) {
+		return;
+	}
+	if (ent->client->smileyTime > level.time) {
+		return;
+	}
+
+	ent->client->ps.generic1 |= GEN_SMILEY_ANGRY;
+	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
+}
+
+
+/*
+=================
+Cmd_DrawMoon_f
+=================
+*/
+void Cmd_DrawMoon_f( gentity_t *ent ) {
+	if ( (ent->client->sess.sessionTeam == TEAM_SPECTATOR) || ent->client->isEliminated ) {
+		return;
+	}
+	if (ent->health <= 0) {
+		return;
+	}
+	if (ent->client->smileyTime > level.time) {
+		return;
+	}
+
+	ent->client->ps.generic1 |= GEN_SMILEY_MOON;
+	ent->client->smileyTime = level.time + REWARD_SPRITE_TIME;
+}
+
+
+/*
 ==================
 G_Say
 ==================
@@ -2441,8 +2525,11 @@ commands_t cmds[ ] =
 
   //OmegA
   { "drop", 0, Cmd_Drop_f },
-  { "ready", 0, Cmd_Ready_f }
-  
+  { "ready", 0, Cmd_Ready_f },
+  { "happy", 0, Cmd_DrawHappy_f },
+  { "sad", 0, Cmd_DrawSad_f },
+  { "angry", 0, Cmd_DrawAngry_f },
+  { "moon", 0, Cmd_DrawMoon_f }
 };
 
 static int numCmds = sizeof( cmds ) / sizeof( cmds[ 0 ] );
