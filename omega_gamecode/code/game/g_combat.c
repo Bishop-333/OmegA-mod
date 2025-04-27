@@ -612,7 +612,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 
 				// add the sprite over the player's head
 				attacker->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
-				self->client->ps.eFlags |= EF_BODY_NOHEAD;
+				self->client->ps.generic1 |= GEN_BODY_NOHEAD;
 				attacker->client->ps.eFlags |= EF_AWARD_HEADSHOT;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 			}

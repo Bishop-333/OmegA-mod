@@ -419,8 +419,9 @@ void CopyToBodyQue( gentity_t *ent ) {
         }
 
 	body->s = ent->s;
-	if ( body->s.eFlags & EF_BODY_NOHEAD ) {
-		body->s.eFlags = EF_DEAD | EF_BODY_NOHEAD;
+	if ( body->s.generic1 & GEN_BODY_NOHEAD ) {
+		body->s.eFlags = EF_DEAD;
+		body->s.generic1 = GEN_BODY_NOHEAD;
 	} else {
 		body->s.eFlags = EF_DEAD;		// clear EF_TALK, etc
 	}

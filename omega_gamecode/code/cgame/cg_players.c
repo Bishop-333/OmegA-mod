@@ -2888,7 +2888,7 @@ void CG_Player( centity_t *cent ) {
 	//
 	// add the head
 	//
-	if ( cent->currentState.eFlags & EF_BODY_NOHEAD ) return;
+	if ( cent->currentState.generic1 & GEN_BODY_NOHEAD ) return;
 
 	head.hModel = ci->headModel;
 	if (!head.hModel) {
