@@ -111,7 +111,17 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		CG_DrawFlagModel( iconx-3, y, 26, 26, TEAM_BLUE, qfalse );
 	} else {
 		if ( ci->team != TEAM_SPECTATOR && cent->currentState.eFlags & EF_TALK ) {
-				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.balloonShader );
+			CG_DrawPic( iconx, y+3, 21, 21, cgs.media.balloonShader );
+		} else if ( cg_drawEmotes.integer ) {
+			if ( cent->currentState.generic1 & GEN_SMILEY_HAPPY ) {
+				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.smileyHappy );
+			} else if ( cent->currentState.generic1 & GEN_SMILEY_SAD ) {
+				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.smileySad );
+			} else if ( cent->currentState.generic1 & GEN_SMILEY_ANGRY ) {
+				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.smileyAngry );
+			} else if ( cent->currentState.generic1 & GEN_SMILEY_MOON ) {
+				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.smileyMoon );
+			}
 		} else if ( ci->botSkill > 0 && ci->botSkill <= 5 ) {
 			if ( cg_drawIcons.integer ) {
 				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.botSkillShaders[ ci->botSkill - 1 ] );

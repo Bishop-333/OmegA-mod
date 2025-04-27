@@ -320,10 +320,10 @@ static bind_t g_bindings[] =
 	{"messagemode4", 	"chat - attacker",	ID_CHAT4,		ANIM_CHAT,		-1,				-1,		-1, -1},
         {"+voiprecord", 	"voice chat",           ID_VOIP_TALK,		ANIM_CHAT,		'q',				-1,		-1, -1},
 	{"drop",		"drop flag",		ID_DROPFLAG,		ANIM_IDLE,		-1,				-1,		-1, -1},
-	{"happy",		"happy smiley",		ID_HAPPY,		ANIM_HAPPY,		-1,				-1,		-1, -1},
-	{"sad",			"sad smiley",		ID_SAD,			ANIM_SAD,		-1,				-1,		-1, -1},
-	{"angry",		"angry smiley",		ID_ANGRY,		ANIM_ANGRY,		-1,				-1,		-1, -1},
-	{"moon",		"moon smiley",		ID_MOON,		ANIM_MOON,		-1,				-1,		-1, -1},
+	{"happy",		"emote - happy",	ID_HAPPY,		ANIM_HAPPY,		-1,				-1,		-1, -1},
+	{"sad",			"emote - sad",		ID_SAD,			ANIM_SAD,		-1,				-1,		-1, -1},
+	{"angry",		"emote - angry",	ID_ANGRY,		ANIM_ANGRY,		-1,				-1,		-1, -1},
+	{"moon",		"emote - moon",		ID_MOON,		ANIM_MOON,		-1,				-1,		-1, -1},
 	{(char*)NULL,		(char*)NULL,		0,				0,				-1,				-1,		-1,	-1},
 };
 

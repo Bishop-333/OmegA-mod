@@ -125,3 +125,5 @@
 - `elimination_items` now has an effect in LMS mode
 - fix issue with `g_survivorsRespawn` in Elimination CTF
 - draw a message when you're the last survivor in your team in elimination modes
+- add emotes
+- add v-sync setting in the menu

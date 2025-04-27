@@ -1510,7 +1510,9 @@ static void CG_ServerCommand( void ) {
 	}
 
         if ( !strcmp (cmd, "notification") ) {
-            trap_S_StartLocalSound( cgs.media.notificationSound, CHAN_ANNOUNCER );
+	    if ( cg_drawEmotes.integer ) {
+                trap_S_StartLocalSound( cgs.media.notificationSound, CHAN_ANNOUNCER );
+	    }
             return;
         }
 

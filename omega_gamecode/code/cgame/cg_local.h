@@ -1483,6 +1483,7 @@ extern vmCvar_t			cg_teamChatBeep;
 extern vmCvar_t	cg_bobgun;
 extern vmCvar_t	cg_brightPlayers;
 extern vmCvar_t	cg_damagePlums;
+extern vmCvar_t	cg_drawEmotes;
 extern vmCvar_t cg_drawEnemyThroughWalls;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t	cg_drawItemPickup;

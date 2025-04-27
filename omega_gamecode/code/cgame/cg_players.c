@@ -2074,24 +2074,26 @@ static void CG_PlayerSprites( centity_t *cent ) {
 		return;
 	}
 
-	if ( cent->currentState.generic1 & GEN_SMILEY_HAPPY ) {
-		CG_PlayerFloatSprite( cent, cgs.media.smileyHappy );
-		return;
-	}
+	if ( cg_drawEmotes.integer ) {
+		if ( cent->currentState.generic1 & GEN_SMILEY_HAPPY ) {
+			CG_PlayerFloatSprite( cent, cgs.media.smileyHappy );
+			return;
+		}
 
-	if ( cent->currentState.generic1 & GEN_SMILEY_SAD ) {
-		CG_PlayerFloatSprite( cent, cgs.media.smileySad );
-		return;
-	}
+		if ( cent->currentState.generic1 & GEN_SMILEY_SAD ) {
+			CG_PlayerFloatSprite( cent, cgs.media.smileySad );
+			return;
+		}
 
-	if ( cent->currentState.generic1 & GEN_SMILEY_ANGRY ) {
-		CG_PlayerFloatSprite( cent, cgs.media.smileyAngry );
-		return;
-	}
+		if ( cent->currentState.generic1 & GEN_SMILEY_ANGRY ) {
+			CG_PlayerFloatSprite( cent, cgs.media.smileyAngry );
+			return;
+		}
 
-	if ( cent->currentState.generic1 & GEN_SMILEY_MOON ) {
-		CG_PlayerFloatSprite( cent, cgs.media.smileyMoon );
-		return;
+		if ( cent->currentState.generic1 & GEN_SMILEY_MOON ) {
+			CG_PlayerFloatSprite( cent, cgs.media.smileyMoon );
+			return;
+		}
 	}
 
 	team = cgs.clientinfo[ cent->currentState.clientNum ].team;

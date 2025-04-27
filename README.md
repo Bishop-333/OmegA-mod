@@ -10,6 +10,7 @@ List of the cvars/additions :
 - cg_bobgun
 - cg_brightPlayers
 - cg_damagePlums
+- cg_drawEmotes
 - cg_drawEnemyThroughWalls
 - cg_drawFriendThroughWalls
 - cg_drawItemPickup
