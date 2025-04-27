@@ -246,7 +246,7 @@ Handles user intended acceleration
 ==============
 */
 static void PM_Accelerate( vec3_t wishdir, float wishspeed, float accel ) {
-if(! (pm->pmove_flags & DF_NO_BUNNY) ) {
+if(! (pm->pmove_flags & DF_NO_BUNNY) || pm->ps->generic1 & GEN_BOT) {
 //#if 1
 
 	// q2 style

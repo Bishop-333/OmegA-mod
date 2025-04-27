@@ -1504,6 +1504,7 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 
 	if( isBot ) {
 		ent->r.svFlags |= SVF_BOT;
+		ent->s.generic1 |= GEN_BOT;
 		ent->inuse = qtrue;
 		if( !G_BotConnect( clientNum, !firstTime ) ) {
 			return "BotConnectfailed";
