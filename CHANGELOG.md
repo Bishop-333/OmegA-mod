@@ -127,3 +127,4 @@
 - draw a message when you're the last survivor in your team in elimination modes
 - add emotes
 - add v-sync setting in the menu
+- better damage plums

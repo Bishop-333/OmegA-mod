@@ -38,6 +38,7 @@ List of the cvars/additions :
 - cg_timerX
 - cg_timerY
 - cg_transparentGun
+- cg_wallhack
 - cg_zoomAnim
 - cg_zoomAnimSpeed
 - cg_zoomToggle
@@ -63,7 +64,6 @@ List of the cvars/additions :
 - g_machinegunDamage
 - g_machinegunTeamDamage
 - g_muteSpectators
-- g_omegaInitialized
 - g_plasmaBounce
 - g_railgunDamage
 - g_railgunFireRate
@@ -77,6 +77,7 @@ List of the cvars/additions :
 - g_survivorsRespawn
 - g_teamPush
 - g_teleportMissiles (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
+- g_vulnerableRockets
 - g_waterDamage
 - g_weaponArena
 #

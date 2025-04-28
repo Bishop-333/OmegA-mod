@@ -1021,24 +1021,24 @@ CG_AddDamagePlum
 
 void CG_AddDamagePlum( localEntity_t *le ) {
 	refEntity_t	*re;
-	vec3_t		origin, delta, dir, vec, up = {0, 0, 1};
-	float		c, len;
-	int			i, score, digits[10], numdigits, negative;
+	vec3_t		origin, dir, vec, up = {0, 0, 1};
+	float		c, deltaTime;
+	int			i, damage, digits[10], numdigits, negative;
 
 	re = &le->refEntity;
 
 	c = ( le->endTime - cg.time ) * le->lifeRate;
 
-	score = le->radius;
-	if (score < 5) {
+	damage = le->radius;
+	if (damage < 10) {
 		re->shaderRGBA[0] = 0xff;
 		re->shaderRGBA[1] = 0xff;
 		re->shaderRGBA[2] = 0xff;
-	} else if (score < 30) {
+	} else if (damage < 30) {
 		re->shaderRGBA[0] = 0xff;
 		re->shaderRGBA[1] = 0xff;
 		re->shaderRGBA[2] = 0x50;
-	} else if (score < 50) {
+	} else if (damage < 50) {
 		re->shaderRGBA[0] = 0xff;
 		re->shaderRGBA[1] = 0xb2;
 		re->shaderRGBA[2] = 0x50;
@@ -1052,35 +1052,31 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 	else
 		re->shaderRGBA[3] = 0xff;
 
-	re->radius = NUMBER_SIZE / 2;
+	re->radius = NUMBER_SIZE * 0.03 / 2;
 
+	deltaTime = (cg.time - le->startTime) * 0.001;
 	VectorCopy(le->pos.trBase, origin);
 	origin[2] += 49 - cos (c * 4.8) * 34;
 
 	VectorSubtract(cg.refdef.vieworg, origin, dir);
 	CrossProduct(dir, up, vec);
 	VectorNormalize(vec);
+	VectorNormalize(dir);
 
-	VectorMA(origin, -8 + 6 * sin(c * 2 * M_PI), vec, origin);
+	VectorMA(cg.refdef.vieworg, -8, dir, origin);
 
-	// if the view would be "inside" the sprite, kill the sprite
-	// so it doesn't add too much overdraw
-	VectorSubtract( origin, cg.refdef.vieworg, delta );
-	len = VectorLength( delta );
-	if ( len < 20 ) {
-		CG_FreeLocalEntity( le );
-		return;
-	}
+	VectorMA(origin, deltaTime, le->pos.trDelta, origin);
+	origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
 
 	negative = qfalse;
-	if (score < 0) {
+	if (damage < 0) {
 		negative = qtrue;
-		score = -score;
+		damage = -damage;
 	}
 
-	for (numdigits = 0; !(numdigits && !score); numdigits++) {
-		digits[numdigits] = score % 10;
-		score = score / 10;
+	for (numdigits = 0; !(numdigits && !damage); numdigits++) {
+		digits[numdigits] = damage % 10;
+		damage = damage / 10;
 	}
 
 	if (negative) {
@@ -1089,7 +1085,7 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 	}
 
 	for (i = 0; i < numdigits; i++) {
-		VectorMA(origin, (float) (((float) numdigits / 2) - i) * NUMBER_SIZE, vec, re->origin);
+		VectorMA(origin, (float) (((float) numdigits / 2) - 0.5 - i) * NUMBER_SIZE * 0.03, vec, re->origin);
 		re->customShader = cgs.media.numberShaders[digits[numdigits-1-i]];
 		trap_R_AddRefEntityToScene( re );
 	}

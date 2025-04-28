@@ -522,6 +522,10 @@ void CG_DamagePlum( int client, vec3_t org, int score ) {
 	VectorCopy(org, lastPos);
 
 
+	le->pos.trDelta[0] = 2.0 * crandom();
+	le->pos.trDelta[1] = 2.0 * crandom();
+	le->pos.trDelta[2] = 6.0;
+
 	re = &le->refEntity;
 
 	re->reType = RT_SPRITE;

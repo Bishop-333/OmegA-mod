@@ -202,10 +202,10 @@ vmCvar_t        g_maxNameChanges;
 vmCvar_t        g_timestamp_startgame;
 
 //OmegA
-vmCvar_t        g_autohop;
 vmCvar_t        g_airControl;
 vmCvar_t        g_allowDuplicateGuid;
 vmCvar_t        g_ambientSounds;
+vmCvar_t        g_autohop;
 vmCvar_t        g_beheading;
 vmCvar_t        g_beheading;
 vmCvar_t        g_botChat;
