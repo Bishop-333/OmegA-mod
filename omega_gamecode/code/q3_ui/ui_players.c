@@ -528,14 +528,32 @@ static void UI_SwingAngles( float destination, float swingTolerance, float clamp
 UI_PlayerAngles
 ===============
 */
-static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], vec3_t head[3], qboolean rotate ) {
+static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], vec3_t head[3], qboolean rotate, qboolean followCursor ) {
 	vec3_t		legsAngles, torsoAngles, headAngles;
 	float		dest;
+	vec3_t		cursorPosition;
 
 	VectorCopy( pi->viewAngles, headAngles );
 
 	if (rotate) {
 		headAngles[YAW] = AngleMod( headAngles[YAW] ) + uis.realtime / 32;
+	} else if ( followCursor ){
+		cursorPosition[0] = 175;
+		cursorPosition[1] = ( uis.cursorx - ( 640 * 0.5 ) );
+		cursorPosition[2] = ( uis.cursory - ( 480 * 0.5 ) );
+
+		VectorClear(pi->viewAngles);
+		VectorClear(pi->moveAngles);
+
+		vectoangles(cursorPosition, pi->viewAngles);
+
+		pi->viewAngles[PITCH] = -pi->viewAngles[PITCH] + 20;
+		pi->viewAngles[YAW] += 130;
+		if ( pi->viewAngles[YAW] > 200 ) {
+			pi->viewAngles[YAW] = 130;
+		}
+
+		VectorCopy( pi->viewAngles, headAngles );
 	} else {
 		headAngles[YAW] = AngleMod( headAngles[YAW] ) + 32;
 	}
@@ -644,7 +662,7 @@ float	UI_MachinegunSpinAngle( playerInfo_t *pi ) {
 UI_DrawPlayer
 ===============
 */
-void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int time, qboolean rotate ) {
+void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int time, qboolean rotate, qboolean followCursor ) {
 	refdef_t		refdef;
 	refEntity_t		legs;
 	refEntity_t		torso;
@@ -714,7 +732,7 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 		 &torso.oldframe, &torso.frame, &torso.backlerp );
 
 	// get the rotation information
-	UI_PlayerAngles( pi, legs.axis, torso.axis, head.axis, rotate );
+	UI_PlayerAngles( pi, legs.axis, torso.axis, head.axis, rotate, followCursor );
 
 	renderfx = RF_LIGHTING_ORIGIN | RF_NOSHADOW;
 

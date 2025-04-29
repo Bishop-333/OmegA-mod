@@ -383,7 +383,7 @@ static void PlayerModel_DrawPlayer( void *self )
 		return;
 	}
 
-	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime/2, qtrue );
+	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime/2, qtrue, qfalse );
 }
 
 /*
