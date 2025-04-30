@@ -8,6 +8,7 @@ ui_connect
 ui_controls2
 ui_challenges
 ui_demo2
+ui_dmflags
 ui_mfield
 ui_menu
 ui_ingame
