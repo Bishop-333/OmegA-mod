@@ -1204,9 +1204,17 @@ static float CG_DrawEliminationTimer( float y ) {
 
 	rst = cgs.roundStartTime;
 
-        if((cg.time>rst && !cgs.roundtime && cg.time -rst>100) || cg.scoreBoardShowing || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR) {
+        if(cg.time>rst && !cgs.roundtime && cg.time -rst>100)
             return y;
-        }
+
+	if(cg_elimination_activewarmup.integer < 3 && cg.time<rst)
+            return y;
+
+	if(cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR)
+            return y;
+
+	if(cg.scoreBoardShowing )
+            return y;
 
 	//default color is white
 	memcpy(color,g_color_table[ColorIndex(COLOR_WHITE)],sizeof(color));
@@ -1655,7 +1663,7 @@ static void CG_DrawUpperRight(stereoFrame_t stereoFrame)
 	if (cg_drawFPS.integer && (stereoFrame == STEREO_CENTER || stereoFrame == STEREO_RIGHT)) {
 		y = CG_DrawFPS( y );
 	}
-	if ( (cgs.gametype==GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype==GT_LMS) && cg_elimination_activewarmup.integer >= 3 ){
+	if (cgs.gametype==GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype==GT_LMS) {
 		y = CG_DrawEliminationTimer( y );
 		/*if (cgs.clientinfo[ cg.clientNum ].isDead)
 			y = CG_DrawEliminationDeathMessage( y);*/
