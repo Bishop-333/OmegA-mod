@@ -45,9 +45,8 @@ levelShotDetail
 	nopicmip
 	{
 		map textures/sfx/detail.tga
-	        blendFunc filter
+        	blendFunc GL_DST_COLOR GL_SRC_COLOR
 		rgbgen identity
-		tcMod scale 2.5 2.5
 	}
 }
 
