@@ -1284,7 +1284,7 @@ Lots of stuff
 */
 	}
 
-	if ( cg.time>rst && cg.time -rst<100 && !fightPlayed && (cgs.roundtime > 0 || cg_elimination_activewarmup.integer) ) {
+	if ( cg.time>rst && cg.time -rst<100 && !fightPlayed && cg_elimination_activewarmup.integer ) {
 		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
 		CG_CenterPrint( "FIGHT!", 80, 24 );
 		fightPlayed = qtrue;
