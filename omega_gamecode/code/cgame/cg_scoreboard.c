@@ -90,7 +90,6 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	clientInfo_t	*ci;
 	int iconx, headx;
 	int x;
-	qboolean isElimGT = ( cgs.gametype == GT_LMS || cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION );
 
 
 	if ( score->client < 0 || score->client >= cgs.maxclients ) {
@@ -150,7 +149,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 
 	// draw the face
-	if ( ( cent->currentState.eFlags & EF_DEAD && !isElimGT ) || ( ci->isDead && cgs.gametype != GT_LMS ) ) {
+	if ( ( cent->currentState.eFlags & EF_DEAD && !BG_IsEliminationGT(cgs.gametype) ) || ( ci->isDead && cgs.gametype != GT_LMS ) ) {
 		CG_DrawPic( headx+2, y+2, BIGCHAR_HEIGHT+7, BIGCHAR_HEIGHT+7, cgs.media.skullShader );
 	} else {
 		VectorClear( headAngles );

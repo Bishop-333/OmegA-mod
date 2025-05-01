@@ -2644,6 +2644,8 @@ int BotWantsToCamp(bot_state_t *bs) {
 		(bs->inventory[INVENTORY_BFG10K] <= 0 || bs->inventory[INVENTORY_BFGAMMO] < 10)) {
 		return qfalse;
 	}
+	//if we are playing in elimination
+	if (BG_IsEliminationGT(g_gametype.integer)) return qfalse;
 	//find the closest camp spot
 	besttraveltime = 99999;
 	for (cs = trap_BotGetNextCampSpotGoal(0, &goal); cs; cs = trap_BotGetNextCampSpotGoal(cs, &goal)) {

@@ -1801,3 +1801,14 @@ char *BG_TeamName( team_t team )
     return "Free For All";
   return "<team>";
 }
+
+/*
+================
+BG_IsEliminationGT
+
+Returns true if the gametype is an elimination mode.
+================
+*/
+qboolean BG_IsEliminationGT( gametype_t gametype ) {
+	return gametype == GT_ELIMINATION || gametype == GT_CTF_ELIMINATION || gametype == GT_LMS;
+}

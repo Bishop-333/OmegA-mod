@@ -847,6 +847,7 @@ qboolean	BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTim
 //KK-OAX
 //bg_misc.c
 char *BG_TeamName( team_t team );
+qboolean BG_IsEliminationGT( gametype_t gametype );
 
 //OmegA
 extern vmCvar_t	autohop;
