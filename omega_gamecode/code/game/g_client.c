@@ -567,16 +567,17 @@ void ClientRespawn( gentity_t *ent ) {
 	}
 
 	if((g_gametype.integer==GT_ELIMINATION || g_gametype.integer==GT_CTF_ELIMINATION || g_gametype.integer==GT_LMS) 
-			&& ent->client->ps.pm_type == PM_SPECTATOR && ent->client->ps.stats[STAT_HEALTH] > 0)
+			&& ent->client->ps.pm_type == PM_SPECTATOR && ent->client->ps.stats[STAT_HEALTH] > 0) {
 		return;
-		ClientSpawn(ent);
+	}
+	ClientSpawn(ent);
 
-		// add a teleportation effect
-		if(g_gametype.integer!=GT_ELIMINATION && g_gametype.integer!=GT_CTF_ELIMINATION && g_gametype.integer!=GT_LMS)
-		{	
-			tent = G_TempEntity( ent->client->ps.origin, EV_PLAYER_TELEPORT_IN );
-			tent->s.clientNum = ent->s.clientNum;
-		}
+	// add a teleportation effect
+	if(g_gametype.integer!=GT_ELIMINATION && g_gametype.integer!=GT_CTF_ELIMINATION && g_gametype.integer!=GT_LMS)
+	{	
+		tent = G_TempEntity( ent->client->ps.origin, EV_PLAYER_TELEPORT_IN );
+		tent->s.clientNum = ent->s.clientNum;
+	}
 }
 
 /*
@@ -1426,8 +1427,8 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	gentity_t	*ent;
 	char        reason[ MAX_STRING_CHARS ] = {""};
 	int         i;
-    
-    //KK-OAX I moved these up so userinfo could be assigned/used. 
+
+	//KK-OAX I moved these up so userinfo could be assigned/used. 
 	ent = &g_entities[ clientNum ];
 	client = &level.clients[ clientNum ];
 	ent->client = client;
@@ -1447,19 +1448,19 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	Q_strncpyz( client->pers.ip, value, sizeof( client->pers.ip ) );
 	
 	if ( G_FilterPacket( value ) && !Q_stricmp(value,"localhost") ) {
-            G_Printf("Player with IP: %s is banned\n",value);
+		G_Printf("Player with IP: %s is banned\n",value);
 		return "You are banned from this server.";
 	}
 	
-    if( G_admin_ban_check( userinfo, reason, sizeof( reason ) ) ) {    
- 	    return va( "%s", reason );
+	if( G_admin_ban_check( userinfo, reason, sizeof( reason ) ) ) {    
+		return va( "%s", reason );
  	}
  	 
-  //KK-OAX
-  // we don't check GUID or password for bots and local client
-  // NOTE: local client <-> "ip" "localhost"
-  //   this means this client is not running in our current process
 	if ( !isBot && (strcmp(value, "localhost") != 0)) {
+//KK-OAX
+// we don't check GUID or password for bots and local client
+// NOTE: local client <-> "ip" "localhost"
+//   this means this client is not running in our current process
 		// check for a password
 		value = Info_ValueForKey (userinfo, "password");
 		if ( g_password.string[0] && Q_stricmp( g_password.string, "none" ) &&
@@ -1467,32 +1468,33 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 			return "Invalid password";
 		}
 		for( i = 0; i < sizeof( client->pers.guid ) - 1 &&
-		    isxdigit( client->pers.guid[ i ] ); i++ );
+			isxdigit( client->pers.guid[ i ] ); i++ ) {};
 		if( i < sizeof( client->pers.guid ) - 1 )
-		    return "Invalid GUID";
-		    
+			return "Invalid GUID";
+
 		for( i = 0; i < level.maxclients; i++ ) {
 		
-		    if( level.clients[ i ].pers.connected == CON_DISCONNECTED )
-		        continue;
+			if( level.clients[ i ].pers.connected == CON_DISCONNECTED )
+				continue;
 		        
-		    if (!g_allowDuplicateGuid.integer) {
-		    	if( !Q_stricmp( client->pers.guid, level.clients[ i ].pers.guid ) ) {
-		        	if( !G_ClientIsLagging( level.clients + i ) ) {
-		            	trap_SendServerCommand( i, "cp \"Your GUID is not secure\"" );
-		                	return "Duplicate GUID";
-		        	}
-		        	trap_DropClient( i, "Ghost" );
-		    	}
-		    }
+			if (!g_allowDuplicateGuid.integer) {
+				if( !Q_stricmp( client->pers.guid, level.clients[ i ].pers.guid ) ) {
+					if( !G_ClientIsLagging( level.clients + i ) ) {
+						trap_SendServerCommand( i, "cp \"Your GUID is not secure\"" );
+						return "Duplicate GUID";
+					}
+					trap_DropClient( i, "Ghost" );
+				}
+			}
 		}
-		    
+		 
 	}
 
-    //Check for local client
-    if( !strcmp( client->pers.ip, "localhost" ) )
-        client->pers.localClient = qtrue;
-        client->pers.adminLevel = G_admin_level( ent );
+	//Check for local client
+	if( !strcmp( client->pers.ip, "localhost" ) ) {
+		client->pers.localClient = qtrue;
+	}
+	client->pers.adminLevel = G_admin_level( ent );
 
 	client->pers.connected = CON_CONNECTING;
 
@@ -1545,7 +1547,7 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	}
 
 //unlagged - backward reconciliation #5
-    G_admin_namelog_update( client, qfalse );
+	G_admin_namelog_update( client, qfalse );
 	return NULL;
 }
 

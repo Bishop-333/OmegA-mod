@@ -30,27 +30,24 @@ allowedVote
  */
 #define MAX_VOTENAME_LENGTH 14 //currently the longest string is "/map_restart/\0" (14 chars)
 int allowedVote(char *commandStr) {
-    char tempStr[MAX_VOTENAME_LENGTH];
-    int length;
-    char voteNames[MAX_CVAR_VALUE_STRING];
-    trap_Cvar_VariableStringBuffer( "g_voteNames", voteNames, sizeof( voteNames ) );
-    if(!Q_stricmp(voteNames, "*" ))
-        return qtrue; //if star, everything is allowed
-    length = strlen(commandStr);
-    if(length>MAX_VOTENAME_LENGTH-3)
-    {
-        //Error: too long
-        return qfalse;
-    }
-    //Now constructing a string that starts and ends with '/' like: "/clientkick/"
-    tempStr[0] = '/';
-    strncpy(&tempStr[1],commandStr,length);
-    tempStr[length+1] = '/';
-    tempStr[length+2] = '\0';
-    if(Q_stristr(voteNames,tempStr) != NULL)
-        return qtrue;
-    else
-        return qfalse;
+	char tempStr[MAX_VOTENAME_LENGTH];
+	int length;
+	char voteNames[MAX_CVAR_VALUE_STRING];
+	trap_Cvar_VariableStringBuffer( "g_voteNames", voteNames, sizeof( voteNames ) );
+	if(!Q_stricmp(voteNames, "*" ))
+		return qtrue; //if star, everything is allowed
+	length = strlen(commandStr);
+	if(length>MAX_VOTENAME_LENGTH-3)
+	{
+		//Error: too long
+		return qfalse;
+	}
+	//Now constructing a string that starts and ends with '/' like: "/clientkick/"
+	Q_snprintf(tempStr, sizeof(tempStr), "/%s/", commandStr);
+	if(Q_stristr(voteNames,tempStr) != NULL)
+		return qtrue;
+	else
+		return qfalse;
 }
 
 /*
@@ -174,27 +171,24 @@ allowedGametype
  */
 #define MAX_GAMETYPENAME_LENGTH 5 //currently the longest string is "/12/\0" (5 chars)
 int allowedGametype(char *gametypeStr) {
-    char tempStr[MAX_GAMETYPENAME_LENGTH];
-    int length;
-    char voteGametypes[MAX_CVAR_VALUE_STRING];
-    trap_Cvar_VariableStringBuffer( "g_voteGametypes", voteGametypes, sizeof( voteGametypes ) );
-    if(!Q_stricmp(voteGametypes, "*" ))
-        return qtrue; //if star, everything is allowed
-    length = strlen(gametypeStr);
-    if(length>MAX_GAMETYPENAME_LENGTH-3)
-    {
-        //Error: too long
-        return qfalse;
-    }
-    tempStr[0] = '/';
-    strncpy(&tempStr[1],gametypeStr,length);
-    tempStr[length+1] = '/';
-    tempStr[length+2] = '\0';
-    if(Q_stristr(voteGametypes,tempStr) != NULL)
-        return qtrue;
-    else {
-        return qfalse;
-    }
+	char tempStr[MAX_GAMETYPENAME_LENGTH];
+	int length;
+	char voteGametypes[MAX_CVAR_VALUE_STRING];
+	trap_Cvar_VariableStringBuffer( "g_voteGametypes", voteGametypes, sizeof( voteGametypes ) );
+	if(!Q_stricmp(voteGametypes, "*" ))
+		return qtrue; //if star, everything is allowed
+	length = strlen(gametypeStr);
+	if(length>MAX_GAMETYPENAME_LENGTH-3)
+	{
+		//Error: too long
+		return qfalse;
+	}
+	Q_snprintf(tempStr, sizeof(tempStr),"/%s/", gametypeStr);
+	if(Q_stristr(voteGametypes,tempStr) != NULL)
+		return qtrue;
+	else {
+		return qfalse;
+	}
 }
 
 /*

@@ -215,7 +215,7 @@ CG_RailTrail
 ==========================
 */
 void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
-	vec3_t axis[36], move, move2, next_move, vec, temp;
+	vec3_t axis[36], move, move2, vec, temp;
 	float  len;
 	int    i, j, skip;
  
@@ -273,7 +273,6 @@ void CG_RailTrail (clientInfo_t *ci, vec3_t start, vec3_t end) {
 	}
 
 	VectorMA(move, 20, vec, move);
-	VectorCopy(move, next_move);
 	VectorScale (vec, SPACING, vec);
 
 	skip = -1;
@@ -1190,12 +1189,6 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 		vec3_t angle;
 		int i;
 
-//unlagged - true lightning
-		// might as well fix up true lightning while we're at it
-		vec3_t viewangles;
-		VectorCopy( cg.predictedPlayerState.viewangles, viewangles );
-//unlagged - true lightning
-
 		for (i = 0; i < 3; i++) {
 			float a = cent->lerpAngles[i] - cg.refdefViewAngles[i];
 			if (a > 180) {
@@ -1786,24 +1779,26 @@ void CG_DrawWeaponSelect( void ) {
 /*
 ===============
 CG_DrawWeaponBar0
+Default weapon bar. Displays only if a weapon has ammo or not (marked with an X).
 ===============
 */
 
-void CG_DrawWeaponBar0(int count, int bits){
+void CG_DrawWeaponBar0(int count, int bits)
+{
 
 	int y = 380;
 	int x = 320 - count * 20;
 	int i;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
 
@@ -1818,23 +1813,25 @@ void CG_DrawWeaponBar0(int count, int bits){
 
 		// no ammo cross on top
 		if ( !cg.snap->ps.ammo[ i ] ) {
-			  CG_DrawPic( x, y, 32, 32, cgs.media.noammoShader );
+			CG_DrawPic( x, y, 32, 32, cgs.media.noammoShader );
 		}
 
 		x += 40;
-                //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar1
+Displays ammo left for the weapon below it with a bar.
 ===============
 */
 
-void CG_DrawWeaponBar1(int count, int bits){
+void CG_DrawWeaponBar1(int count, int bits)
+{
 
 	int y = 380;
 	int x = 320 - count * 20;
@@ -1845,58 +1842,82 @@ void CG_DrawWeaponBar1(int count, int bits){
 	float red[4];
 	float yellow[4];
 	float green[4];
-	
+
 	red[0] = 1.0f;
 	red[1] = 0;
 	red[2] = 0;
 	red[3] = 1.0f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 0.6f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	green[0] = 0;
 	green[1] = 1.0f;
 	green[2] = 0;
 	green[3] = 1.0f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
-		
+
 		ammo=cg.snap->ps.ammo[i];
-			
+
 		switch(i) {
-			case WP_MACHINEGUN: max = 100; break;
-			case WP_SHOTGUN: max = 10; break;
-			case WP_GRENADE_LAUNCHER: max = 10; break;
-			case WP_ROCKET_LAUNCHER: max = 10; break;
-			case WP_LIGHTNING: max = 100; break;
-			case WP_RAILGUN: max = 10; break;
-			case WP_PLASMAGUN: max = 50; break;
-			case WP_BFG: max = 10; break;
-			case WP_NAILGUN: max = 10; break;
-			case WP_PROX_LAUNCHER: max = 5; break;
-			case WP_CHAINGUN: max = 100; break;
-			default: max = 1; break;
+		case WP_MACHINEGUN:
+			max = 100;
+			break;
+		case WP_SHOTGUN:
+			max = 10;
+			break;
+		case WP_GRENADE_LAUNCHER:
+			max = 10;
+			break;
+		case WP_ROCKET_LAUNCHER:
+			max = 10;
+			break;
+		case WP_LIGHTNING:
+			max = 100;
+			break;
+		case WP_RAILGUN:
+			max = 10;
+			break;
+		case WP_PLASMAGUN:
+			max = 50;
+			break;
+		case WP_BFG:
+			max = 10;
+			break;
+		case WP_NAILGUN:
+			max = 10;
+			break;
+		case WP_PROX_LAUNCHER:
+			max = 5;
+			break;
+		case WP_CHAINGUN:
+			max = 100;
+			break;
+		default:
+			max = 1;
+			break;
 		}
-			
+
 		ammo = (ammo*100)/max;
 		if(ammo >=100)
 			ammo=100;
-			
+
 		br=ammo*32/100;
-			
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+
+		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK) {
 			if(ammo <= 20)
 				CG_FillRect( x, y+38, br,4, red);
 			if(ammo > 20 && ammo <= 50)
@@ -1916,23 +1937,26 @@ void CG_DrawWeaponBar1(int count, int bits){
 
 		// no ammo cross on top
 		if ( !cg.snap->ps.ammo[ i ] ) {
-			  CG_DrawPic( x, y, 32, 32, cgs.media.noammoShader );
+			CG_DrawPic( x, y, 32, 32, cgs.media.noammoShader );
 		}
 
 		x += 40;
-                //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar2
+Displays weapons in the left side of the screen with a number showing remaining ammo.
+Weapons with less than 10 ammo units have a red-ish background.
 ===============
 */
 
-void CG_DrawWeaponBar2(int count, int bits, float *color){
+void CG_DrawWeaponBar2(int count, int bits, float *color)
+{
 
 	int y = 200 + count * 12;
 	int x = 0;
@@ -1942,78 +1966,81 @@ void CG_DrawWeaponBar2(int count, int bits, float *color){
 	float red[4];
 	float yellow[4];
 	float blue[4];
-	
+
 	red[0] = 1.0f;
 	red[1] = 0;
 	red[2] = 0;
 	red[3] = 0.4f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 1.0f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	blue[0] = 0;
 	blue[1] = 0;
 	blue[2] = 1.0f;
 	blue[3] = 0.4f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
-		    continue;
+			if(i==10)
+				i=0;
+			continue;
 		}
-			
-		if(cg.snap->ps.ammo[i]){
+
+		if(cg.snap->ps.ammo[i]) {
 			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y, 50, 24, blue );
-				CG_DrawRect( x, y, 50, 24, 2, yellow); 
+				CG_DrawRect( x, y, 50, 24, 2, yellow);
 			}
-			else{   
+			else {
 				CG_FillRect( x, y,50, 24, blue );
 			}
 		}
-		else{ 
-			if ( i == cg.weaponSelect) { 
+		else {
+			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y, 50, 24, red );
 				CG_DrawRect( x, y, 50, 24, 2, yellow);
 			}
-			else{
+			else {
 				CG_FillRect( x, y,50, 24, red );
 			}
 		}
-		     
-                CG_RegisterWeapon( i );
-			// draw weapon icon
-			CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
-		
-			/** Draw Weapon Ammo **/
-			if(cg.snap->ps.ammo[ i ]!=-1){
-				s = va("%i", cg.snap->ps.ammo[ i ] );
-				w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-				CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
-			}
 
-			y -= 24;
-                //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
-	}	
+		CG_RegisterWeapon( i );
+		// draw weapon icon
+		CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
+
+		/** Draw Weapon Ammo **/
+		if(cg.snap->ps.ammo[ i ]!=-1) {
+			s = va("%i", cg.snap->ps.ammo[ i ] );
+			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+			CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
+		}
+
+		y -= 24;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
+	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar3
+Same as 2, but displays ammo left at the right of the number as a bar.
+Weapons with less than 10 ammo units have a red-ish background and don't display the bar.
 ===============
 */
 
-void CG_DrawWeaponBar3(int count, int bits, float *color){
+void CG_DrawWeaponBar3(int count, int bits, float *color)
+{
 
 	int y = 200 + count * 12;
 	int x = 0;
@@ -2027,63 +2054,87 @@ void CG_DrawWeaponBar3(int count, int bits, float *color){
 	float yellow[4];
 	float green[4];
 	float blue[4];
-	
+
 	red[0] = 1.0f;
 	red[1] = 0;
 	red[2] = 0;
 	red[3] = 0.4f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 1.0f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	green[0] = 0;
 	green[1] = 1.0f;
 	green[2] = 0;
 	green[3] = 1.0f;
-	
+
 	blue[0] = 0;
 	blue[1] = 0;
 	blue[2] = 1.0f;
 	blue[3] = 0.4f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
-		
+
 		ammo=cg.snap->ps.ammo[i];
 
 		switch(i) {
-			case WP_MACHINEGUN: max = 100; break;
-			case WP_SHOTGUN: max = 10; break;
-			case WP_GRENADE_LAUNCHER: max = 10; break;
-			case WP_ROCKET_LAUNCHER: max = 10; break;
-			case WP_LIGHTNING: max = 100; break;
-			case WP_RAILGUN: max = 10; break;
-			case WP_PLASMAGUN: max = 50; break;
-			case WP_BFG: max = 10; break;
-			case WP_NAILGUN: max = 10; break;
-			case WP_PROX_LAUNCHER: max = 5; break;
-			case WP_CHAINGUN: max = 100; break;
-			default: max = 1; break;
+		case WP_MACHINEGUN:
+			max = 100;
+			break;
+		case WP_SHOTGUN:
+			max = 10;
+			break;
+		case WP_GRENADE_LAUNCHER:
+			max = 10;
+			break;
+		case WP_ROCKET_LAUNCHER:
+			max = 10;
+			break;
+		case WP_LIGHTNING:
+			max = 100;
+			break;
+		case WP_RAILGUN:
+			max = 10;
+			break;
+		case WP_PLASMAGUN:
+			max = 50;
+			break;
+		case WP_BFG:
+			max = 10;
+			break;
+		case WP_NAILGUN:
+			max = 10;
+			break;
+		case WP_PROX_LAUNCHER:
+			max = 5;
+			break;
+		case WP_CHAINGUN:
+			max = 100;
+			break;
+		default:
+			max = 1;
+			break;
 		}
-			
+
 		ammo = (ammo*100)/max;
 		if(ammo >=100)
 			ammo=100;
-			
+
 		br=ammo*20/100;
-				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+
+		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK) {
 			if(ammo <= 20)
 				CG_FillRect( 51, y+2+20-br, 4,br, red);
 			if(ammo > 20 && ammo <= 50)
@@ -2091,50 +2142,52 @@ void CG_DrawWeaponBar3(int count, int bits, float *color){
 			if(ammo > 50)
 				CG_FillRect( 51, y+2+20-br, 4,br, green);
 		}
-			
-		if(cg.snap->ps.ammo[i]){
+
+		if(cg.snap->ps.ammo[i]) {
 			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y, 50, 24, blue );
-				CG_DrawRect( x, y, 50, 24, 2, yellow); 
+				CG_DrawRect( x, y, 50, 24, 2, yellow);
 			}
-			else{   
+			else {
 				CG_FillRect( x, y,50, 24, blue );
 			}
 		}
-		else{ 
-			if ( i == cg.weaponSelect) { 
+		else {
+			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y, 50, 24, red );
 				CG_DrawRect( x, y, 50, 24, 2, yellow);
 			}
-			else{
-					CG_FillRect( x, y,50, 24, red );
+			else {
+				CG_FillRect( x, y,50, 24, red );
 			}
 		}
-		     CG_RegisterWeapon( i );
-			// draw weapon icon
-			CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
-		
-			/** Draw Weapon Ammo **/
-			if(cg.snap->ps.ammo[ i ]!=-1){
-				s = va("%i", cg.snap->ps.ammo[ i ] );
-				w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-				CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
-			}
+		CG_RegisterWeapon( i );
+		// draw weapon icon
+		CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
 
-			y -= 24;
-                        //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
+		/** Draw Weapon Ammo **/
+		if(cg.snap->ps.ammo[ i ]!=-1) {
+			s = va("%i", cg.snap->ps.ammo[ i ] );
+			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+			CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
+		}
+
+		y -= 24;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar4
+Apparently same as 2, even if the code is different. Weird.
 ===============
 */
 
-void CG_DrawWeaponBar4(int count, int bits, float *color){
+void CG_DrawWeaponBar4(int count, int bits, float *color)
+{
 
 	int y = 200 + count * 12;
 	int x = 0;
@@ -2145,84 +2198,111 @@ void CG_DrawWeaponBar4(int count, int bits, float *color){
 	char *s;
 	float boxColor[4];
 	float yellow[4];
-	
+
 	boxColor[1]=0;
 	boxColor[3]=0.4f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 1.0f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
-		
+
 		ammo=cg.snap->ps.ammo[i];
 
 		switch(i) {
-			case WP_MACHINEGUN: max = 100; break;
-			case WP_SHOTGUN: max = 10; break;
-			case WP_GRENADE_LAUNCHER: max = 10; break;
-			case WP_ROCKET_LAUNCHER: max = 10; break;
-			case WP_LIGHTNING: max = 100; break;
-			case WP_RAILGUN: max = 10; break;
-			case WP_PLASMAGUN: max = 50; break;
-			case WP_BFG: max = 10; break;
-			case WP_NAILGUN: max = 10; break;
-			case WP_PROX_LAUNCHER: max = 5; break;
-			case WP_CHAINGUN: max = 100; break;
-			default: max = 1; break;
+		case WP_MACHINEGUN:
+			max = 100;
+			break;
+		case WP_SHOTGUN:
+			max = 10;
+			break;
+		case WP_GRENADE_LAUNCHER:
+			max = 10;
+			break;
+		case WP_ROCKET_LAUNCHER:
+			max = 10;
+			break;
+		case WP_LIGHTNING:
+			max = 100;
+			break;
+		case WP_RAILGUN:
+			max = 10;
+			break;
+		case WP_PLASMAGUN:
+			max = 50;
+			break;
+		case WP_BFG:
+			max = 10;
+			break;
+		case WP_NAILGUN:
+			max = 10;
+			break;
+		case WP_PROX_LAUNCHER:
+			max = 5;
+			break;
+		case WP_CHAINGUN:
+			max = 100;
+			break;
+		default:
+			max = 1;
+			break;
 		}
-			
+
 		ammo = (ammo*100)/max;
-			
+
 		if((ammo >=100) || (ammo < 0))
 			ammo=100;
-			
+
 		boxColor[2]=(ammo/100.0f)*1.0f;
-		boxColor[0]=1.0f-(ammo/100.0f)*1.0f;	
-		
+		boxColor[0]=1.0f-(ammo/100.0f)*1.0f;
+
 		if ( i == cg.weaponSelect) {
 			CG_FillRect( x, y, 50, 24, boxColor );
-			CG_DrawRect( x, y, 50, 24, 2, yellow); 
+			CG_DrawRect( x, y, 50, 24, 2, yellow);
 		}
-		else{   
+		else {
 			CG_FillRect( x, y,50, 24, boxColor );
 		}
-			CG_RegisterWeapon( i );
-			// draw weapon icon
-			CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
-		
-			/** Draw Weapon Ammo **/
-			if(cg.snap->ps.ammo[ i ]!=-1){
-				s = va("%i", cg.snap->ps.ammo[ i ] );
-				w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-				CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
-			}
+		CG_RegisterWeapon( i );
+		// draw weapon icon
+		CG_DrawPic( x+2, y+4, 16, 16, cg_weapons[i].weaponIcon );
 
-			y -= 24;
-                        //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
+		/** Draw Weapon Ammo **/
+		if(cg.snap->ps.ammo[ i ]!=-1) {
+			s = va("%i", cg.snap->ps.ammo[ i ] );
+			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+			CG_DrawSmallStringColor(x - w/2 + 32, y+4, s, color);
+		}
+
+		y -= 24;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar5
+Weapons have a blue background and a number representing ammo.
+Less than 10 ammo units have a red-ish background.
 ===============
 */
 
-void CG_DrawWeaponBar5(int count, int bits, float *color){
+void CG_DrawWeaponBar5(int count, int bits, float *color)
+{
 
 	int y = 380;
 	int x = 320 - count * 15;
@@ -2232,75 +2312,77 @@ void CG_DrawWeaponBar5(int count, int bits, float *color){
 	float red[4];
 	float yellow[4];
 	float blue[4];
-	
+
 	red[0] = 1.0f;
 	red[1] = 0;
 	red[2] = 0;
 	red[3] = 0.4f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 1.0f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	blue[0] = 0;
 	blue[1] = 0;
 	blue[2] = 1.0f;
 	blue[3] = 0.4f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
-			
-		if(cg.snap->ps.ammo[i]){
+
+		if(cg.snap->ps.ammo[i]) {
 			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y , 30 , 38, blue );
-				CG_DrawRect( x, y, 30 ,38 ,2, yellow); 
+				CG_DrawRect( x, y, 30 ,38 ,2, yellow);
 			}
-			else{   
+			else {
 				CG_FillRect( x, y,30, 38, blue );
 			}
 		}
-		else{ 
+		else {
 			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y , 30 , 38, red );
-				CG_DrawRect( x , y, 30,38,2, yellow); 
+				CG_DrawRect( x , y, 30,38,2, yellow);
 			}
-			else{
+			else {
 				CG_FillRect( x, y,30, 38, red );
 			}
 		}
-		CG_RegisterWeapon( i );		
+		CG_RegisterWeapon( i );
 		CG_DrawPic( x+7, y+2, 16, 16, cg_weapons[i].weaponIcon );
-			
-		if(cg.snap->ps.ammo[ i ]!=-1){
+
+		if(cg.snap->ps.ammo[ i ]!=-1) {
 			s = va("%i", cg.snap->ps.ammo[ i ] );
 			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
 			CG_DrawSmallStringColor(x - w/2 + 15, y+20, s, color);
 		}
-			
+
 		x += 30;
-                //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar6
+Same as 5, but also displays a bar, except when there's no ammo.
 ===============
 */
 
-void CG_DrawWeaponBar6(int count, int bits, float *color){
+void CG_DrawWeaponBar6(int count, int bits, float *color)
+{
 
 	int y = 380;
 	int x = 320 - count * 15;
@@ -2314,64 +2396,88 @@ void CG_DrawWeaponBar6(int count, int bits, float *color){
 	float yellow[4];
 	float green[4];
 	float blue[4];
-	
+
 	red[0] = 1.0f;
 	red[1] = 0;
 	red[2] = 0;
 	red[3] = 0.4f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 1.0f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	green[0] = 0;
 	green[1] = 1.0f;
 	green[2] = 0;
 	green[3] = 1.0f;
-	
+
 	blue[0] = 0;
 	blue[1] = 0;
 	blue[2] = 1.0f;
 	blue[3] = 0.4f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
-		
+
 		ammo=cg.snap->ps.ammo[i];
-		
+
 		switch(i) {
-			case WP_MACHINEGUN: max = 100; break;
-			case WP_SHOTGUN: max = 10; break;
-			case WP_GRENADE_LAUNCHER: max = 10; break;
-			case WP_ROCKET_LAUNCHER: max = 10; break;
-			case WP_LIGHTNING: max = 100; break;
-			case WP_RAILGUN: max = 10; break;
-			case WP_PLASMAGUN: max = 50; break;
-			case WP_BFG: max = 10; break;
-			case WP_NAILGUN: max = 10; break;
-			case WP_PROX_LAUNCHER: max = 5; break;
-			case WP_CHAINGUN: max = 100; break;
-			default: max = 1; break;
+		case WP_MACHINEGUN:
+			max = 100;
+			break;
+		case WP_SHOTGUN:
+			max = 10;
+			break;
+		case WP_GRENADE_LAUNCHER:
+			max = 10;
+			break;
+		case WP_ROCKET_LAUNCHER:
+			max = 10;
+			break;
+		case WP_LIGHTNING:
+			max = 100;
+			break;
+		case WP_RAILGUN:
+			max = 10;
+			break;
+		case WP_PLASMAGUN:
+			max = 50;
+			break;
+		case WP_BFG:
+			max = 10;
+			break;
+		case WP_NAILGUN:
+			max = 10;
+			break;
+		case WP_PROX_LAUNCHER:
+			max = 5;
+			break;
+		case WP_CHAINGUN:
+			max = 100;
+			break;
+		default:
+			max = 1;
+			break;
 		}
-			
+
 		ammo = (ammo*100)/max;
-			
+
 		if(ammo >=100)
 			ammo=100;
-			
+
 		br=ammo*26/100;
-				
-		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK){
+
+		if(i!=WP_GAUNTLET && i!=WP_GRAPPLING_HOOK) {
 			if(ammo <= 20)
 				CG_FillRect( x+2, y +40, br, 4, red);
 			if(ammo > 20 && ammo <= 50)
@@ -2379,48 +2485,50 @@ void CG_DrawWeaponBar6(int count, int bits, float *color){
 			if(ammo > 50)
 				CG_FillRect( x+2, y+40, br, 4, green);
 		}
-			
-		if(cg.snap->ps.ammo[i]){
+
+		if(cg.snap->ps.ammo[i]) {
 			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y , 30 , 38, blue );
-				CG_DrawRect( x, y, 30 ,38 ,2, yellow); 
+				CG_DrawRect( x, y, 30 ,38 ,2, yellow);
 			}
-			else{   
-					CG_FillRect( x, y,30, 38, blue );
+			else {
+				CG_FillRect( x, y,30, 38, blue );
 			}
 		}
-		else{ 
+		else {
 			if ( i == cg.weaponSelect) {
 				CG_FillRect( x, y , 30 , 38, red );
-				CG_DrawRect( x , y, 30,38,2, yellow); 
+				CG_DrawRect( x , y, 30,38,2, yellow);
 			}
-			else{
-					CG_FillRect( x, y,30, 38, red );
+			else {
+				CG_FillRect( x, y,30, 38, red );
 			}
-		}	
-		CG_RegisterWeapon( i );	
+		}
+		CG_RegisterWeapon( i );
 		CG_DrawPic( x+7, y+2, 16, 16, cg_weapons[i].weaponIcon );
-			
-		if(cg.snap->ps.ammo[ i ]!=-1){
+
+		if(cg.snap->ps.ammo[ i ]!=-1) {
 			s = va("%i", cg.snap->ps.ammo[ i ] );
 			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
 			CG_DrawSmallStringColor(x - w/2 + 15, y+20, s, color);
 		}
-			
+
 		x += 30;
-                //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
-	}	
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
+	}
 }
 
 /*
 ===============
 CG_DrawWeaponBar7
+Apparently same as 5, even if the code is different. Weird.
 ===============
 */
 
-void CG_DrawWeaponBar7(int count, int bits, float *color){
+void CG_DrawWeaponBar7(int count, int bits, float *color)
+{
 
 	int y = 380;
 	int x = 320 - count * 15;
@@ -2431,72 +2539,96 @@ void CG_DrawWeaponBar7(int count, int bits, float *color){
 	char *s;
 	float yellow[4];
 	float boxColor[4];
-	
+
 	boxColor[1]=0;
 	boxColor[3]=0.4f;
-	
+
 	yellow[0] = 1.0f;
 	yellow[1] = 1.0f;
 	yellow[2] = 0;
 	yellow[3] = 1.0f;
-	
+
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
-                //Sago: Do mad change of grapple placement:
-                if(i==10)
-                    continue;
-                if(i==0)
-                    i=10;
+		//Sago: Do mad change of grapple placement:
+		if(i==10)
+			continue;
+		if(i==0)
+			i=10;
 		if ( !( bits & ( 1 << i ) ) ) {
-                    if(i==10)
-                        i=0;
+			if(i==10)
+				i=0;
 			continue;
 		}
-		
+
 		ammo=cg.snap->ps.ammo[i];
-		
+
 		switch(i) {
-			case WP_MACHINEGUN: max = 100; break;
-			case WP_SHOTGUN: max = 10; break;
-			case WP_GRENADE_LAUNCHER: max = 10; break;
-			case WP_ROCKET_LAUNCHER: max = 10; break;
-			case WP_LIGHTNING: max = 100; break;
-			case WP_RAILGUN: max = 10; break;
-			case WP_PLASMAGUN: max = 50; break;
-			case WP_BFG: max = 10; break;
-			case WP_NAILGUN: max = 10; break;
-			case WP_PROX_LAUNCHER: max = 5; break;
-			case WP_CHAINGUN: max = 100; break;
-			default: max = 1; break;
+		case WP_MACHINEGUN:
+			max = 100;
+			break;
+		case WP_SHOTGUN:
+			max = 10;
+			break;
+		case WP_GRENADE_LAUNCHER:
+			max = 10;
+			break;
+		case WP_ROCKET_LAUNCHER:
+			max = 10;
+			break;
+		case WP_LIGHTNING:
+			max = 100;
+			break;
+		case WP_RAILGUN:
+			max = 10;
+			break;
+		case WP_PLASMAGUN:
+			max = 50;
+			break;
+		case WP_BFG:
+			max = 10;
+			break;
+		case WP_NAILGUN:
+			max = 10;
+			break;
+		case WP_PROX_LAUNCHER:
+			max = 5;
+			break;
+		case WP_CHAINGUN:
+			max = 100;
+			break;
+		default:
+			max = 1;
+			break;
 		}
-			
+
 		ammo = (ammo*100)/max;
-			
+
 		if((ammo >=100) || (ammo < 0))
 			ammo=100;
-			
+
 		boxColor[2]=(ammo/100.0f)*1.0f;
 		boxColor[0]=1.0f-(ammo/100.0f)*1.0f;
-				
+
 		if ( i == cg.weaponSelect) {
 			CG_FillRect( x, y , 30 , 38, boxColor );
-			CG_DrawRect( x, y, 30 ,38 ,2, yellow); 
+			CG_DrawRect( x, y, 30 ,38 ,2, yellow);
 		}
-		else{   
-				CG_FillRect( x, y,30, 38, boxColor );
+		else {
+			CG_FillRect( x, y,30, 38, boxColor );
 		}
-		CG_RegisterWeapon( i );	
+		CG_RegisterWeapon( i );
 		CG_DrawPic( x+7, y+2, 16, 16, cg_weapons[i].weaponIcon );
-			
-		if(cg.snap->ps.ammo[ i ]!=-1){
+
+		if(cg.snap->ps.ammo[ i ]!=-1) {
 			s = va("%i", cg.snap->ps.ammo[ i ] );
 			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
 			CG_DrawSmallStringColor(x - w/2 + 15, y+20, s, color);
 		}
-		
+
 		x += 30;
-                //Sago: Undo mad change of weapons
-                if(i==10)
-                        i=0;
+		//Sago: Undo mad change of weapons
+		if(i==10)
+			i=0;
 	}
 }
 
@@ -2538,10 +2670,6 @@ void CG_DrawWeaponBar8(int count, int bits, float *color)
 	red[1] = 0;
 	red[2] = 0;
 	red[3] = 0.5f;
-
-
-
-
 
 	for ( i = 0 ; i < MAX_WEAPONS ; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -3330,7 +3458,6 @@ static void CG_ShotgunPellet( vec3_t start, vec3_t end, int skipNum ) {
 	int sourceContentType, destContentType;
 
 // LEILEI ENHACNEMENT
-	localEntity_t	*smoke;
 	vec3_t  kapow;
 
 
@@ -3359,9 +3486,9 @@ static void CG_ShotgunPellet( vec3_t start, vec3_t end, int skipNum ) {
 					kapow[0] = kapow[0] * (crandom() * 22);
 					kapow[1] = kapow[1] * (crandom() * 22);
 					kapow[2] = kapow[2] * (crandom() * 65 + 37);
-					smoke = CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
 						
 				}
 // END LEIHANCMENET
@@ -3379,9 +3506,9 @@ static void CG_ShotgunPellet( vec3_t start, vec3_t end, int skipNum ) {
 					kapow[0] = kapow[0] * (crandom() * 22);
 					kapow[1] = kapow[1] * (crandom() * 22);
 					kapow[2] = kapow[2] * (crandom() * 65 + 37);
-					smoke = CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
 				}
 // END LEIHANCMENET
 	}
@@ -3426,10 +3553,8 @@ static void CG_ShotgunPellet( vec3_t start, vec3_t end, int skipNum ) {
 					CG_LeiSparks(tr.endpos, tr.plane.normal, 1600, 0, 0, 2);
 					
 					if (cg_leiEnhancement.integer) {
-						smoke = CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lsmkShader2 );
-						//smoke = CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lbumShader1 );
-						// use the optimized local entity add
-						smoke->leType = LE_SCALE_FADE;
+						CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lsmkShader2 );
+						//CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0,  cgs.media.lbumShader1 );
 					}
 #if 0
 					CG_LeiPuff(tr.endpos, kapow, 500, 0, 0, 177, 6);
@@ -3673,7 +3798,6 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 	vec3_t		start;
 // LEILEI ENHACNEMENT
 	localEntity_t	*blood;
-	localEntity_t	*smoke;
 	vec3_t	kapew;	
 	vec3_t  kapow;
 
@@ -3704,9 +3828,9 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 					kapow[0] = kapow[0] * (crandom() * 22);
 					kapow[1] = kapow[1] * (crandom() * 22);
 					kapow[2] = kapow[2] * (crandom() * 65 + 37);
-					smoke = CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
 				//	CG_LeiSplash2(trace.endpos, kapow, 900, 0, 0, 444);
 						
 				}
@@ -3727,9 +3851,9 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 					kapow[0] = kapow[0] * (crandom() * 22);
 					kapow[1] = kapow[1] * (crandom() * 22);
 					kapow[2] = kapow[2] * (crandom() * 65 + 37);
-					smoke = CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
-					smoke = CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 14, 1, 1, 1, 1.0f, 400, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 6, 1, 1, 1, 1.0f, 200, cg.time, 0, 0,  cgs.media.lsplShader );
+					CG_SmokePuff( trace.endpos, kapow, 10, 1, 1, 1, 1.0f, 300, cg.time, 0, 0,  cgs.media.lsplShader );
 			//CG_LeiSplash2(trace.endpos, kapow, 500, 0, 0, 1);
 				}
 // END LEIHANCMENET
@@ -3797,9 +3921,7 @@ if (cg_leiSuperGoreyAwesome.integer) {
 					kapew[2] = kapew[2] * (crandom() * 65 + 37);
 
 
-					smoke = CG_SmokePuff( end, kapow, 14, 1, 1, 1, 1.0f, 600, cg.time, 0, 0,  cgs.media.lsmkShader1 );
-					// use the optimized local entity add
-					smoke->leType = LE_SCALE_FADE;
+					CG_SmokePuff( end, kapow, 14, 1, 1, 1, 1.0f, 600, cg.time, 0, 0,  cgs.media.lsmkShader1 );
 			//		CG_LeiSparks(end, normal, 600, 0, 0, 177);
 			//		CG_LeiSparks(end, normal, 600, 0, 0, 155);
 			//		CG_LeiSparks(end, normal, 600, 0, 0, 444);

@@ -564,20 +564,18 @@ static void admin_default_levels( void )
 //  return a level for a player entity.
 int G_admin_level( gentity_t *ent )
 {
-  int i;
+	int i;
 
-  if( !ent )
-  {
-    return MAX_ADMIN_LEVELS;
-  }
+	if( !ent ) {
+		return MAX_ADMIN_LEVELS;
+	}
 
-  for( i = 0; i < MAX_ADMIN_ADMINS && g_admin_admins[ i ]; i++ )
-  {
-    if( !Q_stricmp( g_admin_admins[ i ]->guid, ent->client->pers.guid ) )
-      return g_admin_admins[ i ]->level;
-  }
+	for( i = 0; i < MAX_ADMIN_ADMINS && g_admin_admins[ i ]; i++ ) {
+		if( !Q_stricmp( g_admin_admins[ i ]->guid, ent->client->pers.guid ) )
+			return g_admin_admins[ i ]->level;
+	}
 
-  return 0;
+	return 0;
 }
 
 static qboolean admin_command_permission( gentity_t *ent, char *command )
@@ -2262,119 +2260,105 @@ qboolean G_admin_listadmins( gentity_t *ent, int skiparg )
 
 qboolean G_admin_listplayers( gentity_t *ent, int skiparg )
 {
-  int i, j;
-  gclient_t *p;
-  char c[ 3 ], t[ 2 ]; // color and team letter
-  char n[ MAX_NAME_LENGTH ] = {""};
-  char n2[ MAX_NAME_LENGTH ] = {""};
-  char n3[ MAX_NAME_LENGTH ] = {""};
-  char lname[ MAX_NAME_LENGTH ];
-  char guid_stub[ 9 ];
-  char muted[ 2 ];
-  int l;
+	int i, j;
+	gclient_t *p;
+	char c[ 3 ], t[ 2 ]; // color and team letter
+	char n[ MAX_NAME_LENGTH ] = {""};
+	char n2[ MAX_NAME_LENGTH ] = {""};
+	char n3[ MAX_NAME_LENGTH ] = {""};
+	char lname[ MAX_NAME_LENGTH ];
+	char guid_stub[ 9 ];
+	char muted[ 2 ];
+	int l;
 
-  ADMBP_begin();
-  ADMBP( va( "^3!listplayers: ^7%d players connected:\n",
-    level.numConnectedClients ) );
-  for( i = 0; i < level.maxclients; i++ )
-  {
-    p = &level.clients[ i ];
-    Q_strncpyz( t, "S", sizeof( t ) );
-    Q_strncpyz( c, S_COLOR_YELLOW, sizeof( c ) );
-    if( p->sess.sessionTeam == TEAM_BLUE )
-    {
-      Q_strncpyz( t, "B", sizeof( t ) );
-      Q_strncpyz( c, S_COLOR_BLUE, sizeof( c ) );
-    }
-    else if( p->sess.sessionTeam == TEAM_RED )
-    {
-      Q_strncpyz( t, "R", sizeof( t ) );
-      Q_strncpyz( c, S_COLOR_RED, sizeof( c ) );
-    }
-    else if( p->sess.sessionTeam == TEAM_FREE )
-    {
-      Q_strncpyz( t, "F", sizeof( t ) );
-      Q_strncpyz( c, S_COLOR_GREEN, sizeof( c ) );
-    }
-    else if( p->sess.sessionTeam == TEAM_NONE )
-    {
-      Q_strncpyz( t, "S", sizeof( t ) );
-      Q_strncpyz( c, S_COLOR_WHITE, sizeof( c ) );
-    }
-    if( p->pers.connected == CON_CONNECTING )
-    {
-      Q_strncpyz( t, "C", sizeof( t ) );
-      Q_strncpyz( c, S_COLOR_CYAN, sizeof( c ) );
-    }
-    else if( p->pers.connected != CON_CONNECTED )
-    {
-      continue;
-    }
+	ADMBP_begin();
+	ADMBP( va( "^3!listplayers: ^7%d players connected:\n",
+	           level.numConnectedClients ) );
+	for( i = 0; i < level.maxclients; i++ ) {
+		p = &level.clients[ i ];
+		Q_strncpyz( t, "S", sizeof( t ) );
+		Q_strncpyz( c, S_COLOR_YELLOW, sizeof( c ) );
+		if( p->sess.sessionTeam == TEAM_BLUE ) {
+			Q_strncpyz( t, "B", sizeof( t ) );
+			Q_strncpyz( c, S_COLOR_BLUE, sizeof( c ) );
+		}
+		else if( p->sess.sessionTeam == TEAM_RED ) {
+			Q_strncpyz( t, "R", sizeof( t ) );
+			Q_strncpyz( c, S_COLOR_RED, sizeof( c ) );
+		}
+		else if( p->sess.sessionTeam == TEAM_FREE ) {
+			Q_strncpyz( t, "F", sizeof( t ) );
+			Q_strncpyz( c, S_COLOR_GREEN, sizeof( c ) );
+		}
+		else if( p->sess.sessionTeam == TEAM_NONE ) {
+			Q_strncpyz( t, "S", sizeof( t ) );
+			Q_strncpyz( c, S_COLOR_WHITE, sizeof( c ) );
+		}
+		if( p->pers.connected == CON_CONNECTING ) {
+			Q_strncpyz( t, "C", sizeof( t ) );
+			Q_strncpyz( c, S_COLOR_CYAN, sizeof( c ) );
+		}
+		else if( p->pers.connected != CON_CONNECTED ) {
+			continue;
+		}
 
-    for( j = 0; j < 8; j++ )
-        guid_stub[ j ] = p->pers.guid[ j + 24 ];
-        guid_stub[ j ] = '\0';
+		for( j = 0; j < 8; j++ )
+			guid_stub[ j ] = p->pers.guid[ j + 24 ];
+		guid_stub[ j ] = '\0';
 
-    muted[ 0 ] = '\0';
-    if( p->pers.muted )
-    {
-      Q_strncpyz( muted, "M", sizeof( muted ) );
-    }
-    //Put DisOriented Junk Here!!!
+		muted[ 0 ] = '\0';
+		if( p->pers.muted ) {
+			Q_strncpyz( muted, "M", sizeof( muted ) );
+		}
+		//Put DisOriented Junk Here!!!
 
-    l = 0;
-    G_SanitiseString( p->pers.netname, n2, sizeof( n2 ) );
-    n[ 0 ] = '\0';
-    for( j = 0; j < MAX_ADMIN_ADMINS && g_admin_admins[ j ]; j++ )
-    {
-      if( !Q_stricmp( g_admin_admins[ j ]->guid, p->pers.guid ) )
-      {
-        // don't gather aka or level info if the admin is incognito
-        if( ent && G_admin_permission( &g_entities[ i ], ADMF_INCOGNITO ) )
-        {
-          break;
-        }
-        l = g_admin_admins[ j ]->level;
-        G_SanitiseString( g_admin_admins[ j ]->name, n3, sizeof( n3 ) );
-        if( Q_stricmp( n2, n3 ) )
-        {
-          Q_strncpyz( n, g_admin_admins[ j ]->name, sizeof( n ) );
-        }
-        break;
-      }
-    }
-    lname[ 0 ] = '\0';
-    for( j = 0; j < MAX_ADMIN_LEVELS && g_admin_levels[ j ]; j++ )
-    {
-      if( g_admin_levels[ j ]->level == l )
-      {
-        int k, colorlen;
+		l = 0;
+		G_SanitiseString( p->pers.netname, n2, sizeof( n2 ) );
+		n[ 0 ] = '\0';
+		for( j = 0; j < MAX_ADMIN_ADMINS && g_admin_admins[ j ]; j++ ) {
+			if( !Q_stricmp( g_admin_admins[ j ]->guid, p->pers.guid ) ) {
+				// don't gather aka or level info if the admin is incognito
+				if( ent && G_admin_permission( &g_entities[ i ], ADMF_INCOGNITO ) ) {
+					break;
+				}
+				l = g_admin_admins[ j ]->level;
+				G_SanitiseString( g_admin_admins[ j ]->name, n3, sizeof( n3 ) );
+				if ( Q_stricmp( n2, n3 ) ) {
+					Q_strncpyz( n, g_admin_admins[ j ]->name, sizeof( n ) );
+				}
+				break;
+			}
+		}
+		lname[ 0 ] = '\0';
+		for( j = 0; j < MAX_ADMIN_LEVELS && g_admin_levels[ j ]; j++ ) {
+			if( g_admin_levels[ j ]->level == l ) {
+				int k, colorlen;
 
-        for( colorlen = k = 0; g_admin_levels[ j ]->name[ k ]; k++ )
-          if( Q_IsColorString( &g_admin_levels[ j ]->name[ k ] ) )
-            colorlen += 2;
-        Com_sprintf( lname, sizeof( lname ), "%*s",
-                     admin_level_maxname + colorlen,
-                     g_admin_levels[ j ]->name );
-        break;
-      }
-    }
+				for( colorlen = k = 0; g_admin_levels[ j ]->name[ k ]; k++ )
+					if( Q_IsColorString( &g_admin_levels[ j ]->name[ k ] ) )
+						colorlen += 2;
+				Com_sprintf( lname, sizeof( lname ), "%*s",
+				             admin_level_maxname + colorlen,
+				             g_admin_levels[ j ]->name );
+				break;
+			}
+		}
 
-    ADMBP( va( "%2i %s%s^7 %-2i %s^7 (*%s) ^1%1s^7 %s^7 %s%s^7%s\n",
-              i,
-              c,
-              t,
-              l,
-              lname,
-              guid_stub,
-              muted,
-              p->pers.netname,
-              ( *n ) ? "(a.k.a. " : "",
-              n,
-              ( *n ) ? ")" : "" ) );
-  }
-  ADMBP_end();
-  return qtrue;
+		ADMBP( va( "%2i %s%s^7 %-2i %s^7 (*%s) ^1%1s^7 %s^7 %s%s^7%s\n",
+		           i,
+		           c,
+		           t,
+		           l,
+		           lname,
+		           guid_stub,
+		           muted,
+		           p->pers.netname,
+		           ( *n ) ? "(a.k.a. " : "",
+		           n,
+		           ( *n ) ? ")" : "" ) );
+	}
+	ADMBP_end();
+	return qtrue;
 }
 
 qboolean G_admin_showbans( gentity_t *ent, int skiparg )

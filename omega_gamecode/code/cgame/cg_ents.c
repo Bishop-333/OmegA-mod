@@ -649,6 +649,43 @@ static void CG_Portal( centity_t *cent ) {
 	trap_R_AddRefEntityToScene(&ent);
 }
 
+/*
+================
+CG_CreateRotationMatrix
+================
+*/
+void CG_CreateRotationMatrix(vec3_t angles, vec3_t matrix[3]) {
+	AngleVectors(angles, matrix[0], matrix[1], matrix[2]);
+	VectorInverse(matrix[1]);
+}
+
+/*
+================
+CG_TransposeMatrix
+================
+*/
+void CG_TransposeMatrix(vec3_t matrix[3], vec3_t transpose[3]) {
+	int i, j;
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			transpose[i][j] = matrix[j][i];
+		}
+	}
+}
+
+/*
+================
+CG_RotatePoint
+================
+*/
+void CG_RotatePoint(vec3_t point, vec3_t matrix[3]) {
+	vec3_t tvec;
+
+	VectorCopy(point, tvec);
+	point[0] = DotProduct(matrix[0], tvec);
+	point[1] = DotProduct(matrix[1], tvec);
+	point[2] = DotProduct(matrix[2], tvec);
+}
 
 /*
 =========================
@@ -657,19 +694,23 @@ CG_AdjustPositionForMover
 Also called by client movement prediction code
 =========================
 */
-void CG_AdjustPositionForMover( const vec3_t in, int moverNum, int fromTime, int toTime, vec3_t out ) {
+void CG_AdjustPositionForMover( const vec3_t in, int moverNum, int fromTime, int toTime, vec3_t out, vec3_t angles_in, vec3_t angles_out ) {
 	centity_t	*cent;
 	vec3_t	oldOrigin, origin, deltaOrigin;
 	vec3_t	oldAngles, angles, deltaAngles;
+	vec3_t	matrix[3], transpose[3];
+	vec3_t	org, org2, move2;
 
 	if ( moverNum <= 0 || moverNum >= ENTITYNUM_MAX_NORMAL ) {
 		VectorCopy( in, out );
+		VectorCopy( angles_in, angles_out );
 		return;
 	}
 
 	cent = &cg_entities[ moverNum ];
 	if ( cent->currentState.eType != ET_MOVER ) {
 		VectorCopy( in, out );
+		VectorCopy( angles_in, angles_out );
 		return;
 	}
 
@@ -682,9 +723,17 @@ void CG_AdjustPositionForMover( const vec3_t in, int moverNum, int fromTime, int
 	VectorSubtract( origin, oldOrigin, deltaOrigin );
 	VectorSubtract( angles, oldAngles, deltaAngles );
 
-	VectorAdd( in, deltaOrigin, out );
+	// origin change when on a rotating object
+	CG_CreateRotationMatrix( deltaAngles, transpose );
+	CG_TransposeMatrix( transpose, matrix );
+	VectorSubtract( in, oldOrigin, org );
+	VectorCopy( org, org2 );
+	CG_RotatePoint( org2, matrix );
+	VectorSubtract( org2, org, move2 );
+	VectorAdd( deltaOrigin, move2, deltaOrigin );
 
-	// FIXME: origin change when on a rotating object
+	VectorAdd( in, deltaOrigin, out );
+	VectorAdd( angles_in, deltaAngles, angles_out );
 }
 
 
@@ -821,7 +870,7 @@ static void CG_CalcEntityLerpPositions( centity_t *cent ) {
 	// player state
 	if ( cent != &cg.predictedPlayerEntity ) {
 		CG_AdjustPositionForMover( cent->lerpOrigin, cent->currentState.groundEntityNum, 
-		cg.snap->serverTime, cg.time, cent->lerpOrigin );
+		cg.snap->serverTime, cg.time, cent->lerpOrigin, cent->lerpAngles, cent->lerpAngles );
 	}
 }
 

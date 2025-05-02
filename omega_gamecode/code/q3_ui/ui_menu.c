@@ -105,10 +105,10 @@ void Main_MenuEvent (void* ptr, int event) {
 		break;
 
 	case ID_MULTIPLAYER:
-            if(ui_setupchecked.integer)
-		UI_ArenaServersMenu();
-            else
-                UI_FirstConnectMenu();
+		if(ui_setupchecked.integer)
+			UI_ArenaServersMenu();
+		else
+			UI_FirstConnectMenu();
 		break;
 
 	case ID_SETUP:
@@ -124,8 +124,8 @@ void Main_MenuEvent (void* ptr, int event) {
 		break;*/
 
         /*case ID_CHALLENGES:
-                UI_Challenges();
-                break;*/
+		UI_Challenges();
+		break;*/
 
 	case ID_MODS:
 		UI_ModsMenu();

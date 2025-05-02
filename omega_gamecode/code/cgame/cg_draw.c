@@ -2682,73 +2682,73 @@ CG_DrawCenterDDString
 =====================
 */
 static void CG_DrawCenterDDString( void ) {
-    #ifndef MISSIONPACK
-    int		x, y, w;
-    float       *color;
-    char        *line;
-    int 		statusA, statusB;
-    int sec;
-    static int lastDDSec = -100;
+	#ifndef MISSIONPACK
+	int		x, y, w;
+	float       *color;
+	char        *line;
+	int 		statusA, statusB;
+	int sec;
+	static int lastDDSec = -100;
 
-    
-    if(cgs.gametype != GT_DOUBLE_D)
-        return;
-    
-    	statusA = cgs.redflag;
+
+	if(cgs.gametype != GT_DOUBLE_D)
+		return;
+
+	statusA = cgs.redflag;
 	statusB = cgs.blueflag;
-    
-    if( ( ( statusB == statusA ) && ( statusA == TEAM_RED ) ) ||
-            ( ( statusB == statusA ) && ( statusA == TEAM_BLUE ) ) ) {
-      }
-    else
-        return; //No team is dominating
-    
-    if(statusA == TEAM_BLUE) {
-        line = va("Blue scores in %i",(cgs.timetaken+10*1000-cg.time)/1000+1);
-        color = colorBlue;
-    } else if(statusA == TEAM_RED) {
-        line = va("Red scores in %i",(cgs.timetaken+10*1000-cg.time)/1000+1);
-        color = colorRed;
-    } else {
-        lastDDSec = -100;
-        return;
-    }
 
-    sec = (cgs.timetaken+10*1000-cg.time)/1000+1;
-    if(sec!=lastDDSec) {
-        //A new number is being displayed... play the sound!
-        switch ( sec ) {
-            case 1:
-                trap_S_StartLocalSound( cgs.media.count1Sound, CHAN_ANNOUNCER );
-                break;
-            case 2:
-                trap_S_StartLocalSound( cgs.media.count2Sound, CHAN_ANNOUNCER );
-                break;
-            case 3:
-                trap_S_StartLocalSound( cgs.media.count3Sound, CHAN_ANNOUNCER );
-                break;
-            case 10:
-                trap_S_StartLocalSound( cgs.media.doublerSound , CHAN_ANNOUNCER );
-                break;
-            default:
-                break;
-        }
-    }
-    lastDDSec = sec;
-    
-    y = 100;
-    
-    
-    w = cg.centerPrintCharWidth * CG_DrawStrlen( line );
+	if( ( ( statusB == statusA ) && ( statusA == TEAM_RED ) ) ||
+		( ( statusB == statusA ) && ( statusA == TEAM_BLUE ) ) ) {
+	}
+	else {
+		return; //No team is dominating
+	}
 
-    x = ( SCREEN_WIDTH - w ) / 2;
+	if(statusA == TEAM_BLUE) {
+		line = va("Blue scores in %i",(cgs.timetaken+10*1000-cg.time)/1000+1);
+		color = colorBlue;
+	} else if(statusA == TEAM_RED) {
+		line = va("Red scores in %i",(cgs.timetaken+10*1000-cg.time)/1000+1);
+		color = colorRed;
+	} else {
+		lastDDSec = -100;
+		return;
+	}
 
-    CG_DrawStringExt( x, y, line, color, qfalse, qtrue,
+	sec = (cgs.timetaken+10*1000-cg.time)/1000+1;
+	if(sec!=lastDDSec) {
+		//A new number is being displayed... play the sound!
+		switch ( sec ) {
+			case 1:
+				trap_S_StartLocalSound( cgs.media.count1Sound, CHAN_ANNOUNCER );
+				break;
+			case 2:
+				trap_S_StartLocalSound( cgs.media.count2Sound, CHAN_ANNOUNCER );
+				break;
+			case 3:
+				trap_S_StartLocalSound( cgs.media.count3Sound, CHAN_ANNOUNCER );
+				break;
+			case 10:
+				trap_S_StartLocalSound( cgs.media.doublerSound , CHAN_ANNOUNCER );
+				break;
+			default:
+				break;
+		}
+	}
+	lastDDSec = sec;
+
+	y = 100;
+
+
+	w = cg.centerPrintCharWidth * CG_DrawStrlen( line );
+
+	x = ( SCREEN_WIDTH - w ) / 2;
+
+	CG_DrawStringExt( x, y, line, color, qfalse, qtrue,
 		cg.centerPrintCharWidth, (int)(cg.centerPrintCharWidth * 1.5), 0 );
-    
-    #endif
-}
 
+	#endif
+}
 
 /*
 ================================================================================

@@ -2547,85 +2547,80 @@ it against the table.
 */
 void ClientCommand( int clientNum )
 {
-    gentity_t *ent;
-    char      cmd[ MAX_TOKEN_CHARS ];
-    int       i;
+	gentity_t *ent;
+	char      cmd[ MAX_TOKEN_CHARS ];
+	int       i;
 
-    ent = g_entities + clientNum;
-    if( !ent->client )
-        return;   // not fully in game yet
+	ent = g_entities + clientNum;
+	if( !ent->client )
+		return;   // not fully in game yet
 
-    trap_Argv( 0, cmd, sizeof( cmd ) );
+	trap_Argv( 0, cmd, sizeof( cmd ) );
 
-    for( i = 0; i < numCmds; i++ )
-    {
-        if( Q_stricmp( cmd, cmds[ i ].cmdName ) == 0 )
-            break;
-    }
+	for( i = 0; i < numCmds; i++ ) {
+		if( Q_stricmp( cmd, cmds[ i ].cmdName ) == 0 )
+			break;
+	}
     
-    if( i == numCmds )
-    {   // KK-OAX Admin Command Check
-        if( !G_admin_cmd_check( ent, qfalse ) )
-            trap_SendServerCommand( clientNum,
-                va( "print \"Unknown command %s\n\"", cmd ) );
-            return;
-    }
+	if( i == numCmds ) {
+		// KK-OAX Admin Command Check
+		if( !G_admin_cmd_check( ent, qfalse ) ) {
+			trap_SendServerCommand( clientNum, va( "print \"Unknown command %s\n\"", cmd ) );
+		}
+		return;
+	}
 
-  // do tests here to reduce the amount of repeated code
-    if( !( cmds[ i ].cmdFlags & CMD_INTERMISSION ) && level.intermissiontime )
-        return;
+	// do tests here to reduce the amount of repeated code
+	if( !( cmds[ i ].cmdFlags & CMD_INTERMISSION ) && level.intermissiontime )
+		return;
 
-    if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer )
-    {
-        trap_SendServerCommand( clientNum,
-            "print \"Cheats are not enabled on this server\n\"" );
-        return;
-    }
-    //KK-OAX When the corresponding code is integrated, I will activate these. 
-    //if( cmds[ i ].cmdFlags & CMD_MESSAGE && 
-    //    ( ent->client->pers.muted || G_FloodLimited( ent ) ) )
-    //    return;
+	if( cmds[ i ].cmdFlags & CMD_CHEAT && !g_cheats.integer ) {
+		trap_SendServerCommand( clientNum, "print \"Cheats are not enabled on this server\n\"" );
+		return;
+	}
+	//KK-OAX When the corresponding code is integrated, I will activate these. 
+	//if( cmds[ i ].cmdFlags & CMD_MESSAGE && 
+	//    ( ent->client->pers.muted || G_FloodLimited( ent ) ) )
+	//    return;
     
-    //KK-OAX Do I need to change this for FFA gametype?
-    if( cmds[ i ].cmdFlags & CMD_TEAM &&
-        ent->client->sess.sessionTeam == TEAM_SPECTATOR )
-    {
-        trap_SendServerCommand( clientNum, "print \"Join a team first\n\"" );
-        return;
-    }
+	//KK-OAX Do I need to change this for FFA gametype?
+	if( cmds[ i ].cmdFlags & CMD_TEAM &&
+		ent->client->sess.sessionTeam == TEAM_SPECTATOR ) {
+		trap_SendServerCommand( clientNum, "print \"Join a team first\n\"" );
+		return;
+	}
 
-    if( ( cmds[ i ].cmdFlags & CMD_NOTEAM ||
-        ( cmds[ i ].cmdFlags & CMD_CHEAT_TEAM && !g_cheats.integer ) ) &&
-        ent->client->sess.sessionTeam != TEAM_NONE )
-    {
-        trap_SendServerCommand( clientNum,
-            "print \"Cannot use this command when on a team\n\"" );
-        return;
-    }
+	if( ( cmds[ i ].cmdFlags & CMD_NOTEAM ||
+		( cmds[ i ].cmdFlags & CMD_CHEAT_TEAM && !g_cheats.integer ) ) &&
+		ent->client->sess.sessionTeam != TEAM_NONE ) {
+			trap_SendServerCommand( clientNum,
+				"print \"Cannot use this command when on a team\n\"" );
+			return;
+	}
 
-    if( cmds[ i ].cmdFlags & CMD_RED &&
-        ent->client->sess.sessionTeam != TEAM_RED )
-    {
-        trap_SendServerCommand( clientNum,
-            "print \"Must be on the Red Team to use this command\n\"" );
-        return;
-    }
+	if( cmds[ i ].cmdFlags & CMD_RED &&
+		ent->client->sess.sessionTeam != TEAM_RED )
+	{
+		trap_SendServerCommand( clientNum,
+			"print \"Must be on the Red Team to use this command\n\"" );
+		return;
+	}
 
-    if( cmds[ i ].cmdFlags & CMD_BLUE &&
-        ent->client->sess.sessionTeam != TEAM_BLUE )
-    {
-        trap_SendServerCommand( clientNum,
-            "print \"Must be on the Blue Team to use this command\n\"" );
-        return;
-    }
+	if( cmds[ i ].cmdFlags & CMD_BLUE &&
+		ent->client->sess.sessionTeam != TEAM_BLUE )
+	{
+		trap_SendServerCommand( clientNum,
+			"print \"Must be on the Blue Team to use this command\n\"" );
+		return;
+	}
 
-    if( ( ent->client->ps.pm_type == PM_DEAD ) && ( cmds[ i ].cmdFlags & CMD_LIVING ) )
-    {
-        trap_SendServerCommand( clientNum,
-            "print \"Must be alive to use this command\n\"" );
-        return;
-    }
+	if( ( ent->client->ps.pm_type == PM_DEAD ) && ( cmds[ i ].cmdFlags & CMD_LIVING ) )
+	{
+		trap_SendServerCommand( clientNum,
+			"print \"Must be alive to use this command\n\"" );
+		return;
+	}
 
-    cmds[ i ].cmdHandler( ent );
+	cmds[ i ].cmdHandler( ent );
 }
 
