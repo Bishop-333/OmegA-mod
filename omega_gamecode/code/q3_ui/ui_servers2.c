@@ -135,16 +135,6 @@ static const char *servertype_items[] = {
 	NULL
 };
 
-static const char *servermod_items[] = {
-	"All",
-	"OmegA",
-        "FailMod",
-	"RatMod",
-	"AfterShock",
-        "Defrag",
-	NULL
-};
-
 static const char *sortkey_items[] = {
 	"Server Name",
 	"Map Name",
@@ -272,7 +262,6 @@ static servernode_t	g_favoriteserverlist[MAX_FAVORITESERVERS];
 static int		g_numfavoriteservers;
 static int		g_servertype;
 static int		g_gametype;
-static int		g_mod;
 static int		g_sortkey;
 static int		g_emptyservers;
 static int		g_fullservers;
@@ -575,14 +564,6 @@ static void ArenaServers_UpdateMenu( void ) {
 			g_arenaservers.statusbar.string = "Press SPACE to stop";
 
 			// disable controls during refresh
-			g_arenaservers.master.generic.flags		|= QMF_GRAYED;
-			g_arenaservers.gametype.generic.flags		|= QMF_GRAYED;
-			g_arenaservers.mod.generic.flags		|= QMF_GRAYED;
-			g_arenaservers.sortkey.generic.flags		|= QMF_GRAYED;
-			g_arenaservers.showempty.generic.flags		|= QMF_GRAYED;
-                        g_arenaservers.onlyhumans.generic.flags		|= QMF_GRAYED;
-                        g_arenaservers.hideprivate.generic.flags	|= QMF_GRAYED;
-                        g_arenaservers.save.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.list.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.refresh.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.go.generic.flags			|= QMF_GRAYED;
@@ -604,14 +585,6 @@ static void ArenaServers_UpdateMenu( void ) {
 			}
 
 			// end of refresh - set control state
-			g_arenaservers.master.generic.flags		&= ~QMF_GRAYED;
-			g_arenaservers.gametype.generic.flags		&= ~QMF_GRAYED;
-			g_arenaservers.mod.generic.flags		&= ~QMF_GRAYED;
-			g_arenaservers.sortkey.generic.flags		&= ~QMF_GRAYED;
-			g_arenaservers.showempty.generic.flags		&= ~QMF_GRAYED;
-                        g_arenaservers.onlyhumans.generic.flags		&= ~QMF_GRAYED;
-                        g_arenaservers.hideprivate.generic.flags	&= ~QMF_GRAYED;
-                        g_arenaservers.save.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.list.generic.flags		|= QMF_GRAYED;
 			g_arenaservers.refresh.generic.flags		&= ~QMF_GRAYED;
 			g_arenaservers.go.generic.flags			|= QMF_GRAYED;

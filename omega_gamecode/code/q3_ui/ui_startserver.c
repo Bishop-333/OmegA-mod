@@ -1051,7 +1051,8 @@ static void ServerOptions_InitPlayerItems( void ) {
 		for( ; n < PLAYER_SLOTS; n++ ) {
 			s_serveroptions.playerTeam[n].curvalue = 1;
 		}
-	} else {
+	}
+	else {
 		for( n = 0; n < PLAYER_SLOTS; n++ ) {
 			s_serveroptions.playerTeam[n].generic.flags |= (QMF_INACTIVE|QMF_HIDDEN);
 		}
