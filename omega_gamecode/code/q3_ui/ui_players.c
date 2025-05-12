@@ -549,7 +549,7 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 
 		pi->viewAngles[PITCH] = -pi->viewAngles[PITCH] + 20;
 		pi->viewAngles[YAW] += 130;
-		if ( pi->viewAngles[YAW] > 200 ) {
+		if ( uis.cursorx < 320 ) {
 			pi->viewAngles[YAW] = 130;
 		}
 
