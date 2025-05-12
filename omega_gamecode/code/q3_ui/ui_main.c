@@ -157,7 +157,6 @@ vmCvar_t	ui_spSelection;
 
 vmCvar_t	ui_browserMaster;
 vmCvar_t	ui_browserGameType;
-vmCvar_t	ui_browserMod;
 vmCvar_t	ui_browserSortKey;
 vmCvar_t	ui_browserShowEmpty;
 
@@ -254,7 +253,6 @@ static cvarTable_t		cvarTable[] = {
 
 	{ &ui_browserMaster, "ui_browserMaster", "0", CVAR_ARCHIVE },
 	{ &ui_browserGameType, "ui_browserGameType", "0", CVAR_ARCHIVE },
-	{ &ui_browserMod, "ui_browserMod", "0", CVAR_ARCHIVE },
 	{ &ui_browserSortKey, "ui_browserSortKey", "4", CVAR_ARCHIVE },
 	{ &ui_browserShowEmpty, "ui_browserShowEmpty", "1", CVAR_ARCHIVE },
 
