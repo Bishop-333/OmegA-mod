@@ -2053,6 +2053,7 @@ CG_DrawPickupItem
 static int CG_DrawPickupItem( int y ) {
 	int		value;
 	int w;
+	int offset;
 	float	*fadeColor;
 
 	if ( cg.snap->ps.stats[STAT_HEALTH] <= 0 ) {
@@ -2066,8 +2067,17 @@ static int CG_DrawPickupItem( int y ) {
 		if ( fadeColor ) {
 			CG_RegisterItemVisuals( value );
 			trap_R_SetColor( fadeColor );
-			CG_DrawPic( 625, y, ICON_SIZE/4, ICON_SIZE/4, cg_items[ value ].icon );
-			CG_DrawStringExt( 622 - w, y + 2.5, bg_itemlist[ value ].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+
+			if ( cg.time - cg.itemPickupTime > 3000 ) {
+				return y;
+			}
+
+			if ( cg.time - cg.itemPickupTime < 300 ) {
+				offset = 150 * (1 - (cg.time - cg.itemPickupTime) / 300.0f);
+			}
+
+			CG_DrawPic( 625 + offset, y, ICON_SIZE/4, ICON_SIZE/4, cg_items[ value ].icon );
+			CG_DrawStringExt( 622 - w + offset, y + 2.5, bg_itemlist[ value ].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 			trap_R_SetColor( NULL );
 		}
 	}
