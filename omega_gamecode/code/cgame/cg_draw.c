@@ -2050,38 +2050,63 @@ CG_DrawPickupItem
 ===================
 */
 #ifndef MISSIONPACK
+#define MAX_PICKUPS 3
 static int CG_DrawPickupItem( int y ) {
 	int		value;
+	int i, j;
 	int w;
-	int offset;
+	int offsetX, offsetY;
 	float	*fadeColor;
+	static int itemName[MAX_PICKUPS] = {0};
+	static int itemPickupTime[MAX_PICKUPS] = {0};
 
 	if ( cg.snap->ps.stats[STAT_HEALTH] <= 0 ) {
 		return y;
 	}
 
-	value = cg.itemPickup;
-	w = CG_DrawStrlen( bg_itemlist[ value ].pickup_name ) * TINYCHAR_WIDTH;
-	if ( value ) {
-		fadeColor = CG_FadeColor( cg.itemPickupTime, 3000 );
-		if ( fadeColor ) {
-			CG_RegisterItemVisuals( value );
-			trap_R_SetColor( fadeColor );
-
-			if ( cg.time - cg.itemPickupTime > 3000 ) {
-				return y;
-			}
-
-			if ( cg.time - cg.itemPickupTime < 300 ) {
-				offset = 150 * (1 - (cg.time - cg.itemPickupTime) / 300.0f);
-			}
-
-			CG_DrawPic( 625 + offset, y, ICON_SIZE/4, ICON_SIZE/4, cg_items[ value ].icon );
-			CG_DrawStringExt( 622 - w + offset, y + 2.5, bg_itemlist[ value ].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
-			trap_R_SetColor( NULL );
+	if ( cg.itemPickup && cg.itemPickupTime == cg.time ) {
+		for ( i = 1; i < MAX_PICKUPS; i++ ) {
+			itemName[i-1] = itemName[i];
+			itemPickupTime[i-1] = itemPickupTime[i];
 		}
+		itemName[MAX_PICKUPS-1] = cg.itemPickup;
+		itemPickupTime[MAX_PICKUPS-1] = cg.itemPickupTime;
 	}
-	
+
+        offsetY = 0;
+	for ( i = 0; i < MAX_PICKUPS; i++ ) {
+		value = itemName[i];
+		if ( !value ) {
+			continue;
+		}
+
+		w = CG_DrawStrlen( bg_itemlist[value].pickup_name ) * TINYCHAR_WIDTH;
+		fadeColor = CG_FadeColor( itemPickupTime[i], 3000 );
+		if ( !fadeColor || cg.time - itemPickupTime[i] > 3000 ) {
+			for ( j = i; j < MAX_PICKUPS-1; j++ ) {
+				itemName[j] = itemName[j+1];
+				itemPickupTime[j] = itemPickupTime[j+1];
+			}
+			itemName[MAX_PICKUPS-1] = 0;
+			itemPickupTime[MAX_PICKUPS-1] = 0;
+			i--;
+			continue;
+		}
+
+		CG_RegisterItemVisuals( value );
+		trap_R_SetColor( fadeColor );
+
+		offsetX = 0;
+		if ( cg.time - itemPickupTime[i] < 300 ) {
+			offsetX = 150 * (1 - (cg.time - itemPickupTime[i]) / 300.0f);
+		}
+
+		CG_DrawPic( 625 + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5), ICON_SIZE/4, ICON_SIZE/4, cg_items[value].icon );
+		CG_DrawStringExt( 622 - w + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5) + 2.5, bg_itemlist[value].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		trap_R_SetColor( NULL );
+		offsetY++;
+	}
+
 	return y;
 }
 #endif // MISSIONPACK
