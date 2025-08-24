@@ -2102,8 +2102,8 @@ static int CG_DrawPickupItem( int y ) {
 			offsetX = 150 * (1 - (cg.time - itemPickupTime[i]) / (float)ANIMATION_DURATION);
 		}
 
-		CG_DrawPic( 625 + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5), ICON_SIZE/4, ICON_SIZE/4, cg_items[value].icon );
-		CG_DrawStringExt( 622 - w + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5) + 2.5, bg_itemlist[value].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		CG_DrawPic( 625 + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5), ICON_SIZE/4.25, ICON_SIZE/4.25, cg_items[value].icon );
+		CG_DrawStringExt( 622 - w + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5) + 2.25, bg_itemlist[value].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 		trap_R_SetColor( NULL );
 		offsetY++;
 	}
