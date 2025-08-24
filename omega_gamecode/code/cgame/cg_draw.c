@@ -2051,6 +2051,7 @@ CG_DrawPickupItem
 */
 #ifndef MISSIONPACK
 #define MAX_PICKUPS 3
+#define ANIMATION_DURATION 100 // (ms)
 static int CG_DrawPickupItem( int y ) {
 	int		value;
 	int i, j;
@@ -2097,8 +2098,8 @@ static int CG_DrawPickupItem( int y ) {
 		trap_R_SetColor( fadeColor );
 
 		offsetX = 0;
-		if ( cg.time - itemPickupTime[i] < 300 ) {
-			offsetX = 150 * (1 - (cg.time - itemPickupTime[i]) / 300.0f);
+		if ( cg.time - itemPickupTime[i] < ANIMATION_DURATION ) {
+			offsetX = 150 * (1 - (cg.time - itemPickupTime[i]) / (float)ANIMATION_DURATION);
 		}
 
 		CG_DrawPic( 625 + offsetX, y + offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5), ICON_SIZE/4, ICON_SIZE/4, cg_items[value].icon );
