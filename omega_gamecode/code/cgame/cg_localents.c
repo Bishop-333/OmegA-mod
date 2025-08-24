@@ -1052,7 +1052,11 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 	else
 		re->shaderRGBA[3] = 0xff;
 
-	re->radius = NUMBER_SIZE * 0.03 / 2;
+	if ( cg_damagePlums.integer == 2 ) {
+		re->radius = NUMBER_SIZE / 2;
+	} else {
+		re->radius = NUMBER_SIZE * 0.03 / 2;
+	}
 
 	deltaTime = (cg.time - le->startTime) * 0.001;
 	VectorCopy(le->pos.trBase, origin);
@@ -1061,12 +1065,16 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 	VectorSubtract(cg.refdef.vieworg, origin, dir);
 	CrossProduct(dir, up, vec);
 	VectorNormalize(vec);
-	VectorNormalize(dir);
 
-	VectorMA(cg.refdef.vieworg, -8, dir, origin);
-
-	VectorMA(origin, deltaTime, le->pos.trDelta, origin);
-	origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
+	if ( cg_damagePlums.integer == 2 ) {
+		VectorMA(origin, deltaTime, le->pos.trDelta, origin);
+		origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
+	} else {
+		VectorNormalize(dir);
+		VectorMA(cg.refdef.vieworg, -8, dir, origin);
+		VectorMA(origin, deltaTime, le->pos.trDelta, origin);
+		origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
+	}
 
 	negative = qfalse;
 	if (damage < 0) {
@@ -1085,7 +1093,11 @@ void CG_AddDamagePlum( localEntity_t *le ) {
 	}
 
 	for (i = 0; i < numdigits; i++) {
-		VectorMA(origin, (float) (((float) numdigits / 2) - 0.5 - i) * NUMBER_SIZE * 0.03, vec, re->origin);
+		if ( cg_damagePlums.integer == 2 ) {
+			VectorMA(origin, (float) (((float) numdigits / 2) - i) * NUMBER_SIZE, vec, re->origin);
+		} else {
+			VectorMA(origin, (float) (((float) numdigits / 2) - 0.5 - i) * NUMBER_SIZE * 0.03, vec, re->origin);
+		}
 		re->customShader = cgs.media.numberShaders[digits[numdigits-1-i]];
 		trap_R_AddRefEntityToScene( re );
 	}
