@@ -2108,6 +2108,7 @@ static int CG_DrawPickupItem( int y ) {
 		offsetY++;
 	}
 
+	y += offsetY * (ICON_SIZE/4 + TINYCHAR_HEIGHT - 5);
 	return y;
 }
 #endif // MISSIONPACK
