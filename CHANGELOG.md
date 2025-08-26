@@ -130,4 +130,5 @@
 - better damage plums
 
 ## 3.3.4
+- new pickup items display
 - new crosshair names display imported from OpenSandbox
