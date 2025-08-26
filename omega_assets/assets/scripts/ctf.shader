@@ -17,6 +17,15 @@ sprites/foe
 	}
 }
 
+sprites/foe3
+{
+	nomipmaps
+	{
+		map sprites/foe3.tga
+		blendfunc blend
+	}
+}
+
 models/flags/b_flag
 {
 	cull disable

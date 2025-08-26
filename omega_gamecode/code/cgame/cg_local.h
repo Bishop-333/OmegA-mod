@@ -464,6 +464,13 @@ typedef struct {
 	int numpositions;
 } skulltrail_t;
 
+typedef struct {
+    float x, y, z;
+    const char* str;
+    vec4_t color;
+    qboolean useTrace;
+} worldstring_t;
+
 
 #define MAX_REWARDSTACK		10
 #define MAX_SOUNDBUFFER		20
@@ -793,7 +800,7 @@ typedef struct {
 
 	qhandle_t	friendShader;
 	qhandle_t	friendThroughWallsShader;
-	qhandle_t	enemyThroughWallsShader;
+	qhandle_t	enemyShader;
 
 	qhandle_t	balloonShader;
 	qhandle_t	connectionShader;
@@ -1484,7 +1491,7 @@ extern vmCvar_t	cg_bobgun;
 extern vmCvar_t	cg_brightPlayers;
 extern vmCvar_t	cg_damagePlums;
 extern vmCvar_t	cg_drawEmotes;
-extern vmCvar_t cg_drawEnemyThroughWalls;
+extern vmCvar_t cg_drawEnemy;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t	cg_drawItemPickup;
 extern vmCvar_t	cg_drawTeamBackground;
@@ -1591,8 +1598,10 @@ void CG_DrawMediumStringColor( int x, int y, const char *s, vec4_t color );
 void CG_DrawSmallString( int x, int y, const char *s, float alpha );
 void CG_DrawSmallStringColor( int x, int y, const char *s, vec4_t color );
 void CG_DrawTinyString( int x, int y, const char *s, float alpha );
+void CG_DrawTinyStringColor( int x, int y, const char *s, vec4_t color );
 
 int CG_DrawStrlen( const char *str );
+void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, qboolean useTrace );
 
 float	*CG_FadeColor( int startMsec, int totalMsec );
 float	CG_FadeScale( int startMsec, int totalMsec );
@@ -1647,6 +1656,7 @@ qboolean CG_YourTeamHasFlag( void );
 qboolean CG_OtherTeamHasFlag( void );
 qhandle_t CG_StatusHandle(int task);
 int CG_RewardTime(int idx);
+void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci );
 
 
 

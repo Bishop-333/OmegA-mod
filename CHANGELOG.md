@@ -128,3 +128,6 @@
 - add emotes
 - add v-sync setting in the menu
 - better damage plums
+
+## 3.3.4
+- new crosshair names display imported from OpenSandbox

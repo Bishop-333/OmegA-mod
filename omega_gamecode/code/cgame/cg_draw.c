@@ -44,6 +44,9 @@ char teamChat2[256];
 
 static int CG_DrawPickupItem( int y );
 
+static worldstring_t worldstring[MAX_CLIENTS];
+static int worldstringCount = 0;
+
 #ifdef MISSIONPACK
 
 int CG_Text_Width(const char *text, float scale, int limit) {
@@ -2788,6 +2791,42 @@ static void CG_DrawCenterDDString( void ) {
 }
 
 /*
+=================
+CG_Add3DString
+=================
+*/
+static void CG_Add3DString( float x, float y, float z, const char *str, vec4_t color, qboolean useTrace ) {
+	worldstring_t *a = &worldstring[worldstringCount++];
+
+	if ( worldstringCount >= MAX_CLIENTS ) {
+		return;
+	}
+
+	a->x = x;
+	a->y = y;
+	a->z = z;
+	a->str = str;
+	Vector4Copy( color, a->color );
+	a->useTrace = useTrace;
+}
+
+/*
+=====================
+CG_Draw3DStringQueue
+=====================
+*/
+static void CG_Draw3DStringQueue( void ) {
+	int i;
+
+	for ( i = 0 ; i < worldstringCount ; i++) {
+		worldstring_t *a = &worldstring[i];
+		CG_Draw3DString( a->x, a->y, a->z, a->str, a->color, a->useTrace );
+	}
+
+	worldstringCount = 0;
+}
+
+/*
 ================================================================================
 
 CROSSHAIR
@@ -3062,15 +3101,16 @@ static void CG_DrawCrosshairNames( void ) {
 	if ( !cg_drawCrosshair.integer ) {
 		return;
 	}
-	if ( !cg_drawCrosshairNames.integer ) {
-		return;
-	}
 	if ( cg.renderingThirdPerson ) {
 		return;
 	}
 
 	// scan the known entities to see if the crosshair is sighted on one
 	CG_ScanForCrosshairEntity();
+
+	if ( cg_drawCrosshairNames.integer != 2 ) {
+		return;
+	}
 
 	// draw the name of the player being looked at
 	color = CG_FadeColor( cg.crosshairClientTime, 750 );
@@ -3097,6 +3137,49 @@ static void CG_DrawCrosshairNames( void ) {
 	}
 #endif
 	trap_R_SetColor( NULL );
+}
+
+/*
+=================
+CG_Draw3DCrosshairName
+=================
+*/
+void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
+	float		*color;
+	float		enemyColor[4];
+
+	if ( !cg_drawCrosshairNames.integer || cg_drawCrosshairNames.integer == 2 ) {
+		return;
+	}
+
+	if ( cent->currentState.number == cg.snap->ps.clientNum || cent->currentState.eFlags & EF_DEAD ) {
+		return;
+	}
+
+	// scan the known entities to see if the crosshair is sighted on one
+	if ( cent->currentState.number != cg.crosshairClientNum ) {
+		return;
+	}
+
+	color = CG_FadeColor( cg.crosshairClientTime, 750 );
+	if ( !color ) {
+		trap_R_SetColor( NULL );
+		return;
+	}
+
+	if ( ci->team != cg.snap->ps.persistant[PERS_TEAM] || ci->team == TEAM_FREE ) {
+		if ( cg_drawEnemy.integer ) {
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 73, ci->name, colorCornellRed, qtrue );
+		} else {
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 48, ci->name, colorCornellRed, qtrue );
+		}
+	} else {
+		if ( cg_drawFriend.integer ) {
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 73, ci->name, colorGreen, qfalse );
+		} else {
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 48, ci->name, colorGreen, qfalse );
+		}
+	}
 }
 
 
@@ -3721,6 +3804,8 @@ void CG_DrawActive( stereoFrame_t stereoView ) {
 
 	// draw 3D view
 	trap_R_RenderScene( &cg.refdef );
+
+	CG_Draw3DStringQueue();
 
 	// draw status bar and other floating elements
  	CG_Draw2D(stereoView);

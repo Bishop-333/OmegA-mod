@@ -258,6 +258,10 @@ void CG_DrawTinyString( int x, int y, const char *s, float alpha ) {
 	CG_DrawStringExt( x, y, s, color, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 }
 
+void CG_DrawTinyStringColor( int x, int y, const char *s, vec4_t color ) {
+	CG_DrawStringExt( x, y, s, color, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_WIDTH, 0 );
+}
+
 /*
 =================
 CG_DrawStrlen
@@ -279,6 +283,52 @@ int CG_DrawStrlen( const char *str ) {
 	}
 
 	return count;
+}
+
+/*
+=================
+CG_Draw3DString
+=================
+*/
+void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, qboolean useTrace ) {
+	vec3_t dir, worldPos;
+	float localX, localY, localZ;
+	float fovX, fovY;
+	float finalX, finalY;
+	trace_t trace;
+	int width;
+
+	worldPos[0] = x;
+	worldPos[1] = y;
+	worldPos[2] = z;
+
+	VectorSubtract( worldPos, cg.refdef.vieworg, dir );
+
+	if ( useTrace ) {
+		CG_Trace( &trace, cg.refdef.vieworg, vec3_origin, vec3_origin, worldPos, cg.snap->ps.clientNum, CONTENTS_SOLID );
+		if ( trace.fraction < 1.0f ) {
+			return;
+		}
+	}
+
+	localX = -DotProduct( dir, cg.refdef.viewaxis[1] );
+	localY =  DotProduct( dir, cg.refdef.viewaxis[2] );
+	localZ =  DotProduct( dir, cg.refdef.viewaxis[0] );
+
+	if ( localZ <= 0 ) {
+		return;
+	}
+
+	fovX = tan( DEG2RAD(cg.refdef.fov_x) * 0.5 );
+	fovY = tan( DEG2RAD(cg.refdef.fov_y) * 0.5 );
+
+	finalX = (localX / (localZ * fovX)) * 320 + 320;
+	finalY = (-localY / (localZ * fovY)) * 240 + 240;
+
+	width = CG_DrawStrlen( str ) * TINYCHAR_WIDTH;
+	finalX -= width / 2;
+
+	CG_DrawTinyStringColor( finalX, finalY, str, color );
 }
 
 /*

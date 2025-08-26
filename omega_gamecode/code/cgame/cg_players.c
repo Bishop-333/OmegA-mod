@@ -2121,8 +2121,8 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	if ( !(cent->currentState.eFlags & EF_DEAD) && 
 		( (cg.snap->ps.persistant[PERS_TEAM] != team &&
 		cgs.gametype >= GT_TEAM && cgs.ffa_gt!=1) || team == TEAM_FREE ) ) {
-		if ( cg_drawEnemyThroughWalls.integer ) {
-			CG_PlayerFloatSprite( cent, cgs.media.enemyThroughWallsShader );
+		if ( cg_drawEnemy.integer ) {
+			CG_PlayerFloatSprite( cent, cgs.media.enemyShader );
 		}
 		return;
 	}
@@ -2938,6 +2938,8 @@ void CG_Player( centity_t *cent ) {
 	CG_BreathPuffs(cent, &head);
 
 	CG_DustTrail(cent);
+
+	CG_Draw3DCrosshairName( cent, ci );
 
 	//
 	// add the gun / barrel / flash
