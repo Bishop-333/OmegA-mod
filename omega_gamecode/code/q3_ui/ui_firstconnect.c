@@ -234,19 +234,10 @@ static void FirstConnect_Event( void* ptr, int event )
 
                 case ID_RATE:
                         if( s_firstconnect.rate.curvalue == 0 ) {
-                                trap_Cvar_SetValue( "rate", 2500 );
+                                trap_Cvar_SetValue( "rate", 25000 );
                         }
                         else if( s_firstconnect.rate.curvalue == 1 ) {
-                                trap_Cvar_SetValue( "rate", 3000 );
-                        }
-                        else if( s_firstconnect.rate.curvalue == 2 ) {
-                                trap_Cvar_SetValue( "rate", 4000 );
-                        }
-                        else if( s_firstconnect.rate.curvalue == 3 ) {
-                                trap_Cvar_SetValue( "rate", 5000 );
-                        }
-                        else if( s_firstconnect.rate.curvalue == 4 ) {
-                                trap_Cvar_SetValue( "rate", 25000 );
+                                trap_Cvar_SetValue( "rate", 100000 );
                         }
                         break;
 
@@ -273,23 +264,15 @@ static void FirstConnect_SetMenuItems( void ) {
 	Q_strncpyz( s_firstconnect.name.field.buffer, UI_Cvar_VariableString("name"), sizeof(s_firstconnect.name.field.buffer) );
 
         rate = trap_Cvar_VariableValue( "rate" );
-	if( rate <= 2500 ) {
-		s_firstconnect.rate.curvalue = 0;
-	}
-	else if( rate <= 3000 ) {
+	if( rate >= 100000 ) {
 		s_firstconnect.rate.curvalue = 1;
 	}
-	else if( rate <= 4000 ) {
-		s_firstconnect.rate.curvalue = 2;
-	}
-	else if( rate <= 5000 ) {
-		s_firstconnect.rate.curvalue = 3;
-	}
 	else {
-		s_firstconnect.rate.curvalue = 4;
+		s_firstconnect.rate.curvalue = 0;
 	}
 
         s_firstconnect.allowdownload.curvalue	= trap_Cvar_VariableValue( "cl_allowDownload" ) != 0;
+	trap_Cvar_SetValue( "cg_delag", 1 );
         s_firstconnect.delaghitscan.curvalue	= trap_Cvar_VariableValue( "cg_delag" ) != 0;
 }
 

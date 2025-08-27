@@ -49,11 +49,8 @@ NETWORK OPTIONS MENU
 
 
 const char *rate_items[] = {
-	"<= 28.8K",
-	"33.6K",
-	"56K",
-	"ISDN",
 	"LAN/Cable/xDSL",
+	"Fiber Optic",
 	NULL
 };
 
@@ -175,19 +172,10 @@ static void UI_NetworkOptionsMenu_Event( void* ptr, int event ) {
 
 	case ID_RATE:
 		if( networkOptionsInfo.rate.curvalue == 0 ) {
-			trap_Cvar_SetValue( "rate", 2500 );
+			trap_Cvar_SetValue( "rate", 25000 );
 		}
 		else if( networkOptionsInfo.rate.curvalue == 1 ) {
-			trap_Cvar_SetValue( "rate", 3000 );
-		}
-		else if( networkOptionsInfo.rate.curvalue == 2 ) {
-			trap_Cvar_SetValue( "rate", 4000 );
-		}
-		else if( networkOptionsInfo.rate.curvalue == 3 ) {
-			trap_Cvar_SetValue( "rate", 5000 );
-		}
-		else if( networkOptionsInfo.rate.curvalue == 4 ) {
-			trap_Cvar_SetValue( "rate", 25000 );
+			trap_Cvar_SetValue( "rate", 100000 );
 		}
 		break;
 
@@ -356,20 +344,11 @@ static void UI_NetworkOptionsMenu_Init( void ) {
 	Menu_AddItem( &networkOptionsInfo.menu, ( void * ) &networkOptionsInfo.back );
 
 	rate = trap_Cvar_VariableValue( "rate" );
-	if( rate <= 2500 ) {
-		networkOptionsInfo.rate.curvalue = 0;
-	}
-	else if( rate <= 3000 ) {
+	if( rate >= 100000 ) {
 		networkOptionsInfo.rate.curvalue = 1;
 	}
-	else if( rate <= 4000 ) {
-		networkOptionsInfo.rate.curvalue = 2;
-	}
-	else if( rate <= 5000 ) {
-		networkOptionsInfo.rate.curvalue = 3;
-	}
 	else {
-		networkOptionsInfo.rate.curvalue = 4;
+		networkOptionsInfo.rate.curvalue = 0;
 	}
 
 	networkOptionsInfo.allowdownload.curvalue = trap_Cvar_VariableValue( "cl_allowDownload" ) != 0;
