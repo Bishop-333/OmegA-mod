@@ -113,7 +113,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	} else {
 		if ( ci->team != TEAM_SPECTATOR && cent->currentState.eFlags & EF_TALK ) {
 			CG_DrawPic( iconx, y+3, 21, 21, cgs.media.balloonShader );
-		} else if ( cg_drawEmotes.integer ) {
+		} else if ( cg_drawEmotes.integer && cent->currentState.generic1 & (GEN_SMILEY_HAPPY|GEN_SMILEY_SAD|GEN_SMILEY_ANGRY|GEN_SMILEY_MOON) ) {
 			if ( cent->currentState.generic1 & GEN_SMILEY_HAPPY ) {
 				CG_DrawPic( iconx, y+3, 21, 21, cgs.media.smileyHappy );
 			} else if ( cent->currentState.generic1 & GEN_SMILEY_SAD ) {
