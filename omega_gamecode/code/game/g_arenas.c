@@ -303,7 +303,9 @@ static gentity_t *SpawnPodium( void ) {
 	podium->s.number = podium - g_entities;
 	podium->clipmask = CONTENTS_SOLID;
 	podium->r.contents = CONTENTS_SOLID;
-	//podium->s.modelindex = G_ModelIndex( SP_PODIUM_MODEL );
+	if ( trap_Cvar_VariableValue("protocol") == 68 ) {
+		podium->s.modelindex = G_ModelIndex( SP_PODIUM_MODEL );
+	}
 
 	AngleVectors( level.intermission_angle, vec, NULL, NULL );
 	VectorMA( level.intermission_origin, trap_Cvar_VariableIntegerValue( "g_podiumDist" ), vec, origin );

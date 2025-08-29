@@ -32,6 +32,13 @@ static int			loadingItemIconCount;
 static qhandle_t	loadingPlayerIcons[MAX_LOADING_PLAYER_ICONS];
 static qhandle_t	loadingItemIcons[MAX_LOADING_ITEM_ICONS];
 
+float trap_Cvar_VariableValue( const char *var_name ) {
+	char buf[128];
+
+	trap_Cvar_VariableStringBuffer(var_name, buf, sizeof(buf));
+	return atof(buf);
+}
+
 
 /*
 ===================
@@ -129,6 +136,12 @@ void CG_LoadingClient( int clientNum ) {
 
 	Q_strncpyz( personality, Info_ValueForKey( info, "n" ), sizeof(personality) );
 	Q_CleanStr( personality );
+
+	if ( trap_Cvar_VariableValue("protocol") == 68 ) {
+		if( cgs.gametype == GT_SINGLE_PLAYER ) {
+		trap_S_RegisterSound( va( "sound/player/announce/%s.wav", personality ), qtrue );
+		}
+	}
 
 	CG_LoadingString( personality );
 }

@@ -627,6 +627,17 @@ void UI_SPPostgameMenu_f( void ) {
 	Prepname( 1 );
 	Prepname( 2 );
 
+	if ( trap_Cvar_VariableValue("protocol") == 68 ) {
+		if ( playerGameRank != 1 ) {
+			postgameMenuInfo.winnerSound = trap_S_RegisterSound( va( "sound/player/announce/%s_wins.wav", postgameMenuInfo.placeNames[0] ), qfalse );
+			trap_Cmd_ExecuteText( EXEC_APPEND, "music music/loss\n" );
+		}
+		else {
+			postgameMenuInfo.winnerSound = trap_S_RegisterSound( "sound/player/announce/youwin.wav", qfalse );
+			trap_Cmd_ExecuteText( EXEC_APPEND, "music music/win\n" );
+		}
+	}
+
 	postgameMenuInfo.phase = 1;
 
 	postgameMenuInfo.lastTier = UI_GetNumSPTiers();

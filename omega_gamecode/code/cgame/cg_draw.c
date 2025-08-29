@@ -3146,7 +3146,6 @@ CG_Draw3DCrosshairName
 */
 void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 	float		*color;
-	float		enemyColor[4];
 
 	if ( !cg_drawCrosshairNames.integer || cg_drawCrosshairNames.integer == 2 ) {
 		return;
