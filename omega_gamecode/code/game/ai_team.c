@@ -304,8 +304,8 @@ void BotSayTeamOrderAlways(bot_state_t *bs, int toclient) {
 
         if (bot_nochat.integer>2) return;
 
-	//if the bot is talking to itself or to a player
-	if ( bs->client == toclient || !(g_entities[toclient].r.svFlags & SVF_BOT) ) {
+	//if the bot is talking to itself
+	if (bs->client == toclient) {
 		//don't show the message just put it in the console message queue
 		trap_BotGetChatMessage(bs->cs, buf, sizeof(buf));
 		ClientName(bs->client, name, sizeof(name));
@@ -1891,11 +1891,6 @@ int FindHumanTeamLeader(bot_state_t *bs) {
 					// if this player is on the same team
 					if ( BotSameTeam(bs, i) ) {
 						ClientName(i, bs->teamleader, sizeof(bs->teamleader));
-						// if not yet ordered to do anything
-						if ( !BotSetLastOrderedTask(bs) ) {
-							// go on defense by default
-							if (bot_nochat.integer<3)BotVoiceChat_Defend(bs, i, SAY_TELL);
-						}
 						return qtrue;
 					}
 				}
@@ -1926,29 +1921,7 @@ void BotTeamAI(bot_state_t *bs) {
 		//
 		if (!FindHumanTeamLeader(bs)) {
 			//
-			if (!bs->askteamleader_time && !bs->becometeamleader_time) {
-				if (bs->entergame_time + 10 > FloatTime()) {
-					bs->askteamleader_time = FloatTime() + 5 + random() * 10;
-				}
-				else {
-					bs->becometeamleader_time = FloatTime() + 5 + random() * 10;
-				}
-			}
-			if (bs->askteamleader_time && bs->askteamleader_time < FloatTime()) {
-				// if asked for a team leader and no response
-				BotAI_BotInitialChat(bs, "whoisteamleader", NULL);
-				trap_BotEnterChat(bs->cs, 0, CHAT_TEAM);
-				bs->askteamleader_time = 0;
-				bs->becometeamleader_time = FloatTime() + 8 + random() * 10;
-			}
-			if (bs->becometeamleader_time && bs->becometeamleader_time < FloatTime()) {
-				BotAI_BotInitialChat(bs, "iamteamleader", NULL);
-				trap_BotEnterChat(bs->cs, 0, CHAT_TEAM);
-				ClientName(bs->client, netname, sizeof(netname));
-				strncpy(bs->teamleader, netname, sizeof(bs->teamleader));
-				bs->teamleader[sizeof(bs->teamleader)-1] = '\0';
-				bs->becometeamleader_time = 0;
-			}
+			SetRandomBotLeader( BotTeam(bs) );
 			return;
 		}
 	}
@@ -1956,8 +1929,8 @@ void BotTeamAI(bot_state_t *bs) {
 	bs->becometeamleader_time = 0;
 
 	//return if this bot is NOT the team leader
-	//ClientName(bs->client, netname, sizeof(netname));
-	//if (Q_stricmp(netname, bs->teamleader) != 0) return;
+	ClientName(bs->client, netname, sizeof(netname));
+	if (Q_stricmp(netname, bs->teamleader) != 0) return;
 	//
 	numteammates = BotNumTeamMates(bs);
 	//give orders
