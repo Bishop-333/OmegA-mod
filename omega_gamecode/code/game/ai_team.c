@@ -1891,11 +1891,6 @@ int FindHumanTeamLeader(bot_state_t *bs) {
 					// if this player is on the same team
 					if ( BotSameTeam(bs, i) ) {
 						ClientName(i, bs->teamleader, sizeof(bs->teamleader));
-						// if not yet ordered to do anything
-						if ( !BotSetLastOrderedTask(bs) ) {
-							// go on defense by default
-							if (bot_nochat.integer<3)BotVoiceChat_Defend(bs, i, SAY_TELL);
-						}
 						return qtrue;
 					}
 				}
