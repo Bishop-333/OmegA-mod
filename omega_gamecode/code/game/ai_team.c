@@ -304,8 +304,8 @@ void BotSayTeamOrderAlways(bot_state_t *bs, int toclient) {
 
         if (bot_nochat.integer>2) return;
 
-	//if the bot is talking to itself
-	if (bs->client == toclient) {
+	//if the bot is talking to itself or to a player
+	if ( bs->client == toclient || !(g_entities[toclient].r.svFlags & SVF_BOT) ) {
 		//don't show the message just put it in the console message queue
 		trap_BotGetChatMessage(bs->cs, buf, sizeof(buf));
 		ClientName(bs->client, name, sizeof(name));
@@ -1956,8 +1956,8 @@ void BotTeamAI(bot_state_t *bs) {
 	bs->becometeamleader_time = 0;
 
 	//return if this bot is NOT the team leader
-	ClientName(bs->client, netname, sizeof(netname));
-	if (Q_stricmp(netname, bs->teamleader) != 0) return;
+	//ClientName(bs->client, netname, sizeof(netname));
+	//if (Q_stricmp(netname, bs->teamleader) != 0) return;
 	//
 	numteammates = BotNumTeamMates(bs);
 	//give orders
