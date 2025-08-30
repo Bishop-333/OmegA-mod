@@ -1151,7 +1151,6 @@ void BotMatch_TaskPreference(bot_state_t *bs, bot_match_t *match) {
 	EasyClientName(teammate, teammatename, sizeof(teammatename));
 	BotAI_BotInitialChat(bs, "keepinmind", teammatename, NULL);
 	trap_BotEnterChat(bs->cs, teammate, CHAT_TELL);
-	BotVoiceChatOnly(bs, teammate, VOICECHAT_YES);
 	trap_EA_Action(bs->client, ACTION_AFFIRMATIVE);
 }
 
@@ -1372,7 +1371,6 @@ BotMatch_Suicide
 */
 void BotMatch_Suicide(bot_state_t *bs, bot_match_t *match) {
 	char netname[MAX_MESSAGE_SIZE];
-	int client;
 
 	if (!TeamPlayIsOn()) return;
 	//if not addressed to this bot
@@ -1381,9 +1379,7 @@ void BotMatch_Suicide(bot_state_t *bs, bot_match_t *match) {
 	trap_EA_Command(bs->client, "kill");
 	//
 	trap_BotMatchVariable(match, NETNAME, netname, sizeof(netname));
-	client = ClientFromName(netname);
 	//
-	BotVoiceChat(bs, client, VOICECHAT_TAUNT);
 	trap_EA_Action(bs->client, ACTION_AFFIRMATIVE);
 }
 

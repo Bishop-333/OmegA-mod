@@ -222,21 +222,6 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	angles[YAW] = cg.time * 360 / 2048.0;
 	CG_Draw3DModel( 592, 432, ICON_SIZE, ICON_SIZE, cgs.media.omegaModel, 0, origin, angles );
 
-#ifdef MISSIONPACK
-	// draw the team task
-	if ( ci->teamTask != TEAMTASK_NONE ) {
-                if (ci->isDead) {
-                    CG_DrawPic( headx + 48, y, 16, 16, cgs.media.deathShader );
-                }
-                else if ( ci->teamTask == TEAMTASK_OFFENSE ) {
-			CG_DrawPic( headx + 48, y, 16, 16, cgs.media.assaultShader );
-		}
-		else if ( ci->teamTask == TEAMTASK_DEFENSE ) {
-			CG_DrawPic( headx + 48, y, 16, 16, cgs.media.defendShader );
-		}
-	}
-#endif
-
 	// highlight your position
 	if ( score->client == cg.snap->ps.clientNum ) {
 		float	hcolor[4];

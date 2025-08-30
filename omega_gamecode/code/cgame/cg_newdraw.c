@@ -20,9 +20,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 
-#ifndef MISSIONPACK // bk001204
 #error This file not be used for classic Q3A.
-#endif
 
 #include "cg_local.h"
 #include "../ui/ui_shared.h"
@@ -206,7 +204,6 @@ static void CG_DrawPlayerArmorValue(rectDef_t *rect, float scale, vec4_t color, 
 	}
 }
 
-#ifndef MISSIONPACK // bk001206 
 static float healthColors[4][4] = { 
 //		{ 0.2, 1.0, 0.2, 1.0 } , { 1.0, 0.2, 0.2, 1.0 }, {0.5, 0.5, 0.5, 1} };
   // bk0101016 - float const
@@ -214,7 +211,6 @@ static float healthColors[4][4] = {
   { 1.0f, 0.2f, 0.2f, 1.0f },		// low health
   { 0.5f, 0.5f, 0.5f, 1.0f},		// weapon firing
   { 1.0f, 1.0f, 1.0f, 1.0f } };		// health > 100
-#endif
 
 static void CG_DrawPlayerAmmoIcon( rectDef_t *rect, qboolean draw2D ) {
 	centity_t	*cent;

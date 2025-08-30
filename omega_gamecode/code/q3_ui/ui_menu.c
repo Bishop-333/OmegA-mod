@@ -131,11 +131,6 @@ void Main_MenuEvent (void* ptr, int event) {
 		UI_ModsMenu();
 		break;
 
-	/*case ID_TEAMARENA:
-		trap_Cvar_Set( "fs_game", "missionpack");
-		trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
-		break;*/
-
 	case ID_OPENARENA:
 		trap_Cvar_Set( "fs_game", "");
 		trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
@@ -248,34 +243,6 @@ static void Main_MenuDraw( void ) {
                 if((int)trap_Cvar_VariableValue("protocol")!=71)
                     UI_DrawString( 0, 480-14, va("^7Protocol: %i",(int)trap_Cvar_VariableValue("protocol")), UI_SMALLFONT, color);
 }
-
-
-/*
-===============
-UI_TeamArenaExists
-===============
-*/
-/*static qboolean UI_TeamArenaExists( void )
-{
-	int		numdirs;
-	char	dirlist[2048];
-	char	*dirptr;
-	char  *descptr;
-	int		i;
-	int		dirlen;
-
-	numdirs = trap_FS_GetFileList( "$modlist", "", dirlist, sizeof(dirlist) );
-	dirptr  = dirlist;
-	for( i = 0; i < numdirs; i++ ) {
-		dirlen = strlen( dirptr ) + 1;
-		descptr = dirptr + dirlen;
-		if ( Q_strequal(dirptr, "missionpack") ) {
-			return qtrue;
-		}
-		dirptr += dirlen + strlen(descptr) + 1;
-	}
-	return qfalse;
-}*/
 
 
 /*
