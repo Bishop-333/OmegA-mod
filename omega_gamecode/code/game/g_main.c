@@ -203,7 +203,6 @@ vmCvar_t        g_ambientSounds;
 vmCvar_t        g_autohop;
 vmCvar_t        g_beheading;
 vmCvar_t        g_beheading;
-vmCvar_t        g_botChat;
 vmCvar_t        g_chaos;
 vmCvar_t        g_damagePlums;
 vmCvar_t        g_dropFlag;
@@ -437,7 +436,6 @@ static cvarTable_t		gameCvarTable[] = {
 	{ &g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE| CVAR_LATCH, 0, qtrue },
 	{ &g_autohop, "g_autohop", "0", CVAR_ARCHIVE, 0, qfalse },
 	{ &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
-	{ &g_botChat, "g_botChat", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue },
 	{ &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
 	{ &g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue },

@@ -1149,6 +1149,17 @@ static void CG_ServerCommand( void ) {
 		CG_Printf( "%s\n", text );
 		return;
 	}
+	if ( !strcmp( cmd, "vchat" ) ) {
+		return;
+	}
+
+	if ( !strcmp( cmd, "vtchat" ) ) {
+		return;
+	}
+
+	if ( !strcmp( cmd, "vtell" ) ) {
+		return;
+	}
 
 	if ( !strcmp( cmd, "scores" ) ) {
 		CG_ParseScores();

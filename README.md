@@ -48,7 +48,6 @@ List of the cvars/additions :
 - g_ambientSounds
 - g_autohop
 - g_beheading
-- g_botChat
 - g_chaos
 - g_damagePlums
 - g_dropFlag

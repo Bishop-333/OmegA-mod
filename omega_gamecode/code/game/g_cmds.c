@@ -1436,7 +1436,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ) 
 	char		text[MAX_SAY_TEXT];
 	char		location[64];
 
-    if ((ent->r.svFlags & SVF_BOT) && !g_botChat.integer) return;
+    if ((ent->r.svFlags & SVF_BOT) && trap_Cvar_VariableValue( "bot_nochat" )>1) return;
 
 	if ( (g_gametype.integer < GT_TEAM || g_ffa_gt == 1) && !(ent->client->sess.sessionTeam == TEAM_SPECTATOR) && mode == SAY_TEAM ) {
 		mode = SAY_ALL;
