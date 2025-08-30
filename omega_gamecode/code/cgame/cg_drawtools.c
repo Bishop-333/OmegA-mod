@@ -292,9 +292,12 @@ CG_Draw3DString
 */
 void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, qboolean useTrace ) {
 	vec3_t dir, worldPos;
+	vec4_t fadeColor;
 	float localX, localY, localZ;
 	float fovX, fovY;
 	float finalX, finalY;
+	float dist;
+	float alpha;
 	trace_t trace;
 	int width;
 
@@ -328,7 +331,25 @@ void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, 
 	width = CG_DrawStrlen( str ) * TINYCHAR_WIDTH;
 	finalX -= width / 2;
 
-	CG_DrawTinyStringColor( finalX, finalY, str, color );
+	dist = VectorLength( dir );
+	Vector4Copy( color, fadeColor );
+
+	alpha = 1.0f;
+
+	if ( dist > 1000 ) {
+		alpha = 0.0f;
+	} else if ( dist > 800 ) {
+		alpha = (1000 - dist) / (1000 - 800);
+	}
+
+	if ( dist < 75 ) {
+		alpha = 0.0f;
+	} else if ( dist < 100 ) {
+		alpha = (dist - 75) / (100 - 75);
+	}
+
+	fadeColor[3] *= alpha;
+	CG_DrawTinyStringColor( finalX, finalY, str, fadeColor );
 }
 
 /*
