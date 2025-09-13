@@ -304,11 +304,11 @@ typedef enum {
 #define EF_TEAMVOTED		0x00080000		// already cast a team vote
 
 // entityState_t->generic1
-#define GEN_BODY_NOHEAD      	0x00000001		// for beheading
-#define GEN_SMILEY_HAPPY      	0x00000002		// draw a happy smiley sprite
-#define GEN_SMILEY_SAD      	0x00000004		// draw a sad smiley sprite
-#define GEN_SMILEY_ANGRY      	0x00000008		// draw a angry smiley sprite
-#define GEN_SMILEY_MOON      	0x00000010		// draw a moon smiley sprite
+#define GEN_BODY_NOHEAD      	0x00000010		// for beheading
+#define GEN_SMILEY_HAPPY      	0x00000020		// draw a happy smiley sprite
+#define GEN_SMILEY_SAD      	0x00000040		// draw a sad smiley sprite
+#define GEN_SMILEY_ANGRY      	0x00000080		// draw a angry smiley sprite
+#define GEN_SMILEY_MOON      	0x00000100		// draw a moon smiley sprite
 
 // NOTE: may not have more than 16
 typedef enum {
