@@ -739,7 +739,7 @@ void BotCTFOrders_BothFlagsAtBase(bot_state_t *bs) {
 
 	if(g_elimination_ctf_oneway.integer > 0) {
 		//See if we are attacking:
-		if( ( (level.eliminationSides+level.roundNumber)%2 == 0 ) && (BotTeam(bs) == TEAM_RED))
+		if( G_GetAttackingTeam() == BotTeam(bs) )
 			weAreAttacking = qtrue;
 		
 		if(weAreAttacking) {

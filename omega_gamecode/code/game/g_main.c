@@ -2304,7 +2304,7 @@ void CheckElimination(void) {
 			if(level.roundBluePlayers != 0 && level.roundRedPlayers != 0) {//We don't want to divide by zero. (should not be possible)
 				if(g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer) {
 					//One way CTF, make defensice team the winner.
-					if ( (level.eliminationSides+level.roundNumber)%2 == 0 ) { //Red was attacking
+					if ( G_GetAttackingTeam() == TEAM_RED ) { //Red was attacking
 						trap_SendServerCommand( -1, "print \"Blue team defended the base\n\"");
 						AddTeamScore(level.intermission_origin,TEAM_BLUE,1);
                                                 G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by defending the flag!\n", level.roundNumber, -1, TEAM_BLUE, 5, TeamName(TEAM_BLUE), level.roundNumber );
@@ -2938,5 +2938,19 @@ void G_RunFrame( int levelTime ) {
 	// accepting commands from connected clients
 	level.frameStartTime = trap_Milliseconds();
 //unlagged - backward reconciliation #4
+}
+
+/*
+===================
+G_GetAttackingTeam
+Returns the team that's actually on offense in eCTF AvD matches.
+===================
+ */
+int G_GetAttackingTeam( void ) {
+	if ( (level.eliminationSides+level.roundNumber)%2 == 0 ) {
+		return TEAM_RED;
+	} else if ( (level.eliminationSides+level.roundNumber)%2 == 1 ) {
+		return TEAM_BLUE;
+	}
 }
 

@@ -865,6 +865,7 @@ void QDECL G_Error( const char *fmt, ... ) __attribute__((noreturn));
 //KK-OAX Made Accessible for g_admin.c
 void LogExit( const char *string ); 
 void CheckTeamVote( int team );
+int G_GetAttackingTeam( void );	/* Returns the team that's currently on offense in eCTF AvD. */
 
 //
 // g_client.c
