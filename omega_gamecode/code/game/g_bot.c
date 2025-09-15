@@ -236,17 +236,13 @@ static void PlayerIntroSound( const char *modelAndSkin ) {
 
 /*
 ===============
-G_AddRandomBot
+G_SelectRandomBotForAdd
 ===============
 */
-void G_AddRandomBot( int team ) {
+int G_SelectRandomBotForAdd( int team ) {
 	int		i, n, num;
-	float	skill;
-	char	*value, netname[36], *teamstr;
+	char	*value;
 	gclient_t	*cl;
-
-        if (!trap_AAS_Initialized())
-            return; //If no AAS then don't even try
 
 	num = 0;
 	for ( n = 0; n < g_numBots ; n++ ) {
@@ -293,18 +289,38 @@ void G_AddRandomBot( int team ) {
 		if (i >= g_maxclients.integer) {
 			num--;
 			if (num <= 0) {
-				skill = trap_Cvar_VariableValue( "g_spSkill" );
-				if (team == TEAM_RED) teamstr = "red";
-				else if (team == TEAM_BLUE) teamstr = "blue";
-				else teamstr = "";
-				strncpy(netname, value, sizeof(netname)-1);
-				netname[sizeof(netname)-1] = '\0';
-				Q_CleanStr(netname);
-				trap_SendConsoleCommand( EXEC_INSERT, va("addbot %s %f %s %i\n", netname, skill, teamstr, 0) );
-				return;
+				return n;
 			}
 		}
 	}
+
+	// all bot types are on this team, randomly choose any bot type
+	return random()*(g_numBots-1);
+}
+
+/*
+===============
+G_AddRandomBot
+===============
+*/
+void G_AddRandomBot( int team ) {
+	int n;
+	char *value, netname[36], *teamstr;
+	float	skill;
+
+	n = G_SelectRandomBotForAdd(team);
+
+	// Get name of selected bot.
+	value = Info_ValueForKey( g_botInfos[n], "name" );
+
+	skill = trap_Cvar_VariableValue( "g_spSkill" );
+	if (team == TEAM_RED) teamstr = "red";
+	else if (team == TEAM_BLUE) teamstr = "blue";
+	else teamstr = "free";
+	strncpy(netname, value, sizeof(netname)-1);
+	netname[sizeof(netname)-1] = '\0';
+	Q_CleanStr(netname);
+	trap_SendConsoleCommand( EXEC_INSERT, va("addbot %s %f %s %i\n", netname, skill, teamstr, 0) );
 }
 
 /*
@@ -576,6 +592,7 @@ G_AddBot
 */
 static void G_AddBot( const char *name, float skill, const char *team, int delay, char *altname) {
 	int				clientNum;
+	int				t;
 	char			*botinfo;
 	gentity_t		*bot;
 	char			*key;
@@ -585,10 +602,49 @@ static void G_AddBot( const char *name, float skill, const char *team, int delay
 	char			*headmodel;
 	char			userinfo[MAX_INFO_STRING];
 
+	// have the server allocate a client slot
+	clientNum = trap_BotAllocateClient();
+	if ( clientNum == -1 ) {
+		G_Printf( S_COLOR_RED "Unable to add bot. All player slots are in use.\n" );
+		G_Printf( S_COLOR_RED "Start server with more 'open' slots (or check setting of sv_maxclients cvar).\n" );
+		return;
+	}
+
+	// set default team
+	if( !team || !*team ) {
+		if( g_gametype.integer >= GT_TEAM ) {
+			if( PickTeam(clientNum) == TEAM_RED) {
+				team = "red";
+			}
+			else {
+				team = "blue";
+			}
+		}
+		else {
+			team = "free";
+		}
+	}
+
 	// get the botinfo from bots.txt
-	botinfo = G_GetBotInfoByName( name );
+	if (Q_stricmp(name, "random") == 0) {
+		if (Q_stricmp(team, "blue") == 0)
+			t = TEAM_BLUE;
+		else if (Q_stricmp(team, "red") == 0)
+			t = TEAM_RED;
+		else
+			t = TEAM_FREE;
+
+		// get info of a randomly selected bot
+		botinfo = G_GetBotInfoByNumber( G_SelectRandomBotForAdd( t ) );
+	}
+	else {
+		// get info of the bot
+		botinfo = G_GetBotInfoByName( name );
+	}
+
 	if ( !botinfo ) {
-                G_Printf( S_COLOR_RED "Error: Bot '%s' not defined\n", name );
+		G_Printf( S_COLOR_RED "Error: Bot '%s' not defined\n", name );
+		trap_BotFreeClient(clientNum);
 		return;
 	}
 
@@ -660,31 +716,11 @@ static void G_AddBot( const char *name, float skill, const char *team, int delay
 	s = Info_ValueForKey(botinfo, "aifile");
 	if (!*s ) {
 		trap_Printf( S_COLOR_RED "Error: bot has no aifile specified\n" );
-		return;
-	}
-
-	// have the server allocate a client slot
-	clientNum = trap_BotAllocateClient();
-	if ( clientNum == -1 ) {
-                G_Printf( S_COLOR_RED "Unable to add bot.  All player slots are in use.\n" );
-                G_Printf( S_COLOR_RED "Start server with more 'open' slots (or check setting of sv_maxclients cvar).\n" );
+		trap_BotFreeClient(clientNum);
                 return;
 	}
 
 	// initialize the bot settings
-	if( !team || !*team ) {
-		if( g_gametype.integer >= GT_TEAM && g_ffa_gt!=1) {
-			if( PickTeam(clientNum) == TEAM_RED) {
-				team = "red";
-			}
-			else {
-				team = "blue";
-			}
-		}
-		else {
-			team = "red";
-		}
-	}
 	Info_SetValueForKey( userinfo, "characterfile", Info_ValueForKey( botinfo, "aifile" ) );
 	Info_SetValueForKey( userinfo, "skill", va( "%5.2f", skill ) );
 	Info_SetValueForKey( userinfo, "team", team );
