@@ -61,6 +61,7 @@ GAME OPTIONS MENU
 #define ID_DRAWGUN	        145
 #define ID_TRANSPARENTGUN       146
 
+#undef NUM_CROSSHAIRS
 #define	NUM_CROSSHAIRS			99
 
 

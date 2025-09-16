@@ -2367,17 +2367,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 		trap_R_AddRefEntityToScene( ent );
             }
 	} else {
-		/*
-		if ( state->eFlags & EF_KAMIKAZE ) {
-			if (team == TEAM_BLUE)
-				ent->customShader = cgs.media.blueKamikazeShader;
-			else
-				ent->customShader = cgs.media.redKamikazeShader;
 			trap_R_AddRefEntityToScene( ent );
-		}
-		else {*/
-			trap_R_AddRefEntityToScene( ent );
-		//}
 		if (!isMissile && !(state->eFlags & EF_DEAD) && ( cg_brightPlayers.integer || cg_wallhack.integer ) ) {
 			if ( cg_wallhack.integer && ci != self ) {
 				ent->customShader = cgs.media.brightPlayers2;

@@ -1148,7 +1148,6 @@ static void CG_RegisterGraphics( void ) {
 	// bright players shader
 	cgs.media.brightPlayers = trap_R_RegisterShader( "brightPlayers");
 	cgs.media.brightPlayers2 = trap_R_RegisterShader( "brightPlayers2");
-	cgs.media.wallhackShader = trap_R_RegisterShader( "textures/suction/neon_green.tga");
 
 //For Double Domination:
 	if ( cgs.gametype == GT_DOUBLE_D ) {
@@ -1213,7 +1212,6 @@ static void CG_RegisterGraphics( void ) {
 		cgs.media.harvesterNeutralModel = trap_R_RegisterModel( "models/powerups/obelisk/obelisk.md3" );
 	}
 
-	cgs.media.redKamikazeShader = trap_R_RegisterShader( "models/weaphits/kamikred" );
 	cgs.media.dustPuffShader = trap_R_RegisterShader("hasteSmokePuff" );
 
 	if ( ( ( cgs.gametype >= GT_TEAM ) && ( cgs.ffa_gt != 1 ) ) ||

@@ -498,7 +498,7 @@ smokePuff
 		alphaGen Vertex
 	}
 	{
-		map gfx/misc/smokepuff3.jpg
+		clampmap gfx/misc/smokepuff3.jpg
 		blendfunc blend
 		tcMod rotate 66
 		alphaGen Vertex
