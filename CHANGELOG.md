@@ -132,3 +132,5 @@
 ## 3.3.4
 - new pickup items display
 - new crosshair names display imported from OpenSandbox
+- add random bot option in the in-game menu
+- warning clean, fixes and other optimizations
