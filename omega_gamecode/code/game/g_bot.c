@@ -586,7 +586,12 @@ static void G_AddBot( const char *name, float skill, const char *team, int delay
 	char			userinfo[MAX_INFO_STRING];
 
 	// get the botinfo from bots.txt
-	botinfo = G_GetBotInfoByName( name );
+	if ( Q_stricmp( name, "random" ) == 0 ) {
+		botinfo = G_GetBotInfoByNumber( random()*(g_numBots-1) );
+	} else {
+		botinfo = G_GetBotInfoByName( name );
+	}
+
 	if ( !botinfo ) {
                 G_Printf( S_COLOR_RED "Error: Bot '%s' not defined\n", name );
 		return;

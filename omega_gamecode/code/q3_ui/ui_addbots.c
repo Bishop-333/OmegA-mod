@@ -201,6 +201,13 @@ static int QDECL UI_AddBotsMenu_SortCompare( const void *arg1, const void *arg2 
 	name1 = Info_ValueForKey( info1, "name" );
 	name2 = Info_ValueForKey( info2, "name" );
 
+	if( Q_stricmp( name1, "random" ) == 0 ) {
+		return -1;
+	}
+	if( Q_stricmp( name2, "random" ) == 0 ) {
+		return 1;
+	}
+
 	return Q_stricmp( name1, name2 );
 }
 

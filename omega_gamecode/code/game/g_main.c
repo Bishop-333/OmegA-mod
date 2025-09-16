@@ -2951,6 +2951,8 @@ int G_GetAttackingTeam( void ) {
 		return TEAM_RED;
 	} else if ( (level.eliminationSides+level.roundNumber)%2 == 1 ) {
 		return TEAM_BLUE;
+	} else {
+		return 0;
 	}
 }
 
