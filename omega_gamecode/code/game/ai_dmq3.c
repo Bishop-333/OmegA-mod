@@ -5106,6 +5106,27 @@ void BotCheckSnapshot(bot_state_t *bs) {
 
 /*
 ==================
+BotCheckTeamScores
+==================
+*/
+void BotCheckTeamScores(bot_state_t *bs) {
+
+	switch (bs->cur_ps.persistant[PERS_TEAM]) {
+		case TEAM_RED:
+			bs->enemyteamscore = level.teamScores[TEAM_BLUE];
+			bs->ownteamscore = level.teamScores[TEAM_RED];
+			break;
+		case TEAM_BLUE:
+			bs->enemyteamscore = level.teamScores[TEAM_RED];
+			bs->ownteamscore = level.teamScores[TEAM_BLUE];
+			break;
+		default:
+			return;
+	}
+}
+
+/*
+==================
 BotCheckAir
 ==================
 */
@@ -5313,6 +5334,8 @@ void BotDeathmatchAI(bot_state_t *bs, float thinktime) {
 		BotCheckSnapshot(bs);
 		//check for air
 		BotCheckAir(bs);
+		//check the team scores
+		BotCheckTeamScores(bs);
 	}
 	//check the console messages
 	BotCheckConsoleMessages(bs);

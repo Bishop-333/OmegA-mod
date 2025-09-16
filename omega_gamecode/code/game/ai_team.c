@@ -339,7 +339,7 @@ void BotCTFOrders_BothFlagsNotAtBase(bot_state_t *bs) {
 	numteammates = BotSortTeamMatesByBaseTravelTime(bs, teammates, sizeof(teammates));
 	BotSortTeamMatesByTaskPreference(bs, teammates, numteammates);
 	//different orders based on the number of team mates
-	switch(bs->numteammates) {
+	switch(numteammates) {
 		case 1: break;
 		case 2:
 		{
@@ -461,7 +461,7 @@ void BotCTFOrders_FlagNotAtBase(bot_state_t *bs) {
 	//passive strategy
 	if (!(bs->ctfstrategy & CTFS_AGRESSIVE)) {
 		//different orders based on the number of team mates
-		switch(bs->numteammates) {
+		switch(numteammates) {
 			case 1: break;
 			case 2:
 			{
@@ -517,7 +517,7 @@ void BotCTFOrders_FlagNotAtBase(bot_state_t *bs) {
 	}
 	else {
 		//different orders based on the number of team mates
-		switch(bs->numteammates) {
+		switch(numteammates) {
 			case 1: break;
 			case 2:
 			{
@@ -593,8 +593,8 @@ void BotCTFOrders_EnemyFlagNotAtBase(bot_state_t *bs) {
 		case 2:
 		{
 			//tell the one not carrying the flag to defend the base
-			if (teammates[0] == bs->flagcarrier) other = teammates[1];
-			else other = teammates[0];
+			if (teammates[0] != bs->flagcarrier) other = teammates[0];
+			else other = teammates[1];
 			ClientName(other, name, sizeof(name));
 			BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 			BotSayTeamOrder(bs, other);
@@ -1156,11 +1156,11 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 			case 1: break;
 			case 2:
 			{
-				//tell the one not carrying the flag to attack the enemy base
-				if (teammates[0] == bs->flagcarrier) other = teammates[1];
-				else other = teammates[0];
+				//tell the one not carrying the flag to defend the enemy base
+				if (teammates[0] != bs->flagcarrier) other = teammates[0];
+				else other = teammates[1];
 				ClientName(other, name, sizeof(name));
-				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
+				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				BotSayTeamOrder(bs, other);
 				break;
 			}
@@ -1187,7 +1187,7 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				}
 				else {
 					//
-					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
+					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 				}
 				BotSayTeamOrder(bs, other);
 				break;
@@ -1250,11 +1250,11 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 			case 1: break;
 			case 2:
 			{
-				//tell the one not carrying the flag to defend the base
-				if (teammates[0] == bs->flagcarrier) other = teammates[1];
-				else other = teammates[0];
+				//tell the one not carrying the flag to attack the enemy base
+				if (teammates[0] != bs->flagcarrier) other = teammates[0];
+				else other = teammates[1];
 				ClientName(other, name, sizeof(name));
-				BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
+				BotAI_BotInitialChat(bs, "cmd_attackenemybase", name, NULL);
 				BotSayTeamOrder(bs, other);
 				break;
 			}
@@ -1270,12 +1270,18 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				if (teammates[2] != bs->flagcarrier) other = teammates[2];
 				else other = teammates[1];
 				ClientName(other, name, sizeof(name));
-				ClientName(bs->flagcarrier, carriername, sizeof(carriername));
-				if (bs->flagcarrier == bs->client) {
-					BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+				if ( bs->flagcarrier != -1 ) {
+					ClientName(bs->flagcarrier, carriername, sizeof(carriername));
+					if (bs->flagcarrier == bs->client) {
+						BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+					}
+					else {
+						BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+					}
 				}
 				else {
-					BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+					//
+					BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
 				}
 				BotSayTeamOrder(bs, other);
 				break;
@@ -1297,21 +1303,35 @@ void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 					BotAI_BotInitialChat(bs, "cmd_defendbase", name, NULL);
 					BotSayTeamOrder(bs, teammates[i]);
 				}
-				ClientName(bs->flagcarrier, carriername, sizeof(carriername));
-				for (i = 0; i < attackers; i++) {
-					//
-					if (teammates[numteammates - i - 1] == bs->flagcarrier) {
-						continue;
+				if (bs->flagcarrier != -1) {
+					ClientName(bs->flagcarrier, carriername, sizeof(carriername));
+					for (i = 0; i < attackers; i++) {
+						//
+						if (teammates[numteammates - i - 1] == bs->flagcarrier) {
+							continue;
+						}
+						//
+						ClientName(teammates[numteammates - i - 1], name, sizeof(name));
+						if (bs->flagcarrier == bs->client) {
+							BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+						}
+						else {
+							BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
+						}
+						BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
 					}
-					//
-					ClientName(teammates[numteammates - i - 1], name, sizeof(name));
-					if (bs->flagcarrier == bs->client) {
-						BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);
+				}
+				else {
+					for (i = 0; i < attackers; i++) {
+						//
+						if (teammates[numteammates - i - 1] == bs->flagcarrier) {
+							continue;
+						}
+						//
+						ClientName(teammates[numteammates - i - 1], name, sizeof(name));
+						BotAI_BotInitialChat(bs, "cmd_getflag", name, NULL);
+						BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
 					}
-					else {
-						BotAI_BotInitialChat(bs, "cmd_accompany", name, carriername, NULL);
-					}
-					BotSayTeamOrder(bs, teammates[numteammates - i - 1]);
 				}
 				//
 				break;
@@ -1953,7 +1973,8 @@ void BotTeamAI(bot_state_t *bs) {
 	//return if this bot is NOT the team leader
 	ClientName(bs->client, netname, sizeof(netname));
 	if (Q_stricmp(netname, bs->teamleader) != 0) return;
-	//
+
+	bs->ctfstrategy = 0;
 	numteammates = BotNumTeamMates(bs);
 	//give orders
 	switch(gametype) {
@@ -1975,6 +1996,20 @@ void BotTeamAI(bot_state_t *bs) {
 		case GT_CTF:
 		case GT_CTF_ELIMINATION:
 		{
+			// if the enemy team leads and time limit has expired to 70%, choose aggressive strategy
+			if (bs->ownteamscore < bs->enemyteamscore && level.time - level.startTime > (g_timelimit.integer * 60000) * 0.7f) {
+				bs->ctfstrategy = CTFS_AGRESSIVE;
+			} else {
+				// if there were no flag captures the last 4 minutes
+				if (bs->lastflagcapture_time < FloatTime() - 240) {
+					bs->lastflagcapture_time = FloatTime();
+					// randomly change the CTF strategy
+					if (random() < 0.4) {
+						bs->ctfstrategy ^= CTFS_AGRESSIVE;
+						bs->teamgiveorders_time = FloatTime();
+					}
+				}
+			}
 			//if the number of team mates changed or the flag status changed
 			//or someone wants to know what to do
 			if (bs->numteammates != numteammates || bs->flagstatuschanged || bs->forceorders || lastRoundNumber != level.roundNumber) {
@@ -1983,15 +2018,6 @@ void BotTeamAI(bot_state_t *bs) {
 				bs->flagstatuschanged = qfalse;
 				bs->forceorders = qfalse;
 				lastRoundNumber = level.roundNumber;
-			}
-			//if there were no flag captures the last 3 minutes
-			if (bs->lastflagcapture_time < FloatTime() - 240) {
-				bs->lastflagcapture_time = FloatTime();
-				//randomly change the CTF strategy
-				if (random() < 0.4) {
-					bs->ctfstrategy ^= CTFS_AGRESSIVE;
-					bs->teamgiveorders_time = FloatTime();
-				}
 			}
 			//if it's time to give orders
 			if (bs->teamgiveorders_time && bs->teamgiveorders_time < FloatTime() - 3) {
@@ -2021,20 +2047,28 @@ void BotTeamAI(bot_state_t *bs) {
 		}
 		case GT_1FCTF:
 		{
-			if (bs->numteammates != numteammates || bs->flagstatuschanged || bs->forceorders) {
+			// if the enemy team leads and time limit has expired to 70%, choose aggressive strategy
+			if (bs->ownteamscore < bs->enemyteamscore && level.time - level.startTime > (g_timelimit.integer * 60000) * 0.7f) {
+				bs->ctfstrategy = CTFS_AGRESSIVE;
+				//give orders again after 30 seconds
+				bs->teamgiveorders_time = FloatTime() + 30;
+			} else {
+				// if there were no flag captures the last 4 minutes
+				if (bs->lastflagcapture_time < FloatTime() - 240) {
+					bs->lastflagcapture_time = FloatTime();
+					// randomly change the CTF strategy
+					if (random() < 0.4) {
+						bs->ctfstrategy ^= CTFS_AGRESSIVE;
+						bs->teamgiveorders_time = FloatTime();
+					}
+				}
+			}
+
+			if (bs->flagstatuschanged || bs->forceorders || bs->numteammates != numteammates) {
 				bs->teamgiveorders_time = FloatTime();
 				bs->numteammates = numteammates;
 				bs->flagstatuschanged = qfalse;
 				bs->forceorders = qfalse;
-			}
-			//if there were no flag captures the last 4 minutes
-			if (bs->lastflagcapture_time < FloatTime() - 240) {
-				bs->lastflagcapture_time = FloatTime();
-				//randomly change the CTF strategy
-				if (random() < 0.4) {
-					bs->ctfstrategy ^= CTFS_AGRESSIVE;
-					bs->teamgiveorders_time = FloatTime();
-				}
 			}
 			//if it's time to give orders
 			if (bs->teamgiveorders_time && bs->teamgiveorders_time < FloatTime() - 2) {
@@ -2046,7 +2080,12 @@ void BotTeamAI(bot_state_t *bs) {
 		}
 		case GT_OBELISK:
 		{
-			if (bs->numteammates != numteammates || bs->forceorders) {
+			// if the enemy team is leading by more than 1 point, or if the enemy team leads and time limit has expired to 50%, choose aggressive strategy
+			if (bs->ownteamscore + 1 < bs->enemyteamscore || (bs->ownteamscore < bs->enemyteamscore && level.time - level.startTime > (g_timelimit.integer * 60000) * 0.5f)) {
+				bs->ctfstrategy = CTFS_AGRESSIVE;
+			}
+
+			if (bs->forceorders || bs->numteammates != numteammates) {
 				bs->teamgiveorders_time = FloatTime();
 				bs->numteammates = numteammates;
 				bs->forceorders = qfalse;
@@ -2061,7 +2100,12 @@ void BotTeamAI(bot_state_t *bs) {
 		}
 		case GT_HARVESTER:
 		{
-			if (bs->numteammates != numteammates || bs->forceorders) {
+			// if the enemy team is leading by more than the half of the capturelimit points and time limit has expired to 70%, choose aggressive strategy
+			if (bs->ownteamscore + (g_capturelimit.integer * 0.5f) < bs->enemyteamscore && level.time - level.startTime > (g_timelimit.integer * 60000) * 0.7f) {
+				bs->ctfstrategy = CTFS_AGRESSIVE;
+			}
+
+			if (bs->forceorders || bs->numteammates != numteammates) {
 				bs->teamgiveorders_time = FloatTime();
 				bs->numteammates = numteammates;
 				bs->forceorders = qfalse;
