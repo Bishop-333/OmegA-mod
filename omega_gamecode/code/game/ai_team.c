@@ -340,7 +340,7 @@ void BotCTFOrders_BothFlagsNotAtBase(bot_state_t *bs) {
 	numteammates = BotSortTeamMatesByBaseTravelTime(bs, teammates, sizeof(teammates));
 	BotSortTeamMatesByTaskPreference(bs, teammates, numteammates);
 	//different orders based on the number of team mates
-	switch(bs->numteammates) {
+	switch(numteammates) {
 		case 1: break;
 		case 2:
 		{
@@ -462,7 +462,7 @@ void BotCTFOrders_FlagNotAtBase(bot_state_t *bs) {
 	//passive strategy
 	if (!(bs->ctfstrategy & CTFS_AGRESSIVE)) {
 		//different orders based on the number of team mates
-		switch(bs->numteammates) {
+		switch(numteammates) {
 			case 1: break;
 			case 2:
 			{
@@ -518,7 +518,7 @@ void BotCTFOrders_FlagNotAtBase(bot_state_t *bs) {
 	}
 	else {
 		//different orders based on the number of team mates
-		switch(bs->numteammates) {
+		switch(numteammates) {
 			case 1: break;
 			case 2:
 			{
