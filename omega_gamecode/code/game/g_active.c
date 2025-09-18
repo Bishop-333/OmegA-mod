@@ -1129,7 +1129,7 @@ void ClientThink_real( gentity_t *ent ) {
 		if ( level.warmupTime ) {
 			ClientRespawn( ent );
 		}
-		if ( level.time - client->respawnTime  > g_forcerespawn.integer * 1000 ) {
+		if ( !(ent->r.svFlags & SVF_BOT) && level.time - client->respawnTime > g_forcerespawn.integer * 1000 ) {
 			client->sess.sessionTeam = TEAM_SPECTATOR;
 		}
 		if ( ( level.time > client->respawnTime ) &&
