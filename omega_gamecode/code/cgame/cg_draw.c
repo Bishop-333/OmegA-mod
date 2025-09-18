@@ -3109,6 +3109,7 @@ CG_DrawAmmoWarning
 static void CG_DrawAmmoWarning( void ) {
 	const char	*s;
 	int			w;
+	float		*color;
 
 	//Don't report in instant gib same with RA
 	if(cgs.nopickup)
@@ -3124,11 +3125,13 @@ static void CG_DrawAmmoWarning( void ) {
 
 	if ( cg.lowAmmoWarning == 2 ) {
 		s = "OUT OF AMMO";
+		color = colorRed;
 	} else {
 		s = "LOW AMMO WARNING";
+		color = colorOrange;
 	}
-	w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
-	CG_DrawBigString(320 - w / 2, 64, s, 1.0F);
+	w = CG_DrawStrlen( s ) * MEDIUMCHAR_WIDTH;
+	CG_DrawMediumStringColor(320 - w / 2, 64, s, color);
 }
 
 
