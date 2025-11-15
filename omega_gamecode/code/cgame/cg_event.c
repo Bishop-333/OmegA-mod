@@ -1397,13 +1397,13 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 		if ( !(es->eFlags & EF_KAMIKAZE) ) {
 			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
 		}
-		CG_GibPlayer( cent->lerpOrigin );
+		CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta );
 		break;
 
 	case EV_GIB_PLAYER_HEADSHOT:
 		DEBUGNAME("EV_GIB_PLAYER_HEADSHOT");
 		trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
-		CG_GibPlayerHeadshot( cent->lerpOrigin );
+		CG_GibPlayerHeadshot( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta );
 		break;
 
 	case EV_STOPLOOPINGSOUND:
