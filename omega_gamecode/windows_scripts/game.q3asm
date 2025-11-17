@@ -13,7 +13,6 @@ ai_team
 ai_main
 ai_chat
 ai_cmd
-ai_vcmd
 g_active
 g_admin
 g_arenas

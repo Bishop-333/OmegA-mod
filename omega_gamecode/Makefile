@@ -1613,7 +1613,6 @@ Q3GOBJ_ = \
   $(B)/omega/game/ai_dmq3.o \
   $(B)/omega/game/ai_main.o \
   $(B)/omega/game/ai_team.o \
-  $(B)/omega/game/ai_vcmd.o \
   $(B)/omega/game/bg_misc.o \
   $(B)/omega/game/bg_lib.o \
   $(B)/omega/game/bg_pmove.o \
@@ -1689,7 +1688,6 @@ Q3UIOBJ_ = \
   $(B)/omega/ui/ui_mfield.o \
   $(B)/omega/ui/ui_mods.o \
   $(B)/omega/ui/ui_network.o \
-  $(B)/omega/ui/ui_options.o \
   $(B)/omega/ui/ui_password.o \
   $(B)/omega/ui/ui_playermodel.o \
   $(B)/omega/ui/ui_players.o \

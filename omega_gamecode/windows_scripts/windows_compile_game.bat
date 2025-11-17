@@ -23,7 +23,7 @@ cd windows\build\game
 %cc%  ../../../code/game/ai_dmq3.c
 %cc%  ../../../code/game/ai_main.c
 %cc%  ../../../code/game/ai_team.c
-%cc%  ../../../code/game/ai_vcmd.c
+rem %cc%  ../../../code/game/ai_vcmd.c
 %cc%  ../../../code/game/bg_lib.c
 %cc%  ../../../code/game/bg_misc.c
 %cc%  ../../../code/game/bg_pmove.c

@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *****************************************************************************/
 
-#define MAX_NODESWITCHES	50
+#define MAX_NODESWITCHES 50
 
 void AIEnter_Intermission(bot_state_t *bs, char *s);
 void AIEnter_Observer(bot_state_t *bs, char *s);
@@ -58,4 +58,3 @@ int AINode_Battle_NBG(bot_state_t *bs);
 
 void BotResetNodeSwitches(void);
 void BotDumpNodeSwitches(bot_state_t *bs);
-

@@ -7,17 +7,8 @@ windows_compile_game.bat
 windows_compile_cgame.bat
 windows_compile_q3_ui.bat
 
-Follwing for missionpack:
-windows_compile_game_missionpack.bat
-windows_compile_cgame_missionpack.bat
-windows_compile_ui_missionpack.bat
-
 The qvm files will be placed in:
 windows\baseoa\vm
-
-or
-
-windows\missionpack\vm
 
 The batch files has no error checking so you need to read the output. Feel free to improve the scripts.
 
