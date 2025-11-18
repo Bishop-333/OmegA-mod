@@ -241,7 +241,7 @@ static cvarTable_t gameCvarTable[] = {
 
     // noset vars
     {NULL, "gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_ROM, 0, qfalse},
-    {NULL, "gamedate", __DATE__, CVAR_ROM, 0, qfalse},
+    {NULL, "gamedate", PRODUCT_DATE, CVAR_ROM, 0, qfalse},
     {&g_restarted, "g_restarted", "0", CVAR_ROM, 0, qfalse},
     {NULL, "sv_mapname", "", CVAR_SERVERINFO | CVAR_ROM, 0, qfalse},
 
@@ -743,7 +743,7 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 
 	G_Printf("------- Game Initialization -------\n");
 	G_Printf("gamename: %s\n", GAMEVERSION);
-	G_Printf("gamedate: %s\n", __DATE__);
+	G_Printf("gamedate: %s\n", PRODUCT_DATE);
 
 	srand(randomSeed);
 
