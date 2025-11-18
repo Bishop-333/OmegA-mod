@@ -1377,7 +1377,7 @@ static float CG_DrawScores(float y) {
 	s1 = cgs.scores1;
 	s2 = cgs.scores2;
 
-	y -= BIGCHAR_HEIGHT + 8;
+	y -= BIGCHAR_HEIGHT + 4;
 
 	y1 = y;
 
@@ -1684,8 +1684,8 @@ static void CG_DrawLowerRight(void) {
 		y = CG_DrawTeamOverlay(y, qtrue, qfalse);
 	}
 
-	y = CG_DrawScores(y + 4);
-	y = CG_DrawPowerups(y + 4);
+	y = CG_DrawScores(y);
+	y = CG_DrawPowerups(y);
 }
 
 /*
