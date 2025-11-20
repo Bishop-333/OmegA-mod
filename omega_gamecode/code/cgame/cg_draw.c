@@ -362,7 +362,7 @@ CG_DrawStatusBarFlag
 ================
 */
 static void CG_DrawStatusBarFlag(float x, int team) {
-	CG_DrawFlagModel(x - ICON_SIZE, 480 - ICON_SIZE * 1.1, ICON_SIZE * 1.1, ICON_SIZE * 1.1, team, qfalse);
+	CG_DrawFlagModel(x - ICON_SIZE, 480 - ICON_SIZE - 3, ICON_SIZE, ICON_SIZE, team, qfalse);
 }
 
 /*
@@ -1377,7 +1377,7 @@ static float CG_DrawScores(float y) {
 	s1 = cgs.scores1;
 	s2 = cgs.scores2;
 
-	y -= BIGCHAR_HEIGHT + 8;
+	y -= BIGCHAR_HEIGHT + 4;
 
 	y1 = y;
 
@@ -1393,7 +1393,7 @@ static float CG_DrawScores(float y) {
 		x -= w;
 		CG_FillRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, color);
 		if (cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE) {
-			CG_DrawPic(x, y - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.selectShader);
+			CG_DrawRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, 1, colorWhite);
 		}
 		CG_DrawStringExt(x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0);
 
@@ -1412,7 +1412,7 @@ static float CG_DrawScores(float y) {
 		if (cgs.gametype == GT_DOUBLE_D) {
 			// Display Domination point status
 
-			y1 = y - 32; //BIGCHAR_HEIGHT - 8;
+			y1 = y - 32;
 			if (cgs.redflag >= 0 && cgs.redflag <= 3) {
 				CG_DrawPic(x, y1 - 4, w, 32, cgs.media.ddPointSkinB[cgs.blueflag]);
 			}
@@ -1427,7 +1427,7 @@ static float CG_DrawScores(float y) {
 		x -= w;
 		CG_FillRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, color);
 		if (cg.snap->ps.persistant[PERS_TEAM] == TEAM_RED) {
-			CG_DrawPic(x, y - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.selectShader);
+			CG_DrawRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, 1, colorWhite);
 		}
 		CG_DrawStringExt(x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0);
 
@@ -1446,7 +1446,7 @@ static float CG_DrawScores(float y) {
 		if (cgs.gametype == GT_DOUBLE_D) {
 			// Display Domination point status
 
-			y1 = y - 32; //BIGCHAR_HEIGHT - 8;
+			y1 = y - 32;
 			if (cgs.redflag >= 0 && cgs.redflag <= 3) {
 				CG_DrawPic(x, y1 - 4, w, 32, cgs.media.ddPointSkinA[cgs.redflag]);
 			}
@@ -1526,7 +1526,7 @@ static float CG_DrawScores(float y) {
 				color[2] = 0.0f;
 				color[3] = 0.5f;
 				CG_FillRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, color);
-				CG_DrawPic(x, y - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.selectShader);
+				CG_DrawRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, 1, colorWhite);
 			} else {
 				color[0] = 0.5f;
 				color[1] = 0.5f;
@@ -1548,7 +1548,7 @@ static float CG_DrawScores(float y) {
 				color[2] = 1.0f;
 				color[3] = 0.5f;
 				CG_FillRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, color);
-				CG_DrawPic(x, y - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.selectShader);
+				CG_DrawRect(x, y - 4, w, BIGCHAR_HEIGHT + 8, 1, colorWhite);
 			} else {
 				color[0] = 0.25f;
 				color[1] = 0.25f;
@@ -1684,8 +1684,8 @@ static void CG_DrawLowerRight(void) {
 		y = CG_DrawTeamOverlay(y, qtrue, qfalse);
 	}
 
-	y = CG_DrawScores(y + 4);
-	y = CG_DrawPowerups(y + 4);
+	y = CG_DrawScores(y);
+	y = CG_DrawPowerups(y);
 }
 
 /*
@@ -2957,7 +2957,6 @@ CG_DrawAmmoWarning
 static void CG_DrawAmmoWarning(void) {
 	const char *s;
 	int w;
-	float *color;
 
 	//Don't report in instant gib same with RA
 	if (cgs.nopickup)
@@ -2973,13 +2972,11 @@ static void CG_DrawAmmoWarning(void) {
 
 	if (cg.lowAmmoWarning == 2) {
 		s = "OUT OF AMMO";
-		color = colorRed;
 	} else {
 		s = "LOW AMMO WARNING";
-		color = colorOrange;
 	}
 	w = CG_DrawStrlen(s) * MEDIUMCHAR_WIDTH;
-	CG_DrawMediumStringColor(320 - w / 2, 64, s, color);
+	CG_DrawMediumString(320 - w / 2, 64, s, 1.0f);
 }
 
 /*

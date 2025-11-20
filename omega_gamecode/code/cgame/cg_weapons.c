@@ -1722,7 +1722,7 @@ void CG_DrawWeaponBar0(int count, int bits) {
 
 		// draw selection marker
 		if (i == cg.weaponSelect) {
-			CG_DrawPic(x - 4, y - 4, 40, 40, cgs.media.selectShader);
+			CG_DrawRect(x - 4, y - 4, 40, 40, 1, colorWhite);
 		}
 
 		// no ammo cross on top
