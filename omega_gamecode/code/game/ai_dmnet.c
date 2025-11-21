@@ -639,6 +639,13 @@ static int BotGetLongTermGoal(bot_state_t *bs, int tfl, int retreat, bot_goal_t 
 			}
 			bs->ltgtype = 0;
 		}
+		// if the bot decided to camp
+		if (!bs->ordered) {
+			// if the bot should stop camping
+			if (!BotCanCamp(bs)) {
+				bs->ltgtype = 0;
+			}
+		}
 		//if really near the camp spot
 		VectorSubtract(goal->origin, bs->origin, dir);
 		if (VectorLengthSquared(dir) < Square(60)) {
