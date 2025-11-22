@@ -387,7 +387,7 @@ qboolean CG_DrawOldScoreboard(void) {
 	}
 
 	if (cg.showScores || cg.predictedPlayerState.pm_type == PM_DEAD ||
-	    cg.predictedPlayerState.pm_type == PM_INTERMISSION) {
+	    cg.predictedPlayerState.pm_type == PM_INTERMISSION || cg.predictedPlayerState.stats[STAT_HEALTH] <= 0) {
 		fade = 1.0;
 		fadeColor = colorWhite;
 	} else {

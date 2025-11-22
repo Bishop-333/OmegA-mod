@@ -1531,7 +1531,7 @@ void CG_AddViewWeapon(playerState_t *ps) {
 		return;
 	}
 
-	if (ps->pm_type == PM_INTERMISSION) {
+	if (ps->pm_type == PM_INTERMISSION || ps->pm_type == PM_SPECTATOR) {
 		return;
 	}
 

@@ -226,6 +226,7 @@ vmCvar_t g_rocketFireRate;
 vmCvar_t g_rocketSpeed;
 vmCvar_t g_selfDamage;
 vmCvar_t g_slickGround;
+vmCvar_t g_spectateOnDeath;
 vmCvar_t g_startWhenReady;
 vmCvar_t g_survivorsRespawn;
 vmCvar_t g_teamPush;
@@ -433,8 +434,8 @@ static cvarTable_t gameCvarTable[] = {
     //OmegA
     {&g_airControl, "g_airControl", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse},
-    {&g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qtrue},
-    {&g_autohop, "g_autohop", "0", CVAR_ARCHIVE, 0, qfalse},
+    {&g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse},
+    {&g_autohop, "g_autohop", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse},
@@ -459,6 +460,7 @@ static cvarTable_t gameCvarTable[] = {
     {&g_rocketSpeed, "g_rocketSpeed", "1000", 0, 0, qtrue},
     {&g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_slickGround, "g_slickGround", "0", CVAR_ARCHIVE, 0, qtrue},
+    {&g_spectateOnDeath, "g_spectateOnDeath", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
     {&g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
     {&g_survivorsRespawn, "g_survivorsRespawn", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
     {&g_teamPush, "g_teamPush", "0", CVAR_ARCHIVE, 0, qtrue},
