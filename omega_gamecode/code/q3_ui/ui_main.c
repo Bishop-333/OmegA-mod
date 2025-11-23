@@ -38,7 +38,7 @@ This is the only way control passes into the module.
 This must be the very first function compiled into the .qvm file
 ================
 */
-intptr_t vmMain(int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
+Q_EXPORT intptr_t vmMain(int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
 	switch (command) {
 		case UI_GETAPIVERSION:
 			return UI_API_VERSION;
@@ -272,6 +272,7 @@ static cvarTable_t cvarTable[] = {
     {&ui_server14, "server14", "", CVAR_ARCHIVE},
     {&ui_server15, "server15", "", CVAR_ARCHIVE},
     {&ui_server16, "server16", "", CVAR_ARCHIVE},
+    {NULL, "g_localTeamPref", "", 0},
 
     //new in beta 23:
     {&ui_browserOnlyHumans, "ui_browserOnlyHumans", "0", CVAR_ARCHIVE},
@@ -310,6 +311,9 @@ void UI_UpdateCvars(void) {
 	cvarTable_t *cv;
 
 	for (i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++) {
+		if (!cv->vmCvar) {
+			continue;
+		}
 		trap_Cvar_Update(cv->vmCvar);
 	}
 }

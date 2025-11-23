@@ -1242,7 +1242,7 @@ static void Bot1FCTFOrders_TeamHasFlag(bot_state_t *bs) {
 				else
 					other = teammates[1];
 				ClientName(other, name, sizeof(name));
-				if ( bs->flagcarrier != -1 ) {
+				if (bs->flagcarrier != -1) {
 					ClientName(bs->flagcarrier, carriername, sizeof(carriername));
 					if (bs->flagcarrier == bs->client) {
 						BotAI_BotInitialChat(bs, "cmd_accompanyme", name, NULL);

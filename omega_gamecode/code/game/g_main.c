@@ -93,6 +93,7 @@ vmCvar_t pmove_msec;
 vmCvar_t pmove_float;
 vmCvar_t g_rankings;
 vmCvar_t g_listEntity;
+vmCvar_t g_localTeamPref;
 vmCvar_t g_obeliskHealth;
 vmCvar_t g_obeliskRegenPeriod;
 vmCvar_t g_obeliskRegenAmount;
@@ -346,6 +347,7 @@ static cvarTable_t gameCvarTable[] = {
     //unlagged - server options
 
     {&g_rankings, "g_rankings", "0", 0, 0, qfalse},
+    {&g_localTeamPref, "g_localTeamPref", "", 0, 0, qfalse},
     {&g_music, "g_music", "", 0, 0, qfalse},
     {&g_spawnprotect, "g_spawnprotect", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
     //Now for elimination stuff:

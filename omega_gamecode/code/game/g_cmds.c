@@ -776,7 +776,7 @@ SetTeam
 KK-OAX Modded this to accept a forced admin change. 
 =================
 */
-void SetTeam(gentity_t *ent, char *s) {
+void SetTeam(gentity_t *ent, const char *s) {
 	int team, oldTeam;
 	gclient_t *client;
 	int clientNum;
@@ -823,7 +823,7 @@ void SetTeam(gentity_t *ent, char *s) {
 			team = PickTeam(clientNum);
 		}
 		if (!force) {
-			if (g_teamForceBalance.integer) {
+			if (g_teamForceBalance.integer && !client->pers.localClient && !(ent->r.svFlags & SVF_BOT)) {
 				int counts[TEAM_NUM_TEAMS];
 
 				counts[TEAM_BLUE] = TeamCount(ent->client->ps.clientNum, TEAM_BLUE);
@@ -931,11 +931,15 @@ void SetTeam(gentity_t *ent, char *s) {
 		CheckTeamLeader(oldTeam);
 	}
 
-	BroadcastTeamChange(client, oldTeam);
-
 	// get and distribute relevent paramters
 	ClientUserinfoChanged(clientNum);
 
+	// client hasn't spawned yet, they sent an early team command, teampref userinfo, or g_teamAutoJoin is enabled
+	if (client->pers.connected != CON_CONNECTED) {
+		return;
+	}
+
+	BroadcastTeamChange(client, oldTeam);
 	ClientBegin(clientNum);
 }
 
