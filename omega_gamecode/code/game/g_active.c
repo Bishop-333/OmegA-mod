@@ -917,7 +917,11 @@ static void ClientThink_real(gentity_t *ent) {
 	if (client->noclip) {
 		client->ps.pm_type = PM_NOCLIP;
 	} else if (client->ps.stats[STAT_HEALTH] <= 0) {
-		client->ps.pm_type = PM_DEAD;
+		if (!(ent->r.svFlags & SVF_BOT) && g_spectateOnDeath.integer) {
+			client->ps.pm_type = PM_SPECTATOR;
+		} else {
+			client->ps.pm_type = PM_DEAD;
+		}
 	} else {
 		client->ps.pm_type = PM_NORMAL;
 	}

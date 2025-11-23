@@ -831,7 +831,7 @@ void player_die(gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int 
 	//For testing:
 	//G_Printf("Respawntime: %i\n",self->client->respawnTime);
 	//However during warm up, we should respawn quicker!
-	if (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_LMS)
+	if (BG_IsEliminationGT(g_gametype.integer))
 		if (level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer)
 			self->client->respawnTime = level.time + rand() % 800;
 

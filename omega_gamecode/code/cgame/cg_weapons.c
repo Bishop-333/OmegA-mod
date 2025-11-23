@@ -1527,7 +1527,7 @@ void CG_AddViewWeapon(playerState_t *ps) {
 	vec3_t angles;
 	weaponInfo_t *weapon;
 
-	if (ps->persistant[PERS_TEAM] == TEAM_SPECTATOR) {
+	if (ps->persistant[PERS_TEAM] == TEAM_SPECTATOR || cg.snap->ps.pm_type == PM_SPECTATOR) {
 		return;
 	}
 

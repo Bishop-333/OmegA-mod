@@ -72,6 +72,7 @@ List of the cvars/additions :
 - g_rocketSpeed
 - g_selfDamage
 - g_slikGround
+- g_spectateOnDeath
 - g_startWhenReady
 - g_survivorsRespawn
 - g_teamPush

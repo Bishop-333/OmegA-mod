@@ -583,6 +583,7 @@ void StopFollowing(gentity_t *ent);
 void BroadcastTeamChange(gclient_t *client, int oldTeam);
 void SetTeam(gentity_t *ent, char *s);
 void Cmd_FollowCycle_f(gentity_t *ent); //KK-OAX Changed to match definition
+void Cmd_FollowKiller_f(gentity_t *ent);
 char *ConcatArgs(int start);            //KK-OAX This declaration moved from g_svccmds.c
 //KK-OAX Added this to make accessible from g_svcmds_ext.c
 void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText);
@@ -1167,6 +1168,7 @@ extern vmCvar_t g_rocketSpeed;
 extern vmCvar_t g_selfDamage;
 extern vmCvar_t g_slickGround;
 extern vmCvar_t g_startWhenReady;
+extern vmCvar_t g_spectateOnDeath;
 extern vmCvar_t g_survivorsRespawn;
 extern vmCvar_t g_teamPush;
 extern vmCvar_t g_teleportMissiles; //from ratmod
