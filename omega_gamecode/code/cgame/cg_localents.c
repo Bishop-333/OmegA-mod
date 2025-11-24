@@ -212,7 +212,7 @@ CG_FragmentBounceSound
 static void CG_FragmentBounceSound(localEntity_t *le, trace_t *trace) {
 	if (le->leBounceSoundType == LEBS_BLOOD) {
 		// half the gibs will make splat sounds
-		if (rand() & 1) {
+		if (rand() & 2) {
 			int r = rand() & 3;
 			sfxHandle_t s;
 
