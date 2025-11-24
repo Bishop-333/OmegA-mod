@@ -139,7 +139,7 @@ models/players/sorceress/defaultdrowhair
 {
 	cull disable
 	{
-		map models/players/sorceress/defaultdrowhead.tga
+		map models/players/sorceress/defaultdrowhead
 		rgbGen lightingDiffuse
 		alphaFunc GE128
 	}
@@ -158,12 +158,12 @@ models/players/sorceress/defaultdrowbody
 {
 	cull disable
 	{
-		map models/players/sorceress/defaultdrowbody.tga
+		map models/players/sorceress/defaultdrowbody
 		rgbGen lightingDiffuse
 		alphaFunc GE128
 	}
 	{
-		map models/players/sorceress/defaultdrowbody.tga
+		map models/players/sorceress/defaultdrowbody
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		depthFunc equal

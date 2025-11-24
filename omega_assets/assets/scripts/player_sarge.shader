@@ -1,7 +1,7 @@
 models/players/grism/neon
 {
 	{
-		map models/players/grism/neon.tga
+		map models/players/grism/neon.jpg
 		rgbGen lightingDiffuse
 	}
 	{

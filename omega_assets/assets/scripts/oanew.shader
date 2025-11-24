@@ -208,7 +208,7 @@ textures/base_wall/glass01
 redArmor
 {
 	{
-		map models/powerups/armor/redarmor.tga
+		map models/powerups/armor/redarmor
 		rgbGen lightingDiffuse
 	}
 	{
@@ -218,7 +218,7 @@ redArmor
 		tcGen environment 
 	}
 	{
-		map models/powerups/armor/redarmor.tga
+		map models/powerups/armor/redarmor
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}

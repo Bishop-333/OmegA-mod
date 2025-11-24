@@ -491,8 +491,8 @@ gfx/2d/cursor
 sprites/balloon3
 {
 	{
-		AnimMap 3 sprites/balloon1.tga sprites/balloon2.tga sprites/balloon3.tga
-		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		AnimMap 3 sprites/balloon1.jpg sprites/balloon2.jpg sprites/balloon3.jpg
+		blendFunc GL_ONE GL_ONE
 	}
 }
 

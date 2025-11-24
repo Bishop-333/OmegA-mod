@@ -6,7 +6,7 @@ smallCross
 		tcGen environment 
 	}
 	{
-		map models/powerups/health/cross.tga
+		map models/powerups/health/cross
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -20,7 +20,7 @@ mediumCross
 		tcGen environment 
 	}
 	{
-		map models/powerups/health/cross.tga
+		map models/powerups/health/cross
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -34,7 +34,7 @@ largeCross
 		tcGen environment 
 	}
 	{
-		map models/powerups/health/cross.tga
+		map models/powerups/health/cross
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -48,7 +48,7 @@ megaCross
 		tcGen environment 
 	}
 	{
-		map models/powerups/health/cross.tga
+		map models/powerups/health/cross
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
