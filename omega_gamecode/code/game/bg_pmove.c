@@ -1567,6 +1567,9 @@ static void PM_Weapon(void) {
 		pm->ps->weaponTime = 0;
 		pm->ps->weaponstate = WEAPON_READY;
 		return;
+	} else if (pm->ps->weapon == WP_ROCKET_LAUNCHER && pm->guidedRockets && pm->ps->weaponstate == WEAPON_FIRING) {
+		pm->ps->weaponTime = 1;
+		return; 
 	}
 
 	// start the animation even if out of ammo

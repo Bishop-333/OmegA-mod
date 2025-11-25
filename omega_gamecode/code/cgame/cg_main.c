@@ -160,7 +160,6 @@ vmCvar_t cg_obituaryOutput;
 vmCvar_t pmove_fixed;
 vmCvar_t pmove_msec;
 vmCvar_t pmove_float;
-vmCvar_t cg_pmove_msec;
 vmCvar_t cg_cameraMode;
 vmCvar_t cg_cameraOrbit;
 vmCvar_t cg_cameraOrbitDelay;
@@ -259,6 +258,7 @@ vmCvar_t cg_enemyColor;
 vmCvar_t cg_enemyModel;
 vmCvar_t cg_enemySounds;
 vmCvar_t cg_forceTeamSkins;
+vmCvar_t cg_guidedRockets;
 vmCvar_t cg_killsound;
 vmCvar_t cg_omegaFlags;
 vmCvar_t cg_omegaInitialized;
@@ -466,6 +466,7 @@ static cvarTable_t cvarTable[] = {     // bk001129
     {&cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE},
     {&cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE},
     {&cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE},
+    {&cg_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE},
     {&cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE},
     {&cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH},
     {&cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE},

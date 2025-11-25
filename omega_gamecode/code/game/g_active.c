@@ -1014,6 +1014,7 @@ static void ClientThink_real(gentity_t *ent) {
 	pm.airControl = g_airControl.integer;
 	pm.chaos = g_chaos.integer;
 	pm.clipwalls = g_clipwalls.integer;
+	pm.guidedRockets = g_guidedRockets.integer;
 	pm.rocketFireRate = g_rocketFireRate.integer;
 	pm.railgunFireRate = g_railgunFireRate.integer;
 	pm.slickGround = g_slickGround.integer;

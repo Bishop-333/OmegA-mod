@@ -232,6 +232,7 @@ typedef struct {
 	int autohop;
 	int chaos;
 	int clipwalls;
+	int guidedRockets;
 	int overbounce;
 	int railgunFireRate;
 	int rocketFireRate;

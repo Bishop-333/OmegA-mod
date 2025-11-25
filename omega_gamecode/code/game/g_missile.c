@@ -26,6 +26,37 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /*
 ================
+G_BounceMissile
+================
+*/
+static void G_BounceMissile(gentity_t *ent, trace_t *trace) {
+	vec3_t velocity;
+	float dot;
+	int hitTime;
+
+	// reflect the velocity on the trace plane
+	hitTime = level.previousTime + (level.time - level.previousTime) * trace->fraction;
+	BG_EvaluateTrajectoryDelta(&ent->s.pos, hitTime, velocity);
+	dot = DotProduct(velocity, trace->plane.normal);
+	VectorMA(velocity, -2 * dot, trace->plane.normal, ent->s.pos.trDelta);
+
+	if (ent->s.eFlags & EF_BOUNCE_HALF) {
+		VectorScale(ent->s.pos.trDelta, 0.65, ent->s.pos.trDelta);
+		// check for stop
+		if (trace->plane.normal[2] > 0.2 && VectorLength(ent->s.pos.trDelta) < 40) {
+			G_SetOrigin(ent, trace->endpos);
+			ent->s.time = level.time / 4;
+			return;
+		}
+	}
+
+	VectorAdd(ent->r.currentOrigin, trace->plane.normal, ent->r.currentOrigin);
+	VectorCopy(ent->r.currentOrigin, ent->s.pos.trBase);
+	ent->s.pos.trTime = level.time;
+}
+
+/*
+================
 G_TeleportMissile
 ================
 */
@@ -101,37 +132,6 @@ static void G_PushGrenade(gentity_t *ent, trace_t *trace, gentity_t *jumppad) {
 	ent->s.pos.trTime = level.time;
 
 	G_AddEvent(ent, EV_JUMP_PAD, 0);
-}
-
-/*
-================
-G_BounceMissile
-================
-*/
-static void G_BounceMissile(gentity_t *ent, trace_t *trace) {
-	vec3_t velocity;
-	float dot;
-	int hitTime;
-
-	// reflect the velocity on the trace plane
-	hitTime = level.previousTime + (level.time - level.previousTime) * trace->fraction;
-	BG_EvaluateTrajectoryDelta(&ent->s.pos, hitTime, velocity);
-	dot = DotProduct(velocity, trace->plane.normal);
-	VectorMA(velocity, -2 * dot, trace->plane.normal, ent->s.pos.trDelta);
-
-	if (ent->s.eFlags & EF_BOUNCE_HALF) {
-		VectorScale(ent->s.pos.trDelta, 0.65, ent->s.pos.trDelta);
-		// check for stop
-		if (trace->plane.normal[2] > 0.2 && VectorLength(ent->s.pos.trDelta) < 40) {
-			G_SetOrigin(ent, trace->endpos);
-			ent->s.time = level.time / 4;
-			return;
-		}
-	}
-
-	VectorAdd(ent->r.currentOrigin, trace->plane.normal, ent->r.currentOrigin);
-	VectorCopy(ent->r.currentOrigin, ent->s.pos.trBase);
-	ent->s.pos.trTime = level.time;
 }
 
 /*
@@ -872,20 +872,21 @@ gentity_t *fire_bfg(gentity_t *self, vec3_t start, vec3_t dir) {
 
 /*
 =================
-G_GuidedMissile
+G_GuideMissile
 =================
 */
-static void G_GuidedMissile(gentity_t *missile) {
-	gentity_t *player = missile->parent;
+static void G_GuideMissile(gentity_t *missile) {
+	gentity_t *player;
 	vec3_t forward, right, up;
 	vec3_t muzzle;
 	float dist;
+
+	player = missile->parent;
 
 	if (!player) {
 		return;
 	}
 
-	// Stop if the player released his attack button
 	if (!(player->client->buttons & BUTTON_ATTACK)) {
 		return;
 	}
@@ -897,22 +898,19 @@ static void G_GuidedMissile(gentity_t *missile) {
 	VectorCopy(missile->r.currentOrigin, missile->s.pos.trBase);
 
 	missile->s.pos.trType = TR_LINEAR;
-	missile->s.pos.trTime = level.time - 50;
+	missile->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;
 
 	VectorSubtract(muzzle, missile->r.currentOrigin, muzzle);
 
 	dist = VectorLength(muzzle) + 400;
-
 	VectorScale(forward, dist, forward);
+
 	VectorAdd(forward, muzzle, muzzle);
 	VectorNormalize(muzzle);
 	VectorScale(muzzle, g_rocketSpeed.integer * 0.75, forward);
 	VectorCopy(forward, missile->s.pos.trDelta);
-
 	vectoangles(muzzle, missile->s.angles);
-
 	SnapVector(missile->s.pos.trDelta);
-
 	missile->nextthink = level.time + FRAMETIME;
 }
 
@@ -933,7 +931,7 @@ gentity_t *fire_rocket(gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->classname = "rocket";
 	if (g_guidedRockets.integer) {
 		bolt->nextthink = level.time + FRAMETIME;
-		bolt->think = G_GuidedMissile;
+		bolt->think = G_GuideMissile;
 	} else {
 		bolt->nextthink = level.time + 15000;
 		bolt->think = G_ExplodeMissile;

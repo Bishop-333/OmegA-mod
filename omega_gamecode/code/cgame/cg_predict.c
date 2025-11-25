@@ -828,6 +828,8 @@ void CG_PredictPlayerState(void) {
 			cg_pmove.cmd.serverTime = ((cg_pmove.cmd.serverTime + pmove_msec.integer - 1) / pmove_msec.integer) * pmove_msec.integer;
 		}
 
+		cg_pmove.guidedRockets = cg_guidedRockets.integer;
+
 		//unlagged - optimized prediction
 		if (cg_optimizePrediction.integer) {
 			// if we need to predict this command, or we've run out of space in the saved states queue
