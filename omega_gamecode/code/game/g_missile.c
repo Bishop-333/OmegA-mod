@@ -702,6 +702,9 @@ fire_plasma
 */
 gentity_t *fire_plasma(gentity_t *self, vec3_t start, vec3_t dir) {
 	gentity_t *bolt;
+	//unlagged - plasma
+	int plasmatime;
+	//unlagged - plasma
 
 	VectorNormalize(dir);
 
@@ -730,7 +733,17 @@ gentity_t *fire_plasma(gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
-	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+
+	//unlagged - plasma
+	if (self->client) {
+		plasmatime = self->client->pers.cmd.serverTime + 50;
+	} else {
+		plasmatime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+	}
+
+	bolt->s.pos.trTime = plasmatime;
+	//unlagged - plasma
+
 	VectorCopy(start, bolt->s.pos.trBase);
 	VectorScale(dir, 2000, bolt->s.pos.trDelta);
 	SnapVector(bolt->s.pos.trDelta); // save net bandwidth
@@ -749,6 +762,9 @@ fire_grenade
 */
 gentity_t *fire_grenade(gentity_t *self, vec3_t start, vec3_t dir) {
 	gentity_t *bolt;
+	//unlagged - grenade
+	int grenadetime;
+	//unlagged - grenade
 
 	VectorNormalize(dir);
 
@@ -775,7 +791,17 @@ gentity_t *fire_grenade(gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_GRAVITY;
-	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+
+	//unlagged - grenade
+	if (self->client) {
+		grenadetime = self->client->pers.cmd.serverTime + 50;
+	} else {
+		grenadetime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+	}
+
+	bolt->s.pos.trTime = grenadetime;
+	//unlagged - grenade
+
 	VectorCopy(start, bolt->s.pos.trBase);
 	VectorScale(dir, g_grenadeSpeed.integer, bolt->s.pos.trDelta);
 	SnapVector(bolt->s.pos.trDelta); // save net bandwidth
@@ -794,6 +820,9 @@ fire_bfg
 */
 gentity_t *fire_bfg(gentity_t *self, vec3_t start, vec3_t dir) {
 	gentity_t *bolt;
+	//unlagged - bfg
+	int bfgtime;
+	//unlagged - bfg
 
 	VectorNormalize(dir);
 
@@ -819,7 +848,17 @@ gentity_t *fire_bfg(gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
-	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+
+	//unlagged - bfg
+	if (self->client) {
+		bfgtime = self->client->pers.cmd.serverTime + 50;
+	} else {
+		bfgtime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+	}
+
+	bolt->s.pos.trTime = bfgtime;
+	//unlagged - bfg
+
 	VectorCopy(start, bolt->s.pos.trBase);
 	VectorScale(dir, 2000, bolt->s.pos.trDelta);
 	SnapVector(bolt->s.pos.trDelta); // save net bandwidth
@@ -883,6 +922,9 @@ fire_rocket
 */
 gentity_t *fire_rocket(gentity_t *self, vec3_t start, vec3_t dir) {
 	gentity_t *bolt;
+	//unlagged - rocket
+	int rockettime;
+	//unlagged - rocket
 
 	VectorNormalize(dir);
 
@@ -923,7 +965,17 @@ gentity_t *fire_rocket(gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->target_ent = NULL;
 
 	bolt->s.pos.trType = TR_LINEAR;
-	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+
+	//unlagged - rocket
+	if (self->client) {
+		rockettime = self->client->pers.cmd.serverTime + 50;
+	} else {
+		rockettime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+	}
+
+	bolt->s.pos.trTime = rockettime;
+	//unlagged - rocket
+
 	VectorCopy(start, bolt->s.pos.trBase);
 	VectorScale(dir, g_rocketSpeed.integer, bolt->s.pos.trDelta);
 	SnapVector(bolt->s.pos.trDelta); // save net bandwidth
@@ -1045,6 +1097,9 @@ fire_prox
 */
 gentity_t *fire_prox(gentity_t *self, vec3_t start, vec3_t dir) {
 	gentity_t *bolt;
+	//unlagged - prox
+	int proxtime;
+	//unlagged - prox
 
 	VectorNormalize(dir);
 
@@ -1077,7 +1132,17 @@ gentity_t *fire_prox(gentity_t *self, vec3_t start, vec3_t dir) {
 	bolt->s.generic1 = self->client->sess.sessionTeam;
 
 	bolt->s.pos.trType = TR_GRAVITY;
-	bolt->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+
+	//unlagged - prox
+	if (self->client) {
+		proxtime = self->client->pers.cmd.serverTime + 50;
+	} else {
+		proxtime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
+	}
+
+	bolt->s.pos.trTime = proxtime;
+	//unlagged - prox
+
 	VectorCopy(start, bolt->s.pos.trBase);
 	VectorScale(dir, 700, bolt->s.pos.trDelta);
 	SnapVector(bolt->s.pos.trDelta); // save net bandwidth
