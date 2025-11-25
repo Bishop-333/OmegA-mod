@@ -920,7 +920,7 @@ void CG_RegisterWeapon(int weaponNum) {
 
 			// plasmagun dlight
 			weaponInfo->missileDlight = 200;
-			MAKERGB(weaponInfo->missileDlightColor, 0.2f, 0.2f, 1.0f);
+			MAKERGB(weaponInfo->missileDlightColor, 0.2f, 0.6f, 1.0f);
 
 			MAKERGB(weaponInfo->flashDlightColor, 0.6f, 0.6f, 1.0f);
 			weaponInfo->flashSound[0] = trap_S_RegisterSound("sound/weapons/plasma/hyprbf1a.wav", qfalse);
