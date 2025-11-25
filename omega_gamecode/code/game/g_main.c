@@ -205,6 +205,7 @@ vmCvar_t g_autohop;
 vmCvar_t g_beheading;
 vmCvar_t g_beheading;
 vmCvar_t g_chaos;
+vmCvar_t g_clipwalls; //from ratmod
 vmCvar_t g_damagePlums;
 vmCvar_t g_dropFlag;
 vmCvar_t g_easierPickup;
@@ -440,6 +441,7 @@ static cvarTable_t gameCvarTable[] = {
     {&g_autohop, "g_autohop", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue},
+    {&g_clipwalls, "g_clipwalls", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse},
     {&g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
@@ -666,7 +668,7 @@ static void G_UpdateCvars(void) {
 					VoteParseCustomVotes();
 
 				//Here comes the cvars that must trigger a map_restart
-				if (cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets || cv->vmCvar == &g_weaponArena || cv->vmCvar == &g_elimination_allgametypes) {
+				if (cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets || cv->vmCvar == &g_weaponArena || cv->vmCvar == &g_elimination_allgametypes || cv->vmCvar == &g_clipwalls) {
 					trap_Cvar_Set("sv_dorestart", "1");
 				}
 
