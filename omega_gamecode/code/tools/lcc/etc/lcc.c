@@ -11,7 +11,12 @@ static char rcsid[] = "Id: dummy rcsid";
 #include <assert.h>
 #include <ctype.h>
 #include <signal.h>
+#ifdef WIN32
+#include <process.h> /* getpid() */
+#include <io.h> /* access() */
+#else
 #include <unistd.h>
+#endif
 
 #ifndef TEMPDIR
 #define TEMPDIR "/tmp"
@@ -47,10 +52,6 @@ extern char *strsave(const char *);
 extern char *stringf(const char *, ...);
 extern int suffix(char *, char *[], int);
 extern char *tempname(char *);
-
-#ifndef __sun
-extern int getpid(void);
-#endif
 
 extern char *cpp[], *include[], *com[], *as[],*ld[], inputs[], *suffixes[];
 extern int option(char *);
@@ -216,15 +217,102 @@ char *basename(char *name) {
 }
 
 #ifdef WIN32
-#include <process.h>
+#include <windows.h>
+
+static int argumentNeedsQuoted(const char *arg) {
+	if (arg && *arg == '"' && arg[strlen(arg) - 1] == '"') {
+		// Assume that if it's already fully quoted, it doesn't
+		// need any further quoting or escaping
+		return 0;
+	}
+
+	return !*arg || strpbrk(arg, " \t\"");
+}
+
+static char *quoteArgument(const char *arg) {
+	// Quote if it has spaces, tabs, or is empty
+	if(argumentNeedsQuoted(arg)) {
+		size_t length = strlen(arg);
+		size_t bufferSize = length * 2 + 3; // maximum escapes + quotes + terminator
+		char *buffer = (char *)malloc(bufferSize);
+		char *p = buffer;
+
+		*p++ = '"'; // Open quote
+
+		for(size_t i = 0; i < length; i++) {
+			if(arg[i] == '"') {
+				// Escape quotes
+				*p++ = '\\';
+				*p++ = '"';
+			} else {
+				// Everything else
+				*p++ = arg[i];
+			}
+		}
+
+		*p++ = '"'; // Close quote
+		*p = '\0';
+
+		return buffer;
+	}
+
+	// Duping to make memory management easier
+	return _strdup(arg);
+}
+
+static int spawn(const char *cmdname, char **argv) {
+	size_t totalLength = 0;
+	for(int i = 0; argv[i] != NULL; i++) {
+		char *quotedArg = quoteArgument(argv[i]);
+		totalLength += strlen(quotedArg) + 1;
+		free(quotedArg);
+	}
+
+	char *cmdline = (char *)malloc(totalLength + 1);
+	cmdline[0] = '\0';
+
+	for(int i = 0; argv[i] != NULL; i++) {
+		char *quotedArg = quoteArgument(argv[i]);
+		strcat(cmdline, quotedArg);
+		if(argv[i+1]) strcat(cmdline, " ");
+		free(quotedArg);
+	}
+
+	STARTUPINFOA si = { sizeof(si) };
+	PROCESS_INFORMATION pi;
+	BOOL result = CreateProcessA(
+		cmdname, cmdline,
+		NULL, NULL, FALSE,
+		0, NULL, NULL,
+		&si, &pi);
+
+	if(!result) {
+		fprintf(stderr, "CreateProcess failed (%lu)\n", GetLastError());
+		free(cmdline);
+		return -1;
+	}
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+
+	DWORD exit_code;
+	GetExitCodeProcess(pi.hProcess, &exit_code);
+
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+	free(cmdline);
+
+	return (int)exit_code;
+}
+
 #else
+
 #define _P_WAIT 0
 #ifndef __sun
 extern int fork(void);
 #endif
 extern int wait(int *);
 
-static int _spawnvp(int mode, const char *cmdname, char *argv[]) {
+static int spawn(const char *cmdname, char **argv) {
 	int pid, n, status;
 
 	switch (pid = fork()) {
@@ -292,11 +380,7 @@ static int callsys(char **av) {
 			fprintf(stderr, "\n");
 		}
 		if (verbose < 2)
-#ifndef WIN32
-			status = _spawnvp(_P_WAIT, executable, argv);
-#else
-			status = _spawnvp(_P_WAIT, executable, (const char* const*)argv);
-#endif
+			status = spawn(executable, argv);
 		if (status == -1) {
 			fprintf(stderr, "%s: ", progname);
 			perror(argv[0]);
@@ -376,7 +460,7 @@ static char *exists(char *name) {
 			b = b->link;
 			if (b->str[0]) {
 				char buf[1024];
-				sprintf(buf, "%s/%s", b->str, name);
+				snprintf(buf, sizeof(buf), "%s/%s", b->str, name);
 				if (access(buf, 4) == 0)
 					return strsave(buf);
 			} else if (access(name, 4) == 0)
@@ -575,7 +659,7 @@ static void opt(char *arg) {
 					clist = append(&arg[3], clist);
 					return;
 				}
-				break; /* and fall thru */
+				break; /* and fall through */
 			case 'a':
 				alist = append(&arg[3], alist);
 				return;
@@ -759,7 +843,7 @@ char *stringf(const char *fmt, ...) {
 	va_list ap;
 
 	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
+	vsprintf(buf, fmt, ap);
 	va_end(ap);
 	return strsave(buf);
 }

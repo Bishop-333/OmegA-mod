@@ -250,7 +250,6 @@ static void hashtable_init (hashtable_t *H, int buckets)
 {
   H->buckets = buckets;
   H->table = calloc(H->buckets, sizeof(*(H->table)));
-  return;
 }
 
 static hashtable_t *hashtable_new (int buckets)
@@ -285,7 +284,6 @@ static void hashtable_add (hashtable_t *H, int hashvalue, void *datum)
     }
   hc->data = datum;
   hc->next = 0;
-  return;
 }
 
 static hashchain_t *hashtable_get (hashtable_t *H, int hashvalue)
@@ -386,8 +384,12 @@ static void sort_symbols ()
   symbol_t *s;
   symbol_t **symlist;
 
+  if(!symbols)
+  	return;
+
 //crumb("sort_symbols: Constructing symlist array\n");
   for (elems = 0, s = symbols; s; s = s->next, elems++) /* nop */ ;
+
   symlist = malloc(elems * sizeof(symbol_t*));
   for (i = 0, s = symbols; s; s = s->next, i++)
     {
@@ -489,10 +491,10 @@ static void CodeError( char *fmt, ... ) {
 
 	errorCount++;
 
-	report( "%s:%i ", currentFileName, currentFileLine );
+	fprintf( stderr, "%s:%i ", currentFileName, currentFileLine );
 
 	va_start( argptr,fmt );
-	vprintf( fmt,argptr );
+	vfprintf( stderr, fmt, argptr );
 	va_end( argptr );
 }
 
@@ -544,7 +546,7 @@ static void DefineSymbol( char *sym, int value ) {
 
 	// add the file prefix to local symbols to guarantee unique
 	if ( sym[0] == '$' ) {
-		sprintf( expanded, "%s_%i", sym, currentFileIndex );
+		snprintf( expanded, sizeof(expanded), "%s_%i", sym, currentFileIndex );
 		sym = expanded;
 	}
 
@@ -590,7 +592,7 @@ Symbols can only be evaluated on pass 1
 */
 static int LookupSymbol( char *sym ) {
 	symbol_t	*s;
-	char		expanded[MAX_LINE_LENGTH];
+	char		expanded[MAX_LINE_LENGTH * 2];
 	int			hash;
 	hashchain_t *hc;
 
@@ -600,7 +602,7 @@ static int LookupSymbol( char *sym ) {
 
 	// add the file prefix to local symbols to guarantee unique
 	if ( sym[0] == '$' ) {
-		sprintf( expanded, "%s_%i", sym, currentFileIndex );
+		snprintf( expanded, sizeof(expanded), "%s_%i", sym, currentFileIndex );
 		sym = expanded;
 	}
 
@@ -786,7 +788,7 @@ HackToSegment
 
 BIG HACK: I want to put all 32 bit values in the data
 segment so they can be byte swapped, and all char data in the lit
-segment, but switch jump tables are emited in the lit segment and
+segment, but switch jump tables are emitted in the lit segment and
 initialized strng variables are put in the data segment.
 
 I can change segments here, but I also need to fixup the
@@ -1127,7 +1129,7 @@ STAT("BYTE");
 	return 0;
 }
 
-	// code labels are emited as instruction counts, not byte offsets,
+	// code labels are emitted as instruction counts, not byte offsets,
 	// because the physical size of the code will change with
 	// different run time compilers and we want to minimize the
 	// size of the required translation table
@@ -1519,12 +1521,13 @@ static void ShowHelp( char *argv0 ) {
 	Error("Usage: %s [OPTION]... [FILES]...\n\
 Assemble LCC bytecode assembly to Q3VM bytecode.\n\
 \n\
-    -o OUTPUT      Write assembled output to file OUTPUT.qvm\n\
-    -f LISTFILE    Read options and list of files to assemble from LISTFILE.q3asm\n\
-    -b BUCKETS     Set symbol hash table to BUCKETS buckets\n\
-    -v             Verbose compilation report\n\
-    -vq3           Produce a qvm file compatible with Q3 1.32b\n\
-    -h --help -?   Show this help\n\
+  -o OUTPUT      Write assembled output to file OUTPUT.qvm\n\
+  -f LISTFILE    Read options and list of files to assemble from LISTFILE.q3asm\n\
+  -b BUCKETS     Set symbol hash table to BUCKETS buckets\n\
+  -m             Generate a mapfile for each OUTPUT.qvm\n\
+  -v             Verbose compilation report\n\
+  -vq3           Produce a qvm file compatible with Q3 1.32b\n\
+  -h --help -?   Show this help\n\
 ", argv0);
 }
 
@@ -1561,7 +1564,7 @@ int main( int argc, char **argv ) {
 
 		if ( !strcmp( argv[i], "-o" ) ) {
 			if ( i == argc - 1 ) {
-				Error( "-o must preceed a filename" );
+				Error( "-o must precede a filename" );
 			}
 /* Timbo of Tremulous pointed out -o not working; stock ID q3asm folded in the change. Yay. */
 			strcpy( outputFilename, argv[ i+1 ] );
@@ -1571,7 +1574,7 @@ int main( int argc, char **argv ) {
 
 		if ( !strcmp( argv[i], "-f" ) ) {
 			if ( i == argc - 1 ) {
-				Error( "-f must preceed a filename" );
+				Error( "-f must precede a filename" );
 			}
 			ParseOptionFile( argv[ i+1 ] );
 			i++;
@@ -1617,7 +1620,7 @@ Motivation: not wanting to scrollback for pages to find asm error.
 	}
 	// In some case it Segfault without this check
 	if ( numAsmFiles == 0 ) {
-		Error( "No file to assemble\n" );
+		Error( "No file to assemble" );
 	}
 
 	InitTables();

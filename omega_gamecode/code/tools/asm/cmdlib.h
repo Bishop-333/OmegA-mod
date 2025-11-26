@@ -59,7 +59,7 @@ typedef unsigned char byte;
 #define	MAX_OS_PATH		1024
 #define MEM_BLOCKSIZE 4096
 
-// the dec offsetof macro doesnt work very well...
+// the dec offsetof macro doesn't work very well...
 #define myoffsetof(type,identifier) ((size_t)&((type *)0)->identifier)
 
 
@@ -67,11 +67,10 @@ typedef unsigned char byte;
 extern int myargc;
 extern char **myargv;
 
-char *strupr (char *in);
-char *strlower (char *in);
+char *Q_strupr (char *in);
+char *Q_strlower (char *in);
 int Q_strncasecmp( const char *s1, const char *s2, int n );
 int Q_stricmp( const char *s1, const char *s2 );
-#define Q_strequal(s1,s2) (Q_stricmp(s1,s2)==0)
 void Q_getwd( char *out );
 
 int Q_filelength (FILE *f);

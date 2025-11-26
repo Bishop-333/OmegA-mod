@@ -261,11 +261,7 @@ static void LoadSourceFile( const char *filename ) {
 	length = filelength( f );
 	sourceFile = malloc( length + 1 );
 	if ( sourceFile ) {
-		size_t size;
-		size = fread( sourceFile, length, 1, f );
-		if (size != length) {
-			print( "error reading %s\n", filename );
-		}
+		fread( sourceFile, length, 1, f );
 		sourceFile[length] = 0;
 	}
 

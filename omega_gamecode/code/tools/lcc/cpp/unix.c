@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include "cpp.h"
 
 extern	int lcc_getopt(int, char *const *, const char *);
@@ -64,11 +65,22 @@ setup(int argc, char **argv)
 		fp = (char*)newstring((uchar*)argv[optind], strlen(argv[optind]), 0);
 		if ((fd = open(fp, 0)) <= 0)
 			error(FATAL, "Can't open input file %s", fp);
+#ifdef WIN32
+		_setmode(fd, _O_BINARY);
+#endif
 	}
 	if (optind+1<argc) {
-		int fdo = creat(argv[optind+1], 0666);
+		int fdo;
+#ifdef WIN32
+		fdo = creat(argv[optind+1], _S_IREAD | _S_IWRITE);
+#else
+		fdo = creat(argv[optind+1], 0666);
+#endif
 		if (fdo<0)
 			error(FATAL, "Can't open output file %s", argv[optind+1]);
+#ifdef WIN32
+		_setmode(fdo, _O_BINARY);
+#endif
 		dup2(fdo, 1);
 	}
 	if(Mflag)
@@ -99,7 +111,8 @@ char *basepath( char *fname )
 /* memmove is defined here because some vendors don't provide it at
    all and others do a terrible job (like calling malloc) */
 // -- ouch, that hurts -- ln
-#ifndef MACOS_X   /* always use the system memmove() on Mac OS X. --ryan. */
+/* always use the system memmove() on Mac OS X. --ryan. */
+#if !defined(__APPLE__) && !defined(_MSC_VER)
 #ifdef memmove
 #undef memmove
 #endif

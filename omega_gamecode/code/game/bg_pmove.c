@@ -630,9 +630,9 @@ static void PM_AirMove(void) {
 	if (pm->pmove_doublejump && !pm->pmove_autohop) {
 		if (!(pm->ps->pm_flags & PMF_DOUBLE_JUMPED)) {
 			if (PM_CheckJump()) {
-				pm->ps->velocity[2] = JUMP_VELOCITY*1.25;
+				pm->ps->velocity[2] = JUMP_VELOCITY * 1.25;
 				pm->ps->pm_flags |= PMF_DOUBLE_JUMPED;
-				return; 
+				return;
 			}
 		}
 	}
