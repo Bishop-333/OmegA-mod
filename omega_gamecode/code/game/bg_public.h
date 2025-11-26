@@ -228,8 +228,6 @@ typedef struct {
 	int (*pointcontents)(const vec3_t point, int passEntityNum);
 
 	//OmegA
-	int airControl;
-	int autohop;
 	int chaos;
 	int noInvisWalls;
 	int guidedRockets;
@@ -237,6 +235,8 @@ typedef struct {
 	int railgunFireRate;
 	int rocketFireRate;
 	int slickGround;
+	int pmove_aircontrol;
+	int pmove_autohop;
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles

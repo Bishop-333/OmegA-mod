@@ -375,7 +375,7 @@ static qboolean PM_CheckJump(void) {
 
 	pml.groundPlane = qfalse; // jumping away
 	pml.walking = qfalse;
-	if (!pm->autohop) {
+	if (!pm->pmove_autohop) {
 		pm->ps->pm_flags |= PMF_JUMP_HELD;
 	}
 
@@ -655,7 +655,7 @@ static void PM_AirMove(void) {
 	wishspeed *= scale;
 	wishspeed2 = wishspeed;
 
-	if (pm->airControl) {
+	if (pm->pmove_aircontrol) {
 		curdir[0] = pm->ps->velocity[0];
 		curdir[1] = pm->ps->velocity[1];
 		curdir[2] = 0;
@@ -672,7 +672,7 @@ static void PM_AirMove(void) {
 	// not on ground, so little effect on velocity
 	PM_Accelerate(wishdir, wishspeed, pm_airaccelerate);
 
-	if (pm->airControl) {
+	if (pm->pmove_aircontrol) {
 		PM_CPM_Aircontrol(pm, wishdir, wishspeed2);
 	}
 

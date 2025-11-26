@@ -198,10 +198,8 @@ vmCvar_t g_maxNameChanges;
 vmCvar_t g_timestamp_startgame;
 
 //OmegA
-vmCvar_t g_airControl;
 vmCvar_t g_allowDuplicateGuid;
 vmCvar_t g_ambientSounds;
-vmCvar_t g_autohop;
 vmCvar_t g_beheading;
 vmCvar_t g_beheading;
 vmCvar_t g_chaos;
@@ -236,6 +234,8 @@ vmCvar_t g_teleportMissiles; //from ratmod
 vmCvar_t g_vulnerableRockets;
 vmCvar_t g_waterDamage;
 vmCvar_t g_weaponArena;
+vmCvar_t pmove_aircontrol;
+vmCvar_t pmove_autohop;
 
 // bk001129 - made static to avoid aliasing
 static cvarTable_t gameCvarTable[] = {
@@ -435,10 +435,8 @@ static cvarTable_t gameCvarTable[] = {
     {&g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse},
 
     //OmegA
-    {&g_airControl, "g_airControl", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse},
     {&g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse},
-    {&g_autohop, "g_autohop", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue},
@@ -471,7 +469,9 @@ static cvarTable_t gameCvarTable[] = {
     {&g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse}};
+    {&g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse},
+    {&pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
+    {&pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},};
 
 // bk001129 - made static to avoid aliasing
 static int gameCvarTableSize = sizeof(gameCvarTable) / sizeof(gameCvarTable[0]);

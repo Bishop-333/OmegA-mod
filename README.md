@@ -43,10 +43,8 @@ List of the cvars/additions :
 - cg_zoomAnimSpeed
 - cg_zoomToggle
 #
-- g_airControl
 - g_allowDuplicateGuid
 - g_ambientSounds
-- g_autohop
 - g_beheading
 - g_chaos
 - g_noInvisWalls (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
@@ -81,6 +79,9 @@ List of the cvars/additions :
 - g_vulnerableRockets
 - g_waterDamage
 - g_weaponArena
+#
+- pmove_aircontrol
+- pmove_autohop
 #
 - new flags models
 - new font

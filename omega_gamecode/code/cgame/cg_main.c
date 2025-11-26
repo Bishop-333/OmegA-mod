@@ -284,6 +284,8 @@ vmCvar_t cg_zoomAnim;
 vmCvar_t cg_zoomAnimSpeed;
 vmCvar_t cg_zoomToggle;
 vmCvar_t com_maxfps;
+vmCvar_t pmove_aircontrol;
+vmCvar_t pmove_autohop;
 
 typedef struct {
 	vmCvar_t *vmCvar;
@@ -492,7 +494,9 @@ static cvarTable_t cvarTable[] = {     // bk001129
     {&cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE},
     {&cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE},
     {&cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE},
-    {&com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE}};
+    {&com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE},
+    {&pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO},
+    {&pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO}};
 
 static int cvarTableSize = sizeof(cvarTable) / sizeof(cvarTable[0]);
 

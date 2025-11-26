@@ -1010,14 +1010,15 @@ static void ClientThink_real(gentity_t *ent) {
 	pm.pmove_float = pmove_float.integer;
 	pm.pmove_flags = g_dmflags.integer;
 
-	pm.autohop = g_autohop.integer;
-	pm.airControl = g_airControl.integer;
+	//OmegA
 	pm.chaos = g_chaos.integer;
 	pm.noInvisWalls = g_noInvisWalls.integer;
 	pm.guidedRockets = g_guidedRockets.integer;
 	pm.rocketFireRate = g_rocketFireRate.integer;
 	pm.railgunFireRate = g_railgunFireRate.integer;
 	pm.slickGround = g_slickGround.integer;
+	pm.pmove_aircontrol = pmove_aircontrol.integer;
+	pm.pmove_autohop = pmove_autohop.integer;
 
 	VectorCopy(client->ps.origin, client->oldOrigin);
 
