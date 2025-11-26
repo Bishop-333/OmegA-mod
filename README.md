@@ -82,6 +82,7 @@ List of the cvars/additions :
 #
 - pmove_aircontrol
 - pmove_autohop
+- pmove_doublejump
 #
 - new flags models
 - new font

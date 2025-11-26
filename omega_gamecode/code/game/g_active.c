@@ -1019,6 +1019,7 @@ static void ClientThink_real(gentity_t *ent) {
 	pm.slickGround = g_slickGround.integer;
 	pm.pmove_aircontrol = pmove_aircontrol.integer;
 	pm.pmove_autohop = pmove_autohop.integer;
+	pm.pmove_doublejump = pmove_doublejump.integer;
 
 	VectorCopy(client->ps.origin, client->oldOrigin);
 

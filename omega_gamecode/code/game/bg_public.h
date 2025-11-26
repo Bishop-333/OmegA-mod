@@ -170,6 +170,7 @@ typedef enum {
 // pmove->pm_flags
 #define PMF_DUCKED 1
 #define PMF_JUMP_HELD 2
+#define PMF_DOUBLE_JUMPED 4
 #define PMF_BACKWARDS_JUMP 8   // go into backwards land
 #define PMF_BACKWARDS_RUN 16   // coast down to backwards run
 #define PMF_TIME_LAND 32       // pm_time is time before rejump
@@ -237,6 +238,7 @@ typedef struct {
 	int slickGround;
 	int pmove_aircontrol;
 	int pmove_autohop;
+	int pmove_doublejump;
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles

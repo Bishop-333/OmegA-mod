@@ -466,7 +466,6 @@ static void PM_WaterJumpMove(void) {
 /*
 ===================
 PM_WaterMove
-
 ===================
 */
 static void PM_WaterMove(void) {
@@ -628,6 +627,16 @@ static void PM_AirMove(void) {
 	vec3_t curdir;
 	float dot;
 
+	if (pm->pmove_doublejump && !pm->pmove_autohop) {
+		if (!(pm->ps->pm_flags & PMF_DOUBLE_JUMPED)) {
+			if (PM_CheckJump()) {
+				pm->ps->velocity[2] = JUMP_VELOCITY*1.25;
+				pm->ps->pm_flags |= PMF_DOUBLE_JUMPED;
+				return; 
+			}
+		}
+	}
+
 	PM_Friction();
 
 	fmove = pm->cmd.forwardmove;
@@ -744,6 +753,8 @@ static void PM_WalkMove(void) {
 		return;
 	}
 
+	pm->ps->pm_flags &= ~PMF_DOUBLE_JUMPED;
+
 	PM_Friction();
 
 	fmove = pm->cmd.forwardmove;
@@ -806,9 +817,6 @@ static void PM_WalkMove(void) {
 
 	if ((pml.groundTrace.surfaceFlags & SURF_SLICK) || pm->slickGround || pm->ps->pm_flags & PMF_TIME_KNOCKBACK) {
 		pm->ps->velocity[2] -= pm->ps->gravity * pml.frametime;
-	} else {
-		// don't reset the z velocity for slopes
-		//		pm->ps->velocity[2] = 0;
 	}
 
 	vel = VectorLength(pm->ps->velocity);

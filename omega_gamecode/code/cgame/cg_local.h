@@ -1456,6 +1456,7 @@ extern vmCvar_t cg_zoomAnimSpeed;
 extern vmCvar_t cg_zoomToggle;
 extern vmCvar_t pmove_aircontrol;
 extern vmCvar_t pmove_autohop;
+extern vmCvar_t pmove_doublejump;
 
 //unlagged - cg_unlagged.c
 void CG_PredictWeaponEffects(centity_t *cent);

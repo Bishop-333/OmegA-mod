@@ -236,6 +236,7 @@ vmCvar_t g_waterDamage;
 vmCvar_t g_weaponArena;
 vmCvar_t pmove_aircontrol;
 vmCvar_t pmove_autohop;
+vmCvar_t pmove_doublejump;
 
 // bk001129 - made static to avoid aliasing
 static cvarTable_t gameCvarTable[] = {
@@ -471,7 +472,8 @@ static cvarTable_t gameCvarTable[] = {
     {&g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse},
     {&pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
-    {&pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},};
+    {&pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
+    {&pmove_doublejump, "pmove_doublejump", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue}};
 
 // bk001129 - made static to avoid aliasing
 static int gameCvarTableSize = sizeof(gameCvarTable) / sizeof(gameCvarTable[0]);

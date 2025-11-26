@@ -1176,6 +1176,7 @@ extern vmCvar_t g_waterDamage;
 extern vmCvar_t g_weaponArena;
 extern vmCvar_t pmove_aircontrol;
 extern vmCvar_t pmove_autohop;
+extern vmCvar_t pmove_doublejump;
 
 void trap_Printf(const char *fmt);
 void trap_Error(const char *fmt) __attribute__((noreturn));
