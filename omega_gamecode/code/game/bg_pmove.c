@@ -47,9 +47,11 @@ float pm_flightfriction = 3.0f;
 float pm_spectatorfriction = 5.0f;
 
 // CPM Air Control
-float pm_cpm_aircontrol = 150.0f;
-float pm_cpm_strafeaccelerate = 70.0f;
-float pm_cpm_wishspeed = 30.0f;
+const float pm_cpm_airaccelerate = 1.0f;
+const float pm_cpm_airstopaccelerate = 2.5f;
+const float pm_cpm_airstrafeaccelerate = 70.0f;
+const float pm_cpm_airstrafewishspeed = 30.0f;
+const float pm_cpm_aircontrol = 150.0f;
 
 int c_pmove = 0;
 
@@ -584,29 +586,28 @@ static void PM_CPM_Aircontrol(pmove_t *pm, vec3_t wishdir, float wishspeed) {
 	int i;
 	float zspeed, speed, dot, k;
 
-	if ((pm->ps->movementDir && pm->ps->movementDir != 4 && pm->ps->movementDir != -4 && pm->ps->movementDir != 12) || wishspeed == 0.0) {
+	// this doesn't play well with analog input
+	if (pm->cmd.forwardmove == 0 || pm->cmd.rightmove != 0)
 		return;
-	}
+	k = 32;
+
+	k *= Com_Clamp(0, 1, wishspeed / pm_cpm_airstrafewishspeed);
 
 	zspeed = pm->ps->velocity[2];
 	pm->ps->velocity[2] = 0;
 	speed = VectorNormalize(pm->ps->velocity);
 
 	dot = DotProduct(pm->ps->velocity, wishdir);
-	k = 32;
-	k *= pm_cpm_aircontrol * dot * dot * pml.frametime;
 
-	if (dot > 0) {
-		for (i = 0; i < 2; i++) {
-			pm->ps->velocity[i] = pm->ps->velocity[i] * speed + wishdir[i] * k;
-		}
+	if (dot > 0) { // we can't change direction while slowing down
+		k *= dot * dot * pml.frametime;
+		k *= pm_cpm_aircontrol;
+		VectorMA(vec3_origin, speed, pm->ps->velocity, pm->ps->velocity);
+		VectorMA(pm->ps->velocity, k, wishdir, pm->ps->velocity);
 		VectorNormalize(pm->ps->velocity);
 	}
 
-	for (i = 0; i < 2; i++) {
-		pm->ps->velocity[i] *= speed;
-	}
-
+	VectorScale(pm->ps->velocity, speed, pm->ps->velocity);
 	pm->ps->velocity[2] = zspeed;
 }
 
@@ -623,7 +624,9 @@ static void PM_AirMove(void) {
 	float wishspeed, wishspeed2;
 	float scale;
 	usercmd_t cmd;
-	float accel;
+	float accel = pm_cpm_airaccelerate;
+	vec3_t curdir;
+	float dot;
 
 	PM_Friction();
 
@@ -650,22 +653,26 @@ static void PM_AirMove(void) {
 	VectorCopy(wishvel, wishdir);
 	wishspeed = VectorNormalize(wishdir);
 	wishspeed *= scale;
+	wishspeed2 = wishspeed;
+
+	if (pm->airControl) {
+		curdir[0] = pm->ps->velocity[0];
+		curdir[1] = pm->ps->velocity[1];
+		curdir[2] = 0;
+		VectorNormalize(curdir);
+		dot = -DotProduct(curdir, wishdir);
+		accel = accel + (pm_cpm_airstopaccelerate - accel) * (dot > 0 ? dot : 0);
+
+		if (fmove == 0 && smove != 0) {
+			wishspeed = pm_cpm_airstrafewishspeed;
+			accel = pm_cpm_airstrafeaccelerate;
+		}
+	}
 
 	// not on ground, so little effect on velocity
 	PM_Accelerate(wishdir, wishspeed, pm_airaccelerate);
 
-	if (pm->airControl && !fmove) {
-		wishspeed2 = wishspeed;
-		accel = pm_airaccelerate;
-
-		if ((pm->ps->movementDir == 2 || pm->ps->movementDir == -2 || pm->ps->movementDir == 10) || (pm->ps->movementDir == 6 || pm->ps->movementDir == -6 || pm->ps->movementDir == 14)) {
-			if (wishspeed > pm_cpm_wishspeed) {
-				wishspeed = pm_cpm_wishspeed;
-			}
-			accel = pm_cpm_strafeaccelerate;
-		}
-
-		PM_Accelerate(wishdir, wishspeed, accel);
+	if (pm->airControl) {
 		PM_CPM_Aircontrol(pm, wishdir, wishspeed2);
 	}
 
