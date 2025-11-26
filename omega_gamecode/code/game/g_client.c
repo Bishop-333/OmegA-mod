@@ -1627,7 +1627,7 @@ void ClientSpawn(gentity_t *ent) {
 	ent->classname = "player";
 	ent->r.contents = CONTENTS_BODY;
 	ent->clipmask = MASK_PLAYERSOLID;
-	if (!g_clipwalls.integer) {
+	if (g_noInvisWalls.integer) {
 		ent->clipmask &= ~CONTENTS_PLAYERCLIP;
 	}
 	ent->die = player_die;

@@ -614,7 +614,7 @@ void CG_PredictPlayerState(void) {
 	if (cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR) {
 		cg_pmove.tracemask &= ~CONTENTS_BODY; // spectators can fly through bodies
 	}
-	if (!cg_pmove.clipwalls) {
+	if (cg_pmove.noInvisWalls) {
 		cg_pmove.tracemask &= ~CONTENTS_PLAYERCLIP;
 	}
 	cg_pmove.noFootsteps = (cgs.dmflags & DF_NO_FOOTSTEPS) > 0;
@@ -661,6 +661,7 @@ void CG_PredictPlayerState(void) {
 	cg_pmove.pmove_msec = pmove_msec.integer;
 	cg_pmove.pmove_float = pmove_float.integer;
 	cg_pmove.pmove_flags = cgs.dmflags;
+	cg_pmove.noInvisWalls = cg_noInvisWalls.integer;
 
 	//unlagged - optimized prediction
 	// Like the comments described above, a player's state is entirely

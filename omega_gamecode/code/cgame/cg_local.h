@@ -1432,6 +1432,7 @@ extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_forceTeamSkins;
 extern vmCvar_t cg_guidedRockets;
 extern vmCvar_t cg_killsound;
+extern vmCvar_t cg_noInvisWalls;
 extern vmCvar_t cg_omegaFlags;
 extern vmCvar_t cg_screenshake;
 extern vmCvar_t cg_selfSounds;

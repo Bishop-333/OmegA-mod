@@ -49,7 +49,7 @@ List of the cvars/additions :
 - g_autohop
 - g_beheading
 - g_chaos
-- g_clipwalls (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
+- g_noInvisWalls (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
 - g_damagePlums
 - g_dropFlag
 - g_easierPickup
