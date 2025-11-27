@@ -184,7 +184,7 @@ void G_TimeShiftAllClients(int time, gentity_t *skip) {
 	// for every client
 	ent = &g_entities[0];
 	for (i = 0; i < MAX_CLIENTS; i++, ent++) {
-		if (ent->client && ent->inuse && ent->client->sess.sessionTeam < TEAM_SPECTATOR && ent != skip) {
+		if (ent->client && ent->inuse && ent->client->sess.sessionTeam < TEAM_SPECTATOR && ent != skip && ent->r.linked) {
 			G_TimeShiftClient(ent, time);
 		}
 	}
