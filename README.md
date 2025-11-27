@@ -1,10 +1,10 @@
 <div align="center">
-<img src="omega_logo.svg" alt="OmegA Logo" width="333">
+<img src="omega_logo.svg" alt="OmegA Logo" width="256">
 </div>
 
 # OmegA mod
-![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
 [![Build](https://github.com/Bishop-333/OmegA-mod/actions/workflows/main.yml/badge.svg)](https://github.com/Bishop-333/OmegA-mod/actions/workflows/main.yml)
+![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
 
 **OmegA** is a mod for **OpenArena** designed to polish the original experience and add features for both competitive and casual gameplay. <br>
 It integrates improvements from different projects like [Ratmod](https://github.com/rdntcntrl/ratoa_gamecode), [Aftershock](https://github.com/Irbyz/aftershock-xe), and [ioquake3](https://github.com/ioquake/ioq3).
@@ -57,15 +57,13 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | `g_weaponArena` | Restricts the match to specific weapons. |
 
 ## New assets
-- flag models
 - font
 - icons
-- medals
-- menu
+- models
 - music (can be heard in slimefac)
+- sfx
 - skins
-- sounds
-- weapons sfx
+- sprites
 
 ## Building a pk3
 
