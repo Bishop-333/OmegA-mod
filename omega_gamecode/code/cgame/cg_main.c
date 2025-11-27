@@ -475,7 +475,7 @@ static cvarTable_t cvarTable[] = {     // bk001129
     {&cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE},
     {&cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH},
     {&cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE},
-    {&cg_screenshake, "cg_screenshake", "0", CVAR_ARCHIVE},
+    {&cg_screenshake, "cg_screenshake", "1", CVAR_ARCHIVE},
     {&cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE},
     {&cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE},
     {&cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE},
