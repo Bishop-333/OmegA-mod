@@ -466,7 +466,7 @@ static void CG_DrawStatusBar(void) {
 	VectorClear(angles);
 
 	// draw any 3D icons first, so the changes back to 2D are minimized
-	if (cent->currentState.weapon && cg_weapons[cent->currentState.weapon].ammoModel) {
+	if (cent->currentState.weapon && cg_weapons[cent->currentState.weapon].ammoModel && cg_statusBarStyle.integer!= 2) {
 		origin[0] = 70;
 		origin[1] = 0;
 		origin[2] = 0;
@@ -542,7 +542,7 @@ static void CG_DrawStatusBar(void) {
 			trap_R_SetColor(NULL);
 
 			// draw a 2D icon for ammo
-			if (!cg_draw3dIcons.integer && cg_drawIcons.integer) {
+			if ((!cg_draw3dIcons.integer || cg_statusBarStyle.integer == 2) && cg_drawIcons.integer) {
 				qhandle_t icon;
 
 				icon = cg_weapons[weaponSelect].ammoIcon;
