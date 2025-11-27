@@ -1,107 +1,78 @@
-# OmegA
+<div align="center">
+<img src="omega_logo.svg" alt="OmegA Logo" width="333">
+</div>
+
+# OmegA mod
+![License](https://img.shields.io/badge/License-GPLv2-blue.svg)
 [![Build](https://github.com/Bishop-333/OmegA-mod/actions/workflows/main.yml/badge.svg)](https://github.com/Bishop-333/OmegA-mod/actions/workflows/main.yml)
 
-![OmegA Logo](omega_logo.svg)
+**OmegA** is a mod for **OpenArena** designed to polish the original experience and add features for both competitive and casual gameplay. <br>
+It integrates improvements from different projects like [Ratmod](https://github.com/rdntcntrl/ratoa_gamecode), [Aftershock](https://github.com/Irbyz/aftershock-xe), and [ioquake3](https://github.com/ioquake/ioq3).
 
-OmegA is a mod for OpenArena which has for goal to fix bugs and add cool features for competitive gameplay. It takes inspiration from different mods like Aftershock or Ratmod.
+## List of some new cvars
 
-List of the cvars/additions :
+### Movement
+| Cvar | Description |
+| :--- | :--- |
+| `pmove_aircontrol` | Enables CPMA-style air control. |
+| `pmove_autohop` | Enables holding jump to hop continuously. |
+| `pmove_doublejump` | Enables double jump. |
 
-- cg_bobgun
-- cg_brightPlayers
-- cg_damagePlums
-- cg_drawEmotes
-- cg_drawEnemy
-- cg_drawFriendThroughWalls
-- cg_drawItemPickup
-- cg_drawTeamBackground
-- cg_enemyColor (needs cg_brightPlayers enabled)
-- cg_enemyModel
-- cg_enemySounds
-- cg_forceTeamSkins
-- cg_killsound
-- cg_omegaFlags
-- cg_omegaInitialized
-- cg_screenshake
-- cg_selfSounds
-- cg_shotgunSparks
-- cg_showSpawns
-- cg_showSpecZoom
-- cg_statusBarStyle
-- cg_switchCycle
-- cg_teamColor (needs cg_brightPlayers enabled)
-- cg_teamModel
-- cg_teamSounds
-- cg_thinLightningBolt
-- cg_timerHeight
-- cg_timerWidth
-- cg_timerX
-- cg_timerY
-- cg_transparentGun
-- cg_wallhack
-- cg_zoomAnim
-- cg_zoomAnimSpeed
-- cg_zoomToggle
-#
-- g_allowDuplicateGuid
-- g_ambientSounds
-- g_beheading
-- g_chaos
-- g_noInvisWalls (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
-- g_damagePlums
-- g_dropFlag
-- g_easierPickup
-- g_elimination_items
-- g_gauntletDamage
-- g_grenadeSpeed
-- g_guidedRockets
-- g_headDamageMultiplicator
-- g_headShotOnly
-- g_jumppadGrenades (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
-- g_lightningDamage
-- g_machinegunDamage
-- g_machinegunTeamDamage
-- g_muteSpectators
-- g_plasmaBounce
-- g_railgunDamage
-- g_railgunFireRate
-- g_railJump
-- g_railThroughWalls
-- g_rocketFireRate
-- g_rocketSpeed
-- g_selfDamage
-- g_slikGround
-- g_spectateOnDeath
-- g_startWhenReady
-- g_survivorsRespawn
-- g_teamPush
-- g_teleportMissiles (imported from [ratmod](https://github.com/rdntcntrl/ratoa_gamecode))
-- g_vulnerableRockets
-- g_waterDamage
-- g_weaponArena
-#
-- pmove_aircontrol
-- pmove_autohop
-- pmove_doublejump
-#
-- new flags models
-- new font
-- new hud
-- new icons
-- new medals
-- new menu
-- new music (can be heared in slimefac)
-- new skins
-- new sounds
-- new weapons sfx
-- new ui
-- a lot of fixes
+### Competitive
+| Cvar | Description |
+| :--- | :--- |
+| `cg_brightPlayers` | Enables bright player skins for better visibility. |
+| `cg_damagePlums` | Displays floating numbers indicating the damage dealt when hitting an enemy. |
+| `g_dropFlag` | Allows the flag carrier to drop it manually (requires binding a key). |
+| `g_easierPickup` | Increases the item pickup hitbox height. |
+| `g_startWhenReady` | Match waits for all players to type `/ready` to start (requires `g_doWarmup`). |
 
-## Building
+### HUD
+| Cvar | Description |
+| :--- | :--- |
+| `cg_transparentGun` | Renders your weapon model transparent to have a better field of view. |
+| `cg_drawItemPickup` | Displays pickup item names. |
+| `cg_statusBarStyle` | Changes the visual style of the status bar. |
+| `cg_timerWidth` / `cg_timerHeight` / `cg_timerX` / `cg_timerY` | Adjusts timer size and position. |
+| `cg_zoomAnim` / `cg_zoomAnimSpeed` / `cg_zoomToggle` | Configures zoom. |
+
+### Weapons
+| Cvar | Description |
+| :--- | :--- |
+| `g_gauntletDamage` / `g_lightningDamage` / `g_machinegunDamage` / `g_machinegunTeamDamage` / `g_railgunDamage` | Configures weapon damage. |
+| `g_grenadeSpeed` / `g_rocketSpeed` | Configures projectile velocity. |
+| `g_railgunFireRate` / `g_rocketFireRate` | Configures weapon fire rate. |
+| `g_guidedRockets` | Enables guided missiles when you hold the attack button. |
+| `g_plasmaBounce` | Enables plasma orbs bouncing off walls instead of exploding on impact. |
+| `g_railJump` | Allows rocket jumps for the railgun. |
+| `g_teleportMissiles` | Enables projectiles teleporting through portals. |
+
+### Misc
+| Cvar | Description |
+| :--- | :--- |
+| `cg_drawEmotes` | Displays emote bubbles above player heads (requires binding keys). |
+| `cg_thinLightningBolt` | Renders a thinner lightning bolt. |
+| `g_ambientSounds` | Allows disabling ambient map sounds. |
+| `g_beheading` | Enables railgun headshots that decapitate enemies (gives the "headshot" medal). |
+| `g_weaponArena` | Restricts the match to specific weapons. |
+
+## New assets
+- flag models
+- font
+- icons
+- medals
+- menu
+- music (can be heard in slimefac)
+- skins
+- sounds
+- weapons sfx
+
+## Building a pk3
 
 Simply go to your terminal and type :
 
 ```sh
+cd path/to/your/folder/
 make
 ```
 
@@ -112,5 +83,5 @@ make
 
 ## Donate
 
-I develop during my freetime, if you enjoyed my engine/fork or my mod please consider supporting me by donating !
+I develop during my free time, if you enjoyed my mod or my engine/fork please consider supporting me by donating !
 * paypal.me/fatsakura
