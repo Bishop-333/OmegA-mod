@@ -1147,6 +1147,7 @@ extern vmCvar_t g_noInvisWalls;
 extern vmCvar_t g_damagePlums;
 extern vmCvar_t g_dropFlag;
 extern vmCvar_t g_easierPickup;
+extern vmCvar_t g_forcespectator;
 extern vmCvar_t g_gauntletDamage;
 extern vmCvar_t g_grenadeSpeed;
 extern vmCvar_t g_guidedRockets;

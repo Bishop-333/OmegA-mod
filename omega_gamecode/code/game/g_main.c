@@ -207,6 +207,7 @@ vmCvar_t g_noInvisWalls; //from ratmod
 vmCvar_t g_damagePlums;
 vmCvar_t g_dropFlag;
 vmCvar_t g_easierPickup;
+vmCvar_t g_forcespectator;
 vmCvar_t g_gauntletDamage;
 vmCvar_t g_grenadeSpeed;
 vmCvar_t g_guidedRockets;
@@ -293,7 +294,7 @@ static cvarTable_t gameCvarTable[] = {
     {&g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue},
     {&g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue},
     {&g_weaponTeamRespawn, "g_weaponTeamRespawn", "30", 0, 0, qtrue},
-    {&g_forcerespawn, "g_forcerespawn", "120", 0, 0, qtrue},
+    {&g_forcerespawn, "g_forcerespawn", "20", 0, 0, qtrue},
     {&g_respawntime, "g_respawntime", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_bluerespawntime, "g_bluerespawntime", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_redrespawntime, "g_redrespawntime", "0", CVAR_ARCHIVE, 0, qtrue},
@@ -444,6 +445,7 @@ static cvarTable_t gameCvarTable[] = {
     {&g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse},
     {&g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
+	{&g_forcespectator, "g_forcespectator", "0", 0, 0, qtrue},
     {&g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue},
     {&g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue},
     {&g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue},
