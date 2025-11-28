@@ -647,6 +647,12 @@ Sets cg.refdef view values
 */
 static int CG_CalcViewValues(void) {
 	playerState_t *ps;
+	int msec;
+
+	msec = cg.time - cg.oldTime;
+	if ( msec < 0 ) {
+		msec = 0;
+	}
 
 	memset(&cg.refdef, 0, sizeof(cg.refdef));
 
@@ -678,7 +684,7 @@ static int CG_CalcViewValues(void) {
 			cg_thirdPersonAngle.value += cg_cameraOrbit.value;
 		} else if (trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !(cg.snap->ps.pm_flags & PMF_FOLLOW) && !(cg.predictedPlayerState.stats[STAT_HEALTH] <= 0) && !cg_paused.integer) {
 			cg.nextOrbitTime = cg.time;
-			cg_thirdPersonAngle.value += 0.1;
+			cg_thirdPersonAngle.value += 0.02 * msec;
 		} else {
 			cg_thirdPersonAngle.value = 0;
 		}
