@@ -1300,7 +1300,14 @@ int BotAIStartFrame(int time) {
 		ent = g_entities;
 		for (i = 0; i < level.num_entities; i++, s++, ent++) {
 			ent = &g_entities[i];
-			if (!ent->inuse || !ent->r.linked || (!(g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_LMS || g_instantgib.integer || g_rockets.integer || g_weaponArena.integer || g_elimination_allgametypes.integer || g_gametype.integer == GT_CTF_ELIMINATION) && ent->r.svFlags & SVF_NOCLIENT)) {
+			if (!ent->inuse || !ent->r.linked) {
+				if ( *s == qfalse ) {
+					*s = qtrue;
+					trap_BotLibUpdateEntity(i, NULL);
+				}
+				continue;
+			}
+			if (!((BG_IsEliminationGT(g_gametype.integer) && !g_elimination_items.integer) || g_instantgib.integer || g_rockets.integer || g_weaponArena.integer || g_elimination_allgametypes.integer) && ent->r.svFlags & SVF_NOCLIENT) {
 				if (*s == qfalse) {
 					*s = qtrue;
 					trap_BotLibUpdateEntity(i, NULL);
