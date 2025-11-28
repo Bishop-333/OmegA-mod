@@ -921,6 +921,10 @@ static void ClientThink_real(gentity_t *ent) {
 		client->ps.pm_type = PM_NOCLIP;
 	} else if (client->ps.stats[STAT_HEALTH] <= 0) {
 		if (!(ent->r.svFlags & SVF_BOT) && g_spectateOnDeath.integer) {
+			if (client->ps.pm_type != PM_SPECTATOR) {
+				BG_PlayerStateToEntityState(&client->ps, &ent->s, qtrue);
+				CopyToBodyQue(ent);
+			}
 			client->ps.pm_type = PM_SPECTATOR;
 		} else {
 			client->ps.pm_type = PM_DEAD;
