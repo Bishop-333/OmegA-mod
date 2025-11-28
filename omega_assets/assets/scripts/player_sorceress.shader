@@ -16,15 +16,6 @@ models/players/sorceress/redrings
 	}
 }
 
-models/players/sorceress/defaultrings
-{
-	{
-		map models/players/sorceress/defaultrings.tga
-		rgbGen lightingDiffuse
-		blendfunc gl_one gl_one
-	}
-}
-
 models/players/sorceress/drowhead
 {
 	cull disable
@@ -127,43 +118,6 @@ models/players/sorceress/reddrowbody
 	}
 	{
 		map models/players/sorceress/reddrowbody.tga
-		blendfunc gl_src_alpha gl_one
-		rgbGen lightingDiffuse
-		depthFunc equal
-		alphaGen lightingSpecular
-		detail
-	}
-}
-
-models/players/sorceress/defaultdrowhair
-{
-	cull disable
-	{
-		map models/players/sorceress/defaultdrowhead
-		rgbGen lightingDiffuse
-		alphaFunc GE128
-	}
-	{
-		map gfx/fx/spec/hairspec.tga
-		blendfunc gl_dst_color gl_dst_alpha
-		rgbGen lightingDiffuse
-		tcGen environment 
-		depthFunc equal
-		alphaGen lightingSpecular
-		detail
-	}
-}
-
-models/players/sorceress/defaultdrowbody
-{
-	cull disable
-	{
-		map models/players/sorceress/defaultdrowbody
-		rgbGen lightingDiffuse
-		alphaFunc GE128
-	}
-	{
-		map models/players/sorceress/defaultdrowbody
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		depthFunc equal

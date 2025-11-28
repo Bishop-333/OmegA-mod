@@ -84,7 +84,7 @@ models/weapons2/machinegun/skin
 {
 	nopicmip
 	{
-		map models/weapons2/machinegun/mgun
+		map models/weapons2/machinegun/mgun.tga
 		rgbGen lightingDiffuse
 	}
 	{
@@ -102,7 +102,7 @@ models/weapons2/machinegun/skin
 		detail
 	}
 	{
-		map models/weapons2/machinegun/mgun
+		map models/weapons2/machinegun/mgun.tga
 		blendFunc gl_one gl_zero
 		alphaFunc LT128
 		rgbGen lightingDiffuse
