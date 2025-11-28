@@ -97,11 +97,38 @@ UI_RemoveBotsMenu_DeleteEvent
 =================
 */
 static void UI_RemoveBotsMenu_DeleteEvent(void *ptr, int event) {
+	int index;
+	int n;
+
 	if (event != QM_ACTIVATED) {
 		return;
 	}
 
-	trap_Cmd_ExecuteText(EXEC_APPEND, va("clientkick %i\n", removeBotsMenuInfo.botClientNums[removeBotsMenuInfo.baseBotNum + removeBotsMenuInfo.selectedBotNum]));
+	index = removeBotsMenuInfo.baseBotNum + removeBotsMenuInfo.selectedBotNum;
+
+	trap_Cmd_ExecuteText(EXEC_APPEND, va("clientkick %i\n", removeBotsMenuInfo.botClientNums[index]));
+
+	for (n = index; n < removeBotsMenuInfo.numBots - 1; n++) {
+		removeBotsMenuInfo.botClientNums[n] = removeBotsMenuInfo.botClientNums[n + 1];
+	}
+
+	removeBotsMenuInfo.numBots--;
+
+	if (index >= removeBotsMenuInfo.numBots) {
+		if (removeBotsMenuInfo.selectedBotNum > 0) {
+			removeBotsMenuInfo.selectedBotNum--;
+		} else if (removeBotsMenuInfo.baseBotNum > 0) {
+			removeBotsMenuInfo.baseBotNum--;
+		}
+	}
+
+	UI_RemoveBotsMenu_SetBotNames();
+
+	for (n = 0; n < 7; n++) {
+		if (removeBotsMenuInfo.baseBotNum + n >= removeBotsMenuInfo.numBots) {
+			removeBotsMenuInfo.botnames[n][0] = '\0';
+		}
+	}
 }
 
 /*
