@@ -684,7 +684,7 @@ static int CG_CalcViewValues(void) {
 			cg_thirdPersonAngle.value += cg_cameraOrbit.value;
 		} else if (trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !(cg.snap->ps.pm_flags & PMF_FOLLOW) && !(cg.predictedPlayerState.stats[STAT_HEALTH] <= 0) && !cg_paused.integer) {
 			cg.nextOrbitTime = cg.time;
-			cg_thirdPersonAngle.value += 0.02 * msec;
+			cg_thirdPersonAngle.value += 0.015 * msec;
 		} else {
 			cg_thirdPersonAngle.value = 0;
 		}
