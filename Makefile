@@ -26,7 +26,7 @@ ASSETS_DIR := omega_assets
 OUTPUT_DIR := build
 PK3_DIR := $(OUTPUT_DIR)/pk3
 
-OMEGA_PK3 = z_omega-v3.3.4.pk3
+OMEGA_PK3 = z_omega-v3.3.5.pk3
 
 TIMESTAMP = @$(shell cd $(GAMECODE_DIR) && git show -s --format=%ct)
 

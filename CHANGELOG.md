@@ -134,3 +134,16 @@
 - new crosshair names display imported from OpenSandbox
 - add random bot option in the in-game menu
 - warning clean, fixes and other optimizations
+
+## 3.3.5
+- code and assets cleanup
+- better and adaptative font
+- AI fixes and enhancements
+- dynamic lights now for plasma and bfg
+- gibs are launched in function of the impact location
+- update qvm tools and makefile
+- better pmove_aircontrol (CPM accurate)
+- better `g_plasmaBounce` (no more grenade sound)
+- better `g_guidedRockets` (don't shoot another rocket if your holding attack)
+- don't force inactive players to go spectator now it's defined by `g_forcespectator`
+- add mutliple explicit cvars (`pmove_doublejump`, `g_spectateOnDeath`, `g_noInvisWalls`)

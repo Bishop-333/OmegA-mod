@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CLIENT_WINDOW_TITLE     	"OmegA"
 #define CLIENT_WINDOW_MIN_TITLE 	"OmegA Console"
 
-#define PRODUCT_VERSION			"3.3.4"
+#define PRODUCT_VERSION			"3.3.5"
 
 #ifndef PRODUCT_DATE
   #define PRODUCT_DATE __DATE__
