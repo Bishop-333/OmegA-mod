@@ -1301,7 +1301,7 @@ int BotAIStartFrame(int time) {
 		for (i = 0; i < level.num_entities; i++, s++, ent++) {
 			ent = &g_entities[i];
 			if (!ent->inuse || !ent->r.linked) {
-				if ( *s == qfalse ) {
+				if (*s == qfalse) {
 					*s = qtrue;
 					trap_BotLibUpdateEntity(i, NULL);
 				}

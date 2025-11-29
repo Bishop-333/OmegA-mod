@@ -650,7 +650,7 @@ static int CG_CalcViewValues(void) {
 	int msec;
 
 	msec = cg.time - cg.oldTime;
-	if ( msec < 0 ) {
+	if (msec < 0) {
 		msec = 0;
 	}
 

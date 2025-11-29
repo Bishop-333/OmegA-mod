@@ -222,7 +222,7 @@ Add_Ammo
 ===============
 */
 void Add_Ammo(gentity_t *ent, int weapon, int count) {
-	if ( g_cheats.integer && ent->client->ps.ammo[weapon] > AMMO_HARD_LIMIT ) {
+	if (g_cheats.integer && ent->client->ps.ammo[weapon] > AMMO_HARD_LIMIT) {
 		return;
 	}
 	ent->client->ps.ammo[weapon] += count;

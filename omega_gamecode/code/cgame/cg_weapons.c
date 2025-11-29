@@ -3278,7 +3278,6 @@ static void CG_ShotgunPellet(vec3_t start, vec3_t end, int skipNum) {
 
 				if (cg_leiEnhancement.integer) {
 					CG_SmokePuff(tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0, cgs.media.lsmkShader2);
-					//CG_SmokePuff( tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0, cgs.media.lbumShader1 );
 				}
 				// END LEILEI ENHANCEMENT
 			}
@@ -3606,7 +3605,7 @@ void CG_Bullet(vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, i
 			kapew[1] = kapew[1] * (crandom() * 65 + 37);
 			kapew[2] = kapew[2] * (crandom() * 65 + 37);
 
-			CG_SmokePuff(end, kapow, 14, 1, 1, 1, 1.0f, 600, cg.time, 0, 0, cgs.media.lsmkShader1);
+			CG_SmokePuff(end, kapow, 0.14, 1, 1, 1, 1.0f, 600, cg.time, 0, 0, cgs.media.lsmkShader1);
 		}
 		// END LEILEI ENHANCEMENT
 	}
