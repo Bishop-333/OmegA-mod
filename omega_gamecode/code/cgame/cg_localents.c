@@ -227,38 +227,14 @@ static void CG_FragmentBounceSound(localEntity_t *le, trace_t *trace) {
 		}
 	} else if (le->leBounceSoundType == LEBS_BRASS) {
 		if (cg_leiBrassNoise.integer) {
-			// half the casings will make casing sounds
-			if (rand() & 1) {
-				int r = rand() & 3;
-				sfxHandle_t s;
-
-				if (r == 0) {
-					s = cgs.media.lbul1Sound;
-				} else if (r == 1) {
-					s = cgs.media.lbul2Sound;
-				} else {
-					s = cgs.media.lbul3Sound;
-				}
-				trap_S_StartSound(trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, s);
-			}
+			// casings will make casing sounds
+			trap_S_StartSound(trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.lbul1Sound);
 		}
 
 	} else if (le->leBounceSoundType == LEBS_SHELL) {
 		if (cg_leiBrassNoise.integer) {
-			// half the casings will make casing sounds
-			if (rand() & 1) {
-				int r = rand() & 3;
-				sfxHandle_t s;
-
-				if (r == 0) {
-					s = cgs.media.lshl1Sound;
-				} else if (r == 1) {
-					s = cgs.media.lshl2Sound;
-				} else {
-					s = cgs.media.lshl3Sound;
-				}
-				trap_S_StartSound(trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, s);
-			}
+			// casings will make casing sounds
+			trap_S_StartSound(trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.lshl1Sound);
 		}
 	}
 

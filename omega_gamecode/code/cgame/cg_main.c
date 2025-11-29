@@ -321,7 +321,7 @@ static cvarTable_t cvarTable[] = {     // bk001129
     {&cg_crosshairHealth, "cg_crosshairHealth", "1", CVAR_ARCHIVE},
     {&cg_crosshairX, "cg_crosshairX", "0", CVAR_ARCHIVE},
     {&cg_crosshairY, "cg_crosshairY", "0", CVAR_ARCHIVE},
-    {&cg_brassTime, "cg_brassTime", "0", CVAR_ARCHIVE},
+    {&cg_brassTime, "cg_brassTime", "2500", CVAR_ARCHIVE},
     {&cg_simpleItems, "cg_simpleItems", "0", CVAR_ARCHIVE},
     {&cg_addMarks, "cg_marks", "1", CVAR_ARCHIVE},
     {&cg_lagometer, "cg_lagometer", "1", CVAR_ARCHIVE},
@@ -401,7 +401,7 @@ static cvarTable_t cvarTable[] = {     // bk001129
     {&cg_oldRocket, "cg_oldRocket", "1", CVAR_ARCHIVE},
     {&cg_leiEnhancement, "cg_leiEnhancement", "0", CVAR_ARCHIVE},             // LEILEI default off (in case of whiner)
     {&cg_leiGoreNoise, "cg_leiGoreNoise", "0", CVAR_ARCHIVE},                 // LEILEI
-    {&cg_leiBrassNoise, "cg_leiBrassNoise", "0", CVAR_ARCHIVE},               // LEILEI
+    {&cg_leiBrassNoise, "cg_leiBrassNoise", "1", CVAR_ARCHIVE},               // LEILEI
     {&cg_leiSuperGoreyAwesome, "cg_leiSuperGoreyAwesome", "0", CVAR_ARCHIVE}, // LEILEI
     {&cg_oldPlasma, "cg_oldPlasma", "1", CVAR_ARCHIVE},
     //unlagged - client options
