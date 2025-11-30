@@ -39,24 +39,23 @@ GAME OPTIONS MENU
 
 #define ID_CROSSHAIR 127
 #define ID_SIMPLEITEMS 128
-#define ID_HIGHQUALITYSKY 129
-#define ID_EJECTINGBRASS 130
-#define ID_WALLMARKS 131
-#define ID_IDENTIFYTARGET 132
-#define ID_SYNCEVERYFRAME 133
-#define ID_FORCEMODEL 134
-#define ID_DRAWTEAMOVERLAY 135
-#define ID_AUTOSWITCH 136
-#define ID_BACK 137
+#define ID_EJECTINGBRASS 129
+#define ID_WALLMARKS 130
+#define ID_IDENTIFYTARGET 131
+#define ID_SYNCEVERYFRAME 132
+#define ID_FORCEMODEL 133
+#define ID_DRAWTEAMOVERLAY 134
+#define ID_AUTOSWITCH 135
+#define ID_BACK 136
 //Elimination
-#define ID_WEAPONBAR 138
-#define ID_DELAGHITSCAN 139
-#define ID_COLORRED 140
-#define ID_COLORGREEN 141
-#define ID_COLORBLUE 142
-#define ID_CROSSHAIRHEALTH 143
-#define ID_DRAWGUN 144
-#define ID_TRANSPARENTGUN 145
+#define ID_WEAPONBAR 137
+#define ID_DELAGHITSCAN 138
+#define ID_COLORRED 139
+#define ID_COLORGREEN 140
+#define ID_COLORBLUE 141
+#define ID_CROSSHAIRHEALTH 142
+#define ID_DRAWGUN 143
+#define ID_TRANSPARENTGUN 144
 
 #undef NUM_CROSSHAIRS
 #define NUM_CROSSHAIRS 99
@@ -81,7 +80,6 @@ typedef struct {
 	menuradiobutton_s brass;
 	menuradiobutton_s wallmarks;
 	menuradiobutton_s identifytarget;
-	menuradiobutton_s highqualitysky;
 	menuradiobutton_s synceveryframe;
 	menuradiobutton_s forcemodel;
 	menulist_s drawteamoverlay;
@@ -153,7 +151,6 @@ static void Preferences_SetMenuItems(void) {
 	s_preferences.brass.curvalue = trap_Cvar_VariableValue("cg_brassTime") != 0;
 	s_preferences.wallmarks.curvalue = trap_Cvar_VariableValue("cg_marks") != 0;
 	s_preferences.identifytarget.curvalue = trap_Cvar_VariableValue("cg_drawCrosshairNames") != 0;
-	s_preferences.highqualitysky.curvalue = trap_Cvar_VariableValue("r_fastsky") == 0;
 	s_preferences.synceveryframe.curvalue = trap_Cvar_VariableValue("r_finish") != 0;
 	s_preferences.forcemodel.curvalue = trap_Cvar_VariableValue("cg_forcemodel") != 0;
 	s_preferences.drawteamoverlay.curvalue = Com_Clamp(0, 3, trap_Cvar_VariableValue("cg_drawTeamOverlay"));
@@ -199,10 +196,6 @@ static void Preferences_Event(void *ptr, int notification) {
 
 		case ID_WEAPONBAR:
 			trap_Cvar_SetValue("cg_alwaysWeaponBar", s_preferences.alwaysweaponbar.curvalue);
-			break;
-
-		case ID_HIGHQUALITYSKY:
-			trap_Cvar_SetValue("r_fastsky", !s_preferences.highqualitysky.curvalue);
 			break;
 
 		case ID_EJECTINGBRASS:
@@ -458,15 +451,6 @@ static void Preferences_MenuInit(void) {
 	s_preferences.identifytarget.generic.y = y;
 
 	y += BIGCHAR_HEIGHT + 2;
-	s_preferences.highqualitysky.generic.type = MTYPE_RADIOBUTTON;
-	s_preferences.highqualitysky.generic.name = "High Quality Sky:";
-	s_preferences.highqualitysky.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_preferences.highqualitysky.generic.callback = Preferences_Event;
-	s_preferences.highqualitysky.generic.id = ID_HIGHQUALITYSKY;
-	s_preferences.highqualitysky.generic.x = PREFERENCES_X_POS;
-	s_preferences.highqualitysky.generic.y = y;
-
-	y += BIGCHAR_HEIGHT + 2;
 	s_preferences.synceveryframe.generic.type = MTYPE_RADIOBUTTON;
 	s_preferences.synceveryframe.generic.name = "Sync Every Frame:";
 	s_preferences.synceveryframe.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -557,7 +541,6 @@ static void Preferences_MenuInit(void) {
 	Menu_AddItem(&s_preferences.menu, &s_preferences.wallmarks);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.brass);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.identifytarget);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.highqualitysky);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.synceveryframe);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.forcemodel);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.drawteamoverlay);

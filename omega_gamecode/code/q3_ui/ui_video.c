@@ -262,7 +262,6 @@ typedef struct {
 	menulist_s bloom;
 	menulist_s dynamiclights;
 	menulist_s shadows;
-	menulist_s filter;
 	menulist_s aniso;
 	menulist_s anti;
 	menulist_s supersample;
@@ -283,7 +282,6 @@ typedef struct
 	qboolean dynamiclights;
 	qboolean drawfps;
 	int shadows;
-	int filter;
 	int aniso;
 	int anti;
 	int supersample;
@@ -439,7 +437,6 @@ static void GraphicsOptions_GetInitialVideo(void) {
 	s_ivo.dynamiclights = s_graphicsoptions.dynamiclights.curvalue;
 	s_ivo.drawfps = s_graphicsoptions.drawfps.curvalue;
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
-	s_ivo.filter = s_graphicsoptions.filter.curvalue;
 	s_ivo.aniso = s_graphicsoptions.aniso.curvalue;
 	s_ivo.anti = s_graphicsoptions.anti.curvalue;
 	s_ivo.supersample = s_graphicsoptions.supersample.curvalue;
@@ -516,9 +513,6 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.shadows != s_graphicsoptions.shadows.curvalue) {
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
-	}
-	if (s_ivo.filter != s_graphicsoptions.filter.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.aniso != s_graphicsoptions.aniso.curvalue) {
@@ -598,12 +592,6 @@ static void GraphicsOptions_ApplyChanges(void *unused, int notification) {
 		trap_Cvar_SetValue("cg_shadows", 1);
 	} else {
 		trap_Cvar_SetValue("cg_shadows", 0);
-	}
-
-	if (s_graphicsoptions.filter.curvalue) {
-		trap_Cvar_Set("r_textureMode", "GL_LINEAR_MIPMAP_LINEAR");
-	} else {
-		trap_Cvar_Set("r_textureMode", "GL_LINEAR_MIPMAP_NEAREST");
 	}
 
 	trap_Cmd_ExecuteText(EXEC_APPEND, "vid_restart\n");
@@ -742,12 +730,6 @@ static void GraphicsOptions_SetMenuItems(void) {
 	} else if (s_graphicsoptions.tq.curvalue > 3) {
 		s_graphicsoptions.tq.curvalue = 3;
 	}
-
-	if (!Q_stricmp(UI_Cvar_VariableString("r_textureMode"), "GL_LINEAR_MIPMAP_NEAREST")) {
-		s_graphicsoptions.filter.curvalue = 0;
-	} else {
-		s_graphicsoptions.filter.curvalue = 1;
-	}
 }
 
 /*
@@ -756,12 +738,6 @@ GraphicsOptions_MenuInit
 ================
 */
 void GraphicsOptions_MenuInit(void) {
-	static const char *filter_names[] =
-	    {
-	        "Bilinear",
-	        "Trilinear",
-	        NULL};
-
 	static const char *aniso_names[] =
 	    {
 	        "Off",
@@ -984,15 +960,7 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.tq.generic.callback = GraphicsOptions_TQEvent;
 	y += BIGCHAR_HEIGHT + 2;
 
-	// references/modifies "r_textureMode"
-	s_graphicsoptions.filter.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.filter.generic.name = "Texture Filter:";
-	s_graphicsoptions.filter.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.filter.generic.x = 400;
-	s_graphicsoptions.filter.generic.y = y;
-	s_graphicsoptions.filter.itemnames = filter_names;
-	y += 2 + BIGCHAR_HEIGHT;
-
+	// references/modifies "r_ext_max_anisotropy"
 	s_graphicsoptions.aniso.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.aniso.generic.name = "Anisotropy:";
 	s_graphicsoptions.aniso.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1001,6 +969,7 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.aniso.itemnames = aniso_names;
 	y += 2 + BIGCHAR_HEIGHT;
 
+	// references/modifies "r_ext_multisample"
 	s_graphicsoptions.anti.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.anti.generic.name = "Anti-Aliasing:";
 	s_graphicsoptions.anti.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1009,6 +978,7 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.anti.itemnames = anti_names;
 	y += 2 + BIGCHAR_HEIGHT;
 
+	// references/modifies "r_ext_supersample"
 	s_graphicsoptions.supersample.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.supersample.generic.name = "Supersampling:";
 	s_graphicsoptions.supersample.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1068,7 +1038,6 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.drawfps);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.shadows);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.tq);
-	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.filter);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.aniso);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.anti);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.driverinfo);
