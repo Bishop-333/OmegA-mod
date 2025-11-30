@@ -42,7 +42,7 @@ DISPLAY OPTIONS MENU
 #define ID_SOUND 12
 #define ID_NETWORK 13
 #define ID_BRIGHTNESS 14
-#define ID_SCREENSIZE 15
+#define ID_FOV 15
 #define ID_BACK 16
 
 typedef struct {
@@ -58,7 +58,7 @@ typedef struct {
 	menutext_s network;
 
 	menuslider_s brightness;
-	menuslider_s screensize;
+	menuslider_s fov;
 
 	menulist_s hdr;
 	menulist_s vsync;
@@ -150,8 +150,8 @@ static void UI_DisplayOptionsMenu_Event(void *ptr, int event) {
 			trap_Cvar_SetValue("r_gamma", displayOptionsInfo.brightness.curvalue / 10.0f);
 			break;
 
-		case ID_SCREENSIZE:
-			trap_Cvar_SetValue("cg_viewsize", displayOptionsInfo.screensize.curvalue * 10);
+		case ID_FOV:
+			trap_Cvar_SetValue("cg_fov", (int)displayOptionsInfo.fov.curvalue);
 			break;
 
 		case ID_BACK:
@@ -282,15 +282,15 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	}
 
 	y += BIGCHAR_HEIGHT + 2;
-	displayOptionsInfo.screensize.generic.type = MTYPE_SLIDER;
-	displayOptionsInfo.screensize.generic.name = "Screen Size:";
-	displayOptionsInfo.screensize.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	displayOptionsInfo.screensize.generic.callback = UI_DisplayOptionsMenu_Event;
-	displayOptionsInfo.screensize.generic.id = ID_SCREENSIZE;
-	displayOptionsInfo.screensize.generic.x = 400;
-	displayOptionsInfo.screensize.generic.y = y;
-	displayOptionsInfo.screensize.minvalue = 3;
-	displayOptionsInfo.screensize.maxvalue = 10;
+	displayOptionsInfo.fov.generic.type = MTYPE_SLIDER;
+	displayOptionsInfo.fov.generic.name = "FOV:";
+	displayOptionsInfo.fov.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	displayOptionsInfo.fov.generic.callback = UI_DisplayOptionsMenu_Event;
+	displayOptionsInfo.fov.generic.id = ID_FOV;
+	displayOptionsInfo.fov.generic.x = 400;
+	displayOptionsInfo.fov.generic.y = y;
+	displayOptionsInfo.fov.minvalue = 60;
+	displayOptionsInfo.fov.maxvalue = 160;
 
 	y += BIGCHAR_HEIGHT + 2;
 	displayOptionsInfo.hdr.generic.type = MTYPE_SPINCONTROL;
@@ -337,7 +337,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.sound);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.network);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.brightness);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.screensize);
+	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.fov);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.back);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.apply);
 
@@ -347,7 +347,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	}
 
 	displayOptionsInfo.brightness.curvalue = trap_Cvar_VariableValue("r_gamma") * 10;
-	displayOptionsInfo.screensize.curvalue = trap_Cvar_VariableValue("cg_viewsize") / 10;
+	displayOptionsInfo.fov.curvalue = trap_Cvar_VariableValue("cg_fov");
 
 	DisplayOptions_SetMenuItems();
 	DisplayOptions_GetInitialDisplay();
