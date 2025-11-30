@@ -260,6 +260,7 @@ typedef struct {
 	menulist_s fs;
 	menulist_s flares;
 	menulist_s bloom;
+	menulist_s dynamiclights;
 	menulist_s shadows;
 	menulist_s filter;
 	menulist_s aniso;
@@ -279,6 +280,7 @@ typedef struct
 	int tq;
 	qboolean flares;
 	qboolean bloom;
+	qboolean dynamiclights;
 	qboolean drawfps;
 	int shadows;
 	int filter;
@@ -434,6 +436,7 @@ static void GraphicsOptions_GetInitialVideo(void) {
 	s_ivo.tq = s_graphicsoptions.tq.curvalue;
 	s_ivo.flares = s_graphicsoptions.flares.curvalue;
 	s_ivo.bloom = s_graphicsoptions.bloom.curvalue;
+	s_ivo.dynamiclights = s_graphicsoptions.dynamiclights.curvalue;
 	s_ivo.drawfps = s_graphicsoptions.drawfps.curvalue;
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
 	s_ivo.filter = s_graphicsoptions.filter.curvalue;
@@ -503,6 +506,12 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 	if (s_ivo.bloom != s_graphicsoptions.bloom.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
+	if (s_ivo.dynamiclights != s_graphicsoptions.dynamiclights.curvalue) {
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	}
+	if (s_ivo.dynamiclights != s_graphicsoptions.dynamiclights.curvalue) {
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	}
 	if (s_ivo.drawfps != s_graphicsoptions.drawfps.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
@@ -564,6 +573,7 @@ static void GraphicsOptions_ApplyChanges(void *unused, int notification) {
 	trap_Cvar_SetValue("r_stencilbits", 0);
 	trap_Cvar_SetValue("r_flares", s_graphicsoptions.flares.curvalue);
 	trap_Cvar_SetValue("r_bloom", s_graphicsoptions.bloom.curvalue);
+	trap_Cvar_SetValue("r_dynamiclight", s_graphicsoptions.dynamiclights.curvalue);
 	trap_Cvar_SetValue("cg_drawFPS", s_graphicsoptions.drawfps.curvalue);
 	trap_Cvar_SetValue("r_ext_multisample", s_graphicsoptions.anti.curvalue * 2);
 	trap_Cvar_SetValue("r_ext_supersample", s_graphicsoptions.supersample.curvalue);
@@ -718,6 +728,7 @@ static void GraphicsOptions_SetMenuItems(void) {
 	}
 	s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue("r_flares");
 	s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue("r_bloom");
+	s_graphicsoptions.dynamiclights.curvalue = trap_Cvar_VariableValue("r_dynamiclight");
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue("cg_drawFPS");
 	s_graphicsoptions.shadows.curvalue = trap_Cvar_VariableValue("cg_shadows");
 	s_graphicsoptions.anti.curvalue = trap_Cvar_VariableValue("r_ext_multisample") / 2;
@@ -936,6 +947,15 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.bloom.itemnames = enabled_names;
 	y += BIGCHAR_HEIGHT + 2;
 
+	// references/modifies "r_dynamiclight"
+	s_graphicsoptions.dynamiclights.generic.type = MTYPE_SPINCONTROL;
+	s_graphicsoptions.dynamiclights.generic.name = "Dynamic Lights:";
+	s_graphicsoptions.dynamiclights.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_graphicsoptions.dynamiclights.generic.x = 400;
+	s_graphicsoptions.dynamiclights.generic.y = y;
+	s_graphicsoptions.dynamiclights.itemnames = enabled_names;
+	y += BIGCHAR_HEIGHT + 2;
+
 	s_graphicsoptions.drawfps.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.drawfps.generic.name = "Draw FPS:";
 	s_graphicsoptions.drawfps.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1044,6 +1064,7 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.fs);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.flares);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.bloom);
+	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.dynamiclights);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.drawfps);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.shadows);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.tq);

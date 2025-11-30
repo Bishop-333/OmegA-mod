@@ -42,22 +42,21 @@ GAME OPTIONS MENU
 #define ID_HIGHQUALITYSKY 129
 #define ID_EJECTINGBRASS 130
 #define ID_WALLMARKS 131
-#define ID_DYNAMICLIGHTS 132
-#define ID_IDENTIFYTARGET 133
-#define ID_SYNCEVERYFRAME 134
-#define ID_FORCEMODEL 135
-#define ID_DRAWTEAMOVERLAY 136
-#define ID_AUTOSWITCH 137
-#define ID_BACK 138
+#define ID_IDENTIFYTARGET 132
+#define ID_SYNCEVERYFRAME 133
+#define ID_FORCEMODEL 134
+#define ID_DRAWTEAMOVERLAY 135
+#define ID_AUTOSWITCH 136
+#define ID_BACK 137
 //Elimination
-#define ID_WEAPONBAR 139
-#define ID_DELAGHITSCAN 140
-#define ID_COLORRED 141
-#define ID_COLORGREEN 142
-#define ID_COLORBLUE 143
-#define ID_CROSSHAIRHEALTH 144
-#define ID_DRAWGUN 145
-#define ID_TRANSPARENTGUN 146
+#define ID_WEAPONBAR 138
+#define ID_DELAGHITSCAN 139
+#define ID_COLORRED 140
+#define ID_COLORGREEN 141
+#define ID_COLORBLUE 142
+#define ID_CROSSHAIRHEALTH 143
+#define ID_DRAWGUN 144
+#define ID_TRANSPARENTGUN 145
 
 #undef NUM_CROSSHAIRS
 #define NUM_CROSSHAIRS 99
@@ -81,7 +80,6 @@ typedef struct {
 	menuradiobutton_s alwaysweaponbar;
 	menuradiobutton_s brass;
 	menuradiobutton_s wallmarks;
-	menuradiobutton_s dynamiclights;
 	menuradiobutton_s identifytarget;
 	menuradiobutton_s highqualitysky;
 	menuradiobutton_s synceveryframe;
@@ -155,7 +153,6 @@ static void Preferences_SetMenuItems(void) {
 	s_preferences.brass.curvalue = trap_Cvar_VariableValue("cg_brassTime") != 0;
 	s_preferences.wallmarks.curvalue = trap_Cvar_VariableValue("cg_marks") != 0;
 	s_preferences.identifytarget.curvalue = trap_Cvar_VariableValue("cg_drawCrosshairNames") != 0;
-	s_preferences.dynamiclights.curvalue = trap_Cvar_VariableValue("r_dynamiclight") != 0;
 	s_preferences.highqualitysky.curvalue = trap_Cvar_VariableValue("r_fastsky") == 0;
 	s_preferences.synceveryframe.curvalue = trap_Cvar_VariableValue("r_finish") != 0;
 	s_preferences.forcemodel.curvalue = trap_Cvar_VariableValue("cg_forcemodel") != 0;
@@ -217,10 +214,6 @@ static void Preferences_Event(void *ptr, int notification) {
 
 		case ID_WALLMARKS:
 			trap_Cvar_SetValue("cg_marks", s_preferences.wallmarks.curvalue);
-			break;
-
-		case ID_DYNAMICLIGHTS:
-			trap_Cvar_SetValue("r_dynamiclight", s_preferences.dynamiclights.curvalue);
 			break;
 
 		case ID_IDENTIFYTARGET:
@@ -456,15 +449,6 @@ static void Preferences_MenuInit(void) {
 	s_preferences.brass.generic.y = y;
 
 	y += BIGCHAR_HEIGHT + 2;
-	s_preferences.dynamiclights.generic.type = MTYPE_RADIOBUTTON;
-	s_preferences.dynamiclights.generic.name = "Dynamic Lights:";
-	s_preferences.dynamiclights.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_preferences.dynamiclights.generic.callback = Preferences_Event;
-	s_preferences.dynamiclights.generic.id = ID_DYNAMICLIGHTS;
-	s_preferences.dynamiclights.generic.x = PREFERENCES_X_POS;
-	s_preferences.dynamiclights.generic.y = y;
-
-	y += BIGCHAR_HEIGHT + 2;
 	s_preferences.identifytarget.generic.type = MTYPE_RADIOBUTTON;
 	s_preferences.identifytarget.generic.name = "Identify Target:";
 	s_preferences.identifytarget.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -572,7 +556,6 @@ static void Preferences_MenuInit(void) {
 	Menu_AddItem(&s_preferences.menu, &s_preferences.alwaysweaponbar);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.wallmarks);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.brass);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.dynamiclights);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.identifytarget);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.highqualitysky);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.synceveryframe);
