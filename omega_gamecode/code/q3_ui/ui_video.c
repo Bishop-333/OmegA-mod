@@ -257,12 +257,9 @@ typedef struct {
 	menulist_s ratio;
 	menulist_s mode;
 	menuslider_s tq;
-	menulist_s drawflat;
 	menulist_s fs;
 	menulist_s flares;
 	menulist_s bloom;
-	menulist_s allow_extensions;
-	menulist_s geometry;
 	menulist_s shadows;
 	menulist_s filter;
 	menulist_s aniso;
@@ -279,18 +276,15 @@ typedef struct
 {
 	int mode;
 	qboolean fullscreen;
-	qboolean drawflat;
 	int tq;
 	qboolean flares;
 	qboolean bloom;
 	qboolean drawfps;
-	int geometry;
 	int shadows;
 	int filter;
 	int aniso;
 	int anti;
 	int supersample;
-	qboolean extensions;
 	qboolean desktop;
 } InitialVideoOptions_s;
 
@@ -436,14 +430,11 @@ GraphicsOptions_GetInitialVideo
 static void GraphicsOptions_GetInitialVideo(void) {
 	s_ivo.mode = s_graphicsoptions.mode.curvalue;
 	s_ivo.fullscreen = s_graphicsoptions.fs.curvalue;
-	s_ivo.extensions = s_graphicsoptions.allow_extensions.curvalue;
 	s_ivo.desktop = s_graphicsoptions.desktop.curvalue;
-	s_ivo.drawflat = s_graphicsoptions.drawflat.curvalue;
 	s_ivo.tq = s_graphicsoptions.tq.curvalue;
 	s_ivo.flares = s_graphicsoptions.flares.curvalue;
 	s_ivo.bloom = s_graphicsoptions.bloom.curvalue;
 	s_ivo.drawfps = s_graphicsoptions.drawfps.curvalue;
-	s_ivo.geometry = s_graphicsoptions.geometry.curvalue;
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
 	s_ivo.filter = s_graphicsoptions.filter.curvalue;
 	s_ivo.aniso = s_graphicsoptions.aniso.curvalue;
@@ -492,12 +483,6 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 		s_graphicsoptions.mode.generic.flags &= ~QMF_GRAYED;
 	}
 
-	if (s_graphicsoptions.drawflat.curvalue == 1) {
-		s_graphicsoptions.tq.generic.flags |= QMF_GRAYED;
-	} else {
-		s_graphicsoptions.tq.generic.flags &= ~QMF_GRAYED;
-	}
-
 	s_graphicsoptions.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 
 	if (s_ivo.mode != s_graphicsoptions.mode.curvalue) {
@@ -506,13 +491,7 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 	if (s_ivo.fullscreen != s_graphicsoptions.fs.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
-	if (s_ivo.extensions != s_graphicsoptions.allow_extensions.curvalue) {
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
-	}
 	if (s_ivo.desktop != s_graphicsoptions.desktop.curvalue) {
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
-	}
-	if (s_ivo.drawflat != s_graphicsoptions.drawflat.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.tq != s_graphicsoptions.tq.curvalue) {
@@ -525,9 +504,6 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.drawfps != s_graphicsoptions.drawfps.curvalue) {
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
-	}
-	if (s_ivo.geometry != s_graphicsoptions.geometry.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.shadows != s_graphicsoptions.shadows.curvalue) {
@@ -556,9 +532,7 @@ static void GraphicsOptions_ApplyChanges(void *unused, int notification) {
 	if (notification != QM_ACTIVATED)
 		return;
 
-	trap_Cvar_SetValue("r_drawFlat", s_graphicsoptions.drawflat.curvalue);
 	trap_Cvar_SetValue("r_picmip", 3 - s_graphicsoptions.tq.curvalue);
-	trap_Cvar_SetValue("r_allowExtensions", s_graphicsoptions.allow_extensions.curvalue);
 	trap_Cvar_Set("r_modeFullscreen", "");
 	if (s_graphicsoptions.desktop.curvalue == 1) {
 		trap_Cvar_SetValue("r_mode", -2);
@@ -602,20 +576,6 @@ static void GraphicsOptions_ApplyChanges(void *unused, int notification) {
 		trap_Cvar_SetValue("r_ext_texture_filter_anisotropic", qfalse);
 
 	trap_Cvar_SetValue("com_hunkmegs", 256);
-
-	if (s_graphicsoptions.geometry.curvalue == 3) {
-		trap_Cvar_SetValue("r_lodBias", -2);
-		trap_Cvar_SetValue("r_subdivisions", 1);
-	} else if (s_graphicsoptions.geometry.curvalue == 2) {
-		trap_Cvar_SetValue("r_lodBias", 0);
-		trap_Cvar_SetValue("r_subdivisions", 4);
-	} else if (s_graphicsoptions.geometry.curvalue == 1) {
-		trap_Cvar_SetValue("r_lodBias", 1);
-		trap_Cvar_SetValue("r_subdivisions", 12);
-	} else {
-		trap_Cvar_SetValue("r_lodBias", 1);
-		trap_Cvar_SetValue("r_subdivisions", 20);
-	}
 
 	if (s_graphicsoptions.shadows.curvalue == 4) {
 		trap_Cvar_SetValue("cg_shadows", 4);
@@ -744,7 +704,6 @@ static void GraphicsOptions_SetMenuItems(void) {
 		}
 	}
 	s_graphicsoptions.fs.curvalue = trap_Cvar_VariableValue("r_fullscreen");
-	s_graphicsoptions.allow_extensions.curvalue = trap_Cvar_VariableValue("r_allowExtensions");
 
 	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
 		trap_Cvar_VariableStringBuffer("r_modeFullscreen", str, sizeof(str));
@@ -766,7 +725,6 @@ static void GraphicsOptions_SetMenuItems(void) {
 	if (trap_Cvar_VariableValue("r_ext_texture_filter_anisotropic")) {
 		s_graphicsoptions.aniso.curvalue = trap_Cvar_VariableValue("r_ext_max_anisotropy") / 2;
 	}
-	s_graphicsoptions.drawflat.curvalue = trap_Cvar_VariableValue("r_drawFlat");
 	s_graphicsoptions.tq.curvalue = 3 - trap_Cvar_VariableValue("r_picmip");
 	if (s_graphicsoptions.tq.curvalue < 0) {
 		s_graphicsoptions.tq.curvalue = 0;
@@ -778,18 +736,6 @@ static void GraphicsOptions_SetMenuItems(void) {
 		s_graphicsoptions.filter.curvalue = 0;
 	} else {
 		s_graphicsoptions.filter.curvalue = 1;
-	}
-
-	if (trap_Cvar_VariableValue("r_lodBias") > -2) {
-		if (trap_Cvar_VariableValue("r_subdivisions") >= 20) {
-			s_graphicsoptions.geometry.curvalue = 0;
-		} else if (trap_Cvar_VariableValue("r_subdivisions") >= 12) {
-			s_graphicsoptions.geometry.curvalue = 1;
-		} else {
-			s_graphicsoptions.geometry.curvalue = 2;
-		}
-	} else {
-		s_graphicsoptions.geometry.curvalue = 3;
 	}
 }
 
@@ -934,15 +880,6 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.network.color = color_red;
 
 	y = 240 - 7 * (BIGCHAR_HEIGHT + 2);
-	// references/modifies "r_allowExtensions"
-	s_graphicsoptions.allow_extensions.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.allow_extensions.generic.name = "GL Extensions:";
-	s_graphicsoptions.allow_extensions.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.allow_extensions.generic.x = 400;
-	s_graphicsoptions.allow_extensions.generic.y = y;
-	s_graphicsoptions.allow_extensions.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
-
 	s_graphicsoptions.desktop.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.desktop.generic.name = "Use Desktop Resolution:";
 	s_graphicsoptions.desktop.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1007,15 +944,6 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.drawfps.itemnames = enabled_names;
 	y += BIGCHAR_HEIGHT + 2;
 
-	// references/modifies "r_lodBias" & "subdivisions"
-	s_graphicsoptions.geometry.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.geometry.generic.name = "Geometric Detail:";
-	s_graphicsoptions.geometry.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.geometry.generic.x = 400;
-	s_graphicsoptions.geometry.generic.y = y;
-	s_graphicsoptions.geometry.itemnames = quality_names;
-	y += BIGCHAR_HEIGHT + 2;
-
 	// references/modifies "cg_shadows"
 	s_graphicsoptions.shadows.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.shadows.generic.name = "Shadows:";
@@ -1023,15 +951,6 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.shadows.generic.x = 400;
 	s_graphicsoptions.shadows.generic.y = y;
 	s_graphicsoptions.shadows.itemnames = shadows_names;
-	y += BIGCHAR_HEIGHT + 2;
-
-	// references/modifies "r_drawFlat"
-	s_graphicsoptions.drawflat.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.drawflat.generic.name = "Draw Flat Textures:";
-	s_graphicsoptions.drawflat.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.drawflat.generic.x = 400;
-	s_graphicsoptions.drawflat.generic.y = y;
-	s_graphicsoptions.drawflat.itemnames = enabled_names;
 	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_picmip"
@@ -1119,7 +1038,6 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.sound);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.network);
 
-	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.allow_extensions);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.desktop);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.ratio);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.mode);
@@ -1127,7 +1045,6 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.flares);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.bloom);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.drawfps);
-	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.geometry);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.shadows);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.tq);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.filter);
@@ -1138,7 +1055,6 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.apply);
 
 	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
-		Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.drawflat);
 		Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.supersample);
 	}
 
