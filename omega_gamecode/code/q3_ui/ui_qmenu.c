@@ -703,12 +703,14 @@ static void Slider_Draw(menuslider_s *s) {
 	}
 
 	// draw value
-    if (s->generic.flags & QMF_SLIDER_PERCENTAGE) {
-		Com_sprintf(buf, sizeof(buf), "%i%%", (int)(s->range * 100.0f));
-    } else {
-        Com_sprintf(buf, sizeof(buf), "%i", (int)s->curvalue);
-    }
-    UI_DrawString(x + SMALLCHAR_WIDTH + 100, y, buf, UI_LEFT | style, color);
+	if (!(s->generic.flags & QMF_SLIDER_NOVALUE)) {
+		if (s->generic.flags & QMF_SLIDER_PERCENTAGE) {
+			Com_sprintf(buf, sizeof(buf), "%i%%", (int)(s->range * 100.0f));
+		} else {
+			Com_sprintf(buf, sizeof(buf), "%i", (int)s->curvalue);
+		}
+		UI_DrawString(x + SMALLCHAR_WIDTH + 100, y, buf, UI_LEFT | style, color);
+	}
 
 	UI_DrawHandlePic((int)(x + 2 * SMALLCHAR_WIDTH + (SLIDER_RANGE - 1) * SMALLCHAR_WIDTH * s->range) - 2, y - 2, 12, 20, button);
 }

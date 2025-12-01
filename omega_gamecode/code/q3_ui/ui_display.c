@@ -151,7 +151,11 @@ static void UI_DisplayOptionsMenu_Event(void *ptr, int event) {
 			break;
 
 		case ID_MAXFPS:
-			trap_Cvar_SetValue("com_maxfps", (int)displayOptionsInfo.maxfps.curvalue);
+			if ((int)displayOptionsInfo.maxfps.curvalue >= displayOptionsInfo.maxfps.maxvalue) {
+				trap_Cvar_SetValue("com_maxfps", 0);
+			} else {
+				trap_Cvar_SetValue("com_maxfps", (int)displayOptionsInfo.maxfps.curvalue);
+			}
 			break;
 
 		case ID_BACK:
@@ -166,6 +170,33 @@ DisplayOptions_MenuDraw
 ================
 */
 static void DisplayOptions_MenuDraw(void) {
+	float *color;
+	int x, y;
+	int style;
+	qboolean focus;
+	char buf[32];
+
+	x = displayOptionsInfo.maxfps.generic.x + SMALLCHAR_WIDTH + 100;
+	y = displayOptionsInfo.maxfps.generic.y;
+
+	style = UI_SMALLFONT;
+	focus = displayOptionsInfo.maxfps.generic.parent->cursor == displayOptionsInfo.maxfps.generic.menuPosition;
+
+	if (focus) {
+		color = text_color_highlight;
+		style |= UI_PULSE;
+	} else {
+		color = text_color_normal;
+	}
+
+	if (displayOptionsInfo.maxfps.curvalue >= displayOptionsInfo.maxfps.maxvalue) {
+		strcpy(buf, "Unlimited");
+	} else {
+		Com_sprintf(buf, sizeof(buf), "%i", (int)displayOptionsInfo.maxfps.curvalue);
+	}
+
+	UI_DrawString(x, y, buf, style, color);
+
 	//APSFIX - rework this
 	DisplayOptions_UpdateMenuItems();
 
@@ -284,13 +315,13 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	y += BIGCHAR_HEIGHT + 2;
 	displayOptionsInfo.maxfps.generic.type = MTYPE_SLIDER;
 	displayOptionsInfo.maxfps.generic.name = "Max Framerate:";
-	displayOptionsInfo.maxfps.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	displayOptionsInfo.maxfps.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_NOVALUE;
 	displayOptionsInfo.maxfps.generic.callback = UI_DisplayOptionsMenu_Event;
 	displayOptionsInfo.maxfps.generic.id = ID_MAXFPS;
 	displayOptionsInfo.maxfps.generic.x = 400;
 	displayOptionsInfo.maxfps.generic.y = y;
 	displayOptionsInfo.maxfps.minvalue = 10;
-	displayOptionsInfo.maxfps.maxvalue = 250;
+	displayOptionsInfo.maxfps.maxvalue = 254;
 
 	y += BIGCHAR_HEIGHT + 2;
 	displayOptionsInfo.hdr.generic.type = MTYPE_SPINCONTROL;
@@ -347,7 +378,11 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	}
 
 	displayOptionsInfo.brightness.curvalue = trap_Cvar_VariableValue("r_gamma") * 10;
-	displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue("com_maxfps");
+	if (trap_Cvar_VariableValue("com_maxfps") == 0) {
+		displayOptionsInfo.maxfps.curvalue = displayOptionsInfo.maxfps.maxvalue;
+	} else {
+		displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue("com_maxfps");
+	}
 
 	DisplayOptions_SetMenuItems();
 	DisplayOptions_GetInitialDisplay();

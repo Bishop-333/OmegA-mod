@@ -178,7 +178,8 @@ extern vmCvar_t ui_mapvote_filter;
 #define QMF_LOWERCASE (unsigned int)0x00040000 // edit field is all lower case
 #define QMF_UPPERCASE (unsigned int)0x00080000 // edit field is all upper case
 #define QMF_SILENT (unsigned int)0x00100000
-#define QMF_SLIDER_PERCENTAGE (unsigned int)0x00200000
+#define QMF_SLIDER_NOVALUE (unsigned int)0x00200000
+#define QMF_SLIDER_PERCENTAGE (unsigned int)0x00400000
 
 // callback notifications
 #define QM_GOTFOCUS 1

@@ -303,6 +303,11 @@ static void Crosshair_Draw(void *self) {
 	UI_DrawHandlePic(x + SMALLCHAR_WIDTH, y - 4, 24, 24, s_preferences.crosshairShader[s->curvalue]);
 }
 
+/*
+=================
+Preferences_MenuInit
+=================
+*/
 static void Preferences_MenuInit(void) {
 	int y;
 
