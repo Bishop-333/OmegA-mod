@@ -337,16 +337,16 @@ static cvarTable_t gameCvarTable[] = {
 
     {&g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse},
     {&pmove_fixed, "pmove_fixed", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&pmove_msec, "pmove_msec", "11", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
+    {&pmove_msec, "pmove_msec", "8", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
 
     {&pmove_float, "pmove_float", "1", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
 
     //unlagged - server options
     {&g_delagHitscan, "g_delagHitscan", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
-    {&g_truePing, "g_truePing", "0", CVAR_ARCHIVE, 0, qtrue},
+    {&g_truePing, "g_truePing", "1", CVAR_ARCHIVE, 0, qtrue},
     // it's CVAR_SYSTEMINFO so the client's sv_fps will be automagically set to its value
-    {&sv_fps, "sv_fps", "20", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_lagLightning, "g_lagLightning", "1", CVAR_ARCHIVE, 0, qtrue},
+    {&sv_fps, "sv_fps", "40", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
+    {&g_lagLightning, "g_lagLightning", "0", CVAR_ARCHIVE, 0, qtrue},
     //unlagged - server options
 
     {&g_rankings, "g_rankings", "0", 0, 0, qfalse},
