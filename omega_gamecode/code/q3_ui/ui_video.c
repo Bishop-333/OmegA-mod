@@ -264,7 +264,7 @@ typedef struct {
 	menulist_s shadows;
 	menulist_s aniso;
 	menulist_s anti;
-	menulist_s supersample;
+	menulist_s noborder;
 	menulist_s drawfps;
 	menutext_s driverinfo;
 
@@ -284,7 +284,7 @@ typedef struct
 	int shadows;
 	int aniso;
 	int anti;
-	int supersample;
+	int noborder;
 	qboolean desktop;
 } InitialVideoOptions_s;
 
@@ -439,7 +439,7 @@ static void GraphicsOptions_GetInitialVideo(void) {
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
 	s_ivo.aniso = s_graphicsoptions.aniso.curvalue;
 	s_ivo.anti = s_graphicsoptions.anti.curvalue;
-	s_ivo.supersample = s_graphicsoptions.supersample.curvalue;
+	s_ivo.noborder = s_graphicsoptions.noborder.curvalue;
 }
 
 /*
@@ -521,7 +521,7 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 	if (s_ivo.anti != s_graphicsoptions.anti.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
-	if (s_ivo.supersample != s_graphicsoptions.supersample.curvalue) {
+	if (s_ivo.noborder != s_graphicsoptions.noborder.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 }
@@ -570,7 +570,7 @@ static void GraphicsOptions_ApplyChanges(void *unused, int notification) {
 	trap_Cvar_SetValue("r_dynamiclight", s_graphicsoptions.dynamiclights.curvalue);
 	trap_Cvar_SetValue("cg_drawFPS", s_graphicsoptions.drawfps.curvalue);
 	trap_Cvar_SetValue("r_ext_multisample", s_graphicsoptions.anti.curvalue * 2);
-	trap_Cvar_SetValue("r_ext_supersample", s_graphicsoptions.supersample.curvalue);
+	trap_Cvar_SetValue("r_noborder", s_graphicsoptions.noborder.curvalue);
 
 	//r_ext_texture_filter_anisotropic is special
 	if (s_graphicsoptions.aniso.curvalue) {
@@ -720,7 +720,7 @@ static void GraphicsOptions_SetMenuItems(void) {
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue("cg_drawFPS");
 	s_graphicsoptions.shadows.curvalue = trap_Cvar_VariableValue("cg_shadows");
 	s_graphicsoptions.anti.curvalue = trap_Cvar_VariableValue("r_ext_multisample") / 2;
-	s_graphicsoptions.supersample.curvalue = trap_Cvar_VariableValue("r_ext_supersample");
+	s_graphicsoptions.noborder.curvalue = trap_Cvar_VariableValue("r_noborder");
 	if (trap_Cvar_VariableValue("r_ext_texture_filter_anisotropic")) {
 		s_graphicsoptions.aniso.curvalue = trap_Cvar_VariableValue("r_ext_max_anisotropy") / 2;
 	}
@@ -760,7 +760,7 @@ void GraphicsOptions_MenuInit(void) {
 	        "8x",
 	        NULL};
 
-	static const char *supersample_names[] =
+	static const char *noborder_names[] =
 	    {
 	        "Off",
 	        "On",
@@ -978,13 +978,13 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.anti.itemnames = anti_names;
 	y += 2 + BIGCHAR_HEIGHT;
 
-	// references/modifies "r_ext_supersample"
-	s_graphicsoptions.supersample.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.supersample.generic.name = "Supersampling:";
-	s_graphicsoptions.supersample.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.supersample.generic.x = 400;
-	s_graphicsoptions.supersample.generic.y = y;
-	s_graphicsoptions.supersample.itemnames = supersample_names;
+	// references/modifies "r_noborder"
+	s_graphicsoptions.noborder.generic.type = MTYPE_SPINCONTROL;
+	s_graphicsoptions.noborder.generic.name = "Borderless Window:";
+	s_graphicsoptions.noborder.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_graphicsoptions.noborder.generic.x = 400;
+	s_graphicsoptions.noborder.generic.y = y;
+	s_graphicsoptions.noborder.itemnames = noborder_names;
 	y += 2 * BIGCHAR_HEIGHT;
 
 	s_graphicsoptions.driverinfo.generic.type = MTYPE_PTEXT;
@@ -1043,10 +1043,7 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.driverinfo);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.back);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.apply);
-
-	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
-		Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.supersample);
-	}
+	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.noborder);
 
 	GraphicsOptions_SetMenuItems();
 	GraphicsOptions_GetInitialVideo();
