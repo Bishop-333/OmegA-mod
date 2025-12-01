@@ -866,7 +866,7 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.network.style = UI_RIGHT;
 	s_graphicsoptions.network.color = color_red;
 
-	y = 240 - 7 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 5 * (BIGCHAR_HEIGHT + 2);
 	s_graphicsoptions.desktop.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.desktop.generic.name = "Use Desktop Resolution:";
 	s_graphicsoptions.desktop.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -985,7 +985,7 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.noborder.generic.x = 400;
 	s_graphicsoptions.noborder.generic.y = y;
 	s_graphicsoptions.noborder.itemnames = noborder_names;
-	y += 2 * BIGCHAR_HEIGHT;
+	y += 3 * BIGCHAR_HEIGHT;
 
 	s_graphicsoptions.driverinfo.generic.type = MTYPE_PTEXT;
 	s_graphicsoptions.driverinfo.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
