@@ -638,6 +638,8 @@ static void Slider_Draw(menuslider_s *s) {
 	float *color;
 	int button;
 	qboolean focus;
+	int cursorx;
+	float value;
 
 	x = s->generic.x;
 	y = s->generic.y;
@@ -652,6 +654,24 @@ static void Slider_Draw(menuslider_s *s) {
 	} else {
 		color = text_color_normal;
 		style = UI_SMALLFONT;
+	}
+
+	if (focus && trap_Key_IsDown(K_MOUSE1)) {
+		cursorx = uis.cursorx - s->generic.x - 2 * SMALLCHAR_WIDTH;
+		value = cursorx / (float)(SLIDER_RANGE * SMALLCHAR_WIDTH) * (s->maxvalue - s->minvalue) + s->minvalue;
+
+		if (value < s->minvalue) {
+			value = s->minvalue;
+		} else if (value > s->maxvalue) {
+			value = s->maxvalue;
+		}
+
+		if (value != s->curvalue) {
+			s->curvalue = value;
+			if (s->generic.callback) {
+				s->generic.callback(s, QM_ACTIVATED);
+			}
+		}
 	}
 
 	// draw label
