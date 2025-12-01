@@ -42,7 +42,7 @@ DISPLAY OPTIONS MENU
 #define ID_SOUND 12
 #define ID_NETWORK 13
 #define ID_BRIGHTNESS 14
-#define ID_FOV 15
+#define ID_MAXFPS 15
 #define ID_BACK 16
 
 typedef struct {
@@ -58,7 +58,7 @@ typedef struct {
 	menutext_s network;
 
 	menuslider_s brightness;
-	menuslider_s fov;
+	menuslider_s maxfps;
 
 	menulist_s hdr;
 	menulist_s vsync;
@@ -150,8 +150,8 @@ static void UI_DisplayOptionsMenu_Event(void *ptr, int event) {
 			trap_Cvar_SetValue("r_gamma", displayOptionsInfo.brightness.curvalue / 10.0f);
 			break;
 
-		case ID_FOV:
-			trap_Cvar_SetValue("cg_fov", (int)displayOptionsInfo.fov.curvalue);
+		case ID_MAXFPS:
+			trap_Cvar_SetValue("com_maxfps", (int)displayOptionsInfo.maxfps.curvalue);
 			break;
 
 		case ID_BACK:
@@ -270,7 +270,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	y = 240 - 1 * (BIGCHAR_HEIGHT + 2);
 	displayOptionsInfo.brightness.generic.type = MTYPE_SLIDER;
 	displayOptionsInfo.brightness.generic.name = "Brightness:";
-	displayOptionsInfo.brightness.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	displayOptionsInfo.brightness.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
 	displayOptionsInfo.brightness.generic.callback = UI_DisplayOptionsMenu_Event;
 	displayOptionsInfo.brightness.generic.id = ID_BRIGHTNESS;
 	displayOptionsInfo.brightness.generic.x = 400;
@@ -282,15 +282,15 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	}
 
 	y += BIGCHAR_HEIGHT + 2;
-	displayOptionsInfo.fov.generic.type = MTYPE_SLIDER;
-	displayOptionsInfo.fov.generic.name = "FOV:";
-	displayOptionsInfo.fov.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	displayOptionsInfo.fov.generic.callback = UI_DisplayOptionsMenu_Event;
-	displayOptionsInfo.fov.generic.id = ID_FOV;
-	displayOptionsInfo.fov.generic.x = 400;
-	displayOptionsInfo.fov.generic.y = y;
-	displayOptionsInfo.fov.minvalue = 60;
-	displayOptionsInfo.fov.maxvalue = 160;
+	displayOptionsInfo.maxfps.generic.type = MTYPE_SLIDER;
+	displayOptionsInfo.maxfps.generic.name = "Max Framerate:";
+	displayOptionsInfo.maxfps.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	displayOptionsInfo.maxfps.generic.callback = UI_DisplayOptionsMenu_Event;
+	displayOptionsInfo.maxfps.generic.id = ID_MAXFPS;
+	displayOptionsInfo.maxfps.generic.x = 400;
+	displayOptionsInfo.maxfps.generic.y = y;
+	displayOptionsInfo.maxfps.minvalue = 10;
+	displayOptionsInfo.maxfps.maxvalue = 250;
 
 	y += BIGCHAR_HEIGHT + 2;
 	displayOptionsInfo.hdr.generic.type = MTYPE_SPINCONTROL;
@@ -337,7 +337,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.sound);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.network);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.brightness);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.fov);
+	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.maxfps);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.back);
 	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.apply);
 
@@ -347,7 +347,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	}
 
 	displayOptionsInfo.brightness.curvalue = trap_Cvar_VariableValue("r_gamma") * 10;
-	displayOptionsInfo.fov.curvalue = trap_Cvar_VariableValue("cg_fov");
+	displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue("com_maxfps");
 
 	DisplayOptions_SetMenuItems();
 	DisplayOptions_GetInitialDisplay();

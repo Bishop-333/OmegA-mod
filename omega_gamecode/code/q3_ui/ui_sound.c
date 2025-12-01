@@ -296,7 +296,7 @@ static void UI_SoundOptionsMenu_Init(void) {
 	y = 240 - 1.5 * (BIGCHAR_HEIGHT + 2);
 	soundOptionsInfo.sfxvolume.generic.type = MTYPE_SLIDER;
 	soundOptionsInfo.sfxvolume.generic.name = "Effects Volume:";
-	soundOptionsInfo.sfxvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	soundOptionsInfo.sfxvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
 	soundOptionsInfo.sfxvolume.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.sfxvolume.generic.id = ID_EFFECTSVOLUME;
 	soundOptionsInfo.sfxvolume.generic.x = 400;
@@ -307,7 +307,7 @@ static void UI_SoundOptionsMenu_Init(void) {
 	y += BIGCHAR_HEIGHT + 2;
 	soundOptionsInfo.musicvolume.generic.type = MTYPE_SLIDER;
 	soundOptionsInfo.musicvolume.generic.name = "Music Volume:";
-	soundOptionsInfo.musicvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	soundOptionsInfo.musicvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
 	soundOptionsInfo.musicvolume.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.musicvolume.generic.id = ID_MUSICVOLUME;
 	soundOptionsInfo.musicvolume.generic.x = 400;
@@ -318,7 +318,7 @@ static void UI_SoundOptionsMenu_Init(void) {
 	y += BIGCHAR_HEIGHT + 2;
 	soundOptionsInfo.worldvolume.generic.type = MTYPE_SLIDER;
 	soundOptionsInfo.worldvolume.generic.name = "World Volume:";
-	soundOptionsInfo.worldvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	soundOptionsInfo.worldvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
 	soundOptionsInfo.worldvolume.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.worldvolume.generic.id = ID_WORLDVOLUME;
 	soundOptionsInfo.worldvolume.generic.x = 400;
