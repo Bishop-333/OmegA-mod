@@ -416,7 +416,7 @@ static void CG_Obituary(entityState_t *ent) {
 				break;
 			case MOD_HEADSHOT:
 				message = "was decapitated by";
-				causeShader = cgs.media.headshotShader;
+				causeShader = cgs.media.railgunShader;
 				break;
 			default:
 				message = "was killed by";

@@ -1102,7 +1102,6 @@ static void CG_RegisterGraphics(void) {
 	cgs.media.rocketShader = trap_R_RegisterShader("icons/iconw_rocket");
 	cgs.media.shotgunShader = trap_R_RegisterShader("icons/iconw_shotgun");
 	cgs.media.skullShader = trap_R_RegisterShader("icons/skull");
-	cgs.media.headshotShader = trap_R_RegisterShader("menu/medals/medal_headshot");
 
 	for (i = 0; i < NUM_CROSSHAIRS; i++) {
 		if (i < 10)
@@ -1130,13 +1129,6 @@ static void CG_RegisterGraphics(void) {
 		cgs.media.blueCubeModel = trap_R_RegisterModel("models/powerups/orb/b_orb.md3");
 		cgs.media.redCubeIcon = trap_R_RegisterShader("icons/skull_red");
 		cgs.media.blueCubeIcon = trap_R_RegisterShader("icons/skull_blue");
-	}
-
-	if ((cgs.gametype >= GT_TEAM) && (cgs.ffa_gt != 1)) {
-		cgs.media.redOverlay = trap_R_RegisterShader("playeroverlays/playerSuit1_Red");
-		cgs.media.blueOverlay = trap_R_RegisterShader("playeroverlays/playerSuit1_Blue");
-	} else {
-		cgs.media.neutralOverlay = trap_R_RegisterShader("playeroverlays/playerSuit1_Neutral");
 	}
 
 	// bright players shader
@@ -1264,7 +1256,6 @@ static void CG_RegisterGraphics(void) {
 	cgs.media.invulnerabilityImpactModel = trap_R_RegisterModel("models/powerups/shield/impact.md3");
 	cgs.media.invulnerabilityJuicedModel = trap_R_RegisterModel("models/powerups/shield/juicer.md3");
 	cgs.media.medkitUsageModel = trap_R_RegisterModel("models/powerups/regen.md3");
-	cgs.media.heartShader = trap_R_RegisterShaderNoMip("ui/assets/statusbar/selectedhealth.tga");
 
 	cgs.media.invulnerabilityPowerupModel = trap_R_RegisterModel("models/powerups/shield/shield.md3");
 	cgs.media.medalImpressive = trap_R_RegisterShaderNoMip("medal_impressive");

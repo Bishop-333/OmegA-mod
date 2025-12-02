@@ -2370,22 +2370,6 @@ void CG_AddRefEntityWithPowerups(refEntity_t *ent, entityState_t *state, int tea
 			trap_R_AddRefEntityToScene(ent);
 		}
 
-		if (!isMissile && (cgs.dmflags & DF_PLAYER_OVERLAY) && !(state->eFlags & EF_DEAD)) {
-			switch (team) {
-				case TEAM_RED:
-					ent->customShader = cgs.media.redOverlay;
-					trap_R_AddRefEntityToScene(ent);
-					break;
-				case TEAM_BLUE:
-					ent->customShader = cgs.media.blueOverlay;
-					trap_R_AddRefEntityToScene(ent);
-					break;
-				default:
-					ent->customShader = cgs.media.neutralOverlay;
-					trap_R_AddRefEntityToScene(ent);
-			}
-		}
-
 		if (state->powerups & (1 << PW_QUAD)) {
 			if (team == TEAM_RED)
 				ent->customShader = cgs.media.redQuadShader;
