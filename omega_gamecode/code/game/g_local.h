@@ -584,7 +584,7 @@ void BroadcastTeamChange(gclient_t *client, int oldTeam);
 void SetTeam(gentity_t *ent, const char *s);
 void Cmd_FollowCycle_f(gentity_t *ent); //KK-OAX Changed to match definition
 void Cmd_FollowKiller_f(gentity_t *ent);
-char *ConcatArgs(int start);            //KK-OAX This declaration moved from g_svccmds.c
+char *ConcatArgs(int start); //KK-OAX This declaration moved from g_svccmds.c
 //KK-OAX Added this to make accessible from g_svcmds_ext.c
 void G_Say(gentity_t *ent, gentity_t *target, int mode, const char *chatText);
 void SendReadyMask(int clientnum);
