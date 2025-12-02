@@ -47,8 +47,9 @@ NETWORK OPTIONS MENU
 #define MAX_ADDRLENGTH 30
 
 const char *rate_items[] = {
-    "LAN/Cable/xDSL",
-    "Fiber Optic",
+    "Cable/xDSL",
+    "Broadband",
+    "LAN/Fiber",
     NULL};
 
 typedef struct {
@@ -169,6 +170,8 @@ static void UI_NetworkOptionsMenu_Event(void *ptr, int event) {
 			if (networkOptionsInfo.rate.curvalue == 0) {
 				trap_Cvar_SetValue("rate", 25000);
 			} else if (networkOptionsInfo.rate.curvalue == 1) {
+				trap_Cvar_SetValue("rate", 50000);
+			} else if (networkOptionsInfo.rate.curvalue == 2) {
 				trap_Cvar_SetValue("rate", 100000);
 			}
 			break;
@@ -338,6 +341,8 @@ static void UI_NetworkOptionsMenu_Init(void) {
 
 	rate = trap_Cvar_VariableValue("rate");
 	if (rate >= 100000) {
+		networkOptionsInfo.rate.curvalue = 2;
+	} else if (rate >= 50000) {
 		networkOptionsInfo.rate.curvalue = 1;
 	} else {
 		networkOptionsInfo.rate.curvalue = 0;

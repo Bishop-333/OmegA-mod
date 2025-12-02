@@ -201,7 +201,6 @@ vmCvar_t g_timestamp_startgame;
 vmCvar_t g_allowDuplicateGuid;
 vmCvar_t g_ambientSounds;
 vmCvar_t g_beheading;
-vmCvar_t g_beheading;
 vmCvar_t g_chaos;
 vmCvar_t g_noInvisWalls; //from ratmod
 vmCvar_t g_damagePlums;

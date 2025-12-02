@@ -222,6 +222,8 @@ static void FirstConnect_Event(void *ptr, int event) {
 			if (s_firstconnect.rate.curvalue == 0) {
 				trap_Cvar_SetValue("rate", 25000);
 			} else if (s_firstconnect.rate.curvalue == 1) {
+				trap_Cvar_SetValue("rate", 50000);
+			} else if (s_firstconnect.rate.curvalue == 2) {
 				trap_Cvar_SetValue("rate", 100000);
 			}
 			break;
@@ -250,6 +252,8 @@ static void FirstConnect_SetMenuItems(void) {
 
 	rate = trap_Cvar_VariableValue("rate");
 	if (rate >= 100000) {
+		s_firstconnect.rate.curvalue = 2;
+	} else if (rate >= 50000) {
 		s_firstconnect.rate.curvalue = 1;
 	} else {
 		s_firstconnect.rate.curvalue = 0;
