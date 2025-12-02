@@ -1,22 +1,19 @@
 .PHONY: release qvm clean clean_assets clean_gamecode clean_output distclean
 
-COMPILE_PLATFORM=$(shell uname|sed -e s/_.*//|tr '[:upper:]' '[:lower:]')
+COMPILE_PLATFORM=$(shell uname | sed -e 's/_.*//' | tr '[:upper:]' '[:lower:]' | sed -e 's/\//_/g')
+COMPILE_ARCH=$(shell uname -m | sed -e 's/i.86/x86/' | sed -e 's/^arm.*/arm/')
 
-COMPILE_ARCH=$(shell uname -m | sed -e s/i.86/i386/)
+#arm64 hack!
+ifeq ($(shell uname -m), arm64)
+  COMPILE_ARCH=arm64
+endif
+ifeq ($(shell uname -m), aarch64)
+  COMPILE_ARCH=arm64
+endif
 
 ifeq ($(COMPILE_PLATFORM),sunos)
   # Solaris uname and GNU uname differ
-  COMPILE_ARCH=$(shell uname -p | sed -e s/i.86/i386/)
-endif
-ifeq ($(COMPILE_PLATFORM),darwin)
-  # Apple does some things a little differently...
-  COMPILE_ARCH=$(shell uname -p | sed -e s/i.86/i386/)
-endif
-
-ifeq ($(COMPILE_PLATFORM),mingw32)
-  ifeq ($(COMPILE_ARCH),i386)
-    COMPILE_ARCH=x86
-  endif
+  COMPILE_ARCH=$(shell uname -p | sed -e 's/i.86/x86/')
 endif
 
 GAMECODE_DIR := omega_gamecode
