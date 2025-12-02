@@ -1661,7 +1661,7 @@ static void ServerOptions_MenuInit(qboolean multiplayer) {
 
 	y += SMALLCHAR_HEIGHT;
 	s_serveroptions.dmflags.generic.type = MTYPE_CTEXT;
-	s_serveroptions.dmflags.string = "Advanced Settings";
+	s_serveroptions.dmflags.string = "Game Rules";
 	s_serveroptions.dmflags.generic.flags = QMF_PULSEIFFOCUS;
 	s_serveroptions.dmflags.generic.callback = ServerOptions_Event;
 	s_serveroptions.dmflags.generic.id = ID_DMFLAGS;

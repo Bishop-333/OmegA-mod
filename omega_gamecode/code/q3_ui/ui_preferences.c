@@ -49,13 +49,13 @@ GAME OPTIONS MENU
 #define ID_BACK 136
 //Elimination
 #define ID_WEAPONBAR 137
-#define ID_DELAGHITSCAN 138
-#define ID_COLORRED 139
-#define ID_COLORGREEN 140
-#define ID_COLORBLUE 141
-#define ID_CROSSHAIRHEALTH 142
-#define ID_DRAWGUN 143
-#define ID_TRANSPARENTGUN 144
+#define ID_COLORRED 138
+#define ID_COLORGREEN 139
+#define ID_COLORBLUE 140
+#define ID_CROSSHAIRHEALTH 141
+#define ID_DRAWGUN 142
+#define ID_BOBGUN 143
+#define ID_SCREENSHAKE 144
 
 #undef NUM_CROSSHAIRS
 #define NUM_CROSSHAIRS 99
@@ -83,10 +83,10 @@ typedef struct {
 	menuradiobutton_s synceveryframe;
 	menuradiobutton_s forcemodel;
 	menulist_s drawteamoverlay;
-	menuradiobutton_s delaghitscan;
 	menuradiobutton_s autoswitch;
 	menulist_s drawgun;
-	menuradiobutton_s transparentgun;
+	menuradiobutton_s bobgun;
+	menuradiobutton_s screenshake;
 	menubitmap_s back;
 
 	qhandle_t crosshairShader[NUM_CROSSHAIRS];
@@ -155,9 +155,9 @@ static void Preferences_SetMenuItems(void) {
 	s_preferences.forcemodel.curvalue = trap_Cvar_VariableValue("cg_forcemodel") != 0;
 	s_preferences.drawteamoverlay.curvalue = Com_Clamp(0, 3, trap_Cvar_VariableValue("cg_drawTeamOverlay"));
 	s_preferences.autoswitch.curvalue = trap_Cvar_VariableValue("cg_autoswitch") != 0;
-	s_preferences.delaghitscan.curvalue = trap_Cvar_VariableValue("cg_delag") != 0;
 	s_preferences.drawgun.curvalue = Com_Clamp(0, 3, trap_Cvar_VariableValue("cg_drawGun"));
-	s_preferences.transparentgun.curvalue = trap_Cvar_VariableValue("cg_transparentGun") != 0;
+	s_preferences.bobgun.curvalue = trap_Cvar_VariableValue("cg_bobgun") != 0;
+	s_preferences.screenshake.curvalue = trap_Cvar_VariableValue("cg_screenshake") != 0;
 }
 
 static void Preferences_Event(void *ptr, int notification) {
@@ -229,17 +229,16 @@ static void Preferences_Event(void *ptr, int notification) {
 			trap_Cvar_SetValue("cg_autoswitch", s_preferences.autoswitch.curvalue);
 			break;
 
-		case ID_DELAGHITSCAN:
-			trap_Cvar_SetValue("g_delagHitscan", s_preferences.delaghitscan.curvalue);
-			trap_Cvar_SetValue("cg_delag", s_preferences.delaghitscan.curvalue);
-			break;
-
 		case ID_DRAWGUN:
 			trap_Cvar_SetValue("cg_drawGun", s_preferences.drawgun.curvalue);
 			break;
 
-		case ID_TRANSPARENTGUN:
-			trap_Cvar_SetValue("cg_transparentGun", s_preferences.transparentgun.curvalue);
+		case ID_BOBGUN:
+			trap_Cvar_SetValue("cg_bobgun", s_preferences.bobgun.curvalue);
+			break;
+
+		case ID_SCREENSHAKE:
+			trap_Cvar_SetValue("cg_screenshake", s_preferences.screenshake.curvalue);
 			break;
 
 		case ID_BACK:
@@ -484,15 +483,6 @@ static void Preferences_MenuInit(void) {
 	s_preferences.drawteamoverlay.itemnames = teamoverlay_names;
 
 	y += BIGCHAR_HEIGHT + 2;
-	s_preferences.delaghitscan.generic.type = MTYPE_RADIOBUTTON;
-	s_preferences.delaghitscan.generic.name = "Unlag hitscan:";
-	s_preferences.delaghitscan.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_preferences.delaghitscan.generic.callback = Preferences_Event;
-	s_preferences.delaghitscan.generic.id = ID_DELAGHITSCAN;
-	s_preferences.delaghitscan.generic.x = PREFERENCES_X_POS;
-	s_preferences.delaghitscan.generic.y = y;
-
-	y += BIGCHAR_HEIGHT + 2;
 	s_preferences.autoswitch.generic.type = MTYPE_RADIOBUTTON;
 	s_preferences.autoswitch.generic.name = "Automatic Weapons Switching:";
 	s_preferences.autoswitch.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -512,13 +502,22 @@ static void Preferences_MenuInit(void) {
 	s_preferences.drawgun.itemnames = drawgun_names;
 
 	y += BIGCHAR_HEIGHT + 2;
-	s_preferences.transparentgun.generic.type = MTYPE_RADIOBUTTON;
-	s_preferences.transparentgun.generic.name = "Transparent Gun:";
-	s_preferences.transparentgun.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_preferences.transparentgun.generic.callback = Preferences_Event;
-	s_preferences.transparentgun.generic.id = ID_TRANSPARENTGUN;
-	s_preferences.transparentgun.generic.x = PREFERENCES_X_POS;
-	s_preferences.transparentgun.generic.y = y;
+	s_preferences.bobgun.generic.type = MTYPE_RADIOBUTTON;
+	s_preferences.bobgun.generic.name = "Gun Bobbing:";
+	s_preferences.bobgun.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_preferences.bobgun.generic.callback = Preferences_Event;
+	s_preferences.bobgun.generic.id = ID_BOBGUN;
+	s_preferences.bobgun.generic.x = PREFERENCES_X_POS;
+	s_preferences.bobgun.generic.y = y;
+
+	y += BIGCHAR_HEIGHT + 2;
+	s_preferences.screenshake.generic.type = MTYPE_RADIOBUTTON;
+	s_preferences.screenshake.generic.name = "Screen Shaking:";
+	s_preferences.screenshake.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_preferences.screenshake.generic.callback = Preferences_Event;
+	s_preferences.screenshake.generic.id = ID_SCREENSHAKE;
+	s_preferences.screenshake.generic.x = PREFERENCES_X_POS;
+	s_preferences.screenshake.generic.y = y;
 
 	y += BIGCHAR_HEIGHT + 2;
 	s_preferences.back.generic.type = MTYPE_BITMAP;
@@ -549,10 +548,10 @@ static void Preferences_MenuInit(void) {
 	Menu_AddItem(&s_preferences.menu, &s_preferences.synceveryframe);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.forcemodel);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.drawteamoverlay);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.delaghitscan);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.autoswitch);
 	Menu_AddItem(&s_preferences.menu, &s_preferences.drawgun);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.transparentgun);
+	Menu_AddItem(&s_preferences.menu, &s_preferences.bobgun);
+	Menu_AddItem(&s_preferences.menu, &s_preferences.screenshake);
 
 	Menu_AddItem(&s_preferences.menu, &s_preferences.back);
 

@@ -41,8 +41,9 @@ NETWORK OPTIONS MENU
 #define ID_NETWORK 13
 #define ID_RATE 14
 #define ID_ALLOWDOWNLOAD 15
-#define ID_FORWARDER 16
-#define ID_BACK 17
+#define ID_DELAGHITSCAN 16
+#define ID_FORWARDER 17
+#define ID_BACK 18
 
 #define MAX_ADDRLENGTH 30
 
@@ -66,6 +67,7 @@ typedef struct {
 
 	menulist_s rate;
 	menuradiobutton_s allowdownload;
+	menuradiobutton_s delaghitscan;
 	menuradiobutton_s forwarder;
 	menufield_s address;
 
@@ -182,6 +184,11 @@ static void UI_NetworkOptionsMenu_Event(void *ptr, int event) {
 			trap_Cvar_SetValue("sv_allowDownload", networkOptionsInfo.allowdownload.curvalue);
 			break;
 
+		case ID_DELAGHITSCAN:
+			trap_Cvar_SetValue("g_delagHitscan", networkOptionsInfo.delaghitscan.curvalue);
+			trap_Cvar_SetValue("cg_delag", networkOptionsInfo.delaghitscan.curvalue);
+			break;
+
 		case ID_FORWARDER:
 			trap_Cvar_SetValue("fwd_use", networkOptionsInfo.forwarder.curvalue);
 			break;
@@ -291,6 +298,15 @@ static void UI_NetworkOptionsMenu_Init(void) {
 	networkOptionsInfo.allowdownload.generic.y = y;
 
 	y += BIGCHAR_HEIGHT + 2;
+	networkOptionsInfo.delaghitscan.generic.type = MTYPE_RADIOBUTTON;
+	networkOptionsInfo.delaghitscan.generic.name = "Unlag hitscan:";
+	networkOptionsInfo.delaghitscan.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	networkOptionsInfo.delaghitscan.generic.callback = UI_NetworkOptionsMenu_Event;
+	networkOptionsInfo.delaghitscan.generic.id = ID_DELAGHITSCAN;
+	networkOptionsInfo.delaghitscan.generic.x = 400;
+	networkOptionsInfo.delaghitscan.generic.y = y;
+
+	y += BIGCHAR_HEIGHT + 2;
 	networkOptionsInfo.forwarder.generic.type = MTYPE_RADIOBUTTON;
 	networkOptionsInfo.forwarder.generic.name = "Forwarder:";
 	networkOptionsInfo.forwarder.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -333,6 +349,7 @@ static void UI_NetworkOptionsMenu_Init(void) {
 	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.network);
 	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.rate);
 	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.allowdownload);
+	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.delaghitscan);
 	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
 		Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.forwarder);
 		Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.address);
@@ -349,6 +366,7 @@ static void UI_NetworkOptionsMenu_Init(void) {
 	}
 
 	networkOptionsInfo.allowdownload.curvalue = trap_Cvar_VariableValue("cl_allowDownload") != 0;
+	networkOptionsInfo.delaghitscan.curvalue = trap_Cvar_VariableValue("cg_delag") != 0;
 	networkOptionsInfo.forwarder.curvalue = trap_Cvar_VariableValue("fwd_use") != 0;
 	Q_strncpyz(networkOptionsInfo.address.field.buffer, UI_Cvar_VariableString("fwd_addr"), sizeof(networkOptionsInfo.address.field.buffer));
 }
