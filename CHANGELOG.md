@@ -142,6 +142,7 @@
 - dynamic lights now for plasma and bfg
 - gibs are launched in function of the impact location
 - update qvm tools and makefile
+- better menu
 - better pmove_aircontrol (CPM accurate)
 - better `g_plasmaBounce` (no more grenade sound)
 - better `g_guidedRockets` (don't shoot another rocket if your holding attack)

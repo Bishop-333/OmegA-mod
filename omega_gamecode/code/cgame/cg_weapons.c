@@ -3148,6 +3148,10 @@ void CG_MissileHitPlayer(int weapon, vec3_t origin, vec3_t dir, int entityNum) {
 		if (cg_leiEnhancement.integer) {
 			CG_SpurtBlood(origin, dir, 1);
 		}
+		// don't show player's own blood in view
+		if (entityNum == cg.snap->ps.clientNum) {
+			blood->refEntity.renderfx |= RF_THIRD_PERSON;
+		}
 	}
 
 	else
@@ -3277,7 +3281,7 @@ static void CG_ShotgunPellet(vec3_t start, vec3_t end, int skipNum) {
 				CG_LeiSparks(tr.endpos, tr.plane.normal, 1600, 0, 0, 2);
 
 				if (cg_leiEnhancement.integer) {
-					CG_SmokePuff(tr.endpos, kapow, 21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0, cgs.media.lsmkShader2);
+					CG_SmokePuff(tr.endpos, kapow, 0.21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0, cgs.media.lsmkShader2);
 				}
 				// END LEILEI ENHANCEMENT
 			}
