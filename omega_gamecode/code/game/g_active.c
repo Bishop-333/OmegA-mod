@@ -40,7 +40,7 @@ static void P_DamageFeedback(gentity_t *player) {
 	vec3_t angles;
 
 	client = player->client;
-	if (client->ps.pm_type == PM_DEAD) {
+	if (client->ps.pm_type == PM_DEAD || client->ps.pm_type == PM_SPECTATOR) {
 		return;
 	}
 
