@@ -582,7 +582,6 @@ PM_CPM_Aircontrol
 ===================
 */
 static void PM_CPM_Aircontrol(pmove_t *pm, vec3_t wishdir, float wishspeed) {
-	int i;
 	float zspeed, speed, dot, k;
 
 	// this doesn't play well with analog input

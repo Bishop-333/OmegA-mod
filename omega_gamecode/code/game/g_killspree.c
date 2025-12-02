@@ -222,7 +222,7 @@ static char *fillPlaceHolder(char *stringToSearch, char *placeHolder, char *repl
 	strncpy(output, stringToSearch, p - stringToSearch);
 	output[p - stringToSearch] = '\0';
 
-	Q_snprintf(output, MAX_SAY_TEXT, "%.*s%s%s", (int)(p - stringToSearch), stringToSearch, replaceWith, p + strlen(placeHolder));
+	Com_sprintf(output, MAX_SAY_TEXT, "%.*s%s%s", (int)(p - stringToSearch), stringToSearch, replaceWith, p + strlen(placeHolder));
 
 	return output;
 }
@@ -345,7 +345,7 @@ void G_CheckForSpree(gentity_t *ent, int streak2Test, qboolean checkKillSpree) {
 				return;
 			}
 			//We've made it this far...now do the largest spree defined.
-			Q_snprintf(streakcount, sizeof(streakcount), "%i", streak2Test);
+			Com_sprintf(streakcount, sizeof(streakcount), "%i", streak2Test);
 			//Check if deathSprees is NULL (actual problem!)
 			if (!deathSprees[level.dSpreeUBound])
 				return;
@@ -365,8 +365,8 @@ void G_CheckForSpree(gentity_t *ent, int streak2Test, qboolean checkKillSpree) {
 			for (i = 0; deathSprees[i]; i++) {
 				//If the deathSpree is equal to the streak to test
 				if (deathSprees[i]->streakCount == streak2Test) {
-					//Using Q_snprintf to change the int into a char for replacement.
-					Q_snprintf(streakcount, sizeof(streakcount), "%i", deathSprees[i]->streakCount);
+					//Using Com_sprintf to change the int into a char for replacement.
+					Com_sprintf(streakcount, sizeof(streakcount), "%i", deathSprees[i]->streakCount);
 					//Let's grab the message to show, fill up the placeholders and concatenate it.
 					returnedString = CreateMessage(ent, deathSprees[i]->spreeMsg, streakcount);
 					//Grab the Print Position ( 1 for Center Printing, 2 for Chat )
@@ -396,7 +396,7 @@ void G_CheckForSpree(gentity_t *ent, int streak2Test, qboolean checkKillSpree) {
 				return;
 			}
 			//We've made it this far...now do the largest spree defined.
-			Q_snprintf(streakcount, sizeof(streakcount), "%i", streak2Test);
+			Com_sprintf(streakcount, sizeof(streakcount), "%i", streak2Test);
 			//Check if killSprees is NULL (actual problem!)
 			if (!killSprees[level.kSpreeUBound])
 				return;
@@ -410,7 +410,7 @@ void G_CheckForSpree(gentity_t *ent, int streak2Test, qboolean checkKillSpree) {
 		} else {
 			for (i = 0; killSprees[i]; i++) {
 				if (killSprees[i]->streakCount == streak2Test) {
-					Q_snprintf(streakcount, sizeof(streakcount), "%i", killSprees[i]->streakCount);
+					Com_sprintf(streakcount, sizeof(streakcount), "%i", killSprees[i]->streakCount);
 					returnedString = CreateMessage(ent, killSprees[i]->spreeMsg, streakcount);
 					position = killSprees[i]->position;
 					sound = killSprees[i]->sound2Play;
@@ -442,7 +442,7 @@ void G_checkForMultiKill(gentity_t *ent) {
 	multiKillCount = ent->client->pers.multiKillCount;
 
 	if (multiKillCount > multiKills[level.mKillUBound]->kills) {
-		Q_snprintf(multiKillString, sizeof(multiKillString), "%i", multiKillCount);
+		Com_sprintf(multiKillString, sizeof(multiKillString), "%i", multiKillCount);
 		if (!multiKills[level.mKillUBound])
 			return; //If null
 		returnedString = CreateMessage(ent, multiKills[level.mKillUBound]->killMsg, multiKillString);
@@ -456,7 +456,7 @@ void G_checkForMultiKill(gentity_t *ent) {
 			//If the multikill count is equal to a killLevel let's do this.
 
 			if (multiKills[i]->kills == multiKillCount) {
-				Q_snprintf(multiKillString, sizeof(multiKillString), "%i", multiKills[i]->kills);
+				Com_sprintf(multiKillString, sizeof(multiKillString), "%i", multiKills[i]->kills);
 				//Build the Message
 				returnedString = CreateMessage(ent, multiKills[i]->killMsg, multiKillString);
 				//Grab the sound

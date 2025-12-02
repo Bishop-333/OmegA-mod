@@ -42,7 +42,7 @@ int allowedVote(char *commandStr) {
 		return qfalse;
 	}
 	//Now constructing a string that starts and ends with '/' like: "/clientkick/"
-	Q_snprintf(tempStr, sizeof(tempStr), "/%s/", commandStr);
+	Com_sprintf(tempStr, sizeof(tempStr), "/%s/", commandStr);
 	if (Q_stristr(voteNames, tempStr) != NULL)
 		return qtrue;
 	else
@@ -176,7 +176,7 @@ int allowedGametype(char *gametypeStr) {
 		//Error: too long
 		return qfalse;
 	}
-	Q_snprintf(tempStr, sizeof(tempStr), "/%s/", gametypeStr);
+	Com_sprintf(tempStr, sizeof(tempStr), "/%s/", gametypeStr);
 	if (Q_stristr(voteGametypes, tempStr) != NULL)
 		return qtrue;
 	else {

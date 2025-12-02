@@ -766,14 +766,6 @@ void GraphicsOptions_MenuInit(void) {
 	        "On",
 	        NULL};
 
-	static const char *quality_names[] =
-	    {
-	        "Low",
-	        "Medium",
-	        "High",
-	        "Very High",
-	        NULL};
-
 	static const char *shadows_names[] =
 	    {
 	        "Off",

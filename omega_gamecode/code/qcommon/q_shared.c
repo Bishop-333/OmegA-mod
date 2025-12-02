@@ -750,19 +750,6 @@ int Q_isalpha( int c )
 	return ( 0 );
 }
 
-qboolean Q_isanumber( const char *s )
-{
-	const char *p;
-	double Q_UNUSED_VAR d;
-
-	if( *s == '\0' )
-		return qfalse;
-
-	d = strtod( s, &p );
-
-	return *p == '\0';
-}
-
 qboolean Q_isintegral( float f )
 {
 	return (int)f == f;
