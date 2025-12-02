@@ -31,39 +31,43 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "q_shared.h"
 
-vec3_t	vec3_origin = {0,0,0};
-vec3_t	axisDefault[3] = { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
+vec3_t	vec3_origin = {0.0f, 0.0f, 0.0f};
+vec3_t	axisDefault[3] =
+{
+	{1.0f, 0.0f, 0.0f},
+	{0.0f, 1.0f, 0.0f},
+	{0.0f, 0.0f, 1.0f}
+};
 
 
-vec4_t		colorBlack	= {0, 0, 0, 1};
-vec4_t		colorCornellRed	= {1, 0.25, 0.25, 1};
-vec4_t		colorRed	= {1, 0, 0, 1};
-vec4_t		colorTtGreen	= {0, 1, 0, 0.5};
-vec4_t		colorGreen	= {0, 1, 0, 1};
-vec4_t		colorRoyalBlue	= {0.25, 0.25, 1, 1};
-vec4_t		colorBlue	= {0, 0, 1, 1};
-vec4_t		colorYellow	= {1, 1, 0, 1};
-vec4_t		colorMagenta	= {1, 0, 1, 1};
-vec4_t		colorTtCyan	= {0, 1, 1, 0.5};
-vec4_t		colorCyan	= {0, 1, 1, 1};
-vec4_t		colorOrange	= {1, 0.5, 0, 1};
-vec4_t		colorWhite	= {1, 1, 1, 1};
-vec4_t		colorLtGrey	= {0.75, 0.75, 0.75, 1};
-vec4_t		colorMdGrey	= {0.5, 0.5, 0.5, 1};
-vec4_t		colorDkGrey	= {0.25, 0.25, 0.25, 1};
+vec4_t	colorBlack      = {0.0f,  0.0f,  0.0f,  1.0f};
+vec4_t	colorCornellRed = {1.0f,  0.25f,  0.25f,  1.0f};
+vec4_t	colorRed        = {1.0f,  0.0f,  0.0f,  1.0f};
+vec4_t	colorTtGreen    = {0.0f,  1.0f,  0.0f,  0.5f};
+vec4_t	colorGreen      = {0.0f,  1.0f,  0.0f,  1.0f};
+vec4_t	colorRoyalBlue  = {0.25f,  0.25f,  1.0f,  1.0f};
+vec4_t	colorBlue       = {0.0f,  0.0f,  1.0f,  1.0f};
+vec4_t	colorYellow     = {1.0f,  1.0f,  0.0f,  1.0f};
+vec4_t	colorMagenta    = {1.0f,  0.0f,  1.0f,  1.0f};
+vec4_t	colorTtCyan     = {0.0f,  1.0f,  1.0f,  0.5f};
+vec4_t	colorCyan       = {0.0f,  1.0f,  1.0f,  1.0f};
+vec4_t	colorOrange     = {1.0f,  0.5f,  0.0f,  1.0f};
+vec4_t	colorWhite      = {1.0f,  1.0f,  1.0f,  1.0f};
+vec4_t	colorLtGrey     = {0.75f, 0.75f, 0.75f, 1.0f};
+vec4_t	colorMdGrey     = {0.5f,  0.5f,  0.5f,  1.0f};
+vec4_t	colorDkGrey     = {0.25f, 0.25f, 0.25f, 1.0f};
 
-vec4_t	g_color_table[9] =
-	{
-	{0.0, 0.0, 0.0, 1.0},
-	{1.0, 0.0, 0.0, 1.0},
-	{0.0, 1.0, 0.0, 1.0},
-	{1.0, 1.0, 0.0, 1.0},
-	{0.0, 0.0, 1.0, 1.0},
-	{0.0, 1.0, 1.0, 1.0},
-	{1.0, 0.0, 1.0, 1.0},
-	{1.0, 1.0, 1.0, 1.0},
-        {1.00f, 0.43f, 0.00f, 1.00f},
-	};
+vec4_t	g_color_table[8] =
+{
+	{0.0f, 0.0f, 0.0f, 1.0f},
+	{1.0f, 0.0f, 0.0f, 1.0f},
+	{0.0f, 1.0f, 0.0f, 1.0f},
+	{1.0f, 1.0f, 0.0f, 1.0f},
+	{0.0f, 0.0f, 1.0f, 1.0f},
+	{0.0f, 1.0f, 1.0f, 1.0f},
+	{1.0f, 0.0f, 1.0f, 1.0f},
+	{1.0f, 1.0f, 1.0f, 1.0f},
+};
 
 
 vec3_t	bytedirs[NUMVERTEXNORMALS] =
@@ -154,7 +158,7 @@ vec3_t	bytedirs[NUMVERTEXNORMALS] =
 //==============================================================
 
 int		Q_rand( int *seed ) {
-	*seed = (69069 * *seed + 1);
+	*seed = (69069U * *seed + 1U);
 	return *seed;
 }
 
@@ -262,6 +266,29 @@ float NormalizeColor( const vec3_t in, vec3_t out ) {
 		out[2] = in[2] / max;
 	}
 	return max;
+}
+
+
+/*
+=====================
+PlaneFromPoints
+
+Returns false if the triangle is degenrate.
+The normal will point out of the clock for clockwise ordered points
+=====================
+*/
+qboolean PlaneFromPoints( vec4_t plane, const vec3_t a, const vec3_t b, const vec3_t c ) {
+	vec3_t	d1, d2;
+
+	VectorSubtract( b, a, d1 );
+	VectorSubtract( c, a, d2 );
+	CrossProduct( d2, d1, plane );
+	if ( VectorNormalize( plane ) == 0 ) {
+		return qfalse;
+	}
+
+	plane[3] = DotProduct( a, plane );
+	return qtrue;
 }
 
 /*
@@ -429,12 +456,8 @@ void ProjectPointOnPlane( vec3_t dst, const vec3_t p, const vec3_t normal )
 	float inv_denom;
 
 	inv_denom =  DotProduct( normal, normal );
-	if ( Q_fabs( inv_denom ) == 0.0f ) {
-		VectorCopy( p, dst );
-		return;
-	}
 #ifndef Q3_VM
-	//assert( Q_fabs(inv_denom) != 0.0f ); // zero vectors get here
+	assert( Q_fabs(inv_denom) != 0.0f ); // zero vectors get here
 #endif
 	inv_denom = 1.0f / inv_denom;
 
@@ -488,10 +511,7 @@ void VectorRotate( vec3_t in, vec3_t matrix[3], vec3_t out )
 */
 float Q_rsqrt( float number )
 {
-	union {
-		float f;
-		int i;
-	} t;
+	floatint_t t;
 	float x2, y;
 	const float threehalfs = 1.5F;
 
@@ -506,9 +526,10 @@ float Q_rsqrt( float number )
 }
 
 float Q_fabs( float f ) {
-	int tmp = * ( int * ) &f;
-	tmp &= 0x7FFFFFFF;
-	return * ( float * ) &tmp;
+	floatint_t fi;
+	fi.f = f;
+	fi.i &= 0x7FFFFFFF;
+	return fi.f;
 }
 #endif
 
@@ -614,6 +635,69 @@ float AngleDelta ( float angle1, float angle2 ) {
 
 /*
 =================
+SetPlaneSignbits
+=================
+*/
+void SetPlaneSignbits (cplane_t *out) {
+	int	bits, j;
+
+	// for fast box on planeside test
+	bits = 0;
+	for (j=0 ; j<3 ; j++) {
+		if (out->normal[j] < 0) {
+			bits |= 1<<j;
+		}
+	}
+	out->signbits = bits;
+}
+
+
+/*
+==================
+BoxOnPlaneSide
+
+Returns 1, 2, or 1 + 2
+==================
+*/
+int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+{
+	float	dist[2];
+	int		sides, b, i;
+
+	// fast axial cases
+	if (p->type < 3)
+	{
+		if (p->dist <= emins[p->type])
+			return 1;
+		if (p->dist >= emaxs[p->type])
+			return 2;
+		return 3;
+	}
+
+	// general case
+	dist[0] = dist[1] = 0;
+	if (p->signbits < 8) // >= 8: default case is original code (dist[0]=dist[1]=0)
+	{
+		for (i=0 ; i<3 ; i++)
+		{
+			b = (p->signbits >> i) & 1;
+			dist[ b] += p->normal[i]*emaxs[i];
+			dist[!b] += p->normal[i]*emins[i];
+		}
+	}
+
+	sides = 0;
+	if (dist[0] >= p->dist)
+		sides = 1;
+	if (dist[1] < p->dist)
+		sides |= 2;
+
+	return sides;
+}
+
+
+/*
+=================
 RadiusFromBounds
 =================
 */
@@ -713,10 +797,12 @@ vec_t VectorNormalize( vec3_t v ) {
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);
 
 	if ( length ) {
-		ilength = 1/length;
+		/* writing it this way allows gcc to recognize that rsqrt can be used */
+		ilength = 1/(float)sqrt (length);
+		/* sqrt(length) = length * (1 / sqrt(length)) */
+		length *= ilength;
 		v[0] *= ilength;
 		v[1] *= ilength;
 		v[2] *= ilength;
@@ -729,11 +815,13 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out) {
 	float	length, ilength;
 
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
-	length = sqrt (length);
 
 	if (length)
 	{
-		ilength = 1/length;
+		/* writing it this way allows gcc to recognize that rsqrt can be used */
+		ilength = 1/(float)sqrt (length);
+		/* sqrt(length) = length * (1 / sqrt(length)) */
+		length *= ilength;
 		out[0] = v[0]*ilength;
 		out[1] = v[1]*ilength;
 		out[2] = v[2]*ilength;
@@ -797,6 +885,26 @@ int Q_log2( int val ) {
 	}
 	return answer;
 }
+
+
+
+/*
+=================
+PlaneTypeForNormal
+=================
+*/
+/*
+int	PlaneTypeForNormal (vec3_t normal) {
+	if ( normal[0] == 1.0 )
+		return PLANE_X;
+	if ( normal[1] == 1.0 )
+		return PLANE_Y;
+	if ( normal[2] == 1.0 )
+		return PLANE_Z;
+	
+	return PLANE_NON_AXIAL;
+}
+*/
 
 
 /*
@@ -905,15 +1013,40 @@ Don't pass doubles to this
 */
 int Q_isnan( float x )
 {
-	union
-	{
-		float f;
-		unsigned int i;
-	} t;
+	floatint_t fi;
 
-	t.f = x;
-	t.i &= 0x7FFFFFFF;
-	t.i = 0x7F800000 - t.i;
+	fi.f = x;
+	fi.ui &= 0x7FFFFFFF;
+	fi.ui = 0x7F800000 - fi.ui;
 
-	return (int)( (unsigned int)t.i >> 31 );
+	return (int)( (unsigned int)fi.ui >> 31 );
 }
+//------------------------------------------------------------------------
+
+#ifndef Q3_VM
+/*
+=====================
+Q_acos
+
+the msvc acos doesn't always return a value between -PI and PI:
+
+int i;
+i = 1065353246;
+acos(*(float*) &i) == -1.#IND0
+
+=====================
+*/
+float Q_acos(float c) {
+	float angle;
+
+	angle = acos(c);
+
+	if (angle > M_PI) {
+		return (float)M_PI;
+	}
+	if (angle < -M_PI) {
+		return (float)M_PI;
+	}
+	return angle;
+}
+#endif

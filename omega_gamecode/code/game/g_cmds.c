@@ -458,7 +458,7 @@ static int ClientNumberFromString(gentity_t *to, char *s) {
 		}
 		Q_strncpyz(cleanName, cl->pers.netname, sizeof(cleanName));
 		Q_CleanStr(cleanName);
-		if (Q_strequal(cleanName, s)) {
+		if (!Q_stricmp(cleanName, s)) {
 			return idnum;
 		}
 	}
@@ -512,25 +512,25 @@ static void Cmd_Give_f(gentity_t *ent) {
 
 	name = ConcatArgs(1);
 
-	if Q_strequal (name, "all")
+	if (Q_stricmp(name, "all") == 0)
 		give_all = qtrue;
 	else
 		give_all = qfalse;
 
-	if (give_all || Q_strequal(name, "health")) {
+	if (give_all || Q_stricmp(name, "health") == 0) {
 		ent->health = ent->client->ps.stats[STAT_MAX_HEALTH];
 		if (!give_all)
 			return;
 	}
 
-	if (give_all || Q_strequal(name, "weapons")) {
+	if (give_all || Q_stricmp(name, "weapons") == 0) {
 		ent->client->ps.stats[STAT_WEAPONS] = (1 << WP_NUM_WEAPONS) - 1 -
 		                                      (1 << WP_GRAPPLING_HOOK) - (1 << WP_NONE);
 		if (!give_all)
 			return;
 	}
 
-	if (give_all || Q_strequal(name, "ammo")) {
+	if (give_all || Q_stricmp(name, "ammo") == 0) {
 		for (i = 0; i < MAX_WEAPONS; i++) {
 			ent->client->ps.ammo[i] = 999;
 		}
@@ -538,34 +538,34 @@ static void Cmd_Give_f(gentity_t *ent) {
 			return;
 	}
 
-	if (give_all || Q_strequal(name, "armor")) {
+	if (give_all || Q_stricmp(name, "armor") == 0) {
 		ent->client->ps.stats[STAT_ARMOR] = 200;
 
 		if (!give_all)
 			return;
 	}
 
-	if (Q_strequal(name, "excellent")) {
+	if (Q_stricmp(name, "excellent") == 0) {
 		ent->client->ps.persistant[PERS_EXCELLENT_COUNT]++;
 		return;
 	}
-	if (Q_strequal(name, "impressive")) {
+	if (Q_stricmp(name, "impressive") == 0) {
 		ent->client->ps.persistant[PERS_IMPRESSIVE_COUNT]++;
 		return;
 	}
-	if (Q_strequal(name, "gauntletaward")) {
+	if (Q_stricmp(name, "gauntletaward") == 0) {
 		ent->client->ps.persistant[PERS_GAUNTLET_FRAG_COUNT]++;
 		return;
 	}
-	if (Q_strequal(name, "defend")) {
+	if (Q_stricmp(name, "defend") == 0) {
 		ent->client->ps.persistant[PERS_DEFEND_COUNT]++;
 		return;
 	}
-	if (Q_strequal(name, "assist")) {
+	if (Q_stricmp(name, "assist") == 0) {
 		ent->client->ps.persistant[PERS_ASSIST_COUNT]++;
 		return;
 	}
-	if (Q_strequal(name, "headshot")) {
+	if (Q_stricmp(name, "headshot") == 0) {
 		ent->client->ps.persistant[PERS_HEADSHOT_COUNT]++;
 		return;
 	}
@@ -797,26 +797,26 @@ void SetTeam(gentity_t *ent, const char *s) {
 	trap_GetUserinfo(clientNum, userinfo, sizeof(userinfo));
 	specClient = 0;
 	specState = SPECTATOR_NOT;
-	if (Q_strequal(s, "scoreboard") || Q_strequal(s, "score")) {
+	if (!Q_stricmp(s, "scoreboard") || !Q_stricmp(s, "score")) {
 		team = TEAM_SPECTATOR;
 		specState = SPECTATOR_SCOREBOARD;
-	} else if (Q_strequal(s, "follow1")) {
+	} else if (!Q_stricmp(s, "follow1")) {
 		team = TEAM_SPECTATOR;
 		specState = SPECTATOR_FOLLOW;
 		specClient = -1;
-	} else if (Q_strequal(s, "follow2")) {
+	} else if (!Q_stricmp(s, "follow2")) {
 		team = TEAM_SPECTATOR;
 		specState = SPECTATOR_FOLLOW;
 		specClient = -2;
-	} else if (Q_strequal(s, "spectator") || Q_strequal(s, "s")) {
+	} else if (!Q_stricmp(s, "spectator") || !Q_stricmp(s, "s")) {
 		team = TEAM_SPECTATOR;
 		specState = SPECTATOR_FREE;
 	} else if (g_gametype.integer >= GT_TEAM && g_ffa_gt != 1) {
 		// if running a team game, assign player to one of the teams
 		specState = SPECTATOR_NOT;
-		if (Q_strequal(s, "red") || Q_strequal(s, "r")) {
+		if (!Q_stricmp(s, "red") || !Q_stricmp(s, "r")) {
 			team = TEAM_RED;
-		} else if (Q_strequal(s, "blue") || Q_strequal(s, "b")) {
+		} else if (!Q_stricmp(s, "blue") || !Q_stricmp(s, "b")) {
 			team = TEAM_BLUE;
 		} else {
 			// pick the team with the least number of players
@@ -1085,9 +1085,9 @@ void Cmd_FollowCycle_f(gentity_t *ent) {
 	}
 
 	trap_Argv(0, args, sizeof(args));
-	if (Q_strequal(args, "followprev")) {
+	if (Q_stricmp(args, "followprev") == 0) {
 		dir = -1;
-	} else if (Q_strequal(args, "follownext")) {
+	} else if (Q_stricmp(args, "follownext") == 0) {
 		dir = 1;
 	} else {
 		dir = 1;
@@ -1474,7 +1474,7 @@ static void Cmd_Say_f(gentity_t *ent) {
 	int mode = SAY_ALL;
 
 	trap_Argv(0, arg, sizeof(arg));
-	if (Q_strequal(arg, "say_team"))
+	if (Q_stricmp(arg, "say_team") == 0)
 		mode = SAY_TEAM;
 
 	if (trap_Argc() < 2)
@@ -1520,227 +1520,6 @@ static void Cmd_Tell_f(gentity_t *ent) {
 	if (ent != target && !(ent->r.svFlags & SVF_BOT)) {
 		G_Say(ent, ent, SAY_TELL, p);
 	}
-}
-
-/*
-==================
-G_VoiceTo
-==================
-*/
-static void G_VoiceTo(gentity_t *ent, gentity_t *other, int mode, const char *id, qboolean voiceonly) {
-	int color;
-	char *cmd;
-
-	if (!other) {
-		return;
-	}
-	if (!other->inuse) {
-		return;
-	}
-	if (!other->client) {
-		return;
-	}
-	if (mode == SAY_TEAM && !OnSameTeam(ent, other)) {
-		return;
-	}
-	// no chatting to players in tournements
-	if (g_gametype.integer == GT_TOURNAMENT) {
-		return;
-	}
-
-	if (mode == SAY_TEAM) {
-		color = COLOR_CYAN;
-		cmd = "vtchat";
-	} else if (mode == SAY_TELL) {
-		color = COLOR_MAGENTA;
-		cmd = "vtell";
-	} else {
-		color = COLOR_GREEN;
-		cmd = "vchat";
-	}
-
-	trap_SendServerCommand(other - g_entities, va("%s %d %d %d %s", cmd, voiceonly, ent->s.number, color, id));
-}
-
-/*
-==================
-G_Voice
-==================
-*/
-static void G_Voice(gentity_t *ent, gentity_t *target, int mode, const char *id, qboolean voiceonly) {
-	int j;
-	gentity_t *other;
-
-	if ((g_gametype.integer < GT_TEAM || g_ffa_gt == 1) && mode == SAY_TEAM) {
-		mode = SAY_ALL;
-	}
-
-	if (target) {
-		G_VoiceTo(ent, target, mode, id, voiceonly);
-		return;
-	}
-
-	// echo the text to the console
-	if (g_dedicated.integer) {
-		G_Printf("voice: %s %s\n", ent->client->pers.netname, id);
-	}
-
-	// send it to all the apropriate clients
-	for (j = 0; j < level.maxclients; j++) {
-		other = &g_entities[j];
-		G_VoiceTo(ent, other, mode, id, voiceonly);
-	}
-}
-
-/*
-==================
-Cmd_Voice_f
-KK-OAX Modified this to trap args.
-
-In the original, every call to this function would always set "arg0" to false, and it was
-never passed along to other functions, so I removed/commented it out. 
-==================
-*/
-static void Cmd_Voice_f(gentity_t *ent) {
-	char *p;
-	char arg[MAX_TOKEN_CHARS];
-	int mode = SAY_ALL;
-	qboolean voiceonly = qfalse;
-
-	trap_Argv(0, arg, sizeof(arg));
-	if ((Q_strequal(arg, "vsay_team")) ||
-	    Q_strequal(arg, "vosay_team"))
-		mode = SAY_TEAM;
-
-	if ((Q_strequal(arg, "vosay")) ||
-	    Q_strequal(arg, "vosay_team"))
-		voiceonly = qtrue;
-
-	//KK-OAX Removed "arg0" since it will always be set to qfalse.
-	if (trap_Argc() < 2) {
-		return;
-	}
-	//KK-OAX This was tricky to figure out, but since none of the original command handlings
-	//set it to "qtrue"...
-
-	p = ConcatArgs(1);
-
-	G_Voice(ent, NULL, mode, p, voiceonly);
-}
-
-/*
-==================
-Cmd_VoiceTell_f
-KK-OAX Modified this to trap args. 
-==================
-*/
-static void Cmd_VoiceTell_f(gentity_t *ent) {
-	int targetNum;
-	gentity_t *target;
-	char *id;
-	char arg[MAX_TOKEN_CHARS];
-	qboolean voiceonly = qfalse;
-
-	if (trap_Argc() < 2) {
-		return;
-	}
-
-	trap_Argv(0, arg, sizeof(arg));
-	if (Q_strequal(arg, "votell"))
-		voiceonly = qtrue;
-
-	trap_Argv(1, arg, sizeof(arg));
-	targetNum = atoi(arg);
-	if (targetNum < 0 || targetNum >= level.maxclients) {
-		return;
-	}
-
-	target = &g_entities[targetNum];
-	if (!target || !target->inuse || !target->client) {
-		return;
-	}
-
-	id = ConcatArgs(2);
-
-	G_LogPrintf("vtell: %s to %s: %s\n", ent->client->pers.netname, target->client->pers.netname, id);
-	G_Voice(ent, target, SAY_TELL, id, voiceonly);
-	// don't tell to the player self if it was already directed to this player
-	// also don't send the chat back to a bot
-	if (ent != target && !(ent->r.svFlags & SVF_BOT)) {
-		G_Voice(ent, ent, SAY_TELL, id, voiceonly);
-	}
-}
-
-/*
-==================
-Cmd_VoiceTaunt_f
-==================
-*/
-static void Cmd_VoiceTaunt_f(gentity_t *ent) {
-	gentity_t *who;
-	int i;
-
-	if (!ent->client) {
-		return;
-	}
-
-	// insult someone who just killed you
-	if (ent->enemy && ent->enemy->client && ent->enemy->client->lastkilled_client == ent->s.number) {
-		// i am a dead corpse
-		if (!(ent->enemy->r.svFlags & SVF_BOT)) {
-			G_Voice(ent, ent->enemy, SAY_TELL, VOICECHAT_DEATHINSULT, qfalse);
-		}
-		if (!(ent->r.svFlags & SVF_BOT)) {
-			G_Voice(ent, ent, SAY_TELL, VOICECHAT_DEATHINSULT, qfalse);
-		}
-		ent->enemy = NULL;
-		return;
-	}
-	// insult someone you just killed
-	if (ent->client->lastkilled_client >= 0 && ent->client->lastkilled_client != ent->s.number) {
-		who = g_entities + ent->client->lastkilled_client;
-		if (who->client) {
-			// who is the person I just killed
-			if (who->client->lasthurt_mod == MOD_GAUNTLET) {
-				if (!(who->r.svFlags & SVF_BOT)) {
-					G_Voice(ent, who, SAY_TELL, VOICECHAT_KILLGAUNTLET, qfalse); // and I killed them with a gauntlet
-				}
-				if (!(ent->r.svFlags & SVF_BOT)) {
-					G_Voice(ent, ent, SAY_TELL, VOICECHAT_KILLGAUNTLET, qfalse);
-				}
-			} else {
-				if (!(who->r.svFlags & SVF_BOT)) {
-					G_Voice(ent, who, SAY_TELL, VOICECHAT_KILLINSULT, qfalse); // and I killed them with something else
-				}
-				if (!(ent->r.svFlags & SVF_BOT)) {
-					G_Voice(ent, ent, SAY_TELL, VOICECHAT_KILLINSULT, qfalse);
-				}
-			}
-			ent->client->lastkilled_client = -1;
-			return;
-		}
-	}
-
-	if (g_gametype.integer >= GT_TEAM && g_ffa_gt != 1) {
-		// praise a team mate who just got a reward
-		for (i = 0; i < MAX_CLIENTS; i++) {
-			who = g_entities + i;
-			if (who->client && who != ent && who->client->sess.sessionTeam == ent->client->sess.sessionTeam) {
-				if (who->client->rewardTime > level.time) {
-					if (!(who->r.svFlags & SVF_BOT)) {
-						G_Voice(ent, who, SAY_TELL, VOICECHAT_PRAISE, qfalse);
-					}
-					if (!(ent->r.svFlags & SVF_BOT)) {
-						G_Voice(ent, ent, SAY_TELL, VOICECHAT_PRAISE, qfalse);
-					}
-					return;
-				}
-			}
-		}
-	}
-
-	// just say something
-	G_Voice(ent, NULL, SAY_ALL, VOICECHAT_TAUNT, qfalse);
 }
 
 static char *gc_orders[] = {
@@ -2383,15 +2162,6 @@ commands_t cmds[] =
         // can be used even during intermission
         {"say", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Say_f},
         {"say_team", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Say_f},
-        {"vsay", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Voice_f},
-        {"vsay_team", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Voice_f},
-        {"vsay_local", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Voice_f},
-        {"vtell", CMD_MESSAGE | CMD_INTERMISSION, Cmd_VoiceTell_f},
-        {"vosay", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Voice_f},
-        {"vosay_team", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Voice_f},
-        {"vosay_local", CMD_MESSAGE | CMD_INTERMISSION, Cmd_Voice_f},
-        {"votell", CMD_MESSAGE | CMD_INTERMISSION, Cmd_VoiceTell_f},
-        {"vtaunt", CMD_MESSAGE | CMD_INTERMISSION, Cmd_VoiceTaunt_f},
 
         {"zoom", 0, Cmd_Zoom_f},
         {"unzoom", 0, Cmd_UnZoom_f},

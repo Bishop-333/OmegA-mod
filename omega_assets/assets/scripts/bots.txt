@@ -172,7 +172,7 @@ aifile	bots/grunt_c.c
 // Sorceress model
 {
 name		Sorceress
-model		sorceress
+model		sorceress/blue
 aifile	bots/major_c.c
 }
 // Tony model
