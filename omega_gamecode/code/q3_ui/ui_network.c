@@ -278,7 +278,7 @@ static void UI_NetworkOptionsMenu_Init(void) {
 	networkOptionsInfo.network.style = UI_RIGHT;
 	networkOptionsInfo.network.color = color_red;
 
-	y = 240 - 1 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 2 * (BIGCHAR_HEIGHT + 2);
 	networkOptionsInfo.rate.generic.type = MTYPE_SPINCONTROL;
 	networkOptionsInfo.rate.generic.name = "Data Rate:";
 	networkOptionsInfo.rate.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;

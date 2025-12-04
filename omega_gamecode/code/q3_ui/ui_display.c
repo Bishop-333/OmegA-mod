@@ -298,7 +298,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	displayOptionsInfo.network.style = UI_RIGHT;
 	displayOptionsInfo.network.color = color_red;
 
-	y = 240 - 1 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 2 * (BIGCHAR_HEIGHT + 2);
 	displayOptionsInfo.brightness.generic.type = MTYPE_SLIDER;
 	displayOptionsInfo.brightness.generic.name = "Brightness:";
 	displayOptionsInfo.brightness.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;

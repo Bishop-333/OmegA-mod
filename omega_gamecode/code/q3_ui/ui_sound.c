@@ -293,7 +293,7 @@ static void UI_SoundOptionsMenu_Init(void) {
 	soundOptionsInfo.network.style = UI_RIGHT;
 	soundOptionsInfo.network.color = color_red;
 
-	y = 240 - 1.5 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 3 * (BIGCHAR_HEIGHT + 2);
 	soundOptionsInfo.sfxvolume.generic.type = MTYPE_SLIDER;
 	soundOptionsInfo.sfxvolume.generic.name = "Effects Volume:";
 	soundOptionsInfo.sfxvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
