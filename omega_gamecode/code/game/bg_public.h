@@ -232,7 +232,6 @@ typedef struct {
 	int chaos;
 	int noInvisWalls;
 	int guidedRockets;
-	int overbounce;
 	int railgunFireRate;
 	int rocketFireRate;
 	int slickGround;

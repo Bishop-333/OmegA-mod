@@ -152,12 +152,10 @@ void PM_ClipVelocity(vec3_t in, vec3_t normal, vec3_t out, float overbounce) {
 
 	backoff = DotProduct(in, normal);
 
-	if (pm->overbounce) {
-		if (backoff < 0) {
-			backoff *= overbounce;
-		} else {
-			backoff /= overbounce;
-		}
+	if (backoff < 0) {
+		backoff *= overbounce;
+	} else {
+		backoff /= overbounce;
 	}
 
 	for (i = 0; i < 3; i++) {
