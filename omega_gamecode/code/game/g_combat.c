@@ -1049,7 +1049,7 @@ void G_Damage(gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_t
 	int max;
 	int height;
 	float targ_maxs2;
-	float z_ratio;
+	float z_ratio = 0.0f;
 	float z_rel;
 
 	vec3_t bouncedir, impactpoint;
