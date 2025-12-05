@@ -2720,7 +2720,9 @@ CG_Draw3DCrosshairName
 =================
 */
 void CG_Draw3DCrosshairName(centity_t *cent, clientInfo_t *ci) {
-	float *color;
+	float *fadeColor;
+	vec4_t hcolor;
+	static char name[32];
 
 	if (!cg_drawCrosshairNames.integer || cg_drawCrosshairNames.integer == 2) {
 		return;
@@ -2735,23 +2737,31 @@ void CG_Draw3DCrosshairName(centity_t *cent, clientInfo_t *ci) {
 		return;
 	}
 
-	color = CG_FadeColor(cg.crosshairClientTime, 750);
-	if (!color) {
+	fadeColor = CG_FadeColor(cg.crosshairClientTime, 750);
+	if (!fadeColor) {
 		trap_R_SetColor(NULL);
 		return;
 	}
 
+	// clear the color from the name
+	Q_strncpyz(name, ci->name, sizeof(name));
+	Q_CleanStr(name);
+
 	if (ci->team != cg.snap->ps.persistant[PERS_TEAM] || ci->team == TEAM_FREE) {
+		VectorCopy(colorCornellRed, hcolor);
+		hcolor[3] = fadeColor[3];
 		if (cg_drawEnemy.integer) {
-			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 73, ci->name, colorCornellRed, qtrue);
+			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 73, name, hcolor, qtrue);
 		} else {
-			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 48, ci->name, colorCornellRed, qtrue);
+			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 48, name, hcolor, qtrue);
 		}
 	} else {
+		VectorCopy(colorCornellRed, hcolor);
+		hcolor[3] = fadeColor[3];
 		if (cg_drawFriend.integer) {
-			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 73, ci->name, colorGreen, qfalse);
+			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 73, name, hcolor, qfalse);
 		} else {
-			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 48, ci->name, colorGreen, qfalse);
+			CG_Add3DString(cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 48, name, hcolor, qfalse);
 		}
 	}
 }
