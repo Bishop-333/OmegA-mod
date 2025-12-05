@@ -399,9 +399,8 @@ static qboolean PM_CheckJump(void) {
 
 	pml.groundPlane = qfalse; // jumping away
 	pml.walking = qfalse;
-	if (!pm->pmove_autohop) {
-		pm->ps->pm_flags |= PMF_JUMP_HELD;
-	}
+	pm->ps->pm_flags |= PMF_JUMP_HELD;
+	pm->ps->pm_flags &= ~PMF_DOUBLE_JUMPED;
 
 	pm->ps->groundEntityNum = ENTITYNUM_NONE;
 	pm->ps->velocity[2] = JUMP_VELOCITY;
@@ -650,7 +649,7 @@ static void PM_AirMove(void) {
 	vec3_t curdir;
 	float dot;
 
-	if (pm->pmove_doublejump && !pm->pmove_autohop) {
+	if (pm->pmove_doublejump) {
 		if (!(pm->ps->pm_flags & PMF_DOUBLE_JUMPED)) {
 			if (PM_CheckJump()) {
 				pm->ps->velocity[2] = JUMP_VELOCITY * 1.25;
@@ -764,6 +763,10 @@ static void PM_WalkMove(void) {
 		// begin swimming
 		PM_WaterMove();
 		return;
+	}
+
+	if (pm->pmove_autohop) {
+		pm->ps->pm_flags &= ~PMF_JUMP_HELD;
 	}
 
 	if (PM_CheckJump()) {
