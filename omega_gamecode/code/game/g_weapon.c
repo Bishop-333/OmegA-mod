@@ -664,6 +664,7 @@ static void weapon_railgun_fire(gentity_t *ent) {
 	if (hits == 0) {
 		// complete miss
 		ent->client->accurateCount = 0;
+		ent->client->railgunRapidFire = 0;
 	} else {
 		// check for "impressive" reward sound
 		ent->client->accurateCount += hits;
@@ -677,9 +678,16 @@ static void weapon_railgun_fire(gentity_t *ent) {
 			ent->client->ps.eFlags &= ~(EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT);
 			ent->client->ps.eFlags |= EF_AWARD_IMPRESSIVE;
 			ent->client->rewardTime = level.time + REWARD_SPRITE_TIME;
+			if (g_railgunImpressiveReward.integer) {
+				ent->client->railgunRapidFire = 1;
+			}
 		}
 		ent->client->accuracy_hits++;
 		ent->client->accuracy[WP_RAILGUN][1]++;
+	}
+
+	if (ent->client->railgunRapidFire) {
+		ent->client->ps.weaponTime = RAIL_RELOAD_FAST;
 	}
 }
 

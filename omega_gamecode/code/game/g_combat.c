@@ -1539,7 +1539,6 @@ qboolean G_RadiusDamage(vec3_t origin, gentity_t *attacker, float damage, float 
 G_RailJump
 ============
 */
-#define RAILJUMP_TIME 800
 qboolean G_RailJump(vec3_t origin, gentity_t *attacker) {
 	float points, dist;
 	float damage = 100;
@@ -1572,8 +1571,8 @@ qboolean G_RailJump(vec3_t origin, gentity_t *attacker) {
 		// get knocked into the air more
 		dir[2] += 24;
 		G_Damage(attacker, attacker, attacker, dir, origin, (int)points, DAMAGE_RADIUS, MOD_RAILJUMP);
-		if (attacker->client && attacker->client->ps.weaponTime > RAILJUMP_TIME) {
-			attacker->client->ps.weaponTime = RAILJUMP_TIME;
+		if (attacker->client && attacker->client->ps.weaponTime > RAIL_RELOAD_FAST) {
+			attacker->client->ps.weaponTime = RAIL_RELOAD_FAST;
 		}
 		return qtrue;
 	}

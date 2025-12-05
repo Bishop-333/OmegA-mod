@@ -421,6 +421,8 @@ struct gclient_s {
 	qboolean spawnprotected;
 
 	int accuracy[WP_NUM_WEAPONS][2];
+
+	int railgunRapidFire;
 };
 
 //
@@ -1161,6 +1163,7 @@ extern vmCvar_t g_muteSpectators;
 extern vmCvar_t g_plasmaBounce;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railgunFireRate;
+extern vmCvar_t g_railgunImpressiveReward;
 extern vmCvar_t g_railJump;
 extern vmCvar_t g_railThroughWalls;
 extern vmCvar_t g_rocketFireRate;
