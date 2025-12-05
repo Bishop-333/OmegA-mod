@@ -378,7 +378,7 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 	finalY = (-localY / (localZ * fovY)) * 240 + 240;
 
 	width = CG_DrawStrlen(str) * TINYCHAR_WIDTH;
-	finalX -= width / 2;
+	finalX -= width * 0.5f;
 
 	dist = VectorLength(dir);
 	Vector4Copy(color, fadeColor);
@@ -398,7 +398,7 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 	}
 
 	fadeColor[3] *= alpha;
-	CG_DrawTinyStringColor(finalX, finalY, str, fadeColor);
+	CG_DrawTinyStringColor((int)(finalX + 0.5f), (int)(finalY + 0.5f), str, fadeColor);
 }
 
 /*
