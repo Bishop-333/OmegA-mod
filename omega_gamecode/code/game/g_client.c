@@ -1820,7 +1820,11 @@ void ClientSpawn(gentity_t *ent) {
 		trap_LinkEntity(ent);
 
 		// force the base weapon up
-		client->ps.weapon = WP_MACHINEGUN;
+		if ( g_instantgib.integer ) {
+			client->ps.weapon = WP_RAILGUN;
+		} else {
+			client->ps.weapon = WP_MACHINEGUN;
+		}
 		client->ps.weaponstate = WEAPON_READY;
 	}
 

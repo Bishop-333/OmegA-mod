@@ -1175,7 +1175,6 @@ extern vmCvar_t g_spectateOnDeath;
 extern vmCvar_t g_survivorsRespawn;
 extern vmCvar_t g_teamPush;
 extern vmCvar_t g_teleportMissiles; //from ratmod
-extern vmCvar_t g_vulnerableRockets;
 extern vmCvar_t g_waterDamage;
 extern vmCvar_t g_weaponArena;
 extern vmCvar_t pmove_aircontrol;

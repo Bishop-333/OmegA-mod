@@ -232,7 +232,6 @@ vmCvar_t g_startWhenReady;
 vmCvar_t g_survivorsRespawn;
 vmCvar_t g_teamPush;
 vmCvar_t g_teleportMissiles; //from ratmod
-vmCvar_t g_vulnerableRockets;
 vmCvar_t g_waterDamage;
 vmCvar_t g_weaponArena;
 vmCvar_t pmove_aircontrol;
@@ -448,7 +447,7 @@ static cvarTable_t gameCvarTable[] = {
     {&g_forcespectator, "g_forcespectator", "0", 0, 0, qtrue},
     {&g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue},
     {&g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue},
-    {&g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE, 0, qtrue},
+    {&g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
     {&g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue},
     {&g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue},
@@ -471,7 +470,6 @@ static cvarTable_t gameCvarTable[] = {
     {&g_survivorsRespawn, "g_survivorsRespawn", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
     {&g_teamPush, "g_teamPush", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_vulnerableRockets, "g_vulnerableRockets", "0", CVAR_ARCHIVE, 0, qtrue},
     {&g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue},
     {&g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse},
     {&pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
