@@ -2862,8 +2862,12 @@ float BotEntityVisible(int viewer, vec3_t eye, vec3_t viewangles, float fov, int
 	aas_entityinfo_t entinfo;
 	vec3_t dir, entangles, start, end, middle;
 
-	//calculate middle of bounding box
 	BotEntityInfo(ent, &entinfo);
+	if (!entinfo.valid) {
+		return 0;
+	}
+
+	//calculate middle of bounding box
 	VectorAdd(entinfo.mins, entinfo.maxs, middle);
 	VectorScale(middle, 0.5, middle);
 	VectorAdd(entinfo.origin, middle, middle);
@@ -3008,6 +3012,10 @@ int BotFindEnemy(bot_state_t *bs, int curenemy) {
 		if (i == bs->client) continue;
 		//if it's the current enemy
 		if (i == curenemy) continue;
+		//if the enemy has targeting disabled
+		if (g_entities[i].flags & FL_NOTARGET) {
+			continue;
+		}
 		//
 		BotEntityInfo(i, &entinfo);
 		//
