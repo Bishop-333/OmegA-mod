@@ -401,8 +401,8 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 	}
 
 	fovScale = cg_fov.value / cg.refdef.fov_x;
-	scale = 350.0f / localZ * fovScale;
-	if (scale > 1.0f) scale = 1.0f;
+	scale = 200.0f / localZ * fovScale;
+	if (scale > 2.0f) scale = 2.0f;
 	if (scale < 0.5f) scale = 0.5f;
 
 	w = TINYCHAR_WIDTH * scale;
@@ -416,16 +416,10 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 
 	alpha = 1.0f;
 
-	if (dist > 1500) {
+	if (dist > 1100) {
 		alpha = 0.0f;
 	} else if (dist > 1000) {
-		alpha = (1500 - dist) / (1500 - 1000);
-	}
-
-	if (dist < 75) {
-		alpha = 0.0f;
-	} else if (dist < 100) {
-		alpha = (dist - 75) / (100 - 75);
+		alpha = (1100 - dist) / (1100 - 1000);
 	}
 
 	fadeColor[3] *= alpha;
