@@ -336,6 +336,35 @@ int CG_DrawStrlen(const char *str) {
 
 /*
 =================
+CG_WorldToScreen
+=================
+*/
+static float CG_WorldToScreen(vec3_t point, float *x, float *y) {
+	vec3_t dir;
+	float localX, localY, localZ;
+	float fovX, fovY;
+
+	VectorSubtract(point, cg.refdef.vieworg, dir);
+
+	localZ = DotProduct(dir, cg.refdef.viewaxis[0]);
+	if (localZ <= 0) {
+		return 0;
+	}
+
+	localX = -DotProduct(dir, cg.refdef.viewaxis[1]);
+	localY = DotProduct(dir, cg.refdef.viewaxis[2]);
+
+	fovX = tan(DEG2RAD(cg.refdef.fov_x) * 0.5f);
+	fovY = tan(DEG2RAD(cg.refdef.fov_y) * 0.5f);
+
+	*x = (localX / (localZ * fovX)) * 320.0f + 320.0f;
+	*y = (-localY / (localZ * fovY)) * 240.0f + 240.0f;
+
+	return localZ;
+}
+
+/*
+=================
 CG_Draw3DString
 =================
 */
@@ -343,14 +372,12 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 	vec3_t dir, worldPos;
 	vec4_t fadeColor;
 	trace_t trace;
-	float localX, localY, localZ;
-	float fovX, fovY;
-	float finalX, finalY;
+	float finalX, finalY, localZ;
+	float scale, fovScale;
 	float dist;
 	float alpha;
-	float scale, fovScale;
 	float size;
-	float w, h, xx;
+	float w, h;
 	float scrX, scrY, scrW, scrH;
 	float frow, fcol;
 	int row, col;
@@ -359,7 +386,6 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 	worldPos[0] = x;
 	worldPos[1] = y;
 	worldPos[2] = z;
-
 	VectorSubtract(worldPos, cg.refdef.vieworg, dir);
 
 	if (useTrace) {
@@ -369,19 +395,10 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 		}
 	}
 
-	localX = -DotProduct(dir, cg.refdef.viewaxis[1]);
-	localY = DotProduct(dir, cg.refdef.viewaxis[2]);
-	localZ = DotProduct(dir, cg.refdef.viewaxis[0]);
-
+	localZ = CG_WorldToScreen(worldPos, &finalX, &finalY);
 	if (localZ <= 0) {
 		return;
 	}
-
-	fovX = tan(DEG2RAD(cg.refdef.fov_x) * 0.5f);
-	fovY = tan(DEG2RAD(cg.refdef.fov_y) * 0.5f);
-
-	finalX = (localX / (localZ * fovX)) * 320.0f + 320.0f;
-	finalY = (-localY / (localZ * fovY)) * 240.0f + 240.0f;
 
 	fovScale = cg_fov.value / cg.refdef.fov_x;
 	scale = 350.0f / localZ * fovScale;
@@ -405,10 +422,10 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 		alpha = (1500 - dist) / (1500 - 1000);
 	}
 
-	if (dist < 100) {
+	if (dist < 75) {
 		alpha = 0.0f;
-	} else if (dist < 150) {
-		alpha = (dist - 100) / (150 - 100);
+	} else if (dist < 100) {
+		alpha = (dist - 75) / (100 - 75);
 	}
 
 	fadeColor[3] *= alpha;
@@ -417,7 +434,7 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 	}
 
 	trap_R_SetColor(fadeColor);
-	
+
 	s = str;
 	size = 0.0625f;
 
