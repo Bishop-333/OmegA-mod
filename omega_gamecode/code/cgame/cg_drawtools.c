@@ -342,13 +342,19 @@ CG_Draw3DString
 void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, qboolean useTrace) {
 	vec3_t dir, worldPos;
 	vec4_t fadeColor;
+	trace_t trace;
 	float localX, localY, localZ;
 	float fovX, fovY;
 	float finalX, finalY;
 	float dist;
 	float alpha;
-	trace_t trace;
-	int width;
+	float scale, fovScale;
+	float size;
+	float w, h, xx;
+	float scrX, scrY, scrW, scrH;
+	float frow, fcol;
+	int row, col;
+	const char *s;
 
 	worldPos[0] = x;
 	worldPos[1] = y;
@@ -371,34 +377,67 @@ void CG_Draw3DString(float x, float y, float z, const char *str, vec4_t color, q
 		return;
 	}
 
-	fovX = tan(DEG2RAD(cg.refdef.fov_x) * 0.5);
-	fovY = tan(DEG2RAD(cg.refdef.fov_y) * 0.5);
+	fovX = tan(DEG2RAD(cg.refdef.fov_x) * 0.5f);
+	fovY = tan(DEG2RAD(cg.refdef.fov_y) * 0.5f);
 
-	finalX = (localX / (localZ * fovX)) * 320 + 320;
-	finalY = (-localY / (localZ * fovY)) * 240 + 240;
+	finalX = (localX / (localZ * fovX)) * 320.0f + 320.0f;
+	finalY = (-localY / (localZ * fovY)) * 240.0f + 240.0f;
 
-	width = CG_DrawStrlen(str) * TINYCHAR_WIDTH;
-	finalX -= width * 0.5f;
+	fovScale = cg_fov.value / cg.refdef.fov_x;
+	scale = 350.0f / localZ * fovScale;
+	if (scale > 1.0f) scale = 1.0f;
+	if (scale < 0.5f) scale = 0.5f;
+
+	w = TINYCHAR_WIDTH * scale;
+	h = TINYCHAR_HEIGHT * scale;
+
+	finalX -= (CG_DrawStrlen(str) * w) * 0.5f;
+	finalY -= h * 0.5f;
 
 	dist = VectorLength(dir);
 	Vector4Copy(color, fadeColor);
 
 	alpha = 1.0f;
 
-	if (dist > 1000) {
+	if (dist > 1500) {
 		alpha = 0.0f;
-	} else if (dist > 800) {
-		alpha = (1000 - dist) / (1000 - 800);
+	} else if (dist > 1000) {
+		alpha = (1500 - dist) / (1500 - 1000);
 	}
 
-	if (dist < 75) {
+	if (dist < 100) {
 		alpha = 0.0f;
-	} else if (dist < 100) {
-		alpha = (dist - 75) / (100 - 75);
+	} else if (dist < 150) {
+		alpha = (dist - 100) / (150 - 100);
 	}
 
 	fadeColor[3] *= alpha;
-	CG_DrawTinyStringColor((int)(finalX + 0.5f), (int)(finalY + 0.5f), str, fadeColor);
+	if (fadeColor[3] <= 0.0f) {
+		return;
+	}
+
+	trap_R_SetColor(fadeColor);
+	
+	s = str;
+	size = 0.0625f;
+
+	scrX = finalX;
+	scrY = finalY;
+	scrW = w;
+	scrH = h;
+	CG_AdjustFrom640(&scrX, &scrY, &scrW, &scrH);
+
+	while (*s) {
+		row = (*s) >> 4;
+		col = (*s) & 15;
+		frow = row * size;
+		fcol = col * size;
+
+		trap_R_DrawStretchPic(scrX, scrY, scrW, scrH, fcol, frow, fcol + size, frow + size, cgs.media.charsetShader);
+		scrX += scrW;
+		s++;
+	}
+	trap_R_SetColor(NULL);
 }
 
 /*
