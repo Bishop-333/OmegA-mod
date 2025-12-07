@@ -232,14 +232,13 @@ GRAPHICS OPTIONS MENU
 
 #define ID_BACK2 101
 #define ID_FULLSCREEN 102
-#define ID_DESKTOP 103
-#define ID_MODE 104
-#define ID_DRIVERINFO 105
-#define ID_GRAPHICS 106
-#define ID_DISPLAY 107
-#define ID_SOUND 108
-#define ID_NETWORK 109
-#define ID_RATIO 110
+#define ID_MODE 103
+#define ID_DRIVERINFO 104
+#define ID_GRAPHICS 105
+#define ID_DISPLAY 106
+#define ID_SOUND 107
+#define ID_NETWORK 108
+#define ID_RATIO 109
 
 typedef struct {
 	menuframework_s menu;
@@ -253,19 +252,20 @@ typedef struct {
 	menutext_s sound;
 	menutext_s network;
 
+	menulist_s renderer;
 	menulist_s desktop;
 	menulist_s ratio;
 	menulist_s mode;
-	menuslider_s tq;
 	menulist_s fs;
 	menulist_s flares;
 	menulist_s bloom;
 	menulist_s dynamiclights;
+	menulist_s drawfps;
 	menulist_s shadows;
+	menuslider_s tq;
 	menulist_s aniso;
 	menulist_s anti;
 	menulist_s noborder;
-	menulist_s drawfps;
 	menutext_s driverinfo;
 
 	menubitmap_s apply;
@@ -274,18 +274,19 @@ typedef struct {
 
 typedef struct
 {
+	int renderer;
+	qboolean desktop;
 	int mode;
 	qboolean fullscreen;
-	int tq;
 	qboolean flares;
 	qboolean bloom;
 	qboolean dynamiclights;
 	qboolean drawfps;
 	int shadows;
+	int tq;
 	int aniso;
 	int anti;
-	int noborder;
-	qboolean desktop;
+	qboolean noborder;
 } InitialVideoOptions_s;
 
 static InitialVideoOptions_s s_ivo;
@@ -428,15 +429,16 @@ GraphicsOptions_GetInitialVideo
 =================
 */
 static void GraphicsOptions_GetInitialVideo(void) {
+	s_ivo.renderer = s_graphicsoptions.renderer.curvalue;
+	s_ivo.desktop = s_graphicsoptions.desktop.curvalue;
 	s_ivo.mode = s_graphicsoptions.mode.curvalue;
 	s_ivo.fullscreen = s_graphicsoptions.fs.curvalue;
-	s_ivo.desktop = s_graphicsoptions.desktop.curvalue;
-	s_ivo.tq = s_graphicsoptions.tq.curvalue;
 	s_ivo.flares = s_graphicsoptions.flares.curvalue;
 	s_ivo.bloom = s_graphicsoptions.bloom.curvalue;
 	s_ivo.dynamiclights = s_graphicsoptions.dynamiclights.curvalue;
 	s_ivo.drawfps = s_graphicsoptions.drawfps.curvalue;
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
+	s_ivo.tq = s_graphicsoptions.tq.curvalue;
 	s_ivo.aniso = s_graphicsoptions.aniso.curvalue;
 	s_ivo.anti = s_graphicsoptions.anti.curvalue;
 	s_ivo.noborder = s_graphicsoptions.noborder.curvalue;
@@ -485,16 +487,16 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 
 	s_graphicsoptions.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 
-	if (s_ivo.mode != s_graphicsoptions.mode.curvalue) {
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
-	}
-	if (s_ivo.fullscreen != s_graphicsoptions.fs.curvalue) {
+	if (s_ivo.renderer != s_graphicsoptions.renderer.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.desktop != s_graphicsoptions.desktop.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
-	if (s_ivo.tq != s_graphicsoptions.tq.curvalue) {
+	if (s_ivo.mode != s_graphicsoptions.mode.curvalue) {
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	}
+	if (s_ivo.fullscreen != s_graphicsoptions.fs.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.flares != s_graphicsoptions.flares.curvalue) {
@@ -506,13 +508,13 @@ static void GraphicsOptions_UpdateMenuItems(void) {
 	if (s_ivo.dynamiclights != s_graphicsoptions.dynamiclights.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
-	if (s_ivo.dynamiclights != s_graphicsoptions.dynamiclights.curvalue) {
-		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
-	}
 	if (s_ivo.drawfps != s_graphicsoptions.drawfps.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.shadows != s_graphicsoptions.shadows.curvalue) {
+		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	}
+	if (s_ivo.tq != s_graphicsoptions.tq.curvalue) {
 		s_graphicsoptions.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
 	}
 	if (s_ivo.aniso != s_graphicsoptions.aniso.curvalue) {
@@ -561,6 +563,11 @@ static void GraphicsOptions_ApplyChanges(void *unused, int notification) {
 	} else
 		trap_Cvar_SetValue("r_mode", s_graphicsoptions.mode.curvalue);
 
+	if (s_graphicsoptions.renderer.curvalue == 1) {
+		trap_Cvar_Set("cl_renderer", "vulkan");
+	} else {
+		trap_Cvar_Set("cl_renderer", "opengl");
+	}
 	trap_Cvar_SetValue("r_fullscreen", s_graphicsoptions.fs.curvalue);
 	trap_Cvar_SetValue("r_colorbits", 0);
 	trap_Cvar_SetValue("r_depthbits", 0);
@@ -675,7 +682,16 @@ GraphicsOptions_SetMenuItems
 =================
 */
 static void GraphicsOptions_SetMenuItems(void) {
+	char renderer[MAX_STRING_CHARS];
 	char str[MAX_STRING_CHARS];
+
+	trap_Cvar_VariableStringBuffer("cl_renderer", renderer, sizeof(renderer));
+
+	if (!Q_stricmp(renderer, "vulkan")) {
+			s_graphicsoptions.renderer.curvalue = 1;
+	} else {
+			s_graphicsoptions.renderer.curvalue = 0;
+	}
 
 	s_graphicsoptions.mode.curvalue =
 	    GraphicsOptions_FindDetectedResolution(trap_Cvar_VariableValue("r_mode"));
@@ -738,6 +754,23 @@ GraphicsOptions_MenuInit
 ================
 */
 void GraphicsOptions_MenuInit(void) {
+	char renderer[MAX_STRING_CHARS];
+
+	static const char *renderer_names[] =
+	    {
+	        "OpenGL",
+	        "Vulkan",
+	        NULL};
+
+	static const char *shadows_names[] =
+	    {
+	        "Off",
+	        "Blob",
+	        "Stencil",
+	        "Vertex",
+	        "Circle",
+	        NULL};
+
 	static const char *aniso_names[] =
 	    {
 	        "Off",
@@ -758,21 +791,6 @@ void GraphicsOptions_MenuInit(void) {
 	        "4x",
 	        "6x",
 	        "8x",
-	        NULL};
-
-	static const char *noborder_names[] =
-	    {
-	        "Off",
-	        "On",
-	        NULL};
-
-	static const char *shadows_names[] =
-	    {
-	        "Off",
-	        "Blob",
-	        "Stencil",
-	        "Vertex",
-	        "Circle",
 	        NULL};
 
 	static const char *enabled_names[] =
@@ -858,7 +876,20 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.network.style = UI_RIGHT;
 	s_graphicsoptions.network.color = color_red;
 
+	trap_Cvar_VariableStringBuffer("cl_renderer", renderer, sizeof(renderer));
+
 	y = 240 - 6 * (BIGCHAR_HEIGHT + 2);
+
+	if (renderer[0]) {
+		s_graphicsoptions.renderer.generic.type = MTYPE_SPINCONTROL;
+		s_graphicsoptions.renderer.generic.name = "Renderer:";
+		s_graphicsoptions.renderer.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+		s_graphicsoptions.renderer.generic.x = 400;
+		s_graphicsoptions.renderer.generic.y = y;
+		s_graphicsoptions.renderer.itemnames = renderer_names;
+		y += BIGCHAR_HEIGHT + 2;
+	}
+
 	s_graphicsoptions.desktop.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.desktop.generic.name = "Use Desktop Resolution:";
 	s_graphicsoptions.desktop.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -976,15 +1007,15 @@ void GraphicsOptions_MenuInit(void) {
 	s_graphicsoptions.noborder.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.noborder.generic.x = 400;
 	s_graphicsoptions.noborder.generic.y = y;
-	s_graphicsoptions.noborder.itemnames = noborder_names;
-	y += 4 * BIGCHAR_HEIGHT;
+	s_graphicsoptions.noborder.itemnames = enabled_names;
+	y += 3 * BIGCHAR_HEIGHT;
 
 	s_graphicsoptions.driverinfo.generic.type = MTYPE_PTEXT;
 	s_graphicsoptions.driverinfo.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
 	s_graphicsoptions.driverinfo.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.driverinfo.generic.id = ID_DRIVERINFO;
 	s_graphicsoptions.driverinfo.generic.x = 320;
-	s_graphicsoptions.driverinfo.generic.y = y;
+	s_graphicsoptions.driverinfo.generic.y = 396;
 	s_graphicsoptions.driverinfo.string = "Driver Info";
 	s_graphicsoptions.driverinfo.style = UI_CENTER | UI_SMALLFONT;
 	s_graphicsoptions.driverinfo.color = color_red;
@@ -1020,6 +1051,9 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.sound);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.network);
 
+	if (renderer[0]) {
+		Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.renderer);
+	}
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.desktop);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.ratio);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.mode);
