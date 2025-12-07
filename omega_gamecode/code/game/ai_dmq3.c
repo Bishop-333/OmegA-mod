@@ -2405,10 +2405,10 @@ int BotWantsToChase( bot_state_t *bs ) {
 		BotEntityInfo( bs->enemy, &entinfo );
 		// always chase if the enemy is carrying cubes
 		if ( EntityCarriesCubes( &entinfo ) ) return qtrue;
-	} else if (gametype == GT_POSSESSION) {
+	} else if ( gametype == GT_POSSESSION ) {
 		//always chase if the enemy is carrying a flag
-		BotEntityInfo(bs->enemy, &entinfo);
-		if (EntityCarriesFlag(&entinfo))
+		BotEntityInfo( bs->enemy, &entinfo );
+		if ( EntityCarriesFlag( &entinfo ) )
 			return qtrue;
 	}
 	//if the bot is getting the flag
@@ -4785,7 +4785,7 @@ static void BotCheckEvents( bot_state_t *bs, entityState_t *state ) {
 				bs->enemysuicide = qtrue;
 			}
 			//
-			if ( gametype == GT_1FCTF  || gametype == GT_POSSESSION ) {
+			if ( gametype == GT_1FCTF || gametype == GT_POSSESSION ) {
 				//
 				BotEntityInfo( target, &entinfo );
 				if ( entinfo.powerups & ( 1 << PW_NEUTRALFLAG ) ) {
@@ -5375,9 +5375,9 @@ void BotSetupDeathmatchAI( void ) {
 		if ( untrap_BotGetLevelItemGoal( -1, "Neutral Obelisk", &neutralobelisk ) < 0 )
 			BotAI_Print( PRT_WARNING, "Harvester without neutral obelisk\n" );
 		BotSetEntityNumForGoalWithActivator( &neutralobelisk, "team_neutralobelisk" );
-	} else if (gametype == GT_POSSESSION) {
-		if (untrap_BotGetLevelItemGoal(-1, "Neutral Flag", &ctf_neutralflag) < 0)
-			BotAI_Print(PRT_WARNING, "Possession without Neutral Flag\n");
+	} else if ( gametype == GT_POSSESSION ) {
+		if ( untrap_BotGetLevelItemGoal( -1, "Neutral Flag", &ctf_neutralflag ) < 0 )
+			BotAI_Print( PRT_WARNING, "Possession without Neutral Flag\n" );
 	}
 
 	max_bspmodelindex = 0;

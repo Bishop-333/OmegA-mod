@@ -271,7 +271,7 @@ static void CG_TouchItem( centity_t *cent ) {
 		return; // can't hold it
 	}
 
-	if (cent->currentState.time && cent->currentState.time  > cg.time) {
+	if ( cent->currentState.time && cent->currentState.time > cg.time ) {
 		// item was recently dropped by player using \drop, prevent
 		// pickup (so dropping player doesn't re-pickup it immediately
 		return;
@@ -279,9 +279,9 @@ static void CG_TouchItem( centity_t *cent ) {
 
 	item = &bg_itemlist[cent->currentState.modelindex];
 
-	if (item->giType == IT_TEAM) {
-		if( cgs.gametype == GT_CTF_ELIMINATION ) {
-			if (cgs.elimflags & EF_ONEWAY && cg.predictedPlayerState.persistant[PERS_TEAM] != cgs.attackingTeam) {
+	if ( item->giType == IT_TEAM ) {
+		if ( cgs.gametype == GT_CTF_ELIMINATION ) {
+			if ( cgs.elimflags & EF_ONEWAY && cg.predictedPlayerState.persistant[PERS_TEAM] != cgs.attackingTeam ) {
 				return;
 			}
 		}

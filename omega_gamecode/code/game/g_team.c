@@ -415,7 +415,7 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 		enemy_flag_pw = PW_REDFLAG;
 	}
 
-	if ( g_gametype.integer == GT_1FCTF  || g_gametype.integer == GT_POSSESSION ) {
+	if ( g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_POSSESSION ) {
 		enemy_flag_pw = PW_NEUTRALFLAG;
 	}
 
@@ -426,13 +426,13 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 	}
 	if ( targ->client->ps.powerups[enemy_flag_pw] ) {
 		attacker->client->pers.teamState.lastfraggedcarrier = level.time;
-		if (g_gametype.integer != GT_POSSESSION) {
+		if ( g_gametype.integer != GT_POSSESSION ) {
 			AddScore( attacker, targ->r.currentOrigin, CTF_FRAG_CARRIER_BONUS );
 		}
 		attacker->client->pers.teamState.fragcarrier++;
-		if (g_gametype.integer != GT_POSSESSION) {
-			PrintMsg(NULL, "%s" S_COLOR_WHITE " fragged %s's flag carrier!\n",
-			         attacker->client->pers.netname, TeamName(team));
+		if ( g_gametype.integer != GT_POSSESSION ) {
+			PrintMsg( NULL, "%s" S_COLOR_WHITE " fragged %s's flag carrier!\n",
+			          attacker->client->pers.netname, TeamName( team ) );
 		}
 		if ( g_gametype.integer == GT_CTF ) {
 			G_LogPrintf( "CTF: %i %i %i: %s fragged %s's flag carrier!\n", attacker->client->ps.clientNum, team, 3, attacker->client->pers.netname, TeamName( team ) );
@@ -1490,7 +1490,7 @@ int Pickup_Team( gentity_t *ent, gentity_t *other ) {
 		PrintMsg( other, "Don't know what team the flag is on.\n" );
 		return 0;
 	}
-	if (g_gametype.integer == GT_POSSESSION) {
+	if ( g_gametype.integer == GT_POSSESSION ) {
 		return Possession_TouchFlag( other );
 	}
 	if ( g_gametype.integer == GT_1FCTF ) {
@@ -2243,7 +2243,7 @@ void SP_team_blueobelisk( gentity_t *ent ) {
 /*QUAKED team_neutralobelisk (0 0 1) (-16 -16 0) (16 16 88)
 */
 void SP_team_neutralobelisk( gentity_t *ent ) {
-	if ( g_gametype.integer != GT_1FCTF && g_gametype.integer != GT_HARVESTER && g_gametype.integer != GT_POSSESSION  ) {
+	if ( g_gametype.integer != GT_1FCTF && g_gametype.integer != GT_HARVESTER && g_gametype.integer != GT_POSSESSION ) {
 		G_FreeEntity( ent );
 		return;
 	}

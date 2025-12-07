@@ -472,7 +472,7 @@ void CG_SetConfigValues( void ) {
 		s = CG_ConfigString( CS_FLAGSTATUS );
 		cgs.redflag = s[0] - '0';
 		cgs.blueflag = s[1] - '0';
-	} else if ( cgs.gametype == GT_1FCTF  || cgs.gametype == GT_POSSESSION ) {
+	} else if ( cgs.gametype == GT_1FCTF || cgs.gametype == GT_POSSESSION ) {
 		s = CG_ConfigString( CS_FLAGSTATUS );
 		cgs.flagStatus = s[0] - '0';
 	}

@@ -283,8 +283,7 @@ static cvarTable_t cvarTable[] = {
     { &ui_browserHidePrivate, "ui_browserHidePrivate", "1", CVAR_ARCHIVE },
 
     //OmegA
-    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 }
-};
+    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 } };
 
 // bk001129 - made static to avoid aliasing
 static int cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );

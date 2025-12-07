@@ -840,8 +840,8 @@ static void BotMatch_GetFlag( bot_state_t *bs, bot_match_t *match ) {
 	} else if ( gametype == GT_1FCTF ) {
 		if ( !ctf_neutralflag.areanum || !ctf_redflag.areanum || !ctf_blueflag.areanum )
 			return;
-	} else if (gametype == GT_POSSESSION) {
-		if (!ctf_neutralflag.areanum)
+	} else if ( gametype == GT_POSSESSION ) {
+		if ( !ctf_neutralflag.areanum )
 			return;
 	} else {
 		return;

@@ -22,8 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "g_local.h"
 
-
-static gentity_t	*possessionFlag;
+static gentity_t *possessionFlag;
 
 /*
 =================
@@ -31,16 +30,16 @@ Possession_create_neutral_obelisk
 =================
 */
 static void Possession_create_neutral_obelisk( gentity_t *target ) {
-	gitem_t			*it;
-	if (possessionFlag) {
+	gitem_t *it;
+	if ( possessionFlag ) {
 		return;
 	}
-	it = BG_FindItem("Neutral Flag");
+	it = BG_FindItem( "Neutral Flag" );
 	possessionFlag = G_Spawn();
 	VectorCopy( target->r.currentOrigin, possessionFlag->s.origin );
 	possessionFlag->classname = it->classname;
-	G_SpawnItem(possessionFlag, it);
-	FinishSpawningItem(possessionFlag );
+	G_SpawnItem( possessionFlag, it );
+	FinishSpawningItem( possessionFlag );
 	Team_SetFlagStatus( TEAM_FREE, FLAG_ATBASE );
 }
 
@@ -49,8 +48,8 @@ static void Possession_create_neutral_obelisk( gentity_t *target ) {
 EntityFilterNoBotsOrHumanOnly
 =================
 */
-static qboolean EntityFilterNoBotsOrHumanOnly(const gentity_t* item) {
-	if (item->flags & FL_NO_BOTS || item->flags & FL_NO_HUMANS) {
+static qboolean EntityFilterNoBotsOrHumanOnly( const gentity_t *item ) {
+	if ( item->flags & FL_NO_BOTS || item->flags & FL_NO_HUMANS ) {
 		//We cannot select a nobots or nohuman spawnpoint. These can be outside the map
 		return qfalse;
 	}
@@ -63,29 +62,29 @@ Possession_SpawnFlag
 =================
 */
 void Possession_SpawnFlag( void ) {
-	gentity_t	*ent = NULL;
-	if (possessionFlag) {
+	gentity_t *ent = NULL;
+	if ( possessionFlag ) {
 		return;
 	}
-	ent = SelectRandomEntity("team_CTF_neutralflag");
-	if (ent) {
+	ent = SelectRandomEntity( "team_CTF_neutralflag" );
+	if ( ent ) {
 		possessionFlag = ent;
-		G_LogPrintf("Info: The map contains a white flag. We do not spawn a new one.\n");
+		G_LogPrintf( "Info: The map contains a white flag. We do not spawn a new one.\n" );
 		return;
 	}
-	if (!ent) {
+	if ( !ent ) {
 		//If not pick a random domination point
-		ent = SelectRandomEntity("domination_point");
+		ent = SelectRandomEntity( "domination_point" );
 	}
-	if (!ent) {
+	if ( !ent ) {
 		//Else pick a random deathmatch point
-		ent = SelectRandomEntityFilter("info_player_deathmatch", EntityFilterNoBotsOrHumanOnly);
+		ent = SelectRandomEntityFilter( "info_player_deathmatch", EntityFilterNoBotsOrHumanOnly );
 	}
-	if (!ent) {
+	if ( !ent ) {
 		//If nothing found just use the first entity.
 		ent = &g_entities[0];
 	}
-	Possession_create_neutral_obelisk(ent);
+	Possession_create_neutral_obelisk( ent );
 }
 
 /*
@@ -93,13 +92,12 @@ void Possession_SpawnFlag( void ) {
 Possession_TouchFlag
 =================
 */
-int Possession_TouchFlag(gentity_t *other) {
+int Possession_TouchFlag( gentity_t *other ) {
 	gclient_t *cl = other->client;
 	cl->ps.powerups[PW_NEUTRALFLAG] = INT_MAX; // flags never expire
 	cl->pers.teamState.flagsince = level.time;
-	G_LogPrintf("POS: %i %i: %s^7 took the flag\n", other->s.number, 3, cl->pers.netname);
+	G_LogPrintf( "POS: %i %i: %s^7 took the flag\n", other->s.number, 3, cl->pers.netname );
 	return -1;
 }
-
 
 // Need a blank line

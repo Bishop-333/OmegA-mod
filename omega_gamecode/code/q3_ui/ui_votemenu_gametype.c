@@ -283,7 +283,7 @@ void UI_VoteGametypeMenuInternal( void ) {
 	y += Gametype_MENU_VERTICAL_SPACING;
 	setGametypeMenutext( &s_votemenu_Gametype.bDOM, y, ID_DOM, s_votemenu_Gametype.DOM, "Domination" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bPOS,y,ID_POS,s_votemenu_Gametype.POS,"Possession");
+	setGametypeMenutext( &s_votemenu_Gametype.bPOS, y, ID_POS, s_votemenu_Gametype.POS, "Possession" );
 	y += Gametype_MENU_VERTICAL_SPACING;
 
 	s_votemenu_Gametype.back.generic.type = MTYPE_BITMAP;

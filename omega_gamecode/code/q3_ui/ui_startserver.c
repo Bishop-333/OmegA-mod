@@ -104,7 +104,7 @@ static const char *gametype_items[] = {
     "Last Man Standing",
     "Double Domination",
     "Domination",
-	"Possession",
+    "Possession",
     NULL };
 
 static const char *s_weapon_names[] = {
@@ -136,7 +136,7 @@ static int gametype_remap[] = {
     GT_CTF_ELIMINATION,
     GT_LMS,
     GT_DOUBLE_D,
-	GT_DOMINATION,
+    GT_DOMINATION,
     GT_POSSESSION };
 
 static int gametype_remap2[] = {
@@ -239,7 +239,7 @@ static int GametypeBits( char *string ) {
 			continue;
 		}
 
-		if( Q_strequal( token, "pos" ) ) {
+		if ( Q_strequal( token, "pos" ) ) {
 			bits |= 1 << GT_POSSESSION;
 			continue;
 		}
@@ -917,13 +917,13 @@ static void ServerOptions_Start( void ) {
 			trap_Cvar_SetValue( "ui_dd_timelimit", timelimit );
 			trap_Cvar_SetValue( "ui_dd_friendlt", friendlyfire );
 			break;
-		
+
 		case GT_DOMINATION:
 			trap_Cvar_SetValue( "ui_dom_capturelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_dom_timelimit", timelimit );
 			trap_Cvar_SetValue( "ui_dom_friendly", friendlyfire );
 			break;
-		
+
 		case GT_POSSESSION:
 			trap_Cvar_SetValue( "ui_pos_scorelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_pos_timelimit", timelimit );
@@ -1399,7 +1399,7 @@ static void ServerOptions_SetMenuItems( void ) {
 			Com_sprintf( s_serveroptions.timelimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_dom_timelimit" ) ) );
 			s_serveroptions.friendlyfire.curvalue = (int)Com_Clamp( 0, 1, trap_Cvar_VariableValue( "ui_dom_friendly" ) );
 			break;
-		
+
 		case GT_POSSESSION:
 			trap_Cvar_SetValue( "ui_pos_scorelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_pos_timelimit", timelimit );
@@ -1529,14 +1529,14 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 		s_serveroptions.fraglimit.field.widthInChars = 3;
 		s_serveroptions.fraglimit.field.maxchars = 3;
 	} else if ( s_serveroptions.gametype == GT_POSSESSION ) {
-		s_serveroptions.fraglimit.generic.type       = MTYPE_FIELD;
-		s_serveroptions.fraglimit.generic.name       = "Seconds to win:";
-		s_serveroptions.fraglimit.generic.flags      = QMF_NUMBERSONLY|QMF_PULSEIFFOCUS|QMF_SMALLFONT;
-		s_serveroptions.fraglimit.generic.x	         = OPTIONS_X;
-		s_serveroptions.fraglimit.generic.y	         = y;
-		s_serveroptions.fraglimit.generic.statusbar  = ServerOptions_StatusBar;
+		s_serveroptions.fraglimit.generic.type = MTYPE_FIELD;
+		s_serveroptions.fraglimit.generic.name = "Seconds to win:";
+		s_serveroptions.fraglimit.generic.flags = QMF_NUMBERSONLY | QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+		s_serveroptions.fraglimit.generic.x = OPTIONS_X;
+		s_serveroptions.fraglimit.generic.y = y;
+		s_serveroptions.fraglimit.generic.statusbar = ServerOptions_StatusBar;
 		s_serveroptions.fraglimit.field.widthInChars = 3;
-		s_serveroptions.fraglimit.field.maxchars     = 3;
+		s_serveroptions.fraglimit.field.maxchars = 3;
 	} else {
 		s_serveroptions.flaglimit.generic.type = MTYPE_FIELD;
 		s_serveroptions.flaglimit.generic.name = "Capture Limit:";

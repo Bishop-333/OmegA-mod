@@ -2858,8 +2858,8 @@ void G_RunFrame( int levelTime ) {
 	//Sago: I just need to think why I placed this here... they should only spawn once
 	if ( g_gametype.integer == GT_DOMINATION )
 		Team_Dom_SpawnPoints();
-	
-	if (g_gametype.integer == GT_POSSESSION && level.time > 5000)
+
+	if ( g_gametype.integer == GT_POSSESSION && level.time > 5000 )
 		Possession_SpawnFlag();
 
 	// see if it is time to end the level

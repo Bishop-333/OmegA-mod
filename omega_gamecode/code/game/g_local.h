@@ -920,7 +920,7 @@ void PlayerStore_restore( char *guid, playerState_t *ps );
 // g_possession.c
 //
 void Possession_SpawnFlag( void );
-int Possession_TouchFlag(gentity_t *other);
+int Possession_TouchFlag( gentity_t *other );
 
 //
 // g_vote.c

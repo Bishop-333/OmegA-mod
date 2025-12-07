@@ -104,20 +104,20 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define SORT_PING 4
 #define SORT_HUMANS 5
 
-#define GAMES_ALL			0
-#define GAMES_FFA			1
-#define GAMES_TEAMPLAY                  2
-#define GAMES_TOURNEY                   3
-#define GAMES_CTF			4
-#define GAMES_1FCTF                     5
-#define GAMES_OBELISK                   6
-#define GAMES_HARVESTER                 7
-#define GAMES_ELIMINATION		8
-#define GAMES_CTF_ELIMINATION		9
-#define GAMES_LMS			10
-#define GAMES_DOUBLE_D			11
-#define GAMES_DOM                       12
-#define GAMES_POS                       13
+#define GAMES_ALL 0
+#define GAMES_FFA 1
+#define GAMES_TEAMPLAY 2
+#define GAMES_TOURNEY 3
+#define GAMES_CTF 4
+#define GAMES_1FCTF 5
+#define GAMES_OBELISK 6
+#define GAMES_HARVESTER 7
+#define GAMES_ELIMINATION 8
+#define GAMES_CTF_ELIMINATION 9
+#define GAMES_LMS 10
+#define GAMES_DOUBLE_D 11
+#define GAMES_DOM 12
+#define GAMES_POS 13
 
 static const char *master_items[] = {
     "Local+Internet",
@@ -161,9 +161,9 @@ static char *gamenames[] = {
     "CTF Elimination",
     "Last Man Standing",
     "Double Domination",
-    "Domination",   // Dom replaces Rocket Arena 3
+    "Domination", // Dom replaces Rocket Arena 3
     "Possession",
-    "???",          // unknown
+    "???", // unknown
     NULL };
 
 static char *netnames[] = {
@@ -613,87 +613,87 @@ static void ArenaServers_UpdateMenu( void ) {
 			continue;
 		}
 
-		switch( g_gametype ) {
-		case GAMES_ALL:
-			break;
+		switch ( g_gametype ) {
+			case GAMES_ALL:
+				break;
 
-		case GAMES_FFA:
-			if( servernodeptr->gametype != GT_FFA ) {
-				continue;
-			}
-			break;
+			case GAMES_FFA:
+				if ( servernodeptr->gametype != GT_FFA ) {
+					continue;
+				}
+				break;
 
-		case GAMES_TEAMPLAY:
-			if( servernodeptr->gametype != GT_TEAM ) {
-				continue;
-			}
-			break;
+			case GAMES_TEAMPLAY:
+				if ( servernodeptr->gametype != GT_TEAM ) {
+					continue;
+				}
+				break;
 
-		case GAMES_TOURNEY:
-			if( servernodeptr->gametype != GT_TOURNAMENT ) {
-				continue;
-			}
-			break;
+			case GAMES_TOURNEY:
+				if ( servernodeptr->gametype != GT_TOURNAMENT ) {
+					continue;
+				}
+				break;
 
-		case GAMES_CTF:
-			if( servernodeptr->gametype != GT_CTF ) {
-				continue;
-			}
-			break;
+			case GAMES_CTF:
+				if ( servernodeptr->gametype != GT_CTF ) {
+					continue;
+				}
+				break;
 
-		case GAMES_1FCTF:
-			if( servernodeptr->gametype != GT_1FCTF ) {
-				continue;
-			}
-			break;
+			case GAMES_1FCTF:
+				if ( servernodeptr->gametype != GT_1FCTF ) {
+					continue;
+				}
+				break;
 
-		case GAMES_OBELISK:
-			if( servernodeptr->gametype != GT_OBELISK ) {
-				continue;
-			}
-			break;
+			case GAMES_OBELISK:
+				if ( servernodeptr->gametype != GT_OBELISK ) {
+					continue;
+				}
+				break;
 
-		case GAMES_HARVESTER:
-			if( servernodeptr->gametype != GT_HARVESTER ) {
-				continue;
-			}
-			break;
+			case GAMES_HARVESTER:
+				if ( servernodeptr->gametype != GT_HARVESTER ) {
+					continue;
+				}
+				break;
 
-		case GAMES_ELIMINATION:
-			if( servernodeptr->gametype != GT_ELIMINATION ) {
-				continue;
-			}
-			break;
-		
-		case GAMES_CTF_ELIMINATION:
-			if( servernodeptr->gametype != GT_CTF_ELIMINATION ) {
-				continue;
-			}
-			break;
+			case GAMES_ELIMINATION:
+				if ( servernodeptr->gametype != GT_ELIMINATION ) {
+					continue;
+				}
+				break;
 
-		case GAMES_LMS:
-			if( servernodeptr->gametype != GT_LMS ) {
-				continue;
-			}
-			break;
+			case GAMES_CTF_ELIMINATION:
+				if ( servernodeptr->gametype != GT_CTF_ELIMINATION ) {
+					continue;
+				}
+				break;
 
-		case GAMES_DOUBLE_D:
-			if( servernodeptr->gametype != GT_DOUBLE_D ) {
-				continue;
-			}
-			break;
+			case GAMES_LMS:
+				if ( servernodeptr->gametype != GT_LMS ) {
+					continue;
+				}
+				break;
 
-		case GAMES_DOM:
-			if( servernodeptr->gametype != GT_DOMINATION ) {
-				continue;
-			}
-			break;
+			case GAMES_DOUBLE_D:
+				if ( servernodeptr->gametype != GT_DOUBLE_D ) {
+					continue;
+				}
+				break;
 
-		case GAMES_POS:
-			if( servernodeptr->gametype != GT_POSSESSION ) {
-				continue;
-			}
-			break;
+			case GAMES_DOM:
+				if ( servernodeptr->gametype != GT_DOMINATION ) {
+					continue;
+				}
+				break;
+
+			case GAMES_POS:
+				if ( servernodeptr->gametype != GT_POSSESSION ) {
+					continue;
+				}
+				break;
 		}
 
 		filter = g_arenaservers.mod.field.buffer;
@@ -1213,50 +1213,50 @@ static void ArenaServers_StartRefreshNoClearList( void ) {
 	if ( ( g_servertype >= UIAS_GLOBAL1 && g_servertype <= UIAS_GLOBAL5 ) || g_servertype == UIAS_ALL_GLOBAL ) {
 		int masterserver = ( g_servertype == UIAS_ALL_GLOBAL ? 0 : g_servertype - UIAS_GLOBAL1 );
 		switch ( g_arenaservers.gametype.curvalue ) {
-		default:
-		case GAMES_ALL:
-			myargs[0] = 0;
-			break;
+			default:
+			case GAMES_ALL:
+				myargs[0] = 0;
+				break;
 
-		case GAMES_FFA:
-			strcpy( myargs, " ffa" );
-			break;
+			case GAMES_FFA:
+				strcpy( myargs, " ffa" );
+				break;
 
-		case GAMES_TEAMPLAY:
-			strcpy( myargs, " team" );
-			break;
+			case GAMES_TEAMPLAY:
+				strcpy( myargs, " team" );
+				break;
 
-		case GAMES_TOURNEY:
-			strcpy( myargs, " tourney" );
-			break;
+			case GAMES_TOURNEY:
+				strcpy( myargs, " tourney" );
+				break;
 
-		case GAMES_CTF:
-			strcpy( myargs, " ctf" );
-			break;
+			case GAMES_CTF:
+				strcpy( myargs, " ctf" );
+				break;
 
-		case GAMES_ELIMINATION:
-			strcpy( myargs, " elimination" );
-			break;
+			case GAMES_ELIMINATION:
+				strcpy( myargs, " elimination" );
+				break;
 
-		case GAMES_CTF_ELIMINATION:
-			strcpy( myargs, " ctfelimination" );
-			break;
+			case GAMES_CTF_ELIMINATION:
+				strcpy( myargs, " ctfelimination" );
+				break;
 
-		case GAMES_LMS:
-			strcpy( myargs, " lms" );
-			break;
-		
-		case GAMES_DOUBLE_D:
-			strcpy( myargs, " dd" );
-			break;
+			case GAMES_LMS:
+				strcpy( myargs, " lms" );
+				break;
 
-		case GAMES_DOM:
-			strcpy( myargs, " dom" );
-			break;
+			case GAMES_DOUBLE_D:
+				strcpy( myargs, " dd" );
+				break;
 
-		case GAMES_POS:
-			strcpy( myargs, " pos" );
-			break;
+			case GAMES_DOM:
+				strcpy( myargs, " dom" );
+				break;
+
+			case GAMES_POS:
+				strcpy( myargs, " pos" );
+				break;
 		}
 
 		if ( g_emptyservers ) {
