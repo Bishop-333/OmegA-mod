@@ -50,6 +50,7 @@ static char *votemenu_Gametype_artlist[] =
 #define ID_LMS 111
 #define ID_DOUBLED 112
 #define ID_DOM 113
+#define ID_POS 114
 
 #define Gametype_MENU_VERTICAL_SPACING 19
 
@@ -172,6 +173,11 @@ static void VoteMenu_Gametype_Event( void *ptr, int event ) {
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
+				case ID_POS:
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 13" );
+					UI_PopMenu();
+					UI_PopMenu();
+					break;
 			};
 			break;
 		default:
@@ -276,6 +282,9 @@ void UI_VoteGametypeMenuInternal( void ) {
 	setGametypeMenutext( &s_votemenu_Gametype.bDOUBLED, y, ID_DOUBLED, s_votemenu_Gametype.DOUBLED, "Double Domination" );
 	y += Gametype_MENU_VERTICAL_SPACING;
 	setGametypeMenutext( &s_votemenu_Gametype.bDOM, y, ID_DOM, s_votemenu_Gametype.DOM, "Domination" );
+	y += Gametype_MENU_VERTICAL_SPACING;
+	setGametypeMenutext(&s_votemenu_Gametype.bPOS,y,ID_POS,s_votemenu_Gametype.POS,"Possession");
+	y += Gametype_MENU_VERTICAL_SPACING;
 
 	s_votemenu_Gametype.back.generic.type = MTYPE_BITMAP;
 	s_votemenu_Gametype.back.generic.name = VOTEMENU_BACK0;

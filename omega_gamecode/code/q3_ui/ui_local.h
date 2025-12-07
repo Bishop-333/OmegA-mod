@@ -125,6 +125,7 @@ extern vmCvar_t ui_setupchecked;
 
 //new in beta 23:
 extern vmCvar_t ui_browserOnlyHumans;
+extern vmCvar_t ui_browserHidePrivate;
 
 //OmegA
 extern vmCvar_t ui_mapvote_filter;
