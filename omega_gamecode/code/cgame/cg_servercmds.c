@@ -364,7 +364,7 @@ void CG_ParseServerinfo( void ) {
 	//By default do as normal:
 	cgs.ffa_gt = 0;
 	//See if ffa gametype
-	if ( cgs.gametype == GT_LMS )
+	if ( cgs.gametype == GT_LMS || cgs.gametype == GT_POSSESSION )
 		cgs.ffa_gt = 1;
 	trap_Cvar_Set( "g_gametype", va( "%i", cgs.gametype ) );
 	cgs.dmflags = atoi( Info_ValueForKey( info, "dmflags" ) );
@@ -472,7 +472,7 @@ void CG_SetConfigValues( void ) {
 		s = CG_ConfigString( CS_FLAGSTATUS );
 		cgs.redflag = s[0] - '0';
 		cgs.blueflag = s[1] - '0';
-	} else if ( cgs.gametype == GT_1FCTF ) {
+	} else if ( cgs.gametype == GT_1FCTF  || cgs.gametype == GT_POSSESSION ) {
 		s = CG_ConfigString( CS_FLAGSTATUS );
 		cgs.flagStatus = s[0] - '0';
 	}
@@ -585,7 +585,7 @@ static void CG_ConfigStringModified( void ) {
 			// format is rb where its red/blue, 0 is at base, 1 is taken, 2 is dropped
 			cgs.redflag = str[0] - '0';
 			cgs.blueflag = str[1] - '0';
-		} else if ( cgs.gametype == GT_1FCTF ) {
+		} else if ( cgs.gametype == GT_1FCTF || cgs.gametype == GT_POSSESSION ) {
 			cgs.flagStatus = str[0] - '0';
 		}
 	} else if ( num == CS_SHADERSTATE ) {
