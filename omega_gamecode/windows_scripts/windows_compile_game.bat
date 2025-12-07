@@ -45,6 +45,7 @@ rem %cc%  ../../../code/game/ai_vcmd.c
 %cc%  ../../../code/game/g_missile.c
 %cc%  ../../../code/game/g_mover.c
 %cc%  ../../../code/game/g_playerstore.c
+%cc%  ../../../code/game/g_possession.c
 rem %cc%  ../../../code/game/g_rankings.c
 %cc%  ../../../code/game/g_session.c
 %cc%  ../../../code/game/g_spawn.c

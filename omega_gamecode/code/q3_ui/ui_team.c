@@ -157,6 +157,7 @@ static void TeamMain_MenuInit( void ) {
 		case GT_SINGLE_PLAYER:
 		case GT_FFA:
 		case GT_LMS:
+		case GT_POSSESSION:
 		case GT_TOURNAMENT:
 			s_teammain.joinred.generic.flags |= QMF_GRAYED;
 			s_teammain.joinblue.generic.flags |= QMF_GRAYED;
