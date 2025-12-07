@@ -67,13 +67,13 @@ static setupMenuInfo_t setupMenuInfo;
 Setup_ResetDefaults_Action
 =================
 */
-static void Setup_ResetDefaults_Action(qboolean result) {
-	if (!result) {
+static void Setup_ResetDefaults_Action( qboolean result ) {
+	if ( !result ) {
 		return;
 	}
-	trap_Cmd_ExecuteText(EXEC_APPEND, "exec default.cfg\n");
-	trap_Cmd_ExecuteText(EXEC_APPEND, "cvar_restart\n");
-	trap_Cmd_ExecuteText(EXEC_APPEND, "vid_restart\n");
+	trap_Cmd_ExecuteText( EXEC_APPEND, "exec default.cfg\n" );
+	trap_Cmd_ExecuteText( EXEC_APPEND, "cvar_restart\n" );
+	trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart\n" );
 }
 
 /*
@@ -81,9 +81,9 @@ static void Setup_ResetDefaults_Action(qboolean result) {
 Setup_ResetDefaults_Draw
 =================
 */
-static void Setup_ResetDefaults_Draw(void) {
-	UI_DrawProportionalString(SCREEN_WIDTH / 2, 356 + PROP_HEIGHT * 0, "WARNING: This will reset *ALL*", UI_CENTER | UI_SMALLFONT, color_yellow);
-	UI_DrawProportionalString(SCREEN_WIDTH / 2, 356 + PROP_HEIGHT * 1, "options to their default values.", UI_CENTER | UI_SMALLFONT, color_yellow);
+static void Setup_ResetDefaults_Draw( void ) {
+	UI_DrawProportionalString( SCREEN_WIDTH / 2, 356 + PROP_HEIGHT * 0, "WARNING: This will reset *ALL*", UI_CENTER | UI_SMALLFONT, color_yellow );
+	UI_DrawProportionalString( SCREEN_WIDTH / 2, 356 + PROP_HEIGHT * 1, "options to their default values.", UI_CENTER | UI_SMALLFONT, color_yellow );
 }
 
 /*
@@ -91,12 +91,12 @@ static void Setup_ResetDefaults_Draw(void) {
 UI_SetupMenu_Event
 ===============
 */
-static void UI_SetupMenu_Event(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_SetupMenu_Event( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_CUSTOMIZEPLAYER:
 			UI_PlayerSettingsMenu();
 			break;
@@ -114,7 +114,7 @@ static void UI_SetupMenu_Event(void *ptr, int event) {
 			break;
 
 		case ID_DEFAULTS:
-			UI_ConfirmMenu("SET TO DEFAULTS?", Setup_ResetDefaults_Draw, Setup_ResetDefaults_Action);
+			UI_ConfirmMenu( "SET TO DEFAULTS?", Setup_ResetDefaults_Draw, Setup_ResetDefaults_Action );
 			break;
 
 		case ID_BACK:
@@ -128,12 +128,12 @@ static void UI_SetupMenu_Event(void *ptr, int event) {
 UI_SetupMenu_Init
 ===============
 */
-static void UI_SetupMenu_Init(void) {
+static void UI_SetupMenu_Init( void ) {
 	int y;
 
 	UI_SetupMenu_Cache();
 
-	memset(&setupMenuInfo, 0, sizeof(setupMenuInfo));
+	memset( &setupMenuInfo, 0, sizeof( setupMenuInfo ) );
 	setupMenuInfo.menu.wrapAround = qtrue;
 	setupMenuInfo.menu.fullscreen = qtrue;
 
@@ -204,7 +204,7 @@ static void UI_SetupMenu_Init(void) {
 	setupMenuInfo.game.color = color_red;
 	setupMenuInfo.game.style = UI_CENTER;
 
-	if (!trap_Cvar_VariableValue("cl_paused")) {
+	if ( !trap_Cvar_VariableValue( "cl_paused" ) ) {
 		y += SETUP_MENU_VERTICAL_SPACING;
 		setupMenuInfo.defaults.generic.type = MTYPE_PTEXT;
 		setupMenuInfo.defaults.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -228,17 +228,17 @@ static void UI_SetupMenu_Init(void) {
 	setupMenuInfo.back.height = 64;
 	setupMenuInfo.back.focuspic = ART_BACK1;
 
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.banner);
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.framel);
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.framer);
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.setupplayer);
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.setupcontrols);
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.setupsystem);
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.game);
-	if (!trap_Cvar_VariableValue("cl_paused")) {
-		Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.defaults);
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.banner );
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.framel );
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.framer );
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.setupplayer );
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.setupcontrols );
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.setupsystem );
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.game );
+	if ( !trap_Cvar_VariableValue( "cl_paused" ) ) {
+		Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.defaults );
 	}
-	Menu_AddItem(&setupMenuInfo.menu, &setupMenuInfo.back);
+	Menu_AddItem( &setupMenuInfo.menu, &setupMenuInfo.back );
 }
 
 /*
@@ -246,11 +246,11 @@ static void UI_SetupMenu_Init(void) {
 UI_SetupMenu_Cache
 =================
 */
-void UI_SetupMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	trap_R_RegisterShaderNoMip(ART_FRAMEL);
-	trap_R_RegisterShaderNoMip(ART_FRAMER);
+void UI_SetupMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
 }
 
 /*
@@ -258,7 +258,7 @@ void UI_SetupMenu_Cache(void) {
 UI_SetupMenu
 ===============
 */
-void UI_SetupMenu(void) {
+void UI_SetupMenu( void ) {
 	UI_SetupMenu_Init();
-	UI_PushMenu(&setupMenuInfo.menu);
+	UI_PushMenu( &setupMenuInfo.menu );
 }

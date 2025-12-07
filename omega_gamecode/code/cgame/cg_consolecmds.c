@@ -31,20 +31,20 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 CG_PrintClientNumbers
 =================
 */
-static void CG_PrintClientNumbers(void) {
+static void CG_PrintClientNumbers( void ) {
 	int i;
 
-	CG_Printf("slot score ping name\n");
-	CG_Printf("---- ----- ---- ----\n");
+	CG_Printf( "slot score ping name\n" );
+	CG_Printf( "---- ----- ---- ----\n" );
 
-	for (i = 0; i < cg.numScores; i++) {
-		CG_Printf("%-4d", cg.scores[i].client);
+	for ( i = 0; i < cg.numScores; i++ ) {
+		CG_Printf( "%-4d", cg.scores[i].client );
 
-		CG_Printf(" %-5d", cg.scores[i].score);
+		CG_Printf( " %-5d", cg.scores[i].score );
 
-		CG_Printf(" %-4d", cg.scores[i].ping);
+		CG_Printf( " %-4d", cg.scores[i].ping );
 
-		CG_Printf(" %s\n", cgs.clientinfo[cg.scores[i].client].name);
+		CG_Printf( " %s\n", cgs.clientinfo[cg.scores[i].client].name );
 	}
 }
 
@@ -53,17 +53,17 @@ static void CG_PrintClientNumbers(void) {
 CG_TargetCommand_f
 =================
 */
-static void CG_TargetCommand_f(void) {
+static void CG_TargetCommand_f( void ) {
 	int targetNum;
 	char test[4];
 
 	targetNum = CG_CrosshairPlayer();
-	if (!targetNum) {
+	if ( !targetNum ) {
 		return;
 	}
 
-	trap_Argv(1, test, 4);
-	trap_SendConsoleCommand(va("gc %i %i", targetNum, atoi(test)));
+	trap_Argv( 1, test, 4 );
+	trap_SendConsoleCommand( va( "gc %i %i", targetNum, atoi( test ) ) );
 }
 
 /*
@@ -73,8 +73,8 @@ CG_SizeUp_f
 Keybinding command
 =================
 */
-static void CG_SizeUp_f(void) {
-	trap_Cvar_Set("cg_viewsize", va("%i", (int)(cg_viewsize.integer + 10)));
+static void CG_SizeUp_f( void ) {
+	trap_Cvar_Set( "cg_viewsize", va( "%i", (int)( cg_viewsize.integer + 10 ) ) );
 }
 
 /*
@@ -84,8 +84,8 @@ CG_SizeDown_f
 Keybinding command
 =================
 */
-static void CG_SizeDown_f(void) {
-	trap_Cvar_Set("cg_viewsize", va("%i", (int)(cg_viewsize.integer - 10)));
+static void CG_SizeDown_f( void ) {
+	trap_Cvar_Set( "cg_viewsize", va( "%i", (int)( cg_viewsize.integer - 10 ) ) );
 }
 
 /*
@@ -95,10 +95,10 @@ CG_Viewpos_f
 Debugging command to print the current position
 =============
 */
-static void CG_Viewpos_f(void) {
-	CG_Printf("(%i %i %i) : %i\n", (int)cg.refdef.vieworg[0],
-	          (int)cg.refdef.vieworg[1], (int)cg.refdef.vieworg[2],
-	          (int)cg.refdefViewAngles[YAW]);
+static void CG_Viewpos_f( void ) {
+	CG_Printf( "(%i %i %i) : %i\n", (int)cg.refdef.vieworg[0],
+	           (int)cg.refdef.vieworg[1], (int)cg.refdef.vieworg[2],
+	           (int)cg.refdefViewAngles[YAW] );
 }
 
 /*
@@ -106,17 +106,17 @@ static void CG_Viewpos_f(void) {
 CG_ScoresDown_f
 =================
 */
-static void CG_ScoresDown_f(void) {
+static void CG_ScoresDown_f( void ) {
 
-	if (cg.scoresRequestTime + 2000 < cg.time) {
+	if ( cg.scoresRequestTime + 2000 < cg.time ) {
 		// the scores are more than two seconds out of data,
 		// so request new ones
 		cg.scoresRequestTime = cg.time;
-		trap_SendClientCommand("score");
+		trap_SendClientCommand( "score" );
 
 		// leave the current scores up if they were already
 		// displayed, but if this is the first hit, clear them out
-		if (!cg.showScores) {
+		if ( !cg.showScores ) {
 			cg.showScores = qtrue;
 			cg.numScores = 0;
 		}
@@ -132,8 +132,8 @@ static void CG_ScoresDown_f(void) {
 CG_ScoresUp_f
 =================
 */
-static void CG_ScoresUp_f(void) {
-	if (cg.showScores) {
+static void CG_ScoresUp_f( void ) {
+	if ( cg.showScores ) {
 		cg.showScores = qfalse;
 		cg.scoreFadeTime = cg.time;
 	}
@@ -144,14 +144,14 @@ static void CG_ScoresUp_f(void) {
 CG_AccDown_f
 =================
 */
-static void CG_AccDown_f(void) {
+static void CG_AccDown_f( void ) {
 
-	if (cg.accRequestTime + 2000 < cg.time) {
+	if ( cg.accRequestTime + 2000 < cg.time ) {
 
 		cg.accRequestTime = cg.time;
-		trap_SendClientCommand("acc");
+		trap_SendClientCommand( "acc" );
 
-		if (!cg.showAcc) {
+		if ( !cg.showAcc ) {
 			cg.showAcc = qtrue;
 		}
 
@@ -165,8 +165,8 @@ static void CG_AccDown_f(void) {
 CG_AccUp_f
 =================
 */
-static void CG_AccUp_f(void) {
-	if (cg.showAcc) {
+static void CG_AccUp_f( void ) {
+	if ( cg.showAcc ) {
 		cg.showAcc = qfalse;
 		cg.accFadeTime = cg.time;
 	}
@@ -177,19 +177,19 @@ static void CG_AccUp_f(void) {
 CG_TellTarget_f
 =================
 */
-static void CG_TellTarget_f(void) {
+static void CG_TellTarget_f( void ) {
 	int clientNum;
 	char command[128];
 	char message[128];
 
 	clientNum = CG_CrosshairPlayer();
-	if (clientNum == -1) {
+	if ( clientNum == -1 ) {
 		return;
 	}
 
-	trap_Args(message, 128);
-	Com_sprintf(command, 128, "tell %i %s", clientNum, message);
-	trap_SendClientCommand(command);
+	trap_Args( message, 128 );
+	Com_sprintf( command, 128, "tell %i %s", clientNum, message );
+	trap_SendClientCommand( command );
 }
 
 /*
@@ -197,19 +197,19 @@ static void CG_TellTarget_f(void) {
 CG_TellAttacker_f
 =================
 */
-static void CG_TellAttacker_f(void) {
+static void CG_TellAttacker_f( void ) {
 	int clientNum;
 	char command[128];
 	char message[128];
 
 	clientNum = CG_LastAttacker();
-	if (clientNum == -1) {
+	if ( clientNum == -1 ) {
 		return;
 	}
 
-	trap_Args(message, 128);
-	Com_sprintf(command, 128, "tell %i %s", clientNum, message);
-	trap_SendClientCommand(command);
+	trap_Args( message, 128 );
+	Com_sprintf( command, 128, "tell %i %s", clientNum, message );
+	trap_SendClientCommand( command );
 }
 
 /*
@@ -217,19 +217,19 @@ static void CG_TellAttacker_f(void) {
 CG_VoiceTellTarget_f
 =================
 */
-static void CG_VoiceTellTarget_f(void) {
+static void CG_VoiceTellTarget_f( void ) {
 	int clientNum;
 	char command[128];
 	char message[128];
 
 	clientNum = CG_CrosshairPlayer();
-	if (clientNum == -1) {
+	if ( clientNum == -1 ) {
 		return;
 	}
 
-	trap_Args(message, 128);
-	Com_sprintf(command, 128, "vtell %i %s", clientNum, message);
-	trap_SendClientCommand(command);
+	trap_Args( message, 128 );
+	Com_sprintf( command, 128, "vtell %i %s", clientNum, message );
+	trap_SendClientCommand( command );
 }
 
 /*
@@ -237,19 +237,19 @@ static void CG_VoiceTellTarget_f(void) {
 CG_VoiceTellAttacker_f
 =================
 */
-static void CG_VoiceTellAttacker_f(void) {
+static void CG_VoiceTellAttacker_f( void ) {
 	int clientNum;
 	char command[128];
 	char message[128];
 
 	clientNum = CG_LastAttacker();
-	if (clientNum == -1) {
+	if ( clientNum == -1 ) {
 		return;
 	}
 
-	trap_Args(message, 128);
-	Com_sprintf(command, 128, "vtell %i %s", clientNum, message);
-	trap_SendClientCommand(command);
+	trap_Args( message, 128 );
+	Com_sprintf( command, 128, "vtell %i %s", clientNum, message );
+	trap_SendClientCommand( command );
 }
 
 /*
@@ -257,56 +257,56 @@ static void CG_VoiceTellAttacker_f(void) {
 CG_StartOrbit_f
 ==================
 */
-static void CG_StartOrbit_f(void) {
+static void CG_StartOrbit_f( void ) {
 	char var[MAX_TOKEN_CHARS];
 
-	trap_Cvar_VariableStringBuffer("developer", var, sizeof(var));
-	if (!atoi(var)) {
+	trap_Cvar_VariableStringBuffer( "developer", var, sizeof( var ) );
+	if ( !atoi( var ) ) {
 		return;
 	}
-	if (cg_cameraOrbit.value != 0) {
-		trap_Cvar_Set("cg_cameraOrbit", "0");
-		trap_Cvar_Set("cg_thirdPerson", "0");
+	if ( cg_cameraOrbit.value != 0 ) {
+		trap_Cvar_Set( "cg_cameraOrbit", "0" );
+		trap_Cvar_Set( "cg_thirdPerson", "0" );
 	} else {
-		trap_Cvar_Set("cg_cameraOrbit", "5");
-		trap_Cvar_Set("cg_thirdPerson", "1");
-		trap_Cvar_Set("cg_thirdPersonAngle", "0");
-		trap_Cvar_Set("cg_thirdPersonRange", "100");
+		trap_Cvar_Set( "cg_cameraOrbit", "5" );
+		trap_Cvar_Set( "cg_thirdPerson", "1" );
+		trap_Cvar_Set( "cg_thirdPersonAngle", "0" );
+		trap_Cvar_Set( "cg_thirdPersonRange", "100" );
 	}
 }
 
 typedef struct {
 	char *cmd;
-	void (*function)(void);
+	void ( *function )( void );
 } consoleCommand_t;
 
 static consoleCommand_t commands[] = {
-    {"testgun", CG_TestGun_f},
-    {"testmodel", CG_TestModel_f},
-    {"nextframe", CG_TestModelNextFrame_f},
-    {"prevframe", CG_TestModelPrevFrame_f},
-    {"nextskin", CG_TestModelNextSkin_f},
-    {"prevskin", CG_TestModelPrevSkin_f},
-    {"viewpos", CG_Viewpos_f},
-    {"+scores", CG_ScoresDown_f},
-    {"-scores", CG_ScoresUp_f},
-    {"+zoom", CG_ZoomDown_f},
-    {"-zoom", CG_ZoomUp_f},
-    {"sizeup", CG_SizeUp_f},
-    {"sizedown", CG_SizeDown_f},
-    {"weapnext", CG_NextWeapon_f},
-    {"weapprev", CG_PrevWeapon_f},
-    {"weapon", CG_Weapon_f},
-    {"tell_target", CG_TellTarget_f},
-    {"tell_attacker", CG_TellAttacker_f},
-    {"vtell_target", CG_VoiceTellTarget_f},
-    {"vtell_attacker", CG_VoiceTellAttacker_f},
-    {"tcmd", CG_TargetCommand_f},
-    {"startOrbit", CG_StartOrbit_f},
-    {"loaddeferred", CG_LoadDeferredPlayers},
-    {"+acc", CG_AccDown_f},
-    {"-acc", CG_AccUp_f},
-    {"clients", CG_PrintClientNumbers}};
+    { "testgun", CG_TestGun_f },
+    { "testmodel", CG_TestModel_f },
+    { "nextframe", CG_TestModelNextFrame_f },
+    { "prevframe", CG_TestModelPrevFrame_f },
+    { "nextskin", CG_TestModelNextSkin_f },
+    { "prevskin", CG_TestModelPrevSkin_f },
+    { "viewpos", CG_Viewpos_f },
+    { "+scores", CG_ScoresDown_f },
+    { "-scores", CG_ScoresUp_f },
+    { "+zoom", CG_ZoomDown_f },
+    { "-zoom", CG_ZoomUp_f },
+    { "sizeup", CG_SizeUp_f },
+    { "sizedown", CG_SizeDown_f },
+    { "weapnext", CG_NextWeapon_f },
+    { "weapprev", CG_PrevWeapon_f },
+    { "weapon", CG_Weapon_f },
+    { "tell_target", CG_TellTarget_f },
+    { "tell_attacker", CG_TellAttacker_f },
+    { "vtell_target", CG_VoiceTellTarget_f },
+    { "vtell_attacker", CG_VoiceTellAttacker_f },
+    { "tcmd", CG_TargetCommand_f },
+    { "startOrbit", CG_StartOrbit_f },
+    { "loaddeferred", CG_LoadDeferredPlayers },
+    { "+acc", CG_AccDown_f },
+    { "-acc", CG_AccUp_f },
+    { "clients", CG_PrintClientNumbers } };
 
 /*
 =================
@@ -316,14 +316,14 @@ The string has been tokenized and can be retrieved with
 Cmd_Argc() / Cmd_Argv()
 =================
 */
-qboolean CG_ConsoleCommand(void) {
+qboolean CG_ConsoleCommand( void ) {
 	const char *cmd;
 	int i;
 
-	cmd = CG_Argv(0);
+	cmd = CG_Argv( 0 );
 
-	for (i = 0; i < sizeof(commands) / sizeof(commands[0]); i++) {
-		if (!Q_stricmp(cmd, commands[i].cmd)) {
+	for ( i = 0; i < sizeof( commands ) / sizeof( commands[0] ); i++ ) {
+		if ( !Q_stricmp( cmd, commands[i].cmd ) ) {
 			commands[i].function();
 			return qtrue;
 		}
@@ -340,36 +340,36 @@ Let the client system know about all of our commands
 so it can perform tab completion
 =================
 */
-void CG_InitConsoleCommands(void) {
+void CG_InitConsoleCommands( void ) {
 	int i;
 
-	for (i = 0; i < sizeof(commands) / sizeof(commands[0]); i++) {
-		trap_AddCommand(commands[i].cmd);
+	for ( i = 0; i < sizeof( commands ) / sizeof( commands[0] ); i++ ) {
+		trap_AddCommand( commands[i].cmd );
 	}
 
 	//
 	// the game server will interpret these commands, which will be automatically
 	// forwarded to the server after they are not recognized locally
 	//
-	trap_AddCommand("kill");
-	trap_AddCommand("say");
-	trap_AddCommand("say_team");
-	trap_AddCommand("tell");
-	trap_AddCommand("give");
-	trap_AddCommand("god");
-	trap_AddCommand("notarget");
-	trap_AddCommand("noclip");
-	trap_AddCommand("team");
-	trap_AddCommand("follow");
-	trap_AddCommand("levelshot");
-	trap_AddCommand("addbot");
-	trap_AddCommand("setviewpos");
-	trap_AddCommand("callvote");
-	trap_AddCommand("getmappage");
-	trap_AddCommand("vote");
-	trap_AddCommand("callteamvote");
-	trap_AddCommand("teamvote");
-	trap_AddCommand("stats");
-	trap_AddCommand("teamtask");
-	trap_AddCommand("loaddefered"); // spelled wrong, but not changing for demo
+	trap_AddCommand( "kill" );
+	trap_AddCommand( "say" );
+	trap_AddCommand( "say_team" );
+	trap_AddCommand( "tell" );
+	trap_AddCommand( "give" );
+	trap_AddCommand( "god" );
+	trap_AddCommand( "notarget" );
+	trap_AddCommand( "noclip" );
+	trap_AddCommand( "team" );
+	trap_AddCommand( "follow" );
+	trap_AddCommand( "levelshot" );
+	trap_AddCommand( "addbot" );
+	trap_AddCommand( "setviewpos" );
+	trap_AddCommand( "callvote" );
+	trap_AddCommand( "getmappage" );
+	trap_AddCommand( "vote" );
+	trap_AddCommand( "callteamvote" );
+	trap_AddCommand( "teamvote" );
+	trap_AddCommand( "stats" );
+	trap_AddCommand( "teamtask" );
+	trap_AddCommand( "loaddefered" ); // spelled wrong, but not changing for demo
 }

@@ -30,8 +30,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ART_FRAMER "menu/art_blueish/frame1_r"
 
 #define MAX_MODS 64
-#define NAMEBUFSIZE (MAX_MODS * 48)
-#define GAMEBUFSIZE (MAX_MODS * 16)
+#define NAMEBUFSIZE ( MAX_MODS * 48 )
+#define GAMEBUFSIZE ( MAX_MODS * 16 )
 
 #define ID_BACK 10
 #define ID_GO 11
@@ -66,15 +66,15 @@ static mods_t s_mods;
 UI_Mods_MenuEvent
 ===============
 */
-static void UI_Mods_MenuEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_Mods_MenuEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_GO:
-			trap_Cvar_Set("fs_game", s_mods.fs_gameList[s_mods.list.curvalue]);
-			trap_Cmd_ExecuteText(EXEC_APPEND, "vid_restart;");
+			trap_Cvar_Set( "fs_game", s_mods.fs_gameList[s_mods.list.curvalue] );
+			trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
 			UI_PopMenu();
 			break;
 
@@ -89,16 +89,16 @@ static void UI_Mods_MenuEvent(void *ptr, int event) {
 UI_Mods_ParseInfos
 ===============
 */
-static void UI_Mods_ParseInfos(char *modDir, char *modDesc) {
+static void UI_Mods_ParseInfos( char *modDir, char *modDesc ) {
 	s_mods.fs_gameList[s_mods.list.numitems] = s_mods.fs_gamePtr;
-	Q_strncpyz(s_mods.fs_gamePtr, modDir, 16);
+	Q_strncpyz( s_mods.fs_gamePtr, modDir, 16 );
 
 	s_mods.descriptionList[s_mods.list.numitems] = s_mods.descriptionPtr;
-	Q_strncpyz(s_mods.descriptionPtr, modDesc, 48);
+	Q_strncpyz( s_mods.descriptionPtr, modDesc, 48 );
 
 	s_mods.list.itemnames[s_mods.list.numitems] = s_mods.descriptionPtr;
-	s_mods.descriptionPtr += strlen(s_mods.descriptionPtr) + 1;
-	s_mods.fs_gamePtr += strlen(s_mods.fs_gamePtr) + 1;
+	s_mods.descriptionPtr += strlen( s_mods.descriptionPtr ) + 1;
+	s_mods.fs_gamePtr += strlen( s_mods.fs_gamePtr ) + 1;
 	s_mods.list.numitems++;
 }
 
@@ -107,7 +107,7 @@ static void UI_Mods_ParseInfos(char *modDir, char *modDesc) {
 UI_Mods_LoadMods
 ===============
 */
-static void UI_Mods_LoadMods(void) {
+static void UI_Mods_LoadMods( void ) {
 	int numdirs;
 	char dirlist[2048];
 	char *dirptr;
@@ -124,17 +124,17 @@ static void UI_Mods_LoadMods(void) {
 	s_mods.list.itemnames[0] = s_mods.descriptionList[0] = "OpenArena";
 	s_mods.fs_gameList[0] = "";
 
-	numdirs = trap_FS_GetFileList("$modlist", "", dirlist, sizeof(dirlist));
+	numdirs = trap_FS_GetFileList( "$modlist", "", dirlist, sizeof( dirlist ) );
 	dirptr = dirlist;
-	for (i = 0; i < numdirs; i++) {
-		dirlen = strlen(dirptr) + 1;
+	for ( i = 0; i < numdirs; i++ ) {
+		dirlen = strlen( dirptr ) + 1;
 		descptr = dirptr + dirlen;
-		UI_Mods_ParseInfos(dirptr, descptr);
-		dirptr += dirlen + strlen(descptr) + 1;
+		UI_Mods_ParseInfos( dirptr, descptr );
+		dirptr += dirlen + strlen( descptr ) + 1;
 	}
 
-	trap_Print(va("%i mods parsed\n", s_mods.list.numitems));
-	if (s_mods.list.numitems > MAX_MODS) {
+	trap_Print( va( "%i mods parsed\n", s_mods.list.numitems ) );
+	if ( s_mods.list.numitems > MAX_MODS ) {
 		s_mods.list.numitems = MAX_MODS;
 	}
 }
@@ -144,16 +144,16 @@ static void UI_Mods_LoadMods(void) {
 UI_ModsMenu_Key
 =================
 */
-static sfxHandle_t UI_ModsMenu_Key(int key) {
-	if (key == K_MWHEELUP) {
-		ScrollList_Key(&s_mods.list, K_UPARROW);
+static sfxHandle_t UI_ModsMenu_Key( int key ) {
+	if ( key == K_MWHEELUP ) {
+		ScrollList_Key( &s_mods.list, K_UPARROW );
 	}
 
-	if (key == K_MWHEELDOWN) {
-		ScrollList_Key(&s_mods.list, K_DOWNARROW);
+	if ( key == K_MWHEELDOWN ) {
+		ScrollList_Key( &s_mods.list, K_DOWNARROW );
 	}
 
-	return Menu_DefaultKey(&s_mods.menu, key);
+	return Menu_DefaultKey( &s_mods.menu, key );
 }
 
 /*
@@ -161,10 +161,10 @@ static sfxHandle_t UI_ModsMenu_Key(int key) {
 UI_Mods_MenuInit
 ===============
 */
-static void UI_Mods_MenuInit(void) {
+static void UI_Mods_MenuInit( void ) {
 	UI_ModsMenu_Cache();
 
-	memset(&s_mods, 0, sizeof(mods_t));
+	memset( &s_mods, 0, sizeof( mods_t ) );
 
 	s_mods.menu.key = UI_ModsMenu_Key;
 
@@ -228,12 +228,12 @@ static void UI_Mods_MenuInit(void) {
 
 	UI_Mods_LoadMods();
 
-	Menu_AddItem(&s_mods.menu, &s_mods.banner);
-	Menu_AddItem(&s_mods.menu, &s_mods.framel);
-	Menu_AddItem(&s_mods.menu, &s_mods.framer);
-	Menu_AddItem(&s_mods.menu, &s_mods.list);
-	Menu_AddItem(&s_mods.menu, &s_mods.back);
-	Menu_AddItem(&s_mods.menu, &s_mods.go);
+	Menu_AddItem( &s_mods.menu, &s_mods.banner );
+	Menu_AddItem( &s_mods.menu, &s_mods.framel );
+	Menu_AddItem( &s_mods.menu, &s_mods.framer );
+	Menu_AddItem( &s_mods.menu, &s_mods.list );
+	Menu_AddItem( &s_mods.menu, &s_mods.back );
+	Menu_AddItem( &s_mods.menu, &s_mods.go );
 }
 
 /*
@@ -241,13 +241,13 @@ static void UI_Mods_MenuInit(void) {
 UI_Mods_Cache
 =================
 */
-void UI_ModsMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	trap_R_RegisterShaderNoMip(ART_FIGHT0);
-	trap_R_RegisterShaderNoMip(ART_FIGHT1);
-	trap_R_RegisterShaderNoMip(ART_FRAMEL);
-	trap_R_RegisterShaderNoMip(ART_FRAMER);
+void UI_ModsMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_FIGHT0 );
+	trap_R_RegisterShaderNoMip( ART_FIGHT1 );
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
 }
 
 /*
@@ -255,7 +255,7 @@ void UI_ModsMenu_Cache(void) {
 UI_ModsMenu
 ===============
 */
-void UI_ModsMenu(void) {
+void UI_ModsMenu( void ) {
 	UI_Mods_MenuInit();
-	UI_PushMenu(&s_mods.menu);
+	UI_PushMenu( &s_mods.menu );
 }

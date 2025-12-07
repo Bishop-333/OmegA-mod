@@ -30,6 +30,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *
  *****************************************************************************/
 
-void BotTeamAI(bot_state_t *bs);
-int BotGetTeamMateTaskPreference(bot_state_t *bs, int teammate);
-void BotSetTeamMateTaskPreference(bot_state_t *bs, int teammate, int preference);
+void BotTeamAI( bot_state_t *bs );
+int BotGetTeamMateTaskPreference( bot_state_t *bs, int teammate );
+void BotSetTeamMateTaskPreference( bot_state_t *bs, int teammate, int preference );

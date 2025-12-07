@@ -57,8 +57,8 @@ static saveConfig_t saveConfig;
 UI_SaveConfigMenu_BackEvent
 ===============
 */
-static void UI_SaveConfigMenu_BackEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_SaveConfigMenu_BackEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
@@ -70,19 +70,19 @@ static void UI_SaveConfigMenu_BackEvent(void *ptr, int event) {
 UI_SaveConfigMenu_SaveEvent
 ===============
 */
-static void UI_SaveConfigMenu_SaveEvent(void *ptr, int event) {
+static void UI_SaveConfigMenu_SaveEvent( void *ptr, int event ) {
 	char configname[MAX_QPATH];
 
-	if (event != QM_ACTIVATED) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	if (!saveConfig.savename.field.buffer[0]) {
+	if ( !saveConfig.savename.field.buffer[0] ) {
 		return;
 	}
 
-	COM_StripExtension(saveConfig.savename.field.buffer, configname, sizeof(configname));
-	trap_Cmd_ExecuteText(EXEC_APPEND, va("writeconfig %s.cfg\n", configname));
+	COM_StripExtension( saveConfig.savename.field.buffer, configname, sizeof( configname ) );
+	trap_Cmd_ExecuteText( EXEC_APPEND, va( "writeconfig %s.cfg\n", configname ) );
 	UI_PopMenu();
 }
 
@@ -91,14 +91,14 @@ static void UI_SaveConfigMenu_SaveEvent(void *ptr, int event) {
 UI_SaveConfigMenu_SavenameDraw
 ===============
 */
-static void UI_SaveConfigMenu_SavenameDraw(void *self) {
+static void UI_SaveConfigMenu_SavenameDraw( void *self ) {
 	menufield_s *f;
 	int style;
 	float *color;
 
 	f = (menufield_s *)self;
 
-	if (f == Menu_ItemAtCursor(&saveConfig.menu)) {
+	if ( f == Menu_ItemAtCursor( &saveConfig.menu ) ) {
 		style = UI_LEFT | UI_PULSE | UI_SMALLFONT;
 		color = text_color_highlight;
 	} else {
@@ -106,9 +106,9 @@ static void UI_SaveConfigMenu_SavenameDraw(void *self) {
 		color = colorRed;
 	}
 
-	UI_DrawProportionalString(320, 192, "Enter filename:", UI_CENTER | UI_SMALLFONT, color_orange);
-	UI_FillRect(f->generic.x, f->generic.y, f->field.widthInChars * SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, colorBlack);
-	MField_Draw(&f->field, f->generic.x, f->generic.y, style, color);
+	UI_DrawProportionalString( 320, 192, "Enter filename:", UI_CENTER | UI_SMALLFONT, color_orange );
+	UI_FillRect( f->generic.x, f->generic.y, f->field.widthInChars * SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, colorBlack );
+	MField_Draw( &f->field, f->generic.x, f->generic.y, style, color );
 }
 
 /*
@@ -116,8 +116,8 @@ static void UI_SaveConfigMenu_SavenameDraw(void *self) {
 UI_SaveConfigMenu_Init
 =================
 */
-static void UI_SaveConfigMenu_Init(void) {
-	memset(&saveConfig, 0, sizeof(saveConfig));
+static void UI_SaveConfigMenu_Init( void ) {
+	memset( &saveConfig, 0, sizeof( saveConfig ) );
 
 	UI_SaveConfigMenu_Cache();
 	saveConfig.menu.wrapAround = qtrue;
@@ -172,11 +172,11 @@ static void UI_SaveConfigMenu_Init(void) {
 	saveConfig.save.height = 64;
 	saveConfig.save.focuspic = ART_SAVE1;
 
-	Menu_AddItem(&saveConfig.menu, &saveConfig.banner);
-	Menu_AddItem(&saveConfig.menu, &saveConfig.background);
-	Menu_AddItem(&saveConfig.menu, &saveConfig.savename);
-	Menu_AddItem(&saveConfig.menu, &saveConfig.back);
-	Menu_AddItem(&saveConfig.menu, &saveConfig.save);
+	Menu_AddItem( &saveConfig.menu, &saveConfig.banner );
+	Menu_AddItem( &saveConfig.menu, &saveConfig.background );
+	Menu_AddItem( &saveConfig.menu, &saveConfig.savename );
+	Menu_AddItem( &saveConfig.menu, &saveConfig.back );
+	Menu_AddItem( &saveConfig.menu, &saveConfig.save );
 }
 
 /*
@@ -184,12 +184,12 @@ static void UI_SaveConfigMenu_Init(void) {
 UI_SaveConfigMenu_Cache
 =================
 */
-void UI_SaveConfigMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	trap_R_RegisterShaderNoMip(ART_SAVE0);
-	trap_R_RegisterShaderNoMip(ART_SAVE1);
-	trap_R_RegisterShaderNoMip(ART_BACKGROUND);
+void UI_SaveConfigMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_SAVE0 );
+	trap_R_RegisterShaderNoMip( ART_SAVE1 );
+	trap_R_RegisterShaderNoMip( ART_BACKGROUND );
 }
 
 /*
@@ -197,7 +197,7 @@ void UI_SaveConfigMenu_Cache(void) {
 UI_SaveConfigMenu
 ===============
 */
-void UI_SaveConfigMenu(void) {
+void UI_SaveConfigMenu( void ) {
 	UI_SaveConfigMenu_Init();
-	UI_PushMenu(&saveConfig.menu);
+	UI_PushMenu( &saveConfig.menu );
 }

@@ -69,18 +69,18 @@ static errorMessage_t s_errorMessage;
 Main_MenuEvent
 =================
 */
-static void Main_MenuEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void Main_MenuEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_SINGLEPLAYER:
 			UI_SPLevelMenu();
 			break;
 
 		case ID_MULTIPLAYER:
-			if (ui_setupchecked.integer)
+			if ( ui_setupchecked.integer )
 				UI_ArenaServersMenu();
 			else
 				UI_FirstConnectMenu();
@@ -99,12 +99,12 @@ static void Main_MenuEvent(void *ptr, int event) {
 			break;
 
 		case ID_OPENARENA:
-			trap_Cvar_Set("fs_game", "");
-			trap_Cmd_ExecuteText(EXEC_APPEND, "vid_restart;");
+			trap_Cvar_Set( "fs_game", "" );
+			trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart;" );
 			break;
 
 		case ID_EXIT:
-			trap_Cmd_ExecuteText(EXEC_APPEND, "quit\n");
+			trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
 			break;
 	}
 }
@@ -114,14 +114,14 @@ static void Main_MenuEvent(void *ptr, int event) {
 MainMenu_Cache
 ===============
 */
-void MainMenu_Cache(void) {
-	s_main.bannerModel = trap_R_RegisterModel(MAIN_BANNER_MODEL);
+void MainMenu_Cache( void ) {
+	s_main.bannerModel = trap_R_RegisterModel( MAIN_BANNER_MODEL );
 }
 
-static sfxHandle_t ErrorMessage_Key(int key) {
-	trap_Cvar_Set("com_errorMessage", "");
+static sfxHandle_t ErrorMessage_Key( int key ) {
+	trap_Cvar_Set( "com_errorMessage", "" );
 	UI_MainMenu();
-	return (menu_null_sound);
+	return ( menu_null_sound );
 }
 
 /*
@@ -132,28 +132,28 @@ TTimo: this function is common to the main menu and errorMessage menu
 ===============
 */
 
-static void Main_MenuDraw(void) {
+static void Main_MenuDraw( void ) {
 	refdef_t refdef;
 	refEntity_t ent;
 	vec3_t origin;
 	vec3_t angles;
 	float adjust;
 	float x, y, w, h;
-	vec4_t color = {0.2, 0.2, 1.0, 1};
+	vec4_t color = { 0.2, 0.2, 1.0, 1 };
 
 	// setup the refdef
 
-	memset(&refdef, 0, sizeof(refdef));
+	memset( &refdef, 0, sizeof( refdef ) );
 
 	refdef.rdflags = RDF_NOWORLDMODEL;
 
-	AxisClear(refdef.viewaxis);
+	AxisClear( refdef.viewaxis );
 
 	x = 0;
 	y = 0;
 	w = 640;
 	h = 120;
-	UI_AdjustFrom640(&x, &y, &w, &h);
+	UI_AdjustFrom640( &x, &y, &w, &h );
 	refdef.x = x;
 	refdef.y = y;
 	refdef.width = w;
@@ -173,38 +173,38 @@ static void Main_MenuDraw(void) {
 
 	// add the model
 
-	memset(&ent, 0, sizeof(ent));
+	memset( &ent, 0, sizeof( ent ) );
 
-	adjust = 5.0 * sin((float)uis.realtime / 5000);
-	VectorSet(angles, 0, 180 + adjust, 0);
-	AnglesToAxis(angles, ent.axis);
+	adjust = 5.0 * sin( (float)uis.realtime / 5000 );
+	VectorSet( angles, 0, 180 + adjust, 0 );
+	AnglesToAxis( angles, ent.axis );
 	ent.hModel = s_main.bannerModel;
-	VectorCopy(origin, ent.origin);
-	VectorCopy(origin, ent.lightingOrigin);
+	VectorCopy( origin, ent.origin );
+	VectorCopy( origin, ent.lightingOrigin );
 	ent.renderfx = RF_LIGHTING_ORIGIN | RF_NOSHADOW;
-	VectorCopy(ent.origin, ent.oldorigin);
+	VectorCopy( ent.origin, ent.oldorigin );
 
-	trap_R_AddRefEntityToScene(&ent);
+	trap_R_AddRefEntityToScene( &ent );
 
-	trap_R_RenderScene(&refdef);
+	trap_R_RenderScene( &refdef );
 
-	if (strlen(s_errorMessage.errorMessage)) {
-		UI_DrawProportionalString_AutoWrapped(320, 192, 600, 20, s_errorMessage.errorMessage, UI_CENTER | UI_SMALLFONT | UI_DROPSHADOW, menu_text_color);
+	if ( strlen( s_errorMessage.errorMessage ) ) {
+		UI_DrawProportionalString_AutoWrapped( 320, 192, 600, 20, s_errorMessage.errorMessage, UI_CENTER | UI_SMALLFONT | UI_DROPSHADOW, menu_text_color );
 	} else {
 		// standard menu drawing
-		Menu_Draw(&s_main.menu);
+		Menu_Draw( &s_main.menu );
 	}
 
-	UI_DrawString(320, 386, "OmegA(c) 2021-2025 Bishop-333", UI_CENTER | UI_SMALLFONT, color);
-	UI_DrawString(320, 400, "mod based on OpenArena(c) 2005-2012 OpenArena Team", UI_CENTER | UI_SMALLFONT, color);
-	UI_DrawString(320, 414, "OmegA/OpenArena comes with ABSOLUTELY NO WARRANTY; this is free software", UI_CENTER | UI_SMALLFONT, color);
-	UI_DrawString(320, 428, "and you are welcome to redistribute it under certain conditions;", UI_CENTER | UI_SMALLFONT, color);
-	UI_DrawString(320, 444, "read COPYING for details.", UI_CENTER | UI_SMALLFONT, color);
+	UI_DrawString( 320, 386, "OmegA(c) 2021-2025 Bishop-333", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 400, "mod based on OpenArena(c) 2005-2012 OpenArena Team", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 414, "OmegA/OpenArena comes with ABSOLUTELY NO WARRANTY; this is free software", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 428, "and you are welcome to redistribute it under certain conditions;", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 444, "read COPYING for details.", UI_CENTER | UI_SMALLFONT, color );
 
 	//Draw version.
-	UI_DrawString(640 - 40, 480 - 20, "^7" PRODUCT_VERSION, UI_SMALLFONT, color);
-	if ((int)trap_Cvar_VariableValue("protocol") != 71)
-		UI_DrawString(0, 480 - 14, va("^7Protocol: %i", (int)trap_Cvar_VariableValue("protocol")), UI_SMALLFONT, color);
+	UI_DrawString( 640 - 40, 480 - 20, "^7" PRODUCT_VERSION, UI_SMALLFONT, color );
+	if ( (int)trap_Cvar_VariableValue( "protocol" ) != 71 )
+		UI_DrawString( 0, 480 - 14, va( "^7Protocol: %i", (int)trap_Cvar_VariableValue( "protocol" ) ), UI_SMALLFONT, color );
 }
 
 /*
@@ -216,31 +216,31 @@ so make sure that the attract loop server is down
 and that local cinematics are killed
 ===============
 */
-void UI_MainMenu(void) {
+void UI_MainMenu( void ) {
 	int y;
 	//qboolean teamArena = qfalse;
 	int style = UI_CENTER | UI_DROPSHADOW | UI_SELECTED;
 
-	trap_Cvar_Set("sv_killserver", "1");
-	trap_Cvar_SetValue("handicap", 100); //Reset handicap during server change, it must be ser per game
+	trap_Cvar_Set( "sv_killserver", "1" );
+	trap_Cvar_SetValue( "handicap", 100 ); //Reset handicap during server change, it must be ser per game
 
-	memset(&s_main, 0, sizeof(mainmenu_t));
-	memset(&s_errorMessage, 0, sizeof(errorMessage_t));
+	memset( &s_main, 0, sizeof( mainmenu_t ) );
+	memset( &s_errorMessage, 0, sizeof( errorMessage_t ) );
 
 	// com_errorMessage would need that too
 	MainMenu_Cache();
 
-	trap_Cvar_VariableStringBuffer("com_errorMessage", s_errorMessage.errorMessage, sizeof(s_errorMessage.errorMessage));
-	if (strlen(s_errorMessage.errorMessage)) {
+	trap_Cvar_VariableStringBuffer( "com_errorMessage", s_errorMessage.errorMessage, sizeof( s_errorMessage.errorMessage ) );
+	if ( strlen( s_errorMessage.errorMessage ) ) {
 		s_errorMessage.menu.draw = Main_MenuDraw;
 		s_errorMessage.menu.key = ErrorMessage_Key;
 		s_errorMessage.menu.fullscreen = qtrue;
 		s_errorMessage.menu.wrapAround = qtrue;
 		s_errorMessage.menu.showlogo = qtrue;
 
-		trap_Key_SetCatcher(KEYCATCH_UI);
+		trap_Key_SetCatcher( KEYCATCH_UI );
 		uis.menusp = 0;
-		UI_PushMenu(&s_errorMessage.menu);
+		UI_PushMenu( &s_errorMessage.menu );
 
 		return;
 	}
@@ -327,15 +327,15 @@ void UI_MainMenu(void) {
 	s_main.exit.color = color_red;
 	s_main.exit.style = style;
 
-	Menu_AddItem(&s_main.menu, &s_main.singleplayer);
-	Menu_AddItem(&s_main.menu, &s_main.multiplayer);
-	Menu_AddItem(&s_main.menu, &s_main.setup);
-	Menu_AddItem(&s_main.menu, &s_main.demos);
-	Menu_AddItem(&s_main.menu, &s_main.openArena);
-	Menu_AddItem(&s_main.menu, &s_main.mods);
-	Menu_AddItem(&s_main.menu, &s_main.exit);
+	Menu_AddItem( &s_main.menu, &s_main.singleplayer );
+	Menu_AddItem( &s_main.menu, &s_main.multiplayer );
+	Menu_AddItem( &s_main.menu, &s_main.setup );
+	Menu_AddItem( &s_main.menu, &s_main.demos );
+	Menu_AddItem( &s_main.menu, &s_main.openArena );
+	Menu_AddItem( &s_main.menu, &s_main.mods );
+	Menu_AddItem( &s_main.menu, &s_main.exit );
 
-	trap_Key_SetCatcher(KEYCATCH_UI);
+	trap_Key_SetCatcher( KEYCATCH_UI );
 	uis.menusp = 0;
-	UI_PushMenu(&s_main.menu);
+	UI_PushMenu( &s_main.menu );
 }

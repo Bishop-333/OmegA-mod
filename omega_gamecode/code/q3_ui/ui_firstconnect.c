@@ -55,7 +55,7 @@ static char *art_artlist[] =
         ART_BACK1,
         ART_FIGHT0,
         ART_FIGHT1,
-        NULL};
+        NULL };
 
 typedef struct
 {
@@ -84,7 +84,7 @@ static firstconnect_t s_firstconnect;
 PlayerSettings_DrawName2
 =================
 */
-static void PlayerSettings_DrawName2(void *self) {
+static void PlayerSettings_DrawName2( void *self ) {
 	menufield_s *f;
 	qboolean focus;
 	int style;
@@ -98,41 +98,41 @@ static void PlayerSettings_DrawName2(void *self) {
 	f = (menufield_s *)self;
 	basex = f->generic.x;
 	y = f->generic.y;
-	focus = (f->generic.parent->cursor == f->generic.menuPosition);
+	focus = ( f->generic.parent->cursor == f->generic.menuPosition );
 
 	style = UI_LEFT | UI_SMALLFONT;
 	color = text_color_normal;
-	if (focus) {
+	if ( focus ) {
 		style |= UI_PULSE;
 		color = text_color_highlight;
 	}
 
-	UI_DrawProportionalString(basex, y, "Name:", style, color);
+	UI_DrawProportionalString( basex, y, "Name:", style, color );
 
 	// draw the actual name
 	basex += 64 + 10;
 	y += 4;
 	txt = f->field.buffer;
-	color = g_color_table[ColorIndex(COLOR_WHITE)];
+	color = g_color_table[ColorIndex( COLOR_WHITE )];
 	x = basex;
-	while ((c = *txt) != 0) {
-		if (!focus && Q_IsColorString(txt)) {
-			n = ColorIndex(*(txt + 1));
-			if (n == 0) {
+	while ( ( c = *txt ) != 0 ) {
+		if ( !focus && Q_IsColorString( txt ) ) {
+			n = ColorIndex( *( txt + 1 ) );
+			if ( n == 0 ) {
 				n = 7;
 			}
 			color = g_color_table[n];
 			txt += 2;
 			continue;
 		}
-		UI_DrawChar(x, y, c, style, color);
+		UI_DrawChar( x, y, c, style, color );
 		txt++;
 		x += SMALLCHAR_WIDTH;
 	}
 
 	// draw cursor if we have focus
-	if (focus) {
-		if (trap_Key_GetOverstrikeMode()) {
+	if ( focus ) {
+		if ( trap_Key_GetOverstrikeMode() ) {
 			c = 11;
 		} else {
 			c = 10;
@@ -141,12 +141,12 @@ static void PlayerSettings_DrawName2(void *self) {
 		style &= ~UI_PULSE;
 		style |= UI_BLINK;
 
-		UI_DrawChar(basex + f->field.cursor * SMALLCHAR_WIDTH, y, c, style, color_white);
+		UI_DrawChar( basex + f->field.cursor * SMALLCHAR_WIDTH, y, c, style, color_white );
 	}
 
 	// draw at bottom also using proportional font
-	Q_strncpyz(name, f->field.buffer, sizeof(name));
-	Q_CleanStr(name);
+	Q_strncpyz( name, f->field.buffer, sizeof( name ) );
+	Q_CleanStr( name );
 }
 
 /*
@@ -154,8 +154,8 @@ static void PlayerSettings_DrawName2(void *self) {
 FirstConnect_StatusBar_Name
 =================
 */
-static void FirstConnect_StatusBar_Name(void *ptr) {
-	UI_DrawString(320, 440, "Your nickname", UI_CENTER | UI_SMALLFONT, colorWhite);
+static void FirstConnect_StatusBar_Name( void *ptr ) {
+	UI_DrawString( 320, 440, "Your nickname", UI_CENTER | UI_SMALLFONT, colorWhite );
 }
 
 /*
@@ -163,8 +163,8 @@ static void FirstConnect_StatusBar_Name(void *ptr) {
 FirstConnect_StatusBar_Rate
 =================
 */
-static void FirstConnect_StatusBar_Rate(void *ptr) {
-	UI_DrawString(320, 440, "Your connection speed", UI_CENTER | UI_SMALLFONT, colorWhite);
+static void FirstConnect_StatusBar_Rate( void *ptr ) {
+	UI_DrawString( 320, 440, "Your connection speed", UI_CENTER | UI_SMALLFONT, colorWhite );
 }
 
 /*
@@ -172,8 +172,8 @@ static void FirstConnect_StatusBar_Rate(void *ptr) {
 FirstConnect_StatusBar_Delag
 =================
 */
-static void FirstConnect_StatusBar_Delag(void *ptr) {
-	UI_DrawString(320, 440, "Reliable Instanthit weapons", UI_CENTER | UI_SMALLFONT, colorWhite);
+static void FirstConnect_StatusBar_Delag( void *ptr ) {
+	UI_DrawString( 320, 440, "Reliable Instanthit weapons", UI_CENTER | UI_SMALLFONT, colorWhite );
 }
 
 /*
@@ -181,8 +181,8 @@ static void FirstConnect_StatusBar_Delag(void *ptr) {
 FirstConnect_StatusBar_Download
 =================
 */
-static void FirstConnect_StatusBar_Download(void *ptr) {
-	UI_DrawString(320, 440, "Auto download missing maps and mods", UI_CENTER | UI_SMALLFONT, colorWhite);
+static void FirstConnect_StatusBar_Download( void *ptr ) {
+	UI_DrawString( 320, 440, "Auto download missing maps and mods", UI_CENTER | UI_SMALLFONT, colorWhite );
 }
 
 /*
@@ -190,9 +190,9 @@ static void FirstConnect_StatusBar_Download(void *ptr) {
 FirstConnect_SaveChanges
 =================
 */
-static void FirstConnect_SaveChanges(void) {
+static void FirstConnect_SaveChanges( void ) {
 	// name
-	trap_Cvar_Set("name", s_firstconnect.name.field.buffer);
+	trap_Cvar_Set( "name", s_firstconnect.name.field.buffer );
 }
 
 /*
@@ -200,42 +200,42 @@ static void FirstConnect_SaveChanges(void) {
 FirstConnect_Event
 =================
 */
-static void FirstConnect_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void FirstConnect_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_GO:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 			FirstConnect_SaveChanges();
 			UI_PopMenu();
-			trap_Cvar_SetValue("ui_setupchecked", 1);
+			trap_Cvar_SetValue( "ui_setupchecked", 1 );
 			UI_ArenaServersMenu();
 			break;
 
 		case ID_BACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			UI_PopMenu();
 			break;
 
 		case ID_RATE:
-			if (s_firstconnect.rate.curvalue == 0) {
-				trap_Cvar_SetValue("rate", 25000);
-			} else if (s_firstconnect.rate.curvalue == 1) {
-				trap_Cvar_SetValue("rate", 50000);
-			} else if (s_firstconnect.rate.curvalue == 2) {
-				trap_Cvar_SetValue("rate", 100000);
+			if ( s_firstconnect.rate.curvalue == 0 ) {
+				trap_Cvar_SetValue( "rate", 25000 );
+			} else if ( s_firstconnect.rate.curvalue == 1 ) {
+				trap_Cvar_SetValue( "rate", 50000 );
+			} else if ( s_firstconnect.rate.curvalue == 2 ) {
+				trap_Cvar_SetValue( "rate", 100000 );
 			}
 			break;
 
 		case ID_ALLOWDOWNLOAD:
-			trap_Cvar_SetValue("cl_allowDownload", s_firstconnect.allowdownload.curvalue);
-			trap_Cvar_SetValue("sv_allowDownload", s_firstconnect.allowdownload.curvalue);
+			trap_Cvar_SetValue( "cl_allowDownload", s_firstconnect.allowdownload.curvalue );
+			trap_Cvar_SetValue( "sv_allowDownload", s_firstconnect.allowdownload.curvalue );
 			break;
 
 		case ID_DELAGHITSCAN:
-			trap_Cvar_SetValue("g_delagHitscan", s_firstconnect.delaghitscan.curvalue);
-			trap_Cvar_SetValue("cg_delag", s_firstconnect.delaghitscan.curvalue);
+			trap_Cvar_SetValue( "g_delagHitscan", s_firstconnect.delaghitscan.curvalue );
+			trap_Cvar_SetValue( "cg_delag", s_firstconnect.delaghitscan.curvalue );
 			break;
 	}
 }
@@ -245,23 +245,23 @@ static void FirstConnect_Event(void *ptr, int event) {
 FirstConnect_SetMenuItems
 =================
 */
-static void FirstConnect_SetMenuItems(void) {
+static void FirstConnect_SetMenuItems( void ) {
 	int rate;
 	// name
-	Q_strncpyz(s_firstconnect.name.field.buffer, UI_Cvar_VariableString("name"), sizeof(s_firstconnect.name.field.buffer));
+	Q_strncpyz( s_firstconnect.name.field.buffer, UI_Cvar_VariableString( "name" ), sizeof( s_firstconnect.name.field.buffer ) );
 
-	rate = trap_Cvar_VariableValue("rate");
-	if (rate >= 100000) {
+	rate = trap_Cvar_VariableValue( "rate" );
+	if ( rate >= 100000 ) {
 		s_firstconnect.rate.curvalue = 2;
-	} else if (rate >= 50000) {
+	} else if ( rate >= 50000 ) {
 		s_firstconnect.rate.curvalue = 1;
 	} else {
 		s_firstconnect.rate.curvalue = 0;
 	}
 
-	s_firstconnect.allowdownload.curvalue = trap_Cvar_VariableValue("cl_allowDownload") != 0;
-	trap_Cvar_SetValue("cg_delag", 1);
-	s_firstconnect.delaghitscan.curvalue = trap_Cvar_VariableValue("cg_delag") != 0;
+	s_firstconnect.allowdownload.curvalue = trap_Cvar_VariableValue( "cl_allowDownload" ) != 0;
+	trap_Cvar_SetValue( "cg_delag", 1 );
+	s_firstconnect.delaghitscan.curvalue = trap_Cvar_VariableValue( "cg_delag" ) != 0;
 }
 
 /*
@@ -269,10 +269,10 @@ static void FirstConnect_SetMenuItems(void) {
 FirstConnect_MenuInit
 =================
 */
-static void FirstConnect_MenuInit(void) {
+static void FirstConnect_MenuInit( void ) {
 	int y;
 	// zero set all our globals
-	memset(&s_firstconnect, 0, sizeof(firstconnect_t));
+	memset( &s_firstconnect, 0, sizeof( firstconnect_t ) );
 
 	FirstConnect_Cache();
 
@@ -383,20 +383,20 @@ static void FirstConnect_MenuInit(void) {
 	s_firstconnect.info2.style = UI_CENTER | UI_SMALLFONT;
 	s_firstconnect.info2.string = "Please verify these settings";
 
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.banner);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.framel);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.framer);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.go);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.back);
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.banner );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.framel );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.framer );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.go );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.back );
 
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.name);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.rate);
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.name );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.rate );
 
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.delaghitscan);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.allowdownload);
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.delaghitscan );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.allowdownload );
 
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.info);
-	Menu_AddItem(&s_firstconnect.menu, &s_firstconnect.info2);
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.info );
+	Menu_AddItem( &s_firstconnect.menu, &s_firstconnect.info2 );
 
 	FirstConnect_SetMenuItems();
 }
@@ -406,14 +406,14 @@ static void FirstConnect_MenuInit(void) {
 FirstConnect_Cache
 =================
 */
-void FirstConnect_Cache(void) {
+void FirstConnect_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!art_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !art_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(art_artlist[i]);
+		trap_R_RegisterShaderNoMip( art_artlist[i] );
 	}
 }
 
@@ -422,7 +422,7 @@ void FirstConnect_Cache(void) {
 UI_FirstConnectMenu
 =================
 */
-void UI_FirstConnectMenu(void) {
+void UI_FirstConnectMenu( void ) {
 	FirstConnect_MenuInit();
-	UI_PushMenu(&s_firstconnect.menu);
+	UI_PushMenu( &s_firstconnect.menu );
 }

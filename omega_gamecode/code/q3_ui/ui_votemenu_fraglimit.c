@@ -35,7 +35,7 @@ static char *votemenu_fraglmit_artlist[] =
         VOTEMENU_BACK1,
         ART_FIGHT0,
         ART_FIGHT1,
-        NULL};
+        NULL };
 
 #define ID_BACK 100
 #define ID_GO 101
@@ -71,84 +71,84 @@ typedef struct
 
 static votemenu_t s_votemenu_fraglmit;
 
-void UI_VoteFraglimitMenuInternal(void);
+void UI_VoteFraglimitMenuInternal( void );
 
 /*
 =================
 VoteMenu_Fraglimit_Event
 =================
 */
-static void VoteMenu_Fraglimit_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void VoteMenu_Fraglimit_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_BACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			UI_PopMenu();
 			break;
 		case ID_GO:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			switch (s_votemenu_fraglmit.selection) {
+			switch ( s_votemenu_fraglmit.selection ) {
 				case ID_10:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 10");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 10" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_15:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 15");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 15" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_20:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 20");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 20" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_30:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 30");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 30" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_40:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 40");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 40" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_50:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 50");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 50" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_INF:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote fraglimit 0");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote fraglimit 0" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 			};
 			break;
 		default:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			if (s_votemenu_fraglmit.selection != ((menucommon_s *)ptr)->id) {
-				s_votemenu_fraglmit.selection = ((menucommon_s *)ptr)->id;
+			if ( s_votemenu_fraglmit.selection != ( (menucommon_s *)ptr )->id ) {
+				s_votemenu_fraglmit.selection = ( (menucommon_s *)ptr )->id;
 				UI_VoteFraglimitMenuInternal();
 			}
 			break;
 	}
 }
 
-static void setMenutext(menutext_s *menu, int y, int id, int value, char *text) {
+static void setMenutext( menutext_s *menu, int y, int id, int value, char *text ) {
 	menu->generic.type = MTYPE_PTEXT;
 	menu->color = color_red;
 	menu->generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
-	if ((s_votemenu_fraglmit.min > value && value != 0) ||
-	    (s_votemenu_fraglmit.max < value && s_votemenu_fraglmit.max != 0) ||
-	    (s_votemenu_fraglmit.max != 0 && value == 0))
+	if ( ( s_votemenu_fraglmit.min > value && value != 0 ) ||
+	     ( s_votemenu_fraglmit.max < value && s_votemenu_fraglmit.max != 0 ) ||
+	     ( s_votemenu_fraglmit.max != 0 && value == 0 ) )
 		menu->generic.flags |= QMF_INACTIVE | QMF_GRAYED;
-	else if (s_votemenu_fraglmit.selection == id)
+	else if ( s_votemenu_fraglmit.selection == id )
 		menu->color = color_orange;
 	menu->generic.x = 320;
 	menu->generic.y = y;
@@ -163,14 +163,14 @@ static void setMenutext(menutext_s *menu, int y, int id, int value, char *text) 
 VoteMenu_Fraglimit_Cache
 =================
 */
-static void VoteMenu_Fraglimit_Cache(void) {
+static void VoteMenu_Fraglimit_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!votemenu_fraglmit_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !votemenu_fraglmit_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(votemenu_fraglmit_artlist[i]);
+		trap_R_RegisterShaderNoMip( votemenu_fraglmit_artlist[i] );
 	}
 }
 
@@ -179,11 +179,11 @@ static void VoteMenu_Fraglimit_Cache(void) {
 UI_VoteMenu_Fraglimit_Draw
 =================
 */
-static void UI_VoteMenu_Fraglimit_Draw(void) {
-	UI_DrawNamedPic(320 - 233, 240 - 166, 466, 332, ART_BACKGROUND);
+static void UI_VoteMenu_Fraglimit_Draw( void ) {
+	UI_DrawNamedPic( 320 - 233, 240 - 166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
-	Menu_Draw(&s_votemenu_fraglmit.menu);
+	Menu_Draw( &s_votemenu_fraglmit.menu );
 }
 
 /*
@@ -192,7 +192,7 @@ UI_VoteFraglimitMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteFraglimitMenuInternal(void) {
+void UI_VoteFraglimitMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Fraglimit_Cache();
@@ -209,19 +209,19 @@ void UI_VoteFraglimitMenuInternal(void) {
 	s_votemenu_fraglmit.banner.style = UI_CENTER;
 
 	y = 98;
-	setMenutext(&s_votemenu_fraglmit.bLimit10, y, ID_10, 10, "10");
+	setMenutext( &s_votemenu_fraglmit.bLimit10, y, ID_10, 10, "10" );
 	y += FRAGLIMIT_MENU_VERTICAL_SPACING;
-	setMenutext(&s_votemenu_fraglmit.bLimit15, y, ID_15, 15, "15");
+	setMenutext( &s_votemenu_fraglmit.bLimit15, y, ID_15, 15, "15" );
 	y += FRAGLIMIT_MENU_VERTICAL_SPACING;
-	setMenutext(&s_votemenu_fraglmit.bLimit20, y, ID_20, 20, "20");
+	setMenutext( &s_votemenu_fraglmit.bLimit20, y, ID_20, 20, "20" );
 	y += FRAGLIMIT_MENU_VERTICAL_SPACING;
-	setMenutext(&s_votemenu_fraglmit.bLimit30, y, ID_30, 30, "30");
+	setMenutext( &s_votemenu_fraglmit.bLimit30, y, ID_30, 30, "30" );
 	y += FRAGLIMIT_MENU_VERTICAL_SPACING;
-	setMenutext(&s_votemenu_fraglmit.bLimit40, y, ID_40, 40, "40");
+	setMenutext( &s_votemenu_fraglmit.bLimit40, y, ID_40, 40, "40" );
 	y += FRAGLIMIT_MENU_VERTICAL_SPACING;
-	setMenutext(&s_votemenu_fraglmit.bLimit50, y, ID_50, 50, "50");
+	setMenutext( &s_votemenu_fraglmit.bLimit50, y, ID_50, 50, "50" );
 	y += FRAGLIMIT_MENU_VERTICAL_SPACING;
-	setMenutext(&s_votemenu_fraglmit.bLimitInf, y, ID_INF, 0, "No limit");
+	setMenutext( &s_votemenu_fraglmit.bLimitInf, y, ID_INF, 0, "No limit" );
 
 	s_votemenu_fraglmit.back.generic.type = MTYPE_BITMAP;
 	s_votemenu_fraglmit.back.generic.name = VOTEMENU_BACK0;
@@ -252,24 +252,24 @@ UI_VoteFraglimitMenu
  *Called from outside
 =================
 */
-void UI_VoteFraglimitMenu(void) {
+void UI_VoteFraglimitMenu( void ) {
 	char serverinfo[MAX_INFO_STRING];
 	// zero set all our globals
-	memset(&s_votemenu_fraglmit, 0, sizeof(votemenu_t));
-	trap_GetConfigString(CS_SERVERINFO, serverinfo, MAX_INFO_STRING);
-	s_votemenu_fraglmit.min = atoi(Info_ValueForKey(serverinfo, "g_voteMinFraglimit"));
-	s_votemenu_fraglmit.max = atoi(Info_ValueForKey(serverinfo, "g_voteMaxFraglimit"));
+	memset( &s_votemenu_fraglmit, 0, sizeof( votemenu_t ) );
+	trap_GetConfigString( CS_SERVERINFO, serverinfo, MAX_INFO_STRING );
+	s_votemenu_fraglmit.min = atoi( Info_ValueForKey( serverinfo, "g_voteMinFraglimit" ) );
+	s_votemenu_fraglmit.max = atoi( Info_ValueForKey( serverinfo, "g_voteMaxFraglimit" ) );
 	UI_VoteFraglimitMenuInternal();
 
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.back);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.go);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit10);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit15);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit20);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit30);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit40);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit50);
-	Menu_AddItem(&s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimitInf);
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.back );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.go );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit10 );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit15 );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit20 );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit30 );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit40 );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimit50 );
+	Menu_AddItem( &s_votemenu_fraglmit.menu, (void *)&s_votemenu_fraglmit.bLimitInf );
 
-	UI_PushMenu(&s_votemenu_fraglmit.menu);
+	UI_PushMenu( &s_votemenu_fraglmit.menu );
 }

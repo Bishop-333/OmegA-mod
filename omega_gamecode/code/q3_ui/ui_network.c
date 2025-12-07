@@ -51,7 +51,7 @@ const char *rate_items[] = {
     "Cable/xDSL",
     "Broadband",
     "LAN/Fiber",
-    NULL};
+    NULL };
 
 typedef struct {
 	menuframework_s menu;
@@ -81,7 +81,7 @@ static networkOptionsInfo_t networkOptionsInfo;
 Network_DrawAddress
 =================
 */
-static void Network_DrawAddress(void *self) {
+static void Network_DrawAddress( void *self ) {
 	menufield_s *f;
 	qboolean focus;
 	qboolean forwarder;
@@ -94,13 +94,13 @@ static void Network_DrawAddress(void *self) {
 	f = (menufield_s *)self;
 	basex = f->generic.x;
 	y = f->generic.y;
-	focus = (f->generic.parent->cursor == f->generic.menuPosition);
-	forwarder = (networkOptionsInfo.forwarder.curvalue == 1);
+	focus = ( f->generic.parent->cursor == f->generic.menuPosition );
+	forwarder = ( networkOptionsInfo.forwarder.curvalue == 1 );
 
 	style = UI_LEFT | UI_SMALLFONT;
-	if (forwarder) {
+	if ( forwarder ) {
 		color = text_color_normal;
-		if (focus) {
+		if ( focus ) {
 			style |= UI_PULSE;
 			color = text_color_highlight;
 		}
@@ -113,20 +113,20 @@ static void Network_DrawAddress(void *self) {
 	y += PROP_HEIGHT;
 	txt = f->field.buffer;
 	x = basex;
-	if (forwarder) {
-		while ((c = *txt) != 30) {
-			UI_DrawChar(x, y, c, style, color);
+	if ( forwarder ) {
+		while ( ( c = *txt ) != 30 ) {
+			UI_DrawChar( x, y, c, style, color );
 			txt++;
 			x += SMALLCHAR_WIDTH;
-			trap_Cvar_Set("fwd_addr", networkOptionsInfo.address.field.buffer);
+			trap_Cvar_Set( "fwd_addr", networkOptionsInfo.address.field.buffer );
 		}
 	}
 
-	UI_DrawString(basex - 8 - SMALLCHAR_WIDTH, y, f->generic.name, UI_RIGHT | UI_SMALLFONT, color);
+	UI_DrawString( basex - 8 - SMALLCHAR_WIDTH, y, f->generic.name, UI_RIGHT | UI_SMALLFONT, color );
 
 	// draw cursor if we have focus
-	if (focus && forwarder) {
-		if (trap_Key_GetOverstrikeMode()) {
+	if ( focus && forwarder ) {
+		if ( trap_Key_GetOverstrikeMode() ) {
 			c = 11;
 		} else {
 			c = 10;
@@ -135,7 +135,7 @@ static void Network_DrawAddress(void *self) {
 		style &= ~UI_PULSE;
 		style |= UI_BLINK;
 
-		UI_DrawChar(basex + f->field.cursor * SMALLCHAR_WIDTH, y, c, style, color);
+		UI_DrawChar( basex + f->field.cursor * SMALLCHAR_WIDTH, y, c, style, color );
 	}
 }
 
@@ -144,12 +144,12 @@ static void Network_DrawAddress(void *self) {
 UI_NetworkOptionsMenu_Event
 =================
 */
-static void UI_NetworkOptionsMenu_Event(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_NetworkOptionsMenu_Event( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_GRAPHICS:
 			UI_PopMenu();
 			UI_GraphicsOptionsMenu();
@@ -169,28 +169,28 @@ static void UI_NetworkOptionsMenu_Event(void *ptr, int event) {
 			break;
 
 		case ID_RATE:
-			if (networkOptionsInfo.rate.curvalue == 0) {
-				trap_Cvar_SetValue("rate", 25000);
-			} else if (networkOptionsInfo.rate.curvalue == 1) {
-				trap_Cvar_SetValue("rate", 50000);
-			} else if (networkOptionsInfo.rate.curvalue == 2) {
-				trap_Cvar_SetValue("rate", 100000);
+			if ( networkOptionsInfo.rate.curvalue == 0 ) {
+				trap_Cvar_SetValue( "rate", 25000 );
+			} else if ( networkOptionsInfo.rate.curvalue == 1 ) {
+				trap_Cvar_SetValue( "rate", 50000 );
+			} else if ( networkOptionsInfo.rate.curvalue == 2 ) {
+				trap_Cvar_SetValue( "rate", 100000 );
 			}
 			break;
 
 		case ID_ALLOWDOWNLOAD:
-			trap_Cvar_SetValue("cl_allowDownload", networkOptionsInfo.allowdownload.curvalue);
-			trap_Cvar_SetValue("cl_mapAutoDownload", networkOptionsInfo.allowdownload.curvalue);
-			trap_Cvar_SetValue("sv_allowDownload", networkOptionsInfo.allowdownload.curvalue);
+			trap_Cvar_SetValue( "cl_allowDownload", networkOptionsInfo.allowdownload.curvalue );
+			trap_Cvar_SetValue( "cl_mapAutoDownload", networkOptionsInfo.allowdownload.curvalue );
+			trap_Cvar_SetValue( "sv_allowDownload", networkOptionsInfo.allowdownload.curvalue );
 			break;
 
 		case ID_DELAGHITSCAN:
-			trap_Cvar_SetValue("g_delagHitscan", networkOptionsInfo.delaghitscan.curvalue);
-			trap_Cvar_SetValue("cg_delag", networkOptionsInfo.delaghitscan.curvalue);
+			trap_Cvar_SetValue( "g_delagHitscan", networkOptionsInfo.delaghitscan.curvalue );
+			trap_Cvar_SetValue( "cg_delag", networkOptionsInfo.delaghitscan.curvalue );
 			break;
 
 		case ID_FORWARDER:
-			trap_Cvar_SetValue("fwd_use", networkOptionsInfo.forwarder.curvalue);
+			trap_Cvar_SetValue( "fwd_use", networkOptionsInfo.forwarder.curvalue );
 			break;
 
 		case ID_BACK:
@@ -204,11 +204,11 @@ static void UI_NetworkOptionsMenu_Event(void *ptr, int event) {
 UI_NetworkOptionsMenu_Init
 ===============
 */
-static void UI_NetworkOptionsMenu_Init(void) {
+static void UI_NetworkOptionsMenu_Init( void ) {
 	int y;
 	int rate;
 
-	memset(&networkOptionsInfo, 0, sizeof(networkOptionsInfo));
+	memset( &networkOptionsInfo, 0, sizeof( networkOptionsInfo ) );
 
 	UI_NetworkOptionsMenu_Cache();
 	networkOptionsInfo.menu.wrapAround = qtrue;
@@ -278,7 +278,7 @@ static void UI_NetworkOptionsMenu_Init(void) {
 	networkOptionsInfo.network.style = UI_RIGHT;
 	networkOptionsInfo.network.color = color_red;
 
-	y = 240 - 2 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 2 * ( BIGCHAR_HEIGHT + 2 );
 	networkOptionsInfo.rate.generic.type = MTYPE_SPINCONTROL;
 	networkOptionsInfo.rate.generic.name = "Data Rate:";
 	networkOptionsInfo.rate.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -340,35 +340,35 @@ static void UI_NetworkOptionsMenu_Init(void) {
 	networkOptionsInfo.back.height = 64;
 	networkOptionsInfo.back.focuspic = ART_BACK1;
 
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.banner);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.framel);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.framer);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.graphics);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.display);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.sound);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.network);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.rate);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.allowdownload);
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.delaghitscan);
-	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
-		Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.forwarder);
-		Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.address);
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.banner );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.framel );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.framer );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.graphics );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.display );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.sound );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.network );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.rate );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.allowdownload );
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.delaghitscan );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.forwarder );
+		Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.address );
 	}
-	Menu_AddItem(&networkOptionsInfo.menu, (void *)&networkOptionsInfo.back);
+	Menu_AddItem( &networkOptionsInfo.menu, (void *)&networkOptionsInfo.back );
 
-	rate = trap_Cvar_VariableValue("rate");
-	if (rate >= 100000) {
+	rate = trap_Cvar_VariableValue( "rate" );
+	if ( rate >= 100000 ) {
 		networkOptionsInfo.rate.curvalue = 2;
-	} else if (rate >= 50000) {
+	} else if ( rate >= 50000 ) {
 		networkOptionsInfo.rate.curvalue = 1;
 	} else {
 		networkOptionsInfo.rate.curvalue = 0;
 	}
 
-	networkOptionsInfo.allowdownload.curvalue = trap_Cvar_VariableValue("cl_allowDownload") != 0;
-	networkOptionsInfo.delaghitscan.curvalue = trap_Cvar_VariableValue("cg_delag") != 0;
-	networkOptionsInfo.forwarder.curvalue = trap_Cvar_VariableValue("fwd_use") != 0;
-	Q_strncpyz(networkOptionsInfo.address.field.buffer, UI_Cvar_VariableString("fwd_addr"), sizeof(networkOptionsInfo.address.field.buffer));
+	networkOptionsInfo.allowdownload.curvalue = trap_Cvar_VariableValue( "cl_allowDownload" ) != 0;
+	networkOptionsInfo.delaghitscan.curvalue = trap_Cvar_VariableValue( "cg_delag" ) != 0;
+	networkOptionsInfo.forwarder.curvalue = trap_Cvar_VariableValue( "fwd_use" ) != 0;
+	Q_strncpyz( networkOptionsInfo.address.field.buffer, UI_Cvar_VariableString( "fwd_addr" ), sizeof( networkOptionsInfo.address.field.buffer ) );
 }
 
 /*
@@ -376,11 +376,11 @@ static void UI_NetworkOptionsMenu_Init(void) {
 UI_NetworkOptionsMenu_Cache
 ===============
 */
-void UI_NetworkOptionsMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_FRAMEL);
-	trap_R_RegisterShaderNoMip(ART_FRAMER);
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
+void UI_NetworkOptionsMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
 }
 
 /*
@@ -388,8 +388,8 @@ void UI_NetworkOptionsMenu_Cache(void) {
 UI_NetworkOptionsMenu
 ===============
 */
-void UI_NetworkOptionsMenu(void) {
+void UI_NetworkOptionsMenu( void ) {
 	UI_NetworkOptionsMenu_Init();
-	UI_PushMenu(&networkOptionsInfo.menu);
-	Menu_SetCursorToItem(&networkOptionsInfo.menu, &networkOptionsInfo.network);
+	UI_PushMenu( &networkOptionsInfo.menu );
+	Menu_SetCursorToItem( &networkOptionsInfo.menu, &networkOptionsInfo.network );
 }

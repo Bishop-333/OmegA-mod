@@ -27,13 +27,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #ifndef _G_ADMIN_H
 #define _G_ADMIN_H
 
-#define AP(x) trap_SendServerCommand(-1, x)
-#define CP(x) trap_SendServerCommand(ent - g_entities, x)
-#define CPx(x, y) trap_SendServerCommand(x, y)
-#define ADMP(x) G_admin_print(ent, x)
-#define ADMBP(x) G_admin_buffer_print(ent, x)
+#define AP( x ) trap_SendServerCommand( -1, x )
+#define CP( x ) trap_SendServerCommand( ent - g_entities, x )
+#define CPx( x, y ) trap_SendServerCommand( x, y )
+#define ADMP( x ) G_admin_print( ent, x )
+#define ADMBP( x ) G_admin_buffer_print( ent, x )
 #define ADMBP_begin() G_admin_buffer_begin()
-#define ADMBP_end() G_admin_buffer_end(ent)
+#define ADMBP_end() G_admin_buffer_end( ent )
 
 #define MAX_ADMIN_LEVELS 32
 #define MAX_ADMIN_ADMINS 1024
@@ -87,7 +87,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 typedef struct
 {
 	char *keyword;
-	qboolean (*handler)(gentity_t *ent, int skiparg);
+	qboolean ( *handler )( gentity_t *ent, int skiparg );
 	char *flag;
 	char *function; // used for !help
 	char *syntax;   // used for !help
@@ -141,54 +141,54 @@ typedef struct g_admin_warning {
 	int expires;
 } g_admin_warning_t;
 
-qboolean G_admin_ban_check(char *userinfo, char *reason, int rlen);
-qboolean G_admin_cmd_check(gentity_t *ent, qboolean say);
-qboolean G_admin_readconfig(gentity_t *ent, int skiparg);
-qboolean G_admin_permission(gentity_t *ent, char flag);
-qboolean G_admin_name_check(gentity_t *ent, char *name, char *err, int len);
-void G_admin_namelog_update(gclient_t *ent, qboolean disconnect);
-int G_admin_level(gentity_t *ent);
-int G_admin_parse_time(const char *time);
+qboolean G_admin_ban_check( char *userinfo, char *reason, int rlen );
+qboolean G_admin_cmd_check( gentity_t *ent, qboolean say );
+qboolean G_admin_readconfig( gentity_t *ent, int skiparg );
+qboolean G_admin_permission( gentity_t *ent, char flag );
+qboolean G_admin_name_check( gentity_t *ent, char *name, char *err, int len );
+void G_admin_namelog_update( gclient_t *ent, qboolean disconnect );
+int G_admin_level( gentity_t *ent );
+int G_admin_parse_time( const char *time );
 
 // ! command functions
-qboolean G_admin_time(gentity_t *ent, int skiparg);
-qboolean G_admin_setlevel(gentity_t *ent, int skiparg);
-qboolean G_admin_kick(gentity_t *ent, int skiparg);
-qboolean G_admin_adjustban(gentity_t *ent, int skiparg);
-qboolean G_admin_ban(gentity_t *ent, int skiparg);
-qboolean G_admin_unban(gentity_t *ent, int skiparg);
-qboolean G_admin_putteam(gentity_t *ent, int skiparg);
-qboolean G_admin_listadmins(gentity_t *ent, int skiparg);
-qboolean G_admin_listplayers(gentity_t *ent, int skiparg);
-qboolean G_admin_map(gentity_t *ent, int skiparg);
-qboolean G_admin_mute(gentity_t *ent, int skiparg);
-qboolean G_admin_showbans(gentity_t *ent, int skiparg);
-qboolean G_admin_help(gentity_t *ent, int skiparg);
-qboolean G_admin_admintest(gentity_t *ent, int skiparg);
-qboolean G_admin_allready(gentity_t *ent, int skiparg);
-qboolean G_admin_cancelvote(gentity_t *ent, int skiparg);
-qboolean G_admin_passvote(gentity_t *ent, int skiparg);
-qboolean G_admin_spec999(gentity_t *ent, int skiparg);
-qboolean G_admin_rename(gentity_t *ent, int skiparg);
-qboolean G_admin_restart(gentity_t *ent, int skiparg);
-qboolean G_admin_nextmap(gentity_t *ent, int skiparg);
-qboolean G_admin_namelog(gentity_t *ent, int skiparg);
-qboolean G_admin_lock(gentity_t *ent, int skiparg);
-qboolean G_admin_unlock(gentity_t *ent, int skiparg);
+qboolean G_admin_time( gentity_t *ent, int skiparg );
+qboolean G_admin_setlevel( gentity_t *ent, int skiparg );
+qboolean G_admin_kick( gentity_t *ent, int skiparg );
+qboolean G_admin_adjustban( gentity_t *ent, int skiparg );
+qboolean G_admin_ban( gentity_t *ent, int skiparg );
+qboolean G_admin_unban( gentity_t *ent, int skiparg );
+qboolean G_admin_putteam( gentity_t *ent, int skiparg );
+qboolean G_admin_listadmins( gentity_t *ent, int skiparg );
+qboolean G_admin_listplayers( gentity_t *ent, int skiparg );
+qboolean G_admin_map( gentity_t *ent, int skiparg );
+qboolean G_admin_mute( gentity_t *ent, int skiparg );
+qboolean G_admin_showbans( gentity_t *ent, int skiparg );
+qboolean G_admin_help( gentity_t *ent, int skiparg );
+qboolean G_admin_admintest( gentity_t *ent, int skiparg );
+qboolean G_admin_allready( gentity_t *ent, int skiparg );
+qboolean G_admin_cancelvote( gentity_t *ent, int skiparg );
+qboolean G_admin_passvote( gentity_t *ent, int skiparg );
+qboolean G_admin_spec999( gentity_t *ent, int skiparg );
+qboolean G_admin_rename( gentity_t *ent, int skiparg );
+qboolean G_admin_restart( gentity_t *ent, int skiparg );
+qboolean G_admin_nextmap( gentity_t *ent, int skiparg );
+qboolean G_admin_namelog( gentity_t *ent, int skiparg );
+qboolean G_admin_lock( gentity_t *ent, int skiparg );
+qboolean G_admin_unlock( gentity_t *ent, int skiparg );
 //KK-OAX
-qboolean G_admin_disorient(gentity_t *ent, int skiparg);
-qboolean G_admin_orient(gentity_t *ent, int skiparg);
-qboolean G_admin_slap(gentity_t *ent, int skiparg);
-qboolean G_admin_warn(gentity_t *ent, int skiparg);
-qboolean G_admin_shuffle(gentity_t *ent, int skiparg);
+qboolean G_admin_disorient( gentity_t *ent, int skiparg );
+qboolean G_admin_orient( gentity_t *ent, int skiparg );
+qboolean G_admin_slap( gentity_t *ent, int skiparg );
+qboolean G_admin_warn( gentity_t *ent, int skiparg );
+qboolean G_admin_shuffle( gentity_t *ent, int skiparg );
 
-void G_admin_print(gentity_t *ent, char *m);
-void G_admin_buffer_print(gentity_t *ent, char *m);
-void G_admin_buffer_begin(void);
-void G_admin_buffer_end(gentity_t *ent);
+void G_admin_print( gentity_t *ent, char *m );
+void G_admin_buffer_print( gentity_t *ent, char *m );
+void G_admin_buffer_begin( void );
+void G_admin_buffer_end( gentity_t *ent );
 
-void G_admin_duration(int secs, char *duration, int dursize);
-void G_admin_cleanup(void);
-void G_admin_namelog_cleanup(void);
+void G_admin_duration( int secs, char *duration, int dursize );
+void G_admin_cleanup( void );
+void G_admin_namelog_cleanup( void );
 
 #endif /* ifndef _G_ADMIN_H */

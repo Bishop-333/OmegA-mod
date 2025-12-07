@@ -61,29 +61,29 @@ static menuframework_s s_signup_menu;
 static menuaction_s s_signup_signup;
 static menuaction_s s_signup_cancel;
 
-static vec4_t s_signup_color_prompt = {1.00, 0.43, 0.00, 1.00};
+static vec4_t s_signup_color_prompt = { 1.00, 0.43, 0.00, 1.00 };
 
 /*
 ===============
 Signup_MenuEvent
 ===============
 */
-static void Signup_MenuEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void Signup_MenuEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_SIGNUP:
-			if (strcmp(s_signup.password_box.field.buffer,
-			           s_signup.again_box.field.buffer) != 0) {
+			if ( strcmp( s_signup.password_box.field.buffer,
+			             s_signup.again_box.field.buffer ) != 0 ) {
 				// GRANK_FIXME - password mismatch
 				break;
 			}
 			trap_CL_UI_RankUserCreate(
 			    s_signup.name_box.field.buffer,
 			    s_signup.password_box.field.buffer,
-			    s_signup.email_box.field.buffer);
+			    s_signup.email_box.field.buffer );
 
 			UI_ForceMenuOff();
 			break;
@@ -99,11 +99,11 @@ static void Signup_MenuEvent(void *ptr, int event) {
 Signup_MenuInit
 ===============
 */
-static void Signup_MenuInit(void) {
+static void Signup_MenuInit( void ) {
 	grank_status_t status;
 	int y;
 
-	memset(&s_signup, 0, sizeof(s_signup));
+	memset( &s_signup, 0, sizeof( s_signup ) );
 
 	Signup_Cache();
 
@@ -217,8 +217,8 @@ static void Signup_MenuInit(void) {
 	s_signup.cancel.color = colorRed;
 	y += 20;
 
-	status = (grank_status_t)trap_Cvar_VariableValue("client_status");
-	if ((status != QGR_STATUS_NEW) && (status != QGR_STATUS_SPECTATOR)) {
+	status = (grank_status_t)trap_Cvar_VariableValue( "client_status" );
+	if ( ( status != QGR_STATUS_NEW ) && ( status != QGR_STATUS_SPECTATOR ) ) {
 		s_signup.name_box.generic.flags |= QMF_INACTIVE;
 		s_signup.password_box.generic.flags |= QMF_INACTIVE;
 		s_signup.again_box.generic.flags |= QMF_INACTIVE;
@@ -228,17 +228,17 @@ static void Signup_MenuInit(void) {
 		s_signup.signup.color = colorMdGrey;
 	}
 
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.frame);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.name);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.name_box);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.password);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.password_box);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.again);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.again_box);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.email);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.email_box);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.signup);
-	Menu_AddItem(&s_signup.menu, (void *)&s_signup.cancel);
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.frame );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.name );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.name_box );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.password );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.password_box );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.again );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.again_box );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.email );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.email_box );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.signup );
+	Menu_AddItem( &s_signup.menu, (void *)&s_signup.cancel );
 }
 
 /*
@@ -246,8 +246,8 @@ static void Signup_MenuInit(void) {
 Signup_Cache
 ===============
 */
-void Signup_Cache(void) {
-	trap_R_RegisterShaderNoMip(SIGNUP_FRAME);
+void Signup_Cache( void ) {
+	trap_R_RegisterShaderNoMip( SIGNUP_FRAME );
 }
 
 /*
@@ -255,7 +255,7 @@ void Signup_Cache(void) {
 UI_SignupMenu
 ===============
 */
-void UI_SignupMenu(void) {
+void UI_SignupMenu( void ) {
 	Signup_MenuInit();
-	UI_PushMenu(&s_signup.menu);
+	UI_PushMenu( &s_signup.menu );
 }

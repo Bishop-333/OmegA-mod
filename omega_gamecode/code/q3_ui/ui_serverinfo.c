@@ -33,7 +33,7 @@ static char *serverinfo_artlist[] =
         SERVERINFO_FRAMER,
         SERVERINFO_BACK0,
         SERVERINFO_BACK1,
-        NULL};
+        NULL };
 
 #define ID_ADD 100
 #define ID_BACK 101
@@ -59,31 +59,31 @@ Favorites_Add
 Add current server to favorites
 =================
 */
-static void Favorites_Add(void) {
+static void Favorites_Add( void ) {
 	char adrstr[128];
 	char serverbuff[128];
 	int i;
 	int best;
 
-	trap_Cvar_VariableStringBuffer("cl_currentServerAddress", serverbuff, sizeof(serverbuff));
-	if (!serverbuff[0])
+	trap_Cvar_VariableStringBuffer( "cl_currentServerAddress", serverbuff, sizeof( serverbuff ) );
+	if ( !serverbuff[0] )
 		return;
 
 	best = 0;
-	for (i = 0; i < MAX_FAVORITESERVERS; i++) {
-		trap_Cvar_VariableStringBuffer(va("server%d", i + 1), adrstr, sizeof(adrstr));
-		if (!Q_stricmp(serverbuff, adrstr)) {
+	for ( i = 0; i < MAX_FAVORITESERVERS; i++ ) {
+		trap_Cvar_VariableStringBuffer( va( "server%d", i + 1 ), adrstr, sizeof( adrstr ) );
+		if ( !Q_stricmp( serverbuff, adrstr ) ) {
 			// already in list
 			return;
 		}
 
 		// use first empty or non-numeric available slot
-		if ((adrstr[0] < '0' || adrstr[0] > '9') && !best)
+		if ( ( adrstr[0] < '0' || adrstr[0] > '9' ) && !best )
 			best = i + 1;
 	}
 
-	if (best)
-		trap_Cvar_Set(va("server%d", best), serverbuff);
+	if ( best )
+		trap_Cvar_Set( va( "server%d", best ), serverbuff );
 }
 
 /*
@@ -91,10 +91,10 @@ static void Favorites_Add(void) {
 ServerInfo_Event
 =================
 */
-static void ServerInfo_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void ServerInfo_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_ADD:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			Favorites_Add();
@@ -102,7 +102,7 @@ static void ServerInfo_Event(void *ptr, int event) {
 			break;
 
 		case ID_BACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			UI_PopMenu();
@@ -115,30 +115,30 @@ static void ServerInfo_Event(void *ptr, int event) {
 ServerInfo_MenuDraw
 =================
 */
-static void ServerInfo_MenuDraw(void) {
+static void ServerInfo_MenuDraw( void ) {
 	const char *s;
 	char key[MAX_INFO_KEY];
 	char value[MAX_INFO_VALUE];
 	int i = 0, y;
 
-	y = SCREEN_HEIGHT / 2 - s_serverinfo.numlines * (SMALLCHAR_HEIGHT) / 2 - 20;
+	y = SCREEN_HEIGHT / 2 - s_serverinfo.numlines * ( SMALLCHAR_HEIGHT ) / 2 - 20;
 	s = s_serverinfo.info;
-	while (s && i < s_serverinfo.numlines) {
-		Info_NextPair(&s, key, value);
-		if (!key[0]) {
+	while ( s && i < s_serverinfo.numlines ) {
+		Info_NextPair( &s, key, value );
+		if ( !key[0] ) {
 			break;
 		}
 
-		Q_strcat(key, MAX_INFO_KEY, ":");
+		Q_strcat( key, MAX_INFO_KEY, ":" );
 
-		UI_DrawString(SCREEN_WIDTH * 0.50 - 8, y, key, UI_RIGHT | UI_SMALLFONT, color_red);
-		UI_DrawString(SCREEN_WIDTH * 0.50 + 8, y, value, UI_LEFT | UI_SMALLFONT, text_color_normal);
+		UI_DrawString( SCREEN_WIDTH * 0.50 - 8, y, key, UI_RIGHT | UI_SMALLFONT, color_red );
+		UI_DrawString( SCREEN_WIDTH * 0.50 + 8, y, value, UI_LEFT | UI_SMALLFONT, text_color_normal );
 
 		y += SMALLCHAR_HEIGHT;
 		i++;
 	}
 
-	Menu_Draw(&s_serverinfo.menu);
+	Menu_Draw( &s_serverinfo.menu );
 }
 
 /*
@@ -146,8 +146,8 @@ static void ServerInfo_MenuDraw(void) {
 ServerInfo_MenuKey
 =================
 */
-static sfxHandle_t ServerInfo_MenuKey(int key) {
-	return (Menu_DefaultKey(&s_serverinfo.menu, key));
+static sfxHandle_t ServerInfo_MenuKey( int key ) {
+	return ( Menu_DefaultKey( &s_serverinfo.menu, key ) );
 }
 
 /*
@@ -155,14 +155,14 @@ static sfxHandle_t ServerInfo_MenuKey(int key) {
 ServerInfo_Cache
 =================
 */
-void ServerInfo_Cache(void) {
+void ServerInfo_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!serverinfo_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !serverinfo_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(serverinfo_artlist[i]);
+		trap_R_RegisterShaderNoMip( serverinfo_artlist[i] );
 	}
 }
 
@@ -171,13 +171,13 @@ void ServerInfo_Cache(void) {
 UI_ServerInfoMenu
 =================
 */
-void UI_ServerInfoMenu(void) {
+void UI_ServerInfoMenu( void ) {
 	const char *s;
 	char key[MAX_INFO_KEY];
 	char value[MAX_INFO_VALUE];
 
 	// zero set all our globals
-	memset(&s_serverinfo, 0, sizeof(serverinfo_t));
+	memset( &s_serverinfo, 0, sizeof( serverinfo_t ) );
 
 	ServerInfo_Cache();
 
@@ -218,7 +218,7 @@ void UI_ServerInfoMenu(void) {
 	s_serverinfo.add.string = "ADD TO FAVORITES";
 	s_serverinfo.add.style = UI_CENTER | UI_SMALLFONT;
 	s_serverinfo.add.color = color_red;
-	if (trap_Cvar_VariableValue("sv_running")) {
+	if ( trap_Cvar_VariableValue( "sv_running" ) ) {
 		s_serverinfo.add.generic.flags |= QMF_GRAYED;
 	}
 
@@ -233,26 +233,26 @@ void UI_ServerInfoMenu(void) {
 	s_serverinfo.back.height = 64;
 	s_serverinfo.back.focuspic = SERVERINFO_BACK1;
 
-	trap_GetConfigString(CS_SERVERINFO, s_serverinfo.info, MAX_INFO_STRING);
+	trap_GetConfigString( CS_SERVERINFO, s_serverinfo.info, MAX_INFO_STRING );
 
 	s_serverinfo.numlines = 0;
 	s = s_serverinfo.info;
-	while (s) {
-		Info_NextPair(&s, key, value);
-		if (!key[0]) {
+	while ( s ) {
+		Info_NextPair( &s, key, value );
+		if ( !key[0] ) {
 			break;
 		}
 		s_serverinfo.numlines++;
 	}
 
-	if (s_serverinfo.numlines > 16)
+	if ( s_serverinfo.numlines > 16 )
 		s_serverinfo.numlines = 16;
 
-	Menu_AddItem(&s_serverinfo.menu, (void *)&s_serverinfo.banner);
-	Menu_AddItem(&s_serverinfo.menu, (void *)&s_serverinfo.framel);
-	Menu_AddItem(&s_serverinfo.menu, (void *)&s_serverinfo.framer);
-	Menu_AddItem(&s_serverinfo.menu, (void *)&s_serverinfo.add);
-	Menu_AddItem(&s_serverinfo.menu, (void *)&s_serverinfo.back);
+	Menu_AddItem( &s_serverinfo.menu, (void *)&s_serverinfo.banner );
+	Menu_AddItem( &s_serverinfo.menu, (void *)&s_serverinfo.framel );
+	Menu_AddItem( &s_serverinfo.menu, (void *)&s_serverinfo.framer );
+	Menu_AddItem( &s_serverinfo.menu, (void *)&s_serverinfo.add );
+	Menu_AddItem( &s_serverinfo.menu, (void *)&s_serverinfo.back );
 
-	UI_PushMenu(&s_serverinfo.menu);
+	UI_PushMenu( &s_serverinfo.menu );
 }

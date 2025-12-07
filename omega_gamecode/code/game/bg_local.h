@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define JUMP_VELOCITY 270
 
 #define TIMER_LAND 130
-#define TIMER_GESTURE (34 * 66 + 50)
+#define TIMER_GESTURE ( 34 * 66 + 50 )
 
 #define OVERCLIP 1.001f
 
@@ -73,9 +73,9 @@ extern float pm_flightfriction;
 
 extern int c_pmove;
 
-void PM_ClipVelocity(vec3_t in, vec3_t normal, vec3_t out, float overbounce);
-void PM_AddTouchEnt(int entityNum);
-void PM_AddEvent(int newEvent);
+void PM_ClipVelocity( vec3_t in, vec3_t normal, vec3_t out, float overbounce );
+void PM_AddTouchEnt( int entityNum );
+void PM_AddEvent( int newEvent );
 
-qboolean PM_SlideMove(qboolean gravity);
-void PM_StepSlideMove(qboolean gravity);
+qboolean PM_SlideMove( qboolean gravity );
+void PM_StepSlideMove( qboolean gravity );

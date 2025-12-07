@@ -34,7 +34,7 @@ static char *votemenu_Timelmit_artlist[] =
         VOTEMENU_BACK1,
         ART_FIGHT0,
         ART_FIGHT1,
-        NULL};
+        NULL };
 
 #define ID_BACK 100
 #define ID_GO 101
@@ -70,84 +70,84 @@ typedef struct
 
 static votemenu_t s_votemenu_Timelmit;
 
-void UI_VoteTimelimitMenuInternal(void);
+void UI_VoteTimelimitMenuInternal( void );
 
 /*
 =================
 VoteMenu_Timelimit_Event
 =================
 */
-static void VoteMenu_Timelimit_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void VoteMenu_Timelimit_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_BACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			UI_PopMenu();
 			break;
 		case ID_GO:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			switch (s_votemenu_Timelmit.selection) {
+			switch ( s_votemenu_Timelmit.selection ) {
 				case ID_10:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 10");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 10" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_15:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 15");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 15" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_20:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 20");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 20" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_30:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 30");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 30" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_40:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 40");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 40" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_50:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 50");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 50" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_INF:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote timelimit 0");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote timelimit 0" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 			};
 			break;
 		default:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			if (s_votemenu_Timelmit.selection != ((menucommon_s *)ptr)->id) {
-				s_votemenu_Timelmit.selection = ((menucommon_s *)ptr)->id;
+			if ( s_votemenu_Timelmit.selection != ( (menucommon_s *)ptr )->id ) {
+				s_votemenu_Timelmit.selection = ( (menucommon_s *)ptr )->id;
 				UI_VoteTimelimitMenuInternal();
 			}
 			break;
 	}
 }
 
-static void setTimeMenutext(menutext_s *menu, int y, int id, int value, char *text) {
+static void setTimeMenutext( menutext_s *menu, int y, int id, int value, char *text ) {
 	menu->generic.type = MTYPE_PTEXT;
 	menu->color = color_red;
 	menu->generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
-	if ((s_votemenu_Timelmit.min > value && value != 0) ||
-	    (s_votemenu_Timelmit.max < value && s_votemenu_Timelmit.max != 0) ||
-	    (s_votemenu_Timelmit.max != 0 && value == 0))
+	if ( ( s_votemenu_Timelmit.min > value && value != 0 ) ||
+	     ( s_votemenu_Timelmit.max < value && s_votemenu_Timelmit.max != 0 ) ||
+	     ( s_votemenu_Timelmit.max != 0 && value == 0 ) )
 		menu->generic.flags |= QMF_INACTIVE | QMF_GRAYED;
-	else if (s_votemenu_Timelmit.selection == id)
+	else if ( s_votemenu_Timelmit.selection == id )
 		menu->color = color_orange;
 	menu->generic.x = 320;
 	menu->generic.y = y;
@@ -162,14 +162,14 @@ static void setTimeMenutext(menutext_s *menu, int y, int id, int value, char *te
 VoteMenu_Timelimit_Cache
 =================
 */
-static void VoteMenu_Timelimit_Cache(void) {
+static void VoteMenu_Timelimit_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!votemenu_Timelmit_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !votemenu_Timelmit_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(votemenu_Timelmit_artlist[i]);
+		trap_R_RegisterShaderNoMip( votemenu_Timelmit_artlist[i] );
 	}
 }
 
@@ -178,11 +178,11 @@ static void VoteMenu_Timelimit_Cache(void) {
 UI_VoteMenu_Timelimit_Draw
 =================
 */
-static void UI_VoteMenu_Timelimit_Draw(void) {
-	UI_DrawNamedPic(320 - 233, 240 - 166, 466, 332, ART_BACKGROUND);
+static void UI_VoteMenu_Timelimit_Draw( void ) {
+	UI_DrawNamedPic( 320 - 233, 240 - 166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
-	Menu_Draw(&s_votemenu_Timelmit.menu);
+	Menu_Draw( &s_votemenu_Timelmit.menu );
 }
 
 /*
@@ -192,7 +192,7 @@ UI_VoteTimelimitMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteTimelimitMenuInternal(void) {
+void UI_VoteTimelimitMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Timelimit_Cache();
@@ -209,19 +209,19 @@ void UI_VoteTimelimitMenuInternal(void) {
 	s_votemenu_Timelmit.banner.style = UI_CENTER;
 
 	y = 98;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimit10, y, ID_10, 10, "10 minutes");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimit10, y, ID_10, 10, "10 minutes" );
 	y += TimeLIMIT_MENU_VERTICAL_SPACING;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimit15, y, ID_15, 15, "15 minutes");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimit15, y, ID_15, 15, "15 minutes" );
 	y += TimeLIMIT_MENU_VERTICAL_SPACING;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimit20, y, ID_20, 20, "20 minutes");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimit20, y, ID_20, 20, "20 minutes" );
 	y += TimeLIMIT_MENU_VERTICAL_SPACING;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimit30, y, ID_30, 30, "30 minutes");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimit30, y, ID_30, 30, "30 minutes" );
 	y += TimeLIMIT_MENU_VERTICAL_SPACING;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimit40, y, ID_40, 40, "40 minutes");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimit40, y, ID_40, 40, "40 minutes" );
 	y += TimeLIMIT_MENU_VERTICAL_SPACING;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimit50, y, ID_50, 50, "50 minutes");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimit50, y, ID_50, 50, "50 minutes" );
 	y += TimeLIMIT_MENU_VERTICAL_SPACING;
-	setTimeMenutext(&s_votemenu_Timelmit.bLimitInf, y, ID_INF, 0, "No limit");
+	setTimeMenutext( &s_votemenu_Timelmit.bLimitInf, y, ID_INF, 0, "No limit" );
 
 	s_votemenu_Timelmit.back.generic.type = MTYPE_BITMAP;
 	s_votemenu_Timelmit.back.generic.name = VOTEMENU_BACK0;
@@ -253,24 +253,24 @@ UI_VoteTimelimitMenu
  *Called from outside
 =================
 */
-void UI_VoteTimelimitMenu(void) {
+void UI_VoteTimelimitMenu( void ) {
 	char serverinfo[MAX_INFO_STRING];
 	// zero set all our globals
-	memset(&s_votemenu_Timelmit, 0, sizeof(votemenu_t));
-	trap_GetConfigString(CS_SERVERINFO, serverinfo, MAX_INFO_STRING);
-	s_votemenu_Timelmit.min = atoi(Info_ValueForKey(serverinfo, "g_voteMinTimelimit"));
-	s_votemenu_Timelmit.max = atoi(Info_ValueForKey(serverinfo, "g_voteMaxTimelimit"));
+	memset( &s_votemenu_Timelmit, 0, sizeof( votemenu_t ) );
+	trap_GetConfigString( CS_SERVERINFO, serverinfo, MAX_INFO_STRING );
+	s_votemenu_Timelmit.min = atoi( Info_ValueForKey( serverinfo, "g_voteMinTimelimit" ) );
+	s_votemenu_Timelmit.max = atoi( Info_ValueForKey( serverinfo, "g_voteMaxTimelimit" ) );
 	UI_VoteTimelimitMenuInternal();
 
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.back);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.go);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit10);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit15);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit20);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit30);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit40);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit50);
-	Menu_AddItem(&s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimitInf);
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.back );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.go );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit10 );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit15 );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit20 );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit30 );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit40 );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimit50 );
+	Menu_AddItem( &s_votemenu_Timelmit.menu, (void *)&s_votemenu_Timelmit.bLimitInf );
 
-	UI_PushMenu(&s_votemenu_Timelmit.menu);
+	UI_PushMenu( &s_votemenu_Timelmit.menu );
 }

@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MODEL_ARROWSL "menu/art_blueish/gs_arrows_l"
 #define MODEL_ARROWSR "menu/art_blueish/gs_arrows_r"
 
-#define LOW_MEMORY (5 * 1024 * 1024)
+#define LOW_MEMORY ( 5 * 1024 * 1024 )
 
 static char *playermodel_artlist[] =
     {
@@ -47,11 +47,11 @@ static char *playermodel_artlist[] =
         MODEL_ARROWS,
         MODEL_ARROWSL,
         MODEL_ARROWSR,
-        NULL};
+        NULL };
 
 #define PLAYERGRID_COLS 4
 #define PLAYERGRID_ROWS 4
-#define MAX_MODELSPERPAGE (PLAYERGRID_ROWS * PLAYERGRID_COLS)
+#define MAX_MODELSPERPAGE ( PLAYERGRID_ROWS * PLAYERGRID_COLS )
 
 #define MAX_PLAYERMODELS 256
 
@@ -108,13 +108,13 @@ static playermodel_t s_playermodel;
 PlayerModel_UpdateGrid
 =================
 */
-static void PlayerModel_UpdateGrid(void) {
+static void PlayerModel_UpdateGrid( void ) {
 	int i;
 	int j;
 
 	j = s_playermodel.modelpage * MAX_MODELSPERPAGE;
-	for (i = 0; i < PLAYERGRID_ROWS * PLAYERGRID_COLS; i++, j++) {
-		if (j < s_playermodel.nummodels) {
+	for ( i = 0; i < PLAYERGRID_ROWS * PLAYERGRID_COLS; i++, j++ ) {
+		if ( j < s_playermodel.nummodels ) {
 			// model/skin portrait
 			s_playermodel.pics[i].generic.name = s_playermodel.modelnames[j];
 			s_playermodel.picbuttons[i].generic.flags &= ~QMF_INACTIVE;
@@ -129,7 +129,7 @@ static void PlayerModel_UpdateGrid(void) {
 		s_playermodel.picbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
 	}
 
-	if (s_playermodel.selectedmodel / MAX_MODELSPERPAGE == s_playermodel.modelpage) {
+	if ( s_playermodel.selectedmodel / MAX_MODELSPERPAGE == s_playermodel.modelpage ) {
 		// set selected model
 		i = s_playermodel.selectedmodel % MAX_MODELSPERPAGE;
 
@@ -137,13 +137,13 @@ static void PlayerModel_UpdateGrid(void) {
 		s_playermodel.picbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
 	}
 
-	if (s_playermodel.numpages > 1) {
-		if (s_playermodel.modelpage > 0)
+	if ( s_playermodel.numpages > 1 ) {
+		if ( s_playermodel.modelpage > 0 )
 			s_playermodel.left.generic.flags &= ~QMF_INACTIVE;
 		else
 			s_playermodel.left.generic.flags |= QMF_INACTIVE;
 
-		if (s_playermodel.modelpage < s_playermodel.numpages - 1)
+		if ( s_playermodel.modelpage < s_playermodel.numpages - 1 )
 			s_playermodel.right.generic.flags &= ~QMF_INACTIVE;
 		else
 			s_playermodel.right.generic.flags |= QMF_INACTIVE;
@@ -159,19 +159,19 @@ static void PlayerModel_UpdateGrid(void) {
 PlayerModel_UpdateModel
 =================
 */
-static void PlayerModel_UpdateModel(void) {
+static void PlayerModel_UpdateModel( void ) {
 	vec3_t viewangles;
 	vec3_t moveangles;
 
-	memset(&s_playermodel.playerinfo, 0, sizeof(playerInfo_t));
+	memset( &s_playermodel.playerinfo, 0, sizeof( playerInfo_t ) );
 
 	viewangles[YAW] = 180 - 30;
 	viewangles[PITCH] = 0;
 	viewangles[ROLL] = 0;
-	VectorClear(moveangles);
+	VectorClear( moveangles );
 
-	UI_PlayerInfo_SetModel(&s_playermodel.playerinfo, s_playermodel.modelskin);
-	UI_PlayerInfo_SetInfo(&s_playermodel.playerinfo, LEGS_IDLE, TORSO_STAND, viewangles, moveangles, WP_MACHINEGUN, qfalse, 0);
+	UI_PlayerInfo_SetModel( &s_playermodel.playerinfo, s_playermodel.modelskin );
+	UI_PlayerInfo_SetInfo( &s_playermodel.playerinfo, LEGS_IDLE, TORSO_STAND, viewangles, moveangles, WP_MACHINEGUN, qfalse, 0 );
 }
 
 /*
@@ -179,11 +179,11 @@ static void PlayerModel_UpdateModel(void) {
 PlayerModel_SaveChanges
 =================
 */
-static void PlayerModel_SaveChanges(void) {
-	trap_Cvar_Set("model", s_playermodel.modelskin);
-	trap_Cvar_Set("headmodel", s_playermodel.modelskin);
-	trap_Cvar_Set("team_model", s_playermodel.modelskin);
-	trap_Cvar_Set("team_headmodel", s_playermodel.modelskin);
+static void PlayerModel_SaveChanges( void ) {
+	trap_Cvar_Set( "model", s_playermodel.modelskin );
+	trap_Cvar_Set( "headmodel", s_playermodel.modelskin );
+	trap_Cvar_Set( "team_model", s_playermodel.modelskin );
+	trap_Cvar_Set( "team_headmodel", s_playermodel.modelskin );
 }
 
 /*
@@ -191,20 +191,20 @@ static void PlayerModel_SaveChanges(void) {
 PlayerModel_MenuEvent
 =================
 */
-static void PlayerModel_MenuEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED)
+static void PlayerModel_MenuEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED )
 		return;
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_PREVPAGE:
-			if (s_playermodel.modelpage > 0) {
+			if ( s_playermodel.modelpage > 0 ) {
 				s_playermodel.modelpage--;
 				PlayerModel_UpdateGrid();
 			}
 			break;
 
 		case ID_NEXTPAGE:
-			if (s_playermodel.modelpage < s_playermodel.numpages - 1) {
+			if ( s_playermodel.modelpage < s_playermodel.numpages - 1 ) {
 				s_playermodel.modelpage++;
 				PlayerModel_UpdateGrid();
 			}
@@ -222,45 +222,45 @@ static void PlayerModel_MenuEvent(void *ptr, int event) {
 PlayerModel_MenuKey
 =================
 */
-static sfxHandle_t PlayerModel_MenuKey(int key) {
+static sfxHandle_t PlayerModel_MenuKey( int key ) {
 	menucommon_s *m;
 	int picnum;
 
-	switch (key) {
+	switch ( key ) {
 		case K_KP_LEFTARROW:
 		case K_LEFTARROW:
-			m = Menu_ItemAtCursor(&s_playermodel.menu);
+			m = Menu_ItemAtCursor( &s_playermodel.menu );
 			picnum = m->id - ID_PLAYERPIC0;
-			if (picnum >= 0 && picnum <= 15) {
-				if (picnum > 0) {
-					Menu_SetCursor(&s_playermodel.menu, s_playermodel.menu.cursor - 1);
-					return (menu_move_sound);
+			if ( picnum >= 0 && picnum <= 15 ) {
+				if ( picnum > 0 ) {
+					Menu_SetCursor( &s_playermodel.menu, s_playermodel.menu.cursor - 1 );
+					return ( menu_move_sound );
 
-				} else if (s_playermodel.modelpage > 0) {
+				} else if ( s_playermodel.modelpage > 0 ) {
 					s_playermodel.modelpage--;
-					Menu_SetCursor(&s_playermodel.menu, s_playermodel.menu.cursor + 15);
+					Menu_SetCursor( &s_playermodel.menu, s_playermodel.menu.cursor + 15 );
 					PlayerModel_UpdateGrid();
-					return (menu_move_sound);
+					return ( menu_move_sound );
 				} else
-					return (menu_buzz_sound);
+					return ( menu_buzz_sound );
 			}
 			break;
 
 		case K_KP_RIGHTARROW:
 		case K_RIGHTARROW:
-			m = Menu_ItemAtCursor(&s_playermodel.menu);
+			m = Menu_ItemAtCursor( &s_playermodel.menu );
 			picnum = m->id - ID_PLAYERPIC0;
-			if (picnum >= 0 && picnum <= 15) {
-				if ((picnum < 15) && (s_playermodel.modelpage * MAX_MODELSPERPAGE + picnum + 1 < s_playermodel.nummodels)) {
-					Menu_SetCursor(&s_playermodel.menu, s_playermodel.menu.cursor + 1);
-					return (menu_move_sound);
-				} else if ((picnum == 15) && (s_playermodel.modelpage < s_playermodel.numpages - 1)) {
+			if ( picnum >= 0 && picnum <= 15 ) {
+				if ( ( picnum < 15 ) && ( s_playermodel.modelpage * MAX_MODELSPERPAGE + picnum + 1 < s_playermodel.nummodels ) ) {
+					Menu_SetCursor( &s_playermodel.menu, s_playermodel.menu.cursor + 1 );
+					return ( menu_move_sound );
+				} else if ( ( picnum == 15 ) && ( s_playermodel.modelpage < s_playermodel.numpages - 1 ) ) {
 					s_playermodel.modelpage++;
-					Menu_SetCursor(&s_playermodel.menu, s_playermodel.menu.cursor - 15);
+					Menu_SetCursor( &s_playermodel.menu, s_playermodel.menu.cursor - 15 );
 					PlayerModel_UpdateGrid();
-					return (menu_move_sound);
+					return ( menu_move_sound );
 				} else
-					return (menu_buzz_sound);
+					return ( menu_buzz_sound );
 			}
 			break;
 
@@ -270,7 +270,7 @@ static sfxHandle_t PlayerModel_MenuKey(int key) {
 			break;
 	}
 
-	return (Menu_DefaultKey(&s_playermodel.menu, key));
+	return ( Menu_DefaultKey( &s_playermodel.menu, key ) );
 }
 
 /*
@@ -278,7 +278,7 @@ static sfxHandle_t PlayerModel_MenuKey(int key) {
 PlayerModel_PicEvent
 =================
 */
-static void PlayerModel_PicEvent(void *ptr, int event) {
+static void PlayerModel_PicEvent( void *ptr, int event ) {
 	int modelnum;
 	int maxlen;
 	int prefix = 5;
@@ -286,50 +286,50 @@ static void PlayerModel_PicEvent(void *ptr, int event) {
 	char *pdest;
 	int i;
 
-	if (event != QM_ACTIVATED)
+	if ( event != QM_ACTIVATED )
 		return;
 
-	for (i = 0; i < PLAYERGRID_ROWS * PLAYERGRID_COLS; i++) {
+	for ( i = 0; i < PLAYERGRID_ROWS * PLAYERGRID_COLS; i++ ) {
 		// reset
 		s_playermodel.pics[i].generic.flags &= ~QMF_HIGHLIGHT;
 		s_playermodel.picbuttons[i].generic.flags |= QMF_PULSEIFFOCUS;
 	}
 
 	// set selected
-	i = ((menucommon_s *)ptr)->id - ID_PLAYERPIC0;
+	i = ( (menucommon_s *)ptr )->id - ID_PLAYERPIC0;
 	s_playermodel.pics[i].generic.flags |= QMF_HIGHLIGHT;
 	s_playermodel.picbuttons[i].generic.flags &= ~QMF_PULSEIFFOCUS;
 
 	// get model and strip icon_
 	modelnum = s_playermodel.modelpage * MAX_MODELSPERPAGE + i;
-	buffptr = s_playermodel.modelnames[modelnum] + strlen("models/players/");
-	pdest = strstr(buffptr, "icon_");
-	if (!pdest) {
-		pdest = strstr(buffptr, "iconh_");
+	buffptr = s_playermodel.modelnames[modelnum] + strlen( "models/players/" );
+	pdest = strstr( buffptr, "icon_" );
+	if ( !pdest ) {
+		pdest = strstr( buffptr, "iconh_" );
 		prefix = 6;
 	}
-	if (pdest) {
+	if ( pdest ) {
 		// track the whole model/skin name
-		Q_strncpyz(s_playermodel.modelskin, buffptr, pdest - buffptr + 1);
-		strcat(s_playermodel.modelskin, pdest + prefix);
+		Q_strncpyz( s_playermodel.modelskin, buffptr, pdest - buffptr + 1 );
+		strcat( s_playermodel.modelskin, pdest + prefix );
 
 		// separate the model name
 		maxlen = pdest - buffptr;
-		if (maxlen > 16)
+		if ( maxlen > 16 )
 			maxlen = 16;
-		Q_strncpyz(s_playermodel.modelname.string, buffptr, maxlen);
-		Q_strupr(s_playermodel.modelname.string);
+		Q_strncpyz( s_playermodel.modelname.string, buffptr, maxlen );
+		Q_strupr( s_playermodel.modelname.string );
 
 		// separate the skin name
-		maxlen = strlen(pdest + prefix) + 1;
-		if (maxlen > 16)
+		maxlen = strlen( pdest + prefix ) + 1;
+		if ( maxlen > 16 )
 			maxlen = 16;
-		Q_strncpyz(s_playermodel.skinname.string, pdest + prefix, maxlen);
-		Q_strupr(s_playermodel.skinname.string);
+		Q_strncpyz( s_playermodel.skinname.string, pdest + prefix, maxlen );
+		Q_strupr( s_playermodel.skinname.string );
 
 		s_playermodel.selectedmodel = modelnum;
 
-		if (trap_MemoryRemaining() > LOW_MEMORY) {
+		if ( trap_MemoryRemaining() > LOW_MEMORY ) {
 			PlayerModel_UpdateModel();
 		}
 	}
@@ -340,17 +340,17 @@ static void PlayerModel_PicEvent(void *ptr, int event) {
 PlayerModel_DrawPlayer
 =================
 */
-static void PlayerModel_DrawPlayer(void *self) {
+static void PlayerModel_DrawPlayer( void *self ) {
 	menubitmap_s *b;
 
 	b = (menubitmap_s *)self;
 
-	if (trap_MemoryRemaining() <= LOW_MEMORY) {
-		UI_DrawProportionalString(b->generic.x, b->generic.y + b->height / 2, "LOW MEMORY", UI_LEFT, color_red);
+	if ( trap_MemoryRemaining() <= LOW_MEMORY ) {
+		UI_DrawProportionalString( b->generic.x, b->generic.y + b->height / 2, "LOW MEMORY", UI_LEFT, color_red );
 		return;
 	}
 
-	UI_DrawPlayer(b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime / 2, qtrue, qfalse);
+	UI_DrawPlayer( b->generic.x, b->generic.y, b->width, b->height, &s_playermodel.playerinfo, uis.realtime / 2, qtrue, qfalse );
 }
 
 /*
@@ -358,7 +358,7 @@ static void PlayerModel_DrawPlayer(void *self) {
 PlayerModel_BuildList
 =================
 */
-static void PlayerModel_BuildList(void) {
+static void PlayerModel_BuildList( void ) {
 	int numdirs;
 	int numfiles;
 	char dirlist[2048];
@@ -372,39 +372,39 @@ static void PlayerModel_BuildList(void) {
 	int filelen;
 	qboolean precache;
 
-	precache = trap_Cvar_VariableValue("com_buildscript");
+	precache = trap_Cvar_VariableValue( "com_buildscript" );
 
 	s_playermodel.modelpage = 0;
 	s_playermodel.nummodels = 0;
 
 	// iterate directory of all player models
-	numdirs = trap_FS_GetFileList("models/players", "/", dirlist, 2048);
+	numdirs = trap_FS_GetFileList( "models/players", "/", dirlist, 2048 );
 	dirptr = dirlist;
-	for (i = 0; i < numdirs && s_playermodel.nummodels < MAX_PLAYERMODELS; i++, dirptr += dirlen + 1) {
-		dirlen = strlen(dirptr);
+	for ( i = 0; i < numdirs && s_playermodel.nummodels < MAX_PLAYERMODELS; i++, dirptr += dirlen + 1 ) {
+		dirlen = strlen( dirptr );
 
-		if (dirlen && dirptr[dirlen - 1] == '/') dirptr[dirlen - 1] = '\0';
+		if ( dirlen && dirptr[dirlen - 1] == '/' ) dirptr[dirlen - 1] = '\0';
 
-		if (!strcmp(dirptr, ".") || !strcmp(dirptr, ".."))
+		if ( !strcmp( dirptr, "." ) || !strcmp( dirptr, ".." ) )
 			continue;
 
 		// iterate all skin files in directory
-		numfiles = trap_FS_GetFileList(va("models/players/%s", dirptr), "tga", filelist, 2048);
+		numfiles = trap_FS_GetFileList( va( "models/players/%s", dirptr ), "tga", filelist, 2048 );
 		fileptr = filelist;
-		for (j = 0; j < numfiles && s_playermodel.nummodels < MAX_PLAYERMODELS; j++, fileptr += filelen + 1) {
-			filelen = strlen(fileptr);
+		for ( j = 0; j < numfiles && s_playermodel.nummodels < MAX_PLAYERMODELS; j++, fileptr += filelen + 1 ) {
+			filelen = strlen( fileptr );
 
-			COM_StripExtension(fileptr, skinname, sizeof(skinname));
+			COM_StripExtension( fileptr, skinname, sizeof( skinname ) );
 
 			// look for icon_????
-			if (!Q_stricmpn(skinname, "icon_", 5) || !Q_stricmpn(skinname, "iconh_", 6)) {
-				Com_sprintf(s_playermodel.modelnames[s_playermodel.nummodels++],
-				            sizeof(s_playermodel.modelnames[s_playermodel.nummodels]),
-				            "models/players/%s/%s", dirptr, skinname);
+			if ( !Q_stricmpn( skinname, "icon_", 5 ) || !Q_stricmpn( skinname, "iconh_", 6 ) ) {
+				Com_sprintf( s_playermodel.modelnames[s_playermodel.nummodels++],
+				             sizeof( s_playermodel.modelnames[s_playermodel.nummodels] ),
+				             "models/players/%s/%s", dirptr, skinname );
 			}
 
-			if (precache) {
-				trap_S_RegisterSound(va("sound/player/announce/%s_wins.wav", skinname), qfalse);
+			if ( precache ) {
+				trap_S_RegisterSound( va( "sound/player/announce/%s_wins.wav", skinname ), qfalse );
 			}
 		}
 	}
@@ -412,7 +412,7 @@ static void PlayerModel_BuildList(void) {
 	//APSFIXME - Degenerate no models case
 
 	s_playermodel.numpages = s_playermodel.nummodels / MAX_MODELSPERPAGE;
-	if (s_playermodel.nummodels % MAX_MODELSPERPAGE)
+	if ( s_playermodel.nummodels % MAX_MODELSPERPAGE )
 		s_playermodel.numpages++;
 }
 
@@ -421,7 +421,7 @@ static void PlayerModel_BuildList(void) {
 PlayerModel_SetMenuItems
 =================
 */
-static void PlayerModel_SetMenuItems(void) {
+static void PlayerModel_SetMenuItems( void ) {
 	int i;
 	int maxlen;
 	int prefix;
@@ -430,53 +430,53 @@ static void PlayerModel_SetMenuItems(void) {
 	char *pdest;
 
 	// name
-	trap_Cvar_VariableStringBuffer("name", s_playermodel.playername.string, 16);
-	Q_CleanStr(s_playermodel.playername.string);
+	trap_Cvar_VariableStringBuffer( "name", s_playermodel.playername.string, 16 );
+	Q_CleanStr( s_playermodel.playername.string );
 
 	// model
-	trap_Cvar_VariableStringBuffer("model", s_playermodel.modelskin, 64);
+	trap_Cvar_VariableStringBuffer( "model", s_playermodel.modelskin, 64 );
 
 	// use default skin if none is set
-	if (!strchr(s_playermodel.modelskin, '/')) {
-		Q_strcat(s_playermodel.modelskin, 64, "/default");
+	if ( !strchr( s_playermodel.modelskin, '/' ) ) {
+		Q_strcat( s_playermodel.modelskin, 64, "/default" );
 	}
 
 	// find model in our list
-	for (i = 0; i < s_playermodel.nummodels; i++) {
+	for ( i = 0; i < s_playermodel.nummodels; i++ ) {
 		// strip icon_
-		buffptr = s_playermodel.modelnames[i] + strlen("models/players/");
-		pdest = strstr(buffptr, "icon_");
+		buffptr = s_playermodel.modelnames[i] + strlen( "models/players/" );
+		pdest = strstr( buffptr, "icon_" );
 		prefix = 5;
 
-		if (!pdest) {
-			pdest = strstr(buffptr, "iconh_");
+		if ( !pdest ) {
+			pdest = strstr( buffptr, "iconh_" );
 			prefix = 6;
 		}
 
-		if (pdest) {
-			Q_strncpyz(modelskin, buffptr, pdest - buffptr + 1);
-			strcat(modelskin, pdest + prefix);
+		if ( pdest ) {
+			Q_strncpyz( modelskin, buffptr, pdest - buffptr + 1 );
+			strcat( modelskin, pdest + prefix );
 		} else
 			continue;
 
-		if (!Q_stricmp(s_playermodel.modelskin, modelskin)) {
+		if ( !Q_stricmp( s_playermodel.modelskin, modelskin ) ) {
 			// found pic, set selection here
 			s_playermodel.selectedmodel = i;
 			s_playermodel.modelpage = i / MAX_MODELSPERPAGE;
 
 			// separate the model name
 			maxlen = pdest - buffptr;
-			if (maxlen > 16)
+			if ( maxlen > 16 )
 				maxlen = 16;
-			Q_strncpyz(s_playermodel.modelname.string, buffptr, maxlen);
-			Q_strupr(s_playermodel.modelname.string);
+			Q_strncpyz( s_playermodel.modelname.string, buffptr, maxlen );
+			Q_strupr( s_playermodel.modelname.string );
 
 			// separate the skin name
-			maxlen = strlen(pdest + prefix) + 1;
-			if (maxlen > 16)
+			maxlen = strlen( pdest + prefix ) + 1;
+			if ( maxlen > 16 )
 				maxlen = 16;
-			Q_strncpyz(s_playermodel.skinname.string, pdest + prefix, maxlen);
-			Q_strupr(s_playermodel.skinname.string);
+			Q_strncpyz( s_playermodel.skinname.string, pdest + prefix, maxlen );
+			Q_strupr( s_playermodel.skinname.string );
 			break;
 		}
 	}
@@ -487,7 +487,7 @@ static void PlayerModel_SetMenuItems(void) {
 PlayerModel_MenuInit
 =================
 */
-static void PlayerModel_MenuInit(void) {
+static void PlayerModel_MenuInit( void ) {
 	int i;
 	int j;
 	int k;
@@ -498,7 +498,7 @@ static void PlayerModel_MenuInit(void) {
 	static char skinname[32];
 
 	// zero set all our globals
-	memset(&s_playermodel, 0, sizeof(playermodel_t));
+	memset( &s_playermodel, 0, sizeof( playermodel_t ) );
 
 	PlayerModel_Cache();
 
@@ -538,9 +538,9 @@ static void PlayerModel_MenuInit(void) {
 	s_playermodel.ports.height = 274;
 
 	y = 59;
-	for (i = 0, k = 0; i < PLAYERGRID_ROWS; i++) {
+	for ( i = 0, k = 0; i < PLAYERGRID_ROWS; i++ ) {
 		x = 50;
-		for (j = 0; j < PLAYERGRID_COLS; j++, k++) {
+		for ( j = 0; j < PLAYERGRID_COLS; j++, k++ ) {
 			s_playermodel.pics[k].generic.type = MTYPE_BITMAP;
 			s_playermodel.pics[k].generic.flags = QMF_LEFT_JUSTIFY | QMF_INACTIVE;
 			s_playermodel.pics[k].generic.x = x;
@@ -639,23 +639,23 @@ static void PlayerModel_MenuInit(void) {
 	s_playermodel.back.height = 64;
 	s_playermodel.back.focuspic = MODEL_BACK1;
 
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.banner);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.framel);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.framer);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.ports);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.modelname);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.skinname);
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.banner );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.framel );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.framer );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.ports );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.modelname );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.skinname );
 
-	for (i = 0; i < MAX_MODELSPERPAGE; i++) {
-		Menu_AddItem(&s_playermodel.menu, &s_playermodel.pics[i]);
-		Menu_AddItem(&s_playermodel.menu, &s_playermodel.picbuttons[i]);
+	for ( i = 0; i < MAX_MODELSPERPAGE; i++ ) {
+		Menu_AddItem( &s_playermodel.menu, &s_playermodel.pics[i] );
+		Menu_AddItem( &s_playermodel.menu, &s_playermodel.picbuttons[i] );
 	}
 
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.player);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.arrows);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.left);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.right);
-	Menu_AddItem(&s_playermodel.menu, &s_playermodel.back);
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.player );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.arrows );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.left );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.right );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.back );
 
 	// set initial states
 	PlayerModel_SetMenuItems();
@@ -670,23 +670,23 @@ static void PlayerModel_MenuInit(void) {
 PlayerModel_Cache
 =================
 */
-void PlayerModel_Cache(void) {
+void PlayerModel_Cache( void ) {
 	int i;
 
-	for (i = 0; playermodel_artlist[i]; i++) {
-		trap_R_RegisterShaderNoMip(playermodel_artlist[i]);
+	for ( i = 0; playermodel_artlist[i]; i++ ) {
+		trap_R_RegisterShaderNoMip( playermodel_artlist[i] );
 	}
 
 	PlayerModel_BuildList();
-	for (i = 0; i < s_playermodel.nummodels; i++) {
-		trap_R_RegisterShaderNoMip(s_playermodel.modelnames[i]);
+	for ( i = 0; i < s_playermodel.nummodels; i++ ) {
+		trap_R_RegisterShaderNoMip( s_playermodel.modelnames[i] );
 	}
 }
 
-void UI_PlayerModelMenu(void) {
+void UI_PlayerModelMenu( void ) {
 	PlayerModel_MenuInit();
 
-	UI_PushMenu(&s_playermodel.menu);
+	UI_PushMenu( &s_playermodel.menu );
 
-	Menu_SetCursorToItem(&s_playermodel.menu, &s_playermodel.pics[s_playermodel.selectedmodel % MAX_MODELSPERPAGE]);
+	Menu_SetCursorToItem( &s_playermodel.menu, &s_playermodel.pics[s_playermodel.selectedmodel % MAX_MODELSPERPAGE] );
 }

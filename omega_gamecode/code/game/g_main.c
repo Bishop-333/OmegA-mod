@@ -241,248 +241,248 @@ vmCvar_t pmove_doublejump;
 // bk001129 - made static to avoid aliasing
 static cvarTable_t gameCvarTable[] = {
     // don't override the cheat state set by the system
-    {&g_cheats, "sv_cheats", "", 0, 0, qfalse},
+    { &g_cheats, "sv_cheats", "", 0, 0, qfalse },
 
     // noset vars
-    {NULL, "gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_ROM, 0, qfalse},
-    {NULL, "gamedate", PRODUCT_DATE, CVAR_ROM, 0, qfalse},
-    {&g_restarted, "g_restarted", "0", CVAR_ROM, 0, qfalse},
-    {NULL, "sv_mapname", "", CVAR_SERVERINFO | CVAR_ROM, 0, qfalse},
+    { NULL, "gamename", GAMEVERSION, CVAR_SERVERINFO | CVAR_ROM, 0, qfalse },
+    { NULL, "gamedate", PRODUCT_DATE, CVAR_ROM, 0, qfalse },
+    { &g_restarted, "g_restarted", "0", CVAR_ROM, 0, qfalse },
+    { NULL, "sv_mapname", "", CVAR_SERVERINFO | CVAR_ROM, 0, qfalse },
 
     // latched vars
-    {&g_gametype, "g_gametype", "0", CVAR_SERVERINFO | CVAR_USERINFO | CVAR_LATCH, 0, qfalse},
+    { &g_gametype, "g_gametype", "0", CVAR_SERVERINFO | CVAR_USERINFO | CVAR_LATCH, 0, qfalse },
 
-    {&g_maxclients, "sv_maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse},
-    {&g_maxGameClients, "g_maxGameClients", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse},
+    { &g_maxclients, "sv_maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse },
+    { &g_maxGameClients, "g_maxGameClients", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse },
 
     // change anytime vars
-    {&g_dmflags, "dmflags", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue},
-    {&g_videoflags, "videoflags", "7", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue},
-    {&g_elimflags, "elimflags", "0", CVAR_SERVERINFO, 0, qfalse},
-    {&g_voteflags, "voteflags", "0", CVAR_SERVERINFO, 0, qfalse},
-    {&g_fraglimit, "fraglimit", "20", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_timelimit, "timelimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_capturelimit, "capturelimit", "8", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_dmflags, "dmflags", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
+    { &g_videoflags, "videoflags", "7", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
+    { &g_elimflags, "elimflags", "0", CVAR_SERVERINFO, 0, qfalse },
+    { &g_voteflags, "voteflags", "0", CVAR_SERVERINFO, 0, qfalse },
+    { &g_fraglimit, "fraglimit", "20", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_timelimit, "timelimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_capturelimit, "capturelimit", "8", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
-    {&g_synchronousClients, "g_synchronousClients", "0", CVAR_SYSTEMINFO, 0, qfalse},
+    { &g_synchronousClients, "g_synchronousClients", "0", CVAR_SYSTEMINFO, 0, qfalse },
 
-    {&g_friendlyFire, "g_friendlyFire", "0", CVAR_ARCHIVE, 0, qtrue},
+    { &g_friendlyFire, "g_friendlyFire", "0", CVAR_ARCHIVE, 0, qtrue },
 
-    {&g_teamAutoJoin, "g_teamAutoJoin", "0", CVAR_ARCHIVE},
-    {&g_teamForceBalance, "g_teamForceBalance", "0", CVAR_ARCHIVE},
+    { &g_teamAutoJoin, "g_teamAutoJoin", "0", CVAR_ARCHIVE },
+    { &g_teamForceBalance, "g_teamForceBalance", "0", CVAR_ARCHIVE },
 
-    {&g_warmup, "g_warmup", "20", CVAR_ARCHIVE, 0, qtrue},
-    {&g_doWarmup, "g_doWarmup", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue},
-    {&g_logfile, "g_log", "games.log", CVAR_ARCHIVE, 0, qfalse},
-    {&g_logfileSync, "g_logsync", "0", CVAR_ARCHIVE, 0, qfalse},
+    { &g_warmup, "g_warmup", "20", CVAR_ARCHIVE, 0, qtrue },
+    { &g_doWarmup, "g_doWarmup", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qtrue },
+    { &g_logfile, "g_log", "games.log", CVAR_ARCHIVE, 0, qfalse },
+    { &g_logfileSync, "g_logsync", "0", CVAR_ARCHIVE, 0, qfalse },
 
-    {&g_password, "g_password", "", CVAR_USERINFO, 0, qfalse},
+    { &g_password, "g_password", "", CVAR_USERINFO, 0, qfalse },
 
-    {&g_banIPs, "g_banIPs", "", CVAR_ARCHIVE, 0, qfalse},
-    {&g_filterBan, "g_filterBan", "1", CVAR_ARCHIVE, 0, qfalse},
+    { &g_banIPs, "g_banIPs", "", CVAR_ARCHIVE, 0, qfalse },
+    { &g_filterBan, "g_filterBan", "1", CVAR_ARCHIVE, 0, qfalse },
 
-    {&g_needpass, "g_needpass", "0", CVAR_SERVERINFO | CVAR_ROM, 0, qfalse},
+    { &g_needpass, "g_needpass", "0", CVAR_SERVERINFO | CVAR_ROM, 0, qfalse },
 
-    {&g_dedicated, "dedicated", "0", 0, 0, qfalse},
+    { &g_dedicated, "dedicated", "0", 0, 0, qfalse },
 
-    {&g_speed, "g_speed", "320", 0, 0, qtrue},
-    {&g_gravity, "g_gravity", "800", 0, 0, qtrue},
-    {&g_gravityModifier, "g_gravityModifier", "0.940", 0, 0, qtrue},
-    {&g_damageModifier, "g_damageModifier", "0", 0, 0, qtrue},
-    {&g_knockback, "g_knockback", "1000", 0, 0, qtrue},
-    {&g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue},
-    {&g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue},
-    {&g_weaponTeamRespawn, "g_weaponTeamRespawn", "30", 0, 0, qtrue},
-    {&g_forcerespawn, "g_forcerespawn", "20", 0, 0, qtrue},
-    {&g_respawntime, "g_respawntime", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_bluerespawntime, "g_bluerespawntime", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_redrespawntime, "g_redrespawntime", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_inactivity, "g_inactivity", "0", 0, 0, qtrue},
-    {&g_debugMove, "g_debugMove", "0", 0, 0, qfalse},
-    {&g_debugDamage, "g_debugDamage", "0", 0, 0, qfalse},
-    {&g_debugAlloc, "g_debugAlloc", "0", 0, 0, qfalse},
-    {&g_motd, "g_motd", "", 0, 0, qfalse},
-    {&g_motdfile, "g_motdfile", "motd.cfg", 0, 0, qfalse},
-    {&g_blood, "com_blood", "2", 0, 0, qfalse},
+    { &g_speed, "g_speed", "320", 0, 0, qtrue },
+    { &g_gravity, "g_gravity", "800", 0, 0, qtrue },
+    { &g_gravityModifier, "g_gravityModifier", "0.940", 0, 0, qtrue },
+    { &g_damageModifier, "g_damageModifier", "0", 0, 0, qtrue },
+    { &g_knockback, "g_knockback", "1000", 0, 0, qtrue },
+    { &g_quadfactor, "g_quadfactor", "3", 0, 0, qtrue },
+    { &g_weaponRespawn, "g_weaponrespawn", "5", 0, 0, qtrue },
+    { &g_weaponTeamRespawn, "g_weaponTeamRespawn", "30", 0, 0, qtrue },
+    { &g_forcerespawn, "g_forcerespawn", "20", 0, 0, qtrue },
+    { &g_respawntime, "g_respawntime", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_bluerespawntime, "g_bluerespawntime", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_redrespawntime, "g_redrespawntime", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_inactivity, "g_inactivity", "0", 0, 0, qtrue },
+    { &g_debugMove, "g_debugMove", "0", 0, 0, qfalse },
+    { &g_debugDamage, "g_debugDamage", "0", 0, 0, qfalse },
+    { &g_debugAlloc, "g_debugAlloc", "0", 0, 0, qfalse },
+    { &g_motd, "g_motd", "", 0, 0, qfalse },
+    { &g_motdfile, "g_motdfile", "motd.cfg", 0, 0, qfalse },
+    { &g_blood, "com_blood", "2", 0, 0, qfalse },
 
-    {&g_podiumDist, "g_podiumDist", "80", 0, 0, qfalse},
-    {&g_podiumDrop, "g_podiumDrop", "70", 0, 0, qfalse},
+    { &g_podiumDist, "g_podiumDist", "80", 0, 0, qfalse },
+    { &g_podiumDrop, "g_podiumDrop", "70", 0, 0, qfalse },
 
     //Votes start:
-    {&g_allowVote, "g_allowVote", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_maxvotes, "g_maxVotes", MAX_VOTE_COUNT, CVAR_ARCHIVE, 0, qfalse},
-    {&g_voteNames, "g_voteNames", "/map_restart/nextmap/map/g_gametype/kick/clientkick/g_doWarmup/timelimit/fraglimit/shuffle/", CVAR_ARCHIVE, 0, qfalse}, //clientkick g_doWarmup timelimit fraglimit
-    {&g_voteBan, "g_voteBan", "0", CVAR_ARCHIVE, 0, qfalse},
-    {&g_voteGametypes, "g_voteGametypes", "/0/1/3/4/5/6/7/8/9/10/11/12/", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_voteMaxTimelimit, "g_voteMaxTimelimit", "1000", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_voteMinTimelimit, "g_voteMinTimelimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_voteMaxFraglimit, "g_voteMaxFraglimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_voteMinFraglimit, "g_voteMinFraglimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_votemaps, "g_votemapsfile", "votemaps.cfg", 0, 0, qfalse},
-    {&g_votecustom, "g_votecustomfile", "votecustom.cfg", 0, 0, qfalse},
+    { &g_allowVote, "g_allowVote", "1", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_maxvotes, "g_maxVotes", MAX_VOTE_COUNT, CVAR_ARCHIVE, 0, qfalse },
+    { &g_voteNames, "g_voteNames", "/map_restart/nextmap/map/g_gametype/kick/clientkick/g_doWarmup/timelimit/fraglimit/shuffle/", CVAR_ARCHIVE, 0, qfalse }, //clientkick g_doWarmup timelimit fraglimit
+    { &g_voteBan, "g_voteBan", "0", CVAR_ARCHIVE, 0, qfalse },
+    { &g_voteGametypes, "g_voteGametypes", "/0/1/3/4/5/6/7/8/9/10/11/12/", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_voteMaxTimelimit, "g_voteMaxTimelimit", "1000", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_voteMinTimelimit, "g_voteMinTimelimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_voteMaxFraglimit, "g_voteMaxFraglimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_voteMinFraglimit, "g_voteMinFraglimit", "0", CVAR_SERVERINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_votemaps, "g_votemapsfile", "votemaps.cfg", 0, 0, qfalse },
+    { &g_votecustom, "g_votecustomfile", "votecustom.cfg", 0, 0, qfalse },
 
-    {&g_listEntity, "g_listEntity", "0", 0, 0, qfalse},
+    { &g_listEntity, "g_listEntity", "0", 0, 0, qfalse },
 
-    {&g_obeliskHealth, "g_obeliskHealth", "2500", 0, 0, qfalse},
-    {&g_obeliskRegenPeriod, "g_obeliskRegenPeriod", "1", 0, 0, qfalse},
-    {&g_obeliskRegenAmount, "g_obeliskRegenAmount", "15", 0, 0, qfalse},
-    {&g_obeliskRespawnDelay, "g_obeliskRespawnDelay", "10", CVAR_SERVERINFO, 0, qfalse},
+    { &g_obeliskHealth, "g_obeliskHealth", "2500", 0, 0, qfalse },
+    { &g_obeliskRegenPeriod, "g_obeliskRegenPeriod", "1", 0, 0, qfalse },
+    { &g_obeliskRegenAmount, "g_obeliskRegenAmount", "15", 0, 0, qfalse },
+    { &g_obeliskRespawnDelay, "g_obeliskRespawnDelay", "10", CVAR_SERVERINFO, 0, qfalse },
 
-    {&g_cubeTimeout, "g_cubeTimeout", "30", 0, 0, qfalse},
+    { &g_cubeTimeout, "g_cubeTimeout", "30", 0, 0, qfalse },
 
-    {&g_enableDust, "g_enableDust", "0", CVAR_SERVERINFO, 0, qtrue, qfalse},
-    {&g_enableBreath, "g_enableBreath", "0", CVAR_SERVERINFO, 0, qtrue, qfalse},
-    {&g_proxMineTimeout, "g_proxMineTimeout", "20000", 0, 0, qfalse},
+    { &g_enableDust, "g_enableDust", "0", CVAR_SERVERINFO, 0, qtrue, qfalse },
+    { &g_enableBreath, "g_enableBreath", "0", CVAR_SERVERINFO, 0, qtrue, qfalse },
+    { &g_proxMineTimeout, "g_proxMineTimeout", "20000", 0, 0, qfalse },
 
-    {&g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse},
-    {&pmove_fixed, "pmove_fixed", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&pmove_msec, "pmove_msec", "8", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
+    { &g_smoothClients, "g_smoothClients", "1", 0, 0, qfalse },
+    { &pmove_fixed, "pmove_fixed", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &pmove_msec, "pmove_msec", "8", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse },
 
-    {&pmove_float, "pmove_float", "1", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
+    { &pmove_float, "pmove_float", "1", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue },
 
     //unlagged - server options
-    {&g_delagHitscan, "g_delagHitscan", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
-    {&g_truePing, "g_truePing", "1", CVAR_ARCHIVE, 0, qtrue},
+    { &g_delagHitscan, "g_delagHitscan", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_truePing, "g_truePing", "1", CVAR_ARCHIVE, 0, qtrue },
     // it's CVAR_SYSTEMINFO so the client's sv_fps will be automagically set to its value
-    {&sv_fps, "sv_fps", "40", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse},
-    {&g_lagLightning, "g_lagLightning", "0", CVAR_ARCHIVE, 0, qtrue},
+    { &sv_fps, "sv_fps", "40", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse },
+    { &g_lagLightning, "g_lagLightning", "0", CVAR_ARCHIVE, 0, qtrue },
     //unlagged - server options
 
-    {&g_rankings, "g_rankings", "0", 0, 0, qfalse},
-    {&g_localTeamPref, "g_localTeamPref", "", 0, 0, qfalse},
-    {&g_music, "g_music", "", 0, 0, qfalse},
-    {&g_spawnprotect, "g_spawnprotect", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_rankings, "g_rankings", "0", 0, 0, qfalse },
+    { &g_localTeamPref, "g_localTeamPref", "", 0, 0, qfalse },
+    { &g_music, "g_music", "", 0, 0, qfalse },
+    { &g_spawnprotect, "g_spawnprotect", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     //Now for elimination stuff:
-    {&g_elimination_selfdamage, "elimination_selfdamage", "0", 0, 0, qtrue},
-    {&g_elimination_startHealth, "elimination_startHealth", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_startArmor, "elimination_startArmor", "150", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_bfg, "elimination_bfg", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_grapple, "elimination_grapple", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_roundtime, "elimination_roundtime", "120", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_warmup, "elimination_warmup", "7", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_ARCHIVE | CVAR_NORESTART | CVAR_SYSTEMINFO, 0, qtrue},
-    {&g_elimination_allgametypes, "g_elimination", "0", CVAR_LATCH | CVAR_NORESTART, 0, qfalse},
+    { &g_elimination_selfdamage, "elimination_selfdamage", "0", 0, 0, qtrue },
+    { &g_elimination_startHealth, "elimination_startHealth", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_startArmor, "elimination_startArmor", "150", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_bfg, "elimination_bfg", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_grapple, "elimination_grapple", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_roundtime, "elimination_roundtime", "120", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_warmup, "elimination_warmup", "7", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_ARCHIVE | CVAR_NORESTART | CVAR_SYSTEMINFO, 0, qtrue },
+    { &g_elimination_allgametypes, "g_elimination", "0", CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
 
-    {&g_elimination_machinegun, "elimination_machinegun", "500", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_shotgun, "elimination_shotgun", "500", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_grenade, "elimination_grenade", "100", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_rocket, "elimination_rocket", "50", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_railgun, "elimination_railgun", "20", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_lightning, "elimination_lightning", "300", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_plasmagun, "elimination_plasmagun", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_chain, "elimination_chain", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_mine, "elimination_mine", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
-    {&g_elimination_nail, "elimination_nail", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_elimination_machinegun, "elimination_machinegun", "500", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_shotgun, "elimination_shotgun", "500", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_grenade, "elimination_grenade", "100", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_rocket, "elimination_rocket", "50", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_railgun, "elimination_railgun", "20", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_lightning, "elimination_lightning", "300", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_plasmagun, "elimination_plasmagun", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_chain, "elimination_chain", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_mine, "elimination_mine", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_elimination_nail, "elimination_nail", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
-    {&g_elimination_ctf_oneway, "elimination_ctf_oneway", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_elimination_ctf_oneway, "elimination_ctf_oneway", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
-    {&g_elimination_lockspectator, "elimination_lockspectator", "0", CVAR_NORESTART, 0, qtrue},
+    { &g_elimination_lockspectator, "elimination_lockspectator", "0", CVAR_NORESTART, 0, qtrue },
 
-    {&g_elimination_items, "elimination_items", "0", CVAR_LATCH, 0, qtrue},
+    { &g_elimination_items, "elimination_items", "0", CVAR_LATCH, 0, qtrue },
 
-    {&g_awardpushing, "g_awardpushing", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_awardpushing, "g_awardpushing", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
     //g_persistantpowerups
-    {&g_persistantpowerups, "g_runes", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse},
+    { &g_persistantpowerups, "g_runes", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse },
 
     //nexuiz style rocket arena
-    {&g_rockets, "g_rockets", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse},
+    { &g_rockets, "g_rockets", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
 
     //Instantgib and Vampire thingies
-    {&g_instantgib, "g_instantgib", "0", CVAR_SERVERINFO | CVAR_LATCH, 0, qfalse},
-    {&g_vampire, "g_vampire", "0.0", CVAR_NORESTART, 0, qtrue},
-    {&g_regen, "g_regen", "0", CVAR_NORESTART, 0, qtrue},
-    {&g_vampireMaxHealth, "g_vampire_max_health", "500", CVAR_NORESTART, 0, qtrue},
-    {&g_lms_lives, "g_lms_lives", "1", CVAR_NORESTART, 0, qtrue},
-    {&g_lms_mode, "g_lms_mode", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_instantgib, "g_instantgib", "0", CVAR_SERVERINFO | CVAR_LATCH, 0, qfalse },
+    { &g_vampire, "g_vampire", "0.0", CVAR_NORESTART, 0, qtrue },
+    { &g_regen, "g_regen", "0", CVAR_NORESTART, 0, qtrue },
+    { &g_vampireMaxHealth, "g_vampire_max_health", "500", CVAR_NORESTART, 0, qtrue },
+    { &g_lms_lives, "g_lms_lives", "1", CVAR_NORESTART, 0, qtrue },
+    { &g_lms_mode, "g_lms_mode", "0", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
-    {&g_catchup, "g_catchup", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue},
+    { &g_catchup, "g_catchup", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
-    {&g_autonextmap, "g_autonextmap", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse},
-    {&g_mappools, "g_mappools", "0\\maps_dm.cfg\\1\\maps_tourney.cfg\\3\\maps_tdm.cfg\\4\\maps_ctf.cfg\\5\\maps_oneflag.cfg\\6\\maps_obelisk.cfg\
+    { &g_autonextmap, "g_autonextmap", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+    { &g_mappools, "g_mappools", "0\\maps_dm.cfg\\1\\maps_tourney.cfg\\3\\maps_tdm.cfg\\4\\maps_ctf.cfg\\5\\maps_oneflag.cfg\\6\\maps_obelisk.cfg\
 \\7\\maps_harvester.cfg\\8\\maps_elimination.cfg\\9\\maps_ctf.cfg\\10\\maps_lms.cfg\\11\\maps_dd.cfg\\12\\maps_dom.cfg\\",
-     CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse},
-    {&g_humanplayers, "g_humanplayers", "0", CVAR_ROM | CVAR_NORESTART, 0, qfalse},
+      CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse },
+    { &g_humanplayers, "g_humanplayers", "0", CVAR_ROM | CVAR_NORESTART, 0, qfalse },
     //used for voIP
-    {&g_redTeamClientNumbers, "g_redTeamClientNumbers", "0", CVAR_ROM, 0, qfalse},
-    {&g_blueTeamClientNumbers, "g_blueTeamClientNumbers", "0", CVAR_ROM, 0, qfalse},
+    { &g_redTeamClientNumbers, "g_redTeamClientNumbers", "0", CVAR_ROM, 0, qfalse },
+    { &g_blueTeamClientNumbers, "g_blueTeamClientNumbers", "0", CVAR_ROM, 0, qfalse },
 
     //KK-OAX
-    {&g_sprees, "g_sprees", "sprees.dat", 0, 0, qfalse},
-    {&g_altExcellent, "g_altExcellent", "0", CVAR_SERVERINFO, 0, qtrue},
-    {&g_spreeDiv, "g_spreeDiv", "5", 0, 0, qfalse},
+    { &g_sprees, "g_sprees", "sprees.dat", 0, 0, qfalse },
+    { &g_altExcellent, "g_altExcellent", "0", CVAR_SERVERINFO, 0, qtrue },
+    { &g_spreeDiv, "g_spreeDiv", "5", 0, 0, qfalse },
 
     //Used for command/chat flooding
-    {&g_floodMaxDemerits, "g_floodMaxDemerits", "5000", CVAR_ARCHIVE, 0, qfalse},
-    {&g_floodMinTime, "g_floodMinTime", "2000", CVAR_ARCHIVE, 0, qfalse},
+    { &g_floodMaxDemerits, "g_floodMaxDemerits", "5000", CVAR_ARCHIVE, 0, qfalse },
+    { &g_floodMinTime, "g_floodMinTime", "2000", CVAR_ARCHIVE, 0, qfalse },
 
     //Admin
-    {&g_admin, "g_admin", "admin.dat", CVAR_ARCHIVE, 0, qfalse},
-    {&g_adminLog, "g_adminLog", "admin.log", CVAR_ARCHIVE, 0, qfalse},
-    {&g_adminParseSay, "g_adminParseSay", "1", CVAR_ARCHIVE, 0, qfalse},
-    {&g_adminNameProtect, "g_adminNameProtect", "1", CVAR_ARCHIVE, 0, qfalse},
-    {&g_adminTempBan, "g_adminTempBan", "2m", CVAR_ARCHIVE, 0, qfalse},
-    {&g_adminMaxBan, "g_adminMaxBan", "2w", CVAR_ARCHIVE, 0, qfalse},
+    { &g_admin, "g_admin", "admin.dat", CVAR_ARCHIVE, 0, qfalse },
+    { &g_adminLog, "g_adminLog", "admin.log", CVAR_ARCHIVE, 0, qfalse },
+    { &g_adminParseSay, "g_adminParseSay", "1", CVAR_ARCHIVE, 0, qfalse },
+    { &g_adminNameProtect, "g_adminNameProtect", "1", CVAR_ARCHIVE, 0, qfalse },
+    { &g_adminTempBan, "g_adminTempBan", "2m", CVAR_ARCHIVE, 0, qfalse },
+    { &g_adminMaxBan, "g_adminMaxBan", "2w", CVAR_ARCHIVE, 0, qfalse },
 
-    {&g_specChat, "g_specChat", "1", CVAR_ARCHIVE, 0, qfalse},
-    {&g_publicAdminMessages, "g_publicAdminMessages", "1", CVAR_ARCHIVE, 0, qfalse},
+    { &g_specChat, "g_specChat", "1", CVAR_ARCHIVE, 0, qfalse },
+    { &g_publicAdminMessages, "g_publicAdminMessages", "1", CVAR_ARCHIVE, 0, qfalse },
 
-    {&g_maxWarnings, "g_maxWarnings", "3", CVAR_ARCHIVE, 0, qfalse},
-    {&g_warningExpire, "g_warningExpire", "3600", CVAR_ARCHIVE, 0, qfalse},
+    { &g_maxWarnings, "g_maxWarnings", "3", CVAR_ARCHIVE, 0, qfalse },
+    { &g_warningExpire, "g_warningExpire", "3600", CVAR_ARCHIVE, 0, qfalse },
 
-    {&g_minNameChangePeriod, "g_minNameChangePeriod", "10", 0, 0, qfalse},
-    {&g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse},
+    { &g_minNameChangePeriod, "g_minNameChangePeriod", "10", 0, 0, qfalse },
+    { &g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse },
 
-    {&g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse},
+    { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse },
 
     //OmegA
-    {&g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse},
-    {&g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse},
-    {&g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse},
-    {&g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
-    {&g_forcespectator, "g_forcespectator", "0", 0, 0, qtrue},
-    {&g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue},
-    {&g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue},
-    {&g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
-    {&g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue},
-    {&g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue},
-    {&g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue},
-    {&g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue},
-    {&g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue},
-    {&g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue},
-    {&g_railgunImpressiveReward, "g_railgunImpressiveReward", "1", 0, 0, qtrue},
-    {&g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_rocketFireRate, "g_rocketFireRate", "800", 0, 0, qtrue},
-    {&g_rocketSpeed, "g_rocketSpeed", "1000", 0, 0, qtrue},
-    {&g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_slickGround, "g_slickGround", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_spectateOnDeath, "g_spectateOnDeath", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue},
-    {&g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
-    {&g_survivorsRespawn, "g_survivorsRespawn", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse},
-    {&g_teamPush, "g_teamPush", "0", CVAR_ARCHIVE, 0, qtrue},
-    {&g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue},
-    {&g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse},
-    {&pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
-    {&pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue},
-    {&pmove_doublejump, "pmove_doublejump", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue}};
+    { &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
+    { &g_ambientSounds, "g_ambientSounds", "1", CVAR_ARCHIVE | CVAR_LATCH, 0, qfalse },
+    { &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
+    { &g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_forcespectator, "g_forcespectator", "0", 0, 0, qtrue },
+    { &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
+    { &g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue },
+    { &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue },
+    { &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue },
+    { &g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue },
+    { &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
+    { &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
+    { &g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue },
+    { &g_railgunImpressiveReward, "g_railgunImpressiveReward", "1", 0, 0, qtrue },
+    { &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_rocketFireRate, "g_rocketFireRate", "800", 0, 0, qtrue },
+    { &g_rocketSpeed, "g_rocketSpeed", "1000", 0, 0, qtrue },
+    { &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_slickGround, "g_slickGround", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_spectateOnDeath, "g_spectateOnDeath", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
+    { &g_survivorsRespawn, "g_survivorsRespawn", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },
+    { &g_teamPush, "g_teamPush", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_teleportMissiles, "g_teleportMissiles", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_waterDamage, "g_waterDamage", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_weaponArena, "g_weaponArena", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
+    { &pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue },
+    { &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue },
+    { &pmove_doublejump, "pmove_doublejump", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue } };
 
 // bk001129 - made static to avoid aliasing
-static int gameCvarTableSize = sizeof(gameCvarTable) / sizeof(gameCvarTable[0]);
+static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[0] );
 
-void G_InitGame(int levelTime, int randomSeed, int restart);
-void G_RunFrame(int levelTime);
-void G_ShutdownGame(int restart);
-void CheckExitRules(void);
+void G_InitGame( int levelTime, int randomSeed, int restart );
+void G_RunFrame( int levelTime );
+void G_ShutdownGame( int restart );
+void CheckExitRules( void );
 
 /*
 ================
@@ -492,38 +492,38 @@ This is the only way control passes into the module.
 This must be the very first function compiled into the .q3vm file
 ================
 */
-intptr_t vmMain(int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
-	switch (command) {
+intptr_t vmMain( int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11 ) {
+	switch ( command ) {
 		case GAME_INIT:
-			G_InitGame(arg0, arg1, arg2);
+			G_InitGame( arg0, arg1, arg2 );
 			return 0;
 		case GAME_SHUTDOWN:
-			G_ShutdownGame(arg0);
+			G_ShutdownGame( arg0 );
 			return 0;
 		case GAME_CLIENT_CONNECT:
-			return (intptr_t)ClientConnect(arg0, arg1, arg2);
+			return (intptr_t)ClientConnect( arg0, arg1, arg2 );
 		case GAME_CLIENT_THINK:
-			ClientThink(arg0);
+			ClientThink( arg0 );
 			return 0;
 		case GAME_CLIENT_USERINFO_CHANGED:
-			ClientUserinfoChanged(arg0);
+			ClientUserinfoChanged( arg0 );
 			return 0;
 		case GAME_CLIENT_DISCONNECT:
-			ClientDisconnect(arg0);
+			ClientDisconnect( arg0 );
 			return 0;
 		case GAME_CLIENT_BEGIN:
-			ClientBegin(arg0);
+			ClientBegin( arg0 );
 			return 0;
 		case GAME_CLIENT_COMMAND:
-			ClientCommand(arg0);
+			ClientCommand( arg0 );
 			return 0;
 		case GAME_RUN_FRAME:
-			G_RunFrame(arg0);
+			G_RunFrame( arg0 );
 			return 0;
 		case GAME_CONSOLE_COMMAND:
 			return ConsoleCommand();
 		case BOTAI_START_FRAME:
-			return BotAIStartFrame(arg0);
+			return BotAIStartFrame( arg0 );
 	}
 
 	return -1;
@@ -534,15 +534,15 @@ intptr_t vmMain(int command, int arg0, int arg1, int arg2, int arg3, int arg4, i
 G_Printf
 ================
 */
-void QDECL G_Printf(const char *fmt, ...) {
+void QDECL G_Printf( const char *fmt, ... ) {
 	va_list argptr;
 	char text[1024];
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(text, sizeof(text), fmt, argptr);
-	va_end(argptr);
+	va_start( argptr, fmt );
+	Q_vsnprintf( text, sizeof( text ), fmt, argptr );
+	va_end( argptr );
 
-	trap_Printf(text);
+	trap_Printf( text );
 }
 
 /*
@@ -550,15 +550,15 @@ void QDECL G_Printf(const char *fmt, ...) {
 G_Error
 ================
 */
-void QDECL G_Error(const char *fmt, ...) {
+void QDECL G_Error( const char *fmt, ... ) {
 	va_list argptr;
 	char text[1024];
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(text, sizeof(text), fmt, argptr);
-	va_end(argptr);
+	va_start( argptr, fmt );
+	Q_vsnprintf( text, sizeof( text ), fmt, argptr );
+	va_end( argptr );
 
-	trap_Error(text);
+	trap_Error( text );
 }
 
 /*
@@ -572,31 +572,31 @@ All but the first will have the FL_TEAMSLAVE flag set and teammaster field set
 All but the last will have the teamchain field set to the next one
 ================
 */
-void G_FindTeams(void) {
+void G_FindTeams( void ) {
 	gentity_t *e, *e2;
 	int i, j;
 	int c, c2;
 
 	c = 0;
 	c2 = 0;
-	for (i = 1, e = g_entities + i; i < level.num_entities; i++, e++) {
-		if (!e->inuse)
+	for ( i = 1, e = g_entities + i; i < level.num_entities; i++, e++ ) {
+		if ( !e->inuse )
 			continue;
-		if (!e->team)
+		if ( !e->team )
 			continue;
-		if (e->flags & FL_TEAMSLAVE)
+		if ( e->flags & FL_TEAMSLAVE )
 			continue;
 		e->teammaster = e;
 		c++;
 		c2++;
-		for (j = i + 1, e2 = e + 1; j < level.num_entities; j++, e2++) {
-			if (!e2->inuse)
+		for ( j = i + 1, e2 = e + 1; j < level.num_entities; j++, e2++ ) {
+			if ( !e2->inuse )
 				continue;
-			if (!e2->team)
+			if ( !e2->team )
 				continue;
-			if (e2->flags & FL_TEAMSLAVE)
+			if ( e2->flags & FL_TEAMSLAVE )
 				continue;
-			if (!strcmp(e->team, e2->team)) {
+			if ( !strcmp( e->team, e2->team ) ) {
 				c2++;
 				e2->teamchain = e->teamchain;
 				e->teamchain = e2;
@@ -604,14 +604,14 @@ void G_FindTeams(void) {
 				e2->flags |= FL_TEAMSLAVE;
 
 				// make sure that targets only point at the master
-				if (e2->targetname) {
+				if ( e2->targetname ) {
 					e->targetname = e2->targetname;
 					e2->targetname = NULL;
 				}
 			}
 		}
 	}
-	G_Printf("%i teams with %i entities\n", c, c2);
+	G_Printf( "%i teams with %i entities\n", c, c2 );
 }
 
 /*
@@ -619,25 +619,25 @@ void G_FindTeams(void) {
 G_RegisterCvars
 =================
 */
-static void G_RegisterCvars(void) {
+static void G_RegisterCvars( void ) {
 	int i;
 	cvarTable_t *cv;
 
-	for (i = 0, cv = gameCvarTable; i < gameCvarTableSize; i++, cv++) {
-		trap_Cvar_Register(cv->vmCvar, cv->cvarName,
-		                   cv->defaultString, cv->cvarFlags);
-		if (cv->vmCvar)
+	for ( i = 0, cv = gameCvarTable; i < gameCvarTableSize; i++, cv++ ) {
+		trap_Cvar_Register( cv->vmCvar, cv->cvarName,
+		                    cv->defaultString, cv->cvarFlags );
+		if ( cv->vmCvar )
 			cv->modificationCount = cv->vmCvar->modificationCount;
 	}
 
 	// check some things
-	if (g_gametype.integer < 0 || g_gametype.integer >= GT_MAX_GAME_TYPE) {
-		G_Printf("g_gametype %i is out of range, defaulting to 0\n", g_gametype.integer);
-		trap_Cvar_Set("g_gametype", "0");
+	if ( g_gametype.integer < 0 || g_gametype.integer >= GT_MAX_GAME_TYPE ) {
+		G_Printf( "g_gametype %i is out of range, defaulting to 0\n", g_gametype.integer );
+		trap_Cvar_Set( "g_gametype", "0" );
 	}
 
 	//set FFA status for high gametypes:
-	if (g_gametype.integer == GT_LMS) {
+	if ( g_gametype.integer == GT_LMS ) {
 		g_ffa_gt = 1; //Last Man standig is a FFA gametype
 	} else {
 		g_ffa_gt = 0; //If >GT_CTF use bases
@@ -651,64 +651,64 @@ static void G_RegisterCvars(void) {
 G_UpdateCvars
 =================
 */
-static void G_UpdateCvars(void) {
+static void G_UpdateCvars( void ) {
 	int i;
 	cvarTable_t *cv;
 
-	for (i = 0, cv = gameCvarTable; i < gameCvarTableSize; i++, cv++) {
-		if (cv->vmCvar) {
-			trap_Cvar_Update(cv->vmCvar);
+	for ( i = 0, cv = gameCvarTable; i < gameCvarTableSize; i++, cv++ ) {
+		if ( cv->vmCvar ) {
+			trap_Cvar_Update( cv->vmCvar );
 
-			if (cv->modificationCount != cv->vmCvar->modificationCount) {
+			if ( cv->modificationCount != cv->vmCvar->modificationCount ) {
 				cv->modificationCount = cv->vmCvar->modificationCount;
 
-				if (cv->trackChange) {
-					trap_SendServerCommand(-1, va("print \"Server: %s changed to %s\n\"",
-					                              cv->cvarName, cv->vmCvar->string));
+				if ( cv->trackChange ) {
+					trap_SendServerCommand( -1, va( "print \"Server: %s changed to %s\n\"",
+					                                cv->cvarName, cv->vmCvar->string ) );
 				}
 
-				if (cv->vmCvar == &g_votecustom)
+				if ( cv->vmCvar == &g_votecustom )
 					VoteParseCustomVotes();
 
 				//Here comes the cvars that must trigger a map_restart
-				if (cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets || cv->vmCvar == &g_weaponArena || cv->vmCvar == &g_elimination_allgametypes || cv->vmCvar == &g_noInvisWalls) {
-					trap_Cvar_Set("sv_dorestart", "1");
+				if ( cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets || cv->vmCvar == &g_weaponArena || cv->vmCvar == &g_elimination_allgametypes || cv->vmCvar == &g_noInvisWalls ) {
+					trap_Cvar_Set( "sv_dorestart", "1" );
 				}
 
-				if (cv->vmCvar == &g_voteNames) {
+				if ( cv->vmCvar == &g_voteNames ) {
 					//Set vote flags
 					int voteflags = 0;
-					if (allowedVote("map_restart"))
+					if ( allowedVote( "map_restart" ) )
 						voteflags |= VF_map_restart;
 
-					if (allowedVote("map"))
+					if ( allowedVote( "map" ) )
 						voteflags |= VF_map;
 
-					if (allowedVote("clientkick"))
+					if ( allowedVote( "clientkick" ) )
 						voteflags |= VF_clientkick;
 
-					if (allowedVote("shuffle"))
+					if ( allowedVote( "shuffle" ) )
 						voteflags |= VF_shuffle;
 
-					if (allowedVote("nextmap"))
+					if ( allowedVote( "nextmap" ) )
 						voteflags |= VF_nextmap;
 
-					if (allowedVote("g_gametype"))
+					if ( allowedVote( "g_gametype" ) )
 						voteflags |= VF_g_gametype;
 
-					if (allowedVote("g_doWarmup"))
+					if ( allowedVote( "g_doWarmup" ) )
 						voteflags |= VF_g_doWarmup;
 
-					if (allowedVote("timelimit"))
+					if ( allowedVote( "timelimit" ) )
 						voteflags |= VF_timelimit;
 
-					if (allowedVote("fraglimit"))
+					if ( allowedVote( "fraglimit" ) )
 						voteflags |= VF_fraglimit;
 
-					if (allowedVote("custom"))
+					if ( allowedVote( "custom" ) )
 						voteflags |= VF_custom;
 
-					trap_Cvar_Set("voteflags", va("%i", voteflags));
+					trap_Cvar_Set( "voteflags", va( "%i", voteflags ) );
 				}
 			}
 		}
@@ -720,7 +720,7 @@ static void G_UpdateCvars(void) {
 G_IsElimTeamGametype
 =================
 */
-qboolean G_IsElimTeamGametype(void) {
+qboolean G_IsElimTeamGametype( void ) {
 	return g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == 8;
 }
 
@@ -731,13 +731,13 @@ G_UpdateTimestamp
 Sets the cvar g_timestamp. Return 0 if success or !0 for errors.
 =================
 */
-static int G_UpdateTimestamp(void) {
+static int G_UpdateTimestamp( void ) {
 	int ret = 0;
 	qtime_t timestamp;
-	ret = trap_RealTime(&timestamp);
-	trap_Cvar_Set("g_timestamp", va("%04i-%02i-%02i %02i:%02i:%02i",
-	                                1900 + timestamp.tm_year, 1 + timestamp.tm_mon, timestamp.tm_mday,
-	                                timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec));
+	ret = trap_RealTime( &timestamp );
+	trap_Cvar_Set( "g_timestamp", va( "%04i-%02i-%02i %02i:%02i:%02i",
+	                                  1900 + timestamp.tm_year, 1 + timestamp.tm_mon, timestamp.tm_mday,
+	                                  timestamp.tm_hour, timestamp.tm_min, timestamp.tm_sec ) );
 
 	return ret;
 }
@@ -747,21 +747,21 @@ static int G_UpdateTimestamp(void) {
 G_InitGame
 ============
 */
-void G_InitGame(int levelTime, int randomSeed, int restart) {
+void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	int i;
 
-	G_Printf("------- Game Initialization -------\n");
-	G_Printf("gamename: %s\n", GAMEVERSION);
-	G_Printf("gamedate: %s\n", PRODUCT_DATE);
+	G_Printf( "------- Game Initialization -------\n" );
+	G_Printf( "gamename: %s\n", GAMEVERSION );
+	G_Printf( "gamedate: %s\n", PRODUCT_DATE );
 
-	srand(randomSeed);
+	srand( randomSeed );
 
 	G_RegisterCvars();
 
 	G_UpdateTimestamp();
 
 	//disable unwanted cvars
-	if (g_gametype.integer == GT_SINGLE_PLAYER) {
+	if ( g_gametype.integer == GT_SINGLE_PLAYER ) {
 		g_instantgib.integer = 0;
 		g_rockets.integer = 0;
 		g_weaponArena.integer = 0;
@@ -774,32 +774,32 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 	BG_InitMemory();
 
 	// set some level globals
-	memset(&level, 0, sizeof(level));
+	memset( &level, 0, sizeof( level ) );
 
 	level.time = levelTime;
 	level.startTime = levelTime;
 
-	level.snd_fry = G_SoundIndex("sound/player/fry.wav"); // FIXME standing in lava / slime
+	level.snd_fry = G_SoundIndex( "sound/player/fry.wav" ); // FIXME standing in lava / slime
 
-	if (g_gametype.integer != GT_SINGLE_PLAYER && g_logfile.string[0]) {
-		if (g_logfileSync.integer) {
-			trap_FS_FOpenFile(g_logfile.string, &level.logFile, FS_APPEND_SYNC);
+	if ( g_gametype.integer != GT_SINGLE_PLAYER && g_logfile.string[0] ) {
+		if ( g_logfileSync.integer ) {
+			trap_FS_FOpenFile( g_logfile.string, &level.logFile, FS_APPEND_SYNC );
 		} else {
-			trap_FS_FOpenFile(g_logfile.string, &level.logFile, FS_APPEND);
+			trap_FS_FOpenFile( g_logfile.string, &level.logFile, FS_APPEND );
 		}
-		if (!level.logFile) {
-			G_Printf("WARNING: Couldn't open logfile: %s\n", g_logfile.string);
+		if ( !level.logFile ) {
+			G_Printf( "WARNING: Couldn't open logfile: %s\n", g_logfile.string );
 		} else {
 			char serverinfo[MAX_INFO_STRING];
 
-			trap_GetServerinfo(serverinfo, sizeof(serverinfo));
+			trap_GetServerinfo( serverinfo, sizeof( serverinfo ) );
 
-			G_LogPrintf("------------------------------------------------------------\n");
-			G_LogPrintf("InitGame: %s\n", serverinfo);
-			G_LogPrintf("Info: ServerInfo length: %d of %d\n", strlen(serverinfo), MAX_INFO_STRING);
+			G_LogPrintf( "------------------------------------------------------------\n" );
+			G_LogPrintf( "InitGame: %s\n", serverinfo );
+			G_LogPrintf( "Info: ServerInfo length: %d of %d\n", strlen( serverinfo ), MAX_INFO_STRING );
 		}
 	} else {
-		G_Printf("Not logging to disk.\n");
+		G_Printf( "Not logging to disk.\n" );
 	}
 
 	//Parse the custom vote names:
@@ -808,21 +808,21 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 	G_InitWorldSession();
 
 	//KK-OAX Get Admin Configuration
-	G_admin_readconfig(NULL, 0);
+	G_admin_readconfig( NULL, 0 );
 	//Let's Load up any killing sprees/multikills
-	G_ReadAltKillSettings(NULL, 0);
+	G_ReadAltKillSettings( NULL, 0 );
 
 	// initialize all entities for this game
-	memset(g_entities, 0, MAX_GENTITIES * sizeof(g_entities[0]));
+	memset( g_entities, 0, MAX_GENTITIES * sizeof( g_entities[0] ) );
 	level.gentities = g_entities;
 
 	// initialize all clients for this game
 	level.maxclients = g_maxclients.integer;
-	memset(g_clients, 0, MAX_CLIENTS * sizeof(g_clients[0]));
+	memset( g_clients, 0, MAX_CLIENTS * sizeof( g_clients[0] ) );
 	level.clients = g_clients;
 
 	// set client fields on player ents
-	for (i = 0; i < level.maxclients; i++) {
+	for ( i = 0; i < level.maxclients; i++ ) {
 		g_entities[i].client = level.clients + i;
 	}
 
@@ -831,13 +831,13 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 	// range are NEVER anything but clients
 	level.num_entities = MAX_CLIENTS;
 
-	for (i = 0; i < MAX_CLIENTS; i++) {
+	for ( i = 0; i < MAX_CLIENTS; i++ ) {
 		g_entities[i].classname = "clientslot";
 	}
 
 	// let the server system know where the entites are
-	trap_LocateGameData(level.gentities, level.num_entities, sizeof(gentity_t),
-	                    &level.clients[0].ps, sizeof(level.clients[0]));
+	trap_LocateGameData( level.gentities, level.num_entities, sizeof( gentity_t ),
+	                     &level.clients[0].ps, sizeof( level.clients[0] ) );
 
 	// reserve some spots for dead player bodies
 	InitBodyQue();
@@ -851,22 +851,22 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 	G_FindTeams();
 
 	// make sure we have flags for CTF, etc
-	if (g_gametype.integer >= GT_TEAM && (g_ffa_gt != 1)) {
+	if ( g_gametype.integer >= GT_TEAM && ( g_ffa_gt != 1 ) ) {
 		G_CheckTeamItems();
 	}
 
 	SaveRegisteredItems();
 
-	G_Printf("-----------------------------------\n");
+	G_Printf( "-----------------------------------\n" );
 
-	if (g_gametype.integer == GT_SINGLE_PLAYER || trap_Cvar_VariableIntegerValue("com_buildScript")) {
-		G_ModelIndex(SP_PODIUM_MODEL);
+	if ( g_gametype.integer == GT_SINGLE_PLAYER || trap_Cvar_VariableIntegerValue( "com_buildScript" ) ) {
+		G_ModelIndex( SP_PODIUM_MODEL );
 	}
 
-	if (trap_Cvar_VariableIntegerValue("bot_enable")) {
-		BotAISetup(restart);
-		BotAILoadMap(restart);
-		G_InitBots(restart);
+	if ( trap_Cvar_VariableIntegerValue( "bot_enable" ) ) {
+		BotAISetup( restart );
+		BotAILoadMap( restart );
+		G_InitBots( restart );
 	}
 
 	//elimination:
@@ -880,12 +880,12 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 	level.teamSize = 0;
 	level.hadBots = qfalse;
 
-	if (g_gametype.integer == GT_DOUBLE_D)
+	if ( g_gametype.integer == GT_DOUBLE_D )
 		Team_SpawnDoubleDominationPoints();
 
-	if (g_gametype.integer == GT_DOMINATION) {
+	if ( g_gametype.integer == GT_DOMINATION ) {
 		level.dom_scoreGiven = 0;
-		for (i = 0; i < MAX_DOMINATION_POINTS; i++)
+		for ( i = 0; i < MAX_DOMINATION_POINTS; i++ )
 			level.pointStatusDom[i] = TEAM_NONE;
 		level.domination_points_count = 0; //make sure its not too big
 	}
@@ -895,37 +895,37 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 	//Set vote flags
 	{
 		int voteflags = 0;
-		if (allowedVote("map_restart"))
+		if ( allowedVote( "map_restart" ) )
 			voteflags |= VF_map_restart;
 
-		if (allowedVote("map"))
+		if ( allowedVote( "map" ) )
 			voteflags |= VF_map;
 
-		if (allowedVote("clientkick"))
+		if ( allowedVote( "clientkick" ) )
 			voteflags |= VF_clientkick;
 
-		if (allowedVote("shuffle"))
+		if ( allowedVote( "shuffle" ) )
 			voteflags |= VF_shuffle;
 
-		if (allowedVote("nextmap"))
+		if ( allowedVote( "nextmap" ) )
 			voteflags |= VF_nextmap;
 
-		if (allowedVote("g_gametype"))
+		if ( allowedVote( "g_gametype" ) )
 			voteflags |= VF_g_gametype;
 
-		if (allowedVote("g_doWarmup"))
+		if ( allowedVote( "g_doWarmup" ) )
 			voteflags |= VF_g_doWarmup;
 
-		if (allowedVote("timelimit"))
+		if ( allowedVote( "timelimit" ) )
 			voteflags |= VF_timelimit;
 
-		if (allowedVote("fraglimit"))
+		if ( allowedVote( "fraglimit" ) )
 			voteflags |= VF_fraglimit;
 
-		if (allowedVote("custom"))
+		if ( allowedVote( "custom" ) )
 			voteflags |= VF_custom;
 
-		trap_Cvar_Set("voteflags", va("%i", voteflags));
+		trap_Cvar_Set( "voteflags", va( "%i", voteflags ) );
 	}
 }
 
@@ -934,13 +934,13 @@ void G_InitGame(int levelTime, int randomSeed, int restart) {
 G_ShutdownGame
 =================
 */
-void G_ShutdownGame(int restart) {
-	G_Printf("==== ShutdownGame ====\n");
+void G_ShutdownGame( int restart ) {
+	G_Printf( "==== ShutdownGame ====\n" );
 
-	if (level.logFile) {
-		G_LogPrintf("ShutdownGame:\n");
-		G_LogPrintf("------------------------------------------------------------\n");
-		trap_FS_FCloseFile(level.logFile);
+	if ( level.logFile ) {
+		G_LogPrintf( "ShutdownGame:\n" );
+		G_LogPrintf( "------------------------------------------------------------\n" );
+		trap_FS_FCloseFile( level.logFile );
 		level.logFile = 0;
 	}
 
@@ -951,8 +951,8 @@ void G_ShutdownGame(int restart) {
 	G_admin_cleanup();
 	G_admin_namelog_cleanup();
 
-	if (trap_Cvar_VariableIntegerValue("bot_enable")) {
-		BotAIShutdown(restart);
+	if ( trap_Cvar_VariableIntegerValue( "bot_enable" ) ) {
+		BotAIShutdown( restart );
 	}
 }
 
@@ -963,15 +963,15 @@ void G_ShutdownGame(int restart) {
 Com_Error
 =================
 */
-void QDECL Com_Error(int level, const char *error, ...) {
+void QDECL Com_Error( int level, const char *error, ... ) {
 	va_list argptr;
 	char text[1024];
 
-	va_start(argptr, error);
-	Q_vsnprintf(text, sizeof(text), error, argptr);
-	va_end(argptr);
+	va_start( argptr, error );
+	Q_vsnprintf( text, sizeof( text ), error, argptr );
+	va_end( argptr );
 
-	G_Error("%s", text);
+	G_Error( "%s", text );
 }
 
 /*
@@ -979,15 +979,15 @@ void QDECL Com_Error(int level, const char *error, ...) {
 Com_Printf
 =================
 */
-void QDECL Com_Printf(const char *msg, ...) {
+void QDECL Com_Printf( const char *msg, ... ) {
 	va_list argptr;
 	char text[1024];
 
-	va_start(argptr, msg);
-	Q_vsnprintf(text, sizeof(text), msg, argptr);
-	va_end(argptr);
+	va_start( argptr, msg );
+	Q_vsnprintf( text, sizeof( text ), msg, argptr );
+	va_end( argptr );
 
-	G_Printf("%s", text);
+	G_Printf( "%s", text );
 }
 
 /*
@@ -1006,49 +1006,49 @@ If there are less than two tournament players, put a
 spectator in the game and restart
 =============
 */
-static void AddTournamentPlayer(void) {
+static void AddTournamentPlayer( void ) {
 	int i;
 	gclient_t *client;
 	gclient_t *nextInLine;
 
-	if (level.numPlayingClients >= 2) {
+	if ( level.numPlayingClients >= 2 ) {
 		return;
 	}
 
 	// never change during intermission
-	if (level.intermissiontime) {
+	if ( level.intermissiontime ) {
 		return;
 	}
 
 	nextInLine = NULL;
 
-	for (i = 0; i < level.maxclients; i++) {
+	for ( i = 0; i < level.maxclients; i++ ) {
 		client = &level.clients[i];
-		if (client->pers.connected != CON_CONNECTED) {
+		if ( client->pers.connected != CON_CONNECTED ) {
 			continue;
 		}
-		if (client->sess.sessionTeam != TEAM_SPECTATOR) {
+		if ( client->sess.sessionTeam != TEAM_SPECTATOR ) {
 			continue;
 		}
 		// never select the dedicated follow or scoreboard clients
-		if (client->sess.spectatorState == SPECTATOR_SCOREBOARD ||
-		    client->sess.spectatorClient < 0) {
+		if ( client->sess.spectatorState == SPECTATOR_SCOREBOARD ||
+		     client->sess.spectatorClient < 0 ) {
 			continue;
 		}
 
-		if (!nextInLine || client->sess.spectatorNum > nextInLine->sess.spectatorNum) {
+		if ( !nextInLine || client->sess.spectatorNum > nextInLine->sess.spectatorNum ) {
 			nextInLine = client;
 		}
 	}
 
-	if (!nextInLine) {
+	if ( !nextInLine ) {
 		return;
 	}
 
 	level.warmupTime = -1;
 
 	// set them to free-for-all team
-	SetTeam(&g_entities[nextInLine - level.clients], "f");
+	SetTeam( &g_entities[nextInLine - level.clients], "f" );
 }
 
 /*
@@ -1058,15 +1058,15 @@ AddTournamentQueue
 Add client to end of tournament queue
 =======================
 */
-void AddTournamentQueue(gclient_t *client) {
+void AddTournamentQueue( gclient_t *client ) {
 	int index;
 	gclient_t *curclient;
-	for (index = 0; index < level.maxclients; index++) {
+	for ( index = 0; index < level.maxclients; index++ ) {
 		curclient = &level.clients[index];
-		if (curclient->pers.connected != CON_DISCONNECTED) {
-			if (curclient == client)
+		if ( curclient->pers.connected != CON_DISCONNECTED ) {
+			if ( curclient == client )
 				curclient->sess.spectatorNum = 0;
-			else if (curclient->sess.sessionTeam == TEAM_SPECTATOR)
+			else if ( curclient->sess.sessionTeam == TEAM_SPECTATOR )
 				curclient->sess.spectatorNum++;
 		}
 	}
@@ -1079,21 +1079,21 @@ RemoveTournamentLoser
 Make the loser a spectator at the back of the line
 =======================
 */
-static void RemoveTournamentLoser(void) {
+static void RemoveTournamentLoser( void ) {
 	int clientNum;
 
-	if (level.numPlayingClients != 2) {
+	if ( level.numPlayingClients != 2 ) {
 		return;
 	}
 
 	clientNum = level.sortedClients[1];
 
-	if (level.clients[clientNum].pers.connected != CON_CONNECTED) {
+	if ( level.clients[clientNum].pers.connected != CON_CONNECTED ) {
 		return;
 	}
 
 	// make them a spectator
-	SetTeam(&g_entities[clientNum], "s");
+	SetTeam( &g_entities[clientNum], "s" );
 }
 
 /*
@@ -1101,19 +1101,19 @@ static void RemoveTournamentLoser(void) {
 AdjustTournamentScores
 =======================
 */
-static void AdjustTournamentScores(void) {
+static void AdjustTournamentScores( void ) {
 	int clientNum;
 
 	clientNum = level.sortedClients[0];
-	if (level.clients[clientNum].pers.connected == CON_CONNECTED) {
+	if ( level.clients[clientNum].pers.connected == CON_CONNECTED ) {
 		level.clients[clientNum].sess.wins++;
-		ClientUserinfoChanged(clientNum);
+		ClientUserinfoChanged( clientNum );
 	}
 
 	clientNum = level.sortedClients[1];
-	if (level.clients[clientNum].pers.connected == CON_CONNECTED) {
+	if ( level.clients[clientNum].pers.connected == CON_CONNECTED ) {
 		level.clients[clientNum].sess.losses++;
-		ClientUserinfoChanged(clientNum);
+		ClientUserinfoChanged( clientNum );
 	}
 }
 
@@ -1122,58 +1122,58 @@ static void AdjustTournamentScores(void) {
 SortRanks
 =============
 */
-int QDECL SortRanks(const void *a, const void *b) {
+int QDECL SortRanks( const void *a, const void *b ) {
 	gclient_t *ca, *cb;
 
 	ca = &level.clients[*(int *)a];
 	cb = &level.clients[*(int *)b];
 
 	// sort special clients last
-	if (ca->sess.spectatorState == SPECTATOR_SCOREBOARD || ca->sess.spectatorClient < 0) {
+	if ( ca->sess.spectatorState == SPECTATOR_SCOREBOARD || ca->sess.spectatorClient < 0 ) {
 		return 1;
 	}
-	if (cb->sess.spectatorState == SPECTATOR_SCOREBOARD || cb->sess.spectatorClient < 0) {
+	if ( cb->sess.spectatorState == SPECTATOR_SCOREBOARD || cb->sess.spectatorClient < 0 ) {
 		return -1;
 	}
 
 	// then connecting clients
-	if (ca->pers.connected == CON_CONNECTING) {
+	if ( ca->pers.connected == CON_CONNECTING ) {
 		return 1;
 	}
-	if (cb->pers.connected == CON_CONNECTING) {
+	if ( cb->pers.connected == CON_CONNECTING ) {
 		return -1;
 	}
 
 	// then spectators
-	if (ca->sess.sessionTeam == TEAM_SPECTATOR && cb->sess.sessionTeam == TEAM_SPECTATOR) {
-		if (ca->sess.spectatorNum > cb->sess.spectatorNum) {
+	if ( ca->sess.sessionTeam == TEAM_SPECTATOR && cb->sess.sessionTeam == TEAM_SPECTATOR ) {
+		if ( ca->sess.spectatorNum > cb->sess.spectatorNum ) {
 			return -1;
 		}
-		if (ca->sess.spectatorNum < cb->sess.spectatorNum) {
+		if ( ca->sess.spectatorNum < cb->sess.spectatorNum ) {
 			return 1;
 		}
 		return 0;
 	}
-	if (ca->sess.sessionTeam == TEAM_SPECTATOR) {
+	if ( ca->sess.sessionTeam == TEAM_SPECTATOR ) {
 		return 1;
 	}
-	if (cb->sess.sessionTeam == TEAM_SPECTATOR) {
+	if ( cb->sess.sessionTeam == TEAM_SPECTATOR ) {
 		return -1;
 	}
 
 	//In elimination and CTF elimination, sort dead players last
-	if ((g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION) && level.roundNumber == level.roundNumberStarted && (ca->isEliminated != cb->isEliminated)) {
-		if (ca->isEliminated)
+	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) && level.roundNumber == level.roundNumberStarted && ( ca->isEliminated != cb->isEliminated ) ) {
+		if ( ca->isEliminated )
 			return 1;
-		if (cb->isEliminated)
+		if ( cb->isEliminated )
 			return -1;
 	}
 
 	// then sort by score
-	if (ca->ps.persistant[PERS_SCORE] > cb->ps.persistant[PERS_SCORE]) {
+	if ( ca->ps.persistant[PERS_SCORE] > cb->ps.persistant[PERS_SCORE] ) {
 		return -1;
 	}
-	if (ca->ps.persistant[PERS_SCORE] < cb->ps.persistant[PERS_SCORE]) {
+	if ( ca->ps.persistant[PERS_SCORE] < cb->ps.persistant[PERS_SCORE] ) {
 		return 1;
 	}
 	return 0;
@@ -1188,7 +1188,7 @@ This will be called on every client connect, begin, disconnect, death,
 and team change.
 ============
 */
-void CalculateRanks(void) {
+void CalculateRanks( void ) {
 	int i;
 	int rank;
 	int score;
@@ -1202,33 +1202,33 @@ void CalculateRanks(void) {
 	level.numNonSpectatorClients = 0;
 	level.numPlayingClients = 0;
 	humanplayers = 0; // don't count bots
-	for (i = 0; i < TEAM_NUM_TEAMS; i++) {
+	for ( i = 0; i < TEAM_NUM_TEAMS; i++ ) {
 		level.numteamVotingClients[i] = 0;
 	}
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected != CON_DISCONNECTED) {
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected != CON_DISCONNECTED ) {
 			level.sortedClients[level.numConnectedClients] = i;
 			level.numConnectedClients++;
 
 			//We just set humanplayers to 0 during intermission
-			if (!level.intermissiontime && level.clients[i].pers.connected == CON_CONNECTED && !(g_entities[i].r.svFlags & SVF_BOT)) {
+			if ( !level.intermissiontime && level.clients[i].pers.connected == CON_CONNECTED && !( g_entities[i].r.svFlags & SVF_BOT ) ) {
 				humanplayers++;
 			}
 
-			if (level.clients[i].sess.sessionTeam != TEAM_SPECTATOR) {
+			if ( level.clients[i].sess.sessionTeam != TEAM_SPECTATOR ) {
 				level.numNonSpectatorClients++;
 				// decide if this should be auto-followed
-				if (level.clients[i].pers.connected == CON_CONNECTED) {
+				if ( level.clients[i].pers.connected == CON_CONNECTED ) {
 					level.numPlayingClients++;
-					if (!(g_entities[i].r.svFlags & SVF_BOT)) {
-						if (level.clients[i].sess.sessionTeam == TEAM_RED)
+					if ( !( g_entities[i].r.svFlags & SVF_BOT ) ) {
+						if ( level.clients[i].sess.sessionTeam == TEAM_RED )
 							level.numteamVotingClients[0]++;
-						else if (level.clients[i].sess.sessionTeam == TEAM_BLUE)
+						else if ( level.clients[i].sess.sessionTeam == TEAM_BLUE )
 							level.numteamVotingClients[1]++;
 					}
-					if (level.follow1 == -1) {
+					if ( level.follow1 == -1 ) {
 						level.follow1 = i;
-					} else if (level.follow2 == -1) {
+					} else if ( level.follow2 == -1 ) {
 						level.follow2 = i;
 					}
 				}
@@ -1236,17 +1236,17 @@ void CalculateRanks(void) {
 		}
 	}
 
-	qsort(level.sortedClients, level.numConnectedClients,
-	      sizeof(level.sortedClients[0]), SortRanks);
+	qsort( level.sortedClients, level.numConnectedClients,
+	       sizeof( level.sortedClients[0] ), SortRanks );
 
 	// set the rank value for all clients that are connected and not spectators
-	if (g_gametype.integer >= GT_TEAM && g_ffa_gt != 1) {
+	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
 		// in team games, rank is just the order of the teams, 0=red, 1=blue, 2=tied
-		for (i = 0; i < level.numConnectedClients; i++) {
+		for ( i = 0; i < level.numConnectedClients; i++ ) {
 			cl = &level.clients[level.sortedClients[i]];
-			if (level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE]) {
+			if ( level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] ) {
 				cl->ps.persistant[PERS_RANK] = 2;
-			} else if (level.teamScores[TEAM_RED] > level.teamScores[TEAM_BLUE]) {
+			} else if ( level.teamScores[TEAM_RED] > level.teamScores[TEAM_BLUE] ) {
 				cl->ps.persistant[PERS_RANK] = 0;
 			} else {
 				cl->ps.persistant[PERS_RANK] = 1;
@@ -1255,10 +1255,10 @@ void CalculateRanks(void) {
 	} else {
 		rank = -1;
 		score = 0;
-		for (i = 0; i < level.numPlayingClients; i++) {
+		for ( i = 0; i < level.numPlayingClients; i++ ) {
 			cl = &level.clients[level.sortedClients[i]];
 			newScore = cl->ps.persistant[PERS_SCORE];
-			if (i == 0 || newScore != score) {
+			if ( i == 0 || newScore != score ) {
 				rank = i;
 				// assume we aren't tied until the next client is checked
 				level.clients[level.sortedClients[i]].ps.persistant[PERS_RANK] = rank;
@@ -1268,26 +1268,26 @@ void CalculateRanks(void) {
 				level.clients[level.sortedClients[i]].ps.persistant[PERS_RANK] = rank | RANK_TIED_FLAG;
 			}
 			score = newScore;
-			if (g_gametype.integer == GT_SINGLE_PLAYER && level.numPlayingClients == 1) {
+			if ( g_gametype.integer == GT_SINGLE_PLAYER && level.numPlayingClients == 1 ) {
 				level.clients[level.sortedClients[i]].ps.persistant[PERS_RANK] = rank | RANK_TIED_FLAG;
 			}
 		}
 	}
 
 	// set the CS_SCORES1/2 configstrings, which will be visible to everyone
-	if (g_gametype.integer >= GT_TEAM && g_ffa_gt != 1) {
-		trap_SetConfigstring(CS_SCORES1, va("%i", level.teamScores[TEAM_RED]));
-		trap_SetConfigstring(CS_SCORES2, va("%i", level.teamScores[TEAM_BLUE]));
+	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+		trap_SetConfigstring( CS_SCORES1, va( "%i", level.teamScores[TEAM_RED] ) );
+		trap_SetConfigstring( CS_SCORES2, va( "%i", level.teamScores[TEAM_BLUE] ) );
 	} else {
-		if (level.numConnectedClients == 0) {
-			trap_SetConfigstring(CS_SCORES1, va("%i", SCORE_NOT_PRESENT));
-			trap_SetConfigstring(CS_SCORES2, va("%i", SCORE_NOT_PRESENT));
-		} else if (level.numConnectedClients == 1) {
-			trap_SetConfigstring(CS_SCORES1, va("%i", level.clients[level.sortedClients[0]].ps.persistant[PERS_SCORE]));
-			trap_SetConfigstring(CS_SCORES2, va("%i", SCORE_NOT_PRESENT));
+		if ( level.numConnectedClients == 0 ) {
+			trap_SetConfigstring( CS_SCORES1, va( "%i", SCORE_NOT_PRESENT ) );
+			trap_SetConfigstring( CS_SCORES2, va( "%i", SCORE_NOT_PRESENT ) );
+		} else if ( level.numConnectedClients == 1 ) {
+			trap_SetConfigstring( CS_SCORES1, va( "%i", level.clients[level.sortedClients[0]].ps.persistant[PERS_SCORE] ) );
+			trap_SetConfigstring( CS_SCORES2, va( "%i", SCORE_NOT_PRESENT ) );
 		} else {
-			trap_SetConfigstring(CS_SCORES1, va("%i", level.clients[level.sortedClients[0]].ps.persistant[PERS_SCORE]));
-			trap_SetConfigstring(CS_SCORES2, va("%i", level.clients[level.sortedClients[1]].ps.persistant[PERS_SCORE]));
+			trap_SetConfigstring( CS_SCORES1, va( "%i", level.clients[level.sortedClients[0]].ps.persistant[PERS_SCORE] ) );
+			trap_SetConfigstring( CS_SCORES2, va( "%i", level.clients[level.sortedClients[1]].ps.persistant[PERS_SCORE] ) );
 		}
 	}
 
@@ -1295,12 +1295,12 @@ void CalculateRanks(void) {
 	CheckExitRules();
 
 	// if we are at the intermission, send the new info to everyone
-	if (level.intermissiontime) {
+	if ( level.intermissiontime ) {
 		SendScoreboardMessageToAllClients();
 	}
 
-	if (g_humanplayers.integer != humanplayers) //Presume all spectators are humans!
-		trap_Cvar_Set("g_humanplayers", va("%i", humanplayers));
+	if ( g_humanplayers.integer != humanplayers ) //Presume all spectators are humans!
+		trap_Cvar_Set( "g_humanplayers", va( "%i", humanplayers ) );
 }
 
 /*
@@ -1319,13 +1319,13 @@ Do this at BeginIntermission time and whenever ranks are recalculated
 due to enters/exits/forced team changes
 ========================
 */
-void SendScoreboardMessageToAllClients(void) {
+void SendScoreboardMessageToAllClients( void ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED) {
-			DeathmatchScoreboardMessage(g_entities + i);
-			EliminationMessage(g_entities + i);
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
+			DeathmatchScoreboardMessage( g_entities + i );
+			EliminationMessage( g_entities + i );
 		}
 	}
 }
@@ -1337,12 +1337,12 @@ SendElimiantionMessageToAllClients
 Used to send information important to Elimination
 ========================
 */
-void SendEliminationMessageToAllClients(void) {
+void SendEliminationMessageToAllClients( void ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED) {
-			EliminationMessage(g_entities + i);
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
+			EliminationMessage( g_entities + i );
 		}
 	}
 }
@@ -1354,12 +1354,12 @@ SendDDtimetakenMessageToAllClients
 Do this if a team just started dominating.
 ========================
 */
-void SendDDtimetakenMessageToAllClients(void) {
+void SendDDtimetakenMessageToAllClients( void ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED) {
-			DoubleDominationScoreTimeMessage(g_entities + i);
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
+			DoubleDominationScoreTimeMessage( g_entities + i );
 		}
 	}
 }
@@ -1371,12 +1371,12 @@ SendAttackingTeamMessageToAllClients
 Used for CTF Elimination oneway
 ========================
 */
-static void SendAttackingTeamMessageToAllClients(void) {
+static void SendAttackingTeamMessageToAllClients( void ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED) {
-			AttackingTeamMessage(g_entities + i);
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
+			AttackingTeamMessage( g_entities + i );
 		}
 	}
 }
@@ -1388,12 +1388,12 @@ SendDominationPointsStatusMessageToAllClients
 Used for Standard domination
 ========================
 */
-void SendDominationPointsStatusMessageToAllClients(void) {
+void SendDominationPointsStatusMessageToAllClients( void ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED) {
-			DominationPointStatusMessage(g_entities + i);
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
+			DominationPointStatusMessage( g_entities + i );
 		}
 	}
 }
@@ -1405,12 +1405,12 @@ SendYourTeamMessageToTeam
 Tell all players on a given team who there allies are. Used for VoIP
 ========================
 */
-void SendYourTeamMessageToTeam(team_t team) {
+void SendYourTeamMessageToTeam( team_t team ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED && level.clients[i].sess.sessionTeam == team) {
-			YourTeamMessage(g_entities + i);
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED && level.clients[i].sess.sessionTeam == team ) {
+			YourTeamMessage( g_entities + i );
 		}
 	}
 }
@@ -1423,21 +1423,21 @@ When the intermission starts, this will be called for all players.
 If a new client connects, this will be called after the spawn function.
 ========================
 */
-void MoveClientToIntermission(gentity_t *ent) {
+void MoveClientToIntermission( gentity_t *ent ) {
 	// take out of follow mode if needed
-	if (ent->client->sess.spectatorState == SPECTATOR_FOLLOW) {
-		StopFollowing(ent);
+	if ( ent->client->sess.spectatorState == SPECTATOR_FOLLOW ) {
+		StopFollowing( ent );
 	}
 
 	FindIntermissionPoint();
 	// move to the spot
-	VectorCopy(level.intermission_origin, ent->s.origin);
-	VectorCopy(level.intermission_origin, ent->client->ps.origin);
-	VectorCopy(level.intermission_angle, ent->client->ps.viewangles);
+	VectorCopy( level.intermission_origin, ent->s.origin );
+	VectorCopy( level.intermission_origin, ent->client->ps.origin );
+	VectorCopy( level.intermission_angle, ent->client->ps.viewangles );
 	ent->client->ps.pm_type = PM_INTERMISSION;
 
 	// clean up powerup info
-	memset(ent->client->ps.powerups, 0, sizeof(ent->client->ps.powerups));
+	memset( ent->client->ps.powerups, 0, sizeof( ent->client->ps.powerups ) );
 
 	ent->client->ps.eFlags = 0;
 	ent->s.eFlags = 0;
@@ -1455,23 +1455,23 @@ FindIntermissionPoint
 This is also used for spectator spawns
 ==================
 */
-void FindIntermissionPoint(void) {
+void FindIntermissionPoint( void ) {
 	gentity_t *ent, *target;
 	vec3_t dir;
 
 	// find the intermission spot
-	ent = G_Find(NULL, FOFS(classname), "info_player_intermission");
-	if (!ent) { // the map creator forgot to put in an intermission point...
-		SelectSpawnPoint(vec3_origin, level.intermission_origin, level.intermission_angle);
+	ent = G_Find( NULL, FOFS( classname ), "info_player_intermission" );
+	if ( !ent ) { // the map creator forgot to put in an intermission point...
+		SelectSpawnPoint( vec3_origin, level.intermission_origin, level.intermission_angle );
 	} else {
-		VectorCopy(ent->s.origin, level.intermission_origin);
-		VectorCopy(ent->s.angles, level.intermission_angle);
+		VectorCopy( ent->s.origin, level.intermission_origin );
+		VectorCopy( ent->s.angles, level.intermission_angle );
 		// if it has a target, look towards it
-		if (ent->target) {
-			target = G_PickTarget(ent->target);
-			if (target) {
-				VectorSubtract(target->s.origin, level.intermission_origin, dir);
-				vectoangles(dir, level.intermission_angle);
+		if ( ent->target ) {
+			target = G_PickTarget( ent->target );
+			if ( target ) {
+				VectorSubtract( target->s.origin, level.intermission_origin, dir );
+				vectoangles( dir, level.intermission_angle );
 			}
 		}
 	}
@@ -1482,33 +1482,33 @@ void FindIntermissionPoint(void) {
 BeginIntermission
 ==================
 */
-void BeginIntermission(void) {
+void BeginIntermission( void ) {
 	int i;
 	gentity_t *client;
 
-	if (level.intermissiontime) {
+	if ( level.intermissiontime ) {
 		return; // already active
 	}
 
 	// if in tournement mode, change the wins / losses
-	if (g_gametype.integer == GT_TOURNAMENT) {
+	if ( g_gametype.integer == GT_TOURNAMENT ) {
 		AdjustTournamentScores();
 	}
 
 	level.intermissiontime = level.time;
 	// move all clients to the intermission point
-	for (i = 0; i < level.maxclients; i++) {
+	for ( i = 0; i < level.maxclients; i++ ) {
 		client = g_entities + i;
-		if (!client->inuse)
+		if ( !client->inuse )
 			continue;
 		// respawn if dead
-		if (client->health <= 0) {
-			ClientRespawn(client);
+		if ( client->health <= 0 ) {
+			ClientRespawn( client );
 		}
-		MoveClientToIntermission(client);
+		MoveClientToIntermission( client );
 	}
 	// if single player game
-	if (g_gametype.integer == GT_SINGLE_PLAYER) {
+	if ( g_gametype.integer == GT_SINGLE_PLAYER ) {
 		UpdateTournamentInfo();
 		SpawnModelsOnVictoryPads();
 	}
@@ -1524,7 +1524,7 @@ When the intermission has been exited, the server is either killed
 or moved to a new level based on the "nextmap" cvar 
 =============
 */
-void ExitLevel(void) {
+void ExitLevel( void ) {
 	int i;
 	gclient_t *cl;
 	char nextmap[MAX_STRING_CHARS];
@@ -1536,10 +1536,10 @@ void ExitLevel(void) {
 
 	// if we are running a tournement map, kick the loser to spectator status,
 	// which will automatically grab the next spectator and restart
-	if (g_gametype.integer == GT_TOURNAMENT) {
-		if (!level.restarted) {
+	if ( g_gametype.integer == GT_TOURNAMENT ) {
+		if ( !level.restarted ) {
 			RemoveTournamentLoser();
-			trap_SendConsoleCommand(EXEC_APPEND, "map_restart 0\n");
+			trap_SendConsoleCommand( EXEC_APPEND, "map_restart 0\n" );
 			level.restarted = qtrue;
 			level.changemap = NULL;
 			level.intermissiontime = 0;
@@ -1547,53 +1547,53 @@ void ExitLevel(void) {
 		return;
 	}
 
-	trap_Cvar_VariableStringBuffer("nextmap", nextmap, sizeof(nextmap));
-	trap_Cvar_VariableStringBuffer("d1", d1, sizeof(d1));
+	trap_Cvar_VariableStringBuffer( "nextmap", nextmap, sizeof( nextmap ) );
+	trap_Cvar_VariableStringBuffer( "d1", d1, sizeof( d1 ) );
 
-	trap_GetServerinfo(serverinfo, sizeof(serverinfo));
+	trap_GetServerinfo( serverinfo, sizeof( serverinfo ) );
 
 	//Here the game finds the nextmap if g_autonextmap is set
-	if (g_autonextmap.integer) {
+	if ( g_autonextmap.integer ) {
 		char filename[MAX_FILEPATH];
 		fileHandle_t file, mapfile;
 		//Look in g_mappools.string for the file to look for maps in
-		Q_strncpyz(filename, Info_ValueForKey(g_mappools.string, va("%i", g_gametype.integer)), MAX_FILEPATH);
+		Q_strncpyz( filename, Info_ValueForKey( g_mappools.string, va( "%i", g_gametype.integer ) ), MAX_FILEPATH );
 		//If we found a filename:
-		if (filename[0]) {
+		if ( filename[0] ) {
 			//Read the file:
-			trap_FS_FOpenFile(filename, &file, FS_READ);
-			if (!file)
-				trap_FS_FOpenFile(va("%s.org", filename), &file, FS_READ);
-			if (file) {
+			trap_FS_FOpenFile( filename, &file, FS_READ );
+			if ( !file )
+				trap_FS_FOpenFile( va( "%s.org", filename ), &file, FS_READ );
+			if ( file ) {
 				char buffer[4 * 1024];   // buffer to read file into
 				char mapnames[1024][20]; // Array of mapnames in the map pool
 				char *pointer;
 				int choice, count = 0; //The random choice from mapnames and count of mapnames
 				int i;
-				memset(&buffer, 0, sizeof(buffer));
-				trap_FS_Read(&buffer, sizeof(buffer), file);
+				memset( &buffer, 0, sizeof( buffer ) );
+				trap_FS_Read( &buffer, sizeof( buffer ), file );
 				pointer = buffer;
-				while (qtrue) {
-					Q_strncpyz(mapnames[count], COM_Parse(&pointer), 20);
-					if (!mapnames[count][0]) {
+				while ( qtrue ) {
+					Q_strncpyz( mapnames[count], COM_Parse( &pointer ), 20 );
+					if ( !mapnames[count][0] ) {
 						break;
 					}
-					G_Printf("Mapname in mappool: %s\n", mapnames[count]);
+					G_Printf( "Mapname in mappool: %s\n", mapnames[count] );
 					count++;
 				}
-				trap_FS_FCloseFile(file);
+				trap_FS_FCloseFile( file );
 				//It is possible that the maps in the file read are flawed, so we try up to ten times:
-				for (i = 0; i < 10; i++) {
-					choice = (count > 0) ? rand() % count : 0;
-					if (Q_stricmp(mapnames[choice], Info_ValueForKey(serverinfo, "mapname")) == 0)
+				for ( i = 0; i < 10; i++ ) {
+					choice = ( count > 0 ) ? rand() % count : 0;
+					if ( Q_stricmp( mapnames[choice], Info_ValueForKey( serverinfo, "mapname" ) ) == 0 )
 						continue;
 					//Now check that the map exists:
-					trap_FS_FOpenFile(va("maps/%s.bsp", mapnames[choice]), &mapfile, FS_READ);
-					if (mapfile) {
-						G_Printf("Picked map number %i - %s\n", choice, mapnames[choice]);
-						Q_strncpyz(nextmap, va("map %s", mapnames[choice]), sizeof(nextmap));
-						trap_Cvar_Set("nextmap", nextmap);
-						trap_FS_FCloseFile(mapfile);
+					trap_FS_FOpenFile( va( "maps/%s.bsp", mapnames[choice] ), &mapfile, FS_READ );
+					if ( mapfile ) {
+						G_Printf( "Picked map number %i - %s\n", choice, mapnames[choice] );
+						Q_strncpyz( nextmap, va( "map %s", mapnames[choice] ), sizeof( nextmap ) );
+						trap_Cvar_Set( "nextmap", nextmap );
+						trap_FS_FCloseFile( mapfile );
 						break;
 					}
 				}
@@ -1601,11 +1601,11 @@ void ExitLevel(void) {
 		}
 	}
 
-	if (!Q_stricmp(nextmap, "map_restart 0") && Q_stricmp(d1, "")) {
-		trap_Cvar_Set("nextmap", "vstr d2");
-		trap_SendConsoleCommand(EXEC_APPEND, "vstr d1\n");
+	if ( !Q_stricmp( nextmap, "map_restart 0" ) && Q_stricmp( d1, "" ) ) {
+		trap_Cvar_Set( "nextmap", "vstr d2" );
+		trap_SendConsoleCommand( EXEC_APPEND, "vstr d1\n" );
 	} else {
-		trap_SendConsoleCommand(EXEC_APPEND, "vstr nextmap\n");
+		trap_SendConsoleCommand( EXEC_APPEND, "vstr nextmap\n" );
 	}
 
 	level.changemap = NULL;
@@ -1614,9 +1614,9 @@ void ExitLevel(void) {
 	// reset all the scores so we don't enter the intermission again
 	level.teamScores[TEAM_RED] = 0;
 	level.teamScores[TEAM_BLUE] = 0;
-	for (i = 0; i < g_maxclients.integer; i++) {
+	for ( i = 0; i < g_maxclients.integer; i++ ) {
 		cl = level.clients + i;
-		if (cl->pers.connected != CON_CONNECTED) {
+		if ( cl->pers.connected != CON_CONNECTED ) {
 			continue;
 		}
 		cl->ps.persistant[PERS_SCORE] = 0;
@@ -1627,8 +1627,8 @@ void ExitLevel(void) {
 
 	// change all client states to connecting, so the early players into the
 	// next level will know the others aren't done reconnecting
-	for (i = 0; i < g_maxclients.integer; i++) {
-		if (level.clients[i].pers.connected == CON_CONNECTED) {
+	for ( i = 0; i < g_maxclients.integer; i++ ) {
+		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
 			level.clients[i].pers.connected = CON_CONNECTING;
 		}
 	}
@@ -1641,7 +1641,7 @@ G_LogPrintf
 Print to the logfile with a time stamp if it is open
 =================
 */
-void QDECL G_LogPrintf(const char *fmt, ...) {
+void QDECL G_LogPrintf( const char *fmt, ... ) {
 	va_list argptr;
 	char string[1024];
 	int min, tens, sec;
@@ -1653,21 +1653,21 @@ void QDECL G_LogPrintf(const char *fmt, ...) {
 	tens = sec / 10;
 	sec -= tens * 10;
 
-	Com_sprintf(string, sizeof(string), "%3i:%i%i ", min, tens, sec);
+	Com_sprintf( string, sizeof( string ), "%3i:%i%i ", min, tens, sec );
 
-	va_start(argptr, fmt);
-	Q_vsnprintf(string + 7, sizeof(string) - 7, fmt, argptr);
-	va_end(argptr);
+	va_start( argptr, fmt );
+	Q_vsnprintf( string + 7, sizeof( string ) - 7, fmt, argptr );
+	va_end( argptr );
 
-	if (g_dedicated.integer) {
-		G_Printf("%s", string + 7);
+	if ( g_dedicated.integer ) {
+		G_Printf( "%s", string + 7 );
 	}
 
-	if (!level.logFile) {
+	if ( !level.logFile ) {
 		return;
 	}
 
-	trap_FS_Write(string, strlen(string), level.logFile);
+	trap_FS_Write( string, strlen( string ), level.logFile );
 }
 
 /*
@@ -1677,44 +1677,44 @@ LogExit
 Append information about this game to the log file
 ================
 */
-void LogExit(const char *string) {
+void LogExit( const char *string ) {
 	int i, numSorted;
 	gclient_t *cl;
 
-	G_LogPrintf("Exit: %s\n", string);
+	G_LogPrintf( "Exit: %s\n", string );
 
 	level.intermissionQueued = level.time;
 
 	// this will keep the clients from playing any voice sounds
 	// that will get cut off when the queued intermission starts
-	trap_SetConfigstring(CS_INTERMISSION, "1");
+	trap_SetConfigstring( CS_INTERMISSION, "1" );
 
 	// don't send more than 32 scores (FIXME?)
 	numSorted = level.numConnectedClients;
-	if (numSorted > 32) {
+	if ( numSorted > 32 ) {
 		numSorted = 32;
 	}
 
-	if (g_gametype.integer >= GT_TEAM && g_ffa_gt != 1) {
-		G_LogPrintf("red:%i  blue:%i\n",
-		            level.teamScores[TEAM_RED], level.teamScores[TEAM_BLUE]);
+	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+		G_LogPrintf( "red:%i  blue:%i\n",
+		             level.teamScores[TEAM_RED], level.teamScores[TEAM_BLUE] );
 	}
 
-	for (i = 0; i < numSorted; i++) {
+	for ( i = 0; i < numSorted; i++ ) {
 		int ping;
 
 		cl = &level.clients[level.sortedClients[i]];
 
-		if (cl->sess.sessionTeam == TEAM_SPECTATOR) {
+		if ( cl->sess.sessionTeam == TEAM_SPECTATOR ) {
 			continue;
 		}
-		if (cl->pers.connected == CON_CONNECTING) {
+		if ( cl->pers.connected == CON_CONNECTING ) {
 			continue;
 		}
 
 		ping = cl->ps.ping < 999 ? cl->ps.ping : 999;
 
-		G_LogPrintf("score: %i  ping: %i  client: %i %s\n", cl->ps.persistant[PERS_SCORE], ping, level.sortedClients[i], cl->pers.netname);
+		G_LogPrintf( "score: %i  ping: %i  client: %i %s\n", cl->ps.persistant[PERS_SCORE], ping, level.sortedClients[i], cl->pers.netname );
 	}
 }
 
@@ -1728,13 +1728,13 @@ If one or more players have not acknowledged the continue, the game will
 wait 10 seconds before going on.
 =================
 */
-static void CheckIntermissionExit(void) {
+static void CheckIntermissionExit( void ) {
 	int ready, notReady, playerCount;
 	int i;
 	gclient_t *cl;
 	int readyMask;
 
-	if (g_gametype.integer == GT_SINGLE_PLAYER) {
+	if ( g_gametype.integer == GT_SINGLE_PLAYER ) {
 		return;
 	}
 
@@ -1743,19 +1743,19 @@ static void CheckIntermissionExit(void) {
 	notReady = 0;
 	readyMask = 0;
 	playerCount = 0;
-	for (i = 0; i < g_maxclients.integer; i++) {
+	for ( i = 0; i < g_maxclients.integer; i++ ) {
 		cl = level.clients + i;
-		if (cl->pers.connected != CON_CONNECTED) {
+		if ( cl->pers.connected != CON_CONNECTED ) {
 			continue;
 		}
-		if (g_entities[cl->ps.clientNum].r.svFlags & SVF_BOT) {
+		if ( g_entities[cl->ps.clientNum].r.svFlags & SVF_BOT ) {
 			continue;
 		}
 
 		playerCount++;
-		if (cl->readyToExit) {
+		if ( cl->readyToExit ) {
 			ready++;
-			if (i < 16) {
+			if ( i < 16 ) {
 				readyMask |= 1 << i;
 			}
 		} else {
@@ -1765,43 +1765,43 @@ static void CheckIntermissionExit(void) {
 
 	// copy the readyMask to each player's stats so
 	// it can be displayed on the scoreboard
-	for (i = 0; i < g_maxclients.integer; i++) {
+	for ( i = 0; i < g_maxclients.integer; i++ ) {
 		cl = level.clients + i;
-		if (cl->pers.connected != CON_CONNECTED) {
+		if ( cl->pers.connected != CON_CONNECTED ) {
 			continue;
 		}
 		cl->ps.stats[STAT_CLIENTS_READY] = readyMask;
 	}
 
 	// never exit in less than five seconds
-	if (level.time < level.intermissiontime + 5000) {
+	if ( level.time < level.intermissiontime + 5000 ) {
 		return;
 	}
 
 	// only test ready status when there are real players present
-	if (playerCount > 0) {
+	if ( playerCount > 0 ) {
 		// if nobody wants to go, clear timer
-		if (!ready) {
+		if ( !ready ) {
 			level.readyToExit = qfalse;
 			return;
 		}
 
 		// if everyone wants to go, go now
-		if (!notReady) {
+		if ( !notReady ) {
 			ExitLevel();
 			return;
 		}
 	}
 
 	// the first person to ready starts the ten second timeout
-	if (!level.readyToExit) {
+	if ( !level.readyToExit ) {
 		level.readyToExit = qtrue;
 		level.exitTime = level.time;
 	}
 
 	// if we have waited ten seconds since at least one player
 	// wanted to exit, go ahead
-	if (level.time < level.exitTime + 10000) {
+	if ( level.time < level.exitTime + 10000 ) {
 		return;
 	}
 
@@ -1813,22 +1813,22 @@ static void CheckIntermissionExit(void) {
 ScoreIsTied
 =============
 */
-static qboolean ScoreIsTied(void) {
+static qboolean ScoreIsTied( void ) {
 	int a, b;
 
-	if (level.numPlayingClients < 2) {
+	if ( level.numPlayingClients < 2 ) {
 		return qfalse;
 	}
 
 	//Sago: In Elimination and Oneway Flag Capture teams must win by two points.
-	if (g_gametype.integer == GT_ELIMINATION ||
-	    (g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer)) {
-		return (level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] ||
-		        level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] + 1 ||
-		        level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] - 1);
+	if ( g_gametype.integer == GT_ELIMINATION ||
+	     ( g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer ) ) {
+		return ( level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] ||
+		         level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] + 1 ||
+		         level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] - 1 );
 	}
 
-	if (g_gametype.integer >= GT_TEAM && g_ffa_gt != 1) {
+	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
 		return level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE];
 	}
 
@@ -1847,27 +1847,27 @@ and the time everyone is moved to the intermission spot, so you
 can see the last frag.
 =================
 */
-void CheckExitRules(void) {
+void CheckExitRules( void ) {
 	int i;
 	gclient_t *cl;
 	// if at the intermission, wait for all non-bots to
 	// signal ready, then go to next level
-	if (level.intermissiontime) {
+	if ( level.intermissiontime ) {
 		CheckIntermissionExit();
 		return;
 	} else {
 		//sago: Find the reason for this to be neccesary.
-		for (i = 0; i < g_maxclients.integer; i++) {
+		for ( i = 0; i < g_maxclients.integer; i++ ) {
 			cl = level.clients + i;
-			if (cl->pers.connected != CON_CONNECTED) {
+			if ( cl->pers.connected != CON_CONNECTED ) {
 				continue;
 			}
 			cl->ps.stats[STAT_CLIENTS_READY] = 0;
 		}
 	}
 
-	if (level.intermissionQueued) {
-		if (level.time - level.intermissionQueued >= INTERMISSION_DELAY_TIME) {
+	if ( level.intermissionQueued ) {
+		if ( level.time - level.intermissionQueued >= INTERMISSION_DELAY_TIME ) {
 			level.intermissionQueued = 0;
 			BeginIntermission();
 		}
@@ -1875,65 +1875,65 @@ void CheckExitRules(void) {
 	}
 
 	// check for sudden death
-	if (ScoreIsTied()) {
+	if ( ScoreIsTied() ) {
 		// always wait for sudden death
 		return;
 	}
 
-	if (g_timelimit.integer > 0 && !level.warmupTime) {
-		if ((level.time - level.startTime) / 60000 >= g_timelimit.integer) {
-			trap_SendServerCommand(-1, "print \"Timelimit hit.\n\"");
-			LogExit("Timelimit hit.");
+	if ( g_timelimit.integer > 0 && !level.warmupTime ) {
+		if ( ( level.time - level.startTime ) / 60000 >= g_timelimit.integer ) {
+			trap_SendServerCommand( -1, "print \"Timelimit hit.\n\"" );
+			LogExit( "Timelimit hit." );
 			return;
 		}
 	}
 
-	if (level.numPlayingClients < 2) {
+	if ( level.numPlayingClients < 2 ) {
 		return;
 	}
 
-	if ((g_gametype.integer < GT_CTF || g_ffa_gt > 0) && g_fraglimit.integer) {
-		if (level.teamScores[TEAM_RED] >= g_fraglimit.integer) {
-			trap_SendServerCommand(-1, "print \"Red hit the fraglimit.\n\"");
-			LogExit("Fraglimit hit.");
+	if ( ( g_gametype.integer < GT_CTF || g_ffa_gt > 0 ) && g_fraglimit.integer ) {
+		if ( level.teamScores[TEAM_RED] >= g_fraglimit.integer ) {
+			trap_SendServerCommand( -1, "print \"Red hit the fraglimit.\n\"" );
+			LogExit( "Fraglimit hit." );
 			return;
 		}
 
-		if (level.teamScores[TEAM_BLUE] >= g_fraglimit.integer) {
-			trap_SendServerCommand(-1, "print \"Blue hit the fraglimit.\n\"");
-			LogExit("Fraglimit hit.");
+		if ( level.teamScores[TEAM_BLUE] >= g_fraglimit.integer ) {
+			trap_SendServerCommand( -1, "print \"Blue hit the fraglimit.\n\"" );
+			LogExit( "Fraglimit hit." );
 			return;
 		}
 
-		for (i = 0; i < g_maxclients.integer; i++) {
+		for ( i = 0; i < g_maxclients.integer; i++ ) {
 			cl = level.clients + i;
-			if (cl->pers.connected != CON_CONNECTED) {
+			if ( cl->pers.connected != CON_CONNECTED ) {
 				continue;
 			}
-			if (cl->sess.sessionTeam != TEAM_FREE) {
+			if ( cl->sess.sessionTeam != TEAM_FREE ) {
 				continue;
 			}
 
-			if (cl->ps.persistant[PERS_SCORE] >= g_fraglimit.integer) {
-				LogExit("Fraglimit hit.");
-				trap_SendServerCommand(-1, va("print \"%s" S_COLOR_WHITE " hit the fraglimit.\n\"",
-				                              cl->pers.netname));
+			if ( cl->ps.persistant[PERS_SCORE] >= g_fraglimit.integer ) {
+				LogExit( "Fraglimit hit." );
+				trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " hit the fraglimit.\n\"",
+				                                cl->pers.netname ) );
 				return;
 			}
 		}
 	}
 
-	if ((g_gametype.integer >= GT_CTF && g_ffa_gt < 1) && g_capturelimit.integer) {
+	if ( ( g_gametype.integer >= GT_CTF && g_ffa_gt < 1 ) && g_capturelimit.integer ) {
 
-		if (level.teamScores[TEAM_RED] >= g_capturelimit.integer) {
-			trap_SendServerCommand(-1, "print \"Red hit the capturelimit.\n\"");
-			LogExit("Capturelimit hit.");
+		if ( level.teamScores[TEAM_RED] >= g_capturelimit.integer ) {
+			trap_SendServerCommand( -1, "print \"Red hit the capturelimit.\n\"" );
+			LogExit( "Capturelimit hit." );
 			return;
 		}
 
-		if (level.teamScores[TEAM_BLUE] >= g_capturelimit.integer) {
-			trap_SendServerCommand(-1, "print \"Blue hit the capturelimit.\n\"");
-			LogExit("Capturelimit hit.");
+		if ( level.teamScores[TEAM_BLUE] >= g_capturelimit.integer ) {
+			trap_SendServerCommand( -1, "print \"Blue hit the capturelimit.\n\"" );
+			LogExit( "Capturelimit hit." );
 			return;
 		}
 	}
@@ -1946,11 +1946,11 @@ StartLMSRound
 LMS - Last man Stading functions
 =================
 */
-static void StartLMSRound(void) {
+static void StartLMSRound( void ) {
 	int countsLiving;
-	countsLiving = TeamLivingCount(-1, TEAM_FREE);
-	if (countsLiving < 2) {
-		trap_SendServerCommand(-1, "print \"Not enough players to start the round\n\"");
+	countsLiving = TeamLivingCount( -1, TEAM_FREE );
+	if ( countsLiving < 2 ) {
+		trap_SendServerCommand( -1, "print \"Not enough players to start the round\n\"" );
 		level.roundNumberStarted = level.roundNumber - 1;
 		level.roundStartTime = level.time + 1000 * g_elimination_warmup.integer;
 		return;
@@ -1959,7 +1959,7 @@ static void StartLMSRound(void) {
 	//If we are enough to start a round:
 	level.roundNumberStarted = level.roundNumber; //Set numbers
 
-	G_LogPrintf("LMS: %i %i %i: Round %i has started!\n", level.roundNumber, -1, 0, level.roundNumber);
+	G_LogPrintf( "LMS: %i %i %i: Round %i has started!\n", level.roundNumber, -1, 0, level.roundNumber );
 
 	SendEliminationMessageToAllClients();
 	EnableWeapons();
@@ -1972,13 +1972,13 @@ StartEliminationRound
 The elimination start function
 =================
 */
-static void StartEliminationRound(void) {
+static void StartEliminationRound( void ) {
 
 	int countsLiving[TEAM_NUM_TEAMS];
-	countsLiving[TEAM_BLUE] = TeamLivingCount(-1, TEAM_BLUE);
-	countsLiving[TEAM_RED] = TeamLivingCount(-1, TEAM_RED);
-	if ((countsLiving[TEAM_BLUE] == 0) || (countsLiving[TEAM_RED] == 0)) {
-		trap_SendServerCommand(-1, "print \"Not enough players to start the round\n\"");
+	countsLiving[TEAM_BLUE] = TeamLivingCount( -1, TEAM_BLUE );
+	countsLiving[TEAM_RED] = TeamLivingCount( -1, TEAM_RED );
+	if ( ( countsLiving[TEAM_BLUE] == 0 ) || ( countsLiving[TEAM_RED] == 0 ) ) {
+		trap_SendServerCommand( -1, "print \"Not enough players to start the round\n\"" );
 		level.roundNumberStarted = level.roundNumber - 1;
 		level.roundRespawned = qfalse;
 		//Remember that one of the teams is empty!
@@ -1992,17 +1992,17 @@ static void StartEliminationRound(void) {
 	level.roundNumberStarted = level.roundNumber; //Set numbers
 	level.roundRedPlayers = countsLiving[TEAM_RED];
 	level.roundBluePlayers = countsLiving[TEAM_BLUE];
-	if (g_gametype.integer == GT_CTF_ELIMINATION) {
-		Team_ReturnFlag(TEAM_RED);
-		Team_ReturnFlag(TEAM_BLUE);
+	if ( g_gametype.integer == GT_CTF_ELIMINATION ) {
+		Team_ReturnFlag( TEAM_RED );
+		Team_ReturnFlag( TEAM_BLUE );
 	}
-	if (g_gametype.integer == GT_ELIMINATION) {
-		G_LogPrintf("ELIMINATION: %i %i %i: Round %i has started!\n", level.roundNumber, -1, 0, level.roundNumber);
-	} else if (g_gametype.integer == GT_CTF_ELIMINATION) {
-		G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: Round %i has started!\n", level.roundNumber, -1, -1, 4, level.roundNumber);
+	if ( g_gametype.integer == GT_ELIMINATION ) {
+		G_LogPrintf( "ELIMINATION: %i %i %i: Round %i has started!\n", level.roundNumber, -1, 0, level.roundNumber );
+	} else if ( g_gametype.integer == GT_CTF_ELIMINATION ) {
+		G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: Round %i has started!\n", level.roundNumber, -1, -1, 4, level.roundNumber );
 	}
 	SendEliminationMessageToAllClients();
-	if (g_elimination_ctf_oneway.integer)
+	if ( g_elimination_ctf_oneway.integer )
 		SendAttackingTeamMessageToAllClients(); //Ensure that everyone know who should attack.
 	EnableWeapons();
 	CheckTeamCount();
@@ -2015,14 +2015,14 @@ EndEliminationRound
 Things to do at end of round
 =================
 */
-void EndEliminationRound(void) {
+void EndEliminationRound( void ) {
 	DisableWeapons();
 	level.roundNumber++;
 	level.roundStartTime = level.time + 1000 * g_elimination_warmup.integer;
 	SendEliminationMessageToAllClients();
 	CalculateRanks();
 	level.roundRespawned = qfalse;
-	if (g_elimination_ctf_oneway.integer)
+	if ( g_elimination_ctf_oneway.integer )
 		SendAttackingTeamMessageToAllClients();
 	CheckTeamCount();
 }
@@ -2034,14 +2034,14 @@ RestartEliminationRound
 Things to do if we don't want to move the roundNumber
 =================
 */
-static void RestartEliminationRound(void) {
+static void RestartEliminationRound( void ) {
 	DisableWeapons();
 	level.roundNumberStarted = level.roundNumber - 1;
 	level.roundStartTime = level.time + 1000 * g_elimination_warmup.integer;
-	if (!level.intermissiontime)
+	if ( !level.intermissiontime )
 		SendEliminationMessageToAllClients();
 	level.roundRespawned = qfalse;
-	if (g_elimination_ctf_oneway.integer)
+	if ( g_elimination_ctf_oneway.integer )
 		SendAttackingTeamMessageToAllClients();
 	CheckTeamCount();
 }
@@ -2053,13 +2053,13 @@ WarmupEliminationRound
 Things to do during match warmup
 =================
 */
-static void WarmupEliminationRound(void) {
+static void WarmupEliminationRound( void ) {
 	EnableWeapons();
 	level.roundNumberStarted = level.roundNumber - 1;
 	level.roundStartTime = level.time + 1000 * g_elimination_warmup.integer;
 	SendEliminationMessageToAllClients();
 	level.roundRespawned = qfalse;
-	if (g_elimination_ctf_oneway.integer)
+	if ( g_elimination_ctf_oneway.integer )
 		SendAttackingTeamMessageToAllClients();
 }
 
@@ -2076,13 +2076,13 @@ FUNCTIONS CALLED EVERY FRAME
 CheckDoubleDomination
 =============
 */
-static void CheckDoubleDomination(void) {
-	if (level.numPlayingClients < 1) {
+static void CheckDoubleDomination( void ) {
+	if ( level.numPlayingClients < 1 ) {
 		return;
 	}
 
-	if (level.warmupTime != 0) {
-		if (((level.pointStatusA == TEAM_BLUE && level.pointStatusB == TEAM_BLUE) || (level.pointStatusA == TEAM_RED && level.pointStatusB == TEAM_RED)) && level.timeTaken + 10 * 1000 <= level.time) {
+	if ( level.warmupTime != 0 ) {
+		if ( ( ( level.pointStatusA == TEAM_BLUE && level.pointStatusB == TEAM_BLUE ) || ( level.pointStatusA == TEAM_RED && level.pointStatusB == TEAM_RED ) ) && level.timeTaken + 10 * 1000 <= level.time ) {
 			Team_RemoveDoubleDominationPoints();
 			level.roundStartTime = level.time + 10 * 1000;
 			SendScoreboardMessageToAllClients();
@@ -2090,20 +2090,20 @@ static void CheckDoubleDomination(void) {
 		return;
 	}
 
-	if (g_gametype.integer != GT_DOUBLE_D)
+	if ( g_gametype.integer != GT_DOUBLE_D )
 		return;
 
 	//Don't score if we are in intermission. Both points might have been taken when we went into intermission
-	if (level.intermissiontime)
+	if ( level.intermissiontime )
 		return;
 
-	if (level.pointStatusA == TEAM_RED && level.pointStatusB == TEAM_RED && level.timeTaken + 10 * 1000 <= level.time) {
+	if ( level.pointStatusA == TEAM_RED && level.pointStatusB == TEAM_RED && level.timeTaken + 10 * 1000 <= level.time ) {
 		//Red scores
-		trap_SendServerCommand(-1, "print \"Red team scores!\n\"");
-		AddTeamScore(level.intermission_origin, TEAM_RED, 1);
-		G_LogPrintf("DD: %i %i %i: %s scores!\n", -1, TEAM_RED, 2, TeamName(TEAM_RED));
-		Team_ForceGesture(TEAM_RED);
-		Team_DD_bonusAtPoints(TEAM_RED);
+		trap_SendServerCommand( -1, "print \"Red team scores!\n\"" );
+		AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
+		G_LogPrintf( "DD: %i %i %i: %s scores!\n", -1, TEAM_RED, 2, TeamName( TEAM_RED ) );
+		Team_ForceGesture( TEAM_RED );
+		Team_DD_bonusAtPoints( TEAM_RED );
 		Team_RemoveDoubleDominationPoints();
 		//We start again in 10 seconds:
 		level.roundStartTime = level.time + 10 * 1000;
@@ -2111,13 +2111,13 @@ static void CheckDoubleDomination(void) {
 		CalculateRanks();
 	}
 
-	if (level.pointStatusA == TEAM_BLUE && level.pointStatusB == TEAM_BLUE && level.timeTaken + 10 * 1000 <= level.time) {
+	if ( level.pointStatusA == TEAM_BLUE && level.pointStatusB == TEAM_BLUE && level.timeTaken + 10 * 1000 <= level.time ) {
 		//Blue scores
-		trap_SendServerCommand(-1, "print \"Blue team scores!\n\"");
-		AddTeamScore(level.intermission_origin, TEAM_BLUE, 1);
-		G_LogPrintf("DD: %i %i %i: %s scores!\n", -1, TEAM_BLUE, 2, TeamName(TEAM_BLUE));
-		Team_ForceGesture(TEAM_BLUE);
-		Team_DD_bonusAtPoints(TEAM_BLUE);
+		trap_SendServerCommand( -1, "print \"Blue team scores!\n\"" );
+		AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
+		G_LogPrintf( "DD: %i %i %i: %s scores!\n", -1, TEAM_BLUE, 2, TeamName( TEAM_BLUE ) );
+		Team_ForceGesture( TEAM_BLUE );
+		Team_DD_bonusAtPoints( TEAM_BLUE );
 		Team_RemoveDoubleDominationPoints();
 		//We start again in 10 seconds:
 		level.roundStartTime = level.time + 10 * 1000;
@@ -2125,8 +2125,8 @@ static void CheckDoubleDomination(void) {
 		CalculateRanks();
 	}
 
-	if ((level.pointStatusA == TEAM_NONE || level.pointStatusB == TEAM_NONE) && level.time > level.roundStartTime) {
-		trap_SendServerCommand(-1, "print \"A new round has started\n\"");
+	if ( ( level.pointStatusA == TEAM_NONE || level.pointStatusB == TEAM_NONE ) && level.time > level.roundStartTime ) {
+		trap_SendServerCommand( -1, "print \"A new round has started\n\"" );
 		Team_SpawnDoubleDominationPoints();
 		SendScoreboardMessageToAllClients();
 	}
@@ -2137,81 +2137,81 @@ static void CheckDoubleDomination(void) {
 CheckLMS
 =============
 */
-static void CheckLMS(void) {
+static void CheckLMS( void ) {
 	int mode;
 	int activeWarmup;
 
 	mode = g_lms_mode.integer;
 	activeWarmup = g_elimination_activewarmup.integer;
-	if (level.numPlayingClients < 1) {
+	if ( level.numPlayingClients < 1 ) {
 		return;
 	}
 
 	//We don't want to do anything in intermission
-	if (level.intermissiontime) {
-		if (level.roundRespawned) {
+	if ( level.intermissiontime ) {
+		if ( level.roundRespawned ) {
 			RestartEliminationRound();
 		}
 		level.roundStartTime = level.time; //so that a player might join at any time to fix the bots+no humans+autojoin bug
 		return;
 	}
 
-	if (g_gametype.integer == GT_LMS) {
+	if ( g_gametype.integer == GT_LMS ) {
 		int countsLiving[TEAM_NUM_TEAMS];
-		countsLiving[TEAM_FREE] = TeamLivingCount(-1, TEAM_FREE);
-		if (countsLiving[TEAM_FREE] == 1 && level.roundNumber == level.roundNumberStarted) {
-			if (mode <= 1)
+		countsLiving[TEAM_FREE] = TeamLivingCount( -1, TEAM_FREE );
+		if ( countsLiving[TEAM_FREE] == 1 && level.roundNumber == level.roundNumberStarted ) {
+			if ( mode <= 1 )
 				LMSpoint();
-			trap_SendServerCommand(-1, "print \"We have a winner!\n\"");
+			trap_SendServerCommand( -1, "print \"We have a winner!\n\"" );
 			EndEliminationRound();
-			Team_ForceGesture(TEAM_FREE);
+			Team_ForceGesture( TEAM_FREE );
 		}
 
-		if (countsLiving[TEAM_FREE] == 0 && level.roundNumber == level.roundNumberStarted) {
-			trap_SendServerCommand(-1, "print \"All death... how sad\n\"");
+		if ( countsLiving[TEAM_FREE] == 0 && level.roundNumber == level.roundNumberStarted ) {
+			trap_SendServerCommand( -1, "print \"All death... how sad\n\"" );
 			EndEliminationRound();
 		}
 
-		if ((g_elimination_roundtime.integer) && (level.roundNumber == level.roundNumberStarted) && (g_lms_mode.integer == 1 || g_lms_mode.integer == 3) && (level.time >= level.roundStartTime + 1000 * g_elimination_roundtime.integer)) {
-			trap_SendServerCommand(-1, "print \"Time up - Overtime disabled\n\"");
-			if (mode <= 1)
+		if ( ( g_elimination_roundtime.integer ) && ( level.roundNumber == level.roundNumberStarted ) && ( g_lms_mode.integer == 1 || g_lms_mode.integer == 3 ) && ( level.time >= level.roundStartTime + 1000 * g_elimination_roundtime.integer ) ) {
+			trap_SendServerCommand( -1, "print \"Time up - Overtime disabled\n\"" );
+			if ( mode <= 1 )
 				LMSpoint();
 			EndEliminationRound();
 		}
 
 		//This might be better placed another place:
-		if (activeWarmup < 2)
+		if ( activeWarmup < 2 )
 			activeWarmup = 2;                                //We need at least 2 seconds to spawn all players
-		if (activeWarmup >= g_elimination_warmup.integer)    //This must not be true
+		if ( activeWarmup >= g_elimination_warmup.integer )  //This must not be true
 			g_elimination_warmup.integer = activeWarmup + 1; //Increase warmup
 
 		//Force respawn
-		if (level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * activeWarmup && !level.roundRespawned) {
+		if ( level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * activeWarmup && !level.roundRespawned ) {
 			level.roundRespawned = qtrue;
 			RespawnAll();
 			DisableWeapons();
 			SendEliminationMessageToAllClients();
 		}
 
-		if (level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * activeWarmup) {
+		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * activeWarmup ) {
 			RespawnDead();
 		}
 
-		if (level.roundNumber == level.roundNumberStarted) {
+		if ( level.roundNumber == level.roundNumberStarted ) {
 			EnableWeapons();
 		}
 
-		if ((level.roundNumber > level.roundNumberStarted) && (level.time >= level.roundStartTime))
+		if ( ( level.roundNumber > level.roundNumberStarted ) && ( level.time >= level.roundStartTime ) )
 			StartLMSRound();
 
-		if (level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime && level.numPlayingClients < 2) {
+		if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime && level.numPlayingClients < 2 ) {
 			RespawnDead();            //Allow player to run around anyway
 			WarmupEliminationRound(); //Start over
 			return;
 		}
 
-		if (level.warmupTime != 0) {
-			if (level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime) {
+		if ( level.warmupTime != 0 ) {
+			if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) {
 				RespawnDead();
 				WarmupEliminationRound();
 			}
@@ -2224,157 +2224,157 @@ static void CheckLMS(void) {
 CheckElimination
 =============
 */
-static void CheckElimination(void) {
+static void CheckElimination( void ) {
 	int activeWarmup;
 
 	activeWarmup = g_elimination_activewarmup.integer;
 
-	if (level.numPlayingClients < 1) {
-		if ((g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION) &&
-		    (level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime))
+	if ( level.numPlayingClients < 1 ) {
+		if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) &&
+		     ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) )
 			RestartEliminationRound(); //For spectators
 		return;
 	}
 
 	//We don't want to do anything in intermission
-	if (level.intermissiontime) {
-		if (level.roundRespawned)
+	if ( level.intermissiontime ) {
+		if ( level.roundRespawned )
 			RestartEliminationRound();
 		level.roundStartTime = level.time + 1000 * g_elimination_warmup.integer;
 		return;
 	}
 
-	if (g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION) {
+	if ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) {
 		int counts[TEAM_NUM_TEAMS];
 		int countsLiving[TEAM_NUM_TEAMS];
 		int countsHealth[TEAM_NUM_TEAMS];
-		counts[TEAM_BLUE] = TeamCount(-1, TEAM_BLUE);
-		counts[TEAM_RED] = TeamCount(-1, TEAM_RED);
+		counts[TEAM_BLUE] = TeamCount( -1, TEAM_BLUE );
+		counts[TEAM_RED] = TeamCount( -1, TEAM_RED );
 
-		countsLiving[TEAM_BLUE] = TeamLivingCount(-1, TEAM_BLUE);
-		countsLiving[TEAM_RED] = TeamLivingCount(-1, TEAM_RED);
+		countsLiving[TEAM_BLUE] = TeamLivingCount( -1, TEAM_BLUE );
+		countsLiving[TEAM_RED] = TeamLivingCount( -1, TEAM_RED );
 
-		countsHealth[TEAM_BLUE] = TeamHealthCount(-1, TEAM_BLUE);
-		countsHealth[TEAM_RED] = TeamHealthCount(-1, TEAM_RED);
+		countsHealth[TEAM_BLUE] = TeamHealthCount( -1, TEAM_BLUE );
+		countsHealth[TEAM_RED] = TeamHealthCount( -1, TEAM_RED );
 
-		if (level.roundBluePlayers != 0 && level.roundRedPlayers != 0) { //Cannot score if one of the team never got any living players
-			if ((countsLiving[TEAM_BLUE] == 0) && (level.roundNumber == level.roundNumberStarted)) {
+		if ( level.roundBluePlayers != 0 && level.roundRedPlayers != 0 ) { //Cannot score if one of the team never got any living players
+			if ( ( countsLiving[TEAM_BLUE] == 0 ) && ( level.roundNumber == level.roundNumberStarted ) ) {
 				//Blue team has been eliminated!
-				trap_SendServerCommand(-1, "print \"Blue Team eliminated!\n\"");
-				AddTeamScore(level.intermission_origin, TEAM_RED, 1);
-				if (g_gametype.integer == GT_ELIMINATION) {
-					G_LogPrintf("ELIMINATION: %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, TEAM_RED, 1, TeamName(TEAM_RED), level.roundNumber);
+				trap_SendServerCommand( -1, "print \"Blue Team eliminated!\n\"" );
+				AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
+				if ( g_gametype.integer == GT_ELIMINATION ) {
+					G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, TEAM_RED, 1, TeamName( TEAM_RED ), level.roundNumber );
 				} else {
-					G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, -1, TEAM_RED, 6, TeamName(TEAM_RED), level.roundNumber);
+					G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, -1, TEAM_RED, 6, TeamName( TEAM_RED ), level.roundNumber );
 				}
 				EndEliminationRound();
-				Team_ForceGesture(TEAM_RED);
-			} else if ((countsLiving[TEAM_RED] == 0) && (level.roundNumber == level.roundNumberStarted)) {
+				Team_ForceGesture( TEAM_RED );
+			} else if ( ( countsLiving[TEAM_RED] == 0 ) && ( level.roundNumber == level.roundNumberStarted ) ) {
 				//Red team eliminated!
-				trap_SendServerCommand(-1, "print \"Red Team eliminated!\n\"");
-				AddTeamScore(level.intermission_origin, TEAM_BLUE, 1);
-				if (g_gametype.integer == GT_ELIMINATION) {
-					G_LogPrintf("ELIMINATION: %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, TEAM_BLUE, 1, TeamName(TEAM_BLUE), level.roundNumber);
+				trap_SendServerCommand( -1, "print \"Red Team eliminated!\n\"" );
+				AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
+				if ( g_gametype.integer == GT_ELIMINATION ) {
+					G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, TEAM_BLUE, 1, TeamName( TEAM_BLUE ), level.roundNumber );
 				} else {
-					G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, -1, TEAM_BLUE, 6, TeamName(TEAM_BLUE), level.roundNumber);
+					G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, -1, TEAM_BLUE, 6, TeamName( TEAM_BLUE ), level.roundNumber );
 				}
 				EndEliminationRound();
-				Team_ForceGesture(TEAM_BLUE);
+				Team_ForceGesture( TEAM_BLUE );
 			}
 		}
 
 		//Time up
-		if ((level.roundNumber == level.roundNumberStarted) && (g_elimination_roundtime.integer) && (level.time >= level.roundStartTime + 1000 * g_elimination_roundtime.integer)) {
-			trap_SendServerCommand(-1, "print \"No teams eliminated.\n\"");
+		if ( ( level.roundNumber == level.roundNumberStarted ) && ( g_elimination_roundtime.integer ) && ( level.time >= level.roundStartTime + 1000 * g_elimination_roundtime.integer ) ) {
+			trap_SendServerCommand( -1, "print \"No teams eliminated.\n\"" );
 
-			if (level.roundBluePlayers != 0 && level.roundRedPlayers != 0) { //We don't want to divide by zero. (should not be possible)
-				if (g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer) {
+			if ( level.roundBluePlayers != 0 && level.roundRedPlayers != 0 ) { //We don't want to divide by zero. (should not be possible)
+				if ( g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer ) {
 					//One way CTF, make defensice team the winner.
-					if (G_GetAttackingTeam() == TEAM_RED) { //Red was attacking
-						trap_SendServerCommand(-1, "print \"Blue team defended the base\n\"");
-						AddTeamScore(level.intermission_origin, TEAM_BLUE, 1);
-						G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i by defending the flag!\n", level.roundNumber, -1, TEAM_BLUE, 5, TeamName(TEAM_BLUE), level.roundNumber);
+					if ( G_GetAttackingTeam() == TEAM_RED ) { //Red was attacking
+						trap_SendServerCommand( -1, "print \"Blue team defended the base\n\"" );
+						AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
+						G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by defending the flag!\n", level.roundNumber, -1, TEAM_BLUE, 5, TeamName( TEAM_BLUE ), level.roundNumber );
 					} else {
-						trap_SendServerCommand(-1, "print \"Red team defended the base\n\"");
-						AddTeamScore(level.intermission_origin, TEAM_RED, 1);
-						G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i by defending the flag!\n", level.roundNumber, -1, TEAM_RED, 5, TeamName(TEAM_RED), level.roundNumber);
+						trap_SendServerCommand( -1, "print \"Red team defended the base\n\"" );
+						AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
+						G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by defending the flag!\n", level.roundNumber, -1, TEAM_RED, 5, TeamName( TEAM_RED ), level.roundNumber );
 					}
-				} else if (((double)countsLiving[TEAM_RED]) / ((double)level.roundRedPlayers) > ((double)countsLiving[TEAM_BLUE]) / ((double)level.roundBluePlayers)) {
+				} else if ( ( (double)countsLiving[TEAM_RED] ) / ( (double)level.roundRedPlayers ) > ( (double)countsLiving[TEAM_BLUE] ) / ( (double)level.roundBluePlayers ) ) {
 					//Red team has higher procentage survivors
-					trap_SendServerCommand(-1, "print \"Red team has most survivers!\n\"");
-					AddTeamScore(level.intermission_origin, TEAM_RED, 1);
-					if (g_gametype.integer == GT_ELIMINATION) {
-						G_LogPrintf("ELIMINATION: %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, TEAM_RED, 2, TeamName(TEAM_RED), level.roundNumber);
+					trap_SendServerCommand( -1, "print \"Red team has most survivers!\n\"" );
+					AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
+					if ( g_gametype.integer == GT_ELIMINATION ) {
+						G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, TEAM_RED, 2, TeamName( TEAM_RED ), level.roundNumber );
 					} else {
-						G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, -1, TEAM_RED, 7, TeamName(TEAM_RED), level.roundNumber);
+						G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, -1, TEAM_RED, 7, TeamName( TEAM_RED ), level.roundNumber );
 					}
-				} else if (((double)countsLiving[TEAM_RED]) / ((double)level.roundRedPlayers) < ((double)countsLiving[TEAM_BLUE]) / ((double)level.roundBluePlayers)) {
+				} else if ( ( (double)countsLiving[TEAM_RED] ) / ( (double)level.roundRedPlayers ) < ( (double)countsLiving[TEAM_BLUE] ) / ( (double)level.roundBluePlayers ) ) {
 					//Blue team has higher procentage survivors
-					trap_SendServerCommand(-1, "print \"Blue team has most survivers!\n\"");
-					AddTeamScore(level.intermission_origin, TEAM_BLUE, 1);
-					if (g_gametype.integer == GT_ELIMINATION) {
-						G_LogPrintf("ELIMINATION: %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, TEAM_BLUE, 2, TeamName(TEAM_BLUE), level.roundNumber);
+					trap_SendServerCommand( -1, "print \"Blue team has most survivers!\n\"" );
+					AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
+					if ( g_gametype.integer == GT_ELIMINATION ) {
+						G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, TEAM_BLUE, 2, TeamName( TEAM_BLUE ), level.roundNumber );
 					} else {
-						G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, -1, TEAM_BLUE, 7, TeamName(TEAM_BLUE), level.roundNumber);
+						G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, -1, TEAM_BLUE, 7, TeamName( TEAM_BLUE ), level.roundNumber );
 					}
-				} else if (countsHealth[TEAM_RED] > countsHealth[TEAM_BLUE]) {
+				} else if ( countsHealth[TEAM_RED] > countsHealth[TEAM_BLUE] ) {
 					//Red team has more health
-					trap_SendServerCommand(-1, "print \"Red team has more health left!\n\"");
-					AddTeamScore(level.intermission_origin, TEAM_RED, 1);
-					if (g_gametype.integer == GT_ELIMINATION) {
-						G_LogPrintf("ELIMINATION: %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, TEAM_RED, 3, TeamName(TEAM_RED), level.roundNumber);
+					trap_SendServerCommand( -1, "print \"Red team has more health left!\n\"" );
+					AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
+					if ( g_gametype.integer == GT_ELIMINATION ) {
+						G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, TEAM_RED, 3, TeamName( TEAM_RED ), level.roundNumber );
 					} else {
-						G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, -1, TEAM_RED, 8, TeamName(TEAM_RED), level.roundNumber);
+						G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, -1, TEAM_RED, 8, TeamName( TEAM_RED ), level.roundNumber );
 					}
-				} else if (countsHealth[TEAM_RED] < countsHealth[TEAM_BLUE]) {
+				} else if ( countsHealth[TEAM_RED] < countsHealth[TEAM_BLUE] ) {
 					//Blue team has more health
-					trap_SendServerCommand(-1, "print \"Blue team has more health left!\n\"");
-					AddTeamScore(level.intermission_origin, TEAM_BLUE, 1);
-					if (g_gametype.integer == GT_ELIMINATION) {
-						G_LogPrintf("ELIMINATION: %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, TEAM_BLUE, 3, TeamName(TEAM_BLUE), level.roundNumber);
+					trap_SendServerCommand( -1, "print \"Blue team has more health left!\n\"" );
+					AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
+					if ( g_gametype.integer == GT_ELIMINATION ) {
+						G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, TEAM_BLUE, 3, TeamName( TEAM_BLUE ), level.roundNumber );
 					} else {
-						G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, -1, TEAM_BLUE, 8, TeamName(TEAM_BLUE), level.roundNumber);
+						G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i due to more health left!\n", level.roundNumber, -1, TEAM_BLUE, 8, TeamName( TEAM_BLUE ), level.roundNumber );
 					}
 				}
 			}
 			//Draw
-			if (g_gametype.integer == GT_ELIMINATION) {
-				G_LogPrintf("ELIMINATION: %i %i %i: Round %i ended in a draw!\n", level.roundNumber, -1, 4, level.roundNumber);
+			if ( g_gametype.integer == GT_ELIMINATION ) {
+				G_LogPrintf( "ELIMINATION: %i %i %i: Round %i ended in a draw!\n", level.roundNumber, -1, 4, level.roundNumber );
 			} else {
-				G_LogPrintf("CTF_ELIMINATION: %i %i %i %i: Round %i ended in a draw!\n", level.roundNumber, -1, -1, 9, level.roundNumber);
+				G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: Round %i ended in a draw!\n", level.roundNumber, -1, -1, 9, level.roundNumber );
 			}
 			EndEliminationRound();
 		}
 
 		//This might be better placed another place:
-		if (activeWarmup < 1)
+		if ( activeWarmup < 1 )
 			activeWarmup = 1;                                //We need at least 1 second to spawn all players
-		if (activeWarmup >= g_elimination_warmup.integer)    //This must not be true
+		if ( activeWarmup >= g_elimination_warmup.integer )  //This must not be true
 			g_elimination_warmup.integer = activeWarmup + 1; //Increase warmup
 
 		//Force respawn
-		if (level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * activeWarmup && !level.roundRespawned) {
+		if ( level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * activeWarmup && !level.roundRespawned ) {
 			level.roundRespawned = qtrue;
 			RespawnAll();
 			SendEliminationMessageToAllClients();
 		}
 
-		if (level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * activeWarmup) {
+		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * activeWarmup ) {
 			RespawnDead();
 		}
 
-		if ((level.roundNumber > level.roundNumberStarted) && (level.time >= level.roundStartTime))
+		if ( ( level.roundNumber > level.roundNumberStarted ) && ( level.time >= level.roundStartTime ) )
 			StartEliminationRound();
-		if (level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime) {
-			if (counts[TEAM_BLUE] < 1 || counts[TEAM_RED] < 1) {
+		if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) {
+			if ( counts[TEAM_BLUE] < 1 || counts[TEAM_RED] < 1 ) {
 				RespawnDead();            //Allow players to run around anyway
 				WarmupEliminationRound(); //Start over
 				return;
 			}
 		}
 
-		if (level.warmupTime != 0) {
-			if (level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime) {
+		if ( level.warmupTime != 0 ) {
+			if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) {
 				RespawnDead();
 				WarmupEliminationRound();
 			}
@@ -2387,37 +2387,37 @@ static void CheckElimination(void) {
 CheckDomination
 =============
 */
-static void CheckDomination(void) {
+static void CheckDomination( void ) {
 	int i;
 	int scoreFactor = 1;
 
-	if ((level.numPlayingClients < 1) || (g_gametype.integer != GT_DOMINATION)) {
+	if ( ( level.numPlayingClients < 1 ) || ( g_gametype.integer != GT_DOMINATION ) ) {
 		return;
 	}
 
 	//Do nothing if warmup
-	if (level.warmupTime != 0)
+	if ( level.warmupTime != 0 )
 		return;
 
 	//Don't score if we are in intermission. Just plain stupid
-	if (level.intermissiontime)
+	if ( level.intermissiontime )
 		return;
 
 	//Sago: I use if instead of while, since if the server stops for more than 2 seconds people should not be allowed to score anyway
-	if (level.domination_points_count > 3)
+	if ( level.domination_points_count > 3 )
 		scoreFactor = 2; //score more slowly if there are many points
-	if (level.time >= level.dom_scoreGiven * DOM_SECSPERPOINT * scoreFactor) {
-		for (i = 0; i < level.domination_points_count; i++) {
-			if (level.pointStatusDom[i] == TEAM_RED)
-				AddTeamScore(level.intermission_origin, TEAM_RED, 1);
-			if (level.pointStatusDom[i] == TEAM_BLUE)
-				AddTeamScore(level.intermission_origin, TEAM_BLUE, 1);
-			G_LogPrintf("DOM: %i %i %i %i: %s holds point %s for 1 point!\n",
-			            -1, i, 1, level.pointStatusDom[i],
-			            TeamName(level.pointStatusDom[i]), level.domination_points_names[i]);
+	if ( level.time >= level.dom_scoreGiven * DOM_SECSPERPOINT * scoreFactor ) {
+		for ( i = 0; i < level.domination_points_count; i++ ) {
+			if ( level.pointStatusDom[i] == TEAM_RED )
+				AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
+			if ( level.pointStatusDom[i] == TEAM_BLUE )
+				AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
+			G_LogPrintf( "DOM: %i %i %i %i: %s holds point %s for 1 point!\n",
+			             -1, i, 1, level.pointStatusDom[i],
+			             TeamName( level.pointStatusDom[i] ), level.domination_points_names[i] );
 		}
 		level.dom_scoreGiven++;
-		while (level.time > level.dom_scoreGiven * DOM_SECSPERPOINT * scoreFactor)
+		while ( level.time > level.dom_scoreGiven * DOM_SECSPERPOINT * scoreFactor )
 			level.dom_scoreGiven++;
 		CalculateRanks();
 	}
@@ -2430,127 +2430,127 @@ CheckTournament
 Once a frame, check for changes in tournement player state
 =============
 */
-static void CheckTournament(void) {
+static void CheckTournament( void ) {
 	// check because we run 3 game frames before calling Connect and/or ClientBegin
 	// for clients on a map_restart
-	if (level.numPlayingClients == 0) {
+	if ( level.numPlayingClients == 0 ) {
 		return;
 	}
 
-	if (g_gametype.integer == GT_TOURNAMENT) {
+	if ( g_gametype.integer == GT_TOURNAMENT ) {
 
 		// pull in a spectator if needed
-		if (level.numPlayingClients < 2) {
+		if ( level.numPlayingClients < 2 ) {
 			AddTournamentPlayer();
 		}
 
 		// if we don't have two players, go back to "waiting for players"
-		if (level.numPlayingClients != 2) {
-			if (level.warmupTime != -1) {
+		if ( level.numPlayingClients != 2 ) {
+			if ( level.warmupTime != -1 ) {
 				level.warmupTime = -1;
-				trap_SetConfigstring(CS_WARMUP, va("%i", level.warmupTime));
-				G_LogPrintf("Warmup:\n");
+				trap_SetConfigstring( CS_WARMUP, va( "%i", level.warmupTime ) );
+				G_LogPrintf( "Warmup:\n" );
 			}
 			return;
 		}
 
-		if (level.warmupTime == 0) {
+		if ( level.warmupTime == 0 ) {
 			return;
 		}
 
 		// if the warmup is changed at the console, restart it
-		if (g_warmup.modificationCount != level.warmupModificationCount) {
+		if ( g_warmup.modificationCount != level.warmupModificationCount ) {
 			level.warmupModificationCount = g_warmup.modificationCount;
 			level.warmupTime = -1;
 		}
 
 		// if all players have arrived, start the countdown
-		if (level.warmupTime < 0) {
-			if (level.numPlayingClients == 2) {
-				if ((g_startWhenReady.integer && (g_entities[level.sortedClients[0]].client->ready || (g_entities[level.sortedClients[0]].r.svFlags & SVF_BOT)) && (g_entities[level.sortedClients[1]].client->ready || (g_entities[level.sortedClients[1]].r.svFlags & SVF_BOT))) || !g_startWhenReady.integer || !g_doWarmup.integer) {
+		if ( level.warmupTime < 0 ) {
+			if ( level.numPlayingClients == 2 ) {
+				if ( ( g_startWhenReady.integer && ( g_entities[level.sortedClients[0]].client->ready || ( g_entities[level.sortedClients[0]].r.svFlags & SVF_BOT ) ) && ( g_entities[level.sortedClients[1]].client->ready || ( g_entities[level.sortedClients[1]].r.svFlags & SVF_BOT ) ) ) || !g_startWhenReady.integer || !g_doWarmup.integer ) {
 					// fudge by -1 to account for extra delays
-					if (g_warmup.integer > 1) {
-						level.warmupTime = level.time + (g_warmup.integer - 1) * 1000;
+					if ( g_warmup.integer > 1 ) {
+						level.warmupTime = level.time + ( g_warmup.integer - 1 ) * 1000;
 					} else {
 						level.warmupTime = 0;
 					}
 
-					trap_SetConfigstring(CS_WARMUP, va("%i", level.warmupTime));
+					trap_SetConfigstring( CS_WARMUP, va( "%i", level.warmupTime ) );
 				}
 			}
 			return;
 		}
 
 		// if the warmup time has counted down, restart
-		if (level.time > level.warmupTime) {
+		if ( level.time > level.warmupTime ) {
 			level.warmupTime += 10000;
-			trap_Cvar_Set("g_restarted", "1");
-			trap_SendConsoleCommand(EXEC_APPEND, "map_restart 0\n");
+			trap_Cvar_Set( "g_restarted", "1" );
+			trap_SendConsoleCommand( EXEC_APPEND, "map_restart 0\n" );
 			level.restarted = qtrue;
 			return;
 		}
-	} else if (g_gametype.integer != GT_SINGLE_PLAYER && level.warmupTime != 0) {
+	} else if ( g_gametype.integer != GT_SINGLE_PLAYER && level.warmupTime != 0 ) {
 		int clientsReady = 0;
 		int counts[TEAM_NUM_TEAMS];
 		int i;
 		qboolean notEnough = qfalse;
 
-		if (g_gametype.integer > GT_TEAM && !g_ffa_gt) {
-			counts[TEAM_BLUE] = TeamCount(-1, TEAM_BLUE);
-			counts[TEAM_RED] = TeamCount(-1, TEAM_RED);
+		if ( g_gametype.integer > GT_TEAM && !g_ffa_gt ) {
+			counts[TEAM_BLUE] = TeamCount( -1, TEAM_BLUE );
+			counts[TEAM_RED] = TeamCount( -1, TEAM_RED );
 
-			if (counts[TEAM_RED] < 1 || counts[TEAM_BLUE] < 1) {
+			if ( counts[TEAM_RED] < 1 || counts[TEAM_BLUE] < 1 ) {
 				notEnough = qtrue;
 			}
-		} else if (level.numPlayingClients < 2) {
+		} else if ( level.numPlayingClients < 2 ) {
 			notEnough = qtrue;
 		}
 
-		if (g_startWhenReady.integer) {
-			for (i = 0; i < level.numPlayingClients; i++) {
-				if ((g_entities[level.sortedClients[i]].client->ready) && g_entities[level.sortedClients[i]].inuse)
+		if ( g_startWhenReady.integer ) {
+			for ( i = 0; i < level.numPlayingClients; i++ ) {
+				if ( ( g_entities[level.sortedClients[i]].client->ready ) && g_entities[level.sortedClients[i]].inuse )
 					clientsReady++;
 			}
 		}
 
-		if (g_doWarmup.integer && g_startWhenReady.integer == 1 && (clientsReady < g_humanplayers.integer / 2 + 1)) {
+		if ( g_doWarmup.integer && g_startWhenReady.integer == 1 && ( clientsReady < g_humanplayers.integer / 2 + 1 ) ) {
 			notEnough = qtrue;
-		} else if (g_doWarmup.integer && g_startWhenReady.integer == 2 && (clientsReady < g_humanplayers.integer)) {
+		} else if ( g_doWarmup.integer && g_startWhenReady.integer == 2 && ( clientsReady < g_humanplayers.integer ) ) {
 			notEnough = qtrue;
 		}
 
-		if (notEnough) {
-			if (level.warmupTime != -1) {
+		if ( notEnough ) {
+			if ( level.warmupTime != -1 ) {
 				level.warmupTime = -1;
-				trap_SetConfigstring(CS_WARMUP, va("%i", level.warmupTime));
-				G_LogPrintf("Warmup:\n");
+				trap_SetConfigstring( CS_WARMUP, va( "%i", level.warmupTime ) );
+				G_LogPrintf( "Warmup:\n" );
 			}
 			return; // still waiting for team members
 		}
 
-		if (level.warmupTime == 0) {
+		if ( level.warmupTime == 0 ) {
 			return;
 		}
 
 		// if the warmup is changed at the console, restart it
-		if (g_warmup.modificationCount != level.warmupModificationCount) {
+		if ( g_warmup.modificationCount != level.warmupModificationCount ) {
 			level.warmupModificationCount = g_warmup.modificationCount;
 			level.warmupTime = -1;
 		}
 
 		// if all players have arrived, start the countdown
-		if (level.warmupTime < 0) {
+		if ( level.warmupTime < 0 ) {
 			// fudge by -1 to account for extra delays
-			level.warmupTime = level.time + (g_warmup.integer - 1) * 1000;
-			trap_SetConfigstring(CS_WARMUP, va("%i", level.warmupTime));
+			level.warmupTime = level.time + ( g_warmup.integer - 1 ) * 1000;
+			trap_SetConfigstring( CS_WARMUP, va( "%i", level.warmupTime ) );
 			return;
 		}
 
 		// if the warmup time has counted down, restart
-		if (level.time > level.warmupTime) {
+		if ( level.time > level.warmupTime ) {
 			level.warmupTime += 10000;
-			trap_Cvar_Set("g_restarted", "1");
-			trap_SendConsoleCommand(EXEC_APPEND, "map_restart 0\n");
+			trap_Cvar_Set( "g_restarted", "1" );
+			trap_SendConsoleCommand( EXEC_APPEND, "map_restart 0\n" );
 			level.restarted = qtrue;
 			return;
 		}
@@ -2562,13 +2562,13 @@ static void CheckTournament(void) {
 PrintTeam
 ==================
 */
-static void PrintTeam(int team, char *message) {
+static void PrintTeam( int team, char *message ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].sess.sessionTeam != team)
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].sess.sessionTeam != team )
 			continue;
-		trap_SendServerCommand(i, message);
+		trap_SendServerCommand( i, message );
 	}
 }
 
@@ -2577,28 +2577,28 @@ static void PrintTeam(int team, char *message) {
 SetLeader
 ==================
 */
-void SetLeader(int team, int client) {
+void SetLeader( int team, int client ) {
 	int i;
 
-	if (level.clients[client].pers.connected == CON_DISCONNECTED) {
-		PrintTeam(team, va("print \"%s is not connected\n\"", level.clients[client].pers.netname));
+	if ( level.clients[client].pers.connected == CON_DISCONNECTED ) {
+		PrintTeam( team, va( "print \"%s is not connected\n\"", level.clients[client].pers.netname ) );
 		return;
 	}
-	if (level.clients[client].sess.sessionTeam != team) {
-		PrintTeam(team, va("print \"%s is not on the team anymore\n\"", level.clients[client].pers.netname));
+	if ( level.clients[client].sess.sessionTeam != team ) {
+		PrintTeam( team, va( "print \"%s is not on the team anymore\n\"", level.clients[client].pers.netname ) );
 		return;
 	}
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].sess.sessionTeam != team)
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].sess.sessionTeam != team )
 			continue;
-		if (level.clients[i].sess.teamLeader) {
+		if ( level.clients[i].sess.teamLeader ) {
 			level.clients[i].sess.teamLeader = qfalse;
-			ClientUserinfoChanged(i);
+			ClientUserinfoChanged( i );
 		}
 	}
 	level.clients[client].sess.teamLeader = qtrue;
-	ClientUserinfoChanged(client);
-	PrintTeam(team, va("print \"%s" S_COLOR_WHITE " is the new team leader\n\"", level.clients[client].pers.netname));
+	ClientUserinfoChanged( client );
+	PrintTeam( team, va( "print \"%s" S_COLOR_WHITE " is the new team leader\n\"", level.clients[client].pers.netname ) );
 }
 
 /*
@@ -2606,26 +2606,26 @@ void SetLeader(int team, int client) {
 CheckTeamLeader
 ==================
 */
-void CheckTeamLeader(int team) {
+void CheckTeamLeader( int team ) {
 	int i;
 
-	for (i = 0; i < level.maxclients; i++) {
-		if (level.clients[i].sess.sessionTeam != team)
+	for ( i = 0; i < level.maxclients; i++ ) {
+		if ( level.clients[i].sess.sessionTeam != team )
 			continue;
-		if (level.clients[i].sess.teamLeader)
+		if ( level.clients[i].sess.teamLeader )
 			break;
 	}
-	if (i >= level.maxclients) {
-		for (i = 0; i < level.maxclients; i++) {
-			if (level.clients[i].sess.sessionTeam != team)
+	if ( i >= level.maxclients ) {
+		for ( i = 0; i < level.maxclients; i++ ) {
+			if ( level.clients[i].sess.sessionTeam != team )
 				continue;
-			if (!(g_entities[i].r.svFlags & SVF_BOT)) {
+			if ( !( g_entities[i].r.svFlags & SVF_BOT ) ) {
 				level.clients[i].sess.teamLeader = qtrue;
 				break;
 			}
 		}
-		for (i = 0; i < level.maxclients; i++) {
-			if (level.clients[i].sess.sessionTeam != team)
+		for ( i = 0; i < level.maxclients; i++ ) {
+			if ( level.clients[i].sess.sessionTeam != team )
 				continue;
 			level.clients[i].sess.teamLeader = qtrue;
 			break;
@@ -2638,42 +2638,42 @@ void CheckTeamLeader(int team) {
 CheckTeamVote
 ==================
 */
-void CheckTeamVote(int team) {
+void CheckTeamVote( int team ) {
 	int cs_offset;
 
-	if (team == TEAM_RED)
+	if ( team == TEAM_RED )
 		cs_offset = 0;
-	else if (team == TEAM_BLUE)
+	else if ( team == TEAM_BLUE )
 		cs_offset = 1;
 	else
 		return;
 
-	if (!level.teamVoteTime[cs_offset]) {
+	if ( !level.teamVoteTime[cs_offset] ) {
 		return;
 	}
-	if (level.time - level.teamVoteTime[cs_offset] >= VOTE_TIME) {
-		trap_SendServerCommand(-1, "print \"Team vote failed.\n\"");
+	if ( level.time - level.teamVoteTime[cs_offset] >= VOTE_TIME ) {
+		trap_SendServerCommand( -1, "print \"Team vote failed.\n\"" );
 	} else {
-		if (level.teamVoteYes[cs_offset] > level.numteamVotingClients[cs_offset] / 2) {
+		if ( level.teamVoteYes[cs_offset] > level.numteamVotingClients[cs_offset] / 2 ) {
 			// execute the command, then remove the vote
-			trap_SendServerCommand(-1, "print \"Team vote passed.\n\"");
+			trap_SendServerCommand( -1, "print \"Team vote passed.\n\"" );
 			//
-			if (!Q_strncmp("leader", level.teamVoteString[cs_offset], 6)) {
+			if ( !Q_strncmp( "leader", level.teamVoteString[cs_offset], 6 ) ) {
 				//set the team leader
-				SetLeader(team, atoi(level.teamVoteString[cs_offset] + 7));
+				SetLeader( team, atoi( level.teamVoteString[cs_offset] + 7 ) );
 			} else {
-				trap_SendConsoleCommand(EXEC_APPEND, va("%s\n", level.teamVoteString[cs_offset]));
+				trap_SendConsoleCommand( EXEC_APPEND, va( "%s\n", level.teamVoteString[cs_offset] ) );
 			}
-		} else if (level.teamVoteNo[cs_offset] >= level.numteamVotingClients[cs_offset] / 2) {
+		} else if ( level.teamVoteNo[cs_offset] >= level.numteamVotingClients[cs_offset] / 2 ) {
 			// same behavior as a timeout
-			trap_SendServerCommand(-1, "print \"Team vote failed.\n\"");
+			trap_SendServerCommand( -1, "print \"Team vote failed.\n\"" );
 		} else {
 			// still waiting for a majority
 			return;
 		}
 	}
 	level.teamVoteTime[cs_offset] = 0;
-	trap_SetConfigstring(CS_TEAMVOTE_TIME + cs_offset, "");
+	trap_SetConfigstring( CS_TEAMVOTE_TIME + cs_offset, "" );
 }
 
 /*
@@ -2681,15 +2681,15 @@ void CheckTeamVote(int team) {
 CheckCvars
 ==================
 */
-static void CheckCvars(void) {
+static void CheckCvars( void ) {
 	static int lastMod = -1;
 
-	if (g_password.modificationCount != lastMod) {
+	if ( g_password.modificationCount != lastMod ) {
 		lastMod = g_password.modificationCount;
-		if (*g_password.string && Q_stricmp(g_password.string, "none")) {
-			trap_Cvar_Set("g_needpass", "1");
+		if ( *g_password.string && Q_stricmp( g_password.string, "none" ) ) {
+			trap_Cvar_Set( "g_needpass", "1" );
 		} else {
-			trap_Cvar_Set("g_needpass", "0");
+			trap_Cvar_Set( "g_needpass", "0" );
 		}
 	}
 }
@@ -2701,22 +2701,22 @@ G_RunThink
 Runs thinking code for this frame if necessary
 =============
 */
-void G_RunThink(gentity_t *ent) {
+void G_RunThink( gentity_t *ent ) {
 	float thinktime;
 
 	thinktime = ent->nextthink;
-	if (thinktime <= 0) {
+	if ( thinktime <= 0 ) {
 		return;
 	}
-	if (thinktime > level.time) {
+	if ( thinktime > level.time ) {
 		return;
 	}
 
 	ent->nextthink = 0;
-	if (!ent->think) {
-		G_Error("NULL ent->think");
+	if ( !ent->think ) {
+		G_Error( "NULL ent->think" );
 	}
-	ent->think(ent);
+	ent->think( ent );
 }
 
 /*
@@ -2726,12 +2726,12 @@ G_RunFrame
 Advances the non-player objects in the world
 ================
 */
-void G_RunFrame(int levelTime) {
+void G_RunFrame( int levelTime ) {
 	int i;
 	gentity_t *ent;
 
 	// if we are waiting for the level to restart, do nothing
-	if (level.restarted) {
+	if ( level.restarted ) {
 		return;
 	}
 
@@ -2742,104 +2742,104 @@ void G_RunFrame(int levelTime) {
 	// get any cvar changes
 	G_UpdateCvars();
 
-	if ((g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION) && !(g_elimflags.integer & EF_NO_FREESPEC) && g_elimination_lockspectator.integer > 1)
-		trap_Cvar_Set("elimflags", va("%i", g_elimflags.integer | EF_NO_FREESPEC));
-	else if ((g_elimflags.integer & EF_NO_FREESPEC) && g_elimination_lockspectator.integer < 2)
-		trap_Cvar_Set("elimflags", va("%i", g_elimflags.integer & (~EF_NO_FREESPEC)));
+	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) && !( g_elimflags.integer & EF_NO_FREESPEC ) && g_elimination_lockspectator.integer > 1 )
+		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer | EF_NO_FREESPEC ) );
+	else if ( ( g_elimflags.integer & EF_NO_FREESPEC ) && g_elimination_lockspectator.integer < 2 )
+		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer & ( ~EF_NO_FREESPEC ) ) );
 
-	if (g_elimination_ctf_oneway.integer && !(g_elimflags.integer & EF_ONEWAY)) {
-		trap_Cvar_Set("elimflags", va("%i", g_elimflags.integer | EF_ONEWAY));
+	if ( g_elimination_ctf_oneway.integer && !( g_elimflags.integer & EF_ONEWAY ) ) {
+		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer | EF_ONEWAY ) );
 		//If the server admin has enabled it midgame imidiantly braodcast attacking team
 		SendAttackingTeamMessageToAllClients();
-	} else if (!g_elimination_ctf_oneway.integer && (g_elimflags.integer & EF_ONEWAY)) {
-		trap_Cvar_Set("elimflags", va("%i", g_elimflags.integer & (~EF_ONEWAY)));
+	} else if ( !g_elimination_ctf_oneway.integer && ( g_elimflags.integer & EF_ONEWAY ) ) {
+		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer & ( ~EF_ONEWAY ) ) );
 	}
 
 	//
 	// go through all allocated objects
 	//
 	ent = &g_entities[0];
-	for (i = 0; i < level.num_entities; i++, ent++) {
-		if (!ent->inuse) {
+	for ( i = 0; i < level.num_entities; i++, ent++ ) {
+		if ( !ent->inuse ) {
 			continue;
 		}
 
 		// clear events that are too old
-		if (level.time - ent->eventTime > EVENT_VALID_MSEC) {
-			if (ent->s.event) {
+		if ( level.time - ent->eventTime > EVENT_VALID_MSEC ) {
+			if ( ent->s.event ) {
 				ent->s.event = 0; // &= EV_EVENT_BITS;
-				if (ent->client) {
+				if ( ent->client ) {
 					ent->client->ps.externalEvent = 0;
 				}
 			}
-			if (ent->freeAfterEvent) {
+			if ( ent->freeAfterEvent ) {
 				// tempEntities or dropped items completely go away after their event
-				G_FreeEntity(ent);
+				G_FreeEntity( ent );
 				continue;
-			} else if (ent->unlinkAfterEvent) {
+			} else if ( ent->unlinkAfterEvent ) {
 				// items that will respawn will hide themselves after their pickup event
 				ent->unlinkAfterEvent = qfalse;
-				trap_UnlinkEntity(ent);
+				trap_UnlinkEntity( ent );
 			}
 		}
 
 		// temporary entities don't think
-		if (ent->freeAfterEvent) {
+		if ( ent->freeAfterEvent ) {
 			continue;
 		}
 
-		if (!ent->r.linked && ent->neverFree) {
+		if ( !ent->r.linked && ent->neverFree ) {
 			continue;
 		}
 
-		if (ent->s.eType == ET_ITEM || ent->physicsObject) {
-			G_RunItem(ent);
+		if ( ent->s.eType == ET_ITEM || ent->physicsObject ) {
+			G_RunItem( ent );
 			continue;
 		}
 
-		if (ent->s.eType == ET_MOVER) {
-			G_RunMover(ent);
+		if ( ent->s.eType == ET_MOVER ) {
+			G_RunMover( ent );
 			continue;
 		}
 
-		if (i < MAX_CLIENTS) {
-			G_RunClient(ent);
+		if ( i < MAX_CLIENTS ) {
+			G_RunClient( ent );
 			continue;
 		}
 
-		G_RunThink(ent);
+		G_RunThink( ent );
 	}
 
 	//unlagged - backward reconciliation #2
 	// NOW run the missiles, with all players backward-reconciled
 	// to the positions they were in exactly 50ms ago, at the end
 	// of the last server frame
-	G_TimeShiftAllClients(level.previousTime, NULL);
+	G_TimeShiftAllClients( level.previousTime, NULL );
 
 	ent = &g_entities[0];
-	for (i = 0; i < level.num_entities; i++, ent++) {
-		if (!ent->inuse) {
+	for ( i = 0; i < level.num_entities; i++, ent++ ) {
+		if ( !ent->inuse ) {
 			continue;
 		}
 
 		// temporary entities don't think
-		if (ent->freeAfterEvent) {
+		if ( ent->freeAfterEvent ) {
 			continue;
 		}
 
-		if (ent->s.eType == ET_MISSILE) {
-			G_RunMissile(ent);
+		if ( ent->s.eType == ET_MISSILE ) {
+			G_RunMissile( ent );
 		}
 	}
 
-	G_UnTimeShiftAllClients(NULL);
+	G_UnTimeShiftAllClients( NULL );
 	//unlagged - backward reconciliation #2
 
 	// perform final fixups on the players
 	ent = &g_entities[0];
-	for (i = 0; i < level.maxclients; i++, ent++) {
-		if (ent->inuse) {
-			ClientEndFrame(ent);
+	for ( i = 0; i < level.maxclients; i++, ent++ ) {
+		if ( ent->inuse ) {
+			ClientEndFrame( ent );
 		}
 	}
 
@@ -2856,7 +2856,7 @@ void G_RunFrame(int levelTime) {
 	CheckDomination();
 
 	//Sago: I just need to think why I placed this here... they should only spawn once
-	if (g_gametype.integer == GT_DOMINATION)
+	if ( g_gametype.integer == GT_DOMINATION )
 		Team_Dom_SpawnPoints();
 
 	// see if it is time to end the level
@@ -2869,17 +2869,17 @@ void G_RunFrame(int levelTime) {
 	CheckVote();
 
 	// check team votes
-	CheckTeamVote(TEAM_RED);
-	CheckTeamVote(TEAM_BLUE);
+	CheckTeamVote( TEAM_RED );
+	CheckTeamVote( TEAM_BLUE );
 
 	// for tracking changes
 	CheckCvars();
 
-	if (g_listEntity.integer) {
-		for (i = 0; i < MAX_GENTITIES; i++) {
-			G_Printf("%4i: %s\n", i, g_entities[i].classname);
+	if ( g_listEntity.integer ) {
+		for ( i = 0; i < MAX_GENTITIES; i++ ) {
+			G_Printf( "%4i: %s\n", i, g_entities[i].classname );
 		}
-		trap_Cvar_Set("g_listEntity", "0");
+		trap_Cvar_Set( "g_listEntity", "0" );
 	}
 
 	//unlagged - backward reconciliation #4
@@ -2897,10 +2897,10 @@ G_GetAttackingTeam
 Returns the team that's actually on offense in eCTF AvD matches.
 ===================
  */
-int G_GetAttackingTeam(void) {
-	if ((level.eliminationSides + level.roundNumber) % 2 == 0) {
+int G_GetAttackingTeam( void ) {
+	if ( ( level.eliminationSides + level.roundNumber ) % 2 == 0 ) {
 		return TEAM_RED;
-	} else if ((level.eliminationSides + level.roundNumber) % 2 == 1) {
+	} else if ( ( level.eliminationSides + level.roundNumber ) % 2 == 1 ) {
 		return TEAM_BLUE;
 	} else {
 		return 0;

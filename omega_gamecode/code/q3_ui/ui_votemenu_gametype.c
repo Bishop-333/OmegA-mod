@@ -34,7 +34,7 @@ static char *votemenu_Gametype_artlist[] =
         VOTEMENU_BACK1,
         ART_FIGHT0,
         ART_FIGHT1,
-        NULL};
+        NULL };
 
 #define ID_BACK 100
 #define ID_GO 101
@@ -92,107 +92,107 @@ typedef struct
 
 static votemenu_t s_votemenu_Gametype;
 
-void UI_VoteGametypeMenuInternal(void);
+void UI_VoteGametypeMenuInternal( void );
 
 /*
 =================
 VoteMenu_Gametype_Event
 =================
 */
-static void VoteMenu_Gametype_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void VoteMenu_Gametype_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_BACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			UI_PopMenu();
 			break;
 		case ID_GO:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			switch (s_votemenu_Gametype.selection) {
+			switch ( s_votemenu_Gametype.selection ) {
 				case ID_FFA:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 0");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 0" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_Tourney:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 1");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 1" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_TDM:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 3");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 3" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_CTF:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 4");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 4" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_1FCTF:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 5");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 5" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_Overload:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 6");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 6" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_Harvester:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 7");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 7" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_Elimination:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 8");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 8" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_CTFe:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 9");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 9" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_LMS:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 10");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 10" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_DOUBLED:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 11");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 11" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 				case ID_DOM:
-					trap_Cmd_ExecuteText(EXEC_APPEND, "callvote g_gametype 12");
+					trap_Cmd_ExecuteText( EXEC_APPEND, "callvote g_gametype 12" );
 					UI_PopMenu();
 					UI_PopMenu();
 					break;
 			};
 			break;
 		default:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			if (s_votemenu_Gametype.selection != ((menucommon_s *)ptr)->id) {
-				s_votemenu_Gametype.selection = ((menucommon_s *)ptr)->id;
+			if ( s_votemenu_Gametype.selection != ( (menucommon_s *)ptr )->id ) {
+				s_votemenu_Gametype.selection = ( (menucommon_s *)ptr )->id;
 				UI_VoteGametypeMenuInternal();
 			}
 			break;
 	}
 }
 
-static void setGametypeMenutext(menutext_s *menu, int y, int id, qboolean active, char *text) {
+static void setGametypeMenutext( menutext_s *menu, int y, int id, qboolean active, char *text ) {
 	menu->generic.type = MTYPE_PTEXT;
 	menu->color = color_red;
 	menu->generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
-	if (!active)
+	if ( !active )
 		menu->generic.flags |= QMF_INACTIVE | QMF_GRAYED;
-	else if (s_votemenu_Gametype.selection == id)
+	else if ( s_votemenu_Gametype.selection == id )
 		menu->color = color_orange;
 	menu->generic.x = 320;
 	menu->generic.y = y;
@@ -207,14 +207,14 @@ static void setGametypeMenutext(menutext_s *menu, int y, int id, qboolean active
 VoteMenu_Gametype_Cache
 =================
 */
-static void VoteMenu_Gametype_Cache(void) {
+static void VoteMenu_Gametype_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!votemenu_Gametype_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !votemenu_Gametype_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(votemenu_Gametype_artlist[i]);
+		trap_R_RegisterShaderNoMip( votemenu_Gametype_artlist[i] );
 	}
 }
 
@@ -223,11 +223,11 @@ static void VoteMenu_Gametype_Cache(void) {
 UI_VoteMenu_Gametype_Draw
 =================
 */
-static void UI_VoteMenu_Gametype_Draw(void) {
-	UI_DrawNamedPic(320 - 233, 240 - 166, 466, 332, ART_BACKGROUND);
+static void UI_VoteMenu_Gametype_Draw( void ) {
+	UI_DrawNamedPic( 320 - 233, 240 - 166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
-	Menu_Draw(&s_votemenu_Gametype.menu);
+	Menu_Draw( &s_votemenu_Gametype.menu );
 }
 
 /*
@@ -236,7 +236,7 @@ UI_VoteGametypeMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteGametypeMenuInternal(void) {
+void UI_VoteGametypeMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Gametype_Cache();
@@ -253,29 +253,29 @@ void UI_VoteGametypeMenuInternal(void) {
 	s_votemenu_Gametype.banner.style = UI_CENTER;
 
 	y = 98;
-	setGametypeMenutext(&s_votemenu_Gametype.bFFA, y, ID_FFA, s_votemenu_Gametype.FFA, "Free for all");
+	setGametypeMenutext( &s_votemenu_Gametype.bFFA, y, ID_FFA, s_votemenu_Gametype.FFA, "Free for all" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bTourney, y, ID_Tourney, s_votemenu_Gametype.Tourney, "Tournament");
+	setGametypeMenutext( &s_votemenu_Gametype.bTourney, y, ID_Tourney, s_votemenu_Gametype.Tourney, "Tournament" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bTDM, y, ID_TDM, s_votemenu_Gametype.TDM, "Team Deathmatch");
+	setGametypeMenutext( &s_votemenu_Gametype.bTDM, y, ID_TDM, s_votemenu_Gametype.TDM, "Team Deathmatch" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bCTF, y, ID_CTF, s_votemenu_Gametype.CTF, "Capture the flag");
+	setGametypeMenutext( &s_votemenu_Gametype.bCTF, y, ID_CTF, s_votemenu_Gametype.CTF, "Capture the flag" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.b1FCTF, y, ID_1FCTF, s_votemenu_Gametype._1FCTF, "One flag capture");
+	setGametypeMenutext( &s_votemenu_Gametype.b1FCTF, y, ID_1FCTF, s_votemenu_Gametype._1FCTF, "One flag capture" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bOverload, y, ID_Overload, s_votemenu_Gametype.Overload, "Overload");
+	setGametypeMenutext( &s_votemenu_Gametype.bOverload, y, ID_Overload, s_votemenu_Gametype.Overload, "Overload" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bHarvester, y, ID_Harvester, s_votemenu_Gametype.Harvester, "Harvester");
+	setGametypeMenutext( &s_votemenu_Gametype.bHarvester, y, ID_Harvester, s_votemenu_Gametype.Harvester, "Harvester" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bElimination, y, ID_Elimination, s_votemenu_Gametype.Elimination, "Elimination");
+	setGametypeMenutext( &s_votemenu_Gametype.bElimination, y, ID_Elimination, s_votemenu_Gametype.Elimination, "Elimination" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bCTFe, y, ID_CTFe, s_votemenu_Gametype.CTFe, "CTF Elimination");
+	setGametypeMenutext( &s_votemenu_Gametype.bCTFe, y, ID_CTFe, s_votemenu_Gametype.CTFe, "CTF Elimination" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bLMS, y, ID_LMS, s_votemenu_Gametype.LMS, "Last man standing");
+	setGametypeMenutext( &s_votemenu_Gametype.bLMS, y, ID_LMS, s_votemenu_Gametype.LMS, "Last man standing" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bDOUBLED, y, ID_DOUBLED, s_votemenu_Gametype.DOUBLED, "Double Domination");
+	setGametypeMenutext( &s_votemenu_Gametype.bDOUBLED, y, ID_DOUBLED, s_votemenu_Gametype.DOUBLED, "Double Domination" );
 	y += Gametype_MENU_VERTICAL_SPACING;
-	setGametypeMenutext(&s_votemenu_Gametype.bDOM, y, ID_DOM, s_votemenu_Gametype.DOM, "Domination");
+	setGametypeMenutext( &s_votemenu_Gametype.bDOM, y, ID_DOM, s_votemenu_Gametype.DOM, "Domination" );
 
 	s_votemenu_Gametype.back.generic.type = MTYPE_BITMAP;
 	s_votemenu_Gametype.back.generic.name = VOTEMENU_BACK0;
@@ -306,13 +306,13 @@ UI_VoteGametypeMenu
  *Called from outside
 =================
 */
-void UI_VoteGametypeMenu(void) {
+void UI_VoteGametypeMenu( void ) {
 	char serverinfo[MAX_INFO_STRING], *gametypeinfo;
 	// zero set all our globals
-	memset(&s_votemenu_Gametype, 0, sizeof(votemenu_t));
-	trap_GetConfigString(CS_SERVERINFO, serverinfo, MAX_INFO_STRING);
-	gametypeinfo = Info_ValueForKey(serverinfo, "g_voteGametypes");
-	if (!Q_stricmp(gametypeinfo, "*")) {
+	memset( &s_votemenu_Gametype, 0, sizeof( votemenu_t ) );
+	trap_GetConfigString( CS_SERVERINFO, serverinfo, MAX_INFO_STRING );
+	gametypeinfo = Info_ValueForKey( serverinfo, "g_voteGametypes" );
+	if ( !Q_stricmp( gametypeinfo, "*" ) ) {
 		s_votemenu_Gametype.FFA = qtrue;
 		s_votemenu_Gametype.Tourney = qtrue;
 		s_votemenu_Gametype.TDM = qtrue;
@@ -326,36 +326,36 @@ void UI_VoteGametypeMenu(void) {
 		s_votemenu_Gametype.DOUBLED = qtrue;
 		s_votemenu_Gametype.DOM = qtrue;
 	} else {
-		s_votemenu_Gametype.FFA = (Q_stristr(gametypeinfo, "/0/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.Tourney = (Q_stristr(gametypeinfo, "/1/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.TDM = (Q_stristr(gametypeinfo, "/3/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.CTF = (Q_stristr(gametypeinfo, "/4/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype._1FCTF = (Q_stristr(gametypeinfo, "/5/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.Overload = (Q_stristr(gametypeinfo, "/6/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.Harvester = (Q_stristr(gametypeinfo, "/7/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.Elimination = (Q_stristr(gametypeinfo, "/8/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.CTFe = (Q_stristr(gametypeinfo, "/9/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.LMS = (Q_stristr(gametypeinfo, "/10/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.DOUBLED = (Q_stristr(gametypeinfo, "/11/") != NULL) ? qtrue : qfalse;
-		s_votemenu_Gametype.DOM = (Q_stristr(gametypeinfo, "/12/") != NULL) ? qtrue : qfalse;
+		s_votemenu_Gametype.FFA = ( Q_stristr( gametypeinfo, "/0/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.Tourney = ( Q_stristr( gametypeinfo, "/1/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.TDM = ( Q_stristr( gametypeinfo, "/3/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.CTF = ( Q_stristr( gametypeinfo, "/4/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype._1FCTF = ( Q_stristr( gametypeinfo, "/5/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.Overload = ( Q_stristr( gametypeinfo, "/6/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.Harvester = ( Q_stristr( gametypeinfo, "/7/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.Elimination = ( Q_stristr( gametypeinfo, "/8/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.CTFe = ( Q_stristr( gametypeinfo, "/9/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.LMS = ( Q_stristr( gametypeinfo, "/10/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.DOUBLED = ( Q_stristr( gametypeinfo, "/11/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.DOM = ( Q_stristr( gametypeinfo, "/12/" ) != NULL ) ? qtrue : qfalse;
 	}
 
 	UI_VoteGametypeMenuInternal();
 
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.back);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.go);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bFFA);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bTourney);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bTDM);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bCTF);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.b1FCTF);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bOverload);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bHarvester);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bElimination);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bCTFe);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bLMS);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bDOUBLED);
-	Menu_AddItem(&s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bDOM);
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.back );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.go );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bFFA );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bTourney );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bTDM );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bCTF );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.b1FCTF );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bOverload );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bHarvester );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bElimination );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bCTFe );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bLMS );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bDOUBLED );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bDOM );
 
-	UI_PushMenu(&s_votemenu_Gametype.menu);
+	UI_PushMenu( &s_votemenu_Gametype.menu );
 }

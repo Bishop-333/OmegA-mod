@@ -73,41 +73,41 @@ static int numIPFilters;
 StringToFilter
 =================
 */
-static qboolean StringToFilter(char *s, ipFilter_t *f) {
+static qboolean StringToFilter( char *s, ipFilter_t *f ) {
 	char num[128];
 	int i, j;
 	byte b[4];
 	byte m[4];
 
-	for (i = 0; i < 4; i++) {
+	for ( i = 0; i < 4; i++ ) {
 		b[i] = 0;
 		m[i] = 0;
 	}
 
-	for (i = 0; i < 4; i++) {
-		if (*s < '0' || *s > '9') {
-			if (*s == '*') // 'match any'
+	for ( i = 0; i < 4; i++ ) {
+		if ( *s < '0' || *s > '9' ) {
+			if ( *s == '*' ) // 'match any'
 			{
 				// b[i] and m[i] to 0
 				s++;
-				if (!*s)
+				if ( !*s )
 					break;
 				s++;
 				continue;
 			}
-			G_Printf("Bad filter address: %s\n", s);
+			G_Printf( "Bad filter address: %s\n", s );
 			return qfalse;
 		}
 
 		j = 0;
-		while (*s >= '0' && *s <= '9') {
+		while ( *s >= '0' && *s <= '9' ) {
 			num[j++] = *s++;
 		}
 		num[j] = 0;
-		b[i] = atoi(num);
+		b[i] = atoi( num );
 		m[i] = 255;
 
-		if (!*s)
+		if ( !*s )
 			break;
 		s++;
 	}
@@ -123,7 +123,7 @@ static qboolean StringToFilter(char *s, ipFilter_t *f) {
 UpdateIPBans
 =================
 */
-static void UpdateIPBans(void) {
+static void UpdateIPBans( void ) {
 	byte b[4];
 	byte m[4];
 	int i, j;
@@ -131,29 +131,29 @@ static void UpdateIPBans(void) {
 	char ip[64];
 
 	*iplist_final = 0;
-	for (i = 0; i < numIPFilters; i++) {
-		if (ipFilters[i].compare == 0xffffffff)
+	for ( i = 0; i < numIPFilters; i++ ) {
+		if ( ipFilters[i].compare == 0xffffffff )
 			continue;
 
 		*(unsigned *)b = ipFilters[i].compare;
 		*(unsigned *)m = ipFilters[i].mask;
 		*ip = 0;
-		for (j = 0; j < 4; j++) {
-			if (m[j] != 255)
-				Q_strcat(ip, sizeof(ip), "*");
+		for ( j = 0; j < 4; j++ ) {
+			if ( m[j] != 255 )
+				Q_strcat( ip, sizeof( ip ), "*" );
 			else
-				Q_strcat(ip, sizeof(ip), va("%i", b[j]));
-			Q_strcat(ip, sizeof(ip), (j < 3) ? "." : " ");
+				Q_strcat( ip, sizeof( ip ), va( "%i", b[j] ) );
+			Q_strcat( ip, sizeof( ip ), ( j < 3 ) ? "." : " " );
 		}
-		if (strlen(iplist_final) + strlen(ip) < MAX_CVAR_VALUE_STRING) {
-			Q_strcat(iplist_final, sizeof(iplist_final), ip);
+		if ( strlen( iplist_final ) + strlen( ip ) < MAX_CVAR_VALUE_STRING ) {
+			Q_strcat( iplist_final, sizeof( iplist_final ), ip );
 		} else {
-			Com_Printf("g_banIPs overflowed at MAX_CVAR_VALUE_STRING\n");
+			Com_Printf( "g_banIPs overflowed at MAX_CVAR_VALUE_STRING\n" );
 			break;
 		}
 	}
 
-	trap_Cvar_Set("g_banIPs", iplist_final);
+	trap_Cvar_Set( "g_banIPs", iplist_final );
 }
 
 /*
@@ -161,7 +161,7 @@ static void UpdateIPBans(void) {
 G_FilterPacket
 =================
 */
-qboolean G_FilterPacket(char *from) {
+qboolean G_FilterPacket( char *from ) {
 	int i;
 	unsigned in;
 	byte m[4];
@@ -169,21 +169,21 @@ qboolean G_FilterPacket(char *from) {
 
 	i = 0;
 	p = from;
-	while (*p && i < 4) {
+	while ( *p && i < 4 ) {
 		m[i] = 0;
-		while (*p >= '0' && *p <= '9') {
-			m[i] = m[i] * 10 + (*p - '0');
+		while ( *p >= '0' && *p <= '9' ) {
+			m[i] = m[i] * 10 + ( *p - '0' );
 			p++;
 		}
-		if (!*p || *p == ':')
+		if ( !*p || *p == ':' )
 			break;
 		i++, p++;
 	}
 
 	in = *(unsigned *)m;
 
-	for (i = 0; i < numIPFilters; i++)
-		if ((in & ipFilters[i].mask) == ipFilters[i].compare)
+	for ( i = 0; i < numIPFilters; i++ )
+		if ( ( in & ipFilters[i].mask ) == ipFilters[i].compare )
 			return g_filterBan.integer != 0;
 
 	return g_filterBan.integer == 0;
@@ -194,21 +194,21 @@ qboolean G_FilterPacket(char *from) {
 AddIP
 =================
 */
-static void AddIP(char *str) {
+static void AddIP( char *str ) {
 	int i;
 
-	for (i = 0; i < numIPFilters; i++)
-		if (ipFilters[i].compare == 0xffffffff)
+	for ( i = 0; i < numIPFilters; i++ )
+		if ( ipFilters[i].compare == 0xffffffff )
 			break; // free spot
-	if (i == numIPFilters) {
-		if (numIPFilters == MAX_IPFILTERS) {
-			G_Printf("IP filter list is full\n");
+	if ( i == numIPFilters ) {
+		if ( numIPFilters == MAX_IPFILTERS ) {
+			G_Printf( "IP filter list is full\n" );
 			return;
 		}
 		numIPFilters++;
 	}
 
-	if (!StringToFilter(str, &ipFilters[i]))
+	if ( !StringToFilter( str, &ipFilters[i] ) )
 		ipFilters[i].compare = 0xffffffffu;
 
 	UpdateIPBans();
@@ -219,20 +219,20 @@ static void AddIP(char *str) {
 G_ProcessIPBans
 =================
 */
-void G_ProcessIPBans(void) {
+void G_ProcessIPBans( void ) {
 	char *s, *t;
 	char str[MAX_CVAR_VALUE_STRING];
 
-	Q_strncpyz(str, g_banIPs.string, sizeof(str));
+	Q_strncpyz( str, g_banIPs.string, sizeof( str ) );
 
-	for (t = s = g_banIPs.string; *t; /* */) {
-		s = strchr(s, ' ');
-		if (!s)
+	for ( t = s = g_banIPs.string; *t; /* */ ) {
+		s = strchr( s, ' ' );
+		if ( !s )
 			break;
-		while (*s == ' ')
+		while ( *s == ' ' )
 			*s++ = 0;
-		if (*t)
-			AddIP(t);
+		if ( *t )
+			AddIP( t );
 		t = s;
 	}
 }
@@ -242,17 +242,17 @@ void G_ProcessIPBans(void) {
 Svcmd_AddIP_f
 =================
 */
-static void Svcmd_AddIP_f(void) {
+static void Svcmd_AddIP_f( void ) {
 	char str[MAX_TOKEN_CHARS];
 
-	if (trap_Argc() < 2) {
-		G_Printf("Usage: addip <ip-mask>\n");
+	if ( trap_Argc() < 2 ) {
+		G_Printf( "Usage: addip <ip-mask>\n" );
 		return;
 	}
 
-	trap_Argv(1, str, sizeof(str));
+	trap_Argv( 1, str, sizeof( str ) );
 
-	AddIP(str);
+	AddIP( str );
 }
 
 /*
@@ -260,32 +260,32 @@ static void Svcmd_AddIP_f(void) {
 Svcmd_RemoveIP_f
 =================
 */
-static void Svcmd_RemoveIP_f(void) {
+static void Svcmd_RemoveIP_f( void ) {
 	ipFilter_t f;
 	int i;
 	char str[MAX_TOKEN_CHARS];
 
-	if (trap_Argc() < 2) {
-		G_Printf("Usage: sv removeip <ip-mask>\n");
+	if ( trap_Argc() < 2 ) {
+		G_Printf( "Usage: sv removeip <ip-mask>\n" );
 		return;
 	}
 
-	trap_Argv(1, str, sizeof(str));
+	trap_Argv( 1, str, sizeof( str ) );
 
-	if (!StringToFilter(str, &f))
+	if ( !StringToFilter( str, &f ) )
 		return;
 
-	for (i = 0; i < numIPFilters; i++) {
-		if (ipFilters[i].mask == f.mask &&
-		    ipFilters[i].compare == f.compare) {
+	for ( i = 0; i < numIPFilters; i++ ) {
+		if ( ipFilters[i].mask == f.mask &&
+		     ipFilters[i].compare == f.compare ) {
 			ipFilters[i].compare = 0xffffffffu;
-			G_Printf("Removed.\n");
+			G_Printf( "Removed.\n" );
 
 			UpdateIPBans();
 			return;
 		}
 	}
-	G_Printf("Didn't find %s.\n", str);
+	G_Printf( "Didn't find %s.\n", str );
 }
 
 /*
@@ -293,61 +293,61 @@ static void Svcmd_RemoveIP_f(void) {
 Svcmd_EntityList_f
 ===================
 */
-static void Svcmd_EntityList_f(void) {
+static void Svcmd_EntityList_f( void ) {
 	int e;
 	gentity_t *check;
 
 	check = g_entities + 1;
-	for (e = 1; e < level.num_entities; e++, check++) {
-		if (!check->inuse) {
+	for ( e = 1; e < level.num_entities; e++, check++ ) {
+		if ( !check->inuse ) {
 			continue;
 		}
-		G_Printf("%3i:", e);
-		switch (check->s.eType) {
+		G_Printf( "%3i:", e );
+		switch ( check->s.eType ) {
 			case ET_GENERAL:
-				G_Printf("ET_GENERAL          ");
+				G_Printf( "ET_GENERAL          " );
 				break;
 			case ET_PLAYER:
-				G_Printf("ET_PLAYER           ");
+				G_Printf( "ET_PLAYER           " );
 				break;
 			case ET_ITEM:
-				G_Printf("ET_ITEM             ");
+				G_Printf( "ET_ITEM             " );
 				break;
 			case ET_MISSILE:
-				G_Printf("ET_MISSILE          ");
+				G_Printf( "ET_MISSILE          " );
 				break;
 			case ET_MOVER:
-				G_Printf("ET_MOVER            ");
+				G_Printf( "ET_MOVER            " );
 				break;
 			case ET_BEAM:
-				G_Printf("ET_BEAM             ");
+				G_Printf( "ET_BEAM             " );
 				break;
 			case ET_PORTAL:
-				G_Printf("ET_PORTAL           ");
+				G_Printf( "ET_PORTAL           " );
 				break;
 			case ET_SPEAKER:
-				G_Printf("ET_SPEAKER          ");
+				G_Printf( "ET_SPEAKER          " );
 				break;
 			case ET_PUSH_TRIGGER:
-				G_Printf("ET_PUSH_TRIGGER     ");
+				G_Printf( "ET_PUSH_TRIGGER     " );
 				break;
 			case ET_TELEPORT_TRIGGER:
-				G_Printf("ET_TELEPORT_TRIGGER ");
+				G_Printf( "ET_TELEPORT_TRIGGER " );
 				break;
 			case ET_INVISIBLE:
-				G_Printf("ET_INVISIBLE        ");
+				G_Printf( "ET_INVISIBLE        " );
 				break;
 			case ET_GRAPPLE:
-				G_Printf("ET_GRAPPLE          ");
+				G_Printf( "ET_GRAPPLE          " );
 				break;
 			default:
-				G_Printf("%3i                 ", check->s.eType);
+				G_Printf( "%3i                 ", check->s.eType );
 				break;
 		}
-		if (check->classname) {
-			G_Printf("%s", check->classname);
+		if ( check->classname ) {
+			G_Printf( "%s", check->classname );
 		}
-		G_Printf("\n");
+		G_Printf( "\n" );
 	}
 }
 
@@ -356,38 +356,38 @@ static void Svcmd_EntityList_f(void) {
 ClientForString
 ===================
 */
-gclient_t *ClientForString(const char *s) {
+gclient_t *ClientForString( const char *s ) {
 	gclient_t *cl;
 	int i;
 	int idnum;
 
 	// numeric values are just slot numbers
-	if (s[0] >= '0' && s[0] <= '9') {
-		idnum = atoi(s);
-		if (idnum < 0 || idnum >= level.maxclients) {
-			Com_Printf("Bad client slot: %i\n", idnum);
+	if ( s[0] >= '0' && s[0] <= '9' ) {
+		idnum = atoi( s );
+		if ( idnum < 0 || idnum >= level.maxclients ) {
+			Com_Printf( "Bad client slot: %i\n", idnum );
 			return NULL;
 		}
 
 		cl = &level.clients[idnum];
-		if (cl->pers.connected == CON_DISCONNECTED) {
-			G_Printf("Client %i is not connected\n", idnum);
+		if ( cl->pers.connected == CON_DISCONNECTED ) {
+			G_Printf( "Client %i is not connected\n", idnum );
 			return NULL;
 		}
 		return cl;
 	}
 
 	// check for a name match
-	for (i = 0; i < level.maxclients; i++) {
+	for ( i = 0; i < level.maxclients; i++ ) {
 		cl = &level.clients[i];
-		if (cl->pers.connected == CON_DISCONNECTED) {
+		if ( cl->pers.connected == CON_DISCONNECTED ) {
 			continue;
 		}
-		if (!Q_stricmp(cl->pers.netname, s)) {
+		if ( !Q_stricmp( cl->pers.netname, s ) ) {
 			return cl;
 		}
 	}
-	G_Printf("User %s is not on the server\n", s);
+	G_Printf( "User %s is not on the server\n", s );
 
 	return NULL;
 }
@@ -399,20 +399,20 @@ Svcmd_ForceTeam_f
 forceteam <player> <team>
 ===================
 */
-static void Svcmd_ForceTeam_f(void) {
+static void Svcmd_ForceTeam_f( void ) {
 	gclient_t *cl;
 	char str[MAX_TOKEN_CHARS];
 
 	// find the player
-	trap_Argv(1, str, sizeof(str));
-	cl = ClientForString(str);
-	if (!cl) {
+	trap_Argv( 1, str, sizeof( str ) );
+	cl = ClientForString( str );
+	if ( !cl ) {
 		return;
 	}
 
 	// set the team
-	trap_Argv(2, str, sizeof(str));
-	SetTeam(&g_entities[cl - level.clients], str);
+	trap_Argv( 2, str, sizeof( str ) );
+	SetTeam( &g_entities[cl - level.clients], str );
 }
 
 /*
@@ -420,28 +420,28 @@ static void Svcmd_ForceTeam_f(void) {
 ClientKick_f
 ===================
 */
-static void ClientKick_f(void) {
+static void ClientKick_f( void ) {
 	int idnum, i;
 	char str[MAX_TOKEN_CHARS];
 
-	trap_Argv(1, str, sizeof(str));
+	trap_Argv( 1, str, sizeof( str ) );
 
-	for (i = 0; str[i]; i++) {
-		if (str[i] < '0' || str[i] > '9') {
-			G_Printf("not a valid client number: \"%s\"\n", str);
+	for ( i = 0; str[i]; i++ ) {
+		if ( str[i] < '0' || str[i] > '9' ) {
+			G_Printf( "not a valid client number: \"%s\"\n", str );
 			return;
 		}
 	}
 
-	idnum = atoi(str);
+	idnum = atoi( str );
 
 	//Local client
-	if (!strcmp(level.clients[idnum].pers.ip, "localhost")) {
-		G_Printf("Kick failed - local player\n");
+	if ( !strcmp( level.clients[idnum].pers.ip, "localhost" ) ) {
+		G_Printf( "Kick failed - local player\n" );
 		return;
 	}
 
-	trap_DropClient(idnum, "was kicked");
+	trap_DropClient( idnum, "was kicked" );
 }
 
 /*
@@ -449,7 +449,7 @@ static void ClientKick_f(void) {
 EndGame_f
 ===================
 */
-static void EndGame_f(void) {
+static void EndGame_f( void ) {
 	ExitLevel();
 }
 
@@ -466,34 +466,34 @@ struct
 {
 	char *cmd;
 	qboolean dedicated; //if it has to be entered from a dedicated server or RCON
-	void (*function)(void);
+	void ( *function )( void );
 } svcmds[] = {
 
-    {"entityList", qfalse, Svcmd_EntityList_f},
-    {"forceTeam", qfalse, Svcmd_ForceTeam_f},
-    {"game_memory", qfalse, Svcmd_GameMem_f},
-    {"addbot", qfalse, Svcmd_AddBot_f},
-    {"botlist", qfalse, Svcmd_BotList_f},
-    {"abort_podium", qfalse, Svcmd_AbortPodium_f},
-    {"addip", qfalse, Svcmd_AddIP_f},
-    {"removeip", qfalse, Svcmd_RemoveIP_f},
+    { "entityList", qfalse, Svcmd_EntityList_f },
+    { "forceTeam", qfalse, Svcmd_ForceTeam_f },
+    { "game_memory", qfalse, Svcmd_GameMem_f },
+    { "addbot", qfalse, Svcmd_AddBot_f },
+    { "botlist", qfalse, Svcmd_BotList_f },
+    { "abort_podium", qfalse, Svcmd_AbortPodium_f },
+    { "addip", qfalse, Svcmd_AddIP_f },
+    { "removeip", qfalse, Svcmd_RemoveIP_f },
 
     //KK-OAX Uses wrapper in g_svccmds_ext.c
-    {"listip", qfalse, Svcmd_ListIP_f},
+    { "listip", qfalse, Svcmd_ListIP_f },
     //KK-OAX New
-    {"status", qfalse, Svcmd_Status_f},
-    {"eject", qfalse, Svcmd_EjectClient_f},
-    {"dumpuser", qfalse, Svcmd_DumpUser_f},
+    { "status", qfalse, Svcmd_Status_f },
+    { "eject", qfalse, Svcmd_EjectClient_f },
+    { "dumpuser", qfalse, Svcmd_DumpUser_f },
     // don't handle communication commands unless dedicated
-    {"cp", qtrue, Svcmd_CenterPrint_f},
-    {"say_team", qtrue, Svcmd_TeamMessage_f},
-    {"say", qtrue, Svcmd_MessageWrapper},
-    {"chat", qtrue, Svcmd_Chat_f},
+    { "cp", qtrue, Svcmd_CenterPrint_f },
+    { "say_team", qtrue, Svcmd_TeamMessage_f },
+    { "say", qtrue, Svcmd_MessageWrapper },
+    { "chat", qtrue, Svcmd_Chat_f },
     //Shuffle the teams
-    {"shuffle", qfalse, ShuffleTeams},
+    { "shuffle", qfalse, ShuffleTeams },
     //Kicks a player by number in the game logic rather than the server number
-    {"clientkick_game", qfalse, ClientKick_f},
-    {"endgamenow", qfalse, EndGame_f},
+    { "clientkick_game", qfalse, ClientKick_f },
+    { "endgamenow", qfalse, EndGame_f },
 };
 
 /*
@@ -501,15 +501,15 @@ struct
 ConsoleCommand
 =================
 */
-qboolean ConsoleCommand(void) {
+qboolean ConsoleCommand( void ) {
 	char cmd[MAX_TOKEN_CHARS];
 	int i;
 
-	trap_Argv(0, cmd, sizeof(cmd));
+	trap_Argv( 0, cmd, sizeof( cmd ) );
 
-	for (i = 0; i < sizeof(svcmds) / sizeof(svcmds[0]); i++) {
-		if (!Q_stricmp(cmd, svcmds[i].cmd)) {
-			if (svcmds[i].dedicated && !g_dedicated.integer)
+	for ( i = 0; i < sizeof( svcmds ) / sizeof( svcmds[0] ); i++ ) {
+		if ( !Q_stricmp( cmd, svcmds[i].cmd ) ) {
+			if ( svcmds[i].dedicated && !g_dedicated.integer )
 				return qfalse;
 			svcmds[i].function();
 			return qtrue;
@@ -517,11 +517,11 @@ qboolean ConsoleCommand(void) {
 	}
 	// KK-OAX Will be enabled when admin is added.
 	// see if this is an admin command
-	if (G_admin_cmd_check(NULL, qfalse))
+	if ( G_admin_cmd_check( NULL, qfalse ) )
 		return qtrue;
 
-	if (g_dedicated.integer)
-		G_Printf("unknown command: %s\n", cmd);
+	if ( g_dedicated.integer )
+		G_Printf( "unknown command: %s\n", cmd );
 
 	return qfalse;
 }

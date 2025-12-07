@@ -32,26 +32,26 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 uiStatic_t uis;
 qboolean m_entersound; // after a frame, so caching won't disrupt the sound
 
-void QDECL Com_Error(int level, const char *error, ...) {
+void QDECL Com_Error( int level, const char *error, ... ) {
 	va_list argptr;
 	char text[1024];
 
-	va_start(argptr, error);
-	Q_vsnprintf(text, sizeof(text), error, argptr);
-	va_end(argptr);
+	va_start( argptr, error );
+	Q_vsnprintf( text, sizeof( text ), error, argptr );
+	va_end( argptr );
 
-	trap_Error(va("%s", text));
+	trap_Error( va( "%s", text ) );
 }
 
-void QDECL Com_Printf(const char *msg, ...) {
+void QDECL Com_Printf( const char *msg, ... ) {
 	va_list argptr;
 	char text[1024];
 
-	va_start(argptr, msg);
-	Q_vsnprintf(text, sizeof(text), msg, argptr);
-	va_end(argptr);
+	va_start( argptr, msg );
+	Q_vsnprintf( text, sizeof( text ), msg, argptr );
+	va_end( argptr );
 
-	trap_Print(va("%s", text));
+	trap_Print( va( "%s", text ) );
 }
 
 /*
@@ -59,9 +59,9 @@ void QDECL Com_Printf(const char *msg, ...) {
 UI_ClampCvar
 =================
 */
-float UI_ClampCvar(float min, float max, float value) {
-	if (value < min) return min;
-	if (value > max) return max;
+float UI_ClampCvar( float min, float max, float value ) {
+	if ( value < min ) return min;
+	if ( value > max ) return max;
 	return value;
 }
 
@@ -70,8 +70,8 @@ float UI_ClampCvar(float min, float max, float value) {
 UI_StartDemoLoop
 =================
 */
-void UI_StartDemoLoop(void) {
-	trap_Cmd_ExecuteText(EXEC_APPEND, "d1\n");
+void UI_StartDemoLoop( void ) {
+	trap_Cmd_ExecuteText( EXEC_APPEND, "d1\n" );
 }
 
 /*
@@ -79,21 +79,21 @@ void UI_StartDemoLoop(void) {
 UI_PushMenu
 =================
 */
-void UI_PushMenu(menuframework_s *menu) {
+void UI_PushMenu( menuframework_s *menu ) {
 	int i;
 	menucommon_s *item;
 
 	// avoid stacking menus invoked by hotkeys
-	for (i = 0; i < uis.menusp; i++) {
-		if (uis.stack[i] == menu) {
+	for ( i = 0; i < uis.menusp; i++ ) {
+		if ( uis.stack[i] == menu ) {
 			uis.menusp = i;
 			break;
 		}
 	}
 
-	if (i == uis.menusp) {
-		if (uis.menusp >= MAX_MENUDEPTH)
-			trap_Error("UI_PushMenu: menu stack overflow");
+	if ( i == uis.menusp ) {
+		if ( uis.menusp >= MAX_MENUDEPTH )
+			trap_Error( "UI_PushMenu: menu stack overflow" );
 
 		uis.stack[uis.menusp++] = menu;
 	}
@@ -106,14 +106,14 @@ void UI_PushMenu(menuframework_s *menu) {
 
 	m_entersound = qtrue;
 
-	trap_Key_SetCatcher(KEYCATCH_UI);
+	trap_Key_SetCatcher( KEYCATCH_UI );
 
 	// force first available item to have focus
-	for (i = 0; i < menu->nitems; i++) {
+	for ( i = 0; i < menu->nitems; i++ ) {
 		item = (menucommon_s *)menu->items[i];
-		if (!(item->flags & (QMF_GRAYED | QMF_MOUSEONLY | QMF_INACTIVE))) {
+		if ( !( item->flags & ( QMF_GRAYED | QMF_MOUSEONLY | QMF_INACTIVE ) ) ) {
 			menu->cursor_prev = -1;
-			Menu_SetCursor(menu, i);
+			Menu_SetCursor( menu, i );
 			break;
 		}
 	}
@@ -126,15 +126,15 @@ void UI_PushMenu(menuframework_s *menu) {
 UI_PopMenu
 =================
 */
-void UI_PopMenu(void) {
-	trap_S_StartLocalSound(menu_out_sound, CHAN_LOCAL_SOUND);
+void UI_PopMenu( void ) {
+	trap_S_StartLocalSound( menu_out_sound, CHAN_LOCAL_SOUND );
 
 	uis.menusp--;
 
-	if (uis.menusp < 0)
-		trap_Error("UI_PopMenu: menu stack underflow");
+	if ( uis.menusp < 0 )
+		trap_Error( "UI_PopMenu: menu stack underflow" );
 
-	if (uis.menusp) {
+	if ( uis.menusp ) {
 		uis.activemenu = uis.stack[uis.menusp - 1];
 		uis.firstdraw = qtrue;
 	} else {
@@ -142,13 +142,13 @@ void UI_PopMenu(void) {
 	}
 }
 
-void UI_ForceMenuOff(void) {
+void UI_ForceMenuOff( void ) {
 	uis.menusp = 0;
 	uis.activemenu = NULL;
 
-	trap_Key_SetCatcher(trap_Key_GetCatcher() & ~KEYCATCH_UI);
+	trap_Key_SetCatcher( trap_Key_GetCatcher() & ~KEYCATCH_UI );
 	trap_Key_ClearStates();
-	trap_Cvar_Set("cl_paused", "0");
+	trap_Cvar_Set( "cl_paused", "0" );
 }
 
 /*
@@ -156,15 +156,15 @@ void UI_ForceMenuOff(void) {
 UI_LerpColor
 =================
 */
-void UI_LerpColor(vec4_t a, vec4_t b, vec4_t c, float t) {
+void UI_LerpColor( vec4_t a, vec4_t b, vec4_t c, float t ) {
 	int i;
 
 	// lerp and clamp each component
-	for (i = 0; i < 4; i++) {
-		c[i] = a[i] + t * (b[i] - a[i]);
-		if (c[i] < 0)
+	for ( i = 0; i < 4; i++ ) {
+		c[i] = a[i] + t * ( b[i] - a[i] );
+		if ( c[i] < 0 )
 			c[i] = 0;
-		else if (c[i] > 1.0)
+		else if ( c[i] > 1.0 )
 			c[i] = 1.0;
 	}
 }
@@ -175,158 +175,158 @@ UI_DrawProportionalString2
 =================
 */
 static int propMap[128][3] = {
-    {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1}, {0, 0, -1},
+    { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 }, { 0, 0, -1 },
 
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
-    {0, 0, -1},
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
+    { 0, 0, -1 },
 
-    {0, 0, PROP_SPACE_WIDTH}, // SPACE
-    {11, 122, 7},             // !
-    {154, 181, 14},           // "
-    {55, 122, 17},            // #
-    {79, 122, 18},            // $
-    {101, 122, 23},           // %
-    {153, 122, 18},           // &
-    {9, 93, 7},               // '
-    {207, 122, 8},            // (
-    {230, 122, 9},            // )
-    {177, 122, 18},           // *
-    {30, 152, 18},            // +
-    {85, 181, 7},             // ,
-    {34, 93, 11},             // -
-    {110, 181, 6},            // .
-    {130, 152, 14},           // /
+    { 0, 0, PROP_SPACE_WIDTH }, // SPACE
+    { 11, 122, 7 },             // !
+    { 154, 181, 14 },           // "
+    { 55, 122, 17 },            // #
+    { 79, 122, 18 },            // $
+    { 101, 122, 23 },           // %
+    { 153, 122, 18 },           // &
+    { 9, 93, 7 },               // '
+    { 207, 122, 8 },            // (
+    { 230, 122, 9 },            // )
+    { 177, 122, 18 },           // *
+    { 30, 152, 18 },            // +
+    { 85, 181, 7 },             // ,
+    { 34, 93, 11 },             // -
+    { 110, 181, 6 },            // .
+    { 130, 152, 14 },           // /
 
-    {22, 64, 17},   // 0
-    {41, 64, 12},   // 1
-    {58, 64, 17},   // 2
-    {78, 64, 18},   // 3
-    {98, 64, 19},   // 4
-    {120, 64, 18},  // 5
-    {141, 64, 18},  // 6
-    {204, 64, 16},  // 7
-    {162, 64, 17},  // 8
-    {182, 64, 18},  // 9
-    {59, 181, 7},   // :
-    {35, 181, 7},   // ;
-    {203, 152, 14}, // <
-    {56, 93, 14},   // =
-    {228, 152, 14}, // >
-    {177, 181, 18}, // ?
+    { 22, 64, 17 },   // 0
+    { 41, 64, 12 },   // 1
+    { 58, 64, 17 },   // 2
+    { 78, 64, 18 },   // 3
+    { 98, 64, 19 },   // 4
+    { 120, 64, 18 },  // 5
+    { 141, 64, 18 },  // 6
+    { 204, 64, 16 },  // 7
+    { 162, 64, 17 },  // 8
+    { 182, 64, 18 },  // 9
+    { 59, 181, 7 },   // :
+    { 35, 181, 7 },   // ;
+    { 203, 152, 14 }, // <
+    { 56, 93, 14 },   // =
+    { 228, 152, 14 }, // >
+    { 177, 181, 18 }, // ?
 
-    {28, 122, 22}, // @
-    {5, 4, 18},    // A
-    {27, 4, 18},   // B
-    {48, 4, 18},   // C
-    {69, 4, 17},   // D
-    {90, 4, 13},   // E
-    {106, 4, 13},  // F
-    {121, 4, 18},  // G
-    {143, 4, 17},  // H
-    {164, 4, 8},   // I
-    {175, 4, 16},  // J
-    {195, 4, 18},  // K
-    {216, 4, 12},  // L
-    {230, 4, 23},  // M
-    {6, 34, 18},   // N
-    {27, 34, 18},  // O
+    { 28, 122, 22 }, // @
+    { 5, 4, 18 },    // A
+    { 27, 4, 18 },   // B
+    { 48, 4, 18 },   // C
+    { 69, 4, 17 },   // D
+    { 90, 4, 13 },   // E
+    { 106, 4, 13 },  // F
+    { 121, 4, 18 },  // G
+    { 143, 4, 17 },  // H
+    { 164, 4, 8 },   // I
+    { 175, 4, 16 },  // J
+    { 195, 4, 18 },  // K
+    { 216, 4, 12 },  // L
+    { 230, 4, 23 },  // M
+    { 6, 34, 18 },   // N
+    { 27, 34, 18 },  // O
 
-    {48, 34, 18},   // P
-    {68, 34, 18},   // Q
-    {90, 34, 17},   // R
-    {110, 34, 18},  // S
-    {130, 34, 14},  // T
-    {146, 34, 18},  // U
-    {166, 34, 19},  // V
-    {185, 34, 29},  // W
-    {215, 34, 18},  // X
-    {234, 34, 18},  // Y
-    {5, 64, 14},    // Z
-    {60, 152, 7},   // [
-    {106, 151, 13}, // '\'
-    {83, 152, 7},   // ]
-    {128, 122, 17}, // ^
-    {4, 152, 21},   // _
+    { 48, 34, 18 },   // P
+    { 68, 34, 18 },   // Q
+    { 90, 34, 17 },   // R
+    { 110, 34, 18 },  // S
+    { 130, 34, 14 },  // T
+    { 146, 34, 18 },  // U
+    { 166, 34, 19 },  // V
+    { 185, 34, 29 },  // W
+    { 215, 34, 18 },  // X
+    { 234, 34, 18 },  // Y
+    { 5, 64, 14 },    // Z
+    { 60, 152, 7 },   // [
+    { 106, 151, 13 }, // '\'
+    { 83, 152, 7 },   // ]
+    { 128, 122, 17 }, // ^
+    { 4, 152, 21 },   // _
 
-    {134, 181, 5}, // '
-    {5, 4, 18},    // A
-    {27, 4, 18},   // B
-    {48, 4, 18},   // C
-    {69, 4, 17},   // D
-    {90, 4, 13},   // E
-    {106, 4, 13},  // F
-    {121, 4, 18},  // G
-    {143, 4, 17},  // H
-    {164, 4, 8},   // I
-    {175, 4, 16},  // J
-    {195, 4, 18},  // K
-    {216, 4, 12},  // L
-    {230, 4, 23},  // M
-    {6, 34, 18},   // N
-    {27, 34, 18},  // O
+    { 134, 181, 5 }, // '
+    { 5, 4, 18 },    // A
+    { 27, 4, 18 },   // B
+    { 48, 4, 18 },   // C
+    { 69, 4, 17 },   // D
+    { 90, 4, 13 },   // E
+    { 106, 4, 13 },  // F
+    { 121, 4, 18 },  // G
+    { 143, 4, 17 },  // H
+    { 164, 4, 8 },   // I
+    { 175, 4, 16 },  // J
+    { 195, 4, 18 },  // K
+    { 216, 4, 12 },  // L
+    { 230, 4, 23 },  // M
+    { 6, 34, 18 },   // N
+    { 27, 34, 18 },  // O
 
-    {48, 34, 18},   // P
-    {68, 34, 18},   // Q
-    {90, 34, 17},   // R
-    {110, 34, 18},  // S
-    {130, 34, 14},  // T
-    {146, 34, 18},  // U
-    {166, 34, 19},  // V
-    {185, 34, 29},  // W
-    {215, 34, 18},  // X
-    {234, 34, 18},  // Y
-    {5, 64, 14},    // Z
-    {153, 152, 13}, // {
-    {11, 181, 5},   // |
-    {180, 152, 13}, // }
-    {79, 93, 17},   // ~
-    {0, 0, -1}      // DEL
+    { 48, 34, 18 },   // P
+    { 68, 34, 18 },   // Q
+    { 90, 34, 17 },   // R
+    { 110, 34, 18 },  // S
+    { 130, 34, 14 },  // T
+    { 146, 34, 18 },  // U
+    { 166, 34, 19 },  // V
+    { 185, 34, 29 },  // W
+    { 215, 34, 18 },  // X
+    { 234, 34, 18 },  // Y
+    { 5, 64, 14 },    // Z
+    { 153, 152, 13 }, // {
+    { 11, 181, 5 },   // |
+    { 180, 152, 13 }, // }
+    { 79, 93, 17 },   // ~
+    { 0, 0, -1 }      // DEL
 };
 
 static int propMapB[26][3] = {
-    {11, 12, 33},
-    {49, 12, 31},
-    {85, 12, 31},
-    {120, 12, 30},
-    {156, 12, 21},
-    {183, 12, 21},
-    {207, 12, 32},
+    { 11, 12, 33 },
+    { 49, 12, 31 },
+    { 85, 12, 31 },
+    { 120, 12, 30 },
+    { 156, 12, 21 },
+    { 183, 12, 21 },
+    { 207, 12, 32 },
 
-    {13, 55, 30},
-    {49, 55, 13},
-    {66, 55, 29},
-    {101, 55, 31},
-    {135, 55, 21},
-    {158, 55, 40},
-    {204, 55, 32},
+    { 13, 55, 30 },
+    { 49, 55, 13 },
+    { 66, 55, 29 },
+    { 101, 55, 31 },
+    { 135, 55, 21 },
+    { 158, 55, 40 },
+    { 204, 55, 32 },
 
-    {12, 97, 31},
-    {48, 97, 31},
-    {82, 97, 30},
-    {118, 97, 30},
-    {153, 97, 30},
-    {185, 97, 25},
-    {213, 97, 30},
+    { 12, 97, 31 },
+    { 48, 97, 31 },
+    { 82, 97, 30 },
+    { 118, 97, 30 },
+    { 153, 97, 30 },
+    { 185, 97, 25 },
+    { 213, 97, 30 },
 
-    {11, 139, 32},
-    {42, 139, 51},
-    {93, 139, 32},
-    {126, 139, 31},
-    {158, 139, 25},
+    { 11, 139, 32 },
+    { 42, 139, 51 },
+    { 93, 139, 32 },
+    { 126, 139, 31 },
+    { 158, 139, 25 },
 };
 
 #define PROPB_GAP_WIDTH 4
@@ -340,7 +340,7 @@ static int propMapB[26][3] = {
 UI_DrawBannerString
 =================
 */
-static void UI_DrawBannerString2(int x, int y, const char *str, vec4_t color) {
+static void UI_DrawBannerString2( int x, int y, const char *str, vec4_t color ) {
 	const char *s;
 	unsigned char ch; // bk001204 - unsigned
 	float ax;
@@ -353,17 +353,17 @@ static void UI_DrawBannerString2(int x, int y, const char *str, vec4_t color) {
 	float fheight;
 
 	// draw the colored text
-	trap_R_SetColor(color);
+	trap_R_SetColor( color );
 
 	ax = x * uis.xscale + uis.bias;
 	ay = y * uis.yscale;
 
 	s = str;
-	while (*s) {
+	while ( *s ) {
 		ch = *s & 127;
-		if (ch == ' ') {
-			ax += ((float)PROPB_SPACE_WIDTH + (float)PROPB_GAP_WIDTH) * uis.xscale;
-		} else if (ch >= 'A' && ch <= 'Z') {
+		if ( ch == ' ' ) {
+			ax += ( (float)PROPB_SPACE_WIDTH + (float)PROPB_GAP_WIDTH ) * uis.xscale;
+		} else if ( ch >= 'A' && ch <= 'Z' ) {
 			ch -= 'A';
 			fcol = (float)propMapB[ch][0] / 256.0f;
 			frow = (float)propMapB[ch][1] / 256.0f;
@@ -371,16 +371,16 @@ static void UI_DrawBannerString2(int x, int y, const char *str, vec4_t color) {
 			fheight = (float)PROPB_HEIGHT / 256.0f;
 			aw = (float)propMapB[ch][2] * uis.xscale;
 			ah = (float)PROPB_HEIGHT * uis.yscale;
-			trap_R_DrawStretchPic(ax, ay, aw, ah, fcol, frow, fcol + fwidth, frow + fheight, uis.charsetPropB);
-			ax += (aw + (float)PROPB_GAP_WIDTH * uis.xscale);
+			trap_R_DrawStretchPic( ax, ay, aw, ah, fcol, frow, fcol + fwidth, frow + fheight, uis.charsetPropB );
+			ax += ( aw + (float)PROPB_GAP_WIDTH * uis.xscale );
 		}
 		s++;
 	}
 
-	trap_R_SetColor(NULL);
+	trap_R_SetColor( NULL );
 }
 
-void UI_DrawBannerString(int x, int y, const char *str, int style, vec4_t color) {
+void UI_DrawBannerString( int x, int y, const char *str, int style, vec4_t color ) {
 	const char *s;
 	int ch;
 	int width;
@@ -389,18 +389,18 @@ void UI_DrawBannerString(int x, int y, const char *str, int style, vec4_t color)
 	// find the width of the drawn text
 	s = str;
 	width = 0;
-	while (*s) {
+	while ( *s ) {
 		ch = *s;
-		if (ch == ' ') {
+		if ( ch == ' ' ) {
 			width += PROPB_SPACE_WIDTH;
-		} else if (ch >= 'A' && ch <= 'Z') {
+		} else if ( ch >= 'A' && ch <= 'Z' ) {
 			width += propMapB[ch - 'A'][2] + PROPB_GAP_WIDTH;
 		}
 		s++;
 	}
 	width -= PROPB_GAP_WIDTH;
 
-	switch (style & UI_FORMATMASK) {
+	switch ( style & UI_FORMATMASK ) {
 		case UI_CENTER:
 			x -= width / 2;
 			break;
@@ -414,16 +414,16 @@ void UI_DrawBannerString(int x, int y, const char *str, int style, vec4_t color)
 			break;
 	}
 
-	if (style & UI_DROPSHADOW) {
+	if ( style & UI_DROPSHADOW ) {
 		drawcolor[0] = drawcolor[1] = drawcolor[2] = 0;
 		drawcolor[3] = color[3];
-		UI_DrawBannerString2(x + 2, y + 2, str, drawcolor);
+		UI_DrawBannerString2( x + 2, y + 2, str, drawcolor );
 	}
 
-	UI_DrawBannerString2(x, y, str, color);
+	UI_DrawBannerString2( x, y, str, color );
 }
 
-int UI_ProportionalStringWidth(const char *str) {
+int UI_ProportionalStringWidth( const char *str ) {
 	const char *s;
 	int ch;
 	int charWidth;
@@ -431,10 +431,10 @@ int UI_ProportionalStringWidth(const char *str) {
 
 	s = str;
 	width = 0;
-	while (*s) {
+	while ( *s ) {
 		ch = *s & 127;
 		charWidth = propMap[ch][2];
-		if (charWidth != -1) {
+		if ( charWidth != -1 ) {
 			width += charWidth;
 			width += PROP_GAP_WIDTH;
 		}
@@ -445,7 +445,7 @@ int UI_ProportionalStringWidth(const char *str) {
 	return width;
 }
 
-static void UI_DrawProportionalString2(int x, int y, const char *str, vec4_t color, float sizeScale, qhandle_t charset) {
+static void UI_DrawProportionalString2( int x, int y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
 	const char *s;
 	unsigned char ch; // bk001204 - unsigned
 	float ax;
@@ -458,31 +458,31 @@ static void UI_DrawProportionalString2(int x, int y, const char *str, vec4_t col
 	float fheight;
 
 	// draw the colored text
-	trap_R_SetColor(color);
+	trap_R_SetColor( color );
 
 	ax = x * uis.xscale + uis.bias;
 	ay = y * uis.yscale;
 
 	s = str;
-	while (*s) {
+	while ( *s ) {
 		ch = *s & 127;
-		if (ch == ' ') {
+		if ( ch == ' ' ) {
 			aw = (float)PROP_SPACE_WIDTH * uis.xscale * sizeScale;
-		} else if (propMap[ch][2] != -1) {
+		} else if ( propMap[ch][2] != -1 ) {
 			fcol = (float)propMap[ch][0] / 256.0f;
 			frow = (float)propMap[ch][1] / 256.0f;
 			fwidth = (float)propMap[ch][2] / 256.0f;
 			fheight = (float)PROP_HEIGHT / 256.0f;
 			aw = (float)propMap[ch][2] * uis.xscale * sizeScale;
 			ah = (float)PROP_HEIGHT * uis.yscale * sizeScale;
-			trap_R_DrawStretchPic(ax, ay, aw, ah, fcol, frow, fcol + fwidth, frow + fheight, charset);
+			trap_R_DrawStretchPic( ax, ay, aw, ah, fcol, frow, fcol + fwidth, frow + fheight, charset );
 		}
 
-		ax += (aw + (float)PROP_GAP_WIDTH * uis.xscale * sizeScale);
+		ax += ( aw + (float)PROP_GAP_WIDTH * uis.xscale * sizeScale );
 		s++;
 	}
 
-	trap_R_SetColor(NULL);
+	trap_R_SetColor( NULL );
 }
 
 /*
@@ -490,8 +490,8 @@ static void UI_DrawProportionalString2(int x, int y, const char *str, vec4_t col
 UI_ProportionalSizeScale
 =================
 */
-float UI_ProportionalSizeScale(int style) {
-	if (style & UI_SMALLFONT) {
+float UI_ProportionalSizeScale( int style ) {
+	if ( style & UI_SMALLFONT ) {
 		return PROP_SMALL_SIZE_SCALE;
 	}
 
@@ -503,21 +503,21 @@ float UI_ProportionalSizeScale(int style) {
 UI_DrawProportionalString
 =================
 */
-void UI_DrawProportionalString(int x, int y, const char *str, int style, vec4_t color) {
+void UI_DrawProportionalString( int x, int y, const char *str, int style, vec4_t color ) {
 	vec4_t drawcolor;
 	int width;
 	float sizeScale;
 
-	sizeScale = UI_ProportionalSizeScale(style);
+	sizeScale = UI_ProportionalSizeScale( style );
 
-	switch (style & UI_FORMATMASK) {
+	switch ( style & UI_FORMATMASK ) {
 		case UI_CENTER:
-			width = UI_ProportionalStringWidth(str) * sizeScale;
+			width = UI_ProportionalStringWidth( str ) * sizeScale;
 			x -= width / 2;
 			break;
 
 		case UI_RIGHT:
-			width = UI_ProportionalStringWidth(str) * sizeScale;
+			width = UI_ProportionalStringWidth( str ) * sizeScale;
 			x -= width;
 			break;
 
@@ -526,42 +526,42 @@ void UI_DrawProportionalString(int x, int y, const char *str, int style, vec4_t 
 			break;
 	}
 
-	if (style & UI_DROPSHADOW) {
+	if ( style & UI_DROPSHADOW ) {
 		drawcolor[0] = drawcolor[1] = drawcolor[2] = 0;
 		drawcolor[3] = color[3];
-		UI_DrawProportionalString2(x + 2, y + 2, str, drawcolor, sizeScale, uis.charsetProp);
+		UI_DrawProportionalString2( x + 2, y + 2, str, drawcolor, sizeScale, uis.charsetProp );
 	}
 
-	if (style & UI_INVERSE) {
+	if ( style & UI_INVERSE ) {
 		drawcolor[0] = color[0] * 0.7;
 		drawcolor[1] = color[1] * 0.7;
 		drawcolor[2] = color[2] * 0.7;
 		drawcolor[3] = color[3];
-		UI_DrawProportionalString2(x, y, str, drawcolor, sizeScale, uis.charsetProp);
+		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetProp );
 		return;
 	}
 
-	if (style & UI_PULSE) {
+	if ( style & UI_PULSE ) {
 		drawcolor[0] = color[0] * 0.7;
 		drawcolor[1] = color[1] * 0.7;
 		drawcolor[2] = color[2] * 0.7;
 		drawcolor[3] = color[3];
-		UI_DrawProportionalString2(x, y, str, color, sizeScale, uis.charsetProp);
+		UI_DrawProportionalString2( x, y, str, color, sizeScale, uis.charsetProp );
 
 		drawcolor[0] = color[0];
 		drawcolor[1] = color[1];
 		drawcolor[2] = color[2];
-		drawcolor[3] = 0.5 + 0.5 * sin(uis.realtime / PULSE_DIVISOR);
-		UI_DrawProportionalString2(x, y, str, drawcolor, sizeScale, uis.charsetPropGlow);
+		drawcolor[3] = 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR );
+		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetPropGlow );
 
-		if (style & UI_SELECTED) {
-			UI_DrawNamedPic(x - width / 2, y - sizeScale, width * 2, (float)PROP_HEIGHT * 1.25 * sizeScale, ART_SELECTED);
+		if ( style & UI_SELECTED ) {
+			UI_DrawNamedPic( x - width / 2, y - sizeScale, width * 2, (float)PROP_HEIGHT * 1.25 * sizeScale, ART_SELECTED );
 		}
 
 		return;
 	}
 
-	UI_DrawProportionalString2(x, y, str, color, sizeScale, uis.charsetProp);
+	UI_DrawProportionalString2( x, y, str, color, sizeScale, uis.charsetProp );
 }
 
 /*
@@ -569,45 +569,45 @@ void UI_DrawProportionalString(int x, int y, const char *str, int style, vec4_t 
 UI_DrawProportionalString_Wrapped
 =================
 */
-void UI_DrawProportionalString_AutoWrapped(int x, int y, int xmax, int ystep, const char *str, int style, vec4_t color) {
+void UI_DrawProportionalString_AutoWrapped( int x, int y, int xmax, int ystep, const char *str, int style, vec4_t color ) {
 	int width;
 	char *s1, *s2, *s3;
 	char c_bcp;
 	char buf[1024];
 	float sizeScale;
 
-	if (!str || str[0] == '\0')
+	if ( !str || str[0] == '\0' )
 		return;
 
-	sizeScale = UI_ProportionalSizeScale(style);
+	sizeScale = UI_ProportionalSizeScale( style );
 
-	Q_strncpyz(buf, str, sizeof(buf));
+	Q_strncpyz( buf, str, sizeof( buf ) );
 	s1 = s2 = s3 = buf;
 
-	while (1) {
+	while ( 1 ) {
 		do {
 			s3++;
-		} while (*s3 != ' ' && *s3 != '\0');
+		} while ( *s3 != ' ' && *s3 != '\0' );
 		c_bcp = *s3;
 		*s3 = '\0';
-		width = UI_ProportionalStringWidth(s1) * sizeScale;
+		width = UI_ProportionalStringWidth( s1 ) * sizeScale;
 		*s3 = c_bcp;
-		if (width > xmax) {
-			if (s1 == s2) {
+		if ( width > xmax ) {
+			if ( s1 == s2 ) {
 				// fuck, don't have a clean cut, we'll overflow
 				s2 = s3;
 			}
 			*s2 = '\0';
-			UI_DrawProportionalString(x, y, s1, style, color);
+			UI_DrawProportionalString( x, y, s1, style, color );
 			y += ystep;
-			if (c_bcp == '\0') {
+			if ( c_bcp == '\0' ) {
 				// that was the last word
 				// we could start a new loop, but that wouldn't be much use
 				// even if the word is too long, we would overflow it (see above)
 				// so just print it now if needed
 				s2++;
-				if (*s2 != '\0') // if we are printing an overflowing line we have s2 == s3
-					UI_DrawProportionalString(x, y, s2, style, color);
+				if ( *s2 != '\0' ) // if we are printing an overflowing line we have s2 == s3
+					UI_DrawProportionalString( x, y, s2, style, color );
 				break;
 			}
 			s2++;
@@ -615,9 +615,9 @@ void UI_DrawProportionalString_AutoWrapped(int x, int y, int xmax, int ystep, co
 			s3 = s2;
 		} else {
 			s2 = s3;
-			if (c_bcp == '\0') // we reached the end
+			if ( c_bcp == '\0' ) // we reached the end
 			{
-				UI_DrawProportionalString(x, y, s1, style, color);
+				UI_DrawProportionalString( x, y, s1, style, color );
 				break;
 			}
 		}
@@ -629,7 +629,7 @@ void UI_DrawProportionalString_AutoWrapped(int x, int y, int xmax, int ystep, co
 UI_DrawString2
 =================
 */
-static void UI_DrawString2(int x, int y, const char *str, vec4_t color, int charw, int charh) {
+static void UI_DrawString2( int x, int y, const char *str, vec4_t color, int charw, int charh ) {
 	const char *s;
 	char ch;
 	int forceColor = qfalse; //APSFIXME;
@@ -641,12 +641,12 @@ static void UI_DrawString2(int x, int y, const char *str, vec4_t color, int char
 	float frow;
 	float fcol;
 
-	if (y < -charh)
+	if ( y < -charh )
 		// offscreen
 		return;
 
 	// draw the colored text
-	trap_R_SetColor(color);
+	trap_R_SetColor( color );
 
 	ax = x * uis.xscale + uis.bias;
 	ay = y * uis.yscale;
@@ -654,29 +654,29 @@ static void UI_DrawString2(int x, int y, const char *str, vec4_t color, int char
 	ah = charh * uis.yscale;
 
 	s = str;
-	while (*s) {
-		if (Q_IsColorString(s)) {
-			if (!forceColor) {
-				memcpy(tempcolor, g_color_table[ColorIndex(s[1])], sizeof(tempcolor));
+	while ( *s ) {
+		if ( Q_IsColorString( s ) ) {
+			if ( !forceColor ) {
+				memcpy( tempcolor, g_color_table[ColorIndex( s[1] )], sizeof( tempcolor ) );
 				tempcolor[3] = color[3];
-				trap_R_SetColor(tempcolor);
+				trap_R_SetColor( tempcolor );
 			}
 			s += 2;
 			continue;
 		}
 
 		ch = *s & 255;
-		if (ch != ' ') {
-			frow = (ch >> 4) * 0.0625;
-			fcol = (ch & 15) * 0.0625;
-			trap_R_DrawStretchPic(ax, ay, aw, ah, fcol, frow, fcol + 0.0625, frow + 0.0625, uis.charset);
+		if ( ch != ' ' ) {
+			frow = ( ch >> 4 ) * 0.0625;
+			fcol = ( ch & 15 ) * 0.0625;
+			trap_R_DrawStretchPic( ax, ay, aw, ah, fcol, frow, fcol + 0.0625, frow + 0.0625, uis.charset );
 		}
 
 		ax += aw;
 		s++;
 	}
 
-	trap_R_SetColor(NULL);
+	trap_R_SetColor( NULL );
 }
 
 /*
@@ -684,7 +684,7 @@ static void UI_DrawString2(int x, int y, const char *str, vec4_t color, int char
 UI_DrawString
 =================
 */
-void UI_DrawString(int x, int y, const char *str, int style, vec4_t color) {
+void UI_DrawString( int x, int y, const char *str, int style, vec4_t color ) {
 	int len;
 	int charw;
 	int charh;
@@ -693,20 +693,20 @@ void UI_DrawString(int x, int y, const char *str, int style, vec4_t color) {
 	float *drawcolor;
 	vec4_t dropcolor;
 
-	if (!str) {
+	if ( !str ) {
 		return;
 	}
 
-	if ((style & UI_BLINK) && ((uis.realtime / BLINK_DIVISOR) & 1))
+	if ( ( style & UI_BLINK ) && ( ( uis.realtime / BLINK_DIVISOR ) & 1 ) )
 		return;
 
-	if (style & UI_SMALLFONT) {
+	if ( style & UI_SMALLFONT ) {
 		charw = SMALLCHAR_WIDTH;
 		charh = SMALLCHAR_HEIGHT;
-	} else if (style & UI_MEDIUMFONT) {
+	} else if ( style & UI_MEDIUMFONT ) {
 		charw = MEDIUMCHAR_WIDTH;
 		charh = MEDIUMCHAR_HEIGHT;
-	} else if (style & UI_GIANTFONT) {
+	} else if ( style & UI_GIANTFONT ) {
 		charw = GIANTCHAR_WIDTH;
 		charh = GIANTCHAR_HEIGHT;
 	} else {
@@ -714,26 +714,26 @@ void UI_DrawString(int x, int y, const char *str, int style, vec4_t color) {
 		charh = BIGCHAR_HEIGHT;
 	}
 
-	if (style & UI_PULSE) {
+	if ( style & UI_PULSE ) {
 		lowlight[0] = 0.8 * color[0];
 		lowlight[1] = 0.8 * color[1];
 		lowlight[2] = 0.8 * color[2];
 		lowlight[3] = 0.8 * color[3];
-		UI_LerpColor(color, lowlight, newcolor, 0.5 + 0.5 * sin(uis.realtime / PULSE_DIVISOR));
+		UI_LerpColor( color, lowlight, newcolor, 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR ) );
 		drawcolor = newcolor;
 	} else
 		drawcolor = color;
 
-	switch (style & UI_FORMATMASK) {
+	switch ( style & UI_FORMATMASK ) {
 		case UI_CENTER:
 			// center justify at x
-			len = strlen(str);
+			len = strlen( str );
 			x = x - len * charw / 2;
 			break;
 
 		case UI_RIGHT:
 			// right justify at x
-			len = strlen(str);
+			len = strlen( str );
 			x = x - len * charw;
 			break;
 
@@ -742,13 +742,13 @@ void UI_DrawString(int x, int y, const char *str, int style, vec4_t color) {
 			break;
 	}
 
-	if (style & UI_DROPSHADOW) {
+	if ( style & UI_DROPSHADOW ) {
 		dropcolor[0] = dropcolor[1] = dropcolor[2] = 0;
 		dropcolor[3] = drawcolor[3];
-		UI_DrawString2(x + 2, y + 2, str, dropcolor, charw, charh);
+		UI_DrawString2( x + 2, y + 2, str, dropcolor, charw, charh );
 	}
 
-	UI_DrawString2(x, y, str, drawcolor, charw, charh);
+	UI_DrawString2( x, y, str, drawcolor, charw, charh );
 }
 
 /*
@@ -756,41 +756,41 @@ void UI_DrawString(int x, int y, const char *str, int style, vec4_t color) {
 UI_DrawChar
 =================
 */
-void UI_DrawChar(int x, int y, int ch, int style, vec4_t color) {
+void UI_DrawChar( int x, int y, int ch, int style, vec4_t color ) {
 	char buff[2];
 
 	buff[0] = ch;
 	buff[1] = '\0';
 
-	UI_DrawString(x, y, buff, style, color);
+	UI_DrawString( x, y, buff, style, color );
 }
 
-qboolean UI_IsFullscreen(void) {
-	if (uis.activemenu && (trap_Key_GetCatcher() & KEYCATCH_UI)) {
+qboolean UI_IsFullscreen( void ) {
+	if ( uis.activemenu && ( trap_Key_GetCatcher() & KEYCATCH_UI ) ) {
 		return uis.activemenu->fullscreen;
 	}
 
 	return qfalse;
 }
 
-static void NeedCDAction(qboolean result) {
-	if (!result) {
-		trap_Cmd_ExecuteText(EXEC_APPEND, "quit\n");
+static void NeedCDAction( qboolean result ) {
+	if ( !result ) {
+		trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
 	}
 }
 
-static void NeedCDKeyAction(qboolean result) {
-	if (!result) {
-		trap_Cmd_ExecuteText(EXEC_APPEND, "quit\n");
+static void NeedCDKeyAction( qboolean result ) {
+	if ( !result ) {
+		trap_Cmd_ExecuteText( EXEC_APPEND, "quit\n" );
 	}
 }
 
-void UI_SetActiveMenu(uiMenuCommand_t menu) {
+void UI_SetActiveMenu( uiMenuCommand_t menu ) {
 	// this should be the ONLY way the menu system is brought up
 	// enusure minumum menu data is cached
 	Menu_Cache();
 
-	switch (menu) {
+	switch ( menu ) {
 		case UIMENU_NONE:
 			UI_ForceMenuOff();
 			return;
@@ -798,13 +798,13 @@ void UI_SetActiveMenu(uiMenuCommand_t menu) {
 			UI_MainMenu();
 			return;
 		case UIMENU_NEED_CD:
-			UI_ConfirmMenu("Insert the CD", 0, NeedCDAction);
+			UI_ConfirmMenu( "Insert the CD", 0, NeedCDAction );
 			return;
 		case UIMENU_BAD_CD_KEY:
-			UI_ConfirmMenu("Bad CD Key", 0, NeedCDKeyAction);
+			UI_ConfirmMenu( "Bad CD Key", 0, NeedCDKeyAction );
 			return;
 		case UIMENU_INGAME:
-			trap_Cvar_Set("cl_paused", "1");
+			trap_Cvar_Set( "cl_paused", "1" );
 			UI_InGameMenu();
 			return;
 
@@ -813,7 +813,7 @@ void UI_SetActiveMenu(uiMenuCommand_t menu) {
 		case UIMENU_POSTGAME:
 		default:
 #ifndef NDEBUG
-			Com_Printf("UI_SetActiveMenu: bad enum %d\n", menu);
+			Com_Printf( "UI_SetActiveMenu: bad enum %d\n", menu );
 #endif
 			break;
 	}
@@ -824,24 +824,24 @@ void UI_SetActiveMenu(uiMenuCommand_t menu) {
 UI_KeyEvent
 =================
 */
-void UI_KeyEvent(int key, int down) {
+void UI_KeyEvent( int key, int down ) {
 	sfxHandle_t s;
 
-	if (!uis.activemenu) {
+	if ( !uis.activemenu ) {
 		return;
 	}
 
-	if (!down) {
+	if ( !down ) {
 		return;
 	}
 
-	if (uis.activemenu->key)
-		s = uis.activemenu->key(key);
+	if ( uis.activemenu->key )
+		s = uis.activemenu->key( key );
 	else
-		s = Menu_DefaultKey(uis.activemenu, key);
+		s = Menu_DefaultKey( uis.activemenu, key );
 
-	if ((s > 0) && (s != menu_null_sound))
-		trap_S_StartLocalSound(s, CHAN_LOCAL_SOUND);
+	if ( ( s > 0 ) && ( s != menu_null_sound ) )
+		trap_S_StartLocalSound( s, CHAN_LOCAL_SOUND );
 }
 
 /*
@@ -849,73 +849,73 @@ void UI_KeyEvent(int key, int down) {
 UI_MouseEvent
 =================
 */
-void UI_MouseEvent(int dx, int dy) {
+void UI_MouseEvent( int dx, int dy ) {
 	int i;
 	menucommon_s *m;
 
-	if (!uis.activemenu)
+	if ( !uis.activemenu )
 		return;
 
 	// update mouse screen position
 	uis.cursorx += dx;
-	if (uis.cursorx < -uis.bias)
+	if ( uis.cursorx < -uis.bias )
 		uis.cursorx = -uis.bias;
-	else if (uis.cursorx > SCREEN_WIDTH + uis.bias)
+	else if ( uis.cursorx > SCREEN_WIDTH + uis.bias )
 		uis.cursorx = SCREEN_WIDTH + uis.bias;
 
 	uis.cursory += dy;
-	if (uis.cursory < 0)
+	if ( uis.cursory < 0 )
 		uis.cursory = 0;
-	else if (uis.cursory > SCREEN_HEIGHT)
+	else if ( uis.cursory > SCREEN_HEIGHT )
 		uis.cursory = SCREEN_HEIGHT;
 
 	// region test the active menu items
-	for (i = 0; i < uis.activemenu->nitems; i++) {
+	for ( i = 0; i < uis.activemenu->nitems; i++ ) {
 		m = (menucommon_s *)uis.activemenu->items[i];
 
-		if (m->flags & (QMF_GRAYED | QMF_INACTIVE))
+		if ( m->flags & ( QMF_GRAYED | QMF_INACTIVE ) )
 			continue;
 
-		if ((uis.cursorx < m->left) ||
-		    (uis.cursorx > m->right) ||
-		    (uis.cursory < m->top) ||
-		    (uis.cursory > m->bottom)) {
+		if ( ( uis.cursorx < m->left ) ||
+		     ( uis.cursorx > m->right ) ||
+		     ( uis.cursory < m->top ) ||
+		     ( uis.cursory > m->bottom ) ) {
 			// cursor out of item bounds
 			continue;
 		}
 
 		// set focus to item at cursor
-		if (uis.activemenu->cursor != i) {
-			Menu_SetCursor(uis.activemenu, i);
-			((menucommon_s *)(uis.activemenu->items[uis.activemenu->cursor_prev]))->flags &= ~QMF_HASMOUSEFOCUS;
+		if ( uis.activemenu->cursor != i ) {
+			Menu_SetCursor( uis.activemenu, i );
+			( (menucommon_s *)( uis.activemenu->items[uis.activemenu->cursor_prev] ) )->flags &= ~QMF_HASMOUSEFOCUS;
 
-			if (!(((menucommon_s *)(uis.activemenu->items[uis.activemenu->cursor]))->flags & QMF_SILENT)) {
-				trap_S_StartLocalSound(menu_move_sound, CHAN_LOCAL_SOUND);
+			if ( !( ( (menucommon_s *)( uis.activemenu->items[uis.activemenu->cursor] ) )->flags & QMF_SILENT ) ) {
+				trap_S_StartLocalSound( menu_move_sound, CHAN_LOCAL_SOUND );
 			}
 		}
 
-		((menucommon_s *)(uis.activemenu->items[uis.activemenu->cursor]))->flags |= QMF_HASMOUSEFOCUS;
+		( (menucommon_s *)( uis.activemenu->items[uis.activemenu->cursor] ) )->flags |= QMF_HASMOUSEFOCUS;
 		return;
 	}
 
-	if (uis.activemenu->nitems > 0) {
+	if ( uis.activemenu->nitems > 0 ) {
 		// out of any region
-		((menucommon_s *)(uis.activemenu->items[uis.activemenu->cursor]))->flags &= ~QMF_HASMOUSEFOCUS;
+		( (menucommon_s *)( uis.activemenu->items[uis.activemenu->cursor] ) )->flags &= ~QMF_HASMOUSEFOCUS;
 	}
 }
 
-char *UI_Argv(int arg) {
+char *UI_Argv( int arg ) {
 	static char buffer[MAX_STRING_CHARS];
 
-	trap_Argv(arg, buffer, sizeof(buffer));
+	trap_Argv( arg, buffer, sizeof( buffer ) );
 
 	return buffer;
 }
 
-char *UI_Cvar_VariableString(const char *var_name) {
+char *UI_Cvar_VariableString( const char *var_name ) {
 	static char buffer[MAX_STRING_CHARS];
 
-	trap_Cvar_VariableStringBuffer(var_name, buffer, sizeof(buffer));
+	trap_Cvar_VariableStringBuffer( var_name, buffer, sizeof( buffer ) );
 
 	return buffer;
 }
@@ -925,7 +925,7 @@ char *UI_Cvar_VariableString(const char *var_name) {
 UI_Cache
 =================
 */
-static void UI_Cache_f(void) {
+static void UI_Cache_f( void ) {
 	MainMenu_Cache();
 	InGame_Cache();
 	ConfirmMenu_Cache();
@@ -962,69 +962,69 @@ static void UI_Cache_f(void) {
 UI_ConsoleCommand
 =================
 */
-qboolean UI_ConsoleCommand(int realTime) {
+qboolean UI_ConsoleCommand( int realTime ) {
 	char *cmd;
 
 	uis.frametime = realTime - uis.realtime;
 	uis.realtime = realTime;
 
-	cmd = UI_Argv(0);
+	cmd = UI_Argv( 0 );
 
 	// ensure minimum menu data is available
 	Menu_Cache();
 
-	if (Q_stricmp(cmd, "levelselect") == 0) {
+	if ( Q_stricmp( cmd, "levelselect" ) == 0 ) {
 		UI_SPLevelMenu_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "postgame") == 0) {
+	if ( Q_stricmp( cmd, "postgame" ) == 0 ) {
 		UI_SPPostgameMenu_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "ui_cache") == 0) {
+	if ( Q_stricmp( cmd, "ui_cache" ) == 0 ) {
 		UI_Cache_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "ui_cinematics") == 0) {
+	if ( Q_stricmp( cmd, "ui_cinematics" ) == 0 ) {
 		UI_CinematicsMenu_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "ui_teamOrders") == 0) {
+	if ( Q_stricmp( cmd, "ui_teamOrders" ) == 0 ) {
 		UI_TeamOrdersMenu_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "iamacheater") == 0) {
+	if ( Q_stricmp( cmd, "iamacheater" ) == 0 ) {
 		UI_SPUnlock_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "iamamonkey") == 0) {
+	if ( Q_stricmp( cmd, "iamamonkey" ) == 0 ) {
 		UI_SPUnlockMedals_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "ui_cdkey") == 0) {
+	if ( Q_stricmp( cmd, "ui_cdkey" ) == 0 ) {
 		UI_CDKeyMenu_f();
 		return qtrue;
 	}
 
-	if (Q_stricmp(cmd, "ui_mappage") == 0) {
-		mappage.pagenumber = atoi(UI_Argv(1));
-		Q_strncpyz(mappage.mapname[0], UI_Argv(2), 32);
-		Q_strncpyz(mappage.mapname[1], UI_Argv(3), 32);
-		Q_strncpyz(mappage.mapname[2], UI_Argv(4), 32);
-		Q_strncpyz(mappage.mapname[3], UI_Argv(5), 32);
-		Q_strncpyz(mappage.mapname[4], UI_Argv(6), 32);
-		Q_strncpyz(mappage.mapname[5], UI_Argv(7), 32);
-		Q_strncpyz(mappage.mapname[6], UI_Argv(8), 32);
-		Q_strncpyz(mappage.mapname[7], UI_Argv(9), 32);
-		Q_strncpyz(mappage.mapname[8], UI_Argv(10), 32);
-		Q_strncpyz(mappage.mapname[9], UI_Argv(11), 32);
+	if ( Q_stricmp( cmd, "ui_mappage" ) == 0 ) {
+		mappage.pagenumber = atoi( UI_Argv( 1 ) );
+		Q_strncpyz( mappage.mapname[0], UI_Argv( 2 ), 32 );
+		Q_strncpyz( mappage.mapname[1], UI_Argv( 3 ), 32 );
+		Q_strncpyz( mappage.mapname[2], UI_Argv( 4 ), 32 );
+		Q_strncpyz( mappage.mapname[3], UI_Argv( 5 ), 32 );
+		Q_strncpyz( mappage.mapname[4], UI_Argv( 6 ), 32 );
+		Q_strncpyz( mappage.mapname[5], UI_Argv( 7 ), 32 );
+		Q_strncpyz( mappage.mapname[6], UI_Argv( 8 ), 32 );
+		Q_strncpyz( mappage.mapname[7], UI_Argv( 9 ), 32 );
+		Q_strncpyz( mappage.mapname[8], UI_Argv( 10 ), 32 );
+		Q_strncpyz( mappage.mapname[9], UI_Argv( 11 ), 32 );
 
 		UI_VoteMapMenuInternal();
 		return qtrue;
@@ -1038,7 +1038,7 @@ qboolean UI_ConsoleCommand(int realTime) {
 UI_Shutdown
 =================
 */
-void UI_Shutdown(void) {
+void UI_Shutdown( void ) {
 }
 
 /*
@@ -1046,20 +1046,20 @@ void UI_Shutdown(void) {
 UI_Init
 =================
 */
-void UI_Init(void) {
+void UI_Init( void ) {
 	UI_RegisterCvars();
 
 	UI_InitGameinfo();
 
 	// cache redundant calulations
-	trap_GetGlconfig(&uis.glconfig);
+	trap_GetGlconfig( &uis.glconfig );
 
 	// for 640x480 virtualized screen
-	uis.xscale = uis.glconfig.vidWidth * (1.0 / 640.0);
-	uis.yscale = uis.glconfig.vidHeight * (1.0 / 480.0);
-	if (uis.glconfig.vidWidth * 480 > uis.glconfig.vidHeight * 640) {
+	uis.xscale = uis.glconfig.vidWidth * ( 1.0 / 640.0 );
+	uis.yscale = uis.glconfig.vidHeight * ( 1.0 / 480.0 );
+	if ( uis.glconfig.vidWidth * 480 > uis.glconfig.vidHeight * 640 ) {
 		// wide screen
-		uis.bias = 0.5 * (uis.glconfig.vidWidth - (uis.glconfig.vidHeight * (640.0 / 480.0)));
+		uis.bias = 0.5 * ( uis.glconfig.vidWidth - ( uis.glconfig.vidHeight * ( 640.0 / 480.0 ) ) );
 		uis.xscale = uis.yscale;
 	} else {
 		// no wide screen
@@ -1080,7 +1080,7 @@ UI_AdjustFrom640
 Adjusted for resolution and screen aspect ratio
 ================
 */
-void UI_AdjustFrom640(float *x, float *y, float *w, float *h) {
+void UI_AdjustFrom640( float *x, float *y, float *w, float *h ) {
 	// expect valid pointers
 	*x = *x * uis.xscale + uis.bias;
 	*y *= uis.yscale;
@@ -1088,21 +1088,21 @@ void UI_AdjustFrom640(float *x, float *y, float *w, float *h) {
 	*h *= uis.yscale;
 }
 
-void UI_DrawNamedPic(float x, float y, float width, float height, const char *picname) {
+void UI_DrawNamedPic( float x, float y, float width, float height, const char *picname ) {
 	qhandle_t hShader;
 
-	hShader = trap_R_RegisterShaderNoMip(picname);
-	UI_AdjustFrom640(&x, &y, &width, &height);
-	trap_R_DrawStretchPic(x, y, width, height, 0, 0, 1, 1, hShader);
+	hShader = trap_R_RegisterShaderNoMip( picname );
+	UI_AdjustFrom640( &x, &y, &width, &height );
+	trap_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader );
 }
 
-void UI_DrawHandlePic(float x, float y, float w, float h, qhandle_t hShader) {
+void UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader ) {
 	float s0;
 	float s1;
 	float t0;
 	float t1;
 
-	if (w < 0) { // flip about vertical
+	if ( w < 0 ) { // flip about vertical
 		w = -w;
 		s0 = 1;
 		s1 = 0;
@@ -1111,7 +1111,7 @@ void UI_DrawHandlePic(float x, float y, float w, float h, qhandle_t hShader) {
 		s1 = 1;
 	}
 
-	if (h < 0) { // flip about horizontal
+	if ( h < 0 ) { // flip about horizontal
 		h = -h;
 		t0 = 1;
 		t1 = 0;
@@ -1120,12 +1120,12 @@ void UI_DrawHandlePic(float x, float y, float w, float h, qhandle_t hShader) {
 		t1 = 1;
 	}
 
-	UI_AdjustFrom640(&x, &y, &w, &h);
-	trap_R_DrawStretchPic(x, y, w, h, s0, t0, s1, t1, hShader);
+	UI_AdjustFrom640( &x, &y, &w, &h );
+	trap_R_DrawStretchPic( x, y, w, h, s0, t0, s1, t1, hShader );
 }
 
-void UI_DrawBackgroundPic(qhandle_t hShader) {
-	trap_R_DrawStretchPic(0.0, 0.0, uis.glconfig.vidWidth, uis.glconfig.vidHeight, 0, 0, 1, 1, hShader);
+void UI_DrawBackgroundPic( qhandle_t hShader ) {
+	trap_R_DrawStretchPic( 0.0, 0.0, uis.glconfig.vidWidth, uis.glconfig.vidHeight, 0, 0, 1, 1, hShader );
 }
 
 /*
@@ -1135,13 +1135,13 @@ UI_FillRect
 Coordinates are 640*480 virtual values
 =================
 */
-void UI_FillRect(float x, float y, float width, float height, const float *color) {
-	trap_R_SetColor(color);
+void UI_FillRect( float x, float y, float width, float height, const float *color ) {
+	trap_R_SetColor( color );
 
-	UI_AdjustFrom640(&x, &y, &width, &height);
-	trap_R_DrawStretchPic(x, y, width, height, 0, 0, 0, 0, uis.whiteShader);
+	UI_AdjustFrom640( &x, &y, &width, &height );
+	trap_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, uis.whiteShader );
 
-	trap_R_SetColor(NULL);
+	trap_R_SetColor( NULL );
 }
 
 /*
@@ -1151,24 +1151,24 @@ UI_DrawRect
 Coordinates are 640*480 virtual values
 =================
 */
-void UI_DrawRect(float x, float y, float width, float height, const float *color) {
-	trap_R_SetColor(color);
+void UI_DrawRect( float x, float y, float width, float height, const float *color ) {
+	trap_R_SetColor( color );
 
-	UI_AdjustFrom640(&x, &y, &width, &height);
+	UI_AdjustFrom640( &x, &y, &width, &height );
 
-	trap_R_DrawStretchPic(x, y, width, 1, 0, 0, 0, 0, uis.whiteShader);
-	trap_R_DrawStretchPic(x, y, 1, height, 0, 0, 0, 0, uis.whiteShader);
-	trap_R_DrawStretchPic(x, y + height - 1, width, 1, 0, 0, 0, 0, uis.whiteShader);
-	trap_R_DrawStretchPic(x + width - 1, y, 1, height, 0, 0, 0, 0, uis.whiteShader);
+	trap_R_DrawStretchPic( x, y, width, 1, 0, 0, 0, 0, uis.whiteShader );
+	trap_R_DrawStretchPic( x, y, 1, height, 0, 0, 0, 0, uis.whiteShader );
+	trap_R_DrawStretchPic( x, y + height - 1, width, 1, 0, 0, 0, 0, uis.whiteShader );
+	trap_R_DrawStretchPic( x + width - 1, y, 1, height, 0, 0, 0, 0, uis.whiteShader );
 
-	trap_R_SetColor(NULL);
+	trap_R_SetColor( NULL );
 }
 
-void UI_SetColor(const float *rgba) {
-	trap_R_SetColor(rgba);
+void UI_SetColor( const float *rgba ) {
+	trap_R_SetColor( rgba );
 }
 
-void UI_UpdateScreen(void) {
+void UI_UpdateScreen( void ) {
 	trap_UpdateScreen();
 }
 
@@ -1177,67 +1177,67 @@ void UI_UpdateScreen(void) {
 UI_Refresh
 =================
 */
-void UI_Refresh(int realtime) {
+void UI_Refresh( int realtime ) {
 	uis.frametime = realtime - uis.realtime;
 	uis.realtime = realtime;
 
-	if (!(trap_Key_GetCatcher() & KEYCATCH_UI)) {
+	if ( !( trap_Key_GetCatcher() & KEYCATCH_UI ) ) {
 		return;
 	}
 
 	UI_UpdateCvars();
 
-	if (uis.activemenu) {
-		if (uis.activemenu->fullscreen) {
+	if ( uis.activemenu ) {
+		if ( uis.activemenu->fullscreen ) {
 			// draw the background
-			if (uis.activemenu->showlogo) {
-				UI_DrawBackgroundPic(uis.menuBackShader);
+			if ( uis.activemenu->showlogo ) {
+				UI_DrawBackgroundPic( uis.menuBackShader );
 			} else {
-				UI_DrawBackgroundPic(uis.menuBackNoLogoShader);
+				UI_DrawBackgroundPic( uis.menuBackNoLogoShader );
 			}
 		}
 
-		if (uis.activemenu->draw)
+		if ( uis.activemenu->draw )
 			uis.activemenu->draw();
 		else
-			Menu_Draw(uis.activemenu);
+			Menu_Draw( uis.activemenu );
 
-		if (uis.firstdraw) {
-			UI_MouseEvent(0, 0);
+		if ( uis.firstdraw ) {
+			UI_MouseEvent( 0, 0 );
 			uis.firstdraw = qfalse;
 		}
 	}
 
 	// draw cursor
-	UI_SetColor(NULL);
-	UI_DrawHandlePic(uis.cursorx - 16, uis.cursory - 16, 32, 32, uis.cursor);
+	UI_SetColor( NULL );
+	UI_DrawHandlePic( uis.cursorx - 16, uis.cursory - 16, 32, 32, uis.cursor );
 
 #ifndef NDEBUG
-	if (uis.debug) {
+	if ( uis.debug ) {
 		// cursor coordinates
-		UI_DrawString(0, 0, va("(%d,%d)", uis.cursorx, uis.cursory), UI_LEFT | UI_SMALLFONT, colorRed);
+		UI_DrawString( 0, 0, va( "(%d,%d)", uis.cursorx, uis.cursory ), UI_LEFT | UI_SMALLFONT, colorRed );
 	}
 #endif
 
 	// delay playing the enter sound until after the
 	// menu has been drawn, to avoid delay while
 	// caching images
-	if (m_entersound) {
-		trap_S_StartLocalSound(menu_in_sound, CHAN_LOCAL_SOUND);
+	if ( m_entersound ) {
+		trap_S_StartLocalSound( menu_in_sound, CHAN_LOCAL_SOUND );
 		m_entersound = qfalse;
 	}
 }
 
-void UI_DrawTextBox(int x, int y, int width, int lines) {
-	UI_FillRect(x + BIGCHAR_WIDTH / 2, y + BIGCHAR_HEIGHT / 2, (width + 1) * BIGCHAR_WIDTH, (lines + 1) * BIGCHAR_HEIGHT, colorBlack);
-	UI_DrawRect(x + BIGCHAR_WIDTH / 2, y + BIGCHAR_HEIGHT / 2, (width + 1) * BIGCHAR_WIDTH, (lines + 1) * BIGCHAR_HEIGHT, colorWhite);
+void UI_DrawTextBox( int x, int y, int width, int lines ) {
+	UI_FillRect( x + BIGCHAR_WIDTH / 2, y + BIGCHAR_HEIGHT / 2, ( width + 1 ) * BIGCHAR_WIDTH, ( lines + 1 ) * BIGCHAR_HEIGHT, colorBlack );
+	UI_DrawRect( x + BIGCHAR_WIDTH / 2, y + BIGCHAR_HEIGHT / 2, ( width + 1 ) * BIGCHAR_WIDTH, ( lines + 1 ) * BIGCHAR_HEIGHT, colorWhite );
 }
 
-qboolean UI_CursorInRect(int x, int y, int width, int height) {
-	if (uis.cursorx < x ||
-	    uis.cursory < y ||
-	    uis.cursorx > x + width ||
-	    uis.cursory > y + height)
+qboolean UI_CursorInRect( int x, int y, int width, int height ) {
+	if ( uis.cursorx < x ||
+	     uis.cursory < y ||
+	     uis.cursorx > x + width ||
+	     uis.cursory > y + height )
 		return qfalse;
 
 	return qtrue;

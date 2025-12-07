@@ -50,29 +50,29 @@ static teammain_t s_teammain;
 TeamMain_MenuEvent
 ===============
 */
-static void TeamMain_MenuEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void TeamMain_MenuEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_JOINRED:
-			trap_Cmd_ExecuteText(EXEC_APPEND, "cmd team red\n");
+			trap_Cmd_ExecuteText( EXEC_APPEND, "cmd team red\n" );
 			UI_ForceMenuOff();
 			break;
 
 		case ID_JOINBLUE:
-			trap_Cmd_ExecuteText(EXEC_APPEND, "cmd team blue\n");
+			trap_Cmd_ExecuteText( EXEC_APPEND, "cmd team blue\n" );
 			UI_ForceMenuOff();
 			break;
 
 		case ID_JOINGAME:
-			trap_Cmd_ExecuteText(EXEC_APPEND, "cmd team free\n");
+			trap_Cmd_ExecuteText( EXEC_APPEND, "cmd team free\n" );
 			UI_ForceMenuOff();
 			break;
 
 		case ID_SPECTATE:
-			trap_Cmd_ExecuteText(EXEC_APPEND, "cmd team spectator\n");
+			trap_Cmd_ExecuteText( EXEC_APPEND, "cmd team spectator\n" );
 			UI_ForceMenuOff();
 			break;
 	}
@@ -83,12 +83,12 @@ static void TeamMain_MenuEvent(void *ptr, int event) {
 TeamMain_MenuInit
 ===============
 */
-static void TeamMain_MenuInit(void) {
+static void TeamMain_MenuInit( void ) {
 	int y;
 	int gametype;
 	char info[MAX_INFO_STRING];
 
-	memset(&s_teammain, 0, sizeof(s_teammain));
+	memset( &s_teammain, 0, sizeof( s_teammain ) );
 
 	TeamMain_Cache();
 
@@ -149,11 +149,11 @@ static void TeamMain_MenuInit(void) {
 	s_teammain.spectate.color = colorWhite;
 	y += 20;
 
-	trap_GetConfigString(CS_SERVERINFO, info, MAX_INFO_STRING);
-	gametype = atoi(Info_ValueForKey(info, "g_gametype"));
+	trap_GetConfigString( CS_SERVERINFO, info, MAX_INFO_STRING );
+	gametype = atoi( Info_ValueForKey( info, "g_gametype" ) );
 
 	// set initial states
-	switch (gametype) {
+	switch ( gametype ) {
 		case GT_SINGLE_PLAYER:
 		case GT_FFA:
 		case GT_LMS:
@@ -171,11 +171,11 @@ static void TeamMain_MenuInit(void) {
 			break;
 	}
 
-	Menu_AddItem(&s_teammain.menu, (void *)&s_teammain.frame);
-	Menu_AddItem(&s_teammain.menu, (void *)&s_teammain.joinred);
-	Menu_AddItem(&s_teammain.menu, (void *)&s_teammain.joinblue);
-	Menu_AddItem(&s_teammain.menu, (void *)&s_teammain.joingame);
-	Menu_AddItem(&s_teammain.menu, (void *)&s_teammain.spectate);
+	Menu_AddItem( &s_teammain.menu, (void *)&s_teammain.frame );
+	Menu_AddItem( &s_teammain.menu, (void *)&s_teammain.joinred );
+	Menu_AddItem( &s_teammain.menu, (void *)&s_teammain.joinblue );
+	Menu_AddItem( &s_teammain.menu, (void *)&s_teammain.joingame );
+	Menu_AddItem( &s_teammain.menu, (void *)&s_teammain.spectate );
 }
 
 /*
@@ -183,8 +183,8 @@ static void TeamMain_MenuInit(void) {
 TeamMain_Cache
 ===============
 */
-void TeamMain_Cache(void) {
-	trap_R_RegisterShaderNoMip(TEAMMAIN_FRAME);
+void TeamMain_Cache( void ) {
+	trap_R_RegisterShaderNoMip( TEAMMAIN_FRAME );
 }
 
 /*
@@ -192,7 +192,7 @@ void TeamMain_Cache(void) {
 UI_TeamMainMenu
 ===============
 */
-void UI_TeamMainMenu(void) {
+void UI_TeamMainMenu( void ) {
 	TeamMain_MenuInit();
-	UI_PushMenu(&s_teammain.menu);
+	UI_PushMenu( &s_teammain.menu );
 }

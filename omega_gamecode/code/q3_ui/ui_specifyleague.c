@@ -57,7 +57,7 @@ static char *specifyleague_artlist[] =
         SPECIFYLEAGUE_BACK1,
         GLOBALRANKINGS_LOGO,
         GLOBALRANKINGS_LETTERS,
-        NULL};
+        NULL };
 
 static char playername[80];
 
@@ -91,19 +91,19 @@ static void SpecifyLeague_GetList() {
 	int count = 0;
 	int i;
 	/* The Player Name has changed. We need to perform another search */
-	Q_strncpyz(playername,
-	           s_specifyleague.rankname.field.buffer,
-	           sizeof(playername));
+	Q_strncpyz( playername,
+	            s_specifyleague.rankname.field.buffer,
+	            sizeof( playername ) );
 
-	count = trap_CL_UI_RankGetLeauges(playername);
+	count = trap_CL_UI_RankGetLeauges( playername );
 
-	for (i = 0; i < count; i++) {
+	for ( i = 0; i < count; i++ ) {
 		char s[MAX_LEAGUENAME];
 		const char *var;
-		var = va("leaguename%i", i + 1);
-		trap_Cvar_VariableStringBuffer(var, s, sizeof(s));
-		Q_strncpyz(league_table[i].leaguename, s, sizeof(league_table[i].leaguename));
-		Q_strncpyz(league_table[i].buff, league_table[i].leaguename, sizeof(league_table[i].buff));
+		var = va( "leaguename%i", i + 1 );
+		trap_Cvar_VariableStringBuffer( var, s, sizeof( s ) );
+		Q_strncpyz( league_table[i].leaguename, s, sizeof( league_table[i].leaguename ) );
+		Q_strncpyz( league_table[i].buff, league_table[i].leaguename, sizeof( league_table[i].buff ) );
 	}
 
 	s_specifyleague.list.numitems = count;
@@ -114,38 +114,38 @@ static void SpecifyLeague_GetList() {
 SpecifyLeague_Event
 =================
 */
-static void SpecifyLeague_Event(void *ptr, int event) {
+static void SpecifyLeague_Event( void *ptr, int event ) {
 	int id;
-	id = ((menucommon_s *)ptr)->id;
+	id = ( (menucommon_s *)ptr )->id;
 
-	switch (id) {
+	switch ( id ) {
 		case ID_SPECIFYLEAGUELIST:
-			if (event == QM_GOTFOCUS) {
+			if ( event == QM_GOTFOCUS ) {
 			}
 			break;
 
 		case ID_SPECIFYLEAGUEUP:
-			if (event == QM_ACTIVATED)
-				ScrollList_Key(&s_specifyleague.list, K_UPARROW);
+			if ( event == QM_ACTIVATED )
+				ScrollList_Key( &s_specifyleague.list, K_UPARROW );
 			break;
 
 		case ID_SPECIFYLEAGUEDOWN:
-			if (event == QM_ACTIVATED)
-				ScrollList_Key(&s_specifyleague.list, K_DOWNARROW);
+			if ( event == QM_ACTIVATED )
+				ScrollList_Key( &s_specifyleague.list, K_DOWNARROW );
 			break;
 
 		case ID_SPECIFYLEAGUENAME:
-			if ((event == QM_LOSTFOCUS) &&
-			    (Q_strncmp(playername,
-			               s_specifyleague.rankname.field.buffer,
-			               strlen(s_specifyleague.rankname.field.buffer)) != 0)) {
+			if ( ( event == QM_LOSTFOCUS ) &&
+			     ( Q_strncmp( playername,
+			                  s_specifyleague.rankname.field.buffer,
+			                  strlen( s_specifyleague.rankname.field.buffer ) ) != 0 ) ) {
 				SpecifyLeague_GetList();
 			}
 			break;
 
 		case ID_SPECIFYLEAGUEBACK:
-			if (event == QM_ACTIVATED) {
-				trap_Cvar_Set("sv_leagueName", league_table[s_specifyleague.list.curvalue].leaguename);
+			if ( event == QM_ACTIVATED ) {
+				trap_Cvar_Set( "sv_leagueName", league_table[s_specifyleague.list.curvalue].leaguename );
 				UI_PopMenu();
 			}
 			break;
@@ -157,10 +157,10 @@ static void SpecifyLeague_Event(void *ptr, int event) {
 SpecifyLeague_MenuInit
 =================
 */
-static void SpecifyLeague_MenuInit(void) {
+static void SpecifyLeague_MenuInit( void ) {
 	int i;
 	// zero set all our globals
-	memset(&s_specifyleague, 0, sizeof(specifyleague_t));
+	memset( &s_specifyleague, 0, sizeof( specifyleague_t ) );
 
 	SpecifyLeague_Cache();
 
@@ -218,7 +218,7 @@ static void SpecifyLeague_MenuInit(void) {
 	s_specifyleague.list.height = 8;
 	s_specifyleague.list.itemnames = (const char **)leaguename_items;
 	s_specifyleague.list.numitems = 0;
-	for (i = 0; i < MAX_LISTBOXITEMS; i++) {
+	for ( i = 0; i < MAX_LISTBOXITEMS; i++ ) {
 		league_table[i].buff[0] = 0;
 		league_table[i].leaguename[0] = 0;
 		leaguename_items[i] = league_table[i].buff;
@@ -264,25 +264,25 @@ static void SpecifyLeague_MenuInit(void) {
 	s_specifyleague.back.height = 64;
 	s_specifyleague.back.focuspic = SPECIFYLEAGUE_BACK1;
 
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.banner);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.framel);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.framer);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.grlogo);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.rankname);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.list);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.arrows);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.up);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.down);
-	Menu_AddItem(&s_specifyleague.menu, &s_specifyleague.back);
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.banner );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.framel );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.framer );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.grlogo );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.rankname );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.list );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.arrows );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.up );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.down );
+	Menu_AddItem( &s_specifyleague.menu, &s_specifyleague.back );
 
 	// initialize any menu variables
-	Q_strncpyz(s_specifyleague.rankname.field.buffer,
-	           UI_Cvar_VariableString("name"),
-	           sizeof(s_specifyleague.rankname.field.buffer));
+	Q_strncpyz( s_specifyleague.rankname.field.buffer,
+	            UI_Cvar_VariableString( "name" ),
+	            sizeof( s_specifyleague.rankname.field.buffer ) );
 
-	Q_strncpyz(playername,
-	           UI_Cvar_VariableString("name"),
-	           sizeof(playername));
+	Q_strncpyz( playername,
+	            UI_Cvar_VariableString( "name" ),
+	            sizeof( playername ) );
 
 	SpecifyLeague_GetList();
 }
@@ -292,14 +292,14 @@ static void SpecifyLeague_MenuInit(void) {
 SpecifyLeague_Cache
 =================
 */
-void SpecifyLeague_Cache(void) {
+void SpecifyLeague_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!specifyleague_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !specifyleague_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(specifyleague_artlist[i]);
+		trap_R_RegisterShaderNoMip( specifyleague_artlist[i] );
 	}
 }
 
@@ -308,7 +308,7 @@ void SpecifyLeague_Cache(void) {
 UI_SpecifyLeagueMenu
 =================
 */
-void UI_SpecifyLeagueMenu(void) {
+void UI_SpecifyLeagueMenu( void ) {
 	SpecifyLeague_MenuInit();
-	UI_PushMenu(&s_specifyleague.menu);
+	UI_PushMenu( &s_specifyleague.menu );
 }

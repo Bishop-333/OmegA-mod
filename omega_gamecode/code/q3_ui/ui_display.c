@@ -81,7 +81,7 @@ static displayOptionsInfo_t displayOptionsInfo;
 DisplayOptions_GetInitialDisplay
 =================
 */
-static void DisplayOptions_GetInitialDisplay(void) {
+static void DisplayOptions_GetInitialDisplay( void ) {
 	s_ido.hdr = displayOptionsInfo.hdr.curvalue;
 	s_ido.vsync = displayOptionsInfo.vsync.curvalue;
 }
@@ -91,14 +91,14 @@ static void DisplayOptions_GetInitialDisplay(void) {
 DisplayOptions_UpdateMenuItems
 =================
 */
-static void DisplayOptions_UpdateMenuItems(void) {
+static void DisplayOptions_UpdateMenuItems( void ) {
 	displayOptionsInfo.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 
-	if (s_ido.hdr != displayOptionsInfo.hdr.curvalue) {
-		displayOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	if ( s_ido.hdr != displayOptionsInfo.hdr.curvalue ) {
+		displayOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
-	if (s_ido.vsync != displayOptionsInfo.vsync.curvalue) {
-		displayOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	if ( s_ido.vsync != displayOptionsInfo.vsync.curvalue ) {
+		displayOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 }
 
@@ -107,14 +107,14 @@ static void DisplayOptions_UpdateMenuItems(void) {
 DisplayOptions_ApplyChanges
 =================
 */
-static void DisplayOptions_ApplyChanges(void *unused, int notification) {
-	if (notification != QM_ACTIVATED)
+static void DisplayOptions_ApplyChanges( void *unused, int notification ) {
+	if ( notification != QM_ACTIVATED )
 		return;
 
-	trap_Cvar_SetValue("r_hdr", displayOptionsInfo.hdr.curvalue);
-	trap_Cvar_SetValue("r_swapInterval", displayOptionsInfo.vsync.curvalue);
+	trap_Cvar_SetValue( "r_hdr", displayOptionsInfo.hdr.curvalue );
+	trap_Cvar_SetValue( "r_swapInterval", displayOptionsInfo.vsync.curvalue );
 
-	trap_Cmd_ExecuteText(EXEC_APPEND, "vid_restart\n");
+	trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart\n" );
 }
 
 /*
@@ -122,12 +122,12 @@ static void DisplayOptions_ApplyChanges(void *unused, int notification) {
 UI_DisplayOptionsMenu_Event
 =================
 */
-static void UI_DisplayOptionsMenu_Event(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_DisplayOptionsMenu_Event( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_GRAPHICS:
 			UI_PopMenu();
 			UI_GraphicsOptionsMenu();
@@ -147,14 +147,14 @@ static void UI_DisplayOptionsMenu_Event(void *ptr, int event) {
 			break;
 
 		case ID_BRIGHTNESS:
-			trap_Cvar_SetValue("r_gamma", displayOptionsInfo.brightness.curvalue / 10.0f);
+			trap_Cvar_SetValue( "r_gamma", displayOptionsInfo.brightness.curvalue / 10.0f );
 			break;
 
 		case ID_MAXFPS:
-			if ((int)displayOptionsInfo.maxfps.curvalue >= displayOptionsInfo.maxfps.maxvalue) {
-				trap_Cvar_SetValue("com_maxfps", 0);
+			if ( (int)displayOptionsInfo.maxfps.curvalue >= displayOptionsInfo.maxfps.maxvalue ) {
+				trap_Cvar_SetValue( "com_maxfps", 0 );
 			} else {
-				trap_Cvar_SetValue("com_maxfps", (int)displayOptionsInfo.maxfps.curvalue);
+				trap_Cvar_SetValue( "com_maxfps", (int)displayOptionsInfo.maxfps.curvalue );
 			}
 			break;
 
@@ -169,7 +169,7 @@ static void UI_DisplayOptionsMenu_Event(void *ptr, int event) {
 DisplayOptions_MenuDraw
 ================
 */
-static void DisplayOptions_MenuDraw(void) {
+static void DisplayOptions_MenuDraw( void ) {
 	float *color;
 	int x, y;
 	int style;
@@ -182,25 +182,25 @@ static void DisplayOptions_MenuDraw(void) {
 	style = UI_SMALLFONT;
 	focus = displayOptionsInfo.maxfps.generic.parent->cursor == displayOptionsInfo.maxfps.generic.menuPosition;
 
-	if (focus) {
+	if ( focus ) {
 		color = text_color_highlight;
 		style |= UI_PULSE;
 	} else {
 		color = text_color_normal;
 	}
 
-	if (displayOptionsInfo.maxfps.curvalue >= displayOptionsInfo.maxfps.maxvalue) {
-		strcpy(buf, "Unlimited");
+	if ( displayOptionsInfo.maxfps.curvalue >= displayOptionsInfo.maxfps.maxvalue ) {
+		strcpy( buf, "Unlimited" );
 	} else {
-		Com_sprintf(buf, sizeof(buf), "%i", (int)displayOptionsInfo.maxfps.curvalue);
+		Com_sprintf( buf, sizeof( buf ), "%i", (int)displayOptionsInfo.maxfps.curvalue );
 	}
 
-	UI_DrawString(x, y, buf, style, color);
+	UI_DrawString( x, y, buf, style, color );
 
 	//APSFIX - rework this
 	DisplayOptions_UpdateMenuItems();
 
-	Menu_Draw(&displayOptionsInfo.menu);
+	Menu_Draw( &displayOptionsInfo.menu );
 }
 
 /*
@@ -208,9 +208,9 @@ static void DisplayOptions_MenuDraw(void) {
 DisplayOptions_SetMenuItems
 =================
 */
-static void DisplayOptions_SetMenuItems(void) {
-	displayOptionsInfo.hdr.curvalue = trap_Cvar_VariableValue("r_hdr");
-	displayOptionsInfo.vsync.curvalue = trap_Cvar_VariableValue("r_swapInterval");
+static void DisplayOptions_SetMenuItems( void ) {
+	displayOptionsInfo.hdr.curvalue = trap_Cvar_VariableValue( "r_hdr" );
+	displayOptionsInfo.vsync.curvalue = trap_Cvar_VariableValue( "r_swapInterval" );
 }
 
 /*
@@ -218,16 +218,16 @@ static void DisplayOptions_SetMenuItems(void) {
 UI_DisplayOptionsMenu_Init
 ===============
 */
-static void UI_DisplayOptionsMenu_Init(void) {
+static void UI_DisplayOptionsMenu_Init( void ) {
 	static const char *enabled_names[] =
 	    {
 	        "Off",
 	        "On",
-	        NULL};
+	        NULL };
 
 	int y;
 
-	memset(&displayOptionsInfo, 0, sizeof(displayOptionsInfo));
+	memset( &displayOptionsInfo, 0, sizeof( displayOptionsInfo ) );
 
 	UI_DisplayOptionsMenu_Cache();
 	displayOptionsInfo.menu.wrapAround = qtrue;
@@ -298,7 +298,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	displayOptionsInfo.network.style = UI_RIGHT;
 	displayOptionsInfo.network.color = color_red;
 
-	y = 240 - 2 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 2 * ( BIGCHAR_HEIGHT + 2 );
 	displayOptionsInfo.brightness.generic.type = MTYPE_SLIDER;
 	displayOptionsInfo.brightness.generic.name = "Brightness:";
 	displayOptionsInfo.brightness.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
@@ -308,7 +308,7 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	displayOptionsInfo.brightness.generic.y = y;
 	displayOptionsInfo.brightness.minvalue = 5;
 	displayOptionsInfo.brightness.maxvalue = 20;
-	if (!uis.glconfig.deviceSupportsGamma) {
+	if ( !uis.glconfig.deviceSupportsGamma ) {
 		displayOptionsInfo.brightness.generic.flags |= QMF_GRAYED;
 	}
 
@@ -360,28 +360,28 @@ static void UI_DisplayOptionsMenu_Init(void) {
 	displayOptionsInfo.apply.height = 64;
 	displayOptionsInfo.apply.focuspic = ART_ACCEPT1;
 
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.banner);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.framel);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.framer);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.graphics);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.display);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.sound);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.network);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.brightness);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.maxfps);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.back);
-	Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.apply);
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.banner );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.framel );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.framer );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.graphics );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.display );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.sound );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.network );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.brightness );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.maxfps );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.back );
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.apply );
 
-	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
-		Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.hdr);
-		Menu_AddItem(&displayOptionsInfo.menu, (void *)&displayOptionsInfo.vsync);
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.hdr );
+		Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.vsync );
 	}
 
-	displayOptionsInfo.brightness.curvalue = trap_Cvar_VariableValue("r_gamma") * 10;
-	if (trap_Cvar_VariableValue("com_maxfps") == 0) {
+	displayOptionsInfo.brightness.curvalue = trap_Cvar_VariableValue( "r_gamma" ) * 10;
+	if ( trap_Cvar_VariableValue( "com_maxfps" ) == 0 ) {
 		displayOptionsInfo.maxfps.curvalue = displayOptionsInfo.maxfps.maxvalue;
 	} else {
-		displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue("com_maxfps");
+		displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue( "com_maxfps" );
 	}
 
 	DisplayOptions_SetMenuItems();
@@ -393,13 +393,13 @@ static void UI_DisplayOptionsMenu_Init(void) {
 UI_DisplayOptionsMenu_Cache
 ===============
 */
-void UI_DisplayOptionsMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_FRAMEL);
-	trap_R_RegisterShaderNoMip(ART_FRAMER);
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	trap_R_RegisterShaderNoMip(ART_ACCEPT0);
-	trap_R_RegisterShaderNoMip(ART_ACCEPT1);
+void UI_DisplayOptionsMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_ACCEPT0 );
+	trap_R_RegisterShaderNoMip( ART_ACCEPT1 );
 }
 
 /*
@@ -407,8 +407,8 @@ void UI_DisplayOptionsMenu_Cache(void) {
 UI_DisplayOptionsMenu
 ===============
 */
-void UI_DisplayOptionsMenu(void) {
+void UI_DisplayOptionsMenu( void ) {
 	UI_DisplayOptionsMenu_Init();
-	UI_PushMenu(&displayOptionsInfo.menu);
-	Menu_SetCursorToItem(&displayOptionsInfo.menu, &displayOptionsInfo.display);
+	UI_PushMenu( &displayOptionsInfo.menu );
+	Menu_SetCursorToItem( &displayOptionsInfo.menu, &displayOptionsInfo.display );
 }

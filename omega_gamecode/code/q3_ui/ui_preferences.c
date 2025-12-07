@@ -100,7 +100,7 @@ static const char *teamoverlay_names[] =
         "upper right",
         "lower right",
         "lower left",
-        NULL};
+        NULL };
 
 static const char *drawgun_names[] =
     {
@@ -108,24 +108,24 @@ static const char *drawgun_names[] =
         "right",
         "left",
         "center",
-        NULL};
+        NULL };
 
 /*
 =================
 Preferences_UpdateMenuItems
 =================
 */
-static void Preferences_UpdateMenuItems(void) {
-	if (s_preferences.crosshairHealth.curvalue) {
+static void Preferences_UpdateMenuItems( void ) {
+	if ( s_preferences.crosshairHealth.curvalue ) {
 		//If crosshairHealth is on: Don't allow color selection
 		s_preferences.crosshairColorRed.generic.flags |= QMF_INACTIVE | QMF_GRAYED;
 		s_preferences.crosshairColorGreen.generic.flags |= QMF_INACTIVE | QMF_GRAYED;
 		s_preferences.crosshairColorBlue.generic.flags |= QMF_INACTIVE | QMF_GRAYED;
 	} else {
 		//If crosshairHealth is off: Allow color selection
-		s_preferences.crosshairColorRed.generic.flags &= ~(QMF_INACTIVE | QMF_GRAYED);
-		s_preferences.crosshairColorGreen.generic.flags &= ~(QMF_INACTIVE | QMF_GRAYED);
-		s_preferences.crosshairColorBlue.generic.flags &= ~(QMF_INACTIVE | QMF_GRAYED);
+		s_preferences.crosshairColorRed.generic.flags &= ~( QMF_INACTIVE | QMF_GRAYED );
+		s_preferences.crosshairColorGreen.generic.flags &= ~( QMF_INACTIVE | QMF_GRAYED );
+		s_preferences.crosshairColorBlue.generic.flags &= ~( QMF_INACTIVE | QMF_GRAYED );
 	}
 }
 
@@ -134,111 +134,111 @@ static void Preferences_UpdateMenuItems(void) {
 Preferences_MenuDraw
 ================
 */
-static void Preferences_MenuDraw(void) {
+static void Preferences_MenuDraw( void ) {
 	Preferences_UpdateMenuItems();
 
-	Menu_Draw(&s_preferences.menu);
+	Menu_Draw( &s_preferences.menu );
 }
 
-static void Preferences_SetMenuItems(void) {
-	s_preferences.crosshair.curvalue = (int)trap_Cvar_VariableValue("cg_drawCrosshair") % NUM_CROSSHAIRS;
-	s_preferences.crosshairHealth.curvalue = trap_Cvar_VariableValue("cg_crosshairHealth") != 0;
-	s_preferences.crosshairColorRed.curvalue = trap_Cvar_VariableValue("cg_crosshairColorRed") * 255.0f;
-	s_preferences.crosshairColorGreen.curvalue = trap_Cvar_VariableValue("cg_crosshairColorGreen") * 255.0f;
-	s_preferences.crosshairColorBlue.curvalue = trap_Cvar_VariableValue("cg_crosshairColorBlue") * 255.0f;
-	s_preferences.simpleitems.curvalue = trap_Cvar_VariableValue("cg_simpleItems") != 0;
-	s_preferences.alwaysweaponbar.curvalue = trap_Cvar_VariableValue("cg_alwaysWeaponBar") != 0;
-	s_preferences.brass.curvalue = trap_Cvar_VariableValue("cg_brassTime") != 0;
-	s_preferences.wallmarks.curvalue = trap_Cvar_VariableValue("cg_marks") != 0;
-	s_preferences.identifytarget.curvalue = trap_Cvar_VariableValue("cg_drawCrosshairNames") != 0;
-	s_preferences.synceveryframe.curvalue = trap_Cvar_VariableValue("r_finish") != 0;
-	s_preferences.forcemodel.curvalue = trap_Cvar_VariableValue("cg_forcemodel") != 0;
-	s_preferences.drawteamoverlay.curvalue = Com_Clamp(0, 3, trap_Cvar_VariableValue("cg_drawTeamOverlay"));
-	s_preferences.autoswitch.curvalue = trap_Cvar_VariableValue("cg_autoswitch") != 0;
-	s_preferences.drawgun.curvalue = Com_Clamp(0, 3, trap_Cvar_VariableValue("cg_drawGun"));
-	s_preferences.bobgun.curvalue = trap_Cvar_VariableValue("cg_bobgun") != 0;
-	s_preferences.screenshake.curvalue = trap_Cvar_VariableValue("cg_screenshake") != 0;
+static void Preferences_SetMenuItems( void ) {
+	s_preferences.crosshair.curvalue = (int)trap_Cvar_VariableValue( "cg_drawCrosshair" ) % NUM_CROSSHAIRS;
+	s_preferences.crosshairHealth.curvalue = trap_Cvar_VariableValue( "cg_crosshairHealth" ) != 0;
+	s_preferences.crosshairColorRed.curvalue = trap_Cvar_VariableValue( "cg_crosshairColorRed" ) * 255.0f;
+	s_preferences.crosshairColorGreen.curvalue = trap_Cvar_VariableValue( "cg_crosshairColorGreen" ) * 255.0f;
+	s_preferences.crosshairColorBlue.curvalue = trap_Cvar_VariableValue( "cg_crosshairColorBlue" ) * 255.0f;
+	s_preferences.simpleitems.curvalue = trap_Cvar_VariableValue( "cg_simpleItems" ) != 0;
+	s_preferences.alwaysweaponbar.curvalue = trap_Cvar_VariableValue( "cg_alwaysWeaponBar" ) != 0;
+	s_preferences.brass.curvalue = trap_Cvar_VariableValue( "cg_brassTime" ) != 0;
+	s_preferences.wallmarks.curvalue = trap_Cvar_VariableValue( "cg_marks" ) != 0;
+	s_preferences.identifytarget.curvalue = trap_Cvar_VariableValue( "cg_drawCrosshairNames" ) != 0;
+	s_preferences.synceveryframe.curvalue = trap_Cvar_VariableValue( "r_finish" ) != 0;
+	s_preferences.forcemodel.curvalue = trap_Cvar_VariableValue( "cg_forcemodel" ) != 0;
+	s_preferences.drawteamoverlay.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawTeamOverlay" ) );
+	s_preferences.autoswitch.curvalue = trap_Cvar_VariableValue( "cg_autoswitch" ) != 0;
+	s_preferences.drawgun.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawGun" ) );
+	s_preferences.bobgun.curvalue = trap_Cvar_VariableValue( "cg_bobgun" ) != 0;
+	s_preferences.screenshake.curvalue = trap_Cvar_VariableValue( "cg_screenshake" ) != 0;
 }
 
-static void Preferences_Event(void *ptr, int notification) {
-	if (notification != QM_ACTIVATED) {
+static void Preferences_Event( void *ptr, int notification ) {
+	if ( notification != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_CROSSHAIR:
 			s_preferences.crosshair.curvalue++;
-			if (s_preferences.crosshair.curvalue == NUM_CROSSHAIRS || s_preferences.crosshairShader[s_preferences.crosshair.curvalue] == 0) {
+			if ( s_preferences.crosshair.curvalue == NUM_CROSSHAIRS || s_preferences.crosshairShader[s_preferences.crosshair.curvalue] == 0 ) {
 				s_preferences.crosshair.curvalue = 0;
 			}
-			trap_Cvar_SetValue("cg_drawCrosshair", s_preferences.crosshair.curvalue);
+			trap_Cvar_SetValue( "cg_drawCrosshair", s_preferences.crosshair.curvalue );
 			break;
 
 		case ID_CROSSHAIRHEALTH:
-			trap_Cvar_SetValue("cg_crosshairHealth", s_preferences.crosshairHealth.curvalue);
+			trap_Cvar_SetValue( "cg_crosshairHealth", s_preferences.crosshairHealth.curvalue );
 			break;
 
 		case ID_COLORRED:
-			trap_Cvar_SetValue("cg_crosshairColorRed", ((float)s_preferences.crosshairColorRed.curvalue) / 255.f);
+			trap_Cvar_SetValue( "cg_crosshairColorRed", ( (float)s_preferences.crosshairColorRed.curvalue ) / 255.f );
 			break;
 
 		case ID_COLORGREEN:
-			trap_Cvar_SetValue("cg_crosshairColorGreen", ((float)s_preferences.crosshairColorGreen.curvalue) / 255.f);
+			trap_Cvar_SetValue( "cg_crosshairColorGreen", ( (float)s_preferences.crosshairColorGreen.curvalue ) / 255.f );
 			break;
 
 		case ID_COLORBLUE:
-			trap_Cvar_SetValue("cg_crosshairColorBlue", ((float)s_preferences.crosshairColorBlue.curvalue) / 255.f);
+			trap_Cvar_SetValue( "cg_crosshairColorBlue", ( (float)s_preferences.crosshairColorBlue.curvalue ) / 255.f );
 			break;
 
 		case ID_SIMPLEITEMS:
-			trap_Cvar_SetValue("cg_simpleItems", s_preferences.simpleitems.curvalue);
+			trap_Cvar_SetValue( "cg_simpleItems", s_preferences.simpleitems.curvalue );
 			break;
 
 		case ID_WEAPONBAR:
-			trap_Cvar_SetValue("cg_alwaysWeaponBar", s_preferences.alwaysweaponbar.curvalue);
+			trap_Cvar_SetValue( "cg_alwaysWeaponBar", s_preferences.alwaysweaponbar.curvalue );
 			break;
 
 		case ID_EJECTINGBRASS:
-			if (s_preferences.brass.curvalue)
-				trap_Cvar_Reset("cg_brassTime");
+			if ( s_preferences.brass.curvalue )
+				trap_Cvar_Reset( "cg_brassTime" );
 			else
-				trap_Cvar_SetValue("cg_brassTime", 0);
+				trap_Cvar_SetValue( "cg_brassTime", 0 );
 			break;
 
 		case ID_WALLMARKS:
-			trap_Cvar_SetValue("cg_marks", s_preferences.wallmarks.curvalue);
+			trap_Cvar_SetValue( "cg_marks", s_preferences.wallmarks.curvalue );
 			break;
 
 		case ID_IDENTIFYTARGET:
-			trap_Cvar_SetValue("cg_drawCrosshairNames", s_preferences.identifytarget.curvalue);
+			trap_Cvar_SetValue( "cg_drawCrosshairNames", s_preferences.identifytarget.curvalue );
 			break;
 
 		case ID_SYNCEVERYFRAME:
-			trap_Cvar_SetValue("r_finish", s_preferences.synceveryframe.curvalue);
+			trap_Cvar_SetValue( "r_finish", s_preferences.synceveryframe.curvalue );
 			break;
 
 		case ID_FORCEMODEL:
-			trap_Cvar_SetValue("cg_forcemodel", s_preferences.forcemodel.curvalue);
+			trap_Cvar_SetValue( "cg_forcemodel", s_preferences.forcemodel.curvalue );
 			break;
 
 		case ID_DRAWTEAMOVERLAY:
-			trap_Cvar_SetValue("cg_drawTeamOverlay", s_preferences.drawteamoverlay.curvalue);
+			trap_Cvar_SetValue( "cg_drawTeamOverlay", s_preferences.drawteamoverlay.curvalue );
 			break;
 
 		case ID_AUTOSWITCH:
-			trap_Cvar_SetValue("cg_autoswitch", s_preferences.autoswitch.curvalue);
+			trap_Cvar_SetValue( "cg_autoswitch", s_preferences.autoswitch.curvalue );
 			break;
 
 		case ID_DRAWGUN:
-			trap_Cvar_SetValue("cg_drawGun", s_preferences.drawgun.curvalue);
+			trap_Cvar_SetValue( "cg_drawGun", s_preferences.drawgun.curvalue );
 			break;
 
 		case ID_BOBGUN:
-			trap_Cvar_SetValue("cg_bobgun", s_preferences.bobgun.curvalue);
+			trap_Cvar_SetValue( "cg_bobgun", s_preferences.bobgun.curvalue );
 			break;
 
 		case ID_SCREENSHAKE:
-			trap_Cvar_SetValue("cg_screenshake", s_preferences.screenshake.curvalue);
+			trap_Cvar_SetValue( "cg_screenshake", s_preferences.screenshake.curvalue );
 			break;
 
 		case ID_BACK:
@@ -252,7 +252,7 @@ static void Preferences_Event(void *ptr, int notification) {
 Crosshair_Draw
 =================
 */
-static void Crosshair_Draw(void *self) {
+static void Crosshair_Draw( void *self ) {
 	menulist_s *s;
 	float *color;
 	int x, y;
@@ -265,41 +265,41 @@ static void Crosshair_Draw(void *self) {
 	y = s->generic.y;
 
 	style = UI_SMALLFONT;
-	focus = (s->generic.parent->cursor == s->generic.menuPosition);
+	focus = ( s->generic.parent->cursor == s->generic.menuPosition );
 
-	if (s->generic.flags & QMF_GRAYED)
+	if ( s->generic.flags & QMF_GRAYED )
 		color = text_color_disabled;
-	else if (focus) {
+	else if ( focus ) {
 		color = text_color_highlight;
 		style |= UI_PULSE;
-	} else if (s->generic.flags & QMF_BLINK) {
+	} else if ( s->generic.flags & QMF_BLINK ) {
 		color = text_color_highlight;
 		style |= UI_BLINK;
 	} else
 		color = text_color_normal;
 
-	if (focus) {
+	if ( focus ) {
 		// draw cursor
-		UI_FillRect(s->generic.left, s->generic.top, s->generic.right - s->generic.left + 1, s->generic.bottom - s->generic.top + 1, listbar_color);
-		UI_DrawChar(x, y, 13, UI_CENTER | UI_BLINK | UI_SMALLFONT, color);
+		UI_FillRect( s->generic.left, s->generic.top, s->generic.right - s->generic.left + 1, s->generic.bottom - s->generic.top + 1, listbar_color );
+		UI_DrawChar( x, y, 13, UI_CENTER | UI_BLINK | UI_SMALLFONT, color );
 	}
 
-	UI_DrawString(x - SMALLCHAR_WIDTH, y, s->generic.name, style | UI_RIGHT, color);
-	if (!s->curvalue) {
+	UI_DrawString( x - SMALLCHAR_WIDTH, y, s->generic.name, style | UI_RIGHT, color );
+	if ( !s->curvalue ) {
 		return;
 	}
-	if (s_preferences.crosshairHealth.curvalue) {
+	if ( s_preferences.crosshairHealth.curvalue ) {
 		color4[0] = 1.0f;
 		color4[1] = 1.0f;
 		color4[2] = 1.0f;
 	} else {
-		color4[0] = ((float)s_preferences.crosshairColorRed.curvalue) / 255.f;
-		color4[1] = ((float)s_preferences.crosshairColorGreen.curvalue) / 255.f;
-		color4[2] = ((float)s_preferences.crosshairColorBlue.curvalue) / 255.f;
+		color4[0] = ( (float)s_preferences.crosshairColorRed.curvalue ) / 255.f;
+		color4[1] = ( (float)s_preferences.crosshairColorGreen.curvalue ) / 255.f;
+		color4[2] = ( (float)s_preferences.crosshairColorBlue.curvalue ) / 255.f;
 	}
 	color4[3] = 1.0f;
-	trap_R_SetColor(color4);
-	UI_DrawHandlePic(x + SMALLCHAR_WIDTH, y - 4, 24, 24, s_preferences.crosshairShader[s->curvalue]);
+	trap_R_SetColor( color4 );
+	UI_DrawHandlePic( x + SMALLCHAR_WIDTH, y - 4, 24, 24, s_preferences.crosshairShader[s->curvalue] );
 }
 
 /*
@@ -307,15 +307,15 @@ static void Crosshair_Draw(void *self) {
 Preferences_MenuInit
 =================
 */
-static void Preferences_MenuInit(void) {
+static void Preferences_MenuInit( void ) {
 	int y;
 
-	UI_SetDefaultCvar("cg_crosshairHealth", "1");
-	UI_SetDefaultCvar("cg_crosshairColorRed", "1");
-	UI_SetDefaultCvar("cg_crosshairColorBlue", "1");
-	UI_SetDefaultCvar("cg_crosshairColorGreen", "1");
+	UI_SetDefaultCvar( "cg_crosshairHealth", "1" );
+	UI_SetDefaultCvar( "cg_crosshairColorRed", "1" );
+	UI_SetDefaultCvar( "cg_crosshairColorBlue", "1" );
+	UI_SetDefaultCvar( "cg_crosshairColorGreen", "1" );
 
-	memset(&s_preferences, 0, sizeof(preferences_t));
+	memset( &s_preferences, 0, sizeof( preferences_t ) );
 
 	Preferences_Cache();
 
@@ -357,7 +357,7 @@ static void Preferences_MenuInit(void) {
 	s_preferences.crosshair.generic.id = ID_CROSSHAIR;
 	s_preferences.crosshair.generic.top = y - 4;
 	s_preferences.crosshair.generic.bottom = y + 20;
-	s_preferences.crosshair.generic.left = PREFERENCES_X_POS - ((strlen(s_preferences.crosshair.generic.name) + 1) * SMALLCHAR_WIDTH);
+	s_preferences.crosshair.generic.left = PREFERENCES_X_POS - ( ( strlen( s_preferences.crosshair.generic.name ) + 1 ) * SMALLCHAR_WIDTH );
 	s_preferences.crosshair.generic.right = PREFERENCES_X_POS + 48;
 
 	y += BIGCHAR_HEIGHT + 2;
@@ -402,7 +402,7 @@ static void Preferences_MenuInit(void) {
 	s_preferences.crosshairColorBlue.minvalue = 0.0f;
 	s_preferences.crosshairColorBlue.maxvalue = 255.0f;
 
-	if (s_preferences.crosshairHealth.curvalue) {
+	if ( s_preferences.crosshairHealth.curvalue ) {
 		s_preferences.crosshairColorRed.generic.flags |= QMF_INACTIVE;
 		s_preferences.crosshairColorGreen.generic.flags |= QMF_INACTIVE;
 		s_preferences.crosshairColorBlue.generic.flags |= QMF_INACTIVE;
@@ -531,29 +531,29 @@ static void Preferences_MenuInit(void) {
 	s_preferences.back.height = 64;
 	s_preferences.back.focuspic = ART_BACK1;
 
-	Menu_AddItem(&s_preferences.menu, &s_preferences.banner);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.framel);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.framer);
+	Menu_AddItem( &s_preferences.menu, &s_preferences.banner );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.framel );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.framer );
 
-	Menu_AddItem(&s_preferences.menu, &s_preferences.crosshair);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.crosshairHealth);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.crosshairColorRed);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.crosshairColorGreen);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.crosshairColorBlue);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.simpleitems);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.alwaysweaponbar);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.wallmarks);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.brass);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.identifytarget);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.synceveryframe);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.forcemodel);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.drawteamoverlay);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.autoswitch);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.drawgun);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.bobgun);
-	Menu_AddItem(&s_preferences.menu, &s_preferences.screenshake);
+	Menu_AddItem( &s_preferences.menu, &s_preferences.crosshair );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.crosshairHealth );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.crosshairColorRed );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.crosshairColorGreen );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.crosshairColorBlue );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.simpleitems );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.alwaysweaponbar );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.wallmarks );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.brass );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.identifytarget );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.synceveryframe );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.forcemodel );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.drawteamoverlay );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.drawgun );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.bobgun );
+	Menu_AddItem( &s_preferences.menu, &s_preferences.screenshake );
 
-	Menu_AddItem(&s_preferences.menu, &s_preferences.back);
+	Menu_AddItem( &s_preferences.menu, &s_preferences.back );
 
 	Preferences_SetMenuItems();
 }
@@ -563,18 +563,18 @@ static void Preferences_MenuInit(void) {
 Preferences_Cache
 ===============
 */
-void Preferences_Cache(void) {
+void Preferences_Cache( void ) {
 	int n;
 
-	trap_R_RegisterShaderNoMip(ART_FRAMEL);
-	trap_R_RegisterShaderNoMip(ART_FRAMER);
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	for (n = 0; n < NUM_CROSSHAIRS; n++) {
-		if (n < 10)
-			s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip(va("gfx/2d/crosshair%c", 'a' + n));
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	for ( n = 0; n < NUM_CROSSHAIRS; n++ ) {
+		if ( n < 10 )
+			s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip( va( "gfx/2d/crosshair%c", 'a' + n ) );
 		else
-			s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip(va("gfx/2d/crosshair%02d", n - 10));
+			s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip( va( "gfx/2d/crosshair%02d", n - 10 ) );
 	}
 }
 
@@ -583,7 +583,7 @@ void Preferences_Cache(void) {
 UI_PreferencesMenu
 ===============
 */
-void UI_PreferencesMenu(void) {
+void UI_PreferencesMenu( void ) {
 	Preferences_MenuInit();
-	UI_PushMenu(&s_preferences.menu);
+	UI_PushMenu( &s_preferences.menu );
 }

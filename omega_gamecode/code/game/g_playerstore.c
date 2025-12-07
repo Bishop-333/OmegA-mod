@@ -45,8 +45,8 @@ PlayerStoreInit
 Resets the player store. Should be called everytime game.qvm is loaded.
 ===============
 */
-void PlayerStoreInit(void) {
-	memset(playerstore, 0, sizeof(playerstore));
+void PlayerStoreInit( void ) {
+	memset( playerstore, 0, sizeof( playerstore ) );
 	nextAge = 1;
 }
 
@@ -55,38 +55,38 @@ void PlayerStoreInit(void) {
 PlayerStore_store
 ===============
 */
-void PlayerStore_store(char *guid, playerState_t ps) {
+void PlayerStore_store( char *guid, playerState_t ps ) {
 	int place2store = -1;
 	int lowestAge = 32000;
 	int i;
-	if (strlen(guid) < 32) {
-		G_LogPrintf("Playerstore: Failed to store player. Invalid guid: %s\n", guid);
+	if ( strlen( guid ) < 32 ) {
+		G_LogPrintf( "Playerstore: Failed to store player. Invalid guid: %s\n", guid );
 		return;
 	}
-	for (i = 0; i < MAX_PLAYERS_STORED; i++) {
-		if (!Q_stricmp(guid, playerstore[i].guid)) {
+	for ( i = 0; i < MAX_PLAYERS_STORED; i++ ) {
+		if ( !Q_stricmp( guid, playerstore[i].guid ) ) {
 			place2store = i;
 		}
 	}
 
-	if (place2store < 0)
-		for (i = 0; i < MAX_PLAYERS_STORED; i++) {
-			if (playerstore[i].age < lowestAge) {
+	if ( place2store < 0 )
+		for ( i = 0; i < MAX_PLAYERS_STORED; i++ ) {
+			if ( playerstore[i].age < lowestAge ) {
 				place2store = i;
 				lowestAge = playerstore[i].age;
 			}
 		}
 
 	//Make sure we don't store in -1
-	if (place2store < 0)
+	if ( place2store < 0 )
 		place2store = 0;
 	//place2store is now the place to store to.
 	playerstore[place2store].age = nextAge++;
-	Q_strncpyz(playerstore[place2store].guid, guid, GUID_SIZE + 1);
-	memcpy(playerstore[place2store].persistant, ps.persistant, sizeof(int[MAX_PERSISTANT]));
-	memcpy(playerstore[place2store].accuracy, level.clients[ps.clientNum].accuracy, sizeof(playerstore[0].accuracy));
+	Q_strncpyz( playerstore[place2store].guid, guid, GUID_SIZE + 1 );
+	memcpy( playerstore[place2store].persistant, ps.persistant, sizeof( int[MAX_PERSISTANT] ) );
+	memcpy( playerstore[place2store].accuracy, level.clients[ps.clientNum].accuracy, sizeof( playerstore[0].accuracy ) );
 	playerstore[place2store].timePlayed = level.time - level.clients[ps.clientNum].pers.enterTime;
-	G_LogPrintf("Playerstore: Stored player with guid: %s in %u\n", playerstore[place2store].guid, place2store);
+	G_LogPrintf( "Playerstore: Stored player with guid: %s in %u\n", playerstore[place2store].guid, place2store );
 }
 
 /*
@@ -94,24 +94,24 @@ void PlayerStore_store(char *guid, playerState_t ps) {
 PlayerStore_restore
 ===============
 */
-void PlayerStore_restore(char *guid, playerState_t *ps) {
+void PlayerStore_restore( char *guid, playerState_t *ps ) {
 	int i;
-	if (strlen(guid) < 32) {
-		G_LogPrintf("Playerstore: Failed to restore player. Invalid guid: %s\n", guid);
+	if ( strlen( guid ) < 32 ) {
+		G_LogPrintf( "Playerstore: Failed to restore player. Invalid guid: %s\n", guid );
 		return;
 	}
-	for (i = 0; i < MAX_PLAYERS_STORED; i++) {
-		if (!Q_stricmpn(guid, playerstore[i].guid, GUID_SIZE) && playerstore[i].age != -1) {
-			memcpy(ps->persistant, playerstore[i].persistant, sizeof(int[MAX_PERSISTANT]));
-			memcpy(level.clients[ps->clientNum].accuracy, playerstore[i].accuracy, sizeof(playerstore[0].accuracy));
+	for ( i = 0; i < MAX_PLAYERS_STORED; i++ ) {
+		if ( !Q_stricmpn( guid, playerstore[i].guid, GUID_SIZE ) && playerstore[i].age != -1 ) {
+			memcpy( ps->persistant, playerstore[i].persistant, sizeof( int[MAX_PERSISTANT] ) );
+			memcpy( level.clients[ps->clientNum].accuracy, playerstore[i].accuracy, sizeof( playerstore[0].accuracy ) );
 			level.clients[ps->clientNum].pers.enterTime = level.time - playerstore[i].timePlayed;
 			//Never ever restore a player with negative score
-			if (ps->persistant[PERS_SCORE] < 0)
+			if ( ps->persistant[PERS_SCORE] < 0 )
 				ps->persistant[PERS_SCORE] = 0;
 			playerstore[i].age = -1;
-			G_LogPrintf("Restored player with guid: %s\n", guid);
+			G_LogPrintf( "Restored player with guid: %s\n", guid );
 			return;
 		}
 	}
-	G_LogPrintf("Playerstore: Nothing to restore. Guid: %s\n", guid);
+	G_LogPrintf( "Playerstore: Nothing to restore. Guid: %s\n", guid );
 }

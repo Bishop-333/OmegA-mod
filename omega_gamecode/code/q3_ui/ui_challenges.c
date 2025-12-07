@@ -74,19 +74,19 @@ static challenges_t challenges;
 static int mainSelection;
 
 //This should only be accessed locally
-void UI_ChallengesLocal(void);
+void UI_ChallengesLocal( void );
 
 /*
 =================
 UI_Challenges_Event
 =================
 */
-static void UI_Challenges_Event(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_Challenges_Event( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_GENERAL:
 			mainSelection = 0;
 			UI_PopMenu();
@@ -131,10 +131,10 @@ static void UI_Challenges_Event(void *ptr, int event) {
 UI_Challenges_Init
 ===============
 */
-static void UI_Challenges_Init(void) {
+static void UI_Challenges_Init( void ) {
 	int y, i;
 
-	memset(&challenges, 0, sizeof(challenges));
+	memset( &challenges, 0, sizeof( challenges ) );
 
 	UI_DisplayOptionsMenu_Cache();
 	challenges.menu.wrapAround = qtrue;
@@ -227,14 +227,14 @@ static void UI_Challenges_Init(void) {
 	challenges.back.height = 64;
 	challenges.back.focuspic = ART_BACK1;
 
-	switch (mainSelection) {
+	switch ( mainSelection ) {
 		case 0:
 			//general
 			challenges.entry[0].string = "Total kills:";
 			challenges.entry[1].string = "Total deaths:";
 			challenges.numberOfEntries = 2;
-			challenges.entryInt[0] = getChallenge(GENERAL_TOTALKILLS);
-			challenges.entryInt[1] = getChallenge(GENERAL_TOTALDEATHS);
+			challenges.entryInt[0] = getChallenge( GENERAL_TOTALKILLS );
+			challenges.entryInt[1] = getChallenge( GENERAL_TOTALDEATHS );
 			challenges.general.generic.flags = QMF_RIGHT_JUSTIFY | QMF_INACTIVE;
 			break;
 		case 1:
@@ -262,23 +262,23 @@ static void UI_Challenges_Init(void) {
 			challenges.entry[15].string = "Push kills:";
 			challenges.entry[16].string = "Crush kills:";
 			challenges.numberOfEntries = 17;
-			challenges.entryInt[0] = getChallenge(WEAPON_GAUNTLET_KILLS);
-			challenges.entryInt[1] = getChallenge(WEAPON_MACHINEGUN_KILLS);
-			challenges.entryInt[2] = getChallenge(WEAPON_SHOTGUN_KILLS);
-			challenges.entryInt[3] = getChallenge(WEAPON_GRANADE_KILLS);
-			challenges.entryInt[4] = getChallenge(WEAPON_ROCKET_KILLS);
-			challenges.entryInt[5] = getChallenge(WEAPON_LIGHTNING_KILLS);
-			challenges.entryInt[6] = getChallenge(WEAPON_PLASMA_KILLS);
-			challenges.entryInt[7] = getChallenge(WEAPON_RAIL_KILLS);
-			challenges.entryInt[8] = getChallenge(WEAPON_INSTANT_RAIL_KILLS);
-			challenges.entryInt[9] = getChallenge(WEAPON_BFG_KILLS);
-			challenges.entryInt[10] = getChallenge(WEAPON_GRAPPLE_KILLS);
-			challenges.entryInt[11] = getChallenge(WEAPON_CHAINGUN_KILLS);
-			challenges.entryInt[12] = getChallenge(WEAPON_NAILGUN_KILLS);
-			challenges.entryInt[13] = getChallenge(WEAPON_MINE_KILLS);
-			challenges.entryInt[14] = getChallenge(WEAPON_TELEFRAG_KILLS);
-			challenges.entryInt[15] = getChallenge(WEAPON_PUSH_KILLS);
-			challenges.entryInt[16] = getChallenge(WEAPON_CRUSH_KILLS);
+			challenges.entryInt[0] = getChallenge( WEAPON_GAUNTLET_KILLS );
+			challenges.entryInt[1] = getChallenge( WEAPON_MACHINEGUN_KILLS );
+			challenges.entryInt[2] = getChallenge( WEAPON_SHOTGUN_KILLS );
+			challenges.entryInt[3] = getChallenge( WEAPON_GRANADE_KILLS );
+			challenges.entryInt[4] = getChallenge( WEAPON_ROCKET_KILLS );
+			challenges.entryInt[5] = getChallenge( WEAPON_LIGHTNING_KILLS );
+			challenges.entryInt[6] = getChallenge( WEAPON_PLASMA_KILLS );
+			challenges.entryInt[7] = getChallenge( WEAPON_RAIL_KILLS );
+			challenges.entryInt[8] = getChallenge( WEAPON_INSTANT_RAIL_KILLS );
+			challenges.entryInt[9] = getChallenge( WEAPON_BFG_KILLS );
+			challenges.entryInt[10] = getChallenge( WEAPON_GRAPPLE_KILLS );
+			challenges.entryInt[11] = getChallenge( WEAPON_CHAINGUN_KILLS );
+			challenges.entryInt[12] = getChallenge( WEAPON_NAILGUN_KILLS );
+			challenges.entryInt[13] = getChallenge( WEAPON_MINE_KILLS );
+			challenges.entryInt[14] = getChallenge( WEAPON_TELEFRAG_KILLS );
+			challenges.entryInt[15] = getChallenge( WEAPON_PUSH_KILLS );
+			challenges.entryInt[16] = getChallenge( WEAPON_CRUSH_KILLS );
 			challenges.weapons.generic.flags = QMF_RIGHT_JUSTIFY | QMF_INACTIVE;
 			break;
 		case 3:
@@ -290,12 +290,12 @@ static void UI_Challenges_Init(void) {
 			challenges.entry[4].string = "Assist";
 			challenges.entry[5].string = "Defend";
 			challenges.numberOfEntries = 6;
-			challenges.entryInt[0] = getChallenge(WEAPON_GAUNTLET_KILLS);
-			challenges.entryInt[1] = getChallenge(AWARD_IMPRESSIVE);
-			challenges.entryInt[2] = getChallenge(AWARD_EXCELLENT);
-			challenges.entryInt[3] = getChallenge(AWARD_CAPTURE);
-			challenges.entryInt[4] = getChallenge(AWARD_ASSIST);
-			challenges.entryInt[5] = getChallenge(AWARD_DEFENCE);
+			challenges.entryInt[0] = getChallenge( WEAPON_GAUNTLET_KILLS );
+			challenges.entryInt[1] = getChallenge( AWARD_IMPRESSIVE );
+			challenges.entryInt[2] = getChallenge( AWARD_EXCELLENT );
+			challenges.entryInt[3] = getChallenge( AWARD_CAPTURE );
+			challenges.entryInt[4] = getChallenge( AWARD_ASSIST );
+			challenges.entryInt[5] = getChallenge( AWARD_DEFENCE );
 			challenges.awards.generic.flags = QMF_RIGHT_JUSTIFY | QMF_INACTIVE;
 			break;
 		case 4:
@@ -313,18 +313,18 @@ static void UI_Challenges_Init(void) {
 			challenges.entry[11].string = "Counter multi";
 			challenges.numberOfEntries = 12;
 
-			challenges.entryInt[0] = getChallenge(POWERUP_QUAD_KILL);
-			challenges.entryInt[1] = getChallenge(POWERUP_SPEED_KILL);
-			challenges.entryInt[2] = getChallenge(POWERUP_INVIS_KILL);
-			challenges.entryInt[3] = getChallenge(POWERUP_FLIGHT_KILL);
-			challenges.entryInt[4] = getChallenge(POWERUP_MULTI_KILL);
-			challenges.entryInt[5] = getChallenge(POWERUP_COUNTER_QUAD);
-			challenges.entryInt[6] = getChallenge(POWERUP_COUNTER_SPEED);
-			challenges.entryInt[7] = getChallenge(POWERUP_COUNTER_INVIS);
-			challenges.entryInt[8] = getChallenge(POWERUP_COUNTER_FLIGHT);
-			challenges.entryInt[9] = getChallenge(POWERUP_COUNTER_ENVIR);
-			challenges.entryInt[10] = getChallenge(POWERUP_COUNTER_REGEN);
-			challenges.entryInt[11] = getChallenge(POWERUP_COUNTER_MULTI);
+			challenges.entryInt[0] = getChallenge( POWERUP_QUAD_KILL );
+			challenges.entryInt[1] = getChallenge( POWERUP_SPEED_KILL );
+			challenges.entryInt[2] = getChallenge( POWERUP_INVIS_KILL );
+			challenges.entryInt[3] = getChallenge( POWERUP_FLIGHT_KILL );
+			challenges.entryInt[4] = getChallenge( POWERUP_MULTI_KILL );
+			challenges.entryInt[5] = getChallenge( POWERUP_COUNTER_QUAD );
+			challenges.entryInt[6] = getChallenge( POWERUP_COUNTER_SPEED );
+			challenges.entryInt[7] = getChallenge( POWERUP_COUNTER_INVIS );
+			challenges.entryInt[8] = getChallenge( POWERUP_COUNTER_FLIGHT );
+			challenges.entryInt[9] = getChallenge( POWERUP_COUNTER_ENVIR );
+			challenges.entryInt[10] = getChallenge( POWERUP_COUNTER_REGEN );
+			challenges.entryInt[11] = getChallenge( POWERUP_COUNTER_MULTI );
 			challenges.powerups.generic.flags = QMF_RIGHT_JUSTIFY | QMF_INACTIVE;
 			break;
 
@@ -333,8 +333,8 @@ static void UI_Challenges_Init(void) {
 	};
 
 	//Now write the challenges
-	y = 240 - (int)((((float)challenges.numberOfEntries) / 2.0) * (float)(BIGCHAR_HEIGHT + 2));
-	for (i = 0; i < MAX_ENTRIES && i < challenges.numberOfEntries; i++) {
+	y = 240 - (int)( ( ( (float)challenges.numberOfEntries ) / 2.0 ) * (float)( BIGCHAR_HEIGHT + 2 ) );
+	for ( i = 0; i < MAX_ENTRIES && i < challenges.numberOfEntries; i++ ) {
 		challenges.entry[i].color = color_white;
 		challenges.entry[i].generic.type = MTYPE_TEXT;
 		challenges.entry[i].generic.x = 230;
@@ -347,26 +347,26 @@ static void UI_Challenges_Init(void) {
 		challenges.entryIntText[i].style = UI_RIGHT;
 		challenges.entryIntText[i].string = challenges.entryIntString[i];
 
-		Com_sprintf(challenges.entryIntString[i], MAX_INT_AS_STRING, "%u", challenges.entryInt[i]);
+		Com_sprintf( challenges.entryIntString[i], MAX_INT_AS_STRING, "%u", challenges.entryInt[i] );
 		y += BIGCHAR_HEIGHT + 2;
 	}
 
-	Menu_AddItem(&challenges.menu, (void *)&challenges.banner);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.framel);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.framer);
+	Menu_AddItem( &challenges.menu, (void *)&challenges.banner );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.framel );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.framer );
 
-	Menu_AddItem(&challenges.menu, (void *)&challenges.general);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.weapons);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.awards);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.powerups);
+	Menu_AddItem( &challenges.menu, (void *)&challenges.general );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.weapons );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.awards );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.powerups );
 
-	for (i = 0; i < MAX_ENTRIES && i < challenges.numberOfEntries; i++) {
-		Menu_AddItem(&challenges.menu, (void *)&challenges.entry[i]);
-		Menu_AddItem(&challenges.menu, (void *)&challenges.entryIntText[i]);
+	for ( i = 0; i < MAX_ENTRIES && i < challenges.numberOfEntries; i++ ) {
+		Menu_AddItem( &challenges.menu, (void *)&challenges.entry[i] );
+		Menu_AddItem( &challenges.menu, (void *)&challenges.entryIntText[i] );
 	}
-	Menu_AddItem(&challenges.menu, (void *)&challenges.notice);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.notice2);
-	Menu_AddItem(&challenges.menu, (void *)&challenges.back);
+	Menu_AddItem( &challenges.menu, (void *)&challenges.notice );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.notice2 );
+	Menu_AddItem( &challenges.menu, (void *)&challenges.back );
 }
 
 /*
@@ -374,11 +374,11 @@ static void UI_Challenges_Init(void) {
 UI_Challenges
 ===============
 */
-void UI_Challenges(void) {
+void UI_Challenges( void ) {
 	mainSelection = 0;
 	UI_Challenges_Init();
-	UI_PushMenu(&challenges.menu);
-	Menu_SetCursorToItem(&challenges.menu, &challenges.back);
+	UI_PushMenu( &challenges.menu );
+	Menu_SetCursorToItem( &challenges.menu, &challenges.back );
 }
 
 /*
@@ -388,8 +388,8 @@ UI_ChallengesLocal
  *This is only used locally. Remembers selection
 ===============
 */
-void UI_ChallengesLocal(void) {
+void UI_ChallengesLocal( void ) {
 	UI_Challenges_Init();
-	UI_PushMenu(&challenges.menu);
-	Menu_SetCursorToItem(&challenges.menu, &challenges.back);
+	UI_PushMenu( &challenges.menu );
+	Menu_SetCursorToItem( &challenges.menu, &challenges.back );
 }

@@ -38,8 +38,8 @@ This is the only way control passes into the module.
 This must be the very first function compiled into the .qvm file
 ================
 */
-Q_EXPORT intptr_t vmMain(int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11) {
-	switch (command) {
+Q_EXPORT intptr_t vmMain( int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11 ) {
+	switch ( command ) {
 		case UI_GETAPIVERSION:
 			return UI_API_VERSION;
 
@@ -52,29 +52,29 @@ Q_EXPORT intptr_t vmMain(int command, int arg0, int arg1, int arg2, int arg3, in
 			return 0;
 
 		case UI_KEY_EVENT:
-			UI_KeyEvent(arg0, arg1);
+			UI_KeyEvent( arg0, arg1 );
 			return 0;
 
 		case UI_MOUSE_EVENT:
-			UI_MouseEvent(arg0, arg1);
+			UI_MouseEvent( arg0, arg1 );
 			return 0;
 
 		case UI_REFRESH:
-			UI_Refresh(arg0);
+			UI_Refresh( arg0 );
 			return 0;
 
 		case UI_IS_FULLSCREEN:
 			return UI_IsFullscreen();
 
 		case UI_SET_ACTIVE_MENU:
-			UI_SetActiveMenu(arg0);
+			UI_SetActiveMenu( arg0 );
 			return 0;
 
 		case UI_CONSOLE_COMMAND:
-			return UI_ConsoleCommand(arg0);
+			return UI_ConsoleCommand( arg0 );
 
 		case UI_DRAW_CONNECT_SCREEN:
-			UI_DrawConnectScreen(arg0);
+			UI_DrawConnectScreen( arg0 );
 			return 0;
 		case UI_HASUNIQUECDKEY: // mod authors need to observe this
 			return qtrue;       // bk010117 - change this to qfalse for mods!
@@ -190,114 +190,114 @@ vmCvar_t ui_mapvote_filter;
 
 // bk001129 - made static to avoid aliasing.
 static cvarTable_t cvarTable[] = {
-    {&ui_ffa_fraglimit, "ui_ffa_fraglimit", "20", CVAR_ARCHIVE},
-    {&ui_ffa_timelimit, "ui_ffa_timelimit", "0", CVAR_ARCHIVE},
+    { &ui_ffa_fraglimit, "ui_ffa_fraglimit", "20", CVAR_ARCHIVE },
+    { &ui_ffa_timelimit, "ui_ffa_timelimit", "0", CVAR_ARCHIVE },
 
-    {&ui_tourney_fraglimit, "ui_tourney_fraglimit", "0", CVAR_ARCHIVE},
-    {&ui_tourney_timelimit, "ui_tourney_timelimit", "15", CVAR_ARCHIVE},
+    { &ui_tourney_fraglimit, "ui_tourney_fraglimit", "0", CVAR_ARCHIVE },
+    { &ui_tourney_timelimit, "ui_tourney_timelimit", "15", CVAR_ARCHIVE },
 
-    {&ui_team_fraglimit, "ui_team_fraglimit", "0", CVAR_ARCHIVE},
-    {&ui_team_timelimit, "ui_team_timelimit", "20", CVAR_ARCHIVE},
-    {&ui_team_friendly, "ui_team_friendly", "1", CVAR_ARCHIVE},
+    { &ui_team_fraglimit, "ui_team_fraglimit", "0", CVAR_ARCHIVE },
+    { &ui_team_timelimit, "ui_team_timelimit", "20", CVAR_ARCHIVE },
+    { &ui_team_friendly, "ui_team_friendly", "1", CVAR_ARCHIVE },
 
-    {&ui_ctf_capturelimit, "ui_ctf_capturelimit", "8", CVAR_ARCHIVE},
-    {&ui_ctf_timelimit, "ui_ctf_timelimit", "30", CVAR_ARCHIVE},
-    {&ui_ctf_friendly, "ui_ctf_friendly", "0", CVAR_ARCHIVE},
+    { &ui_ctf_capturelimit, "ui_ctf_capturelimit", "8", CVAR_ARCHIVE },
+    { &ui_ctf_timelimit, "ui_ctf_timelimit", "30", CVAR_ARCHIVE },
+    { &ui_ctf_friendly, "ui_ctf_friendly", "0", CVAR_ARCHIVE },
 
-    {&ui_1fctf_capturelimit, "ui_1fctf_capturelimit", "8", CVAR_ARCHIVE},
-    {&ui_1fctf_timelimit, "ui_1fctf_timelimit", "30", CVAR_ARCHIVE},
-    {&ui_1fctf_friendly, "ui_1fctf_friendly", "0", CVAR_ARCHIVE},
+    { &ui_1fctf_capturelimit, "ui_1fctf_capturelimit", "8", CVAR_ARCHIVE },
+    { &ui_1fctf_timelimit, "ui_1fctf_timelimit", "30", CVAR_ARCHIVE },
+    { &ui_1fctf_friendly, "ui_1fctf_friendly", "0", CVAR_ARCHIVE },
 
-    {&ui_overload_capturelimit, "ui_overload_capturelimit", "8", CVAR_ARCHIVE},
-    {&ui_overload_timelimit, "ui_overload_timelimit", "30", CVAR_ARCHIVE},
-    {&ui_overload_friendly, "ui_overload_friendly", "0", CVAR_ARCHIVE},
+    { &ui_overload_capturelimit, "ui_overload_capturelimit", "8", CVAR_ARCHIVE },
+    { &ui_overload_timelimit, "ui_overload_timelimit", "30", CVAR_ARCHIVE },
+    { &ui_overload_friendly, "ui_overload_friendly", "0", CVAR_ARCHIVE },
 
-    {&ui_harvester_capturelimit, "ui_harvester_capturelimit", "20", CVAR_ARCHIVE},
-    {&ui_harvester_timelimit, "ui_harvester_timelimit", "30", CVAR_ARCHIVE},
-    {&ui_harvester_friendly, "ui_harvester_friendly", "0", CVAR_ARCHIVE},
+    { &ui_harvester_capturelimit, "ui_harvester_capturelimit", "20", CVAR_ARCHIVE },
+    { &ui_harvester_timelimit, "ui_harvester_timelimit", "30", CVAR_ARCHIVE },
+    { &ui_harvester_friendly, "ui_harvester_friendly", "0", CVAR_ARCHIVE },
 
-    {&ui_elimination_capturelimit, "ui_elimination_capturelimit", "8", CVAR_ARCHIVE},
-    {&ui_elimination_timelimit, "ui_elimination_timelimit", "20", CVAR_ARCHIVE},
+    { &ui_elimination_capturelimit, "ui_elimination_capturelimit", "8", CVAR_ARCHIVE },
+    { &ui_elimination_timelimit, "ui_elimination_timelimit", "20", CVAR_ARCHIVE },
 
-    {&ui_ctf_elimination_capturelimit, "ui_ctf_elimination_capturelimit", "8", CVAR_ARCHIVE},
-    {&ui_ctf_elimination_timelimit, "ui_ctf_elimination_timelimit", "30", CVAR_ARCHIVE},
+    { &ui_ctf_elimination_capturelimit, "ui_ctf_elimination_capturelimit", "8", CVAR_ARCHIVE },
+    { &ui_ctf_elimination_timelimit, "ui_ctf_elimination_timelimit", "30", CVAR_ARCHIVE },
 
-    {&ui_lms_fraglimit, "ui_lms_fraglimit", "20", CVAR_ARCHIVE},
-    {&ui_lms_timelimit, "ui_lms_timelimit", "0", CVAR_ARCHIVE},
+    { &ui_lms_fraglimit, "ui_lms_fraglimit", "20", CVAR_ARCHIVE },
+    { &ui_lms_timelimit, "ui_lms_timelimit", "0", CVAR_ARCHIVE },
 
-    {&ui_dd_capturelimit, "ui_dd_capturelimit", "8", CVAR_ARCHIVE},
-    {&ui_dd_timelimit, "ui_dd_timelimit", "30", CVAR_ARCHIVE},
-    {&ui_dd_friendly, "ui_dd_friendly", "0", CVAR_ARCHIVE},
+    { &ui_dd_capturelimit, "ui_dd_capturelimit", "8", CVAR_ARCHIVE },
+    { &ui_dd_timelimit, "ui_dd_timelimit", "30", CVAR_ARCHIVE },
+    { &ui_dd_friendly, "ui_dd_friendly", "0", CVAR_ARCHIVE },
 
-    {&ui_dom_capturelimit, "ui_dom_capturelimit", "500", CVAR_ARCHIVE},
-    {&ui_dom_timelimit, "ui_dom_timelimit", "30", CVAR_ARCHIVE},
-    {&ui_dom_friendly, "ui_dom_friendly", "0", CVAR_ARCHIVE},
+    { &ui_dom_capturelimit, "ui_dom_capturelimit", "500", CVAR_ARCHIVE },
+    { &ui_dom_timelimit, "ui_dom_timelimit", "30", CVAR_ARCHIVE },
+    { &ui_dom_friendly, "ui_dom_friendly", "0", CVAR_ARCHIVE },
 
-    {&ui_arenasFile, "g_arenasFile", "", CVAR_INIT | CVAR_ROM},
-    {&ui_botsFile, "g_botsFile", "", CVAR_INIT | CVAR_ROM},
-    {&ui_spScores1, "g_spScores1", "", CVAR_ARCHIVE},
-    {&ui_spScores2, "g_spScores2", "", CVAR_ARCHIVE},
-    {&ui_spScores3, "g_spScores3", "", CVAR_ARCHIVE},
-    {&ui_spScores4, "g_spScores4", "", CVAR_ARCHIVE},
-    {&ui_spScores5, "g_spScores5", "", CVAR_ARCHIVE},
-    {&ui_spAwards, "g_spAwards", "", CVAR_ARCHIVE},
-    {&ui_spVideos, "g_spVideos", "", CVAR_ARCHIVE},
-    {&ui_spSkill, "g_spSkill", "3", CVAR_ARCHIVE | CVAR_LATCH},
+    { &ui_arenasFile, "g_arenasFile", "", CVAR_INIT | CVAR_ROM },
+    { &ui_botsFile, "g_botsFile", "", CVAR_INIT | CVAR_ROM },
+    { &ui_spScores1, "g_spScores1", "", CVAR_ARCHIVE },
+    { &ui_spScores2, "g_spScores2", "", CVAR_ARCHIVE },
+    { &ui_spScores3, "g_spScores3", "", CVAR_ARCHIVE },
+    { &ui_spScores4, "g_spScores4", "", CVAR_ARCHIVE },
+    { &ui_spScores5, "g_spScores5", "", CVAR_ARCHIVE },
+    { &ui_spAwards, "g_spAwards", "", CVAR_ARCHIVE },
+    { &ui_spVideos, "g_spVideos", "", CVAR_ARCHIVE },
+    { &ui_spSkill, "g_spSkill", "3", CVAR_ARCHIVE | CVAR_LATCH },
 
-    {&ui_spSelection, "ui_spSelection", "", CVAR_ROM},
+    { &ui_spSelection, "ui_spSelection", "", CVAR_ROM },
 
-    {&ui_browserMaster, "ui_browserMaster", "0", CVAR_ARCHIVE},
-    {&ui_browserGameType, "ui_browserGameType", "0", CVAR_ARCHIVE},
-    {&ui_browserSortKey, "ui_browserSortKey", "4", CVAR_ARCHIVE},
-    {&ui_browserShowEmpty, "ui_browserShowEmpty", "1", CVAR_ARCHIVE},
+    { &ui_browserMaster, "ui_browserMaster", "0", CVAR_ARCHIVE },
+    { &ui_browserGameType, "ui_browserGameType", "0", CVAR_ARCHIVE },
+    { &ui_browserSortKey, "ui_browserSortKey", "4", CVAR_ARCHIVE },
+    { &ui_browserShowEmpty, "ui_browserShowEmpty", "1", CVAR_ARCHIVE },
 
-    {&ui_brassTime, "cg_brassTime", "2500", CVAR_ARCHIVE},
-    {&ui_drawCrosshair, "cg_drawCrosshair", "4", CVAR_ARCHIVE},
-    {&ui_drawCrosshairNames, "cg_drawCrosshairNames", "1", CVAR_ARCHIVE},
-    {&ui_marks, "cg_marks", "1", CVAR_ARCHIVE},
+    { &ui_brassTime, "cg_brassTime", "2500", CVAR_ARCHIVE },
+    { &ui_drawCrosshair, "cg_drawCrosshair", "4", CVAR_ARCHIVE },
+    { &ui_drawCrosshairNames, "cg_drawCrosshairNames", "1", CVAR_ARCHIVE },
+    { &ui_marks, "cg_marks", "1", CVAR_ARCHIVE },
 
-    {&ui_server1, "server1", "", CVAR_ARCHIVE},
-    {&ui_server2, "server2", "", CVAR_ARCHIVE},
-    {&ui_server3, "server3", "", CVAR_ARCHIVE},
-    {&ui_server4, "server4", "", CVAR_ARCHIVE},
-    {&ui_server5, "server5", "", CVAR_ARCHIVE},
-    {&ui_server6, "server6", "", CVAR_ARCHIVE},
-    {&ui_server7, "server7", "", CVAR_ARCHIVE},
-    {&ui_server8, "server8", "", CVAR_ARCHIVE},
-    {&ui_server9, "server9", "", CVAR_ARCHIVE},
-    {&ui_server10, "server10", "", CVAR_ARCHIVE},
-    {&ui_server11, "server11", "", CVAR_ARCHIVE},
-    {&ui_server12, "server12", "", CVAR_ARCHIVE},
-    {&ui_server13, "server13", "", CVAR_ARCHIVE},
-    {&ui_server14, "server14", "", CVAR_ARCHIVE},
-    {&ui_server15, "server15", "", CVAR_ARCHIVE},
-    {&ui_server16, "server16", "", CVAR_ARCHIVE},
-    {NULL, "g_localTeamPref", "", 0},
+    { &ui_server1, "server1", "", CVAR_ARCHIVE },
+    { &ui_server2, "server2", "", CVAR_ARCHIVE },
+    { &ui_server3, "server3", "", CVAR_ARCHIVE },
+    { &ui_server4, "server4", "", CVAR_ARCHIVE },
+    { &ui_server5, "server5", "", CVAR_ARCHIVE },
+    { &ui_server6, "server6", "", CVAR_ARCHIVE },
+    { &ui_server7, "server7", "", CVAR_ARCHIVE },
+    { &ui_server8, "server8", "", CVAR_ARCHIVE },
+    { &ui_server9, "server9", "", CVAR_ARCHIVE },
+    { &ui_server10, "server10", "", CVAR_ARCHIVE },
+    { &ui_server11, "server11", "", CVAR_ARCHIVE },
+    { &ui_server12, "server12", "", CVAR_ARCHIVE },
+    { &ui_server13, "server13", "", CVAR_ARCHIVE },
+    { &ui_server14, "server14", "", CVAR_ARCHIVE },
+    { &ui_server15, "server15", "", CVAR_ARCHIVE },
+    { &ui_server16, "server16", "", CVAR_ARCHIVE },
+    { NULL, "g_localTeamPref", "", 0 },
 
     //new in beta 23:
-    {&ui_browserOnlyHumans, "ui_browserOnlyHumans", "0", CVAR_ARCHIVE},
+    { &ui_browserOnlyHumans, "ui_browserOnlyHumans", "0", CVAR_ARCHIVE },
 
     //new in beta 37:
-    {&ui_setupchecked, "ui_setupchecked", "0", CVAR_ARCHIVE},
+    { &ui_setupchecked, "ui_setupchecked", "0", CVAR_ARCHIVE },
 
     //OmegA
-    {&ui_mapvote_filter, "ui_mapvote_filter", "", 0},
+    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
 };
 
 // bk001129 - made static to avoid aliasing
-static int cvarTableSize = sizeof(cvarTable) / sizeof(cvarTable[0]);
+static int cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );
 
 /*
 =================
 UI_RegisterCvars
 =================
 */
-void UI_RegisterCvars(void) {
+void UI_RegisterCvars( void ) {
 	int i;
 	cvarTable_t *cv;
 
-	for (i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++) {
-		trap_Cvar_Register(cv->vmCvar, cv->cvarName, cv->defaultString, cv->cvarFlags);
+	for ( i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++ ) {
+		trap_Cvar_Register( cv->vmCvar, cv->cvarName, cv->defaultString, cv->cvarFlags );
 	}
 }
 
@@ -306,15 +306,15 @@ void UI_RegisterCvars(void) {
 UI_UpdateCvars
 =================
 */
-void UI_UpdateCvars(void) {
+void UI_UpdateCvars( void ) {
 	int i;
 	cvarTable_t *cv;
 
-	for (i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++) {
-		if (!cv->vmCvar) {
+	for ( i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++ ) {
+		if ( !cv->vmCvar ) {
 			continue;
 		}
-		trap_Cvar_Update(cv->vmCvar);
+		trap_Cvar_Update( cv->vmCvar );
 	}
 }
 
@@ -326,7 +326,7 @@ void UI_UpdateCvars(void) {
  This is only good for cvars that cannot naturally be blank
 ================== 
  */
-void UI_SetDefaultCvar(const char *cvar, const char *value) {
-	if (strlen(UI_Cvar_VariableString(cvar)) == 0)
-		trap_Cvar_Set(cvar, value);
+void UI_SetDefaultCvar( const char *cvar, const char *value ) {
+	if ( strlen( UI_Cvar_VariableString( cvar ) ) == 0 )
+		trap_Cvar_Set( cvar, value );
 }

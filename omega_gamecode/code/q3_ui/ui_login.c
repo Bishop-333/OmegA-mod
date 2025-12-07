@@ -53,24 +53,24 @@ static menuframework_s s_login_menu;
 static menuaction_s s_login_login;
 static menuaction_s s_login_cancel;
 
-static vec4_t s_login_color_prompt = {1.00, 0.43, 0.00, 1.00};
+static vec4_t s_login_color_prompt = { 1.00, 0.43, 0.00, 1.00 };
 
 /*
 ===============
 Login_MenuEvent
 ===============
 */
-static void Login_MenuEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void Login_MenuEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_LOGIN:
 			// login
 			trap_CL_UI_RankUserLogin(
 			    s_login.name_box.field.buffer,
-			    s_login.password_box.field.buffer);
+			    s_login.password_box.field.buffer );
 
 			UI_ForceMenuOff();
 			break;
@@ -86,10 +86,10 @@ static void Login_MenuEvent(void *ptr, int event) {
 Login_MenuInit
 ===============
 */
-static void Login_MenuInit(void) {
+static void Login_MenuInit( void ) {
 	int y;
 
-	memset(&s_login, 0, sizeof(s_login));
+	memset( &s_login, 0, sizeof( s_login ) );
 
 	Login_Cache();
 
@@ -165,13 +165,13 @@ static void Login_MenuInit(void) {
 	s_login.cancel.color = colorRed;
 	y += 20;
 
-	Menu_AddItem(&s_login.menu, (void *)&s_login.frame);
-	Menu_AddItem(&s_login.menu, (void *)&s_login.name);
-	Menu_AddItem(&s_login.menu, (void *)&s_login.name_box);
-	Menu_AddItem(&s_login.menu, (void *)&s_login.password);
-	Menu_AddItem(&s_login.menu, (void *)&s_login.password_box);
-	Menu_AddItem(&s_login.menu, (void *)&s_login.login);
-	Menu_AddItem(&s_login.menu, (void *)&s_login.cancel);
+	Menu_AddItem( &s_login.menu, (void *)&s_login.frame );
+	Menu_AddItem( &s_login.menu, (void *)&s_login.name );
+	Menu_AddItem( &s_login.menu, (void *)&s_login.name_box );
+	Menu_AddItem( &s_login.menu, (void *)&s_login.password );
+	Menu_AddItem( &s_login.menu, (void *)&s_login.password_box );
+	Menu_AddItem( &s_login.menu, (void *)&s_login.login );
+	Menu_AddItem( &s_login.menu, (void *)&s_login.cancel );
 }
 
 /*
@@ -179,8 +179,8 @@ static void Login_MenuInit(void) {
 Login_Cache
 ===============
 */
-void Login_Cache(void) {
-	trap_R_RegisterShaderNoMip(LOGIN_FRAME);
+void Login_Cache( void ) {
+	trap_R_RegisterShaderNoMip( LOGIN_FRAME );
 }
 
 /*
@@ -188,7 +188,7 @@ void Login_Cache(void) {
 UI_LoginMenu
 ===============
 */
-void UI_LoginMenu(void) {
+void UI_LoginMenu( void ) {
 	Login_MenuInit();
-	UI_PushMenu(&s_login.menu);
+	UI_PushMenu( &s_login.menu );
 }

@@ -55,7 +55,7 @@ SOUND OPTIONS MENU
 #define ID_APPLY 25
 
 static const char *quality_items[] = {
-    "Low", "High", NULL};
+    "Low", "High", NULL };
 
 typedef struct {
 	menuframework_s menu;
@@ -97,7 +97,7 @@ static soundOptionsInfo_t soundOptionsInfo;
 UI_SoundOptions_GetInitialSound
 =================
 */
-static void UI_SoundOptions_GetInitialSound(void) {
+static void UI_SoundOptions_GetInitialSound( void ) {
 	s_iso.quality = soundOptionsInfo.quality.curvalue;
 	s_iso.openal = soundOptionsInfo.openal.curvalue;
 }
@@ -107,14 +107,14 @@ static void UI_SoundOptions_GetInitialSound(void) {
 UI_SoundOptions_UpdateMenuItems
 =================
 */
-static void UI_SoundOptions_UpdateMenuItems(void) {
+static void UI_SoundOptions_UpdateMenuItems( void ) {
 	soundOptionsInfo.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 
-	if (s_iso.quality != soundOptionsInfo.quality.curvalue) {
-		soundOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	if ( s_iso.quality != soundOptionsInfo.quality.curvalue ) {
+		soundOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
-	if (s_iso.openal != soundOptionsInfo.openal.curvalue) {
-		soundOptionsInfo.apply.generic.flags &= ~(QMF_HIDDEN | QMF_INACTIVE);
+	if ( s_iso.openal != soundOptionsInfo.openal.curvalue ) {
+		soundOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 }
 
@@ -123,12 +123,12 @@ static void UI_SoundOptions_UpdateMenuItems(void) {
 UI_SoundOptionsMenu_Event
 =================
 */
-static void UI_SoundOptionsMenu_Event(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_SoundOptionsMenu_Event( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	switch (((menucommon_s *)ptr)->id) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_GRAPHICS:
 			UI_PopMenu();
 			UI_GraphicsOptionsMenu();
@@ -148,49 +148,49 @@ static void UI_SoundOptionsMenu_Event(void *ptr, int event) {
 			break;
 
 		case ID_EFFECTSVOLUME:
-			trap_Cvar_SetValue("s_volume", soundOptionsInfo.sfxvolume.curvalue / 10);
+			trap_Cvar_SetValue( "s_volume", soundOptionsInfo.sfxvolume.curvalue / 10 );
 			break;
 
 		case ID_MUSICVOLUME:
-			trap_Cvar_SetValue("s_musicvolume", soundOptionsInfo.musicvolume.curvalue / 10);
+			trap_Cvar_SetValue( "s_musicvolume", soundOptionsInfo.musicvolume.curvalue / 10 );
 			break;
 
 		case ID_WORLDVOLUME:
-			trap_Cvar_SetValue("s_worldvolume", soundOptionsInfo.worldvolume.curvalue / 10);
+			trap_Cvar_SetValue( "s_worldvolume", soundOptionsInfo.worldvolume.curvalue / 10 );
 			break;
 
 		case ID_QUALITY:
-			if (soundOptionsInfo.quality.curvalue) {
-				trap_Cvar_SetValue("s_khz", 22);
-				trap_Cvar_SetValue("s_compression", 0);
+			if ( soundOptionsInfo.quality.curvalue ) {
+				trap_Cvar_SetValue( "s_khz", 22 );
+				trap_Cvar_SetValue( "s_compression", 0 );
 			} else {
-				trap_Cvar_SetValue("s_khz", 11);
-				trap_Cvar_SetValue("s_compression", 1);
+				trap_Cvar_SetValue( "s_khz", 11 );
+				trap_Cvar_SetValue( "s_compression", 1 );
 			}
 			break;
 
 		case ID_OPENAL:
-			if (soundOptionsInfo.openal.curvalue) {
-				trap_Cvar_SetValue("s_useopenal", 1);
+			if ( soundOptionsInfo.openal.curvalue ) {
+				trap_Cvar_SetValue( "s_useopenal", 1 );
 			} else {
-				trap_Cvar_SetValue("s_useopenal", 0);
+				trap_Cvar_SetValue( "s_useopenal", 0 );
 			}
 			break;
 
 		case ID_CHATBEEP:
-			trap_Cvar_SetValue("cg_chatBeep", soundOptionsInfo.chatBeep.curvalue);
+			trap_Cvar_SetValue( "cg_chatBeep", soundOptionsInfo.chatBeep.curvalue );
 			break;
 
 		case ID_TEAMCHATBEEP:
-			trap_Cvar_SetValue("cg_teamChatBeep", soundOptionsInfo.teamChatBeep.curvalue);
+			trap_Cvar_SetValue( "cg_teamChatBeep", soundOptionsInfo.teamChatBeep.curvalue );
 			break;
 
 		case ID_HITSOUND:
-			trap_Cvar_SetValue("cg_hitsound", soundOptionsInfo.hitSound.curvalue);
+			trap_Cvar_SetValue( "cg_hitsound", soundOptionsInfo.hitSound.curvalue );
 			break;
 
 		case ID_KILLSOUND:
-			trap_Cvar_SetValue("cg_killsound", soundOptionsInfo.killSound.curvalue);
+			trap_Cvar_SetValue( "cg_killsound", soundOptionsInfo.killSound.curvalue );
 			break;
 
 		case ID_BACK:
@@ -198,7 +198,7 @@ static void UI_SoundOptionsMenu_Event(void *ptr, int event) {
 			break;
 
 		case ID_APPLY:
-			trap_Cmd_ExecuteText(EXEC_APPEND, "snd_restart\n");
+			trap_Cmd_ExecuteText( EXEC_APPEND, "snd_restart\n" );
 			break;
 	}
 }
@@ -208,10 +208,10 @@ static void UI_SoundOptionsMenu_Event(void *ptr, int event) {
 UI_SoundOptions_MenuDraw
 ================
 */
-static void UI_SoundOptions_MenuDraw(void) {
+static void UI_SoundOptions_MenuDraw( void ) {
 	UI_SoundOptions_UpdateMenuItems();
 
-	Menu_Draw(&soundOptionsInfo.menu);
+	Menu_Draw( &soundOptionsInfo.menu );
 }
 
 /*
@@ -219,10 +219,10 @@ static void UI_SoundOptions_MenuDraw(void) {
 UI_SoundOptionsMenu_Init
 ===============
 */
-static void UI_SoundOptionsMenu_Init(void) {
+static void UI_SoundOptionsMenu_Init( void ) {
 	int y;
 
-	memset(&soundOptionsInfo, 0, sizeof(soundOptionsInfo));
+	memset( &soundOptionsInfo, 0, sizeof( soundOptionsInfo ) );
 
 	UI_SoundOptionsMenu_Cache();
 	soundOptionsInfo.menu.wrapAround = qtrue;
@@ -293,7 +293,7 @@ static void UI_SoundOptionsMenu_Init(void) {
 	soundOptionsInfo.network.style = UI_RIGHT;
 	soundOptionsInfo.network.color = color_red;
 
-	y = 240 - 3 * (BIGCHAR_HEIGHT + 2);
+	y = 240 - 3 * ( BIGCHAR_HEIGHT + 2 );
 	soundOptionsInfo.sfxvolume.generic.type = MTYPE_SLIDER;
 	soundOptionsInfo.sfxvolume.generic.name = "Effects Volume:";
 	soundOptionsInfo.sfxvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
@@ -403,36 +403,36 @@ static void UI_SoundOptionsMenu_Init(void) {
 	soundOptionsInfo.apply.height = 64;
 	soundOptionsInfo.apply.focuspic = ART_ACCEPT1;
 
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.banner);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.framel);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.framer);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.graphics);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.display);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.sound);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.network);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.sfxvolume);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.musicvolume);
-	if (trap_Cvar_VariableValue("cl_omegaEngine") == 1) {
-		Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.worldvolume);
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.banner );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.framel );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.framer );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.graphics );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.display );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.sound );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.network );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.sfxvolume );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.musicvolume );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.worldvolume );
 	}
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.quality);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.openal);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.chatBeep);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.teamChatBeep);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.hitSound);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.killSound);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.back);
-	Menu_AddItem(&soundOptionsInfo.menu, (void *)&soundOptionsInfo.apply);
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.quality );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.openal );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.chatBeep );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.teamChatBeep );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.hitSound );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.killSound );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.back );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.apply );
 
-	soundOptionsInfo.sfxvolume.curvalue = trap_Cvar_VariableValue("s_volume") * 10;
-	soundOptionsInfo.musicvolume.curvalue = trap_Cvar_VariableValue("s_musicvolume") * 10;
-	soundOptionsInfo.worldvolume.curvalue = trap_Cvar_VariableValue("s_worldvolume") * 10;
-	soundOptionsInfo.quality.curvalue = !trap_Cvar_VariableValue("s_compression");
-	soundOptionsInfo.openal.curvalue = (int)trap_Cvar_VariableValue("s_useopenal");
-	soundOptionsInfo.chatBeep.curvalue = Com_Clamp(1, 1, trap_Cvar_VariableValue("cg_chatBeep"));
-	soundOptionsInfo.teamChatBeep.curvalue = Com_Clamp(1, 1, trap_Cvar_VariableValue("cg_teamChatBeep"));
-	soundOptionsInfo.hitSound.curvalue = Com_Clamp(1, 1, trap_Cvar_VariableValue("cg_hitsound"));
-	soundOptionsInfo.killSound.curvalue = Com_Clamp(1, 1, trap_Cvar_VariableValue("cg_killsound"));
+	soundOptionsInfo.sfxvolume.curvalue = trap_Cvar_VariableValue( "s_volume" ) * 10;
+	soundOptionsInfo.musicvolume.curvalue = trap_Cvar_VariableValue( "s_musicvolume" ) * 10;
+	soundOptionsInfo.worldvolume.curvalue = trap_Cvar_VariableValue( "s_worldvolume" ) * 10;
+	soundOptionsInfo.quality.curvalue = !trap_Cvar_VariableValue( "s_compression" );
+	soundOptionsInfo.openal.curvalue = (int)trap_Cvar_VariableValue( "s_useopenal" );
+	soundOptionsInfo.chatBeep.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_chatBeep" ) );
+	soundOptionsInfo.teamChatBeep.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_teamChatBeep" ) );
+	soundOptionsInfo.hitSound.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_hitsound" ) );
+	soundOptionsInfo.killSound.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_killsound" ) );
 
 	UI_SoundOptions_GetInitialSound();
 }
@@ -442,13 +442,13 @@ static void UI_SoundOptionsMenu_Init(void) {
 UI_SoundOptionsMenu_Cache
 ===============
 */
-void UI_SoundOptionsMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_FRAMEL);
-	trap_R_RegisterShaderNoMip(ART_FRAMER);
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	trap_R_RegisterShaderNoMip(ART_ACCEPT0);
-	trap_R_RegisterShaderNoMip(ART_ACCEPT1);
+void UI_SoundOptionsMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_FRAMEL );
+	trap_R_RegisterShaderNoMip( ART_FRAMER );
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_ACCEPT0 );
+	trap_R_RegisterShaderNoMip( ART_ACCEPT1 );
 }
 
 /*
@@ -456,8 +456,8 @@ void UI_SoundOptionsMenu_Cache(void) {
 UI_SoundOptionsMenu
 ===============
 */
-void UI_SoundOptionsMenu(void) {
+void UI_SoundOptionsMenu( void ) {
 	UI_SoundOptionsMenu_Init();
-	UI_PushMenu(&soundOptionsInfo.menu);
-	Menu_SetCursorToItem(&soundOptionsInfo.menu, &soundOptionsInfo.sound);
+	UI_PushMenu( &soundOptionsInfo.menu );
+	Menu_SetCursorToItem( &soundOptionsInfo.menu, &soundOptionsInfo.sound );
 }

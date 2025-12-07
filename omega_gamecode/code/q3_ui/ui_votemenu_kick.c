@@ -75,18 +75,18 @@ typedef struct {
 
 static votemenu_kick_t s_votemenu_kick;
 
-void UI_VoteKickMenuInternal(void);
+void UI_VoteKickMenuInternal( void );
 
-static void populatePlayerList(void) {
+static void populatePlayerList( void ) {
 	int i;
 	char playerinfo[MAX_INFO_STRING];
 	s_votemenu_kick.numPlayers = 0;
 
-	for (i = 0; i < MAX_CLIENTS; i++) {
-		trap_GetConfigString(CS_PLAYERS + i, playerinfo, MAX_INFO_STRING);
-		if (strlen(playerinfo)) {
+	for ( i = 0; i < MAX_CLIENTS; i++ ) {
+		trap_GetConfigString( CS_PLAYERS + i, playerinfo, MAX_INFO_STRING );
+		if ( strlen( playerinfo ) ) {
 			s_votemenu_kick.players_profiles[s_votemenu_kick.numPlayers].id = i;
-			Q_strncpyz(s_votemenu_kick.players_profiles[s_votemenu_kick.numPlayers].name, Info_ValueForKey(playerinfo, "n"), SIZE_OF_NAME - 2);
+			Q_strncpyz( s_votemenu_kick.players_profiles[s_votemenu_kick.numPlayers].name, Info_ValueForKey( playerinfo, "n" ), SIZE_OF_NAME - 2 );
 			s_votemenu_kick.numPlayers++;
 		}
 	}
@@ -97,29 +97,29 @@ static void populatePlayerList(void) {
 VoteKickMenu_Event
 =================
 */
-static void VoteKickMenu_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void VoteKickMenu_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_BACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				return;
 			UI_PopMenu();
 			break;
 		case ID_GO:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			if (!s_votemenu_kick.selected)
+			if ( !s_votemenu_kick.selected )
 				return;
-			trap_Cmd_ExecuteText(EXEC_APPEND, va("callvote clientkick %d", s_votemenu_kick.players_profiles[(s_votemenu_kick.selected - 20) + s_votemenu_kick.startIndex].id));
+			trap_Cmd_ExecuteText( EXEC_APPEND, va( "callvote clientkick %d", s_votemenu_kick.players_profiles[( s_votemenu_kick.selected - 20 ) + s_votemenu_kick.startIndex].id ) );
 			UI_PopMenu();
 			UI_PopMenu();
 			break;
 		default:
-			if (event != QM_ACTIVATED) {
+			if ( event != QM_ACTIVATED ) {
 				return;
 			}
-			if (s_votemenu_kick.selected != ((menucommon_s *)ptr)->id) {
-				s_votemenu_kick.selected = ((menucommon_s *)ptr)->id;
+			if ( s_votemenu_kick.selected != ( (menucommon_s *)ptr )->id ) {
+				s_votemenu_kick.selected = ( (menucommon_s *)ptr )->id;
 				UI_VoteKickMenuInternal();
 			}
 			break;
@@ -131,12 +131,12 @@ static void VoteKickMenu_Event(void *ptr, int event) {
 UI_VoteKickMenu_UpEvent
 =================
 */
-static void UI_VoteKickMenu_UpEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_VoteKickMenu_UpEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	if (s_votemenu_kick.startIndex > 0) {
+	if ( s_votemenu_kick.startIndex > 0 ) {
 		s_votemenu_kick.startIndex--;
 	}
 
@@ -148,12 +148,12 @@ static void UI_VoteKickMenu_UpEvent(void *ptr, int event) {
 UI_VoteKickMenu_DownEvent
 =================
 */
-static void UI_VoteKickMenu_DownEvent(void *ptr, int event) {
-	if (event != QM_ACTIVATED) {
+static void UI_VoteKickMenu_DownEvent( void *ptr, int event ) {
+	if ( event != QM_ACTIVATED ) {
 		return;
 	}
 
-	if (s_votemenu_kick.startIndex + SIZE_OF_LIST < s_votemenu_kick.numPlayers) {
+	if ( s_votemenu_kick.startIndex + SIZE_OF_LIST < s_votemenu_kick.numPlayers ) {
 		s_votemenu_kick.startIndex++;
 	}
 
@@ -165,11 +165,11 @@ static void UI_VoteKickMenu_DownEvent(void *ptr, int event) {
 UI_VoteKickMenu_Draw
 =================
 */
-static void UI_VoteKickMenu_Draw(void) {
-	UI_DrawNamedPic(320 - 233, 240 - 166, 466, 332, ART_BACKGROUND);
+static void UI_VoteKickMenu_Draw( void ) {
+	UI_DrawNamedPic( 320 - 233, 240 - 166, 466, 332, ART_BACKGROUND );
 
 	// standard menu drawing
-	Menu_Draw(&s_votemenu_kick.menu);
+	Menu_Draw( &s_votemenu_kick.menu );
 }
 
 /*
@@ -177,24 +177,24 @@ static void UI_VoteKickMenu_Draw(void) {
 VoteKickMenu_Cache
 =================
 */
-static void VoteKickMenu_Cache(void) {
-	trap_R_RegisterShaderNoMip(ART_BACK0);
-	trap_R_RegisterShaderNoMip(ART_BACK1);
-	trap_R_RegisterShaderNoMip(ART_FIGHT0);
-	trap_R_RegisterShaderNoMip(ART_FIGHT1);
-	trap_R_RegisterShaderNoMip(ART_BACKGROUND);
-	trap_R_RegisterShaderNoMip(ART_ARROWS);
-	trap_R_RegisterShaderNoMip(ART_ARROWUP);
-	trap_R_RegisterShaderNoMip(ART_ARROWDOWN);
+static void VoteKickMenu_Cache( void ) {
+	trap_R_RegisterShaderNoMip( ART_BACK0 );
+	trap_R_RegisterShaderNoMip( ART_BACK1 );
+	trap_R_RegisterShaderNoMip( ART_FIGHT0 );
+	trap_R_RegisterShaderNoMip( ART_FIGHT1 );
+	trap_R_RegisterShaderNoMip( ART_BACKGROUND );
+	trap_R_RegisterShaderNoMip( ART_ARROWS );
+	trap_R_RegisterShaderNoMip( ART_ARROWUP );
+	trap_R_RegisterShaderNoMip( ART_ARROWDOWN );
 }
 
-static void setKickMenutext(menutext_s *menu, int y, int id, qboolean active, char *text) {
+static void setKickMenutext( menutext_s *menu, int y, int id, qboolean active, char *text ) {
 	menu->generic.type = MTYPE_PTEXT;
 	menu->color = color_red;
 	menu->generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
-	if (!active)
+	if ( !active )
 		menu->generic.flags |= QMF_INACTIVE | QMF_GRAYED;
-	else if (s_votemenu_kick.selected == id)
+	else if ( s_votemenu_kick.selected == id )
 		menu->color = color_orange;
 	menu->generic.x = 320;
 	menu->generic.y = y;
@@ -210,7 +210,7 @@ UI_VoteKickMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteKickMenuInternal(void) {
+void UI_VoteKickMenuInternal( void ) {
 	int y;
 
 	s_votemenu_kick.menu.wrapAround = qtrue;
@@ -233,25 +233,25 @@ void UI_VoteKickMenuInternal(void) {
 	s_votemenu_kick.arrows.height = 128;
 
 	y = 98;
-	setKickMenutext(&s_votemenu_kick.players[0], y, ID_PLAYERNAME0, s_votemenu_kick.startIndex < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex].name);
+	setKickMenutext( &s_votemenu_kick.players[0], y, ID_PLAYERNAME0, s_votemenu_kick.startIndex < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[1], y, ID_PLAYERNAME1, s_votemenu_kick.startIndex + 1 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 1].name);
+	setKickMenutext( &s_votemenu_kick.players[1], y, ID_PLAYERNAME1, s_votemenu_kick.startIndex + 1 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 1].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[2], y, ID_PLAYERNAME2, s_votemenu_kick.startIndex + 2 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 2].name);
+	setKickMenutext( &s_votemenu_kick.players[2], y, ID_PLAYERNAME2, s_votemenu_kick.startIndex + 2 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 2].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[3], y, ID_PLAYERNAME3, s_votemenu_kick.startIndex + 3 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 3].name);
+	setKickMenutext( &s_votemenu_kick.players[3], y, ID_PLAYERNAME3, s_votemenu_kick.startIndex + 3 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 3].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[4], y, ID_PLAYERNAME4, s_votemenu_kick.startIndex + 4 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 4].name);
+	setKickMenutext( &s_votemenu_kick.players[4], y, ID_PLAYERNAME4, s_votemenu_kick.startIndex + 4 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 4].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[5], y, ID_PLAYERNAME5, s_votemenu_kick.startIndex + 5 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 5].name);
+	setKickMenutext( &s_votemenu_kick.players[5], y, ID_PLAYERNAME5, s_votemenu_kick.startIndex + 5 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 5].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[6], y, ID_PLAYERNAME6, s_votemenu_kick.startIndex + 6 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 6].name);
+	setKickMenutext( &s_votemenu_kick.players[6], y, ID_PLAYERNAME6, s_votemenu_kick.startIndex + 6 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 6].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[7], y, ID_PLAYERNAME7, s_votemenu_kick.startIndex + 7 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 7].name);
+	setKickMenutext( &s_votemenu_kick.players[7], y, ID_PLAYERNAME7, s_votemenu_kick.startIndex + 7 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 7].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[8], y, ID_PLAYERNAME8, s_votemenu_kick.startIndex + 8 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 8].name);
+	setKickMenutext( &s_votemenu_kick.players[8], y, ID_PLAYERNAME8, s_votemenu_kick.startIndex + 8 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 8].name );
 	y += VOTEKICK_MENU_VERTICAL_SPACING;
-	setKickMenutext(&s_votemenu_kick.players[9], y, ID_PLAYERNAME9, s_votemenu_kick.startIndex + 9 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 9].name);
+	setKickMenutext( &s_votemenu_kick.players[9], y, ID_PLAYERNAME9, s_votemenu_kick.startIndex + 9 < s_votemenu_kick.numPlayers, s_votemenu_kick.players_profiles[s_votemenu_kick.startIndex + 9].name );
 
 	s_votemenu_kick.up.generic.type = MTYPE_BITMAP;
 	s_votemenu_kick.up.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -302,21 +302,21 @@ UI_VoteKickMenu
  *Called from outside
 =================
 */
-void UI_VoteKickMenu(void) {
+void UI_VoteKickMenu( void ) {
 	int i;
 	VoteKickMenu_Cache();
-	memset(&s_votemenu_kick, 0, sizeof(votemenu_kick_t));
+	memset( &s_votemenu_kick, 0, sizeof( votemenu_kick_t ) );
 	populatePlayerList();
 
 	UI_VoteKickMenuInternal();
 
-	Menu_AddItem(&s_votemenu_kick.menu, (void *)&s_votemenu_kick.back);
-	Menu_AddItem(&s_votemenu_kick.menu, (void *)&s_votemenu_kick.go);
-	Menu_AddItem(&s_votemenu_kick.menu, (void *)&s_votemenu_kick.arrows);
-	Menu_AddItem(&s_votemenu_kick.menu, (void *)&s_votemenu_kick.down);
-	Menu_AddItem(&s_votemenu_kick.menu, (void *)&s_votemenu_kick.up);
-	for (i = 0; i < SIZE_OF_LIST; i++)
-		Menu_AddItem(&s_votemenu_kick.menu, (void *)&s_votemenu_kick.players[i]);
+	Menu_AddItem( &s_votemenu_kick.menu, (void *)&s_votemenu_kick.back );
+	Menu_AddItem( &s_votemenu_kick.menu, (void *)&s_votemenu_kick.go );
+	Menu_AddItem( &s_votemenu_kick.menu, (void *)&s_votemenu_kick.arrows );
+	Menu_AddItem( &s_votemenu_kick.menu, (void *)&s_votemenu_kick.down );
+	Menu_AddItem( &s_votemenu_kick.menu, (void *)&s_votemenu_kick.up );
+	for ( i = 0; i < SIZE_OF_LIST; i++ )
+		Menu_AddItem( &s_votemenu_kick.menu, (void *)&s_votemenu_kick.players[i] );
 
-	UI_PushMenu(&s_votemenu_kick.menu);
+	UI_PushMenu( &s_votemenu_kick.menu );
 }

@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // because games can change separately from the main system version, we need a
 // second version that must match between game and cgame
 
-#if defined(BG_PUBLIC_H)
+#if defined( BG_PUBLIC_H )
 #else
 #define BG_PUBLIC_H 1
 
@@ -100,14 +100,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define CS_ITEMS 27 // string of 0's and 1's that tell which items are present
 
 #define CS_MODELS 32
-#define CS_SOUNDS (CS_MODELS + MAX_MODELS)
-#define CS_PLAYERS (CS_SOUNDS + MAX_SOUNDS)
-#define CS_LOCATIONS (CS_PLAYERS + MAX_CLIENTS)
-#define CS_PARTICLES (CS_LOCATIONS + MAX_LOCATIONS)
+#define CS_SOUNDS ( CS_MODELS + MAX_MODELS )
+#define CS_PLAYERS ( CS_SOUNDS + MAX_SOUNDS )
+#define CS_LOCATIONS ( CS_PLAYERS + MAX_CLIENTS )
+#define CS_PARTICLES ( CS_LOCATIONS + MAX_LOCATIONS )
 
-#define CS_MAX (CS_PARTICLES + MAX_LOCATIONS)
+#define CS_MAX ( CS_PARTICLES + MAX_LOCATIONS )
 
-#if (CS_MAX) > MAX_CONFIGSTRINGS
+#if ( CS_MAX ) > MAX_CONFIGSTRINGS
 #error overflow: (CS_MAX) > MAX_CONFIGSTRINGS
 #endif
 
@@ -188,7 +188,7 @@ typedef enum {
 #define PMF_ELIMWARMUP 32768  //I hope this is more than 16 signed bits! (it's not but it just works anyway...)
 //Don't add anymore, I have already set the sign bit :-(
 
-#define PMF_ALL_TIMES (PMF_TIME_WATERJUMP | PMF_TIME_LAND | PMF_TIME_KNOCKBACK)
+#define PMF_ALL_TIMES ( PMF_TIME_WATERJUMP | PMF_TIME_LAND | PMF_TIME_KNOCKBACK )
 
 #define MAXTOUCH 32
 typedef struct {
@@ -227,8 +227,8 @@ typedef struct {
 
 	// callbacks to test the world
 	// these will be different functions during game and cgame
-	void (*trace)(trace_t *results, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int passEntityNum, int contentMask);
-	int (*pointcontents)(const vec3_t point, int passEntityNum);
+	void ( *trace )( trace_t *results, const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, int passEntityNum, int contentMask );
+	int ( *pointcontents )( const vec3_t point, int passEntityNum );
 
 	//OmegA
 	int chaos;
@@ -243,8 +243,8 @@ typedef struct {
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles
-void PM_UpdateViewAngles(playerState_t *ps, const usercmd_t *cmd);
-void Pmove(pmove_t *pmove);
+void PM_UpdateViewAngles( playerState_t *ps, const usercmd_t *cmd );
+void Pmove( pmove_t *pmove );
 
 //===================================================================================
 
@@ -411,7 +411,7 @@ typedef enum {
 // to retrieve the actual event number
 #define EV_EVENT_BIT1 0x00000100
 #define EV_EVENT_BIT2 0x00000200
-#define EV_EVENT_BITS (EV_EVENT_BIT1 | EV_EVENT_BIT2)
+#define EV_EVENT_BITS ( EV_EVENT_BIT1 | EV_EVENT_BIT2 )
 
 #define EVENT_VALID_MSEC 300
 
@@ -715,13 +715,13 @@ typedef struct gitem_s {
 extern gitem_t bg_itemlist[];
 extern int bg_numItems;
 
-gitem_t *BG_FindItem(const char *pickupName);
-gitem_t *BG_FindItemForWeapon(weapon_t weapon);
-gitem_t *BG_FindItemForPowerup(powerup_t pw);
-gitem_t *BG_FindItemForHoldable(holdable_t pw);
-#define ITEM_INDEX(x) ((x) - bg_itemlist)
+gitem_t *BG_FindItem( const char *pickupName );
+gitem_t *BG_FindItemForWeapon( weapon_t weapon );
+gitem_t *BG_FindItemForPowerup( powerup_t pw );
+gitem_t *BG_FindItemForHoldable( holdable_t pw );
+#define ITEM_INDEX( x ) ( ( x ) - bg_itemlist )
 
-qboolean BG_CanItemBeGrabbed(int gametype, const entityState_t *ent, const playerState_t *ps);
+qboolean BG_CanItemBeGrabbed( int gametype, const entityState_t *ent, const playerState_t *ps );
 
 // g_dmflags->integer flags
 #define DF_NO_FALLING 8
@@ -759,13 +759,13 @@ qboolean BG_CanItemBeGrabbed(int gametype, const entityState_t *ent, const playe
 #define VF_shuffle 512
 
 // content masks
-#define MASK_ALL (-1)
-#define MASK_SOLID (CONTENTS_SOLID)
-#define MASK_PLAYERSOLID (CONTENTS_SOLID | CONTENTS_PLAYERCLIP | CONTENTS_BODY)
-#define MASK_DEADSOLID (CONTENTS_SOLID | CONTENTS_PLAYERCLIP)
-#define MASK_WATER (CONTENTS_WATER | CONTENTS_LAVA | CONTENTS_SLIME)
-#define MASK_OPAQUE (CONTENTS_SOLID | CONTENTS_SLIME | CONTENTS_LAVA)
-#define MASK_SHOT (CONTENTS_SOLID | CONTENTS_BODY | CONTENTS_CORPSE)
+#define MASK_ALL ( -1 )
+#define MASK_SOLID ( CONTENTS_SOLID )
+#define MASK_PLAYERSOLID ( CONTENTS_SOLID | CONTENTS_PLAYERCLIP | CONTENTS_BODY )
+#define MASK_DEADSOLID ( CONTENTS_SOLID | CONTENTS_PLAYERCLIP )
+#define MASK_WATER ( CONTENTS_WATER | CONTENTS_LAVA | CONTENTS_SLIME )
+#define MASK_OPAQUE ( CONTENTS_SOLID | CONTENTS_SLIME | CONTENTS_LAVA )
+#define MASK_SHOT ( CONTENTS_SOLID | CONTENTS_BODY | CONTENTS_CORPSE )
 
 //
 // entityState_t->eType
@@ -793,23 +793,23 @@ typedef enum {
 //KK-OAX Using this now instead of g_mem.c
 // bg_alloc.c
 //
-qboolean BG_CanAlloc(unsigned int size);
-void *BG_Alloc(unsigned int size);
-void BG_InitMemory(void);
-void BG_Free(void *ptr);
-void BG_DefragmentMemory(void);
+qboolean BG_CanAlloc( unsigned int size );
+void *BG_Alloc( unsigned int size );
+void BG_InitMemory( void );
+void BG_Free( void *ptr );
+void BG_DefragmentMemory( void );
 
-void BG_EvaluateTrajectory(const trajectory_t *tr, int atTime, vec3_t result);
-void BG_EvaluateTrajectoryDelta(const trajectory_t *tr, int atTime, vec3_t result);
+void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result );
+void BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t result );
 
-void BG_AddPredictableEventToPlayerstate(int newEvent, int eventParm, playerState_t *ps);
+void BG_AddPredictableEventToPlayerstate( int newEvent, int eventParm, playerState_t *ps );
 
-void BG_TouchJumpPad(playerState_t *ps, entityState_t *jumppad);
+void BG_TouchJumpPad( playerState_t *ps, entityState_t *jumppad );
 
-void BG_PlayerStateToEntityState(playerState_t *ps, entityState_t *s, qboolean snap);
-void BG_PlayerStateToEntityStateExtraPolate(playerState_t *ps, entityState_t *s, int time, qboolean snap);
+void BG_PlayerStateToEntityState( playerState_t *ps, entityState_t *s, qboolean snap );
+void BG_PlayerStateToEntityStateExtraPolate( playerState_t *ps, entityState_t *s, int time, qboolean snap );
 
-qboolean BG_PlayerTouchesItem(playerState_t *ps, entityState_t *item, int atTime, int pickupHeightMode);
+qboolean BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTime, int pickupHeightMode );
 
 #define ARENAS_PER_TIER 4
 #define MAX_ARENAS 1024
@@ -842,8 +842,8 @@ qboolean BG_PlayerTouchesItem(playerState_t *ps, entityState_t *item, int atTime
 
 //KK-OAX
 //bg_misc.c
-char *BG_TeamName(team_t team);
-qboolean BG_IsEliminationGT(gametype_t gametype);
+char *BG_TeamName( team_t team );
+qboolean BG_IsEliminationGT( gametype_t gametype );
 
 //OmegA
 extern vmCvar_t autohop;

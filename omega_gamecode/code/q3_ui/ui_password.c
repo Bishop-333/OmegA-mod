@@ -44,7 +44,7 @@ static char *specifypassword_artlist[] =
         SPECIFYPASSWORD_BACK1,
         SPECIFYPASSWORD_FIGHT0,
         SPECIFYPASSWORD_FIGHT1,
-        NULL};
+        NULL };
 
 typedef struct
 {
@@ -68,20 +68,20 @@ static specifypassword_t s_specifypassword;
 SpecifyPassword_Event
 =================
 */
-static void SpecifyPassword_Event(void *ptr, int event) {
-	switch (((menucommon_s *)ptr)->id) {
+static void SpecifyPassword_Event( void *ptr, int event ) {
+	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_SPECIFYPASSWORDGO:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
-			if (s_specifypassword.password.field.buffer[0]) {
-				trap_Cvar_Set("password", s_specifypassword.password.field.buffer);
-				trap_Cmd_ExecuteText(EXEC_APPEND, s_specifypassword.connectstring);
+			if ( s_specifypassword.password.field.buffer[0] ) {
+				trap_Cvar_Set( "password", s_specifypassword.password.field.buffer );
+				trap_Cmd_ExecuteText( EXEC_APPEND, s_specifypassword.connectstring );
 			}
 			break;
 
 		case ID_SPECIFYPASSWORDBACK:
-			if (event != QM_ACTIVATED)
+			if ( event != QM_ACTIVATED )
 				break;
 
 			UI_PopMenu();
@@ -94,9 +94,9 @@ static void SpecifyPassword_Event(void *ptr, int event) {
 SpecifyPassword_MenuInit
 =================
 */
-static void SpecifyPassword_MenuInit(void) {
+static void SpecifyPassword_MenuInit( void ) {
 	// zero set all our globals
-	memset(&s_specifypassword, 0, sizeof(specifypassword_t));
+	memset( &s_specifypassword, 0, sizeof( specifypassword_t ) );
 
 	SpecifyPassword_Cache();
 
@@ -140,7 +140,7 @@ static void SpecifyPassword_MenuInit(void) {
 	s_specifypassword.password.generic.y = 220;
 	s_specifypassword.password.field.widthInChars = 38;
 	s_specifypassword.password.field.maxchars = 80;
-	trap_Cvar_VariableStringBuffer("password", s_specifypassword.password.field.buffer, 80);
+	trap_Cvar_VariableStringBuffer( "password", s_specifypassword.password.field.buffer, 80 );
 
 	s_specifypassword.go.generic.type = MTYPE_BITMAP;
 	s_specifypassword.go.generic.name = SPECIFYPASSWORD_FIGHT0;
@@ -164,13 +164,13 @@ static void SpecifyPassword_MenuInit(void) {
 	s_specifypassword.back.height = 64;
 	s_specifypassword.back.focuspic = SPECIFYPASSWORD_BACK1;
 
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.banner);
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.info);
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.framel);
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.framer);
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.password);
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.go);
-	Menu_AddItem(&s_specifypassword.menu, &s_specifypassword.back);
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.banner );
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.info );
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.framel );
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.framer );
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.password );
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.go );
+	Menu_AddItem( &s_specifypassword.menu, &s_specifypassword.back );
 }
 
 /*
@@ -178,14 +178,14 @@ static void SpecifyPassword_MenuInit(void) {
 SpecifyPassword_Cache
 =================
 */
-void SpecifyPassword_Cache(void) {
+void SpecifyPassword_Cache( void ) {
 	int i;
 
 	// touch all our pics
-	for (i = 0;; i++) {
-		if (!specifypassword_artlist[i])
+	for ( i = 0;; i++ ) {
+		if ( !specifypassword_artlist[i] )
 			break;
-		trap_R_RegisterShaderNoMip(specifypassword_artlist[i]);
+		trap_R_RegisterShaderNoMip( specifypassword_artlist[i] );
 	}
 }
 
@@ -194,9 +194,9 @@ void SpecifyPassword_Cache(void) {
 UI_SpecifyPasswordMenu
 =================
 */
-void UI_SpecifyPasswordMenu(char *string, char *name) {
+void UI_SpecifyPasswordMenu( char *string, char *name ) {
 	SpecifyPassword_MenuInit();
 	s_specifypassword.connectstring = string;
-	Q_strncpyz(s_specifypassword.servername, name, 32);
-	UI_PushMenu(&s_specifypassword.menu);
+	Q_strncpyz( s_specifypassword.servername, name, 32 );
+	UI_PushMenu( &s_specifypassword.menu );
 }

@@ -58,8 +58,8 @@ typedef struct multikill {
 } multikill_t;
 
 //function declarations
-qboolean G_ReadAltKillSettings(gentity_t *ent, int skiparg);
-void G_RunStreakLogic(gentity_t *attacker, gentity_t *victim);
-void G_CheckForSpree(gentity_t *ent, int streak2Test, qboolean checkKillSpree);
-void G_checkForMultiKill(gentity_t *ent);
-void G_ConfigClientExcellent(qboolean levelStart);
+qboolean G_ReadAltKillSettings( gentity_t *ent, int skiparg );
+void G_RunStreakLogic( gentity_t *attacker, gentity_t *victim );
+void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree );
+void G_checkForMultiKill( gentity_t *ent );
+void G_ConfigClientExcellent( qboolean levelStart );
