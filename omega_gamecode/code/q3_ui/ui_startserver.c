@@ -239,7 +239,7 @@ static int GametypeBits( char *string ) {
 			continue;
 		}
 
-		if ( Q_strequal( token, "pos" ) ) {
+		if ( Q_stricmp( token, "pos" ) == 0 ) {
 			bits |= 1 << GT_POSSESSION;
 			continue;
 		}
@@ -1401,8 +1401,8 @@ static void ServerOptions_SetMenuItems( void ) {
 			break;
 
 		case GT_POSSESSION:
-			trap_Cvar_SetValue( "ui_pos_scorelimit", fraglimit );
-			trap_Cvar_SetValue( "ui_pos_timelimit", timelimit );
+			Com_sprintf( s_serveroptions.fraglimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_pos_scorelimit" ) ) );
+			Com_sprintf( s_serveroptions.timelimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_pos_timelimit" ) ) );
 			break;
 	}
 

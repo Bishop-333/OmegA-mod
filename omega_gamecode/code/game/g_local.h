@@ -874,6 +874,16 @@ void ShuffleTeams( void );
 //KK-OAX Added for Command Handling Changes (r24)
 team_t G_TeamFromString( char *str );
 void CheckTeamCount( void );
+/**
+ * Picks a random location.
+ * This function can be given a filter. If the callback function returns 0 then the entity is not valid for selection
+ * @param classname Name of the class to choose
+ * @param filter The filter callback function or 0 for everything.
+ * @return A pointer to an enityt or NULL if not such entity could be found
+ */
+gentity_t *SelectRandomEntityFilter( const char *classname, qboolean ( *filter )( const gentity_t * ) );
+gentity_t *SelectRandomEntity( const char *classname );
+void Team_SetFlagStatus( int team, flagStatus_t status );
 
 //KK-OAX This was moved
 // bg_alloc.c

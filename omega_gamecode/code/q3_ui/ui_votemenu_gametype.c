@@ -74,6 +74,7 @@ typedef struct
 	menutext_s bLMS;
 	menutext_s bDOUBLED;
 	menutext_s bDOM;
+	menutext_s bPOS;
 
 	//Allowed:
 	qboolean FFA;
@@ -88,6 +89,7 @@ typedef struct
 	qboolean LMS;
 	qboolean DOUBLED;
 	qboolean DOM;
+	qboolean POS;
 	int selection;
 } votemenu_t;
 
@@ -334,6 +336,7 @@ void UI_VoteGametypeMenu( void ) {
 		s_votemenu_Gametype.LMS = qtrue;
 		s_votemenu_Gametype.DOUBLED = qtrue;
 		s_votemenu_Gametype.DOM = qtrue;
+		s_votemenu_Gametype.POS = qtrue;
 	} else {
 		s_votemenu_Gametype.FFA = ( Q_stristr( gametypeinfo, "/0/" ) != NULL ) ? qtrue : qfalse;
 		s_votemenu_Gametype.Tourney = ( Q_stristr( gametypeinfo, "/1/" ) != NULL ) ? qtrue : qfalse;
@@ -347,6 +350,7 @@ void UI_VoteGametypeMenu( void ) {
 		s_votemenu_Gametype.LMS = ( Q_stristr( gametypeinfo, "/10/" ) != NULL ) ? qtrue : qfalse;
 		s_votemenu_Gametype.DOUBLED = ( Q_stristr( gametypeinfo, "/11/" ) != NULL ) ? qtrue : qfalse;
 		s_votemenu_Gametype.DOM = ( Q_stristr( gametypeinfo, "/12/" ) != NULL ) ? qtrue : qfalse;
+		s_votemenu_Gametype.POS = ( Q_stristr( gametypeinfo, "/13/" ) != NULL ) ? qtrue : qfalse;
 	}
 
 	UI_VoteGametypeMenuInternal();
@@ -365,6 +369,7 @@ void UI_VoteGametypeMenu( void ) {
 	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bLMS );
 	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bDOUBLED );
 	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bDOM );
+	Menu_AddItem( &s_votemenu_Gametype.menu, (void *)&s_votemenu_Gametype.bPOS );
 
 	UI_PushMenu( &s_votemenu_Gametype.menu );
 }

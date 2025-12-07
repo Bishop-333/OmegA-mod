@@ -851,7 +851,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	G_FindTeams();
 
 	// make sure we have flags for CTF, etc
-	if ( g_gametype.integer == GT_POSSESSION || g_gametype.integer >= GT_TEAM && ( g_ffa_gt != 1 ) ) {
+	if ( g_gametype.integer == GT_POSSESSION || ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) ) {
 		G_CheckTeamItems();
 	}
 

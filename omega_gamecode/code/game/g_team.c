@@ -1578,7 +1578,50 @@ qboolean Team_GetLocationMsg( gentity_t *ent, char *loc, int loclen ) {
 
 /*
 ================
-SelectRandomDeathmatchSpawnPoint
+SelectRandomEntityFilter
+================
+*/
+#define MAX_RANDOM_SET_SIZE 128
+gentity_t *SelectRandomEntityFilter( const char *classname, qboolean ( *filter )( const gentity_t * ) ) {
+	gentity_t *spot;
+	int count;
+	int selection;
+	gentity_t *spots[MAX_RANDOM_SET_SIZE];
+
+	count = 0;
+	spot = NULL;
+
+	while ( ( spot = G_Find( spot, FOFS( classname ), classname ) ) != NULL ) {
+		if ( filter ) {
+			if ( !filter( spot ) ) {
+				continue;
+			}
+		}
+		spots[count] = spot;
+		if ( ++count == MAX_RANDOM_SET_SIZE )
+			break;
+	}
+
+	if ( !count ) {
+		return NULL;
+	}
+
+	selection = rand() % count;
+	return spots[selection];
+}
+
+/*
+================
+SelectRandomEntity
+================
+*/
+gentity_t *SelectRandomEntity( const char *classname ) {
+	return SelectRandomEntityFilter( classname, 0 );
+}
+
+/*
+================
+SelectRandomTeamSpawnPoint
 
 go to a random point that doesn't telefrag
 ================
