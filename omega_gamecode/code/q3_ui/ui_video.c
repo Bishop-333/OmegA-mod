@@ -688,9 +688,9 @@ static void GraphicsOptions_SetMenuItems(void) {
 	trap_Cvar_VariableStringBuffer("cl_renderer", renderer, sizeof(renderer));
 
 	if (!Q_stricmp(renderer, "vulkan")) {
-			s_graphicsoptions.renderer.curvalue = 1;
+		s_graphicsoptions.renderer.curvalue = 1;
 	} else {
-			s_graphicsoptions.renderer.curvalue = 0;
+		s_graphicsoptions.renderer.curvalue = 0;
 	}
 
 	s_graphicsoptions.mode.curvalue =
@@ -880,7 +880,7 @@ void GraphicsOptions_MenuInit(void) {
 
 	y = 240 - 6 * (BIGCHAR_HEIGHT + 2);
 
-	if (renderer[0]) {
+	if ((trap_Cvar_VariableValue("cl_omegaEngine") == 1) && renderer[0]) {
 		s_graphicsoptions.renderer.generic.type = MTYPE_SPINCONTROL;
 		s_graphicsoptions.renderer.generic.name = "Renderer:";
 		s_graphicsoptions.renderer.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1051,7 +1051,7 @@ void GraphicsOptions_MenuInit(void) {
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.sound);
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.network);
 
-	if (renderer[0]) {
+	if ((trap_Cvar_VariableValue("cl_omegaEngine") == 1) && renderer[0]) {
 		Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.renderer);
 	}
 	Menu_AddItem(&s_graphicsoptions.menu, (void *)&s_graphicsoptions.desktop);
