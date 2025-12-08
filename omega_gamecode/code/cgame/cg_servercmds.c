@@ -364,8 +364,9 @@ void CG_ParseServerinfo( void ) {
 	//By default do as normal:
 	cgs.ffa_gt = 0;
 	//See if ffa gametype
-	if ( cgs.gametype == GT_LMS || cgs.gametype == GT_POSSESSION )
+	if ( cgs.gametype == GT_LMS || cgs.gametype == GT_POSSESSION ) {
 		cgs.ffa_gt = 1;
+	}
 	trap_Cvar_Set( "g_gametype", va( "%i", cgs.gametype ) );
 	cgs.dmflags = atoi( Info_ValueForKey( info, "dmflags" ) );
 	cgs.videoflags = atoi( Info_ValueForKey( info, "videoflags" ) );
@@ -705,7 +706,7 @@ static void CG_MapRestart( void ) {
 	// we really should clear more parts of cg here and stop sounds
 
 	// play the "fight" sound if this is a restart without warmup
-	if ( cg.warmup == 0 /* && cgs.gametype == GT_TOURNAMENT */ ) {
+	if ( cg.warmup == 0 ) {
 		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
 		CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH * 2 );
 	}
