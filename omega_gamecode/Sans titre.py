@@ -3,7 +3,8 @@ import re
 import sys
 
 # --- CONFIGURATION ---
-SOURCE_DIR = "./"  # Dossier à analyser
+# Liste des dossiers spécifiques à analyser (chemins relatifs à la racine)
+SCAN_DIRS = ["code/game", "code/cgame", "code/q3_ui"]
 EXTENSIONS = {".c", ".h"}
 
 # Liste des FICHIERS à ignorer (ne jamais signaler d'erreurs dedans)
@@ -12,12 +13,13 @@ FILE_WHITELIST = {
     "match.h", 
     "syn.h", 
     "g_syscalls.c", 
+    "chars.h.c", 
     "cg_syscalls.c"
 }
 
 # Liste des MOTS à ignorer (fonctions système, types de base...)
 SYMBOL_WHITELIST = {
-    "vmMain", "DllMain", "main", "Foundation", "software", "code", 
+    "vmMain", "DllMain", "main", "Foundation", "software", "code",
     "Sys_GetGameAPI", "Sys_GetCGameAPI", "Sys_GetUIAPI", "Sys_GetBotLibAPI",
     "int", "float", "void", "char", "double", "struct", "union", "enum", "typedef",
     "if", "while", "for", "return", "switch", "case", "default", "break", "continue", 
@@ -30,12 +32,18 @@ REGEX_DEFINE = re.compile(r'^\s*#define\s+([a-zA-Z_][a-zA-Z0-9_]*)', re.MULTILIN
 REGEX_FUNC = re.compile(r'^([a-zA-Z_][a-zA-Z0-9_\s\*]+)\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\([^;]*\)\s*\{', re.MULTILINE)
 REGEX_VAR_PROTO = re.compile(r'^\s*(?:static\s+|const\s+|extern\s+)?(?:[a-zA-Z0-9_]+\s+(?:\*\s*)*)+([a-zA-Z_][a-zA-Z0-9_]*)\s*(?:\[[^;]*\])?(?:=.*?)?;', re.MULTILINE)
 
-def get_files(directory):
+def get_files(target_dirs):
     files = []
-    for root, _, filenames in os.walk(directory):
-        for f in filenames:
-            if os.path.splitext(f)[1] in EXTENSIONS:
-                files.append(os.path.join(root, f))
+    for directory in target_dirs:
+        # Vérification d'existence du dossier
+        if not os.path.exists(directory):
+            print(f"ATTENTION : Le dossier '{directory}' n'existe pas (vérifiez que vous êtes à la racine).")
+            continue
+            
+        for root, _, filenames in os.walk(directory):
+            for f in filenames:
+                if os.path.splitext(f)[1] in EXTENSIONS:
+                    files.append(os.path.join(root, f))
     return files
 
 def read_file(path):
@@ -79,9 +87,13 @@ def find_candidates(content, filepath):
     return candidates
 
 def main():
-    print("--- 1. SCAN DES FICHIERS ---")
-    files = get_files(SOURCE_DIR)
+    print(f"--- 1. SCAN DES DOSSIERS CIBLES : {', '.join(SCAN_DIRS)} ---")
+    files = get_files(SCAN_DIRS)
     print(f"{len(files)} fichiers sources trouvés.")
+
+    if len(files) == 0:
+        print("Aucun fichier trouvé. Assurez-vous d'exécuter ce script à la racine du projet (là où se trouve le dossier 'code').")
+        return
 
     full_code_clean = ""
     
@@ -96,7 +108,6 @@ def main():
         # Vérification Whitelist Fichier
         filename = os.path.basename(f)
         if filename in FILE_WHITELIST:
-            # On ne cherche PAS de candidats à supprimer dans ce fichier
             continue
             
         # Sinon, on liste les définitions
@@ -121,22 +132,26 @@ def main():
         if count_processed % 500 == 0:
             print(f"Analyse... {count_processed}/{total_unique_names}")
 
+        # Recherche du mot entier dans tout le code chargé
         pattern = r'\b' + re.escape(name) + r'\b'
         matches = len(re.findall(pattern, full_code_clean))
         definition_count = len(candidate_list)
         
-        # Si (Occurrences Totales) <= (Nombre de déclarations connues), c'est probablement inutilisé
+        # Si le nombre total d'occurrences est égal (ou inférieur) au nombre de définitions/déclarations,
+        # cela signifie que le mot n'est jamais "appelé" ou "utilisé" ailleurs.
         if (matches - definition_count) <= 0:
             for c in candidate_list:
                 unused_items.append(c)
 
     print("\n" + "="*60)
     print("RAPPORT : ÉLÉMENTS POTENTIELLEMENT INUTILISÉS")
+    print(f"Dossiers scannés : {', '.join(SCAN_DIRS)}")
     print(f"Fichiers ignorés : {', '.join(FILE_WHITELIST)}")
     print("="*60)
     print(f"Format: [TYPE] Fichier:Ligne -> Nom")
     print("-" * 60)
 
+    # Tri par fichier et ligne pour lecture facile
     unused_items.sort(key=lambda x: (x['file'], x['line']))
 
     current_file = ""

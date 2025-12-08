@@ -231,14 +231,13 @@ GRAPHICS OPTIONS MENU
 #define GRAPHICSOPTIONS_ACCEPT1 "menu/art_blueish/accept_1"
 
 #define ID_BACK2 101
-#define ID_FULLSCREEN 102
-#define ID_MODE 103
-#define ID_DRIVERINFO 104
-#define ID_GRAPHICS 105
-#define ID_DISPLAY 106
-#define ID_SOUND 107
-#define ID_NETWORK 108
-#define ID_RATIO 109
+#define ID_MODE 102
+#define ID_DRIVERINFO 103
+#define ID_GRAPHICS 104
+#define ID_DISPLAY 105
+#define ID_SOUND 106
+#define ID_NETWORK 107
+#define ID_RATIO 108
 
 typedef struct {
 	menuframework_s menu;

@@ -67,7 +67,6 @@ typedef struct {
 	menubitmap_s back;
 	menubitmap_s go;
 
-	int numDemos;
 	char names[NAMEBUFSIZE];
 	char *demolist[MAX_DEMOS];
 } demos_t;

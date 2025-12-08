@@ -508,8 +508,6 @@ static void UI_SPLevelMenu_CustomEvent( void *ptr, int notification ) {
 UI_SPLevelMenu_MenuDraw
 =================
 */
-#define LEVEL_DESC_LEFT_MARGIN 332
-
 static void UI_SPLevelMenu_MenuDraw( void ) {
 	int n, i;
 	int x, y;

@@ -53,11 +53,6 @@ typedef struct
 	float value;
 } configcvar_t;
 
-#define SAVE_NOOP 0
-#define SAVE_YES 1
-#define SAVE_NO 2
-#define SAVE_CANCEL 3
-
 // control sections
 #define C_MOVEMENT 0
 #define C_LOOKING 1
