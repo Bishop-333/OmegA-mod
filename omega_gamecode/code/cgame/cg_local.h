@@ -1254,8 +1254,6 @@ extern vmCvar_t cg_predictItems;
 extern vmCvar_t cg_deferPlayers;
 extern vmCvar_t cg_drawFriend;
 extern vmCvar_t cg_teamChatsOnly;
-extern vmCvar_t cg_noVoiceChats;
-extern vmCvar_t cg_noVoiceText;
 extern vmCvar_t cg_scorePlum;
 extern vmCvar_t cg_obituaryOutput;
 extern vmCvar_t pmove_fixed;
