@@ -110,7 +110,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define ST_RETURNEDFLAG 16384
 #define ST_TEAM 32768
 #define ST_1FCTFGOTFLAG 65535
-
 //ctf task preferences
 #define ST_DEFENDER 1
 #define ST_ATTACKER 2
