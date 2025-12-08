@@ -837,54 +837,6 @@ static void CG_LaunchExplode( vec3_t origin, vec3_t velocity, qhandle_t hModel )
 	le->leMarkType = LEMT_NONE;
 }
 
-#define EXP_VELOCITY 100
-#define EXP_JUMP 150
-
-/*
-===================
-CG_GibPlayer
-
-Generated a bunch of gibs launching out from the bodies location
-===================
-*/
-void CG_BigExplosion( vec3_t playerOrigin ) {
-	vec3_t origin, velocity;
-
-	if ( !cg_blood.integer ) {
-		return;
-	}
-
-	VectorCopy( playerOrigin, origin );
-	velocity[0] = crandom() * EXP_VELOCITY;
-	velocity[1] = crandom() * EXP_VELOCITY;
-	velocity[2] = EXP_JUMP + crandom() * EXP_VELOCITY;
-	CG_LaunchExplode( origin, velocity, cgs.media.smoke2 );
-
-	VectorCopy( playerOrigin, origin );
-	velocity[0] = crandom() * EXP_VELOCITY;
-	velocity[1] = crandom() * EXP_VELOCITY;
-	velocity[2] = EXP_JUMP + crandom() * EXP_VELOCITY;
-	CG_LaunchExplode( origin, velocity, cgs.media.smoke2 );
-
-	VectorCopy( playerOrigin, origin );
-	velocity[0] = crandom() * EXP_VELOCITY * 1.5;
-	velocity[1] = crandom() * EXP_VELOCITY * 1.5;
-	velocity[2] = EXP_JUMP + crandom() * EXP_VELOCITY;
-	CG_LaunchExplode( origin, velocity, cgs.media.smoke2 );
-
-	VectorCopy( playerOrigin, origin );
-	velocity[0] = crandom() * EXP_VELOCITY * 2.0;
-	velocity[1] = crandom() * EXP_VELOCITY * 2.0;
-	velocity[2] = EXP_JUMP + crandom() * EXP_VELOCITY;
-	CG_LaunchExplode( origin, velocity, cgs.media.smoke2 );
-
-	VectorCopy( playerOrigin, origin );
-	velocity[0] = crandom() * EXP_VELOCITY * 2.5;
-	velocity[1] = crandom() * EXP_VELOCITY * 2.5;
-	velocity[2] = EXP_JUMP + crandom() * EXP_VELOCITY;
-	CG_LaunchExplode( origin, velocity, cgs.media.smoke2 );
-}
-
 /*
 ===================
 CG_GibPlayerHeadshot
