@@ -75,7 +75,7 @@ typedef struct optimized_s
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_KeepEdge(aas_edge_t *edge)
+int AAS_KeepEdge(aas_edge_t *edge)
 {
 	return 1;
 } //end of the function AAS_KeepFace
@@ -85,7 +85,7 @@ static int AAS_KeepEdge(aas_edge_t *edge)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_OptimizeEdge(optimized_t *optimized, int edgenum)
+int AAS_OptimizeEdge(optimized_t *optimized, int edgenum)
 {
 	int i, optedgenum;
 	aas_edge_t *edge, *optedge;
@@ -130,7 +130,7 @@ static int AAS_OptimizeEdge(optimized_t *optimized, int edgenum)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_KeepFace(aas_face_t *face)
+int AAS_KeepFace(aas_face_t *face)
 {
 	if (!(face->faceflags & FACE_LADDER)) return 0;
 	else return 1;
@@ -141,7 +141,7 @@ static int AAS_KeepFace(aas_face_t *face)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_OptimizeFace(optimized_t *optimized, int facenum)
+int AAS_OptimizeFace(optimized_t *optimized, int facenum)
 {
 	int i, edgenum, optedgenum, optfacenum;
 	aas_face_t *face, *optface;
@@ -186,7 +186,7 @@ static int AAS_OptimizeFace(optimized_t *optimized, int facenum)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_OptimizeArea(optimized_t *optimized, int areanum)
+void AAS_OptimizeArea(optimized_t *optimized, int areanum)
 {
 	int i, facenum, optfacenum;
 	aas_area_t *area, *optarea;
@@ -215,7 +215,7 @@ static void AAS_OptimizeArea(optimized_t *optimized, int areanum)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_OptimizeAlloc(optimized_t *optimized)
+void AAS_OptimizeAlloc(optimized_t *optimized)
 {
 	optimized->vertexes = (aas_vertex_t *) GetClearedMemory(aasworld.numvertexes * sizeof(aas_vertex_t));
 	optimized->numvertexes = 0;
@@ -240,7 +240,7 @@ static void AAS_OptimizeAlloc(optimized_t *optimized)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_OptimizeStore(optimized_t *optimized)
+void AAS_OptimizeStore(optimized_t *optimized)
 {
 	//store the optimized vertexes
 	if (aasworld.vertexes) FreeMemory(aasworld.vertexes);

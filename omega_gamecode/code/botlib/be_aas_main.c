@@ -90,7 +90,7 @@ int AAS_Initialized(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_SetInitialized(void)
+void AAS_SetInitialized(void)
 {
 	aasworld.initialized = qtrue;
 	botimport.Print(PRT_MESSAGE, "AAS initialized.\n");
@@ -217,11 +217,10 @@ void AAS_ProjectPointOntoVector( vec3_t point, vec3_t vStart, vec3_t vEnd, vec3_
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_LoadFiles(const char *mapname)
+int AAS_LoadFiles(const char *mapname)
 {
 	int errnum;
-	char aasfile[MAX_PATH];
-//	char bspfile[MAX_PATH];
+	char aasfile[MAX_QPATH];
 
 	Q_strncpyz(aasworld.mapname, mapname, sizeof(aasworld.mapname));
 	//NOTE: first reset the entity links into the AAS areas and BSP leaves
@@ -238,7 +237,7 @@ static int AAS_LoadFiles(const char *mapname)
 		return errnum;
 
 	botimport.Print(PRT_MESSAGE, "loaded %s\n", aasfile);
-	Q_strncpyz( aasworld.filename, aasfile, sizeof( aasworld.filename ) );
+	Q_strncpyz(aasworld.filename, aasfile, sizeof(aasworld.filename));
 	return BLERR_NOERROR;
 } //end of the function AAS_LoadFiles
 //===========================================================================

@@ -84,9 +84,26 @@ int Sys_MilliSeconds(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static qboolean ValidEntityNumber(int num, const char *str)
+qboolean ValidClientNumber(int num, char *str)
 {
-	if ( /*num < 0 || */ (unsigned)num > botlibglobals.maxentities )
+	if (num < 0 || num > botlibglobals.maxclients)
+	{
+		//weird: the disabled stuff results in a crash
+		botimport.Print(PRT_ERROR, "%s: invalid client number %d, [0, %d]\n",
+										str, num, botlibglobals.maxclients);
+		return qfalse;
+	} //end if
+	return qtrue;
+} //end of the function BotValidateClientNumber
+//===========================================================================
+//
+// Parameter:				-
+// Returns:					-
+// Changes Globals:		-
+//===========================================================================
+qboolean ValidEntityNumber(int num, char *str)
+{
+	if (num < 0 || num > botlibglobals.maxentities)
 	{
 		botimport.Print(PRT_ERROR, "%s: invalid entity number %d, [0, %d]\n",
 										str, num, botlibglobals.maxentities);
@@ -100,7 +117,7 @@ static qboolean ValidEntityNumber(int num, const char *str)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static qboolean BotLibSetup(const char *str)
+qboolean BotLibSetup(char *str)
 {
 	if (!botlibglobals.botlibsetup)
 	{
@@ -116,25 +133,24 @@ static qboolean BotLibSetup(const char *str)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibSetup( void )
+int Export_BotLibSetup(void)
 {
 	int		errnum;
 	
-	botDeveloper = LibVarGetValue( "bot_developer" );
- 	memset( &botlibglobals, 0, sizeof( botlibglobals ) );
+	botDeveloper = LibVarGetValue("bot_developer");
+ 	memset( &botlibglobals, 0, sizeof(botlibglobals) );
+	//initialize byte swapping (litte endian etc.)
+//	Swap_Init();
 
-	// initialize byte swapping (litte endian etc.)
-	// Swap_Init();
-
-	if ( botDeveloper )
+	if(botDeveloper)
 	{
-		Log_Open( "botlib.log" );
+		Log_Open("botlib.log");
 	}
 
-	botimport.Print( PRT_MESSAGE, "------- BotLib Initialization -------\n" );
+	botimport.Print(PRT_MESSAGE, "------- BotLib Initialization -------\n");
 
-	botlibglobals.maxclients = (int) LibVarValue( "maxclients", "64" );
-	botlibglobals.maxentities = (int) LibVarValue( "maxentities", "1024" );
+	botlibglobals.maxclients = (int) LibVarValue("maxclients", "128");
+	botlibglobals.maxentities = (int) LibVarValue("maxentities", "1024");
 
 	errnum = AAS_Setup();			//be_aas_main.c
 	if (errnum != BLERR_NOERROR) return errnum;
@@ -160,10 +176,9 @@ static int Export_BotLibSetup( void )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibShutdown(void)
+int Export_BotLibShutdown(void)
 {
-	if ( !botlibglobals.botlibsetup )
-		return BLERR_LIBRARYNOTSETUP;
+	if (!BotLibSetup("BotLibShutdown")) return BLERR_LIBRARYNOTSETUP;
 #ifndef DEMO
 	//DumpFileCRCs();
 #endif //DEMO
@@ -174,9 +189,9 @@ static int Export_BotLibShutdown(void)
 	BotShutdownWeaponAI();		//be_ai_weap.c
 	BotShutdownWeights();		//be_ai_weight.c
 	BotShutdownCharacters();	//be_ai_char.c
-	//shut down AAS
+	//shud down aas
 	AAS_Shutdown();
-	//shut down bot elementary actions
+	//shut down bot elemantary actions
 	EA_Shutdown();
 	//free all libvars
 	LibVarDeAllocAll();
@@ -204,9 +219,9 @@ static int Export_BotLibShutdown(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibVarSet( const char *var_name, const char *value )
+int Export_BotLibVarSet(const char *var_name, const char *value)
 {
-	LibVarSet( var_name, value );
+	LibVarSet(var_name, value);
 	return BLERR_NOERROR;
 } //end of the function Export_BotLibVarSet
 //===========================================================================
@@ -215,12 +230,12 @@ static int Export_BotLibVarSet( const char *var_name, const char *value )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibVarGet( const char *var_name, char *value, int size )
+int Export_BotLibVarGet(const char *var_name, char *value, int size)
 {
-	const char *varvalue;
+	char *varvalue;
 
-	varvalue = LibVarGetString( var_name );
-	Q_strncpyz( value, varvalue, size );
+	varvalue = LibVarGetString(var_name);
+	Q_strncpyz(value, varvalue, size);
 	return BLERR_NOERROR;
 } //end of the function Export_BotLibVarGet
 //===========================================================================
@@ -229,7 +244,7 @@ static int Export_BotLibVarGet( const char *var_name, char *value, int size )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibStartFrame(float time)
+int Export_BotLibStartFrame(float time)
 {
 	if (!BotLibSetup("BotStartFrame")) return BLERR_LIBRARYNOTSETUP;
 	return AAS_StartFrame(time);
@@ -240,7 +255,7 @@ static int Export_BotLibStartFrame(float time)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibLoadMap(const char *mapname)
+int Export_BotLibLoadMap(const char *mapname)
 {
 #ifdef DEBUG
 	int starttime = Sys_MilliSeconds();
@@ -270,7 +285,7 @@ static int Export_BotLibLoadMap(const char *mapname)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int Export_BotLibUpdateEntity(int ent, bot_entitystate_t *state)
+int Export_BotLibUpdateEntity(int ent, bot_entitystate_t *state)
 {
 	if (!BotLibSetup("BotUpdateEntity")) return BLERR_LIBRARYNOTSETUP;
 	if (!ValidEntityNumber(ent, "BotUpdateEntity")) return BLERR_INVALIDENTITYNUMBER;
@@ -283,9 +298,7 @@ static int Export_BotLibUpdateEntity(int ent, bot_entitystate_t *state)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-#if 0
 void AAS_TestMovementPrediction(int entnum, vec3_t origin, vec3_t dir);
-#endif
 void ElevatorBottomCenter(aas_reachability_t *reach, vec3_t bottomcenter);
 int BotGetReachabilityToGoal(vec3_t origin, int areanum,
 									  int lastgoalareanum, int lastareanum,
@@ -315,7 +328,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 	static int line[2];
 	int newarea, i, highlightarea, flood;
 //	int reachnum;
-	vec3_t eye, forward, right, /*end,*/ origin;
+	vec3_t eye, forward, right, end, origin;
 //	vec3_t bottomcenter;
 //	aas_trace_t trace;
 //	aas_face_t *face;
@@ -325,8 +338,8 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 //	bot_goal_t goal;
 
 	// clock_t start_time, end_time;
-	//vec3_t mins = {-16, -16, -24};
-	//vec3_t maxs = {16, 16, 32};
+	vec3_t mins = {-16, -16, -24};
+	vec3_t maxs = {16, 16, 32};
 
 //	int areas[10], numareas;
 
@@ -556,7 +569,7 @@ int BotExportTest(int parm0, char *parm1, vec3_t parm2, vec3_t parm3)
 	//get the eye 24 units up
 	eye[2] += 24;
 	//get the end point for the line to be traced
-	//VectorMA(eye, 800, forward, end);
+	VectorMA(eye, 800, forward, end);
 
 //	AAS_TestMovementPrediction(1, parm2, forward);
 /*

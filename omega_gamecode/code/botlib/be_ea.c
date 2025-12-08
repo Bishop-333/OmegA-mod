@@ -39,9 +39,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "be_ea.h"
 
 #define MAX_USERMOVE				400
-#define MAX_COMMANDARGUMENTS		10
 
-static bot_input_t *botinputs;
+bot_input_t *botinputs;
 
 //===========================================================================
 //
@@ -49,9 +48,9 @@ static bot_input_t *botinputs;
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_Say( int client, const char *str )
+void EA_Say(int client, char *str)
 {
-	botimport.BotClientCommand( client, va( "say %s", str ) );
+	botimport.BotClientCommand(client, va("say %s", str) );
 } //end of the function EA_Say
 //===========================================================================
 //
@@ -59,9 +58,9 @@ void EA_Say( int client, const char *str )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_SayTeam( int client, const char *str )
+void EA_SayTeam(int client, char *str)
 {
-	botimport.BotClientCommand( client, va( "say_team %s", str ) );
+	botimport.BotClientCommand(client, va("say_team %s", str));
 } //end of the function EA_SayTeam
 //===========================================================================
 //
@@ -69,9 +68,9 @@ void EA_SayTeam( int client, const char *str )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_Tell( int client, int clientto, const char *str )
+void EA_Tell(int client, int clientto, char *str)
 {
-	botimport.BotClientCommand( client, va( "tell %d, %s", clientto, str ) );
+	botimport.BotClientCommand(client, va("tell %d, %s", clientto, str));
 } //end of the function EA_SayTeam
 //===========================================================================
 //
@@ -79,9 +78,9 @@ void EA_Tell( int client, int clientto, const char *str )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_UseItem( int client, const char *it )
+void EA_UseItem(int client, char *it)
 {
-	botimport.BotClientCommand( client, va( "use %s", it ) );
+	botimport.BotClientCommand(client, va("use %s", it));
 } //end of the function EA_UseItem
 //===========================================================================
 //
@@ -89,9 +88,9 @@ void EA_UseItem( int client, const char *it )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_DropItem( int client, const char *it )
+void EA_DropItem(int client, char *it)
 {
-	botimport.BotClientCommand( client, va( "drop %s", it ) );
+	botimport.BotClientCommand(client, va("drop %s", it));
 } //end of the function EA_DropItem
 //===========================================================================
 //
@@ -99,9 +98,9 @@ void EA_DropItem( int client, const char *it )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_UseInv( int client, const char *inv )
+void EA_UseInv(int client, char *inv)
 {
-	botimport.BotClientCommand( client, va( "invuse %s", inv ) );
+	botimport.BotClientCommand(client, va("invuse %s", inv));
 } //end of the function EA_UseInv
 //===========================================================================
 //
@@ -109,9 +108,9 @@ void EA_UseInv( int client, const char *inv )
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-void EA_DropInv( int client, const char *inv )
+void EA_DropInv(int client, char *inv)
 {
-	botimport.BotClientCommand( client, va( "invdrop %s", inv ) );
+	botimport.BotClientCommand(client, va("invdrop %s", inv));
 } //end of the function EA_DropInv
 //===========================================================================
 //
@@ -133,9 +132,9 @@ void EA_Gesture(int client)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void EA_Command( int client, const char *command )
+void EA_Command(int client, char *command)
 {
-	botimport.BotClientCommand( client, command );
+	botimport.BotClientCommand(client, command);
 } //end of the function EA_Command
 //===========================================================================
 //
@@ -439,7 +438,7 @@ void EA_GetInput(int client, float thinktime, bot_input_t *input)
 void EA_ResetInput(int client)
 {
 	bot_input_t *bi;
-	int jumped;
+	int jumped = qfalse;
 
 	bi = &botinputs[client];
 

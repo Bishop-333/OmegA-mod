@@ -136,7 +136,7 @@ typedef struct iteminfo_s
 
 #define ITEMINFO_OFS(x)	(size_t)&(((iteminfo_t *)0)->x)
 
-static const fielddef_t iteminfo_fields[] =
+fielddef_t iteminfo_fields[] =
 {
 {"name", ITEMINFO_OFS(name), FT_STRING},
 {"model", ITEMINFO_OFS(model), FT_STRING},
@@ -149,7 +149,7 @@ static const fielddef_t iteminfo_fields[] =
 {NULL, 0, 0}
 };
 
-static const structdef_t iteminfo_struct =
+structdef_t iteminfo_struct =
 {
 	sizeof(iteminfo_t), iteminfo_fields
 };
@@ -176,22 +176,22 @@ typedef struct bot_goalstate_s
 	float avoidgoaltimes[MAX_AVOIDGOALS];		//times to avoid the goals
 } bot_goalstate_t;
 
-static bot_goalstate_t *botgoalstates[MAX_CLIENTS + 1]; // FIXME: init?
+bot_goalstate_t *botgoalstates[MAX_CLIENTS + 1]; // FIXME: init?
 //item configuration
-static itemconfig_t *itemconfig = NULL;
+itemconfig_t *itemconfig = NULL;
 //level items
-static levelitem_t *levelitemheap = NULL;
-static levelitem_t *freelevelitems = NULL;
-static levelitem_t *levelitems = NULL;
-static int numlevelitems = 0;
+levelitem_t *levelitemheap = NULL;
+levelitem_t *freelevelitems = NULL;
+levelitem_t *levelitems = NULL;
+int numlevelitems = 0;
 //map locations
-static maplocation_t *maplocations = NULL;
+maplocation_t *maplocations = NULL;
 //camp spots
-static campspot_t *campspots = NULL;
+campspot_t *campspots = NULL;
 //the game type
-static int g_gametype = 0;
+int g_gametype = 0;
 //additional dropped item weight
-static libvar_t *droppedweight = NULL;
+libvar_t *droppedweight = NULL;
 
 //========================================================================
 //
@@ -221,13 +221,13 @@ bot_goalstate_t *BotGoalStateFromHandle(int handle)
 //===========================================================================
 void BotInterbreedGoalFuzzyLogic(int parent1, int parent2, int child)
 {
-	const bot_goalstate_t *p1, *p2, *c;
+	bot_goalstate_t *p1, *p2, *c;
 
 	p1 = BotGoalStateFromHandle(parent1);
 	p2 = BotGoalStateFromHandle(parent2);
 	c = BotGoalStateFromHandle(child);
 
-	if ( !p1 || !p2 || !c )
+	if (!p1 || !p2 || !c)
 		return;
 
 	InterbreedWeightConfigs(p1->itemweightconfig, p2->itemweightconfig,
@@ -239,13 +239,12 @@ void BotInterbreedGoalFuzzyLogic(int parent1, int parent2, int child)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void BotSaveGoalFuzzyLogic(int goalstate, const char *filename)
+void BotSaveGoalFuzzyLogic(int goalstate, char *filename)
 {
 	//bot_goalstate_t *gs;
 
 	//gs = BotGoalStateFromHandle(goalstate);
-
-	// if ( !gs ) return;
+	//if (!gs) return;
 	//WriteWeightConfig(filename, gs->itemweightconfig);
 } //end of the function BotSaveGoalFuzzyLogic
 //===========================================================================
@@ -259,8 +258,7 @@ void BotMutateGoalFuzzyLogic(int goalstate, float range)
 	bot_goalstate_t *gs;
 
 	gs = BotGoalStateFromHandle(goalstate);
-
-	if ( !gs ) return;
+	if (!gs) return;
 	EvolveWeightConfig(gs->itemweightconfig);
 } //end of the function BotMutateGoalFuzzyLogic
 //===========================================================================
@@ -269,11 +267,11 @@ void BotMutateGoalFuzzyLogic(int goalstate, float range)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static itemconfig_t *LoadItemConfig( const char *filename )
+itemconfig_t *LoadItemConfig(char *filename)
 {
 	int max_iteminfo;
 	token_t token;
-	char path[MAX_PATH];
+	char path[MAX_QPATH];
 	source_t *source;
 	itemconfig_t *ic;
 	iteminfo_t *ii;
@@ -286,7 +284,7 @@ static itemconfig_t *LoadItemConfig( const char *filename )
 		LibVarSet( "max_iteminfo", "256" );
 	}
 
-	Q_strncpyz( path, filename, sizeof( path ) );
+	Q_strncpyz(path, filename, sizeof(path));
 	PC_SetBaseFolder(BOTFILESBASEFOLDER);
 	source = LoadSourceFile( path );
 	if( !source ) {
@@ -319,7 +317,7 @@ static itemconfig_t *LoadItemConfig( const char *filename )
 				return NULL;
 			} //end if
 			StripDoubleQuotes(token.string);
-			Q_strncpyz( ii->classname, token.string, sizeof( ii->classname ) );
+			Q_strncpyz(ii->classname, token.string, sizeof(ii->classname));
 			if (!ReadStructure(source, &iteminfo_struct, (char *) ii))
 			{
 				FreeMemory(ic);
@@ -350,7 +348,7 @@ static itemconfig_t *LoadItemConfig( const char *filename )
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int *ItemWeightIndex(const weightconfig_t *iwc, const itemconfig_t *ic)
+int *ItemWeightIndex(weightconfig_t *iwc, itemconfig_t *ic)
 {
 	int *index, i;
 
@@ -373,7 +371,7 @@ static int *ItemWeightIndex(const weightconfig_t *iwc, const itemconfig_t *ic)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void InitLevelItemHeap(void)
+void InitLevelItemHeap(void)
 {
 	int i, max_levelitems;
 
@@ -396,14 +394,14 @@ static void InitLevelItemHeap(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static levelitem_t *AllocLevelItem(void)
+levelitem_t *AllocLevelItem(void)
 {
 	levelitem_t *li;
 
 	li = freelevelitems;
 	if (!li)
 	{
-		//botimport.Print(PRT_FATAL, "out of level items\n");
+		botimport.Print(PRT_FATAL, "out of level items\n");
 		return NULL;
 	} //end if
 	//
@@ -417,7 +415,7 @@ static levelitem_t *AllocLevelItem(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void FreeLevelItem(levelitem_t *li)
+void FreeLevelItem(levelitem_t *li)
 {
 	li->next = freelevelitems;
 	freelevelitems = li;
@@ -428,7 +426,7 @@ static void FreeLevelItem(levelitem_t *li)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AddLevelItemToList(levelitem_t *li)
+void AddLevelItemToList(levelitem_t *li)
 {
 	if (levelitems) levelitems->prev = li;
 	li->prev = NULL;
@@ -441,7 +439,7 @@ static void AddLevelItemToList(levelitem_t *li)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void RemoveLevelItemFromList(levelitem_t *li)
+void RemoveLevelItemFromList(levelitem_t *li)
 {
 	if (li->prev) li->prev->next = li->next;
 	else levelitems = li->next;
@@ -453,7 +451,7 @@ static void RemoveLevelItemFromList(levelitem_t *li)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void BotFreeInfoEntities(void)
+void BotFreeInfoEntities(void)
 {
 	maplocation_t *ml, *nextml;
 	campspot_t *cs, *nextcs;
@@ -477,7 +475,7 @@ static void BotFreeInfoEntities(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void BotInitInfoEntities(void)
+void BotInitInfoEntities(void)
 {
 	char classname[MAX_EPAIRKEY];
 	maplocation_t *ml;
@@ -568,7 +566,7 @@ void BotInitLevelItems(void)
 	{
 		if (!ic->iteminfo[i].modelindex)
 		{
-			Log_Write("item %s has modelindex 0\n", ic->iteminfo[i].classname);
+			Log_Write("item %s has modelindex 0", ic->iteminfo[i].classname);
 		} //end if
 	} //end for
 
@@ -605,7 +603,7 @@ void BotInitLevelItems(void)
 				VectorCopy(origin, end);
 				end[2] -= 32;
 				trace = AAS_Trace(origin, ic->iteminfo[i].mins, ic->iteminfo[i].maxs, end, -1, CONTENTS_SOLID|CONTENTS_PLAYERCLIP);
-				//if the item is not near the ground
+				//if the item not near the ground
 				if (trace.fraction >= 1)
 				{
 					//if the item is not reachable from a jumppad
@@ -690,7 +688,7 @@ void BotGoalName(int number, char *name, int size)
 	{
 		if (li->number == number)
 		{
-			Q_strncpyz( name, itemconfig->iteminfo[li->iteminfo].name, size );
+			Q_strncpyz(name, itemconfig->iteminfo[li->iteminfo].name, size);
 			return;
 		} //end for
 	} //end for
@@ -741,7 +739,7 @@ void BotDumpAvoidGoals(int goalstate)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void BotAddToAvoidGoals(bot_goalstate_t *gs, int number, float avoidtime)
+void BotAddToAvoidGoals(bot_goalstate_t *gs, int number, float avoidtime)
 {
 	int i;
 
@@ -858,7 +856,7 @@ void BotSetAvoidGoalTime(int goalstate, int number, float avoidtime)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-int BotGetLevelItemGoal(int index, const char *name, bot_goal_t *goal)
+int BotGetLevelItemGoal(int index, char *name, bot_goal_t *goal)
 {
 	levelitem_t *li;
 
@@ -912,7 +910,7 @@ int BotGetLevelItemGoal(int index, const char *name, bot_goal_t *goal)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-int BotGetMapLocationGoal(const char *name, bot_goal_t *goal)
+int BotGetMapLocationGoal(char *name, bot_goal_t *goal)
 {
 	maplocation_t *ml;
 	vec3_t mins = {-8, -8, -8}, maxs = {8, 8, 8};
@@ -965,14 +963,13 @@ int BotGetNextCampSpotGoal(int num, bot_goal_t *goal)
 	} //end for
 	return 0;
 } //end of the function BotGetNextCampSpotGoal
-#if 0
 //===========================================================================
 //
 // Parameter:			-
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void BotFindEntityForLevelItem(levelitem_t *li)
+void BotFindEntityForLevelItem(levelitem_t *li)
 {
 	int ent, modelindex;
 	itemconfig_t *ic;
@@ -1006,7 +1003,6 @@ static void BotFindEntityForLevelItem(levelitem_t *li)
 		} //end if
 	} //end for
 } //end of the function BotFindEntityForLevelItem
-#endif
 //===========================================================================
 //
 // Parameter:			-
@@ -1616,13 +1612,13 @@ int BotChooseNBGItem(int goalstate, vec3_t origin, int *inventory, int travelfla
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-int BotTouchingGoal(const vec3_t origin, const bot_goal_t *goal)
+int BotTouchingGoal(vec3_t origin, bot_goal_t *goal)
 {
 	int i;
 	vec3_t boxmins, boxmaxs;
 	vec3_t absmins, absmaxs;
-	const vec3_t safety_maxs = {0, 0, 0}; //{4, 4, 10};
-	const vec3_t safety_mins = {0, 0, 0}; //{-4, -4, 0};
+	vec3_t safety_maxs = {0, 0, 0}; //{4, 4, 10};
+	vec3_t safety_mins = {0, 0, 0}; //{-4, -4, 0};
 
 	AAS_PresenceTypeBoundingBox(PRESENCE_NORMAL, boxmins, boxmaxs);
 	VectorSubtract(goal->mins, boxmaxs, absmins);
@@ -1698,7 +1694,7 @@ void BotResetGoalState(int goalstate)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-int BotLoadItemWeights(int goalstate, const char *filename)
+int BotLoadItemWeights(int goalstate, char *filename)
 {
 	bot_goalstate_t *gs;
 
@@ -1784,7 +1780,7 @@ void BotFreeGoalState(int handle)
 //===========================================================================
 int BotSetupGoalAI(void)
 {
-	const char *filename;
+	char *filename;
 
 	//check if teamplay is on
 	g_gametype = LibVarValue("g_gametype", "0");

@@ -47,7 +47,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //structure field definition
 typedef struct fielddef_s
 {
-	const char *name;										//name of the field
+	char *name;										//name of the field
 	int offset;										//offset in the structure
 	int type;										//type of the field
 	//type specific fields
@@ -60,16 +60,16 @@ typedef struct fielddef_s
 typedef struct structdef_s
 {
 	int size;
-	const fielddef_t *fields;
+	fielddef_t *fields;
 } structdef_t;
 
 //read a structure from a script
-int ReadStructure(source_t *source, const structdef_t *def, char *structure);
+int ReadStructure(source_t *source, structdef_t *def, char *structure);
 //write a structure to a file
-int WriteStructure(FILE *fp, const structdef_t *def, const char *structure);
+int WriteStructure(FILE *fp, structdef_t *def, char *structure);
 //writes indents
 int WriteIndent(FILE *fp, int indent);
-//writes a float without trailing zeros
+//writes a float without traling zeros
 int WriteFloat(FILE *fp, float value);
 
 
