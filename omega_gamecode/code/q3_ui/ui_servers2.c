@@ -137,6 +137,15 @@ static const char *servertype_items[] = {
     "Team Deathmatch",
     "Tournament",
     "Capture the Flag",
+    "One Flag Capture",
+    "Overload",
+    "Harvester",
+    "Elimination",
+    "CTF Elimination",
+    "Last Man Standing",
+    "Double Domination",
+    "Domination",
+    "Possession",
     NULL };
 
 static const char *sortkey_items[] = {
