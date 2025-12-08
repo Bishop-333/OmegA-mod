@@ -118,7 +118,6 @@ struct gentity_s {
 	int soundLoop;
 	gentity_t *parent;
 	gentity_t *nextTrain;
-	gentity_t *prevTrain;
 	vec3_t pos1, pos2;
 
 	char *message;
@@ -147,7 +146,6 @@ struct gentity_s {
 
 	int pain_debounce_time;
 	int fly_sound_debounce_time; // wind tunnel
-	int last_move_time;
 
 	int health;
 
@@ -287,7 +285,6 @@ typedef struct {
 	//KK-OAX Killing Sprees/Multikills
 	int killstreak;
 	int deathstreak;
-	qboolean onSpree;
 	int multiKillCount;
 
 	//KK-OAX Admin Stuff
@@ -295,7 +292,6 @@ typedef struct {
 	char ip[40];
 	qboolean muted;
 	qboolean disoriented;
-	qboolean wasdisoriented;
 	int adminLevel;
 
 	// flood protection
@@ -388,8 +384,6 @@ struct gclient_s {
 	int ammoTimes[WP_NUM_WEAPONS];
 	int invulnerabilityTime;
 
-	char *areabits;
-
 	qboolean isEliminated; //Has been killed in this round
 
 	//New vote system. The votes are saved in the client info, so we know who voted on what and can cancel votes on leave.
@@ -435,7 +429,6 @@ typedef struct {
 	struct gclient_s *clients; // [maxclients]
 
 	struct gentity_s *gentities;
-	int gentitySize;
 	int num_entities; // current number, <= MAX_GENTITIES
 
 	int warmupTime; // restart match at this time
