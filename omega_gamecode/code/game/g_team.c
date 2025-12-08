@@ -73,6 +73,7 @@ void Team_InitGame( void ) {
 			dominationPointsSpawned = qfalse;
 			break;
 		case GT_1FCTF:
+		case GT_POSSESSION:
 			teamgame.flagStatus = -1; // Invalid to force update
 			Team_SetFlagStatus( TEAM_FREE, FLAG_ATBASE );
 			break;
@@ -414,7 +415,7 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 		enemy_flag_pw = PW_REDFLAG;
 	}
 
-	if ( g_gametype.integer == GT_1FCTF ) {
+	if ( g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_POSSESSION ) {
 		enemy_flag_pw = PW_NEUTRALFLAG;
 	}
 
@@ -425,10 +426,14 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 	}
 	if ( targ->client->ps.powerups[enemy_flag_pw] ) {
 		attacker->client->pers.teamState.lastfraggedcarrier = level.time;
-		AddScore( attacker, targ->r.currentOrigin, CTF_FRAG_CARRIER_BONUS );
+		if ( g_gametype.integer != GT_POSSESSION ) {
+			AddScore( attacker, targ->r.currentOrigin, CTF_FRAG_CARRIER_BONUS );
+		}
 		attacker->client->pers.teamState.fragcarrier++;
-		PrintMsg( NULL, "%s" S_COLOR_WHITE " fragged %s's flag carrier!\n",
-		          attacker->client->pers.netname, TeamName( team ) );
+		if ( g_gametype.integer != GT_POSSESSION ) {
+			PrintMsg( NULL, "%s" S_COLOR_WHITE " fragged %s's flag carrier!\n",
+			          attacker->client->pers.netname, TeamName( team ) );
+		}
 		if ( g_gametype.integer == GT_CTF ) {
 			G_LogPrintf( "CTF: %i %i %i: %s fragged %s's flag carrier!\n", attacker->client->ps.clientNum, team, 3, attacker->client->pers.netname, TeamName( team ) );
 		} else if ( g_gametype.integer == GT_CTF_ELIMINATION ) {
@@ -966,7 +971,7 @@ static void Team_ResetFlags( void ) {
 	if ( g_gametype.integer == GT_CTF || g_gametype.integer == GT_CTF_ELIMINATION ) {
 		Team_ResetFlag( TEAM_RED );
 		Team_ResetFlag( TEAM_BLUE );
-	} else if ( g_gametype.integer == GT_1FCTF ) {
+	} else if ( g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_POSSESSION ) {
 		Team_ResetFlag( TEAM_FREE );
 	}
 }
@@ -1274,7 +1279,7 @@ static int Team_TouchOurFlag( gentity_t *ent, gentity_t *other, int team ) {
 	gclient_t *cl = other->client;
 	int enemy_flag;
 
-	if ( g_gametype.integer == GT_1FCTF ) {
+	if ( g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_POSSESSION ) {
 		enemy_flag = PW_NEUTRALFLAG;
 	} else {
 		if ( cl->sess.sessionTeam == TEAM_RED ) {
@@ -1485,6 +1490,9 @@ int Pickup_Team( gentity_t *ent, gentity_t *other ) {
 		PrintMsg( other, "Don't know what team the flag is on.\n" );
 		return 0;
 	}
+	if ( g_gametype.integer == GT_POSSESSION ) {
+		return Possession_TouchFlag( other );
+	}
 	if ( g_gametype.integer == GT_1FCTF ) {
 		if ( team == TEAM_FREE ) {
 			return Team_TouchEnemyFlag( ent, other, cl->sess.sessionTeam );
@@ -1570,7 +1578,50 @@ qboolean Team_GetLocationMsg( gentity_t *ent, char *loc, int loclen ) {
 
 /*
 ================
-SelectRandomDeathmatchSpawnPoint
+SelectRandomEntityFilter
+================
+*/
+#define MAX_RANDOM_SET_SIZE 128
+gentity_t *SelectRandomEntityFilter( const char *classname, qboolean ( *filter )( const gentity_t * ) ) {
+	gentity_t *spot;
+	int count;
+	int selection;
+	gentity_t *spots[MAX_RANDOM_SET_SIZE];
+
+	count = 0;
+	spot = NULL;
+
+	while ( ( spot = G_Find( spot, FOFS( classname ), classname ) ) != NULL ) {
+		if ( filter ) {
+			if ( !filter( spot ) ) {
+				continue;
+			}
+		}
+		spots[count] = spot;
+		if ( ++count == MAX_RANDOM_SET_SIZE )
+			break;
+	}
+
+	if ( !count ) {
+		return NULL;
+	}
+
+	selection = rand() % count;
+	return spots[selection];
+}
+
+/*
+================
+SelectRandomEntity
+================
+*/
+gentity_t *SelectRandomEntity( const char *classname ) {
+	return SelectRandomEntityFilter( classname, 0 );
+}
+
+/*
+================
+SelectRandomTeamSpawnPoint
 
 go to a random point that doesn't telefrag
 ================
@@ -2235,7 +2286,7 @@ void SP_team_blueobelisk( gentity_t *ent ) {
 /*QUAKED team_neutralobelisk (0 0 1) (-16 -16 0) (16 16 88)
 */
 void SP_team_neutralobelisk( gentity_t *ent ) {
-	if ( g_gametype.integer != GT_1FCTF && g_gametype.integer != GT_HARVESTER ) {
+	if ( g_gametype.integer != GT_1FCTF && g_gametype.integer != GT_HARVESTER && g_gametype.integer != GT_POSSESSION ) {
 		G_FreeEntity( ent );
 		return;
 	}

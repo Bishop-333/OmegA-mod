@@ -455,6 +455,11 @@ static void ClientTimerActions( gentity_t *ent, int msec ) {
 		if ( client->ps.stats[STAT_ARMOR] > client->ps.stats[STAT_MAX_HEALTH] ) {
 			client->ps.stats[STAT_ARMOR]--;
 		}
+
+		if ( g_gametype.integer == GT_POSSESSION && ent->health > 0 && client->ps.powerups[PW_NEUTRALFLAG] ) {
+			AddScore( ent, ent->client->ps.origin, 1 );
+			G_LogPrintf( "POS: %i %i: %s^7 scored a point\n", ent->s.number, 1, client->pers.netname );
+		}
 	}
 	if ( bg_itemlist[client->ps.stats[STAT_PERSISTANT_POWERUP]].giTag == PW_AMMOREGEN ) {
 		int w, max, inc, t, i;

@@ -637,7 +637,7 @@ static void G_RegisterCvars( void ) {
 	}
 
 	//set FFA status for high gametypes:
-	if ( g_gametype.integer == GT_LMS ) {
+	if ( g_gametype.integer == GT_LMS || g_gametype.integer == GT_POSSESSION ) {
 		g_ffa_gt = 1; //Last Man standig is a FFA gametype
 	} else {
 		g_ffa_gt = 0; //If >GT_CTF use bases
@@ -851,7 +851,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	G_FindTeams();
 
 	// make sure we have flags for CTF, etc
-	if ( g_gametype.integer >= GT_TEAM && ( g_ffa_gt != 1 ) ) {
+	if ( g_gametype.integer == GT_POSSESSION || ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) ) {
 		G_CheckTeamItems();
 	}
 
@@ -2858,6 +2858,9 @@ void G_RunFrame( int levelTime ) {
 	//Sago: I just need to think why I placed this here... they should only spawn once
 	if ( g_gametype.integer == GT_DOMINATION )
 		Team_Dom_SpawnPoints();
+
+	if ( g_gametype.integer == GT_POSSESSION && level.time > 5000 )
+		Possession_SpawnFlag();
 
 	// see if it is time to end the level
 	CheckExitRules();

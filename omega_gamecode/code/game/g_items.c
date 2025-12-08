@@ -635,7 +635,7 @@ gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity ) {
 	VectorCopy( velocity, dropped->s.pos.trDelta );
 
 	dropped->s.eFlags |= EF_BOUNCE_HALF;
-	if ( ( g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D ) && item->giType == IT_TEAM ) { // Special case for CTF flags
+	if ( ( g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D || g_gametype.integer == GT_POSSESSION ) && item->giType == IT_TEAM ) { // Special case for CTF flags
 		dropped->think = Team_DroppedFlagThink;
 		dropped->nextthink = level.time + 30000;
 		Team_CheckDroppedItem( dropped );
@@ -935,6 +935,10 @@ void ClearRegisteredItems( void ) {
 		RegisterItem( BG_FindItem( "Red domination point" ) );
 		RegisterItem( BG_FindItem( "Blue domination point" ) );
 	}
+
+	if ( g_gametype.integer == GT_POSSESSION ) {
+		RegisterItem( BG_FindItem( "Neutral Flag" ) );
+	}
 }
 
 /*
@@ -1030,11 +1034,17 @@ void G_SpawnItem( gentity_t *ent, gitem_t *item ) {
 		ent->r.svFlags |= SVF_NOCLIENT; //Don't broadcast
 	}
 
-	if ( g_gametype.integer == GT_DOUBLE_D && ( strcmp( ent->classname, "team_CTF_redflag" ) == 0 || strcmp( ent->classname, "team_CTF_blueflag" ) == 0 || strcmp( ent->classname, "team_CTF_neutralflag" ) == 0 || item->giType == IT_PERSISTANT_POWERUP ) )
+	if ( g_gametype.integer == GT_DOUBLE_D && ( strcmp( ent->classname, "team_CTF_redflag" ) == 0 || strcmp( ent->classname, "team_CTF_blueflag" ) == 0 || strcmp( ent->classname, "team_CTF_neutralflag" ) == 0 || item->giType == IT_PERSISTANT_POWERUP ) ) {
 		ent->s.eFlags |= EF_NODRAW; //Don't draw the flag models/persistant powerups
+	}
 
-	if ( g_gametype.integer != GT_1FCTF && strcmp( ent->classname, "team_CTF_neutralflag" ) == 0 )
+	if ( g_gametype.integer != GT_1FCTF && g_gametype.integer != GT_POSSESSION && strcmp( ent->classname, "team_CTF_neutralflag" ) == 0 ) {
 		ent->s.eFlags |= EF_NODRAW; // Don't draw the flag in CTF_elimination
+	}
+
+	if ( g_gametype.integer == GT_POSSESSION && ( strcmp( ent->classname, "team_CTF_redflag" ) == 0 || strcmp( ent->classname, "team_CTF_blueflag" ) == 0 ) ) {
+		ent->s.eFlags |= EF_NODRAW; // Don't draw the flag colored flags in possession
+	}
 
 	if ( strcmp( ent->classname, "domination_point" ) == 0 )
 		ent->s.eFlags |= EF_NODRAW; // Don't draw domination_point. It is just a pointer to where the Domination points should be placed

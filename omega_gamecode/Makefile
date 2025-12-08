@@ -600,6 +600,7 @@ QAOBJ_ = \
   $(B)/$(MOD)/game/g_missile.o \
   $(B)/$(MOD)/game/g_mover.o \
   $(B)/$(MOD)/game/g_playerstore.o \
+  $(B)/$(MOD)/game/g_possession.o \
   $(B)/$(MOD)/game/g_session.o \
   $(B)/$(MOD)/game/g_spawn.o \
   $(B)/$(MOD)/game/g_svcmds.o \

@@ -254,18 +254,6 @@ CG_TouchItem
 */
 static void CG_TouchItem( centity_t *cent ) {
 	const gitem_t *item;
-	//For instantgib
-	qboolean canBePicked;
-
-	if ( cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_LMS )
-		return; //No weapon pickup in elimination
-
-	//normally we can
-	canBePicked = qtrue;
-
-	//But in instantgib, rocket arena, and CTF_ELIMINATION we normally can't:
-	if ( cgs.nopickup || cgs.gametype == GT_CTF_ELIMINATION )
-		canBePicked = qfalse;
 
 	if ( !cg_predictItems.integer ) {
 		return;
@@ -283,63 +271,53 @@ static void CG_TouchItem( centity_t *cent ) {
 		return; // can't hold it
 	}
 
-	item = &bg_itemlist[cent->currentState.modelindex];
-
-	// Special case for flags.
-	// We don't predict touching our own flag
-	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION ) {
-		if ( cg.predictedPlayerState.persistant[PERS_TEAM] == TEAM_RED &&
-		     item->giTag == PW_REDFLAG )
-			return;
-		if ( cg.predictedPlayerState.persistant[PERS_TEAM] == TEAM_BLUE &&
-		     item->giTag == PW_BLUEFLAG )
-			return;
-		//Even in instantgib, we can predict our enemy flag
-		if ( cg.predictedPlayerState.persistant[PERS_TEAM] == TEAM_RED &&
-		     item->giTag == PW_BLUEFLAG && ( !( cgs.elimflags & EF_ONEWAY ) || cgs.attackingTeam == TEAM_RED ) )
-			canBePicked = qtrue;
-		if ( cg.predictedPlayerState.persistant[PERS_TEAM] == TEAM_BLUE &&
-		     item->giTag == PW_REDFLAG && ( !( cgs.elimflags & EF_ONEWAY ) || cgs.attackingTeam == TEAM_BLUE ) )
-			canBePicked = qtrue;
-		if ( item->giTag == WP_RAILGUN )
-			canBePicked = qfalse;
-		if ( item->giTag == WP_PLASMAGUN )
-			canBePicked = qfalse;
+	if ( cent->currentState.time && cent->currentState.time > cg.time ) {
+		// item was recently dropped by player using \drop, prevent
+		// pickup (so dropping player doesn't re-pickup it immediately
+		return;
 	}
 
-	//Currently we don't predict anything in Double Domination because it looks like we take a flag
-	if ( cgs.gametype == GT_DOUBLE_D ) {
-		if ( cgs.redflag == TEAM_NONE )
-			return;                                                             //Can never pick if just one flag is NONE (because then the other is too)
-		if ( item->giTag == PW_REDFLAG ) {                                      //at point A
-			if ( cgs.redflag != cg.predictedPlayerState.persistant[PERS_TEAM] ) //not already taken
-				trap_S_StartLocalSound( 0, CHAN_ANNOUNCER );
-			return;
+	item = &bg_itemlist[cent->currentState.modelindex];
+
+	if ( item->giType == IT_TEAM ) {
+		if ( cgs.gametype == GT_CTF_ELIMINATION ) {
+			if ( cgs.elimflags & EF_ONEWAY && cg.predictedPlayerState.persistant[PERS_TEAM] != cgs.attackingTeam ) {
+				return;
+			}
 		}
-		if ( item->giTag == PW_BLUEFLAG ) {                                      //at point B
-			if ( cgs.blueflag != cg.predictedPlayerState.persistant[PERS_TEAM] ) //already taken
-				trap_S_StartLocalSound( 0, CHAN_ANNOUNCER );
-			return;
+
+		//Currently we don't predict anything in Double Domination because it looks like we take a flag
+		if ( cgs.gametype == GT_DOUBLE_D ) {
+			if ( cgs.redflag == TEAM_NONE )
+				return;                                                             //Can never pick if just one flag is NONE (because then the other is too)
+			if ( item->giTag == PW_REDFLAG ) {                                      //at point A
+				if ( cgs.redflag != cg.predictedPlayerState.persistant[PERS_TEAM] ) //not already taken
+					trap_S_StartLocalSound( 0, CHAN_ANNOUNCER );
+				return;
+			}
+			if ( item->giTag == PW_BLUEFLAG ) {                                      //at point B
+				if ( cgs.blueflag != cg.predictedPlayerState.persistant[PERS_TEAM] ) //already taken
+					trap_S_StartLocalSound( 0, CHAN_ANNOUNCER );
+				return;
+			}
 		}
 	}
 
 	// grab it
-	if ( canBePicked ) {
-		BG_AddPredictableEventToPlayerstate( EV_ITEM_PICKUP, cent->currentState.modelindex, &cg.predictedPlayerState );
+	BG_AddPredictableEventToPlayerstate( EV_ITEM_PICKUP, cent->currentState.modelindex, &cg.predictedPlayerState );
 
-		// remove it from the frame so it won't be drawn
-		cent->currentState.eFlags |= EF_NODRAW;
-		cent->nextState.eFlags |= EF_NODRAW;
+	// remove it from the frame so it won't be drawn
+	cent->currentState.eFlags |= EF_NODRAW;
+	cent->nextState.eFlags |= EF_NODRAW;
 
-		// don't touch it again this prediction
-		cent->miscTime = cg.time;
+	// don't touch it again this prediction
+	cent->miscTime = cg.time;
 
-		// if its a weapon, give them some predicted ammo so the autoswitch will work
-		if ( item->giType == IT_WEAPON ) {
-			cg.predictedPlayerState.stats[STAT_WEAPONS] |= 1 << item->giTag;
-			if ( !cg.predictedPlayerState.ammo[item->giTag] ) {
-				cg.predictedPlayerState.ammo[item->giTag] = 1;
-			}
+	// if its a weapon, give them some predicted ammo so the autoswitch will work
+	if ( item->giType == IT_WEAPON ) {
+		cg.predictedPlayerState.stats[STAT_WEAPONS] |= 1 << item->giTag;
+		if ( !cg.predictedPlayerState.ammo[item->giTag] ) {
+			cg.predictedPlayerState.ammo[item->giTag] = 1;
 		}
 	}
 }

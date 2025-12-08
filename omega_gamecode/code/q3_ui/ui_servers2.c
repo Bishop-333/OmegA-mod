@@ -109,6 +109,15 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define GAMES_TEAMPLAY 2
 #define GAMES_TOURNEY 3
 #define GAMES_CTF 4
+#define GAMES_1FCTF 5
+#define GAMES_OBELISK 6
+#define GAMES_HARVESTER 7
+#define GAMES_ELIMINATION 8
+#define GAMES_CTF_ELIMINATION 9
+#define GAMES_LMS 10
+#define GAMES_DOUBLE_D 11
+#define GAMES_DOM 12
+#define GAMES_POS 13
 
 static const char *master_items[] = {
     "Local+Internet",
@@ -128,6 +137,15 @@ static const char *servertype_items[] = {
     "Team Deathmatch",
     "Tournament",
     "Capture the Flag",
+    "One Flag Capture",
+    "Overload",
+    "Harvester",
+    "Elimination",
+    "CTF Elimination",
+    "Last Man Standing",
+    "Double Domination",
+    "Domination",
+    "Possession",
     NULL };
 
 static const char *sortkey_items[] = {
@@ -152,11 +170,9 @@ static char *gamenames[] = {
     "CTF Elimination",
     "Last Man Standing",
     "Double Domination",
-    "Domination",   // Dom replaces Rocket Arena 3
-    "Q3F",          // Q3F
-    "Urban Terror", // Urban Terror
-    "OSP",          // Orange Smoothie Productions
-    "???",          // unknown
+    "Domination", // Dom replaces Rocket Arena 3
+    "Possession",
+    "???", // unknown
     NULL };
 
 static char *netnames[] = {
@@ -630,6 +646,60 @@ static void ArenaServers_UpdateMenu( void ) {
 
 			case GAMES_CTF:
 				if ( servernodeptr->gametype != GT_CTF ) {
+					continue;
+				}
+				break;
+
+			case GAMES_1FCTF:
+				if ( servernodeptr->gametype != GT_1FCTF ) {
+					continue;
+				}
+				break;
+
+			case GAMES_OBELISK:
+				if ( servernodeptr->gametype != GT_OBELISK ) {
+					continue;
+				}
+				break;
+
+			case GAMES_HARVESTER:
+				if ( servernodeptr->gametype != GT_HARVESTER ) {
+					continue;
+				}
+				break;
+
+			case GAMES_ELIMINATION:
+				if ( servernodeptr->gametype != GT_ELIMINATION ) {
+					continue;
+				}
+				break;
+
+			case GAMES_CTF_ELIMINATION:
+				if ( servernodeptr->gametype != GT_CTF_ELIMINATION ) {
+					continue;
+				}
+				break;
+
+			case GAMES_LMS:
+				if ( servernodeptr->gametype != GT_LMS ) {
+					continue;
+				}
+				break;
+
+			case GAMES_DOUBLE_D:
+				if ( servernodeptr->gametype != GT_DOUBLE_D ) {
+					continue;
+				}
+				break;
+
+			case GAMES_DOM:
+				if ( servernodeptr->gametype != GT_DOMINATION ) {
+					continue;
+				}
+				break;
+
+			case GAMES_POS:
+				if ( servernodeptr->gametype != GT_POSSESSION ) {
 					continue;
 				}
 				break;
@@ -1172,6 +1242,30 @@ static void ArenaServers_StartRefreshNoClearList( void ) {
 			case GAMES_CTF:
 				strcpy( myargs, " ctf" );
 				break;
+
+			case GAMES_ELIMINATION:
+				strcpy( myargs, " elimination" );
+				break;
+
+			case GAMES_CTF_ELIMINATION:
+				strcpy( myargs, " ctfelimination" );
+				break;
+
+			case GAMES_LMS:
+				strcpy( myargs, " lms" );
+				break;
+
+			case GAMES_DOUBLE_D:
+				strcpy( myargs, " dd" );
+				break;
+
+			case GAMES_DOM:
+				strcpy( myargs, " dom" );
+				break;
+
+			case GAMES_POS:
+				strcpy( myargs, " pos" );
+				break;
 		}
 
 		if ( g_emptyservers ) {
@@ -1332,6 +1426,7 @@ static void ArenaServers_Event( void *ptr, int event ) {
 			break;
 
 		case ID_HIDE_PRIVATE:
+			trap_Cvar_SetValue( "ui_browserHidePrivate", g_arenaservers.hideprivate.curvalue );
 			g_hideprivate = g_arenaservers.hideprivate.curvalue;
 			ArenaServers_UpdateMenu();
 			break;
@@ -1711,8 +1806,8 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.onlyhumans.curvalue = Com_Clamp( 0, 1, ui_browserOnlyHumans.integer );
 	g_onlyhumans = ui_browserOnlyHumans.integer;
 
-	g_arenaservers.hideprivate.curvalue = 1;
-	g_hideprivate = 1;
+	g_arenaservers.hideprivate.curvalue = Com_Clamp( 0, 1, ui_browserHidePrivate.integer );
+	g_hideprivate = ui_browserHidePrivate.integer;
 
 	// force to initial state and refresh
 	g_arenaservers.master.curvalue = g_servertype = ArenaServers_SetType( g_servertype );

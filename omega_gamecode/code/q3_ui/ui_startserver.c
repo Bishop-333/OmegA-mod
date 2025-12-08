@@ -104,6 +104,7 @@ static const char *gametype_items[] = {
     "Last Man Standing",
     "Double Domination",
     "Domination",
+    "Possession",
     NULL };
 
 static const char *s_weapon_names[] = {
@@ -135,7 +136,8 @@ static int gametype_remap[] = {
     GT_CTF_ELIMINATION,
     GT_LMS,
     GT_DOUBLE_D,
-    GT_DOMINATION };
+    GT_DOMINATION,
+    GT_POSSESSION };
 
 static int gametype_remap2[] = {
     0,
@@ -174,6 +176,7 @@ static int GametypeBits( char *string ) {
 
 		if ( Q_stricmp( token, "ffa" ) == 0 ) {
 			bits |= 1 << GT_FFA;
+			bits |= 1 << GT_POSSESSION;
 			continue;
 		}
 
@@ -233,6 +236,11 @@ static int GametypeBits( char *string ) {
 
 		if ( Q_stricmp( token, "dom" ) == 0 ) {
 			bits |= 1 << GT_DOMINATION;
+			continue;
+		}
+
+		if ( Q_stricmp( token, "pos" ) == 0 ) {
+			bits |= 1 << GT_POSSESSION;
 			continue;
 		}
 	}
@@ -787,7 +795,7 @@ static qboolean BotAlreadySelected( const char *checkName ) {
 		if ( s_serveroptions.playerType[n].curvalue != 1 ) {
 			continue;
 		}
-		if ( ( s_serveroptions.gametype >= GT_TEAM ) && s_serveroptions.gametype != GT_LMS &&
+		if ( ( s_serveroptions.gametype >= GT_TEAM ) && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION &&
 		     ( s_serveroptions.playerTeam[n].curvalue != s_serveroptions.playerTeam[s_serveroptions.newBotIndex].curvalue ) ) {
 			continue;
 		}
@@ -909,6 +917,17 @@ static void ServerOptions_Start( void ) {
 			trap_Cvar_SetValue( "ui_dd_timelimit", timelimit );
 			trap_Cvar_SetValue( "ui_dd_friendlt", friendlyfire );
 			break;
+
+		case GT_DOMINATION:
+			trap_Cvar_SetValue( "ui_dom_capturelimit", fraglimit );
+			trap_Cvar_SetValue( "ui_dom_timelimit", timelimit );
+			trap_Cvar_SetValue( "ui_dom_friendly", friendlyfire );
+			break;
+
+		case GT_POSSESSION:
+			trap_Cvar_SetValue( "ui_pos_scorelimit", fraglimit );
+			trap_Cvar_SetValue( "ui_pos_timelimit", timelimit );
+			break;
 	}
 
 	trap_Cvar_SetValue( "sv_maxclients", Com_Clamp( 0, 12, maxclients ) );
@@ -944,7 +963,7 @@ static void ServerOptions_Start( void ) {
 		if ( s_serveroptions.playerNameBuffers[n][0] == '-' ) {
 			continue;
 		}
-		if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS ) {
+		if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
 			Com_sprintf( buf, sizeof( buf ), "addbot %s %i %s\n", s_serveroptions.playerNameBuffers[n], skill,
 			             playerTeam_list[s_serveroptions.playerTeam[n].curvalue] );
 		} else {
@@ -954,7 +973,7 @@ static void ServerOptions_Start( void ) {
 	}
 
 	// set player's team
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
 		trap_Cvar_Set( "g_localTeamPref", playerTeam_list[s_serveroptions.playerTeam[0].curvalue] );
 	}
 }
@@ -1006,7 +1025,7 @@ static void ServerOptions_InitPlayerItems( void ) {
 	Q_CleanStr( s_serveroptions.playerNameBuffers[0] );
 
 	// init teams
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
 		for ( n = 0; n < ( PLAYER_SLOTS / 2 ); n++ ) {
 			s_serveroptions.playerTeam[n].curvalue = 0;
 		}
@@ -1043,7 +1062,7 @@ static void ServerOptions_SetPlayerItems( void ) {
 	}
 
 	// teams
-	if ( s_serveroptions.gametype < GT_TEAM || s_serveroptions.gametype == GT_LMS ) {
+	if ( s_serveroptions.gametype < GT_TEAM || s_serveroptions.gametype == GT_LMS || s_serveroptions.gametype == GT_POSSESSION ) {
 		return;
 	}
 	for ( n = start; n < PLAYER_SLOTS; n++ ) {
@@ -1197,7 +1216,7 @@ static void ServerOptions_InitBotNames( void ) {
 	char bots[MAX_INFO_STRING];
 
 	//this SHOULD work
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
 		Q_strncpyz( s_serveroptions.playerNameBuffers[1], "gargoyle", 16 );
 		Q_strncpyz( s_serveroptions.playerNameBuffers[2], "kyonshi", 16 );
 		Q_strncpyz( s_serveroptions.playerNameBuffers[3], "grism", 16 );
@@ -1380,6 +1399,11 @@ static void ServerOptions_SetMenuItems( void ) {
 			Com_sprintf( s_serveroptions.timelimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_dom_timelimit" ) ) );
 			s_serveroptions.friendlyfire.curvalue = (int)Com_Clamp( 0, 1, trap_Cvar_VariableValue( "ui_dom_friendly" ) );
 			break;
+
+		case GT_POSSESSION:
+			Com_sprintf( s_serveroptions.fraglimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_pos_scorelimit" ) ) );
+			Com_sprintf( s_serveroptions.timelimit.field.buffer, 4, "%i", (int)Com_Clamp( 0, 999, trap_Cvar_VariableValue( "ui_pos_timelimit" ) ) );
+			break;
 	}
 
 	Q_strncpyz( s_serveroptions.hostname.field.buffer, UI_Cvar_VariableString( "sv_hostname" ), sizeof( s_serveroptions.hostname.field.buffer ) );
@@ -1504,6 +1528,15 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 		s_serveroptions.fraglimit.generic.statusbar = ServerOptions_StatusBar;
 		s_serveroptions.fraglimit.field.widthInChars = 3;
 		s_serveroptions.fraglimit.field.maxchars = 3;
+	} else if ( s_serveroptions.gametype == GT_POSSESSION ) {
+		s_serveroptions.fraglimit.generic.type = MTYPE_FIELD;
+		s_serveroptions.fraglimit.generic.name = "Seconds to win:";
+		s_serveroptions.fraglimit.generic.flags = QMF_NUMBERSONLY | QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+		s_serveroptions.fraglimit.generic.x = OPTIONS_X;
+		s_serveroptions.fraglimit.generic.y = y;
+		s_serveroptions.fraglimit.generic.statusbar = ServerOptions_StatusBar;
+		s_serveroptions.fraglimit.field.widthInChars = 3;
+		s_serveroptions.fraglimit.field.maxchars = 3;
 	} else {
 		s_serveroptions.flaglimit.generic.type = MTYPE_FIELD;
 		s_serveroptions.flaglimit.generic.name = "Capture Limit:";
@@ -1525,7 +1558,7 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	s_serveroptions.timelimit.field.widthInChars = 3;
 	s_serveroptions.timelimit.field.maxchars = 3;
 
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_ELIMINATION && s_serveroptions.gametype != GT_CTF_ELIMINATION ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION && s_serveroptions.gametype != GT_ELIMINATION && s_serveroptions.gametype != GT_CTF_ELIMINATION ) {
 		y += BIGCHAR_HEIGHT + 2;
 		s_serveroptions.friendlyfire.generic.type = MTYPE_RADIOBUTTON;
 		s_serveroptions.friendlyfire.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1723,13 +1756,13 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.dmflags );
 
-	if ( s_serveroptions.gametype < GT_CTF || s_serveroptions.gametype == GT_LMS ) {
+	if ( s_serveroptions.gametype < GT_CTF || s_serveroptions.gametype == GT_LMS || s_serveroptions.gametype == GT_POSSESSION ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.fraglimit );
 	} else {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.flaglimit );
 	}
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.timelimit );
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_ELIMINATION && s_serveroptions.gametype != GT_CTF_ELIMINATION ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION && s_serveroptions.gametype != GT_ELIMINATION && s_serveroptions.gametype != GT_CTF_ELIMINATION ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.friendlyfire );
 	}
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.pure );

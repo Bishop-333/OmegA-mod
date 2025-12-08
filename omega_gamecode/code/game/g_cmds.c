@@ -1578,7 +1578,8 @@ static const char *gameNames[] = {
     "CTF Elimination",
     "Last Man Standing",
     "Double Domination",
-    "Domination" };
+    "Domination",
+    "Possession" };
 
 /*
 ==================

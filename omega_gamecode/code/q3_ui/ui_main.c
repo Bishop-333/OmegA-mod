@@ -181,6 +181,7 @@ vmCvar_t ui_server16;
 
 //new in beta 23:
 vmCvar_t ui_browserOnlyHumans;
+vmCvar_t ui_browserHidePrivate;
 
 //new in beta 37:
 vmCvar_t ui_setupchecked;
@@ -279,10 +280,10 @@ static cvarTable_t cvarTable[] = {
 
     //new in beta 37:
     { &ui_setupchecked, "ui_setupchecked", "0", CVAR_ARCHIVE },
+    { &ui_browserHidePrivate, "ui_browserHidePrivate", "1", CVAR_ARCHIVE },
 
     //OmegA
-    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
-};
+    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 } };
 
 // bk001129 - made static to avoid aliasing
 static int cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );

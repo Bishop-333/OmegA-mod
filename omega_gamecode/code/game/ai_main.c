@@ -291,6 +291,10 @@ static void BotSetInfoConfigString( bot_state_t *bs ) {
 		if ( Bot1FCTFCarryingFlag( bs ) ) {
 			strcpy( carrying, "F " );
 		}
+	} else if ( gametype == GT_1FCTF || gametype == GT_POSSESSION ) {
+		if ( Bot1FCTFCarryingFlag( bs ) ) {
+			strcpy( carrying, "F " );
+		}
 	} else if ( gametype == GT_HARVESTER ) {
 		if ( BotHarvesterCarryingCubes( bs ) ) {
 			if ( BotTeam( bs ) == TEAM_RED )
