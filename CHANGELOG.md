@@ -149,3 +149,4 @@
 - don't force inactive players to go spectator now it's defined by `g_forcespectator`
 - add mutliple explicit cvars (`pmove_doublejump`, `g_spectateOnDeath`, `g_noInvisWalls`)
 - add `g_railgunImpressiveReward` which double the reload speed of the railgun after an "Impressive" medal
+- add Possession gametype from OpenArena (OAX)
