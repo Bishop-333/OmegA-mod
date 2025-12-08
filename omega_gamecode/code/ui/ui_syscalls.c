@@ -30,14 +30,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 static intptr_t( QDECL *syscall )( intptr_t arg, ... ) = ( intptr_t( QDECL * )( intptr_t, ... ) ) - 1;
 
-void dllEntry( intptr_t( QDECL *syscallptr )( intptr_t arg, ... ) ) {
+Q_EXPORT void dllEntry( intptr_t( QDECL *syscallptr )( intptr_t arg, ... ) ) {
 	syscall = syscallptr;
 }
 
 int PASSFLOAT( float x ) {
-	float floatTemp;
-	floatTemp = x;
-	return *(int *)&floatTemp;
+	floatint_t fi;
+	fi.f = x;
+	return fi.i;
 }
 
 void trap_Print( const char *string ) {
@@ -46,6 +46,8 @@ void trap_Print( const char *string ) {
 
 void trap_Error( const char *string ) {
 	syscall( UI_ERROR, string );
+	// shut up GCC warning about returning functions, because we know better
+	exit( 1 );
 }
 
 int trap_Milliseconds( void ) {
@@ -65,9 +67,9 @@ void trap_Cvar_Set( const char *var_name, const char *value ) {
 }
 
 float trap_Cvar_VariableValue( const char *var_name ) {
-	int temp;
-	temp = syscall( UI_CVAR_VARIABLEVALUE, var_name );
-	return ( *(float *)&temp );
+	floatint_t fi;
+	fi.i = syscall( UI_CVAR_VARIABLEVALUE, var_name );
+	return fi.f;
 }
 
 void trap_Cvar_VariableStringBuffer( const char *var_name, char *buffer, int bufsize ) {

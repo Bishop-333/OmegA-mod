@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define __UI_LOCAL_H__
 
 #include "../qcommon/q_shared.h"
-#include "../renderer/tr_types.h"
+#include "../renderercommon/tr_types.h"
 #include "ui_public.h"
 #include "../client/keycodes.h"
 #include "../game/bg_public.h"
@@ -61,7 +61,6 @@ extern vmCvar_t ui_spSelection;
 
 extern vmCvar_t ui_browserMaster;
 extern vmCvar_t ui_browserGameType;
-extern vmCvar_t ui_browserSortKey;
 extern vmCvar_t ui_browserShowFull;
 extern vmCvar_t ui_browserShowEmpty;
 
@@ -130,8 +129,6 @@ extern vmCvar_t ui_scoreTime;
 extern vmCvar_t ui_smallFont;
 extern vmCvar_t ui_bigFont;
 extern vmCvar_t ui_serverStatusTimeOut;
-
-extern vmCvar_t ui_humansonly;
 
 //
 // ui_qmenu.c
@@ -258,7 +255,7 @@ typedef struct
 	int width;
 	int height;
 	int columns;
-	int seperation;
+	int separation;
 } menulist_s;
 
 typedef struct
@@ -359,6 +356,7 @@ int UI_AdjustTimeByGame( int time );
 void UI_ShowPostGame( qboolean newHigh );
 void UI_ClearScores( void );
 void UI_LoadArenas( void );
+void UI_LoadArenasIntoMapList( void );
 
 //
 // ui_menu.c
@@ -367,6 +365,11 @@ extern void MainMenu_Cache( void );
 extern void UI_MainMenu( void );
 extern void UI_RegisterCvars( void );
 extern void UI_UpdateCvars( void );
+
+//
+// ui_credits.c
+//
+extern void UI_CreditMenu( void );
 
 //
 // ui_ingame.c
@@ -528,6 +531,9 @@ typedef struct {
 
 	animation_t animations[MAX_TOTALANIMATIONS];
 
+	qboolean fixedlegs;  // true if legs yaw is always the same as torso yaw
+	qboolean fixedtorso; // true if torso never changes yaw
+
 	qhandle_t weaponModel;
 	qhandle_t barrelModel;
 	qhandle_t flashModel;
@@ -563,7 +569,6 @@ typedef struct {
 } playerInfo_t;
 
 void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int time );
-void UI_DrawPlayerII( float x, float y, float w, float h, playerInfo_t *pi, int time );
 void UI_PlayerInfo_SetModel( playerInfo_t *pi, const char *model, const char *headmodel, char *teamName );
 void UI_PlayerInfo_SetInfo( playerInfo_t *pi, int legsAnim, int torsoAnim, vec3_t viewAngles, vec3_t moveAngles, weapon_t weaponNum, qboolean chat );
 qboolean UI_RegisterClientModelname( playerInfo_t *pi, const char *modelSkinName, const char *headName, const char *teamName );
@@ -571,7 +576,7 @@ qboolean UI_RegisterClientModelname( playerInfo_t *pi, const char *modelSkinName
 //
 // ui_atoms.c
 //
-// this is only used in the old ui, the new ui has it's own version
+// this is only used in the old ui, the new ui has its own version
 typedef struct {
 	int frametime;
 	int realtime;
@@ -581,7 +586,6 @@ typedef struct {
 	qboolean debug;
 	qhandle_t whiteShader;
 	qhandle_t menuBackShader;
-	qhandle_t menuBackShader2;
 	qhandle_t menuBackNoLogoShader;
 	qhandle_t charset;
 	qhandle_t charsetProp;
@@ -603,7 +607,7 @@ typedef struct {
 #define MAX_HEADNAME 32
 #define MAX_TEAMS 64
 #define MAX_GAMETYPES 16
-#define MAX_MAPS 128
+#define MAX_MAPS MAX_ARENAS
 #define MAX_SPMAPS 16
 #define PLAYERS_PER_TEAM 5
 #define MAX_PINGREQUESTS 32
@@ -626,10 +630,9 @@ typedef struct {
 #define MAPS_PER_TIER 3
 #define MAX_TIERS 16
 #define MAX_MODS 64
-#define MAX_DEMOS 256
+#define MAX_DEMOS 512
 #define MAX_MOVIES 256
-//#define MAX_PLAYERMODELS 256
-#define MAX_PLAYERMODELS 1024
+#define MAX_PLAYERMODELS 256
 
 typedef struct {
 	const char *name;
@@ -905,7 +908,7 @@ void UI_SPSkillMenu_Cache( void );
 // ui_syscalls.c
 //
 void trap_Print( const char *string );
-void trap_Error( const char *string );
+void trap_Error( const char *string ) Q_NO_RETURN;
 int trap_Milliseconds( void );
 void trap_Cvar_Register( vmCvar_t *vmCvar, const char *varName, const char *defaultValue, int flags );
 void trap_Cvar_Update( vmCvar_t *vmCvar );
