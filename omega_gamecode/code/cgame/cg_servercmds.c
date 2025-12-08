@@ -786,7 +786,7 @@ static int CG_ParseVoiceChats( const char *filename, voiceChatList_t *voiceChatL
 		voiceChats[i].id[0] = 0;
 	}
 	token = COM_ParseExt( p, qtrue );
-	if ( !token || token[0] == 0 ) {
+	if ( !token[0] ) {
 		return qtrue;
 	}
 	if ( !Q_stricmp( token, "female" ) ) {
@@ -803,7 +803,7 @@ static int CG_ParseVoiceChats( const char *filename, voiceChatList_t *voiceChatL
 	voiceChatList->numVoiceChats = 0;
 	while ( 1 ) {
 		token = COM_ParseExt( p, qtrue );
-		if ( !token || token[0] == 0 ) {
+		if ( !token[0] ) {
 			return qtrue;
 		}
 		Com_sprintf( voiceChats[voiceChatList->numVoiceChats].id, sizeof( voiceChats[voiceChatList->numVoiceChats].id ), "%s", token );
@@ -815,7 +815,7 @@ static int CG_ParseVoiceChats( const char *filename, voiceChatList_t *voiceChatL
 		voiceChats[voiceChatList->numVoiceChats].numSounds = 0;
 		while ( 1 ) {
 			token = COM_ParseExt( p, qtrue );
-			if ( !token || token[0] == 0 ) {
+			if ( !token[0] ) {
 				return qtrue;
 			}
 			if ( !Q_stricmp( token, "}" ) )
@@ -823,7 +823,7 @@ static int CG_ParseVoiceChats( const char *filename, voiceChatList_t *voiceChatL
 			sound = trap_S_RegisterSound( token, compress );
 			voiceChats[voiceChatList->numVoiceChats].sounds[voiceChats[voiceChatList->numVoiceChats].numSounds] = sound;
 			token = COM_ParseExt( p, qtrue );
-			if ( !token || token[0] == 0 ) {
+			if ( !token[0] ) {
 				return qtrue;
 			}
 			Com_sprintf( voiceChats[voiceChatList->numVoiceChats].chats[voiceChats[voiceChatList->numVoiceChats].numSounds], MAX_CHATSIZE, "%s", token );

@@ -174,17 +174,17 @@ static void UI_SPLevelMenu_SetBots( void ) {
 	p = &bots[0];
 	while ( *p && levelMenuInfo.numBots < 7 ) {
 		//skip spaces
-		while ( *p && *p == ' ' ) {
+		while ( *p == ' ' ) {
 			p++;
 		}
-		if ( !p ) {
+		if ( !*p ) {
 			break;
 		}
 
 		// mark start of bot name
 		bot = p;
 
-		// skip until space of null
+		// skip until space or null
 		while ( *p && *p != ' ' ) {
 			p++;
 		}

@@ -819,7 +819,7 @@ static void G_SpawnBots( const char *botList, int baseDelay ) {
 		while ( *p && *p == ' ' ) {
 			p++;
 		}
-		if ( !p ) {
+		if ( !*p ) {
 			break;
 		}
 

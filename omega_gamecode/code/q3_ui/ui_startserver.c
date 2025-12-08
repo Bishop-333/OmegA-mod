@@ -152,7 +152,8 @@ static int gametype_remap2[] = {
     8,
     9,
     10,
-    11 }; //this works and should increment for more gametypes
+    11,
+    12 }; //this works and should increment for more gametypes
 
 static void UI_ServerOptionsMenu( qboolean multiplayer );
 
@@ -170,7 +171,7 @@ static int GametypeBits( char *string ) {
 	p = string;
 	while ( 1 ) {
 		token = COM_ParseExt( &p, qfalse );
-		if ( token[0] == 0 ) {
+		if ( !token[0] ) {
 			break;
 		}
 
@@ -1253,17 +1254,17 @@ static void ServerOptions_InitBotNames( void ) {
 	p = &bots[0];
 	while ( *p && count < PLAYER_SLOTS ) {
 		//skip spaces
-		while ( *p && *p == ' ' ) {
+		while ( *p == ' ' ) {
 			p++;
 		}
-		if ( !p ) {
+		if ( !*p ) {
 			break;
 		}
 
 		// mark start of bot name
 		bot = p;
 
-		// skip until space of null
+		// skip until space or null
 		while ( *p && *p != ' ' ) {
 			p++;
 		}

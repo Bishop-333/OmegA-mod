@@ -288,7 +288,7 @@ static void InGame_MenuInit( void ) {
 	s_ingame.vote.color = color_red;
 	s_ingame.vote.style = UI_CENTER | UI_SMALLFONT;
 	trap_GetConfigString( CS_SERVERINFO, info, MAX_INFO_STRING );
-	if ( atoi( Info_ValueForKey( info, "g_allowVote" ) ) == 0 || trap_Cvar_VariableValue( "g_gametype" ) == GT_SINGLE_PLAYER ) {
+	if ( atoi( Info_ValueForKey( info, "g_allowVote" ) ) == 0 || gametype == GT_SINGLE_PLAYER ) {
 		s_ingame.vote.generic.flags |= QMF_GRAYED;
 	}
 

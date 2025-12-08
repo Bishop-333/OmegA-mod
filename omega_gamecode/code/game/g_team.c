@@ -1080,7 +1080,7 @@ void Team_ReturnFlag( int team ) {
 		}
 	} else {
 		PrintMsg( NULL, "The %s flag has returned!\n", TeamName( team ) );
-		if ( g_gametype.integer == GT_CTF_ELIMINATION ) {
+		if ( g_gametype.integer == GT_CTF ) {
 			G_LogPrintf( "CTF: %i %i %i: The %s flag was returned!\n", -1, team, 2, TeamName( team ) );
 		} else if ( g_gametype.integer == GT_CTF_ELIMINATION ) {
 			G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: The %s flag was returned!\n", level.roundNumber, -1, team, 2, TeamName( team ) );
