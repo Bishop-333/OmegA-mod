@@ -1177,7 +1177,11 @@ static void CG_RegisterGraphics( void ) {
 	}
 
 	if ( cgs.gametype == GT_1FCTF || cgs.gametype == GT_POSSESSION || cg_buildScript.integer ) {
-		cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
+		if ( cg_omegaFlags.integer ) {
+			cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags_omega/n_flag.md3" );
+		} else {
+			cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
+		}
 		cgs.media.flagShader[0] = trap_R_RegisterShaderNoMip( "icons/iconf_neutral1" );
 		cgs.media.flagShader[1] = trap_R_RegisterShaderNoMip( "icons/iconf_red2" );
 		cgs.media.flagShader[2] = trap_R_RegisterShaderNoMip( "icons/iconf_blu2" );
