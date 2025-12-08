@@ -154,7 +154,6 @@ vmCvar_t cg_drawFriend;
 vmCvar_t cg_teamChatsOnly;
 vmCvar_t cg_noVoiceChats;
 vmCvar_t cg_noVoiceText;
-vmCvar_t cg_hudFiles;
 vmCvar_t cg_scorePlum;
 vmCvar_t cg_obituaryOutput;
 vmCvar_t pmove_fixed;

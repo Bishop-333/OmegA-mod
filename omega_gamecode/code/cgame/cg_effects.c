@@ -807,37 +807,6 @@ void CG_GibPlayer( const vec3_t playerOrigin, const vec3_t playerAngles, const v
 }
 
 /*
-==================
-CG_LaunchGib
-==================
-*/
-static void CG_LaunchExplode( vec3_t origin, vec3_t velocity, qhandle_t hModel ) {
-	localEntity_t *le;
-	refEntity_t *re;
-
-	le = CG_AllocLocalEntity();
-	re = &le->refEntity;
-
-	le->leType = LE_FRAGMENT;
-	le->startTime = cg.time;
-	le->endTime = le->startTime + 10000 + random() * 6000;
-
-	VectorCopy( origin, re->origin );
-	AxisCopy( axisDefault, re->axis );
-	re->hModel = hModel;
-
-	le->pos.trType = TR_GRAVITY;
-	VectorCopy( origin, le->pos.trBase );
-	VectorCopy( velocity, le->pos.trDelta );
-	le->pos.trTime = cg.time;
-
-	le->bounceFactor = 0.1f;
-
-	le->leBounceSoundType = LEBS_BRASS;
-	le->leMarkType = LEMT_NONE;
-}
-
-/*
 ===================
 CG_GibPlayerHeadshot
 ===================

@@ -34,15 +34,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SB_NORMAL_HEIGHT 40
 #define SB_INTER_HEIGHT 23 // interleaved height
 
-#define SB_MAXCLIENTS_NORMAL ( ( SB_STATUSBAR - SB_TOP ) / SB_NORMAL_HEIGHT )
 #define SB_MAXCLIENTS_INTER ( ( SB_STATUSBAR - SB_TOP ) / SB_INTER_HEIGHT - 1 )
 
-// Used when interleaved
-
-#define SB_LEFT_BOTICON_X ( SCOREBOARD_X - 42 )
-#define SB_LEFT_HEAD_X ( SCOREBOARD_X - 10 )
-#define SB_RIGHT_BOTICON_X ( SCOREBOARD_X - 22 )
-#define SB_RIGHT_HEAD_X ( SCOREBOARD_X - 52 )
 // Normal
 #define SB_BOTICON_X ( SCOREBOARD_X - 10 )
 #define SB_HEAD_X ( SCOREBOARD_X + 12 )

@@ -297,7 +297,6 @@ typedef struct particle_s {
 	vec3_t vel;
 	vec3_t accel;
 	int color;
-	float colorvel;
 	float alpha;
 	float alphavel;
 	int type;

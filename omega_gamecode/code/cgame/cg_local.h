@@ -179,7 +179,6 @@ typedef struct centity_s {
 
 	int muzzleFlashTime; // move to playerEntity?
 	int previousEvent;
-	int teleportFlag;
 
 	int trailTime; // so missile trails can handle dropped initial packets
 	int dustTrailTime;
@@ -190,14 +189,10 @@ typedef struct centity_s {
 	playerEntity_t pe;
 
 	int errorTime; // decay the error from this time
-	vec3_t errorOrigin;
-	vec3_t errorAngles;
 
 	qboolean extrapolated; // false if origin / angles is an interpolation
 	vec3_t rawOrigin;
 	vec3_t rawAngles;
-
-	vec3_t beamEnd;
 
 	// exact interpolated position of entity on this frame
 	vec3_t lerpOrigin;
@@ -294,7 +289,6 @@ typedef struct {
 	int ping;
 	int time;
 	int scoreFlags;
-	int powerUps;
 	int accuracy;
 	int impressiveCount;
 	int excellentCount;
@@ -398,7 +392,6 @@ typedef struct weaponInfo_s {
 
 	vec3_t weaponMidpoint; // so it will rotate centered instead of by tag
 
-	float flashDlight;
 	vec3_t flashDlightColor;
 	sfxHandle_t flashSound[4]; // fast firing weapons randomly choose
 
@@ -549,7 +542,6 @@ typedef struct {
 	// scoreboard
 	int scoresRequestTime;
 	int numScores;
-	int selectedScore;
 	int teamScores[2];
 	score_t scores[MAX_CLIENTS];
 	qboolean showScores;
@@ -566,11 +558,6 @@ typedef struct {
 	char spectatorList[MAX_STRING_CHARS]; // list of names
 	int spectatorLen;                     // length of list
 	float spectatorWidth;                 // width in device units
-	int spectatorTime;                    // next time to offset
-	int spectatorPaintX;                  // current paint x
-	int spectatorPaintX2;                 // current paint x
-	int spectatorOffset;                  // current offset from start
-	int spectatorPaintLen;                // current offset from start
 
 	// skull trails
 	skulltrail_t skulltrails[MAX_CLIENTS];
@@ -585,9 +572,6 @@ typedef struct {
 	// low ammo warning state
 	int lowAmmoWarning; // 1 = low, 2 = empty
 
-	// kill timers for carnage reward
-	int lastKillTime;
-
 	// crosshair client ID
 	int crosshairClientNum;
 	int crosshairClientTime;
@@ -598,15 +582,12 @@ typedef struct {
 
 	// attacking player
 	int attackerTime;
-	int voiceTime;
 
 	// reward medals
-	int rewardStack;
 	int rewardTime[MAX_REWARDSTACK];
 	int rewardCount[MAX_REWARDSTACK];
 	int rewardSoundDelay[MAX_REWARDSTACK];
 	qhandle_t rewardShader[MAX_REWARDSTACK];
-	qhandle_t rewardSound[MAX_REWARDSTACK];
 
 	// sound buffer mainly for announcer sounds
 	int soundBufferIn;
@@ -620,11 +601,6 @@ typedef struct {
 	int rewardSoundTime;
 	qhandle_t rewardSoundBuffer[MAX_REWARDSTACK];
 
-	// for voice chat buffer
-	int voiceChatTime;
-	int voiceChatBufferIn;
-	int voiceChatBufferOut;
-
 	// warmup countdown
 	int warmup;
 	int warmupCount;
@@ -636,15 +612,12 @@ typedef struct {
 	int itemPickupBlendTime; // the pulse around the crosshair is timed seperately
 
 	int weaponSelectTime;
-	int weaponAnimation;
-	int weaponAnimationTime;
 
 	// blend blobs
 	float damageTime;
 	float damageX, damageY, damageValue;
 
 	// status bar head
-	float headYaw;
 	float headEndPitch;
 	float headEndYaw;
 	int headEndTime;
@@ -851,20 +824,13 @@ typedef struct {
 	qhandle_t battleSuitShader;
 	qhandle_t battleWeaponShader;
 	qhandle_t hastePuffShader;
-	qhandle_t redKamikazeShader;
 	qhandle_t blueKamikazeShader;
 	qhandle_t spawnPointShader;
 	qhandle_t transparentWeaponShader;
 
-	// player overlays
-	qhandle_t neutralOverlay;
-	qhandle_t redOverlay;
-	qhandle_t blueOverlay;
-
 	// bright players
 	qhandle_t brightPlayers;
 	qhandle_t brightPlayers2;
-	qhandle_t wallhackShader;
 
 	// weapon effect models
 	qhandle_t bulletFlashModel;
@@ -896,7 +862,6 @@ typedef struct {
 	qhandle_t invulnerabilityJuicedModel;
 	qhandle_t medkitUsageModel;
 	qhandle_t dustPuffShader;
-	qhandle_t heartShader;
 	qhandle_t invulnerabilityPowerupModel;
 
 	// scoreboard headers
@@ -936,7 +901,6 @@ typedef struct {
 	qhandle_t rocketShader;
 	qhandle_t shotgunShader;
 	qhandle_t skullShader;
-	qhandle_t headshotShader;
 
 	// sounds
 	sfxHandle_t quadSound;
@@ -975,7 +939,6 @@ typedef struct {
 	sfxHandle_t obeliskRespawnSound;
 	sfxHandle_t winnerSound;
 	sfxHandle_t loserSound;
-	sfxHandle_t youSuckSound;
 	sfxHandle_t gibSound;
 	sfxHandle_t gibBounce1Sound;
 	sfxHandle_t gibBounce2Sound;
@@ -986,7 +949,6 @@ typedef struct {
 	sfxHandle_t respawnSound;
 	sfxHandle_t talkSound;
 	sfxHandle_t landSound;
-	sfxHandle_t fallSound;
 	sfxHandle_t jumpPadSound;
 
 	// LEILEI
@@ -1023,19 +985,12 @@ typedef struct {
 	sfxHandle_t assistSound;
 	sfxHandle_t defendSound;
 	sfxHandle_t headshotSound;
-	sfxHandle_t firstImpressiveSound;
-	sfxHandle_t firstExcellentSound;
-	sfxHandle_t firstHumiliationSound;
 
 	sfxHandle_t notificationSound;
 
 	sfxHandle_t takenLeadSound;
 	sfxHandle_t tiedLeadSound;
 	sfxHandle_t lostLeadSound;
-
-	sfxHandle_t voteNow;
-	sfxHandle_t votePassed;
-	sfxHandle_t voteFailed;
 
 	sfxHandle_t watrInSound;
 	sfxHandle_t watrOutSound;
@@ -1083,10 +1038,6 @@ typedef struct {
 	sfxHandle_t doublerSound;
 	sfxHandle_t guardSound;
 	sfxHandle_t scoutSound;
-
-	qhandle_t cursor;
-	qhandle_t selectCursor;
-	qhandle_t sizeCursor;
 
 	sfxHandle_t regenSound;
 	sfxHandle_t protectSound;
@@ -1185,8 +1136,6 @@ typedef struct {
 
 	int redLivingCount, blueLivingCount;
 
-	qboolean newHud;
-
 	//
 	// locally derived information from gamestate
 	//
@@ -1205,25 +1154,7 @@ typedef struct {
 	int teamChatPos;
 	int teamLastChatPos;
 
-	int cursorX;
-	int cursorY;
-	qboolean eventHandling;
-	qboolean mouseCaptured;
-	qboolean sizingHud;
-	void *capturedItem;
-	qhandle_t activeCursor;
-
 	fragInfo_t fragMsg[FRAGMSG_MAX];
-
-	// orders
-	int currentOrder;
-	qboolean orderPending;
-	int orderTime;
-	int currentVoiceClient;
-	int acceptOrderTime;
-	int acceptTask;
-	int acceptLeader;
-	char acceptVoice[MAX_NAME_LENGTH];
 
 	// player sounds
 	sfxHandle_t selfSounds[MAX_CUSTOM_SOUNDS];
@@ -1550,9 +1481,6 @@ void CG_DrawTopBottom( float x, float y, float w, float h, float size );
 extern int sortedTeamPlayers[TEAM_MAXOVERLAY];
 extern int numSortedTeamPlayers;
 extern int drawTeamOverlayModificationCount;
-extern char systemChat[256];
-extern char teamChat1[256];
-extern char teamChat2[256];
 
 void CG_AddLagometerFrameInfo( void );
 void CG_AddLagometerSnapshotInfo( snapshot_t *snap );

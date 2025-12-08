@@ -30,10 +30,6 @@ int drawTeamOverlayModificationCount = -1;
 int sortedTeamPlayers[TEAM_MAXOVERLAY];
 int numSortedTeamPlayers;
 
-char systemChat[256];
-char teamChat1[256];
-char teamChat2[256];
-
 static int CG_DrawPickupItem( int y );
 
 static worldstring_t worldstring[MAX_CLIENTS];
