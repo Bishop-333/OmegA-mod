@@ -49,7 +49,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int GeneticSelection(int numranks, const float *rankings)
+int GeneticSelection(int numranks, float *rankings)
 {
 	float sum;
 	int i, index;

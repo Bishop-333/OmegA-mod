@@ -36,16 +36,16 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "be_interface.h"
 
 //#define MEMDEBUG
-//#define MEMORYMANAGER
+//#define MEMORYMANEGER
 
 #define MEM_ID		0x12345678l
 #define HUNK_ID		0x87654321l
 
-#ifdef MEMORYMANAGER
+int allocatedmemory;
+int totalmemorysize;
+int numblocks;
 
-static int allocatedmemory;
-static int totalmemorysize;
-static int numblocks;
+#ifdef MEMORYMANEGER
 
 typedef struct memoryblock_s
 {
@@ -60,7 +60,7 @@ typedef struct memoryblock_s
 	struct memoryblock_s *prev, *next;
 } memoryblock_t;
 
-static memoryblock_t *memory;
+memoryblock_t *memory;
 
 //===========================================================================
 //
@@ -68,7 +68,7 @@ static memoryblock_t *memory;
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void LinkMemoryBlock(memoryblock_t *block)
+void LinkMemoryBlock(memoryblock_t *block)
 {
 	block->prev = NULL;
 	block->next = memory;
@@ -81,7 +81,7 @@ static void LinkMemoryBlock(memoryblock_t *block)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void UnlinkMemoryBlock(memoryblock_t *block)
+void UnlinkMemoryBlock(memoryblock_t *block)
 {
 	if (block->prev) block->prev->next = block->next;
 	else memory = block->next;
@@ -197,7 +197,7 @@ void *GetClearedHunkMemory(unsigned long size)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static memoryblock_t *BlockFromPointer(void *ptr, char *str)
+memoryblock_t *BlockFromPointer(void *ptr, char *str)
 {
 	memoryblock_t *block;
 
@@ -370,10 +370,7 @@ void *GetClearedMemory(unsigned long size)
 #else
 	ptr = GetMemory(size);
 #endif //MEMDEBUG
-	if (ptr)
-	{
-		Com_Memset(ptr, 0, size);
-	}
+	Com_Memset(ptr, 0, size);
 	return ptr;
 } //end of the function GetClearedMemory
 //===========================================================================
@@ -415,10 +412,7 @@ void *GetClearedHunkMemory(unsigned long size)
 #else
 	ptr = GetHunkMemory(size);
 #endif //MEMDEBUG
-	if (ptr)
-	{
-		Com_Memset(ptr, 0, size);
-	}
+	Com_Memset(ptr, 0, size);
 	return ptr;
 } //end of the function GetClearedHunkMemory
 //===========================================================================

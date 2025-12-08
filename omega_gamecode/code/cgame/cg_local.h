@@ -1400,8 +1400,8 @@ qboolean CG_Cvar_ClampInt( const char *name, vmCvar_t *vmCvar, int min, int max 
 const char *CG_ConfigString( int index );
 const char *CG_Argv( int arg );
 
-void QDECL CG_Printf( const char *msg, ... ) __attribute__( ( format( printf, 1, 2 ) ) );
-void QDECL CG_Error( const char *msg, ... ) __attribute__( ( format( printf, 1, 2 ) ) ) __attribute__( ( noreturn ) );
+void QDECL CG_Printf( const char *msg, ... ) Q_PRINTF_FUNC(1, 2);
+void QDECL CG_Error( const char *msg, ... ) Q_NO_RETURN Q_PRINTF_FUNC(1, 2);
 
 void CG_StartMusic( void );
 
@@ -1698,7 +1698,7 @@ void CG_TransitionPlayerState( playerState_t *ps, playerState_t *ops );
 void trap_Print( const char *fmt );
 
 // abort the game
-void trap_Error( const char *fmt ) __attribute__( ( noreturn ) );
+void trap_Error(const char *fmt) Q_NO_RETURN;
 
 // milliseconds should only be used for performance tuning, never
 // for anything game related. Get time from the CG_DrawActiveFrame parameter

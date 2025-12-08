@@ -47,7 +47,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define ROUTING_DEBUG
 
-//travel time in hundredths of a second = distance * 100 / speed
+//travel time in hundreths of a second = distance * 100 / speed
 #define DISTANCEFACTOR_CROUCH		1.3f		//crouch speed = 100
 #define DISTANCEFACTOR_SWIM			1		//should be 0.66, swim speed = 150
 #define DISTANCEFACTOR_WALK			0.33f	//walk speed = 300
@@ -132,7 +132,7 @@ static ID_INLINE int AAS_ClusterAreaNum(int cluster, int areanum)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_InitTravelFlagFromType(void)
+void AAS_InitTravelFlagFromType(void)
 {
 	int i;
 
@@ -166,17 +166,16 @@ static void AAS_InitTravelFlagFromType(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static ID_INLINE int AAS_TravelFlagForType_inline(unsigned int traveltype)
+static ID_INLINE int AAS_TravelFlagForType_inline(int traveltype)
 {
-	int tfl;
+	int tfl = 0;
 
-	tfl = 0;
 	if (traveltype & TRAVELFLAG_NOTTEAM1)
 		tfl |= TFL_NOTTEAM1;
 	if (traveltype & TRAVELFLAG_NOTTEAM2)
 		tfl |= TFL_NOTTEAM2;
 	traveltype &= TRAVELTYPE_MASK;
-	if (traveltype >= MAX_TRAVELTYPES)
+	if (traveltype < 0 || traveltype >= MAX_TRAVELTYPES)
 		return TFL_INVALID;
 	tfl |= aasworld.travelflagfortype[traveltype];
 	return tfl;
@@ -197,7 +196,7 @@ int AAS_TravelFlagForType(int traveltype)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_UnlinkCache(aas_routingcache_t *cache)
+void AAS_UnlinkCache(aas_routingcache_t *cache)
 {
 	if (cache->time_next) cache->time_next->time_prev = cache->time_prev;
 	else aasworld.newestcache = cache->time_prev;
@@ -212,7 +211,7 @@ static void AAS_UnlinkCache(aas_routingcache_t *cache)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_LinkCache(aas_routingcache_t *cache)
+void AAS_LinkCache(aas_routingcache_t *cache)
 {
 	if (aasworld.newestcache)
 	{
@@ -245,7 +244,7 @@ void AAS_FreeRoutingCache(aas_routingcache_t *cache)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_RemoveRoutingCacheInCluster( int clusternum )
+void AAS_RemoveRoutingCacheInCluster( int clusternum )
 {
 	int i;
 	aas_routingcache_t *cache, *nextcache;
@@ -270,7 +269,7 @@ static void AAS_RemoveRoutingCacheInCluster( int clusternum )
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_RemoveRoutingCacheUsingArea( int areanum )
+void AAS_RemoveRoutingCacheUsingArea( int areanum )
 {
 	int i, clusternum;
 	aas_routingcache_t *cache, *nextcache;
@@ -349,7 +348,7 @@ static ID_INLINE float AAS_RoutingTime(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_GetAreaContentsTravelFlags(int areanum)
+int AAS_GetAreaContentsTravelFlags(int areanum)
 {
 	int contents, tfl;
 
@@ -399,7 +398,7 @@ int AAS_AreaContentsTravelFlags(int areanum)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_InitAreaContentsTravelFlags(void)
+void AAS_InitAreaContentsTravelFlags(void)
 {
 	int i;
 
@@ -416,7 +415,7 @@ static void AAS_InitAreaContentsTravelFlags(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_CreateReversedReachability(void)
+void AAS_CreateReversedReachability(void)
 {
 	int i, n;
 	aas_reversedlink_t *revlink;
@@ -443,7 +442,7 @@ static void AAS_CreateReversedReachability(void)
 		//settings of the area
 		settings = &aasworld.areasettings[i];
 		//
-		if (settings->numreachableareas > 128)
+		if (settings->numreachableareas >= 128)
 			botimport.Print(PRT_WARNING, "area %d has more than 128 reachabilities\n", i);
 		//create reversed links for the reachabilities
 		for (n = 0; n < settings->numreachableareas && n < 128; n++)
@@ -497,13 +496,13 @@ unsigned short int AAS_AreaTravelTime(int areanum, vec3_t start, vec3_t end)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_CalculateAreaTravelTimes(void)
+void AAS_CalculateAreaTravelTimes(void)
 {
 	int i, l, n, size;
 	char *ptr;
 	vec3_t end;
-	const aas_reversedreachability_t *revreach;
-	const aas_reversedlink_t *revlink;
+	aas_reversedreachability_t *revreach;
+	aas_reversedlink_t *revlink;
 	aas_reachability_t *reach;
 	aas_areasettings_t *settings;
 #ifdef DEBUG
@@ -566,7 +565,7 @@ static void AAS_CalculateAreaTravelTimes(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_PortalMaxTravelTime(int portalnum)
+int AAS_PortalMaxTravelTime(int portalnum)
 {
 	int l, n, t, maxt;
 	aas_portal_t *portal;
@@ -600,7 +599,7 @@ static int AAS_PortalMaxTravelTime(int portalnum)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_InitPortalMaxTravelTimes(void)
+void AAS_InitPortalMaxTravelTimes(void)
 {
 	int i;
 
@@ -621,7 +620,7 @@ static void AAS_InitPortalMaxTravelTimes(void)
 // Changes Globals:		-
 //===========================================================================
 /*
-static int AAS_FreeOldestCache(void)
+int AAS_FreeOldestCache(void)
 {
 	int i, j, bestcluster, bestarea, freed;
 	float besttime;
@@ -695,7 +694,7 @@ static int AAS_FreeOldestCache(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_FreeOldestCache(void)
+int AAS_FreeOldestCache(void)
 {
 	int clusterareanum;
 	aas_routingcache_t *cache;
@@ -734,7 +733,7 @@ static int AAS_FreeOldestCache(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static aas_routingcache_t *AAS_AllocRoutingCache(int numtraveltimes)
+aas_routingcache_t *AAS_AllocRoutingCache(int numtraveltimes)
 {
 	aas_routingcache_t *cache;
 	int size;
@@ -758,7 +757,7 @@ static aas_routingcache_t *AAS_AllocRoutingCache(int numtraveltimes)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_FreeAllClusterAreaCache(void)
+void AAS_FreeAllClusterAreaCache(void)
 {
 	int i, j;
 	aas_routingcache_t *cache, *nextcache;
@@ -790,7 +789,7 @@ static void AAS_FreeAllClusterAreaCache(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_InitClusterAreaCache(void)
+void AAS_InitClusterAreaCache(void)
 {
 	int i, size;
 	char *ptr;
@@ -819,7 +818,7 @@ static void AAS_InitClusterAreaCache(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_FreeAllPortalCache(void)
+void AAS_FreeAllPortalCache(void)
 {
 	int i;
 	aas_routingcache_t *cache, *nextcache;
@@ -845,7 +844,7 @@ static void AAS_FreeAllPortalCache(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_InitPortalCache(void)
+void AAS_InitPortalCache(void)
 {
 	//
 	aasworld.portalcache = (aas_routingcache_t **) GetClearedMemory(
@@ -857,7 +856,7 @@ static void AAS_InitPortalCache(void)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_InitRoutingUpdate(void)
+void AAS_InitRoutingUpdate(void)
 {
 	int i, maxreachabilityareas;
 
@@ -1033,7 +1032,7 @@ void AAS_WriteRouteCache(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static aas_routingcache_t *AAS_ReadCache(fileHandle_t fp)
+aas_routingcache_t *AAS_ReadCache(fileHandle_t fp)
 {
 	int size;
 	aas_routingcache_t *cache;
@@ -1052,7 +1051,7 @@ static aas_routingcache_t *AAS_ReadCache(fileHandle_t fp)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_ReadRouteCache(void)
+int AAS_ReadRouteCache(void)
 {
 	int i, clusterareanum;//, size;
 	fileHandle_t fp;
@@ -1145,7 +1144,7 @@ static int AAS_ReadRouteCache(void)
 //===========================================================================
 #define MAX_REACHABILITYPASSAREAS		32
 
-static void AAS_InitReachabilityAreas(void)
+void AAS_InitReachabilityAreas(void)
 {
 	int i, j, numareas, areas[MAX_REACHABILITYPASSAREAS];
 	int numreachareas;
@@ -1290,15 +1289,15 @@ void AAS_FreeRoutingCaches(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_UpdateAreaRoutingCache(aas_routingcache_t *areacache)
+void AAS_UpdateAreaRoutingCache(aas_routingcache_t *areacache)
 {
 	int i, nextareanum, cluster, badtravelflags, clusterareanum, linknum;
 	int numreachabilityareas;
 	unsigned short int t, startareatraveltimes[128]; //NOTE: not more than 128 reachabilities per area allowed
 	aas_routingupdate_t *updateliststart, *updatelistend, *curupdate, *nextupdate;
 	aas_reachability_t *reach;
-	const aas_reversedreachability_t *revreach;
-	const aas_reversedlink_t *revlink;
+	aas_reversedreachability_t *revreach;
+	aas_reversedlink_t *revlink;
 
 #ifdef ROUTING_DEBUG
 	numareacacheupdates++;
@@ -1401,7 +1400,7 @@ static void AAS_UpdateAreaRoutingCache(aas_routingcache_t *areacache)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static aas_routingcache_t *AAS_GetAreaRoutingCache(int clusternum, int areanum, int travelflags)
+aas_routingcache_t *AAS_GetAreaRoutingCache(int clusternum, int areanum, int travelflags)
 {
 	int clusterareanum;
 	aas_routingcache_t *cache, *clustercache;
@@ -1447,7 +1446,7 @@ static aas_routingcache_t *AAS_GetAreaRoutingCache(int clusternum, int areanum, 
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_UpdatePortalRoutingCache(aas_routingcache_t *portalcache)
+void AAS_UpdatePortalRoutingCache(aas_routingcache_t *portalcache)
 {
 	int i, portalnum, clusterareanum, clusternum;
 	unsigned short int t;
@@ -1545,7 +1544,7 @@ static void AAS_UpdatePortalRoutingCache(aas_routingcache_t *portalcache)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static aas_routingcache_t *AAS_GetPortalRoutingCache(int clusternum, int areanum, int travelflags)
+aas_routingcache_t *AAS_GetPortalRoutingCache(int clusternum, int areanum, int travelflags)
 {
 	aas_routingcache_t *cache;
 
@@ -1587,7 +1586,7 @@ static aas_routingcache_t *AAS_GetPortalRoutingCache(int clusternum, int areanum
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_AreaRouteToGoalArea(int areanum, vec3_t origin, int goalareanum, int travelflags, int *traveltime, int *reachnum)
+int AAS_AreaRouteToGoalArea(int areanum, vec3_t origin, int goalareanum, int travelflags, int *traveltime, int *reachnum)
 {
 	int clusternum, goalclusternum, portalnum, i, clusterareanum, bestreachnum;
 	unsigned short int t, besttime;
@@ -1625,14 +1624,10 @@ static int AAS_AreaRouteToGoalArea(int areanum, vec3_t origin, int goalareanum, 
 	{
 		return qfalse;
 	} //end if
-
 	// make sure the routing cache doesn't grow to large
-	while ( routingcachesize > 12 * 1024 * 1024 ) {
-		if ( !AAS_FreeOldestCache() ) {
-			break;
-		}
+	while(AvailableMemory() < 1 * 1024 * 1024) {
+		if (!AAS_FreeOldestCache()) break;
 	}
-
 	//
 	if (AAS_AreaDoNotEnter(areanum) || AAS_AreaDoNotEnter(goalareanum))
 	{
@@ -1793,7 +1788,7 @@ int AAS_AreaTravelTimeToGoalArea(int areanum, vec3_t origin, int goalareanum, in
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_AreaReachabilityToGoalArea(int areanum, vec3_t origin, int goalareanum, int travelflags)
+int AAS_AreaReachabilityToGoalArea(int areanum, vec3_t origin, int goalareanum, int travelflags)
 {
 	int traveltime, reachnum = 0;
 
@@ -1913,7 +1908,6 @@ int AAS_PredictRoute(struct aas_predictroute_s *route, int areanum, vec3_t origi
 		return qfalse;
 	return qtrue;
 } //end of the function AAS_PredictRoute
-#if 0
 //===========================================================================
 //
 // Parameter:			-
@@ -1924,7 +1918,6 @@ int AAS_BridgeWalkable(int areanum)
 {
 	return qfalse;
 } //end of the function AAS_BridgeWalkable
-#endif
 //===========================================================================
 //
 // Parameter:			-
@@ -2068,11 +2061,10 @@ int AAS_RandomGoalArea(int areanum, int travelflags, int *goalareanum, vec3_t go
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_AreaVisible(int srcarea, int destarea)
+int AAS_AreaVisible(int srcarea, int destarea)
 {
 	return qfalse;
 } //end of the function AAS_AreaVisible
-#if 0
 //===========================================================================
 //
 // Parameter:			-
@@ -2087,7 +2079,6 @@ float DistancePointToLine(vec3_t v1, vec3_t v2, vec3_t point)
 	VectorSubtract(point, p2, vec);
 	return VectorLength(vec);
 } //end of the function DistancePointToLine
-#endif
 //===========================================================================
 //
 // Parameter:			-

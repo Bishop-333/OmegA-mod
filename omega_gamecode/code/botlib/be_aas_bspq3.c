@@ -30,7 +30,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  *****************************************************************************/
 
 #include "../qcommon/q_shared.h"
-#include "../qcommon/qcommon.h"
 #include "l_memory.h"
 #include "l_script.h"
 #include "l_precomp.h"
@@ -49,14 +48,14 @@ extern botlib_import_t botimport;
 //#define DEG2RAD( a ) (( a * M_PI ) / 180.0F)
 
 #define MAX_BSPENTITIES		2048
-#if 0
+
 typedef struct rgb_s
 {
 	int red;
 	int green;
 	int blue;
 } rgb_t;
-#endif
+
 //bsp entity epair
 typedef struct bsp_epair_s
 {
@@ -85,7 +84,7 @@ typedef struct bsp_s
 } bsp_t;
 
 //global bsp
-static bsp_t bspworld;
+bsp_t bspworld;
 
 
 #ifdef BSP_DEBUG
@@ -123,7 +122,7 @@ cname_t contentnames[] =
 	{CONTENTS_LADDER,"CONTENTS_LADDER"},
 	{0, 0}
 };
-#if 0
+
 void PrintContents(int contents)
 {
 	int i;
@@ -136,7 +135,7 @@ void PrintContents(int contents)
 		} //end if
 	} //end for
 } //end of the function PrintContents
-#endif
+
 #endif // BSP_DEBUG
 //===========================================================================
 // traces axial boxes of any size through the world
@@ -182,7 +181,6 @@ qboolean AAS_EntityCollision(int entnum,
 	} //end if
 	return qfalse;
 } //end of the function AAS_EntityCollision
-#if 0
 //===========================================================================
 // returns true if in Potentially Hearable Set
 //
@@ -205,7 +203,6 @@ qboolean AAS_inPHS(vec3_t p1, vec3_t p2)
 {
 	return qtrue;
 } //end of the function AAS_inPHS
-#endif
 //===========================================================================
 //
 // Parameter:				-
@@ -236,7 +233,6 @@ bsp_link_t *AAS_BSPLinkEntity(vec3_t absmins, vec3_t absmaxs, int entnum, int mo
 {
 	return NULL;
 } //end of the function AAS_BSPLinkEntity
-#if 0
 //===========================================================================
 //
 // Parameter:				-
@@ -247,7 +243,6 @@ int AAS_BoxEntities(vec3_t absmins, vec3_t absmaxs, int *list, int maxcount)
 {
 	return 0;
 } //end of the function AAS_BoxEntities
-#endif
 //===========================================================================
 //
 // Parameter:			-
@@ -266,7 +261,7 @@ int AAS_NextBSPEntity(int ent)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_BSPEntityInRange(int ent)
+int AAS_BSPEntityInRange(int ent)
 {
 	if (ent <= 0 || ent >= bspworld.numentities)
 	{
@@ -281,7 +276,7 @@ static int AAS_BSPEntityInRange(int ent)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-int AAS_ValueForBSPEpairKey(int ent, const char *key, char *value, int size)
+int AAS_ValueForBSPEpairKey(int ent, char *key, char *value, int size)
 {
 	bsp_epair_t *epair;
 
@@ -291,7 +286,7 @@ int AAS_ValueForBSPEpairKey(int ent, const char *key, char *value, int size)
 	{
 		if (!strcmp(epair->key, key))
 		{
-			Q_strncpyz( value, epair->value, size );
+			Q_strncpyz(value, epair->value, size);
 			return qtrue;
 		} //end if
 	} //end for
@@ -303,17 +298,19 @@ int AAS_ValueForBSPEpairKey(int ent, const char *key, char *value, int size)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-int AAS_VectorForBSPEpairKey(int ent, const char *key, vec3_t v)
+int AAS_VectorForBSPEpairKey(int ent, char *key, vec3_t v)
 {
-	char buf[MAX_EPAIRKEY], *s[3];
+	char buf[MAX_EPAIRKEY];
+	double v1, v2, v3;
 
 	VectorClear(v);
-	if (!AAS_ValueForBSPEpairKey(ent, key, buf, sizeof( buf ) )) return qfalse;
+	if (!AAS_ValueForBSPEpairKey(ent, key, buf, MAX_EPAIRKEY)) return qfalse;
 	//scanf into doubles, then assign, so it is vec_t size independent
-	Com_Split( buf, s, 3, ' ' );
-	v[0] = Q_atof( s[0] );
-	v[1] = Q_atof( s[1] );
-	v[2] = Q_atof( s[2] );
+	v1 = v2 = v3 = 0;
+	sscanf(buf, "%lf %lf %lf", &v1, &v2, &v3);
+	v[0] = v1;
+	v[1] = v2;
+	v[2] = v3;
 	return qtrue;
 } //end of the function AAS_VectorForBSPEpairKey
 //===========================================================================
@@ -322,12 +319,12 @@ int AAS_VectorForBSPEpairKey(int ent, const char *key, vec3_t v)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-int AAS_FloatForBSPEpairKey(int ent, const char *key, float *value)
+int AAS_FloatForBSPEpairKey(int ent, char *key, float *value)
 {
 	char buf[MAX_EPAIRKEY];
 	
 	*value = 0;
-	if (!AAS_ValueForBSPEpairKey(ent, key, buf, sizeof( buf ))) return qfalse;
+	if (!AAS_ValueForBSPEpairKey(ent, key, buf, MAX_EPAIRKEY)) return qfalse;
 	*value = atof(buf);
 	return qtrue;
 } //end of the function AAS_FloatForBSPEpairKey
@@ -337,12 +334,12 @@ int AAS_FloatForBSPEpairKey(int ent, const char *key, float *value)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-int AAS_IntForBSPEpairKey(int ent, const char *key, int *value)
+int AAS_IntForBSPEpairKey(int ent, char *key, int *value)
 {
 	char buf[MAX_EPAIRKEY];
 	
 	*value = 0;
-	if (!AAS_ValueForBSPEpairKey(ent, key, buf, sizeof( buf ))) return qfalse;
+	if (!AAS_ValueForBSPEpairKey(ent, key, buf, MAX_EPAIRKEY)) return qfalse;
 	*value = atoi(buf);
 	return qtrue;
 } //end of the function AAS_IntForBSPEpairKey
@@ -352,7 +349,7 @@ int AAS_IntForBSPEpairKey(int ent, const char *key, int *value)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_FreeBSPEntities(void)
+void AAS_FreeBSPEntities(void)
 {
 	int i;
 	bsp_entity_t *ent;
@@ -378,7 +375,7 @@ static void AAS_FreeBSPEntities(void)
 // Returns:				-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_ParseBSPEntities(void)
+void AAS_ParseBSPEntities(void)
 {
 	script_t *script;
 	token_t token;
@@ -443,17 +440,16 @@ static void AAS_ParseBSPEntities(void)
 	} //end while
 	FreeScript(script);
 } //end of the function AAS_ParseBSPEntities
-#if 0
 //===========================================================================
 //
 // Parameter:				-
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_BSPTraceLight(vec3_t start, vec3_t end, vec3_t endpos, int *red, int *green, int *blue)
+int AAS_BSPTraceLight(vec3_t start, vec3_t end, vec3_t endpos, int *red, int *green, int *blue)
 {
 	return 0;
-#endif
+} //end of the function AAS_BSPTraceLight
 //===========================================================================
 //
 // Parameter:				-
@@ -488,4 +484,3 @@ int AAS_LoadBSPFile(void)
 	bspworld.loaded = qtrue;
 	return BLERR_NOERROR;
 } //end of the function AAS_LoadBSPFile
-

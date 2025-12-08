@@ -53,9 +53,9 @@ typedef struct midrangearea_s
 	unsigned short goaltime;
 } midrangearea_t;
 
-static midrangearea_t *midrangeareas;
-static int *clusterareas;
-static int numclusterareas;
+midrangearea_t *midrangeareas;
+int *clusterareas;
+int numclusterareas;
 
 //===========================================================================
 //
@@ -63,7 +63,7 @@ static int numclusterareas;
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void AAS_AltRoutingFloodCluster_r(int areanum)
+void AAS_AltRoutingFloodCluster_r(int areanum)
 {
 	int i, otherareanum;
 	aas_area_t *area;
@@ -139,7 +139,7 @@ int AAS_AlternativeRouteGoals(vec3_t start, int startareanum, vec3_t goal, int g
 		} //end if
 		//if the area has no reachabilities
 		if (!AAS_AreaReachability(i)) continue;
-		//travel time from the area to the start area
+		//tavel time from the area to the start area
 		starttime = AAS_AreaTravelTimeToGoalArea(startareanum, start, i, travelflags);
 		if (!starttime) continue;
 		//if the travel time from the start to the area is greater than the shortest goal travel time

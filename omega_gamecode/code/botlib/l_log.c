@@ -57,43 +57,37 @@ static logfile_t logfile;
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-void Log_Open( const char *filename )
+void Log_Open(char *filename)
 {
-	const char *ospath;
-
-	if ( !LibVarValue( "log", "0" ) ) 
-		return;
-
-	if ( !filename || !*filename )
+	char *ospath;
+	if (!LibVarValue("log", "0")) return;
+	if (!filename || !strlen(filename))
 	{
-		botimport.Print( PRT_MESSAGE, "openlog <filename>\n" );
+		botimport.Print(PRT_MESSAGE, "openlog <filename>\n");
 		return;
 	} //end if
-
-	if ( logfile.fp )
+	if (logfile.fp)
 	{
 		botimport.Print(PRT_ERROR, "log file %s is already opened\n", logfile.filename);
 		return;
 	} //end if
-
-	ospath = FS_BuildOSPath( Cvar_VariableString( "fs_homepath" ), "", filename );
-	logfile.fp = Sys_FOpen( ospath, "wb" );
-	if ( !logfile.fp )
+	ospath = FS_BuildOSPath(Cvar_VariableString("fs_homestatepath"), Cvar_VariableString("fs_game"), filename);
+	logfile.fp = fopen(ospath, "wb");
+	if (!logfile.fp)
 	{
-		botimport.Print( PRT_ERROR, "can't open the log file %s\n", filename );
+		botimport.Print(PRT_ERROR, "can't open the log file %s\n", filename);
 		return;
 	} //end if
-
-	Q_strncpyz( logfile.filename, filename, sizeof( logfile.filename ) );
-	botimport.Print( PRT_MESSAGE, "Opened log %s\n", logfile.filename );
-} //end of the function Log_Open
+	Q_strncpyz(logfile.filename, filename, MAX_LOGFILENAMESIZE);
+	botimport.Print(PRT_MESSAGE, "Opened log %s\n", logfile.filename);
+} //end of the function Log_Create
 //===========================================================================
 //
 // Parameter:				-
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static void Log_Close(void)
+void Log_Close(void)
 {
 	if (!logfile.fp) return;
 	if (fclose(logfile.fp))
@@ -131,7 +125,6 @@ void QDECL Log_Write(char *fmt, ...)
 	//fprintf(logfile.fp, "\r\n");
 	fflush(logfile.fp);
 } //end of the function Log_Write
-#if 0
 //===========================================================================
 //
 // Parameter:				-
@@ -156,8 +149,7 @@ void QDECL Log_WriteTimeStamped(char *fmt, ...)
 	fprintf(logfile.fp, "\r\n");
 	logfile.numwrites++;
 	fflush(logfile.fp);
-} //end of the function Log_WriteTimeStamped
-#endif
+} //end of the function Log_Write
 //===========================================================================
 //
 // Parameter:				-

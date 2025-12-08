@@ -3085,7 +3085,6 @@ static void CG_DrawWarmup( void ) {
 	int w;
 	int sec;
 	int i;
-	float scale __attribute__( ( unused ) );
 	clientInfo_t *ci1, *ci2;
 	int cw;
 	const char *s;
@@ -3152,23 +3151,18 @@ static void CG_DrawWarmup( void ) {
 				break;
 		}
 	}
-	scale = 0.45f;
 	switch ( cg.warmupCount ) {
 		case 0:
 			cw = 22;
-			scale = 0.54f;
 			break;
 		case 1:
 			cw = 20;
-			scale = 0.51f;
 			break;
 		case 2:
 			cw = 18;
-			scale = 0.48f;
 			break;
 		default:
 			cw = 16;
-			scale = 0.45f;
 			break;
 	}
 

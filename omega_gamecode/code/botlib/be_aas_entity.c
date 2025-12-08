@@ -186,7 +186,6 @@ void AAS_EntityInfo(int entnum, aas_entityinfo_t *info)
 
 	Com_Memcpy(info, &aasworld.entities[entnum].i, sizeof(aas_entityinfo_t));
 } //end of the function AAS_EntityInfo
-#if 0
 //===========================================================================
 //
 // Parameter:				-
@@ -204,7 +203,6 @@ void AAS_EntityOrigin(int entnum, vec3_t origin)
 
 	VectorCopy(aasworld.entities[entnum].i.origin, origin);
 } //end of the function AAS_EntityOrigin
-#endif
 //===========================================================================
 //
 // Parameter:				-
@@ -279,7 +277,6 @@ int AAS_OriginOfMoverWithModelNum(int modelnum, vec3_t origin)
 	} //end for
 	return qfalse;
 } //end of the function AAS_OriginOfMoverWithModelNum
-#if 0
 //===========================================================================
 //
 // Parameter:				-
@@ -320,7 +317,6 @@ void AAS_EntityBSPData(int entnum, bsp_entdata_t *entdata)
 	entdata->solid = ent->i.solid;
 	entdata->modelnum = ent->i.modelindex - 1;
 } //end of the function AAS_EntityBSPData
-#endif
 //===========================================================================
 //
 // Parameter:				-
@@ -374,7 +370,6 @@ void AAS_UnlinkInvalidEntities(void)
 		} //end for
 	} //end for
 } //end of the function AAS_UnlinkInvalidEntities
-#if 0
 //===========================================================================
 //
 // Parameter:				-
@@ -395,9 +390,9 @@ int AAS_NearestEntity(vec3_t origin, int modelindex)
 		ent = &aasworld.entities[i];
 		if (ent->i.modelindex != modelindex) continue;
 		VectorSubtract(ent->i.origin, origin, dir);
-		if (fabs(dir[0]) < 40)
+		if (fabsf(dir[0]) < 40)
 		{
-			if (fabs(dir[1]) < 40)
+			if (fabsf(dir[1]) < 40)
 			{
 				dist = VectorLength(dir);
 				if (dist < bestdist)
@@ -416,14 +411,13 @@ int AAS_NearestEntity(vec3_t origin, int modelindex)
 // Returns:					-
 // Changes Globals:		-
 //===========================================================================
-static int AAS_BestReachableEntityArea(int entnum)
+int AAS_BestReachableEntityArea(int entnum)
 {
 	aas_entity_t *ent;
 
 	ent = &aasworld.entities[entnum];
 	return AAS_BestReachableLinkArea(ent->areas);
 } //end of the function AAS_BestReachableEntityArea
-#endif
 //===========================================================================
 //
 // Parameter:			-

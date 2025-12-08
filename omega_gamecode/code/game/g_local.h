@@ -835,7 +835,7 @@ void SendDDtimetakenMessageToAllClients( void );
 void SendDominationPointsStatusMessageToAllClients( void );
 void SendYourTeamMessageToTeam( team_t team );
 void QDECL G_Printf( const char *fmt, ... );
-void QDECL G_Error( const char *fmt, ... ) __attribute__( ( noreturn ) );
+void QDECL G_Error( const char *fmt, ... ) Q_NO_RETURN Q_PRINTF_FUNC(1, 2);
 //KK-OAX Made Accessible for g_admin.c
 void LogExit( const char *string );
 void CheckTeamVote( int team );
@@ -1191,7 +1191,7 @@ extern vmCvar_t pmove_autohop;
 extern vmCvar_t pmove_doublejump;
 
 void trap_Printf( const char *fmt );
-void trap_Error( const char *fmt ) __attribute__( ( noreturn ) );
+void trap_Error( const char *text ) Q_NO_RETURN;
 int trap_Milliseconds( void );
 int trap_RealTime( qtime_t *qtime );
 int trap_Argc( void );

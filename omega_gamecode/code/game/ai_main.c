@@ -89,7 +89,7 @@ void ExitLevel( void );
 BotAI_Print
 ==================
 */
-void QDECL BotAI_Print( int type, const char *fmt, ... ) {
+void QDECL BotAI_Print(int type, char *fmt, ...) {
 	char str[2048];
 	va_list ap;
 

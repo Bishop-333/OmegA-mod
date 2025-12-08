@@ -1211,7 +1211,6 @@ sends the readymask to the player with clientnum, if clientnum = -1 its send to 
 void SendReadyMask( int clientnum ) {
 	char entry[16];
 	int i;
-	int ready __attribute__( ( unused ) ), notReady __attribute__( ( unused ) ), playerCount __attribute__( ( unused ) );
 	int readyMask;
 	gclient_t *cl;
 
@@ -1220,10 +1219,7 @@ void SendReadyMask( int clientnum ) {
 	}
 
 	// see which players are ready
-	ready = 0;
-	notReady = 0;
 	readyMask = 0;
-	playerCount = 0;
 
 	for ( i = 0; i < g_maxclients.integer; i++ ) {
 		cl = level.clients + i;
@@ -1231,14 +1227,10 @@ void SendReadyMask( int clientnum ) {
 			continue;
 		}
 
-		playerCount++;
 		if ( cl->ready || ( g_entities[cl->ps.clientNum].r.svFlags & SVF_BOT ) ) {
-			ready++;
 			if ( i < 16 ) {
 				readyMask |= 1 << i;
 			}
-		} else {
-			notReady++;
 		}
 	}
 
