@@ -48,23 +48,19 @@ static const char rcsid[] =
     static char *med3( char *, char *, char *, cmp_t * );
 static void swapfunc( char *, char *, int, int );
 
-#ifndef min
-#define min( a, b ) ( ( a ) < ( b ) ? ( a ) : ( b ) )
-#endif
-
 /*
  * Qsort routine from Bentley & McIlroy's "Engineering a Sort Function".
  */
-#define swapcode( TYPE, parmi, parmj, n )      \
-	{                                          \
-		long i = ( n ) / sizeof( TYPE );       \
-		register TYPE *pi = (TYPE *)( parmi ); \
-		register TYPE *pj = (TYPE *)( parmj ); \
-		do {                                   \
-			register TYPE t = *pi;             \
-			*pi++ = *pj;                       \
-			*pj++ = t;                         \
-		} while ( --i > 0 );                   \
+#define swapcode( TYPE, parmi, parmj, n ) \
+	{                                     \
+		long i = ( n ) / sizeof( TYPE );  \
+		TYPE *pi = (TYPE *)( parmi );     \
+		TYPE *pj = (TYPE *)( parmj );     \
+		do {                              \
+			TYPE t = *pi;                 \
+			*pi++ = *pj;                  \
+			*pj++ = t;                    \
+		} while ( --i > 0 );              \
 	}
 
 #define SWAPINIT( a, es ) swaptype = ( (char *)a - (char *)0 ) % sizeof( long ) || \
@@ -169,9 +165,9 @@ loop:
 	}
 
 	pn = (char *)a + n * es;
-	r = min( pa - (char *)a, pb - pa );
+	r = MIN( pa - (char *)a, pb - pa );
 	vecswap( a, pb - r, r );
-	r = min( pd - pc, pn - pd - es );
+	r = MIN( pd - pc, pn - pd - es );
 	vecswap( pb, pn - r, r );
 	if ( ( r = pb - pa ) > es )
 		qsort( a, r / es, es, cmp );
@@ -236,6 +232,7 @@ char *strchr( const char *string, int c ) {
 		}
 		string++;
 	}
+
 	if ( c )
 		return NULL;
 	else
@@ -290,17 +287,22 @@ int toupper( int c ) {
 }
 
 void *memmove( void *dest, const void *src, size_t count ) {
-	int i;
+	size_t i;
 
-	if ( dest > src ) {
-		for ( i = count - 1; i >= 0; i-- ) {
-			( (char *)dest )[i] = ( (char *)src )[i];
-		}
-	} else {
-		for ( i = 0; i < count; i++ ) {
-			( (char *)dest )[i] = ( (char *)src )[i];
+	if ( count ) {
+		if ( dest > src ) {
+			i = count;
+
+			do {
+				i--;
+				( (char *)dest )[i] = ( (char *)src )[i];
+			} while ( i > 0 );
+		} else {
+			for ( i = 0; i < count; i++ )
+				( (char *)dest )[i] = ( (char *)src )[i];
 		}
 	}
+
 	return dest;
 }
 
@@ -761,19 +763,16 @@ powN
 Raise a double to a integer power
 ===============
 */
-static double powN( double base, int exp )
-{
-	if( exp >= 0 )
-	{
+static double powN( double base, int exp ) {
+	if ( exp >= 0 ) {
 		double result = 1.0;
 
 		// calculate x, x^2, x^4, ... by repeated squaring
 		// and multiply together the ones corresponding to the
 		// binary digits of the exponent
 		// e.g. x^73 = x^(1 + 8 + 64) = x * x^8 * x^64
-		while( exp > 0 )
-		{
-			if( exp % 2 == 1 )
+		while ( exp > 0 ) {
+			if ( exp % 2 == 1 )
 				result *= base;
 
 			base *= base;
@@ -784,7 +783,7 @@ static double powN( double base, int exp )
 	}
 	// if exp is INT_MIN, the next clause will be upset,
 	// because -exp isn't representable
-	else if( exp == INT_MIN )
+	else if ( exp == INT_MIN )
 		return powN( base, exp + 1 ) / base;
 	// x < 0
 	else
@@ -952,21 +951,19 @@ The variable pointed to by endptr will hold the location of the first character
 in the nptr string that was not used in the conversion
 ==============
 */
-double strtod( const char *nptr, char **endptr )
-{
+double strtod( const char *nptr, char **endptr ) {
 	double res;
 	qboolean neg = qfalse;
 
 	// skip whitespace
-	while( isspace( *nptr ) )
+	while ( isspace( *nptr ) )
 		nptr++;
 
 	// special string parsing
-	if( Q_stricmpn( nptr, "nan", 3 ) == 0 )
-	{
+	if ( Q_stricmpn( nptr, "nan", 3 ) == 0 ) {
 		floatint_t nan;
 
-		if( endptr )
+		if ( endptr )
 			*endptr = (char *)&nptr[3];
 
 		// nan can be followed by a bracketed number (in hex, octal,
@@ -974,14 +971,12 @@ double strtod( const char *nptr, char **endptr )
 		// this can be used to generate signalling or quiet NaNs, for
 		// example (though I doubt it'll ever be used)
 		// note that nan(0) is infinity!
-		if( nptr[3] == '(' )
-		{
+		if ( nptr[3] == '(' ) {
 			char *end;
 			int mantissa = strtol( &nptr[4], &end, 0 );
-			if( *end == ')' )
-			{
+			if ( *end == ')' ) {
 				nan.ui = 0x7f800000 | ( mantissa & 0x7fffff );
-				if( endptr )
+				if ( endptr )
 					*endptr = &end[1];
 				return nan.f;
 			}
@@ -989,13 +984,12 @@ double strtod( const char *nptr, char **endptr )
 		nan.ui = 0x7fffffff;
 		return nan.f;
 	}
-	if( Q_stricmpn( nptr, "inf", 3 ) == 0 )
-	{
+	if ( Q_stricmpn( nptr, "inf", 3 ) == 0 ) {
 		floatint_t inf;
 		inf.ui = 0x7f800000;
-		if( endptr == NULL )
+		if ( endptr == NULL )
 			return inf.f;
-		if( Q_stricmpn( &nptr[3], "inity", 5 ) == 0 )
+		if ( Q_stricmpn( &nptr[3], "inity", 5 ) == 0 )
 			*endptr = (char *)&nptr[8];
 		else
 			*endptr = (char *)&nptr[3];
@@ -1004,120 +998,109 @@ double strtod( const char *nptr, char **endptr )
 
 	// normal numeric parsing
 	// sign
-	if( *nptr == '-' )
-	{
+	if ( *nptr == '-' ) {
 		nptr++;
 		neg = qtrue;
-	}
-	else if( *nptr == '+' )
+	} else if ( *nptr == '+' )
 		nptr++;
 	// hex
-	if( Q_stricmpn( nptr, "0x", 2 ) == 0 )
-	{
+	if ( Q_stricmpn( nptr, "0x", 2 ) == 0 ) {
 		// track if we use any digits
 		const char *s = &nptr[1], *end = s;
 		nptr += 2;
 		res = 0;
-		while( qtrue )
-		{
-			if( isdigit( *nptr ) )
+		while ( qtrue ) {
+			if ( isdigit( *nptr ) )
 				res = 16 * res + ( *nptr++ - '0' );
-			else if( *nptr >= 'A' && *nptr <= 'F' )
+			else if ( *nptr >= 'A' && *nptr <= 'F' )
 				res = 16 * res + 10 + *nptr++ - 'A';
-			else if( *nptr >= 'a' && *nptr <= 'f' )
+			else if ( *nptr >= 'a' && *nptr <= 'f' )
 				res = 16 * res + 10 + *nptr++ - 'a';
 			else
 				break;
 		}
 		// if nptr moved, save it
-		if( end + 1 < nptr )
+		if ( end + 1 < nptr )
 			end = nptr;
-		if( *nptr == '.' )
-		{
+		if ( *nptr == '.' ) {
 			float place;
 			nptr++;
 			// 1.0 / 16.0 == 0.0625
 			// I don't expect the float accuracy to hold out for
 			// very long but since we need to know the length of
 			// the string anyway we keep on going regardless
-			for( place = 0.0625;; place /= 16.0 )
-			{
-				if( isdigit( *nptr ) )
+			for ( place = 0.0625;; place /= 16.0 ) {
+				if ( isdigit( *nptr ) )
 					res += place * ( *nptr++ - '0' );
-				else if( *nptr >= 'A' && *nptr <= 'F' )
+				else if ( *nptr >= 'A' && *nptr <= 'F' )
 					res += place * ( 10 + *nptr++ - 'A' );
-				else if( *nptr >= 'a' && *nptr <= 'f' )
+				else if ( *nptr >= 'a' && *nptr <= 'f' )
 					res += place * ( 10 + *nptr++ - 'a' );
 				else
 					break;
 			}
-			if( end < nptr )
+			if ( end < nptr )
 				end = nptr;
 		}
 		// parse an optional exponent, representing multiplication
 		// by a power of two
 		// exponents are only valid if we encountered at least one
 		// digit already (and have therefore set end to something)
-		if( end != s && tolower( *nptr ) == 'p' )
-		{
+		if ( end != s && tolower( *nptr ) == 'p' ) {
 			int exp;
 			// apparently (confusingly) the exponent should be
 			// decimal
 			exp = strtol( &nptr[1], (char **)&end, 10 );
-			if( &nptr[1] == end )
-			{
+			if ( &nptr[1] == end ) {
 				// no exponent
-				if( endptr )
+				if ( endptr )
 					*endptr = (char *)nptr;
 				return res;
 			}
 
 			res *= powN( 2, exp );
 		}
-		if( endptr )
+		if ( endptr )
 			*endptr = (char *)end;
 		return res;
 	}
 	// decimal
-	else
-	{
+	else {
 		// track if we find any digits
 		const char *end = nptr, *p = nptr;
 		// this is most of the work
-		for( res = 0; isdigit( *nptr );
-			res = 10 * res + *nptr++ - '0' );
+		for ( res = 0; isdigit( *nptr );
+		      res = 10 * res + *nptr++ - '0' )
+			;
 		// if nptr moved, we read something
-		if( end < nptr )
+		if ( end < nptr )
 			end = nptr;
-		if( *nptr == '.' )
-		{
+		if ( *nptr == '.' ) {
 			// fractional part
 			float place;
 			nptr++;
-			for( place = 0.1; isdigit( *nptr ); place /= 10.0 )
+			for ( place = 0.1; isdigit( *nptr ); place /= 10.0 )
 				res += ( *nptr++ - '0' ) * place;
 			// if nptr moved, we read something
-			if( end + 1 < nptr )
+			if ( end + 1 < nptr )
 				end = nptr;
 		}
 		// exponent
 		// meaningless without having already read digits, so check
 		// we've set end to something
-		if( p != end && tolower( *nptr ) == 'e' )
-		{
+		if ( p != end && tolower( *nptr ) == 'e' ) {
 			int exp;
 			exp = strtol( &nptr[1], (char **)&end, 10 );
-			if( &nptr[1] == end )
-			{
+			if ( &nptr[1] == end ) {
 				// no exponent
-				if( endptr )
+				if ( endptr )
 					*endptr = (char *)nptr;
 				return res;
 			}
 
 			res *= powN( 10, exp );
 		}
-		if( endptr )
+		if ( endptr )
 			*endptr = (char *)end;
 		return res;
 	}
@@ -1226,80 +1209,70 @@ Will not overflow - returns LONG_MIN or LONG_MAX as appropriate
 *endptr is set to the location of the first character not used
 ==============
 */
-long strtol( const char *nptr, char **endptr, int base )
-{
+long strtol( const char *nptr, char **endptr, int base ) {
 	long res;
 	qboolean pos = qtrue;
 
-	if( endptr )
+	if ( endptr )
 		*endptr = (char *)nptr;
 	// bases other than 0, 2, 8, 16 are very rarely used, but they're
 	// not much extra effort to support
-	if( base < 0 || base == 1 || base > 36 )
+	if ( base < 0 || base == 1 || base > 36 )
 		return 0;
 	// skip leading whitespace
-	while( isspace( *nptr ) )
+	while ( isspace( *nptr ) )
 		nptr++;
 	// sign
-	if( *nptr == '-' )
-	{
+	if ( *nptr == '-' ) {
 		nptr++;
 		pos = qfalse;
-	}
-	else if( *nptr == '+' )
+	} else if ( *nptr == '+' )
 		nptr++;
 	// look for base-identifying sequences e.g. 0x for hex, 0 for octal
-	if( nptr[0] == '0' )
-	{
+	if ( nptr[0] == '0' ) {
 		nptr++;
 		// 0 is always a valid digit
-		if( endptr )
+		if ( endptr )
 			*endptr = (char *)nptr;
-		if( *nptr == 'x' || *nptr == 'X' )
-		{
-			if( base != 0 && base != 16 )
-			{
+		if ( *nptr == 'x' || *nptr == 'X' ) {
+			if ( base != 0 && base != 16 ) {
 				// can't be hex, reject x (accept 0)
-				if( endptr )
+				if ( endptr )
 					*endptr = (char *)nptr;
 				return 0;
 			}
 			nptr++;
 			base = 16;
-		}
-		else if( base == 0 )
+		} else if ( base == 0 )
 			base = 8;
-	}
-	else if( base == 0 )
+	} else if ( base == 0 )
 		base = 10;
 	res = 0;
-	while( qtrue )
-	{
+	while ( qtrue ) {
 		int val;
-		if( isdigit( *nptr ) )
+		if ( isdigit( *nptr ) )
 			val = *nptr - '0';
-		else if( islower( *nptr ) )
+		else if ( islower( *nptr ) )
 			val = 10 + *nptr - 'a';
-		else if( isupper( *nptr ) )
+		else if ( isupper( *nptr ) )
 			val = 10 + *nptr - 'A';
 		else
 			break;
-		if( val >= base )
+		if ( val >= base )
 			break;
 		// we go negative because LONG_MIN is further from 0 than
 		// LONG_MAX
-		if( res < ( LONG_MIN + val ) / base )
+		if ( res < ( LONG_MIN + val ) / base )
 			res = LONG_MIN; // overflow
 		else
 			res = res * base - val;
 		nptr++;
-		if( endptr )
+		if ( endptr )
 			*endptr = (char *)nptr;
 	}
-	if( pos )
-	{
+	if ( pos ) {
 		// can't represent LONG_MIN positive
-		if( res == LONG_MIN )
+		if ( res == LONG_MIN )
 			res = LONG_MAX;
 		else
 			res = -res;
@@ -1354,7 +1327,7 @@ double fabs( double x ) {
  *    probably requires libm on most operating systems.  Don't yet
  *    support the exponent (e,E) and sigfig (g,G).  Also, fmtint()
  *    was pretty badly broken, it just wasn't being exercised in ways
- *    which showed it, so that's been fixed.  Also, formated the code
+ *    which showed it, so that's been fixed.  Also, formatted the code
  *    to mutt conventions, and removed dead code left over from the
  *    original.  Also, there is now a builtin-test, just compile with:
  *           gcc -DTEST_SNPRINTF -o snprintf snprintf.c -lm
@@ -1703,12 +1676,8 @@ static int dopr( char *buffer, size_t maxlen, const char *format, va_list args )
 				break; /* some picky compilers need this */
 		}
 	}
-	if ( buffer != NULL ) {
-		if ( currlen < maxlen - 1 )
-			buffer[currlen] = '\0';
-		else
-			buffer[maxlen - 1] = '\0';
-	}
+	if ( maxlen > 0 )
+		buffer[currlen] = '\0';
 	return total;
 }
 
@@ -1844,17 +1813,6 @@ static LDOUBLE abs_val( LDOUBLE value ) {
 	return result;
 }
 
-static LDOUBLE pow10( int exp ) {
-	LDOUBLE result = 1;
-
-	while ( exp ) {
-		result *= 10;
-		exp--;
-	}
-
-	return result;
-}
-
 static long round( LDOUBLE value ) {
 	long intpart;
 
@@ -1913,11 +1871,11 @@ static int fmtfp( char *buffer, size_t *currlen, size_t maxlen,
 	/* We "cheat" by converting the fractional part to integer by
    * multiplying by a factor of 10
    */
-	fracpart = round( ( pow10( max ) ) * ( ufvalue - intpart ) );
+	fracpart = round( ( powN( 10, max ) ) * ( ufvalue - intpart ) );
 
-	if ( fracpart >= pow10( max ) ) {
+	if ( fracpart >= powN( 10, max ) ) {
 		intpart++;
-		fracpart -= pow10( max );
+		fracpart -= powN( 10, max );
 	}
 
 #ifdef DEBUG_SNPRINTF
@@ -2002,20 +1960,7 @@ static int dopr_outch( char *buffer, size_t *currlen, size_t maxlen, char c ) {
 }
 
 int Q_vsnprintf( char *str, size_t length, const char *fmt, va_list args ) {
-	if ( str != NULL )
-		str[0] = 0;
 	return dopr( str, length, fmt, args );
-}
-
-int Q_snprintf( char *str, size_t length, const char *fmt, ... ) {
-	va_list ap;
-	int retval;
-
-	va_start( ap, fmt );
-	retval = Q_vsnprintf( str, length, fmt, ap );
-	va_end( ap );
-
-	return retval;
 }
 
 /* this is really crappy */

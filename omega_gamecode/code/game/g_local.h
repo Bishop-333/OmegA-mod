@@ -835,7 +835,7 @@ void SendDDtimetakenMessageToAllClients( void );
 void SendDominationPointsStatusMessageToAllClients( void );
 void SendYourTeamMessageToTeam( team_t team );
 void QDECL G_Printf( const char *fmt, ... );
-void QDECL G_Error( const char *fmt, ... ) Q_NO_RETURN Q_PRINTF_FUNC(1, 2);
+void QDECL G_Error( const char *fmt, ... ) Q_NO_RETURN Q_PRINTF_FUNC( 1, 2 );
 //KK-OAX Made Accessible for g_admin.c
 void LogExit( const char *string );
 void CheckTeamVote( int team );
