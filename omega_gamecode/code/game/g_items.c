@@ -1042,7 +1042,7 @@ void G_SpawnItem( gentity_t *ent, gitem_t *item ) {
 		ent->s.eFlags |= EF_NODRAW; // Don't draw the flag in CTF_elimination
 	}
 
-	if ( g_gametype.integer == GT_POSSESSION && ( strcmp( ent->classname, "team_CTF_redflag" ) || strcmp( ent->classname, "team_CTF_blueflag" ) ) ) {
+	if ( g_gametype.integer == GT_POSSESSION && ( strcmp( ent->classname, "team_CTF_redflag" ) == 0 || strcmp( ent->classname, "team_CTF_blueflag" ) == 0 ) ) {
 		ent->s.eFlags |= EF_NODRAW; // Don't draw the flag colored flags in possession
 	}
 
