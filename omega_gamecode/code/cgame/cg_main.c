@@ -1152,12 +1152,11 @@ static void CG_RegisterGraphics( void ) {
 		if ( cg_omegaFlags.integer ) {
 			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags_omega/r_flag.md3" );
 			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags_omega/b_flag.md3" );
-			cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags_omega/n_flag.md3" );
 		} else {
 			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags/r_flag.md3" );
 			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags/b_flag.md3" );
-			cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
 		}
+		cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
 		cgs.media.redFlagShader[0] = trap_R_RegisterShaderNoMip( "icons/iconf_red1" );
 		cgs.media.redFlagShader[1] = trap_R_RegisterShaderNoMip( "icons/iconf_red2" );
 		cgs.media.redFlagShader[2] = trap_R_RegisterShaderNoMip( "icons/iconf_red3" );
@@ -1177,11 +1176,7 @@ static void CG_RegisterGraphics( void ) {
 	}
 
 	if ( cgs.gametype == GT_1FCTF || cgs.gametype == GT_POSSESSION || cg_buildScript.integer ) {
-		if ( cg_omegaFlags.integer ) {
-			cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags_omega/n_flag.md3" );
-		} else {
-			cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
-		}
+		cgs.media.neutralFlagModel = trap_R_RegisterModel( "models/flags/n_flag.md3" );
 		cgs.media.flagShader[0] = trap_R_RegisterShaderNoMip( "icons/iconf_neutral1" );
 		cgs.media.flagShader[1] = trap_R_RegisterShaderNoMip( "icons/iconf_red2" );
 		cgs.media.flagShader[2] = trap_R_RegisterShaderNoMip( "icons/iconf_blu2" );

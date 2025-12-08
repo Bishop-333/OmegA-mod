@@ -128,13 +128,3 @@ models/flags/rflagface
 	}
 }
 
-models/flags/nflagface
-{
-	cull none
-	nopicmip
-	nomipmaps
-	{
-		clampmap models/flags_omega/nflagface1.jpg
-		blendfunc add
-	}
-}
