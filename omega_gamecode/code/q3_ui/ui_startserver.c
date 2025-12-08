@@ -871,31 +871,31 @@ static void ServerOptions_Start( void ) {
 		case GT_TEAM:
 			trap_Cvar_SetValue( "ui_team_fraglimit", fraglimit );
 			trap_Cvar_SetValue( "ui_team_timelimit", timelimit );
-			trap_Cvar_SetValue( "ui_team_friendlt", friendlyfire );
+			trap_Cvar_SetValue( "ui_team_friendly", friendlyfire );
 			break;
 
 		case GT_CTF:
 			trap_Cvar_SetValue( "ui_ctf_fraglimit", fraglimit );
 			trap_Cvar_SetValue( "ui_ctf_timelimit", timelimit );
-			trap_Cvar_SetValue( "ui_ctf_friendlt", friendlyfire );
+			trap_Cvar_SetValue( "ui_ctf_friendly", friendlyfire );
 			break;
 
 		case GT_1FCTF:
 			trap_Cvar_SetValue( "ui_1fctf_capturelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_1fctf_timelimit", timelimit );
-			trap_Cvar_SetValue( "ui_1fctf_friendlt", friendlyfire );
+			trap_Cvar_SetValue( "ui_1fctf_friendly", friendlyfire );
 			break;
 
 		case GT_OBELISK:
 			trap_Cvar_SetValue( "ui_overload_capturelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_overload_timelimit", timelimit );
-			trap_Cvar_SetValue( "ui_overload_friendlt", friendlyfire );
+			trap_Cvar_SetValue( "ui_overload_friendly", friendlyfire );
 			break;
 
 		case GT_HARVESTER:
 			trap_Cvar_SetValue( "ui_harvester_capturelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_harvester_timelimit", timelimit );
-			trap_Cvar_SetValue( "ui_harvester_friendlt", friendlyfire );
+			trap_Cvar_SetValue( "ui_harvester_friendly", friendlyfire );
 			break;
 
 		case GT_ELIMINATION:
@@ -916,7 +916,7 @@ static void ServerOptions_Start( void ) {
 		case GT_DOUBLE_D:
 			trap_Cvar_SetValue( "ui_dd_capturelimit", fraglimit );
 			trap_Cvar_SetValue( "ui_dd_timelimit", timelimit );
-			trap_Cvar_SetValue( "ui_dd_friendlt", friendlyfire );
+			trap_Cvar_SetValue( "ui_dd_friendly", friendlyfire );
 			break;
 
 		case GT_DOMINATION:

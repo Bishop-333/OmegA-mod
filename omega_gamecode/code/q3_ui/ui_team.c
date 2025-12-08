@@ -166,8 +166,13 @@ static void TeamMain_MenuInit( void ) {
 		default:
 		case GT_TEAM:
 		case GT_CTF:
+		case GT_1FCTF:
+		case GT_OBELISK:
+		case GT_HARVESTER:
 		case GT_ELIMINATION:
 		case GT_CTF_ELIMINATION:
+		case GT_DOUBLE_D:
+		case GT_DOMINATION:
 			s_teammain.joingame.string = "AUTO JOIN GAME";
 			break;
 	}
