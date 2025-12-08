@@ -29,11 +29,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define LOGIN_FRAME "menu/art_blueish/cut_frame"
 
 #define ID_NAME 100
-#define ID_NAME_BOX 101
-#define ID_PASSWORD 102
-#define ID_PASSWORD_BOX 103
-#define ID_LOGIN 104
-#define ID_CANCEL 105
+#define ID_PASSWORD 101
+#define ID_LOGIN 102
+#define ID_CANCEL 103
 
 typedef struct
 {
@@ -48,10 +46,6 @@ typedef struct
 } login_t;
 
 static login_t s_login;
-
-static menuframework_s s_login_menu;
-static menuaction_s s_login_login;
-static menuaction_s s_login_cancel;
 
 static vec4_t s_login_color_prompt = { 1.00, 0.43, 0.00, 1.00 };
 

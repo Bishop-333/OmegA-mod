@@ -213,46 +213,6 @@ static void CG_TellAttacker_f( void ) {
 }
 
 /*
-=================
-CG_VoiceTellTarget_f
-=================
-*/
-static void CG_VoiceTellTarget_f( void ) {
-	int clientNum;
-	char command[128];
-	char message[128];
-
-	clientNum = CG_CrosshairPlayer();
-	if ( clientNum == -1 ) {
-		return;
-	}
-
-	trap_Args( message, 128 );
-	Com_sprintf( command, 128, "vtell %i %s", clientNum, message );
-	trap_SendClientCommand( command );
-}
-
-/*
-=================
-CG_VoiceTellAttacker_f
-=================
-*/
-static void CG_VoiceTellAttacker_f( void ) {
-	int clientNum;
-	char command[128];
-	char message[128];
-
-	clientNum = CG_LastAttacker();
-	if ( clientNum == -1 ) {
-		return;
-	}
-
-	trap_Args( message, 128 );
-	Com_sprintf( command, 128, "vtell %i %s", clientNum, message );
-	trap_SendClientCommand( command );
-}
-
-/*
 ==================
 CG_StartOrbit_f
 ==================
@@ -299,8 +259,6 @@ static consoleCommand_t commands[] = {
     { "weapon", CG_Weapon_f },
     { "tell_target", CG_TellTarget_f },
     { "tell_attacker", CG_TellAttacker_f },
-    { "vtell_target", CG_VoiceTellTarget_f },
-    { "vtell_attacker", CG_VoiceTellAttacker_f },
     { "tcmd", CG_TargetCommand_f },
     { "startOrbit", CG_StartOrbit_f },
     { "loaddeferred", CG_LoadDeferredPlayers },

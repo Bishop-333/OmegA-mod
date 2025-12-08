@@ -53,9 +53,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "syn.h"   //synonyms
 #include "match.h" //string matching types and vars
 
-// for the voice chats
-#include "../../ui/menudef.h"
-
 //goal flag, see ../botlib/be_ai_goal.h for the other GFL_*
 #define GFL_AIR 128
 
@@ -291,7 +288,7 @@ static int BotGetItemLongTermGoal( bot_state_t *bs, int tfl, bot_goal_t *goal ) 
 ==================
 BotGetLongTermGoal
 
-we could also create a seperate AI node for every long term goal type
+we could also create a separate AI node for every long term goal type
 however this saves us a lot of code
 ==================
 */
@@ -2437,7 +2434,7 @@ int AINode_Battle_Retreat( bot_state_t *bs ) {
 		VectorCopy( moveresult.ideal_viewangles, bs->ideal_viewangles );
 	} else if ( !( moveresult.flags & MOVERESULT_MOVEMENTVIEWSET ) && !( bs->flags & BFL_IDEALVIEWSET ) ) {
 		attack_skill = trap_Characteristic_BFloat( bs->character, CHARACTERISTIC_ATTACK_SKILL, 0, 1 );
-		//if the bot is skilled anough
+		//if the bot is skilled enough
 		if ( attack_skill > 0.3 ) {
 			BotAimAtEnemy( bs );
 		} else {
@@ -2575,7 +2572,7 @@ int AINode_Battle_NBG( bot_state_t *bs ) {
 		VectorCopy( moveresult.ideal_viewangles, bs->ideal_viewangles );
 	} else if ( !( moveresult.flags & MOVERESULT_MOVEMENTVIEWSET ) && !( bs->flags & BFL_IDEALVIEWSET ) ) {
 		attack_skill = trap_Characteristic_BFloat( bs->character, CHARACTERISTIC_ATTACK_SKILL, 0, 1 );
-		//if the bot is skilled anough and the enemy is visible
+		//if the bot is skilled enough and the enemy is visible
 		if ( attack_skill > 0.3 ) {
 			BotAimAtEnemy( bs );
 		} else {

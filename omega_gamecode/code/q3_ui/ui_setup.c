@@ -41,10 +41,9 @@ SETUP MENU
 #define ID_CUSTOMIZECONTROLS 11
 #define ID_SYSTEMCONFIG 12
 #define ID_GAME 13
-#define ID_LOAD 15
-#define ID_SAVE 16
-#define ID_DEFAULTS 17
-#define ID_BACK 18
+#define ID_SAVE 14
+#define ID_DEFAULTS 15
+#define ID_BACK 16
 
 typedef struct {
 	menuframework_s menu;

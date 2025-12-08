@@ -272,7 +272,7 @@ int G_FloodLimited( gentity_t *ent ) {
 	return ms;
 }
 
-static void QDECL G_AdminMessage( const char *prefix, const char *fmt, ... ) __attribute__( ( format( printf, 2, 3 ) ) );
+static void QDECL G_AdminMessage( const char *prefix, const char *fmt, ... ) Q_PRINTF_FUNC( 2, 3 );
 
 /*
 =================
