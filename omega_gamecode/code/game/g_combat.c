@@ -1342,7 +1342,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		z_rel = point[2] - targ->r.currentOrigin[2] + fabs( targ->r.mins[2] );
 		z_ratio = z_rel / height;
 
-		if ( z_ratio < 0.90 ) {
+		if ( z_ratio < 0.95 ) {
 			if ( g_headShotOnly.integer ) {
 				take *= 0;
 			}
@@ -1377,7 +1377,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	}
 
 	if ( damage && targ->client && targ != attacker && g_damagePlums.integer && targ->health > 0 && !g_instantgib.integer ) {
-		if ( !g_headShotOnly.integer || ( g_headShotOnly.integer && z_ratio > 0.90 ) ) {
+		if ( !g_headShotOnly.integer || ( g_headShotOnly.integer && z_ratio > 0.95 ) ) {
 			if ( mod != MOD_SHOTGUN ) {
 				DamagePlum( attacker, targ->r.currentOrigin, damage );
 			} else {
