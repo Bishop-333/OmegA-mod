@@ -250,6 +250,7 @@ vmCvar_t cg_drawEmotes;
 vmCvar_t cg_drawEnemy;
 vmCvar_t cg_drawFriendThroughWalls;
 vmCvar_t cg_drawItemPickup;
+vmCvar_t cg_drawOldScoreboard;
 vmCvar_t cg_drawTeamBackground;
 vmCvar_t cg_elimination_activewarmup;
 vmCvar_t cg_enemyColor;
@@ -460,6 +461,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_drawEnemy, "cg_enemy", "0", CVAR_ARCHIVE },
     { &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
     { &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE },
+    { &cg_drawOldScoreboard, "cg_drawOldScoreboard", "0", CVAR_ARCHIVE },
     { &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE },
     { &cg_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_SYSTEMINFO },
     { &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },

@@ -2912,7 +2912,11 @@ static qboolean CG_DrawScoreboard( void ) {
 			CG_DrawSmallStringColor( 320 - w / 2, 400, "Click FIRE to respawn", colorGreen );
 		}
 	}
-	return CG_DrawOldScoreboard();
+	if ( cg_drawOldScoreboard.integer ) {
+		return CG_DrawOldScoreboard();
+	} else {
+		return CG_DrawNewScoreboard();
+	}
 }
 
 #define ACCBOARD_XPOS 500

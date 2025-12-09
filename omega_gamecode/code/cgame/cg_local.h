@@ -1387,6 +1387,7 @@ extern vmCvar_t cg_drawEmotes;
 extern vmCvar_t cg_drawEnemy;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t cg_drawItemPickup;
+extern vmCvar_t cg_drawOldScoreboard;
 extern vmCvar_t cg_drawTeamBackground;
 extern vmCvar_t cg_elimination_activewarmup;
 extern vmCvar_t cg_enemyColor;
@@ -1688,6 +1689,7 @@ void CG_DrawInformation( void );
 //
 // cg_scoreboard.c
 //
+qboolean CG_DrawNewScoreboard( void );
 qboolean CG_DrawOldScoreboard( void );
 void CG_DrawOldTourneyScoreboard( void );
 
