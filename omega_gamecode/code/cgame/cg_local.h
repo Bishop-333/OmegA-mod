@@ -739,7 +739,7 @@ typedef struct {
 	qhandle_t armorModel;
 	qhandle_t armorIcon;
 
-	qhandle_t omegaModel;
+	qhandle_t omegaLogoModel;
 
 	qhandle_t teamStatusBar;
 
@@ -1388,6 +1388,7 @@ extern vmCvar_t cg_drawEnemy;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t cg_drawItemPickup;
 extern vmCvar_t cg_drawOldScoreboard;
+extern vmCvar_t cg_drawSmallHealthSphere;
 extern vmCvar_t cg_drawTeamBackground;
 extern vmCvar_t cg_elimination_activewarmup;
 extern vmCvar_t cg_enemyColor;

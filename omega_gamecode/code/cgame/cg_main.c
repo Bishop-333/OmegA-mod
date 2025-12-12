@@ -251,6 +251,7 @@ vmCvar_t cg_drawEnemy;
 vmCvar_t cg_drawFriendThroughWalls;
 vmCvar_t cg_drawItemPickup;
 vmCvar_t cg_drawOldScoreboard;
+vmCvar_t cg_drawSmallHealthSphere;
 vmCvar_t cg_drawTeamBackground;
 vmCvar_t cg_elimination_activewarmup;
 vmCvar_t cg_enemyColor;
@@ -462,6 +463,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
     { &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE },
     { &cg_drawOldScoreboard, "cg_drawOldScoreboard", "0", CVAR_ARCHIVE },
+    { &cg_drawSmallHealthSphere, "cg_drawSmallHealthSphere", "0", CVAR_ARCHIVE },
     { &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE },
     { &cg_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_SYSTEMINFO },
     { &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },
@@ -1216,7 +1218,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.armorModel = trap_R_RegisterModel( "models/powerups/armor/armor_yel.md3" );
 	cgs.media.armorIcon = trap_R_RegisterShaderNoMip( "icons/iconr_yellow" );
 
-	cgs.media.omegaModel = trap_R_RegisterModel( "models/mapobjects/logo/logo.md3" );
+	cgs.media.omegaLogoModel = trap_R_RegisterModel( "models/mapobjects/logo/logo.md3" );
 
 	cgs.media.machinegunBrassModel = trap_R_RegisterModel( "models/weapons2/shells/m_shell.md3" );
 	cgs.media.shotgunBrassModel = trap_R_RegisterModel( "models/weapons2/shells/s_shell.md3" );

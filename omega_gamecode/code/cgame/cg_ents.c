@@ -354,6 +354,9 @@ static void CG_Item( centity_t *cent ) {
 		VectorClear( spinAngles );
 
 		if ( item->giType == IT_HEALTH || item->giType == IT_POWERUP ) {
+			if ( item->giType == IT_HEALTH && item->quantity == 5 && !cg_drawSmallHealthSphere.integer ) {
+				return;
+			}
 			if ( ( ent.hModel = cg_items[es->modelindex].models[1] ) != 0 ) {
 				if ( item->giType == IT_POWERUP ) {
 					ent.origin[2] += 12;
