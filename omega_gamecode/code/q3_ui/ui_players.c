@@ -452,14 +452,18 @@ UI_SwingAngles
 ==================
 */
 static void UI_SwingAngles( float destination, float swingTolerance, float clampTolerance,
-                            float speed, float *angle, qboolean *swinging ) {
+                            float speed, float *angle, qboolean *swinging, qboolean followCursor ) {
 	float swing;
 	float move;
 	float scale;
 
 	if ( !*swinging ) {
 		// see if a swing should be started
-		swing = 0.0;
+		if ( followCursor ) {
+			swing = AngleSubtract( destination, *angle );
+		} else {
+			swing = 0.0;
+		}
 		if ( swing > swingTolerance || swing < -swingTolerance ) {
 			*swinging = qtrue;
 		}
@@ -560,8 +564,18 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 	torsoAngles[YAW] = headAngles[YAW];
 
 	// torso
-	UI_SwingAngles( torsoAngles[YAW], 0, 90, SWINGSPEED, &pi->torso.yawAngle, &pi->torso.yawing );
-	UI_SwingAngles( legsAngles[YAW], 0, 90, SWINGSPEED, &pi->legs.yawAngle, &pi->legs.yawing );
+	if ( rotate ) {
+		UI_SwingAngles( torsoAngles[YAW], 0, 90, SWINGSPEED, &pi->torso.yawAngle, &pi->torso.yawing, followCursor );
+		UI_SwingAngles( legsAngles[YAW], 0, 90, SWINGSPEED, &pi->legs.yawAngle, &pi->legs.yawing, followCursor );
+	} else {
+		UI_SwingAngles( torsoAngles[YAW], 25, 90, SWINGSPEED, &pi->torso.yawAngle, &pi->torso.yawing, followCursor );
+		UI_SwingAngles( legsAngles[YAW], 40, 90, SWINGSPEED, &pi->legs.yawAngle, &pi->legs.yawing, followCursor );
+	}
+
+	if ( followCursor ) {
+		legsAngles[YAW] = pi->legs.yawAngle;
+ 		torsoAngles[YAW] = pi->torso.yawAngle;
+	}
 
 	// --------- pitch -------------
 
@@ -571,7 +585,7 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 	} else {
 		dest = headAngles[PITCH] * 0.75;
 	}
-	UI_SwingAngles( dest, 15, 30, 0.1f, &pi->torso.pitchAngle, &pi->torso.pitching );
+	UI_SwingAngles( dest, 15, 30, 0.1f, &pi->torso.pitchAngle, &pi->torso.pitching, followCursor );
 	torsoAngles[PITCH] = pi->torso.pitchAngle;
 
 	// pull the angles back out of the hierarchial chain
