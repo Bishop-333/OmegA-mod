@@ -141,8 +141,8 @@ int g_ffa_gt; //Are this a FFA gametype even if gametype is high?
 vmCvar_t g_lms_lives;
 vmCvar_t g_lms_mode;
 vmCvar_t g_elimination_ctf_oneway;
-vmCvar_t g_awardpushing;       //The server can decide if players are awarded for pushing people in lave etc.
-vmCvar_t g_persistantpowerups; //Allow missionpack style persistant powerups?
+vmCvar_t g_awardpushing; //The server can decide if players are awarded for pushing people in lave etc.
+vmCvar_t g_runes;        //Allow missionpack style persistant powerups?
 
 vmCvar_t g_catchup; //Favors the week players
 
@@ -383,7 +383,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_awardpushing, "g_awardpushing", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
     //g_persistantpowerups
-    { &g_persistantpowerups, "g_runes", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse },
+    { &g_runes, "g_runes", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse },
 
     //nexuiz style rocket arena
     { &g_rockets, "g_rockets", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse },

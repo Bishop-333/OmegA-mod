@@ -574,7 +574,7 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 
 	if ( followCursor ) {
 		legsAngles[YAW] = pi->legs.yawAngle;
- 		torsoAngles[YAW] = pi->torso.yawAngle;
+		torsoAngles[YAW] = pi->torso.yawAngle;
 	}
 
 	// --------- pitch -------------
