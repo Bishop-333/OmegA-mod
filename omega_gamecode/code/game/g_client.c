@@ -573,7 +573,7 @@ TeamCount
 Returns number of players on a team
 ================
 */
-team_t TeamCount( int ignoreClientNum, int team ) {
+int TeamCount( int ignoreClientNum, team_t team ) {
 	int i;
 	int count = 0;
 
@@ -604,7 +604,7 @@ TeamLivingCount
 Returns number of living players on a team
 ================
 */
-team_t TeamLivingCount( int ignoreClientNum, int team ) {
+int TeamLivingCount( int ignoreClientNum, team_t team ) {
 	int i;
 	int count = 0;
 	qboolean LMS = ( g_gametype.integer == GT_LMS );
@@ -637,7 +637,7 @@ Count total number of healthpoints on teh teams used for draws in Elimination
 ================
 */
 
-team_t TeamHealthCount( int ignoreClientNum, int team ) {
+int TeamHealthCount( int ignoreClientNum, team_t team ) {
 	int i;
 	int count = 0;
 

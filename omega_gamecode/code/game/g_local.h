@@ -758,9 +758,9 @@ void G_PredictPlayerMove( gentity_t *ent, float frametime );
 //
 // g_client.c
 //
-team_t TeamCount( int ignoreClientNum, int team );
-team_t TeamLivingCount( int ignoreClientNum, int team ); //Elimination
-team_t TeamHealthCount( int ignoreClientNum, int team ); //Elimination
+int TeamCount( int ignoreClientNum, team_t team );
+int TeamLivingCount( int ignoreClientNum, team_t team ); //Elimination
+int TeamHealthCount( int ignoreClientNum, team_t team ); //Elimination
 void RespawnAll( void );                                 //For round elimination
 void RespawnDead( void );
 void EnableWeapons( void );
