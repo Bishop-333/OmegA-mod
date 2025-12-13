@@ -881,6 +881,8 @@ static float CG_DrawTimer( int y ) {
 	char *s;
 	int mins, seconds, tens;
 	int msec;
+	int timerX, timerY, timerW, timerH;
+	vec4_t color;
 
 	msec = cg.time - cgs.levelStartTime;
 
@@ -890,20 +892,43 @@ static float CG_DrawTimer( int y ) {
 	tens = seconds / 10;
 	seconds -= tens * 10;
 
-	s = va( "%i:%i%i", mins, tens, seconds );
+	VectorCopy( colorWhite, color );
+	if ( ( msec / 1000 ) & 1 ) {
+		color[3] = 0.5f;
+	} else {
+		color[3] = 1.0f;
+	}
+
+	s = va( "%i %i%i", mins, tens, seconds );
 
 	if ( cg_drawTimer.integer == 1 ) {
 		/* customizable timer */
-		CG_DrawStringExt( cg_timerX.integer - CG_DrawStrlen( s ) * cg_timerWidth.integer / 2, cg_timerY.integer, s, colorWhite, qfalse, qtrue, cg_timerWidth.integer, cg_timerHeight.integer, 0 );
-		return y;
+		timerX = cg_timerX.integer;
+		timerY = cg_timerY.integer;
+		timerW = cg_timerWidth.integer;
+		timerH = cg_timerHeight.integer;
 	} else if ( cg_drawTimer.integer == 2 ) {
 		/* top of screen */
-		CG_DrawStringExt( 318 - CG_DrawStrlen( s ) * 25 / 2, 2, s, colorWhite, qfalse, qtrue, 25, 25, 0 );
-		return y;
+		timerX = 318;
+		timerY = 2;
+		timerW = 25;
+		timerH = 25;
 	} else {
 		/* top right-hand corner of screen */
-		CG_DrawStringExt( 619 - CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 2, y + 2, s, colorWhite, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
-		return y + TINYCHAR_HEIGHT + 4;
+		timerX = 619;
+		timerY = y + 2;
+		timerW = TINYCHAR_WIDTH;
+		timerH = TINYCHAR_HEIGHT;
+	}
+
+	timerX -= CG_DrawStrlen( s ) * timerW / 2;
+	CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
+	CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
+
+	if ( cg_drawTimer.integer == 1 || cg_drawTimer.integer == 2 ) {
+		return y;
+	} else {
+		return y + timerH + 4;
 	}
 }
 

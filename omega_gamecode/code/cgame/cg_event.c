@@ -692,13 +692,13 @@ static void CG_PlayFootstep( int clientNum, int type ) {
 	if ( !cg_footsteps.integer ) {
 		return;
 	}
-	
+
 	if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
 		clientNum = 0;
 	}
 
 	do {
-		r = (int)(random() * 4.0f);
+		r = (int)( random() * 4.0f );
 	} while ( r == lastFootstep[clientNum] );
 
 	lastFootstep[clientNum] = r;
