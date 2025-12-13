@@ -276,6 +276,7 @@ static void CG_OffsetThirdPersonView( void ) {
 	sideScale = sin( cg_thirdPersonAngle.value / 180 * M_PI );
 	VectorMA( view, -cg_thirdPersonRange.value * forwardScale, forward, view );
 	VectorMA( view, -cg_thirdPersonRange.value * sideScale, right, view );
+	VectorMA( view, cg_thirdPersonOffset.value, right, view );
 
 	// trace a ray from the origin to the viewpoint to make sure the view isn't
 	// in a solid block. Use an 8 by 8 block to prevent the view from near clipping anything
