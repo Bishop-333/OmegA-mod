@@ -237,17 +237,6 @@ static void CG_ParseRespawnTime( void ) {
 
 /*
 =================
-CG_ParseTeam
-=================
-*/
-static void CG_ParseTeam( void ) {
-	//TODO: Add code here
-	if ( cg_voip_teamonly.integer )
-		trap_Cvar_Set( "cl_voipSendTarget", CG_Argv( 1 ) );
-}
-
-/*
-=================
 CG_ParseAttackingTeam
 =================
 */
@@ -805,17 +794,6 @@ static void CG_ServerCommand( void ) {
 		CG_Printf( "%s\n", text );
 		return;
 	}
-	if ( !strcmp( cmd, "vchat" ) ) {
-		return;
-	}
-
-	if ( !strcmp( cmd, "vtchat" ) ) {
-		return;
-	}
-
-	if ( !strcmp( cmd, "vtell" ) ) {
-		return;
-	}
 
 	if ( !strcmp( cmd, "scores" ) ) {
 		CG_ParseScores();
@@ -924,11 +902,6 @@ static void CG_ServerCommand( void ) {
 
 	if ( !strcmp( cmd, "spawnPoints" ) ) {
 		CG_ParseSpawnpoints();
-		return;
-	}
-
-	if ( !strcmp( cmd, "team" ) ) {
-		CG_ParseTeam();
 		return;
 	}
 

@@ -113,14 +113,13 @@ typedef struct
 #define ID_CHAT2 35
 #define ID_CHAT3 36
 #define ID_CHAT4 37
-#define ID_VOIP_TALK 38
 
 // omega
-#define ID_DROPFLAG 39
-#define ID_HAPPY 40
-#define ID_SAD 41
-#define ID_ANGRY 42
-#define ID_MOON 43
+#define ID_DROPFLAG 38
+#define ID_HAPPY 39
+#define ID_SAD 40
+#define ID_ANGRY 41
+#define ID_MOON 42
 
 // all others
 #define ID_FREELOOK 39
@@ -131,8 +130,7 @@ typedef struct
 #define ID_JOYENABLE 44
 #define ID_JOYTHRESHOLD 45
 #define ID_SMOOTHMOUSE 46
-#define ID_VOIP_TEAMONLY 47
-#define ID_FOV 48
+#define ID_FOV 47
 
 #define ANIM_IDLE 0
 #define ANIM_RUN 1
@@ -238,8 +236,6 @@ typedef struct
 	menuaction_s chat2;
 	menuaction_s chat3;
 	menuaction_s chat4;
-	menuaction_s voip_talk;
-	menuradiobutton_s voip_teamonly;
 	menuradiobutton_s joyenable;
 	menuslider_s joythreshold;
 	int section;
@@ -309,7 +305,6 @@ static bind_t g_bindings[] =
         { "messagemode2", "chat - team", ID_CHAT2, ANIM_CHAT, -1, -1, -1, -1 },
         { "messagemode3", "chat - target", ID_CHAT3, ANIM_CHAT, -1, -1, -1, -1 },
         { "messagemode4", "chat - attacker", ID_CHAT4, ANIM_CHAT, -1, -1, -1, -1 },
-        { "+voiprecord", "voice chat", ID_VOIP_TALK, ANIM_CHAT, 'q', -1, -1, -1 },
         { "drop", "drop flag", ID_DROPFLAG, ANIM_IDLE, -1, -1, -1, -1 },
         { "happy", "emote - happy", ID_HAPPY, ANIM_HAPPY, -1, -1, -1, -1 },
         { "sad", "emote - sad", ID_SAD, ANIM_SAD, -1, -1, -1, -1 },
@@ -329,7 +324,6 @@ static configcvar_t g_configcvars[] =
         { "joy_threshold", 0, 0 },
         { "m_filter", 0, 0 },
         { "cl_freelook", 0, 0 },
-        { "cg_voipTeamOnly", 0, 0 },
         { NULL, 0, 0 } };
 
 static menucommon_s *g_movement_controls[] =
@@ -397,8 +391,6 @@ static menucommon_s *g_misc_controls[] = {
     (menucommon_s *)&s_controls.chat2,
     (menucommon_s *)&s_controls.chat3,
     (menucommon_s *)&s_controls.chat4,
-    (menucommon_s *)&s_controls.voip_talk,
-    (menucommon_s *)&s_controls.voip_teamonly,
     NULL,
 };
 
@@ -876,9 +868,8 @@ static void Controls_GetConfig( void ) {
 	s_controls.sensitivity.curvalue = UI_ClampCvar( 2, 30, Controls_GetCvarValue( "sensitivity" ) );
 	s_controls.fov.curvalue = UI_ClampCvar( 90, 130, Controls_GetCvarValue( "cg_fov" ) );
 	s_controls.joyenable.curvalue = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "in_joystick" ) );
-	s_controls.joythreshold.curvalue = UI_ClampCvar( 0.05f, 0.75f, Controls_GetCvarValue( "joy_threshold" ) );
+	s_controls.joythreshold.curvalue = UI_ClampCvar( 0.05f, 0.75f, Controls_GetCvarValue( "joy_threshold" ) ) * 100.0f;
 	s_controls.freelook.curvalue = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "cl_freelook" ) );
-	s_controls.voip_teamonly.curvalue = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "cg_voipTeamOnly" ) );
 }
 
 /*
@@ -916,9 +907,8 @@ static void Controls_SetConfig( void ) {
 	trap_Cvar_SetValue( "sensitivity", s_controls.sensitivity.curvalue );
 	trap_Cvar_SetValue( "cg_fov", s_controls.fov.curvalue );
 	trap_Cvar_SetValue( "in_joystick", s_controls.joyenable.curvalue );
-	trap_Cvar_SetValue( "joy_threshold", s_controls.joythreshold.curvalue );
+	trap_Cvar_SetValue( "joy_threshold", s_controls.joythreshold.curvalue / 100.0f );
 	trap_Cvar_SetValue( "cl_freelook", s_controls.freelook.curvalue );
-	trap_Cvar_SetValue( "cg_voipTeamOnly", s_controls.voip_teamonly.curvalue );
 	trap_Cmd_ExecuteText( EXEC_APPEND, "in_restart\n" );
 }
 
@@ -949,9 +939,8 @@ static void Controls_SetDefaults( void ) {
 	s_controls.sensitivity.curvalue = Controls_GetCvarDefault( "sensitivity" );
 	s_controls.fov.curvalue = Controls_GetCvarDefault( "cg_fov" );
 	s_controls.joyenable.curvalue = Controls_GetCvarDefault( "in_joystick" );
-	s_controls.joythreshold.curvalue = Controls_GetCvarDefault( "joy_threshold" );
+	s_controls.joythreshold.curvalue = Controls_GetCvarDefault( "joy_threshold" ) * 100.0f;
 	s_controls.freelook.curvalue = Controls_GetCvarDefault( "cl_freelook" );
-	s_controls.voip_teamonly.curvalue = Controls_GetCvarDefault( "cg_voipTeamOnly" );
 }
 
 /*
@@ -1153,7 +1142,6 @@ static void Controls_MenuEvent( void *ptr, int event ) {
 		case ID_FOV:
 		case ID_ALWAYSRUN:
 		case ID_AUTOSWITCH:
-		case ID_VOIP_TEAMONLY:
 		case ID_JOYENABLE:
 		case ID_JOYTHRESHOLD:
 			if ( event == QM_ACTIVATED ) {
@@ -1614,20 +1602,6 @@ static void Controls_MenuInit( void ) {
 	s_controls.chat4.generic.ownerdraw = Controls_DrawKeyBinding;
 	s_controls.chat4.generic.id = ID_CHAT4;
 
-	s_controls.voip_talk.generic.type = MTYPE_ACTION;
-	s_controls.voip_talk.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_GRAYED | QMF_HIDDEN;
-	s_controls.voip_talk.generic.callback = Controls_ActionEvent;
-	s_controls.voip_talk.generic.ownerdraw = Controls_DrawKeyBinding;
-	s_controls.voip_talk.generic.id = ID_VOIP_TALK;
-
-	s_controls.voip_teamonly.generic.type = MTYPE_RADIOBUTTON;
-	s_controls.voip_teamonly.generic.flags = QMF_SMALLFONT;
-	s_controls.voip_teamonly.generic.x = SCREEN_WIDTH / 2;
-	s_controls.voip_teamonly.generic.name = "teamonly voicechat";
-	s_controls.voip_teamonly.generic.id = ID_VOIP_TEAMONLY;
-	s_controls.voip_teamonly.generic.callback = Controls_MenuEvent;
-	s_controls.voip_teamonly.generic.statusbar = Controls_StatusBar;
-
 	s_controls.joyenable.generic.type = MTYPE_RADIOBUTTON;
 	s_controls.joyenable.generic.flags = QMF_SMALLFONT;
 	s_controls.joyenable.generic.x = SCREEN_WIDTH / 2;
@@ -1642,8 +1616,8 @@ static void Controls_MenuInit( void ) {
 	s_controls.joythreshold.generic.name = "joystick threshold";
 	s_controls.joythreshold.generic.id = ID_JOYTHRESHOLD;
 	s_controls.joythreshold.generic.callback = Controls_MenuEvent;
-	s_controls.joythreshold.minvalue = 0.05f;
-	s_controls.joythreshold.maxvalue = 0.75f;
+	s_controls.joythreshold.minvalue = 5.0f;
+	s_controls.joythreshold.maxvalue = 75.0f;
 	s_controls.joythreshold.generic.statusbar = Controls_StatusBar;
 
 	s_controls.name.generic.type = MTYPE_PTEXT;
@@ -1720,8 +1694,6 @@ static void Controls_MenuInit( void ) {
 	Menu_AddItem( &s_controls.menu, &s_controls.chat2 );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat3 );
 	Menu_AddItem( &s_controls.menu, &s_controls.chat4 );
-	Menu_AddItem( &s_controls.menu, &s_controls.voip_talk );
-	Menu_AddItem( &s_controls.menu, &s_controls.voip_teamonly );
 
 	Menu_AddItem( &s_controls.menu, &s_controls.back );
 
