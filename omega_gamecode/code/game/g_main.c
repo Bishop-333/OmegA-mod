@@ -199,6 +199,7 @@ vmCvar_t g_timestamp_startgame;
 
 //OmegA
 vmCvar_t g_allowDuplicateGuid;
+vmCvar_t g_allowThirdPerson;
 vmCvar_t g_beheading;
 vmCvar_t g_chaos;
 vmCvar_t g_noInvisWalls; //from ratmod
@@ -436,6 +437,7 @@ static cvarTable_t gameCvarTable[] = {
 
     //OmegA
     { &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
+    { &g_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
     { &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue },

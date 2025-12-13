@@ -243,6 +243,7 @@ vmCvar_t cg_chatBeep;
 vmCvar_t cg_teamChatBeep;
 
 //OmegA
+vmCvar_t cg_allowThirdPerson;
 vmCvar_t cg_ambient;
 vmCvar_t cg_bobgun;
 vmCvar_t cg_brightPlayers;
@@ -350,9 +351,9 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_tracerChance, "cg_tracerchance", "0.4", CVAR_CHEAT },
     { &cg_tracerWidth, "cg_tracerwidth", "1", CVAR_CHEAT },
     { &cg_tracerLength, "cg_tracerlength", "100", CVAR_CHEAT },
-    { &cg_thirdPersonRange, "cg_thirdPersonRange", "40", CVAR_CHEAT },
-    { &cg_thirdPersonAngle, "cg_thirdPersonAngle", "0", CVAR_CHEAT },
-    { &cg_thirdPersonOffset, "cg_thirdPersonOffset", "0", CVAR_CHEAT },
+    { &cg_thirdPersonRange, "cg_thirdPersonRange", "40", CVAR_ARCHIVE },
+    { &cg_thirdPersonAngle, "cg_thirdPersonAngle", "0", CVAR_ARCHIVE },
+    { &cg_thirdPersonOffset, "cg_thirdPersonOffset", "0", CVAR_ARCHIVE },
     { &cg_thirdPerson, "cg_thirdPerson", "0", 0 },
     { &cg_teamChatTime, "cg_teamChatTime", "3000", CVAR_ARCHIVE },
     { &cg_teamChatHeight, "cg_teamChatHeight", "0", CVAR_ARCHIVE },
@@ -457,6 +458,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_teamChatBeep, "cg_teamChatBeep", "1", CVAR_ARCHIVE },
 
     //OmegA
+    { &cg_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_SYSTEMINFO },
     { &cg_ambient, "cg_ambient", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_bobgun, "cg_bobgun", "1", CVAR_ARCHIVE },
     { &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE },

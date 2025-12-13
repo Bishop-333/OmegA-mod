@@ -245,6 +245,7 @@ static void CG_OffsetThirdPersonView( void ) {
 	vec3_t focusPoint;
 	float focusDist;
 	float forwardScale, sideScale;
+	float angle, range, offset;
 
 	cg.refdef.vieworg[2] += cg.predictedPlayerState.viewheight;
 
@@ -272,11 +273,23 @@ static void CG_OffsetThirdPersonView( void ) {
 
 	AngleVectors( cg.refdefViewAngles, forward, right, up );
 
-	forwardScale = cos( cg_thirdPersonAngle.value / 180 * M_PI );
-	sideScale = sin( cg_thirdPersonAngle.value / 180 * M_PI );
-	VectorMA( view, -cg_thirdPersonRange.value * forwardScale, forward, view );
-	VectorMA( view, -cg_thirdPersonRange.value * sideScale, right, view );
-	VectorMA( view, cg_thirdPersonOffset.value, right, view );
+	angle = cg_thirdPersonAngle.value;
+	range = cg_thirdPersonRange.value;
+	offset = cg_thirdPersonOffset.value;
+
+	if ( cg_allowThirdPerson.integer < 2 ) {
+		if ( !( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) ) {
+			angle = 0.0f;
+		}
+		range = 40.0f;
+		offset = 0.0f;
+	}
+
+	forwardScale = cos( angle / 180 * M_PI );
+	sideScale = sin( angle / 180 * M_PI );
+	VectorMA( view, -range * forwardScale, forward, view );
+	VectorMA( view, -range * sideScale, right, view );
+	VectorMA( view, offset, right, view );
 
 	// trace a ray from the origin to the viewpoint to make sure the view isn't
 	// in a solid block. Use an 8 by 8 block to prevent the view from near clipping anything
@@ -304,7 +317,7 @@ static void CG_OffsetThirdPersonView( void ) {
 		focusDist = 1; // should never happen
 	}
 	cg.refdefViewAngles[PITCH] = -180 / M_PI * atan2( focusPoint[2], focusDist );
-	cg.refdefViewAngles[YAW] -= cg_thirdPersonAngle.value;
+	cg.refdefViewAngles[YAW] -= angle;
 }
 
 // this causes a compiler bug on mac MrC compiler
@@ -975,7 +988,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 	CG_PredictPlayerState();
 
 	// decide on third person view
-	cg.renderingThirdPerson = cg_thirdPerson.integer || ( ( ( cg.snap->ps.stats[STAT_HEALTH] <= 0 ) || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !cg_paused.integer ) ) && cg.snap->ps.pm_type != PM_SPECTATOR );
+	cg.renderingThirdPerson = ( cg_thirdPerson.integer && cg_allowThirdPerson.integer ) || ( ( ( cg.snap->ps.stats[STAT_HEALTH] <= 0 ) || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !cg_paused.integer ) ) && cg.snap->ps.pm_type != PM_SPECTATOR );
 
 	CG_SpecZooming();
 
