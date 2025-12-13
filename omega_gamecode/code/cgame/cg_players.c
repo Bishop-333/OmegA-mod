@@ -40,6 +40,24 @@ char *cg_customSoundNames[MAX_CUSTOM_SOUNDS] = {
 
 /*
 ================
+CG_CheckBoost
+================
+*/
+static void CG_CheckBoost( int clientNum, sfxHandle_t sfx ) {
+	clientInfo_t *ci;
+
+	if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
+		clientNum = 0;
+	}
+	ci = &cgs.clientinfo[clientNum];
+
+	if ( strstr( ci->modelName, "sarge" ) || strstr( ci->modelName, "smarine" ) ) {
+		trap_S_StartSound( NULL, clientNum, CHAN_AUTO, sfx );
+	}
+}
+
+/*
+================
 CG_CustomSound
 ================
 */
@@ -69,12 +87,16 @@ sfxHandle_t CG_CustomSound( int clientNum, const char *soundName ) {
 	for ( i = 0; i < MAX_CUSTOM_SOUNDS && cg_customSoundNames[i]; i++ ) {
 		if ( !strcmp( soundName, cg_customSoundNames[i] ) ) {
 			if ( ci == self && cgs.selfSounds[i] ) {
+				CG_CheckBoost( clientNum, cgs.selfSounds[i] );
 				return cgs.selfSounds[i];
 			} else if ( ( ( ci->team != myteam ) || ( myteam == TEAM_FREE && ci != self ) ) && cgs.enemySounds[i] ) {
+				CG_CheckBoost( clientNum, cgs.enemySounds[i] );
 				return cgs.enemySounds[i];
 			} else if ( ( myteam != TEAM_FREE && ci->team == myteam ) && cgs.teamSounds[i] ) {
+				CG_CheckBoost( clientNum, cgs.teamSounds[i] );
 				return cgs.teamSounds[i];
 			}
+			CG_CheckBoost( clientNum, ci->sounds[i] );
 			return ci->sounds[i];
 		}
 	}
