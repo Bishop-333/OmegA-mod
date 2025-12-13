@@ -254,6 +254,7 @@ vmCvar_t cg_drawItemPickup;
 vmCvar_t cg_drawOldScoreboard;
 vmCvar_t cg_drawSmallHealthSphere;
 vmCvar_t cg_drawTeamBackground;
+vmCvar_t cg_drawThirdPersonCrosshair;
 vmCvar_t cg_elimination_activewarmup;
 vmCvar_t cg_enemyColor;
 vmCvar_t cg_enemyModel;
@@ -467,6 +468,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_drawOldScoreboard, "cg_drawOldScoreboard", "0", CVAR_ARCHIVE },
     { &cg_drawSmallHealthSphere, "cg_drawSmallHealthSphere", "0", CVAR_ARCHIVE },
     { &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE },
+    { &cg_drawThirdPersonCrosshair, "cg_drawThirdPersonCrosshair", "0", CVAR_ARCHIVE },
     { &cg_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_SYSTEMINFO },
     { &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },
     { &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE },

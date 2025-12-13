@@ -1391,6 +1391,7 @@ extern vmCvar_t cg_drawItemPickup;
 extern vmCvar_t cg_drawOldScoreboard;
 extern vmCvar_t cg_drawSmallHealthSphere;
 extern vmCvar_t cg_drawTeamBackground;
+extern vmCvar_t cg_drawThirdPersonCrosshair;
 extern vmCvar_t cg_elimination_activewarmup;
 extern vmCvar_t cg_enemyColor;
 extern vmCvar_t cg_enemyModel;

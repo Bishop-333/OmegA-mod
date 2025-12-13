@@ -2536,7 +2536,7 @@ static void CG_DrawCrosshair( void ) {
 		return;
 	}
 
-	if ( cg.renderingThirdPerson ) {
+	if ( cg.renderingThirdPerson && !cg_drawThirdPersonCrosshair.integer ) {
 		return;
 	}
 
