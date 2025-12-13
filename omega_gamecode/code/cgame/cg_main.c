@@ -242,6 +242,7 @@ vmCvar_t cg_chatBeep;
 vmCvar_t cg_teamChatBeep;
 
 //OmegA
+vmCvar_t cg_ambient;
 vmCvar_t cg_bobgun;
 vmCvar_t cg_brightPlayers;
 vmCvar_t cg_damagePlums;
@@ -453,6 +454,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_teamChatBeep, "cg_teamChatBeep", "1", CVAR_ARCHIVE },
 
     //OmegA
+	{ &cg_ambient, "cg_ambient", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_bobgun, "cg_bobgun", "1", CVAR_ARCHIVE },
     { &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE },
     { &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },

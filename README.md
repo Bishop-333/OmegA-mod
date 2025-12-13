@@ -50,9 +50,9 @@ It integrates improvements from different projects like [Ratmod](https://github.
 ### Misc
 | Cvar | Description |
 | :--- | :--- |
+| `cg_ambient` | Allows disabling ambient map sounds. |
 | `cg_drawEmotes` | Displays emote bubbles above player heads (requires binding keys). |
 | `cg_thinLightningBolt` | Renders a thinner lightning bolt. |
-| `g_ambientSounds` | Allows disabling ambient map sounds. |
 | `g_beheading` | Enables railgun headshots that decapitate enemies (gives the "headshot" medal). |
 | `g_weaponArena` | Restricts the match to specific weapons. |
 

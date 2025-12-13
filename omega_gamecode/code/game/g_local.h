@@ -1158,7 +1158,6 @@ extern vmCvar_t g_maxNameChanges;
 
 //OmegA
 extern vmCvar_t g_allowDuplicateGuid;
-extern vmCvar_t g_ambientSounds;
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_chaos;
 extern vmCvar_t g_noInvisWalls;

@@ -122,7 +122,7 @@ static void CG_EntityEffects( const centity_t *cent ) {
 	CG_SetEntitySoundPosition( cent );
 
 	// add loop sound
-	if ( cent->currentState.loopSound ) {
+	if ( cent->currentState.loopSound && cg_ambient.integer ) {
 		if ( cent->currentState.eType != ET_SPEAKER ) {
 			trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin,
 			                        cgs.gameSounds[cent->currentState.loopSound] );
@@ -194,6 +194,10 @@ Speaker entities can automatically play sounds
 ==================
 */
 static void CG_Speaker( centity_t *cent ) {
+	if ( !cg_ambient.integer ) {
+		return;
+	}
+
 	if ( !cent->currentState.clientNum ) { // FIXME: use something other than clientNum...
 		return;                            // not auto triggering
 	}

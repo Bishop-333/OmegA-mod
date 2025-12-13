@@ -1379,6 +1379,7 @@ extern vmCvar_t cg_chatBeep;
 extern vmCvar_t cg_teamChatBeep;
 
 //OmegA
+extern vmCvar_t cg_ambient;
 extern vmCvar_t cg_bobgun;
 extern vmCvar_t cg_brightPlayers;
 extern vmCvar_t cg_damagePlums;
