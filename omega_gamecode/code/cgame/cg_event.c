@@ -682,6 +682,32 @@ void CG_PainEvent( centity_t *cent, int health ) {
 
 /*
 ==============
+CG_PlayFootstep
+==============
+*/
+static void CG_PlayFootstep( int clientNum, int type ) {
+	static int lastFootstep[MAX_CLIENTS];
+	int r;
+
+	if ( !cg_footsteps.integer ) {
+		return;
+	}
+	
+	if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
+		clientNum = 0;
+	}
+
+	do {
+		r = (int)(random() * 4.0f);
+	} while ( r == lastFootstep[clientNum] );
+
+	lastFootstep[clientNum] = r;
+
+	trap_S_StartSound( NULL, clientNum, CHAN_BODY, cgs.media.footsteps[type][r] );
+}
+
+/*
+==============
 CG_EntityEvent
 
 An entity has an event value
@@ -724,38 +750,23 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 		//
 		case EV_FOOTSTEP:
 			DEBUGNAME( "EV_FOOTSTEP" );
-			if ( cg_footsteps.integer ) {
-				trap_S_StartSound( NULL, es->number, CHAN_BODY,
-				                   cgs.media.footsteps[ci->footsteps][rand() & 3] );
-			}
+			CG_PlayFootstep( es->number, ci->footsteps );
 			break;
 		case EV_FOOTSTEP_METAL:
 			DEBUGNAME( "EV_FOOTSTEP_METAL" );
-			if ( cg_footsteps.integer ) {
-				trap_S_StartSound( NULL, es->number, CHAN_BODY,
-				                   cgs.media.footsteps[FOOTSTEP_METAL][rand() & 3] );
-			}
+			CG_PlayFootstep( es->number, FOOTSTEP_METAL );
 			break;
 		case EV_FOOTSPLASH:
 			DEBUGNAME( "EV_FOOTSPLASH" );
-			if ( cg_footsteps.integer ) {
-				trap_S_StartSound( NULL, es->number, CHAN_BODY,
-				                   cgs.media.footsteps[FOOTSTEP_SPLASH][rand() & 3] );
-			}
+			CG_PlayFootstep( es->number, FOOTSTEP_SPLASH );
 			break;
 		case EV_FOOTWADE:
 			DEBUGNAME( "EV_FOOTWADE" );
-			if ( cg_footsteps.integer ) {
-				trap_S_StartSound( NULL, es->number, CHAN_BODY,
-				                   cgs.media.footsteps[FOOTSTEP_SPLASH][rand() & 3] );
-			}
+			CG_PlayFootstep( es->number, FOOTSTEP_SPLASH );
 			break;
 		case EV_SWIM:
 			DEBUGNAME( "EV_SWIM" );
-			if ( cg_footsteps.integer ) {
-				trap_S_StartSound( NULL, es->number, CHAN_BODY,
-				                   cgs.media.footsteps[FOOTSTEP_SPLASH][rand() & 3] );
-			}
+			CG_PlayFootstep( es->number, FOOTSTEP_SPLASH );
 			break;
 
 		case EV_FALL_SHORT:
