@@ -401,9 +401,9 @@ void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, 
 	}
 
 	fovScale = cg_fov.value / cg.refdef.fov_x;
-	scale = 200.0f / localZ * fovScale;
-	if ( scale > 2.0f ) scale = 2.0f;
-	if ( scale < 0.5f ) scale = 0.5f;
+	scale = 175.0f / localZ * fovScale;
+	if ( scale > 1.75f ) scale = 1.75f;
+	if ( scale < 0.25f ) scale = 0.25f;
 
 	w = TINYCHAR_WIDTH * scale;
 	h = TINYCHAR_HEIGHT * scale;

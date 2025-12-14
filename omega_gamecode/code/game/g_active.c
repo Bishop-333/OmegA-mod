@@ -811,6 +811,8 @@ static void ClientThink_real( gentity_t *ent ) {
 		//		G_Printf("serverTime >>>>>\n" );
 	}
 
+	ent->r.svFlags |= SVF_BROADCAST;
+
 	//Here comes the unlagged bit!
 	//unlagged - backward reconciliation #4
 	// frameOffset should be about the number of milliseconds into a frame
