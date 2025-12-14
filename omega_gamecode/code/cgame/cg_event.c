@@ -275,7 +275,7 @@ static void CG_Obituary( entityState_t *ent ) {
 			}
 		}
 		if ( cg_killsound.integer ) {
-			trap_S_StartLocalSound( cgs.media.hitSoundHighArmor, CHAN_LOCAL_SOUND );
+			trap_S_StartLocalSound( cgs.media.killSound, CHAN_LOCAL_SOUND );
 		}
 		cg.lastHitWasKill = qtrue;
 		if ( mod == MOD_HEADSHOT && cgs.gametype < GT_TEAM ) {

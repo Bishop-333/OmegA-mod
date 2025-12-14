@@ -479,7 +479,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE },
     { &cg_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE },
     { &cg_hitmarker, "cg_hitmarker", "1", CVAR_ARCHIVE },
-    { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
+    { &cg_killsound, "cg_killsound", "2", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
     { &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
@@ -926,6 +926,17 @@ static void CG_RegisterSounds( void ) {
 		case 0:
 		default:
 			cgs.media.hitSound = trap_S_RegisterSound( "sound/feedback/hit1.wav", qfalse );
+			break;
+	};
+
+	switch ( cg_killsound.integer ) {
+		case 0:
+		case 2:
+			cgs.media.killSound = trap_S_RegisterSound( "sound/feedback/kill1.wav", qfalse );
+			break;
+		default:
+			cgs.media.killSound = trap_S_RegisterSound( "sound/feedback/hithi.wav", qfalse );
+			break;
 	};
 
 	cgs.media.hitSoundHighArmor = trap_S_RegisterSound( "sound/feedback/hithi.wav", qfalse );

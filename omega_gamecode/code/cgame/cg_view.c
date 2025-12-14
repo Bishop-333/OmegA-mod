@@ -279,7 +279,7 @@ static void CG_OffsetThirdPersonView( void ) {
 
 	if ( cg_allowThirdPerson.integer < 2 ) {
 		range = 40.0f;
-		if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) {
+		if ( ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) || cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
 			offset = 0.0f;
 		} else {
 			angle = 0.0f;
