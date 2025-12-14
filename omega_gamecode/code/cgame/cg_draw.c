@@ -369,10 +369,6 @@ CG_DrawTeamBackground
 void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team ) {
 	vec4_t hcolor;
 
-	if ( !cg_drawTeamBackground.integer ) {
-		return;
-	}
-
 	if ( team == TEAM_RED ) {
 		hcolor[0] = 1;
 		hcolor[1] = 0;
@@ -452,11 +448,12 @@ static void CG_DrawStatusBar( void ) {
 	}
 
 	// draw the team background
-	if ( !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) //If not following anybody:
-		CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cg.snap->ps.persistant[PERS_TEAM] );
-	else //Sago: If we follow find the teamcolor of the guy we follow. It might not be our own team!
-		CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cgs.clientinfo[cg.snap->ps.clientNum].team );
-
+	if ( cg_drawTeamBackground.integer ) {
+		if ( !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) //If not following anybody:
+			CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cg.snap->ps.persistant[PERS_TEAM] );
+		else //Sago: If we follow find the teamcolor of the guy we follow. It might not be our own team!
+			CG_DrawTeamBackground( 0, 420, 640, 60, 0.33f, cgs.clientinfo[cg.snap->ps.clientNum].team );
+	}
 	cent = &cg_entities[cg.snap->ps.clientNum];
 	ps = &cg.snap->ps;
 
@@ -486,7 +483,7 @@ static void CG_DrawStatusBar( void ) {
 	if ( cg_statusBarStyle.integer == 3 ) {
 		flagX = 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE;
 	} else {
-		flagX = 566 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE;
+		flagX = 422 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE;
 	}
 
 	if ( cg.predictedPlayerState.powerups[PW_REDFLAG] ) {
