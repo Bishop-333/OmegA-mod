@@ -810,7 +810,6 @@ void G_SetStats( gentity_t *ent );
 // g_cmds.c
 // Also another place /Sago
 void DoubleDominationScoreTimeMessage( gentity_t *ent );
-void YourTeamMessage( gentity_t *ent );
 void AttackingTeamMessage( gentity_t *ent );
 void ObeliskHealthMessage( void );
 void DeathmatchScoreboardMessage( gentity_t *client );
@@ -840,7 +839,6 @@ void SendScoreboardMessageToAllClients( void );
 void SendEliminationMessageToAllClients( void );
 void SendDDtimetakenMessageToAllClients( void );
 void SendDominationPointsStatusMessageToAllClients( void );
-void SendYourTeamMessageToTeam( team_t team );
 void QDECL G_Printf( const char *fmt, ... );
 void QDECL G_Error( const char *fmt, ... ) Q_NO_RETURN Q_PRINTF_FUNC( 1, 2 );
 //KK-OAX Made Accessible for g_admin.c

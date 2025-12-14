@@ -289,26 +289,6 @@ void DominationPointNamesMessage( gentity_t *ent ) {
 
 /*
 ==================
-YourTeamMessage
-==================
-*/
-void YourTeamMessage( gentity_t *ent ) {
-	int team = level.clients[ent - g_entities].sess.sessionTeam;
-
-	switch ( team ) {
-		case TEAM_RED:
-			trap_SendServerCommand( ent - g_entities, va( "team \"%s\"", g_redTeamClientNumbers.string ) );
-			break;
-		case TEAM_BLUE:
-			trap_SendServerCommand( ent - g_entities, va( "team \"%s\"", g_blueTeamClientNumbers.string ) );
-			break;
-		default:
-			trap_SendServerCommand( ent - g_entities, "team \"all\"" );
-	};
-}
-
-/*
-==================
 AttackingTeamMessage
 ==================
 */

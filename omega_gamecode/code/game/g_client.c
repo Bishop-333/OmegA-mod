@@ -521,67 +521,6 @@ static void respawnRound( gentity_t *ent ) {
 
 /*
 ================
-TeamCvarSet
-
-Sets the red and blue team client number cvars.
-================
- */
-static void TeamCvarSet( void ) {
-	int i;
-	qboolean redChanged = qfalse;
-	qboolean blueChanged = qfalse;
-	qboolean first = qtrue;
-	char *temp = NULL;
-
-	for ( i = 0; i < level.maxclients; i++ ) {
-		if ( level.clients[i].pers.connected == CON_DISCONNECTED ) {
-			continue;
-		}
-		if ( level.clients[i].sess.sessionTeam == TEAM_RED ) {
-			if ( first ) {
-				temp = va( "%i", i );
-				first = qfalse;
-			} else {
-				temp = va( "%s,%i", temp, i );
-			}
-		}
-	}
-
-	if ( Q_stricmp( g_redTeamClientNumbers.string, temp ) )
-		redChanged = qtrue;
-	trap_Cvar_Set( "g_redTeamClientNumbers", temp ); //Set it right
-	first = qtrue;
-
-	for ( i = 0; i < level.maxclients; i++ ) {
-		if ( level.clients[i].pers.connected == CON_DISCONNECTED ) {
-			continue;
-		}
-		if ( level.clients[i].sess.sessionTeam == TEAM_BLUE ) {
-			if ( first ) {
-				temp = va( "%i", i );
-				first = qfalse;
-			} else {
-				temp = va( "%s,%i", temp, i );
-			}
-		}
-	}
-	if ( Q_stricmp( g_blueTeamClientNumbers.string, temp ) )
-		blueChanged = qtrue;
-	trap_Cvar_Set( "g_blueTeamClientNumbers", temp );
-
-	//Note: We need to force update of the cvar or SendYourTeamMessage will send the old cvar value!
-	if ( redChanged ) {
-		trap_Cvar_Update( &g_redTeamClientNumbers ); //Force update of CVAR
-		SendYourTeamMessageToTeam( TEAM_RED );
-	}
-	if ( blueChanged ) {
-		trap_Cvar_Update( &g_blueTeamClientNumbers );
-		SendYourTeamMessageToTeam( TEAM_BLUE ); //Force update of CVAR
-	}
-}
-
-/*
-================
 TeamCount
 
 Returns number of players on a team
@@ -1415,8 +1354,6 @@ void ClientBegin( int clientNum ) {
 		DominationPointNamesMessage( ent );
 		DominationPointStatusMessage( ent );
 	}
-
-	TeamCvarSet();
 
 	// count current clients and rank for scoreboard
 	CalculateRanks();

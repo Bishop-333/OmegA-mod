@@ -1400,23 +1400,6 @@ void SendDominationPointsStatusMessageToAllClients( void ) {
 
 /*
 ========================
-SendYourTeamMessageToTeam
-
-Tell all players on a given team who there allies are. Used for VoIP
-========================
-*/
-void SendYourTeamMessageToTeam( team_t team ) {
-	int i;
-
-	for ( i = 0; i < level.maxclients; i++ ) {
-		if ( level.clients[i].pers.connected == CON_CONNECTED && level.clients[i].sess.sessionTeam == team ) {
-			YourTeamMessage( g_entities + i );
-		}
-	}
-}
-
-/*
-========================
 MoveClientToIntermission
 
 When the intermission starts, this will be called for all players.
