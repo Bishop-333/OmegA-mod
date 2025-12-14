@@ -2669,6 +2669,26 @@ static void CG_DrawCrosshair( void ) {
 	trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ),
 	                       y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ),
 	                       w, h, 0, 0, 1, 1, hShader );
+
+	if ( cg_hitmarker.integer && cg.lastHitTime > 0 && cg.time - cg.lastHitTime < 200 ) {
+		float animTime = (float)( cg.time - cg.lastHitTime ) / 200.0f;
+		float size = 5.0f + animTime * 50.0f;
+		vec4_t color;
+
+		if ( cg.lastHitWasKill ) {
+			VectorCopy( colorRed, color );
+		} else {
+			VectorCopy( colorWhite, color );
+		}
+		color[3] = 1.0f - animTime;
+		trap_R_SetColor( color );
+
+		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f - size, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f - size, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
+		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f + size, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f - size, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
+		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f - size, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f + size, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
+		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f + size, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f + size, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
+	}
+	trap_R_SetColor( NULL );
 }
 
 /*

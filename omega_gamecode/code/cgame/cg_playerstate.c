@@ -286,6 +286,8 @@ static void CG_CheckLocalSounds( playerState_t *ps, playerState_t *ops ) {
 		if ( cg_hitsound.integer ) {
 			trap_S_StartLocalSound( cgs.media.hitSound, CHAN_LOCAL_SOUND );
 		}
+		cg.lastHitTime = cg.time;
+		cg.lastHitWasKill = qfalse;
 	} else if ( ps->persistant[PERS_HITS] < ops->persistant[PERS_HITS] ) {
 		trap_S_StartLocalSound( cgs.media.hitTeamSound, CHAN_LOCAL_SOUND );
 	}

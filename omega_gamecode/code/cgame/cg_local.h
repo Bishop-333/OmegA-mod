@@ -681,6 +681,9 @@ typedef struct {
 	int readyMask;
 	int numSpawnpoints;
 	spawnpoint_t spawnpoints[MAX_SPAWNPOINTS];
+
+	int lastHitTime;
+	qboolean lastHitWasKill;
 } cg_t;
 
 // all of the model, shader, and sound references that are
@@ -1399,6 +1402,7 @@ extern vmCvar_t cg_enemyModel;
 extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_forceTeamSkins;
 extern vmCvar_t cg_guidedRockets;
+extern vmCvar_t cg_hitmarker;
 extern vmCvar_t cg_killsound;
 extern vmCvar_t cg_noInvisWalls;
 extern vmCvar_t cg_omegaFlags;

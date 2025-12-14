@@ -262,6 +262,7 @@ vmCvar_t cg_enemyModel;
 vmCvar_t cg_enemySounds;
 vmCvar_t cg_forceTeamSkins;
 vmCvar_t cg_guidedRockets;
+vmCvar_t cg_hitmarker;
 vmCvar_t cg_killsound;
 vmCvar_t cg_noInvisWalls;
 vmCvar_t cg_omegaFlags;
@@ -477,6 +478,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE },
     { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE },
     { &cg_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE },
+    { &cg_hitmarker, "cg_hitmarker", "1", CVAR_ARCHIVE },
     { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
     { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
     { &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
