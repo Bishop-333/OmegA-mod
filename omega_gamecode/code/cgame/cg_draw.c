@@ -2838,7 +2838,15 @@ CG_Draw3DCrosshairName
 void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 	float *fadeColor;
 	vec4_t hcolor;
-	static char name[32];
+	static char names[MAX_CLIENTS][32];
+	char *name;
+	int enemy;
+
+	if ( ci->team != cg.snap->ps.persistant[PERS_TEAM] || ci->team == TEAM_FREE ) {
+		enemy = 1;
+	} else {
+		enemy = 0;
+	}
 
 	if ( !cg_drawCrosshairNames.integer || cg_drawCrosshairNames.integer == 2 ) {
 		return;
@@ -2849,23 +2857,29 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 	}
 
 	// scan the known entities to see if the crosshair is sighted on one
-	if ( cent->currentState.number != cg.crosshairClientNum ) {
+	if ( cent->currentState.number != cg.crosshairClientNum && enemy ) {
 		return;
 	}
 
 	fadeColor = CG_FadeColor( cg.crosshairClientTime, 750 );
 	if ( !fadeColor ) {
-		trap_R_SetColor( NULL );
-		return;
+		if ( !enemy ) {
+			hcolor[3] = 1.0f;
+		} else {
+			trap_R_SetColor( NULL );
+			return;
+		}
+	} else {
+		hcolor[3] = fadeColor[3];
 	}
 
-	// clear the color from the name
-	Q_strncpyz( name, ci->name, sizeof( name ) );
+	// clear the color from the names
+	name = names[cent->currentState.clientNum];
+	Q_strncpyz( name, ci->name, sizeof( names[0] ) );
 	Q_CleanStr( name );
 
-	if ( ci->team != cg.snap->ps.persistant[PERS_TEAM] || ci->team == TEAM_FREE ) {
+	if ( enemy ) {
 		VectorCopy( colorCornellRed, hcolor );
-		hcolor[3] = fadeColor[3];
 		if ( cg_drawEnemy.integer ) {
 			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 65, name, hcolor, qtrue );
 		} else {
@@ -2873,7 +2887,6 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 		}
 	} else {
 		VectorCopy( colorGreen, hcolor );
-		hcolor[3] = fadeColor[3];
 		if ( cg_drawFriend.integer ) {
 			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 65, name, hcolor, qfalse );
 		} else {
