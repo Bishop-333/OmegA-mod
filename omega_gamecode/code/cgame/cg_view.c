@@ -277,14 +277,17 @@ static void CG_OffsetThirdPersonView( void ) {
 	range = cg_thirdPersonRange.value;
 	offset = cg_thirdPersonOffset.value;
 
-	if ( cg_allowThirdPerson.integer < 2 ) {
+	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
+		angle = 0.0f;
 		range = 40.0f;
-		if ( ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) || cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
-			offset = 0.0f;
-		} else {
-			angle = 0.0f;
-			offset = 25.0f;
-		}
+		offset = 0.0f;
+	} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) {
+		range = 40.0f;
+		offset = 0.0f;
+	} else if ( cg_allowThirdPerson.integer < 2 ) {
+		angle = 0.0f;
+		range = 40.0f;
+		offset = 25.0f;
 	}
 
 	forwardScale = cos( angle / 180 * M_PI );

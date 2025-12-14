@@ -1947,7 +1947,13 @@ Float sprites over the player's head
 ===============
 */
 static void CG_PlayerSprites( centity_t *cent ) {
+	clientInfo_t *ci;
+	clientInfo_t *self;
 	int team;
+
+	team = cgs.clientinfo[cent->currentState.clientNum].team;
+	self = &cgs.clientinfo[cg.clientNum];
+	ci = &cgs.clientinfo[cent->currentState.clientNum];
 
 	if ( cent->currentState.eFlags & EF_CONNECTION ) {
 		CG_PlayerFloatSprite( cent, cgs.media.connectionShader );
@@ -2016,8 +2022,6 @@ static void CG_PlayerSprites( centity_t *cent ) {
 		}
 	}
 
-	team = cgs.clientinfo[cent->currentState.clientNum].team;
-
 	if ( ( cent->currentState.eFlags & EF_DEAD ) && cg.snap->ps.persistant[PERS_TEAM] == team && cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
 		CG_PlayerFloatSprite( cent, cgs.media.skullShader );
 		return;
@@ -2048,7 +2052,7 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	     ( ( cg.snap->ps.persistant[PERS_TEAM] != team &&
 	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
 	       team == TEAM_FREE ) ) {
-		if ( cg_drawEnemy.integer ) {
+		if ( cg_drawEnemy.integer && ci != self ) {
 			CG_PlayerFloatSprite( cent, cgs.media.enemyShader );
 		}
 		return;

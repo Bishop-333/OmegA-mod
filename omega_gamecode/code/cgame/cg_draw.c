@@ -2561,7 +2561,7 @@ static void CG_DrawCrosshair( void ) {
 		return;
 	}
 
-	if ( cg.renderingThirdPerson && ( !cg_thirdPerson.integer || !cg_drawThirdPersonCrosshair.integer ) ) {
+	if ( cg.renderingThirdPerson && ( !cg_drawThirdPersonCrosshair.integer || trap_Key_GetCatcher() & KEYCATCH_CONSOLE || cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) ) {
 		return;
 	}
 
