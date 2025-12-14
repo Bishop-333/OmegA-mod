@@ -470,7 +470,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_drawOldScoreboard, "cg_drawOldScoreboard", "0", CVAR_ARCHIVE },
     { &cg_drawSmallHealthSphere, "cg_drawSmallHealthSphere", "0", CVAR_ARCHIVE },
     { &cg_drawTeamBackground, "cg_drawTeamBackground", "1", CVAR_ARCHIVE },
-    { &cg_drawThirdPersonCrosshair, "cg_drawThirdPersonCrosshair", "0", CVAR_ARCHIVE },
+    { &cg_drawThirdPersonCrosshair, "cg_drawThirdPersonCrosshair", "1", CVAR_ARCHIVE },
     { &cg_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_SYSTEMINFO },
     { &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },
     { &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE },

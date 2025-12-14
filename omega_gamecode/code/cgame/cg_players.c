@@ -2017,6 +2017,12 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	}
 
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
+
+	if ( ( cent->currentState.eFlags & EF_DEAD ) && cg.snap->ps.persistant[PERS_TEAM] == team && cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		CG_PlayerFloatSprite( cent, cgs.media.skullShader );
+		return;
+	}
+
 	if ( !( cent->currentState.eFlags & EF_DEAD ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {

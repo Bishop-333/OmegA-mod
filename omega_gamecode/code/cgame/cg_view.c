@@ -278,11 +278,13 @@ static void CG_OffsetThirdPersonView( void ) {
 	offset = cg_thirdPersonOffset.value;
 
 	if ( cg_allowThirdPerson.integer < 2 ) {
-		if ( !( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) ) {
-			angle = 0.0f;
-		}
 		range = 40.0f;
-		offset = 0.0f;
+		if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) {
+			offset = 0.0f;
+		} else {
+			angle = 0.0f;
+			offset = 25.0f;
+		}
 	}
 
 	forwardScale = cos( angle / 180 * M_PI );
