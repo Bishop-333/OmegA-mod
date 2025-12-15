@@ -210,9 +210,10 @@ CG_FragmentBounceSound
 ================
 */
 static void CG_FragmentBounceSound( localEntity_t *le, trace_t *trace ) {
+	static int lastGibSoundTime = 0;
+
 	if ( le->leBounceSoundType == LEBS_BLOOD ) {
-		// half the gibs will make splat sounds
-		if ( rand() & 2 ) {
+		if ( cg.time > lastGibSoundTime + 100 ) {
 			int r = rand() & 3;
 			sfxHandle_t s;
 
@@ -224,6 +225,7 @@ static void CG_FragmentBounceSound( localEntity_t *le, trace_t *trace ) {
 				s = cgs.media.gibBounce3Sound;
 			}
 			trap_S_StartSound( trace->endpos, ENTITYNUM_WORLD, CHAN_AUTO, s );
+			lastGibSoundTime = cg.time;
 		}
 	} else if ( le->leBounceSoundType == LEBS_BRASS ) {
 		if ( cg_leiBrassNoise.integer ) {
