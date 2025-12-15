@@ -993,7 +993,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 	CG_PredictPlayerState();
 
 	// decide on third person view
-	cg.renderingThirdPerson = ( cg_thirdPerson.integer && cg_allowThirdPerson.integer ) || ( ( ( cg.snap->ps.stats[STAT_HEALTH] <= 0 ) || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !cg_paused.integer ) ) && cg.snap->ps.pm_type != PM_SPECTATOR );
+	cg.renderingThirdPerson = ( ( cg_thirdPerson.integer && cg_allowThirdPerson.integer ) || cg.snap->ps.stats[STAT_HEALTH] <= 0 || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !cg_paused.integer ) ) && cg.snap->ps.pm_type != PM_SPECTATOR;
 
 	CG_SpecZooming();
 
