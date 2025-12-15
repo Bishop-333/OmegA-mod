@@ -1956,13 +1956,9 @@ Float sprites over the player's head
 ===============
 */
 static void CG_PlayerSprites( centity_t *cent ) {
-	clientInfo_t *ci;
-	clientInfo_t *self;
 	int team;
 
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
-	self = &cgs.clientinfo[cg.clientNum];
-	ci = &cgs.clientinfo[cent->currentState.clientNum];
 
 	if ( cent->currentState.eFlags & EF_CONNECTION ) {
 		CG_PlayerFloatSprite( cent, cgs.media.connectionShader );
@@ -2039,7 +2035,7 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	if ( !( cent->currentState.eFlags & EF_DEAD ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
-		if ( cg_drawFriend.integer ) {
+		if ( cg_drawFriend.integer && cent->currentState.clientNum != cg.snap->ps.clientNum ) {
 			if ( cg_drawFriendThroughWalls.integer ) {
 				if ( cent->currentState.powerups & ( 1 << PW_REDFLAG ) ) {
 					CG_PlayerFloatSprite( cent, cgs.media.redFlagShader[0] );
@@ -2061,7 +2057,7 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	     ( ( cg.snap->ps.persistant[PERS_TEAM] != team &&
 	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
 	       team == TEAM_FREE ) ) {
-		if ( cg_drawEnemy.integer && ci != self ) {
+		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum ) {
 			CG_PlayerFloatSprite( cent, cgs.media.enemyShader );
 		}
 		return;
