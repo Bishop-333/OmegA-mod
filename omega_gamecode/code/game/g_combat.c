@@ -887,6 +887,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		if ( self->s.eFlags & EF_KAMIKAZE ) {
 			Kamikaze_DeathTimer( self );
 		}
+
+		if ( g_spectateOnDeath.integer ) {
+			self->client->ps.pm_time = 2000;
+		}
 	}
 
 	trap_LinkEntity( self );
