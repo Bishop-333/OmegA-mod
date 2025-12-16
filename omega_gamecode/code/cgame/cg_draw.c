@@ -2865,12 +2865,13 @@ CG_Draw3DCrosshairName
 =================
 */
 void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
+	int enemy;
+	int offset;
 	float *fadeColor;
 	float scale;
 	vec4_t hcolor;
 	static char names[MAX_CLIENTS][32];
 	char *name;
-	int enemy;
 
 	if ( !cg_drawCrosshairNames.integer || cg_drawCrosshairNames.integer == 2 ) {
 		return;
@@ -2910,23 +2911,25 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 
 	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
 		scale = 1.5f;
+		offset = 12;
 	} else {
 		scale = 1.0f;
+		offset = 0;
 	}
 
 	if ( enemy ) {
 		VectorCopy( colorCornellRed, hcolor );
 		if ( cg_drawEnemy.integer ) {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 58 * scale, name, hcolor, qtrue );
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 58 * scale + offset, name, hcolor, qtrue );
 		} else {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 45 * scale, name, hcolor, qtrue );
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 45 * scale + offset, name, hcolor, qtrue );
 		}
 	} else {
 		VectorCopy( colorGreen, hcolor );
 		if ( cg_drawFriend.integer ) {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 58 * scale, name, hcolor, qfalse );
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 58 * scale + offset, name, hcolor, qfalse );
 		} else {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 45 * scale, name, hcolor, qfalse );
+			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], cent->lerpOrigin[2] + 45 * scale + offset, name, hcolor, qfalse );
 		}
 	}
 }

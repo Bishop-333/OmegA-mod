@@ -1926,6 +1926,7 @@ Float a sprite over the player's head
 */
 static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 	int rf;
+	int offset;
 	refEntity_t ent;
 	float scale;
 
@@ -1937,13 +1938,15 @@ static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 
 	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
 		scale = 1.5f;
+		offset = 12;
 	} else {
 		scale = 1.0f;
+		offset = 0;
 	}
 
 	memset( &ent, 0, sizeof( ent ) );
 	VectorCopy( cent->lerpOrigin, ent.origin );
-	ent.origin[2] += 45 * scale;
+	ent.origin[2] += 45 * scale + offset;
 	ent.reType = RT_SPRITE;
 	ent.customShader = shader;
 	ent.radius = 9 * scale;
