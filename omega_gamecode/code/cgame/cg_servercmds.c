@@ -403,9 +403,7 @@ static void CG_ParseWarmup( void ) {
 	if ( warmup == 0 && cg.warmup ) {
 
 	} else if ( warmup > 0 && cg.warmup <= 0 ) {
-		{
-			trap_S_StartLocalSound( cgs.media.countPrepareSound, CHAN_ANNOUNCER );
-		}
+		trap_S_StartLocalSound( cgs.media.countPrepareSound, CHAN_ANNOUNCER );
 	}
 
 	cg.warmup = warmup;

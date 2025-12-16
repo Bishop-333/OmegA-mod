@@ -489,6 +489,10 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		self->client->sess.deaths += 1;
 	}
 
+	if ( self->client->ps.generic1 & GEN_JUGGERNAUT ) {
+		self->client->ps.generic1 &= ~GEN_JUGGERNAUT;
+	}
+
 	//unlagged - backward reconciliation #2
 	// make sure the body shows up in the client's current position
 	G_UnTimeShiftClient( self );

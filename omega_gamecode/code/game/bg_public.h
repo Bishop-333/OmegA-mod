@@ -319,6 +319,7 @@ typedef enum {
 #define GEN_SMILEY_SAD 0x00000004      // draw a sad smiley sprite
 #define GEN_SMILEY_ANGRY 0x00000008    // draw a angry smiley sprite
 #define GEN_SMILEY_MOON 0x00000010     // draw a moon smiley sprite
+#define GEN_JUGGERNAUT 0x00000020      // for juggernaut
 
 // NOTE: may not have more than 16
 typedef enum {

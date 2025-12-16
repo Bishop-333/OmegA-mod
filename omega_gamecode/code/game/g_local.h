@@ -1169,6 +1169,7 @@ extern vmCvar_t g_grenadeSpeed;
 extern vmCvar_t g_guidedRockets;
 extern vmCvar_t g_headDamageMultiplicator;
 extern vmCvar_t g_headShotOnly;
+extern vmCvar_t g_juggernaut;
 extern vmCvar_t g_jumppadGrenades; //from ratmod
 extern vmCvar_t g_lightningDamage;
 extern vmCvar_t g_machinegunDamage;

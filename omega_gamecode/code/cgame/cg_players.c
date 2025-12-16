@@ -1927,6 +1927,7 @@ Float a sprite over the player's head
 static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 	int rf;
 	refEntity_t ent;
+	float scale;
 
 	if ( cent->currentState.number == cg.snap->ps.clientNum && !cg.renderingThirdPerson ) {
 		rf = RF_THIRD_PERSON; // only show in mirrors
@@ -1934,12 +1935,18 @@ static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 		rf = 0;
 	}
 
+	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+		scale = 1.5f;
+	} else {
+		scale = 1.0f;
+	}
+
 	memset( &ent, 0, sizeof( ent ) );
 	VectorCopy( cent->lerpOrigin, ent.origin );
-	ent.origin[2] += 48;
+	ent.origin[2] += 48 * scale;
 	ent.reType = RT_SPRITE;
 	ent.customShader = shader;
-	ent.radius = 10;
+	ent.radius = 10 * scale;
 	ent.renderfx = rf;
 	ent.shaderRGBA[0] = 255;
 	ent.shaderRGBA[1] = 255;
@@ -2075,8 +2082,6 @@ Float sprites over the player's head
 static void CG_PlayerSprites( centity_t *cent ) {
 	int team;
 
-	team = cgs.clientinfo[cent->currentState.clientNum].team;
-
 	if ( cent->currentState.eFlags & EF_CONNECTION ) {
 		CG_PlayerFloatSprite( cent, cgs.media.connectionShader );
 		return;
@@ -2143,6 +2148,8 @@ static void CG_PlayerSprites( centity_t *cent ) {
 			return;
 		}
 	}
+
+	team = cgs.clientinfo[cent->currentState.clientNum].team;
 
 	if ( ( cent->currentState.eFlags & EF_DEAD ) && cg.snap->ps.persistant[PERS_TEAM] == team && cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
 		CG_PlayerFloatSprite( cent, cgs.media.skullShader );
@@ -2599,6 +2606,12 @@ void CG_Player( centity_t *cent ) {
 	// get the rotation information
 	CG_PlayerAngles( cent, legs.axis, torso.axis, head.axis );
 
+	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+		VectorScale( legs.axis[0], 1.5, legs.axis[0] );
+		VectorScale( legs.axis[1], 1.5, legs.axis[1] );
+		VectorScale( legs.axis[2], 1.5, legs.axis[2] );
+	}
+
 	// get the animation state (after rotation, to allow feet shuffle)
 	CG_PlayerAnimation( cent, &legs.oldframe, &legs.frame, &legs.backlerp,
 	                    &torso.oldframe, &torso.frame, &torso.backlerp );
@@ -2637,6 +2650,10 @@ void CG_Player( centity_t *cent ) {
 	legs.shaderRGBA[3] = 255;
 
 	VectorCopy( cent->lerpOrigin, legs.origin );
+
+	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+		legs.origin[2] += 12;
+	}
 
 	VectorCopy( cent->lerpOrigin, legs.lightingOrigin );
 	legs.shadowPlane = shadowPlane;

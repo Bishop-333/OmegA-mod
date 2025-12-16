@@ -449,6 +449,9 @@ static qboolean PM_CheckWaterJump( void ) {
 	}
 
 	spot[2] += 16;
+	if ( pm->ps->generic1 & GEN_JUGGERNAUT ) {
+		spot[2] *= 1.5;
+	}
 	cont = pm->pointcontents( spot, pm->ps->clientNum );
 	if ( cont & ( CONTENTS_SOLID | CONTENTS_PLAYERCLIP | CONTENTS_BODY ) ) {
 		return qfalse;
@@ -1321,6 +1324,11 @@ static void PM_CheckDuck( void ) {
 	} else {
 		pm->maxs[2] = DEFAULT_HEIGHT;
 		pm->ps->viewheight = DEFAULT_VIEWHEIGHT;
+	}
+
+	if ( pm->ps->generic1 & GEN_JUGGERNAUT ) {
+		pm->maxs[2] = (int)( DEFAULT_HEIGHT * 1.5 );
+		pm->ps->viewheight = (int)( DEFAULT_VIEWHEIGHT * 1.5 );
 	}
 }
 
