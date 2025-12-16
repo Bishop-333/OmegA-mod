@@ -723,7 +723,6 @@ static float CG_DrawSpeedMeter( float y ) {
 	int w;
 	vec_t *vel;
 	int speed;
-	float color[4];
 
 	/* speed meter can get in the way of the scoreboard */
 	if ( cg.scoreBoardShowing ) {
@@ -738,12 +737,9 @@ static float CG_DrawSpeedMeter( float y ) {
 
 	w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH;
 
-	color[0] = color[1] = color[2] = 1.0;
-	color[3] = 0.5;
-
 	if ( cg_drawSpeed.integer == 1 ) {
-		/* top left-hand corner of screen */
-		CG_DrawStringExt( 635 - CG_DrawStrlen( s ) * TINYCHAR_WIDTH, y + 2, s, color, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		/* top right-hand corner of screen */
+		CG_DrawStringExt( 635 - CG_DrawStrlen( s ) * TINYCHAR_WIDTH, y + 2, s, colorWhite, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 		return y + TINYCHAR_HEIGHT + 4;
 	} else {
 		/* center of screen */
@@ -883,6 +879,17 @@ static float CG_DrawTimer( int y ) {
 
 	msec = cg.time - cgs.levelStartTime;
 
+	if ( cg_drawTimer.integer == 2 || cg_drawTimer.integer == 4 ) {
+		if ( cgs.timelimit > 0 ) {
+			msec = ( cgs.timelimit * 60000 ) - msec;
+			if ( msec < 0 ) {
+				msec = -msec;
+			}
+		} else {
+			return y;
+		}
+	}
+
 	seconds = msec / 1000;
 	mins = seconds / 60;
 	seconds -= mins * 60;
@@ -898,34 +905,26 @@ static float CG_DrawTimer( int y ) {
 
 	s = va( "%i %i%i", mins, tens, seconds );
 
-	if ( cg_drawTimer.integer == 1 ) {
+	if ( cg_drawTimer.integer == 1 || cg_drawTimer.integer == 2 ) {
 		/* customizable timer */
 		timerX = cg_timerX.integer;
 		timerY = cg_timerY.integer;
 		timerW = cg_timerWidth.integer;
 		timerH = cg_timerHeight.integer;
-	} else if ( cg_drawTimer.integer == 2 ) {
-		/* top of screen */
-		timerX = 318;
-		timerY = 2;
-		timerW = 25;
-		timerH = 25;
-	} else {
+		timerX -= CG_DrawStrlen( s ) * timerW / 2;
+		CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
+		CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
+		return y;
+	} else if ( cg_drawTimer.integer == 3 || cg_drawTimer.integer == 4 ) {
 		/* top right-hand corner of screen */
 		timerX = 619;
 		timerY = y + 2;
 		timerW = TINYCHAR_WIDTH;
 		timerH = TINYCHAR_HEIGHT;
-	}
-
-	timerX -= CG_DrawStrlen( s ) * timerW / 2;
-	CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
-	CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
-
-	if ( cg_drawTimer.integer == 1 || cg_drawTimer.integer == 2 ) {
-		return y;
-	} else {
-		return y + timerH + 4;
+		timerX -= CG_DrawStrlen( s ) * timerW / 2;
+		CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
+		CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
+		return y + timerH + 8;
 	}
 }
 
