@@ -2892,7 +2892,7 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 
 	fadeColor = CG_FadeColor( cg.crosshairClientTime, 750 );
 
-	if ( !enemy ) {
+	if ( !enemy && cg_drawFriendThroughWalls.integer ) {
 		hcolor[3] = 1.0f;
 	} else {
 		if ( !fadeColor ) {

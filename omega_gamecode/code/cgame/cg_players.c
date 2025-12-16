@@ -1950,6 +1950,123 @@ static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 
 /*
 ===============
+CG_HudBorderMarker
+
+Draw an indicator at the screen border
+===============
+*/
+static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandle_t shader, int baseAngle ) {
+	vec3_t dir;
+	float front, left, up;
+	vec3_t flu;
+	float r, inc, az;
+	// half FOV
+	float hfov_y = cg.refdef.fov_y * M_PI / 360;
+	float hfov_x = cg.refdef.fov_x * M_PI / 360;
+
+	VectorSubtract( origin, cg.refdef.vieworg, dir );
+
+	front = DotProduct( dir, cg.refdef.viewaxis[0] );
+	left = DotProduct( dir, cg.refdef.viewaxis[1] );
+	up = DotProduct( dir, cg.refdef.viewaxis[2] );
+
+	flu[0] = front;
+	flu[1] = left;
+	flu[2] = up;
+
+	r = VectorLength( flu );
+	az = atan2( flu[1], flu[0] );
+	inc = acos( flu[2] / r );
+	inc = M_PI / 2.0 - inc;
+
+	if ( fabs( az ) < hfov_x && fabs( inc ) < hfov_y ) {
+		// inside fov, no need to draw marker
+		// Note: this isn't entirely accurate
+		return;
+	} else {
+		refEntity_t ent;
+		float phi;
+		float dist = 8;
+		vec3_t middleOfPlane;
+		vec3_t planeAxis[2];
+		float ratio;
+		float circleSz = 100;
+		float r;
+		float h1, h2;
+
+		memset( &ent, 0, sizeof( ent ) );
+		ent.reType = RT_SPRITE;
+		ent.renderfx = RF_FIRST_PERSON;
+
+		phi = atan2( -flu[2], flu[1] );
+		ent.rotation = phi / M_PI * 180;
+		ent.rotation += baseAngle;
+
+		// make sure it stays the same size regardless of fov
+		ent.radius = 0.5 * radius * tan( hfov_x );
+		ent.customShader = shader;
+		ent.shaderRGBA[0] = 255;
+		ent.shaderRGBA[1] = 255;
+		ent.shaderRGBA[2] = 255;
+		ent.shaderRGBA[3] = 0xff * alpha;
+
+		ratio = tan( hfov_y ) / tan( hfov_x );
+
+		VectorScale( cg.refdef.viewaxis[0], dist, middleOfPlane );
+		r = dist / cos( hfov_x );
+		VectorScale( cg.refdef.viewaxis[1], r * sin( hfov_x ) - ent.radius, planeAxis[0] );
+
+		r = dist / cos( hfov_y );
+		VectorScale( cg.refdef.viewaxis[2], -( r * sin( hfov_y ) - ent.radius ), planeAxis[1] );
+
+		r = cos( phi ) * circleSz;
+		VectorScale( planeAxis[0], r, ent.origin );
+
+		r = sin( phi ) * circleSz * 1.0 / ratio;
+		VectorMA( ent.origin, r, planeAxis[1], ent.origin );
+
+		h1 = fabs( VectorLength( planeAxis[0] ) / cos( phi ) );
+		h2 = fabs( VectorLength( planeAxis[1] ) / sin( phi ) );
+		if ( h2 < h1 ) {
+			h1 = h2;
+		}
+		if ( VectorLength( ent.origin ) > h1 ) {
+			VectorNormalize( ent.origin );
+			VectorScale( ent.origin, h1, ent.origin );
+		}
+
+		VectorAdd( middleOfPlane, ent.origin, ent.origin );
+		VectorAdd( cg.refdef.vieworg, ent.origin, ent.origin );
+		trap_R_AddRefEntityToScene( &ent );
+	}
+}
+
+/*
+===============
+CG_FriendHudMarker
+===============
+*/
+static void CG_FriendHudMarker( centity_t *cent ) {
+	int team;
+	float distance;
+	float hfov_x;
+	float size;
+
+	team = cgs.clientinfo[cent->currentState.clientNum].team;
+
+	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || ( cent->currentState.eFlags & EF_DEAD ) || cent->currentState.number == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
+		return;
+	}
+
+	distance = Distance( cent->lerpOrigin, cg.predictedPlayerState.origin );
+	hfov_x = cg.refdef.fov_x * M_PI / 360;
+	size = 1.0 / tan( hfov_x ) * 150 / distance;
+
+	CG_HudBorderMarker( cent->lerpOrigin, 1.0, size, cgs.media.friendShader, 270 );
+}
+
+/*
+===============
 CG_PlayerSprites
 
 Float sprites over the player's head
@@ -2491,6 +2608,9 @@ void CG_Player( centity_t *cent ) {
 
 	// add the shadow
 	shadow = CG_PlayerShadow( cent, &shadowPlane, ci->team );
+
+	// draw hud markers for friendly players
+	CG_FriendHudMarker( cent );
 
 	// add a water splash if partially in and out of water
 	CG_PlayerSplash( cent );
