@@ -569,6 +569,12 @@ static int CG_CalcFov( void ) {
 				zoomFov = 140;
 		}
 
+		if ( cg_zoomAnimSpeed.value < 1.0f ) {
+			trap_Cvar_Set( "cg_zoomAnimSpeed", "1.0" );
+		} else if ( cg_zoomAnimSpeed.value > 10.0f ) {
+			trap_Cvar_Set( "cg_zoomAnimSpeed", "10.0" );
+		}
+
 		if ( cg.zoomed ) {
 			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
 			if ( f > 1.0 || !cg_zoomAnim.integer ) {

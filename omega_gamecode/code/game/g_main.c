@@ -226,7 +226,6 @@ vmCvar_t g_railJump;
 vmCvar_t g_railThroughWalls;
 vmCvar_t g_rocketFireRate;
 vmCvar_t g_rocketSpeed;
-vmCvar_t g_selfDamage;
 vmCvar_t g_slickGround;
 vmCvar_t g_spectateOnDeath;
 vmCvar_t g_startWhenReady;
@@ -465,7 +464,6 @@ static cvarTable_t gameCvarTable[] = {
     { &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_rocketFireRate, "g_rocketFireRate", "800", 0, 0, qtrue },
     { &g_rocketSpeed, "g_rocketSpeed", "1000", 0, 0, qtrue },
-    { &g_selfDamage, "g_selfDamage", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_slickGround, "g_slickGround", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_spectateOnDeath, "g_spectateOnDeath", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
     { &g_startWhenReady, "g_startWhenReady", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qfalse },

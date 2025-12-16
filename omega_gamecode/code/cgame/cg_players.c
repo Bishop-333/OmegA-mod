@@ -2151,7 +2151,10 @@ static void CG_PlayerSprites( centity_t *cent ) {
 
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
 
-	if ( ( cent->currentState.eFlags & EF_DEAD ) && cg.snap->ps.persistant[PERS_TEAM] == team && cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( ( cent->currentState.eFlags & EF_DEAD ) &&
+	     cg.snap->ps.persistant[PERS_TEAM] == team &&
+	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 &&
+	     cg_drawFriend.integer && cg_drawFriendThroughWalls.integer ) {
 		CG_PlayerFloatSprite( cent, cgs.media.skullShader );
 		return;
 	}
@@ -2198,7 +2201,7 @@ should it return a full plane instead of a Z?
 ===============
 */
 #define SHADOW_DISTANCE 512
-static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team ) {
+static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadowPlane, int team ) {
 	vec3_t end, mins = { -15, -15, 0 }, maxs = { 15, 15, 2 };
 	trace_t trace;
 	float alpha;
@@ -2247,7 +2250,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float *shadowPlane, int team )
 	}
 
 	// fade the shadow out with height
-	alpha = 1.0 - trace.fraction;
+	alpha = ( 1.0 - trace.fraction ) * alphaMult;
 
 	// add the mark as a temporary, so it goes directly to the renderer
 	// without taking a spot in the cg_marks array
@@ -2553,6 +2556,31 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 
 /*
 ===============
+CG_Corpse
+===============
+*/
+#define BODY_SINK_DIST 15
+void CG_Corpse( centity_t *cent, int playerNum, float *bodySinkOffset, float *shadowAlpha ) {
+	float offset;
+
+	// After sitting around for five seconds, fall into the ground and dissapear.
+	if ( cg.time - cent->currentState.pos.trTime > BODY_SINK_DELAY ) {
+		float sinkFrac;
+
+		sinkFrac = ( cg.time - cent->currentState.pos.trTime - BODY_SINK_DELAY ) / (float)BODY_SINK_TIME;
+		offset = sinkFrac * BODY_SINK_DIST;
+
+		*shadowAlpha = 1.0f - sinkFrac;
+	} else {
+		offset = 0;
+		*shadowAlpha = 1;
+	}
+
+	*bodySinkOffset = offset;
+}
+
+/*
+===============
 CG_Player
 ===============
 */
@@ -2565,6 +2593,8 @@ void CG_Player( centity_t *cent ) {
 	int renderfx;
 	qboolean shadow;
 	float shadowPlane;
+	float shadowAlpha;
+	float bodySinkOffset;
 	refEntity_t skull;
 	refEntity_t powerup;
 	int t;
@@ -2620,8 +2650,18 @@ void CG_Player( centity_t *cent ) {
 	// add the talk baloon or disconnect icon
 	CG_PlayerSprites( cent );
 
+	if ( cent->currentState.number != clientNum ) {
+		CG_Corpse( cent, clientNum, &bodySinkOffset, &shadowAlpha );
+	} else {
+		bodySinkOffset = 0;
+		shadowAlpha = 1;
+	}
+
 	// add the shadow
-	shadow = CG_PlayerShadow( cent, &shadowPlane, ci->team );
+	shadow = CG_PlayerShadow( cent, shadowAlpha, &shadowPlane, ci->team );
+
+	// have corpse sink after shadow, so shadow doesn't disappear when origin goes into ground
+	cent->lerpOrigin[2] -= bodySinkOffset;
 
 	// draw hud markers for friendly players
 	CG_FriendHudMarker( cent );

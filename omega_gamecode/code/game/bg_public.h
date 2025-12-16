@@ -68,6 +68,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_DOMINATION_POINTS 6
 #define MAX_DOMINATION_POINTS_NAMES 20
 
+#define BODY_SINK_DELAY 5000
+#define BODY_SINK_TIME 1500
+
 //
 // config strings are a general means of communicating variable length strings
 // from the server to all connected clients.
