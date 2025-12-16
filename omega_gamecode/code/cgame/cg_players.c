@@ -1943,10 +1943,10 @@ static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 
 	memset( &ent, 0, sizeof( ent ) );
 	VectorCopy( cent->lerpOrigin, ent.origin );
-	ent.origin[2] += 48 * scale;
+	ent.origin[2] += 45 * scale;
 	ent.reType = RT_SPRITE;
 	ent.customShader = shader;
-	ent.radius = 10 * scale;
+	ent.radius = 9 * scale;
 	ent.renderfx = rf;
 	ent.shaderRGBA[0] = 255;
 	ent.shaderRGBA[1] = 255;
@@ -2606,6 +2606,7 @@ void CG_Player( centity_t *cent ) {
 	// get the rotation information
 	CG_PlayerAngles( cent, legs.axis, torso.axis, head.axis );
 
+	// scale juggernaut players
 	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
 		VectorScale( legs.axis[0], 1.5, legs.axis[0] );
 		VectorScale( legs.axis[1], 1.5, legs.axis[1] );
