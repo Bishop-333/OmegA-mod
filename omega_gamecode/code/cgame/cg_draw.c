@@ -924,7 +924,7 @@ static float CG_DrawTimer( int y ) {
 		timerX -= CG_DrawStrlen( s ) * timerW;
 		CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
 		CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
-		return y + timerH + 8;
+		return y + timerH + 4;
 	}
 }
 
@@ -1451,7 +1451,7 @@ static void CG_DrawUpperRight( stereoFrame_t stereoFrame ) {
 		y = CG_DrawTimer( y );
 	}
 	if ( cg_drawItemPickup.integer ) {
-		y = CG_DrawPickupItem( y );
+		y = CG_DrawPickupItem( y + 4 );
 	}
 	if ( cg_drawAttacker.integer ) {
 		y = CG_DrawAttacker( y );
