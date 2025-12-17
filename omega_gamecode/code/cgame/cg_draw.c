@@ -917,11 +917,11 @@ static float CG_DrawTimer( int y ) {
 		return y;
 	} else if ( cg_drawTimer.integer == 3 || cg_drawTimer.integer == 4 ) {
 		/* top right-hand corner of screen */
-		timerX = 619;
+		timerX = 635;
 		timerY = y + 2;
 		timerW = TINYCHAR_WIDTH;
 		timerH = TINYCHAR_HEIGHT;
-		timerX -= CG_DrawStrlen( s ) * timerW / 2;
+		timerX -= CG_DrawStrlen( s ) * timerW;
 		CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
 		CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
 		return y + timerH + 8;
