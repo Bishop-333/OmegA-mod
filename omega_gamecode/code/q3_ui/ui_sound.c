@@ -51,11 +51,15 @@ SOUND OPTIONS MENU
 #define ID_TEAMCHATBEEP 21
 #define ID_HITSOUND 22
 #define ID_KILLSOUND 23
-#define ID_BACK 24
-#define ID_APPLY 25
+#define ID_KILLSOUNDSTYLE 24
+#define ID_BACK 25
+#define ID_APPLY 26
 
 static const char *quality_items[] = {
     "Low", "High", NULL };
+
+static const char *killsound_items[] = {
+    "Default", "Cha-Ching", NULL };
 
 typedef struct {
 	menuframework_s menu;
@@ -79,6 +83,7 @@ typedef struct {
 	menuradiobutton_s teamChatBeep;
 	menuradiobutton_s hitSound;
 	menuradiobutton_s killSound;
+	menulist_s killSoundStyle;
 
 	menubitmap_s back;
 	menubitmap_s apply;
@@ -87,6 +92,7 @@ typedef struct {
 typedef struct {
 	int quality;
 	int openal;
+	int killSoundStyle;
 } InitialSoundOptions_s;
 
 static InitialSoundOptions_s s_iso;
@@ -100,6 +106,7 @@ UI_SoundOptions_GetInitialSound
 static void UI_SoundOptions_GetInitialSound( void ) {
 	s_iso.quality = soundOptionsInfo.quality.curvalue;
 	s_iso.openal = soundOptionsInfo.openal.curvalue;
+	s_iso.killSoundStyle = soundOptionsInfo.killSoundStyle.curvalue;
 }
 
 /*
@@ -110,10 +117,19 @@ UI_SoundOptions_UpdateMenuItems
 static void UI_SoundOptions_UpdateMenuItems( void ) {
 	soundOptionsInfo.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 
+	if ( soundOptionsInfo.killSound.curvalue == 0 ) {
+		soundOptionsInfo.killSoundStyle.generic.flags |= QMF_GRAYED;
+	} else {
+		soundOptionsInfo.killSoundStyle.generic.flags &= ~QMF_GRAYED;
+	}
+
 	if ( s_iso.quality != soundOptionsInfo.quality.curvalue ) {
 		soundOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 	if ( s_iso.openal != soundOptionsInfo.openal.curvalue ) {
+		soundOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
+	}
+	if ( s_iso.killSoundStyle != soundOptionsInfo.killSoundStyle.curvalue ) {
 		soundOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 }
@@ -191,6 +207,10 @@ static void UI_SoundOptionsMenu_Event( void *ptr, int event ) {
 
 		case ID_KILLSOUND:
 			trap_Cvar_SetValue( "cg_killsound", soundOptionsInfo.killSound.curvalue );
+			break;
+
+		case ID_KILLSOUNDSTYLE:
+			trap_Cvar_SetValue( "cg_killsound", soundOptionsInfo.killSoundStyle.curvalue + 1 );
 			break;
 
 		case ID_BACK:
@@ -293,7 +313,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.network.style = UI_RIGHT;
 	soundOptionsInfo.network.color = color_red;
 
-	y = 240 - 3 * ( BIGCHAR_HEIGHT + 2 );
+	y = 240 - 4 * ( BIGCHAR_HEIGHT + 2 );
 	soundOptionsInfo.sfxvolume.generic.type = MTYPE_SLIDER;
 	soundOptionsInfo.sfxvolume.generic.name = "Effects Volume:";
 	soundOptionsInfo.sfxvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
@@ -381,6 +401,16 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.killSound.generic.x = 400;
 	soundOptionsInfo.killSound.generic.y = y;
 
+	y += BIGCHAR_HEIGHT + 2;
+	soundOptionsInfo.killSoundStyle.generic.type = MTYPE_SPINCONTROL;
+	soundOptionsInfo.killSoundStyle.generic.name = "Killsound Style:";
+	soundOptionsInfo.killSoundStyle.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	soundOptionsInfo.killSoundStyle.generic.callback = UI_SoundOptionsMenu_Event;
+	soundOptionsInfo.killSoundStyle.generic.id = ID_KILLSOUNDSTYLE;
+	soundOptionsInfo.killSoundStyle.generic.x = 400;
+	soundOptionsInfo.killSoundStyle.generic.y = y;
+	soundOptionsInfo.killSoundStyle.itemnames = killsound_items;
+
 	soundOptionsInfo.back.generic.type = MTYPE_BITMAP;
 	soundOptionsInfo.back.generic.name = ART_BACK0;
 	soundOptionsInfo.back.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -421,6 +451,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.teamChatBeep );
 	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.hitSound );
 	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.killSound );
+	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.killSoundStyle );
 	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.back );
 	Menu_AddItem( &soundOptionsInfo.menu, (void *)&soundOptionsInfo.apply );
 
@@ -433,6 +464,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.teamChatBeep.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_teamChatBeep" ) );
 	soundOptionsInfo.hitSound.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_hitsound" ) );
 	soundOptionsInfo.killSound.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "cg_killsound" ) );
+	soundOptionsInfo.killSoundStyle.curvalue = trap_Cvar_VariableValue( "cg_killsound" ) - 1;
 
 	UI_SoundOptions_GetInitialSound();
 }

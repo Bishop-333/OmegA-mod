@@ -479,7 +479,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE },
     { &cg_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE },
     { &cg_hitmarker, "cg_hitmarker", "1", CVAR_ARCHIVE },
-    { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE | CVAR_LATCH },
+    { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
     { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
     { &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
