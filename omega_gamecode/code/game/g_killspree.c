@@ -290,7 +290,7 @@ void G_RunStreakLogic( gentity_t *attacker, gentity_t *victim ) {
 		//Let's check for a killingspree for the attacker
 		G_CheckForSpree( attacker, attacker->client->pers.killstreak, qtrue );
 
-		if ( g_juggernaut.integer && attacker->client->pers.killstreak >= 5 && !( attacker->client->ps.generic1 & GEN_JUGGERNAUT ) ) {
+		if ( g_juggernaut.integer && attacker->client->pers.killstreak >= g_juggernaut.integer && !( attacker->client->ps.generic1 & GEN_JUGGERNAUT ) ) {
 			attacker->client->ps.generic1 |= GEN_JUGGERNAUT;
 			G_Printf( "%s is a Juggernaut!\n", attacker->client->pers.netname );
 		}

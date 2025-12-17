@@ -450,7 +450,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
     { &g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue },
     { &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
-    { &g_juggernaut, "g_juggernaut", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_juggernaut, "g_juggernaut", "7", CVAR_ARCHIVE, 0, qtrue },
     { &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue },
     { &g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue },
