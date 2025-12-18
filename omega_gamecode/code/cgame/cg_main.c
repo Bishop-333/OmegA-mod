@@ -250,6 +250,7 @@ vmCvar_t cg_brightPlayers;
 vmCvar_t cg_damagePlums;
 vmCvar_t cg_drawEmotes;
 vmCvar_t cg_drawEnemy;
+vmCvar_t cg_drawFriendSkulls;
 vmCvar_t cg_drawFriendThroughWalls;
 vmCvar_t cg_drawItemPickup;
 vmCvar_t cg_drawOldScoreboard;
@@ -466,6 +467,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
     { &cg_drawEmotes, "cg_drawEmotes", "1", CVAR_ARCHIVE },
     { &cg_drawEnemy, "cg_drawEnemy", "1", CVAR_ARCHIVE },
+    { &cg_drawFriendSkulls, "cg_drawFriendSkulls", "1", CVAR_ARCHIVE },
     { &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
     { &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE },
     { &cg_drawOldScoreboard, "cg_drawOldScoreboard", "0", CVAR_ARCHIVE },
