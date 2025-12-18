@@ -221,7 +221,7 @@ vmCvar_t g_muteSpectators;
 vmCvar_t g_plasmaBounce;
 vmCvar_t g_railgunDamage;
 vmCvar_t g_railgunFireRate;
-vmCvar_t g_railgunImpressiveReward;
+vmCvar_t g_railgunImpressiveFastReload;
 vmCvar_t g_railJump;
 vmCvar_t g_railThroughWalls;
 vmCvar_t g_rocketFireRate;
@@ -459,7 +459,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
     { &g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue },
-    { &g_railgunImpressiveReward, "g_railgunImpressiveReward", "1", 0, 0, qtrue },
+    { &g_railgunImpressiveFastReload, "g_railgunImpressiveFastReload", "1", 0, 0, qtrue },
     { &g_railJump, "g_railJump", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_railThroughWalls, "g_railThroughWalls", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_rocketFireRate, "g_rocketFireRate", "800", 0, 0, qtrue },

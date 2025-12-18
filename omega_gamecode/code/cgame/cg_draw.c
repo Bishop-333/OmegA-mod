@@ -915,7 +915,7 @@ static float CG_DrawTimer( int y ) {
 		CG_DrawStringExt( timerX, timerY, s, colorWhite, qfalse, qtrue, timerW, timerH, 0 );
 		CG_DrawStringExt( timerX + ( CG_DrawStrlen( s ) - 3 ) * timerW, timerY, ":", color, qfalse, qtrue, timerW, timerH, 0 );
 		return y;
-	} else if ( cg_drawTimer.integer == 3 || cg_drawTimer.integer == 4 ) {
+	} else {
 		/* top right-hand corner of screen */
 		timerX = 635;
 		timerY = y + 2;
@@ -2880,15 +2880,15 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 		return;
 	}
 
-	// scan the known entities to see if the crosshair is sighted on one
-	if ( cent->currentState.number != cg.crosshairClientNum && enemy ) {
-		return;
-	}
-
 	if ( ci->team != cg.snap->ps.persistant[PERS_TEAM] || ci->team == TEAM_FREE ) {
 		enemy = 1;
 	} else {
 		enemy = 0;
+	}
+
+	// scan the known entities to see if the crosshair is sighted on one
+	if ( cent->currentState.number != cg.crosshairClientNum && enemy ) {
+		return;
 	}
 
 	fadeColor = CG_FadeColor( cg.crosshairClientTime, 750 );
