@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // A user mod should never modify this file
 
 #define BASEGAME			"baseoa"
-#define PRODUCT_VERSION			"3.3.5"
+#define PRODUCT_VERSION			"3.3.6"
 
 #ifndef PRODUCT_DATE
 #  define PRODUCT_DATE __DATE__
