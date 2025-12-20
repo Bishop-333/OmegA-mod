@@ -40,6 +40,44 @@ char *cg_customSoundNames[MAX_CUSTOM_SOUNDS] = {
 
 /*
 ================
+CG_IsEnemy
+================
+*/
+static qboolean CG_IsEnemy( int clientNum ) {
+	clientInfo_t *ci;
+	clientInfo_t *self;
+	int myteam;
+
+	if ( cg.snap->ps.pm_flags & PMF_FOLLOW && cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
+		myteam = cgs.clientinfo[cg.snap->ps.clientNum].team;
+		self = &cgs.clientinfo[cg.snap->ps.clientNum];
+	} else {
+		myteam = cg.snap->ps.persistant[PERS_TEAM];
+		self = &cgs.clientinfo[cg.clientNum];
+	}
+
+	if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
+		clientNum = 0;
+	}
+	ci = &cgs.clientinfo[clientNum];
+
+	if ( ci == self ) {
+		return qfalse;
+	}
+
+	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( ci->team != myteam ) {
+			return qtrue;
+		}
+	} else {
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/*
+================
 CG_CheckBoost
 ================
 */
@@ -65,13 +103,10 @@ sfxHandle_t CG_CustomSound( int clientNum, const char *soundName ) {
 	clientInfo_t *ci;
 	clientInfo_t *self;
 	int i;
-	int myteam;
 
 	if ( cg.snap->ps.pm_flags & PMF_FOLLOW && cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
-		myteam = cgs.clientinfo[cg.snap->ps.clientNum].team;
 		self = &cgs.clientinfo[cg.snap->ps.clientNum];
 	} else {
-		myteam = cg.snap->ps.persistant[PERS_TEAM];
 		self = &cgs.clientinfo[cg.clientNum];
 	}
 
@@ -89,10 +124,10 @@ sfxHandle_t CG_CustomSound( int clientNum, const char *soundName ) {
 			if ( ci == self && cgs.selfSounds[i] ) {
 				CG_CheckBoost( clientNum, cgs.selfSounds[i] );
 				return cgs.selfSounds[i];
-			} else if ( ( ( ci->team != myteam ) || ( myteam == TEAM_FREE && ci != self ) ) && cgs.enemySounds[i] ) {
+			} else if ( CG_IsEnemy( clientNum ) && cgs.enemySounds[i] ) {
 				CG_CheckBoost( clientNum, cgs.enemySounds[i] );
 				return cgs.enemySounds[i];
-			} else if ( ( myteam != TEAM_FREE && ci->team == myteam ) && cgs.teamSounds[i] ) {
+			} else if ( !CG_IsEnemy( clientNum ) && cgs.teamSounds[i] ) {
 				CG_CheckBoost( clientNum, cgs.teamSounds[i] );
 				return cgs.teamSounds[i];
 			}
@@ -893,14 +928,12 @@ CG_NewClientInfo
 ======================
 */
 void CG_NewClientInfo( int clientNum ) {
-	int local_team;
 	clientInfo_t *ci;
 	clientInfo_t newInfo;
 	const char *configstring;
 	const char *local_config;
 	const char *v;
 	char *slash;
-	qboolean enemy = qfalse;
 
 	ci = &cgs.clientinfo[clientNum];
 
@@ -912,7 +945,6 @@ void CG_NewClientInfo( int clientNum ) {
 
 	local_config = CG_ConfigString( cg.clientNum + CS_PLAYERS );
 	v = Info_ValueForKey( local_config, "t" );
-	local_team = atoi( v );
 
 	// build into a temp buffer so the defer checks can use
 	// the old value
@@ -965,22 +997,9 @@ void CG_NewClientInfo( int clientNum ) {
 
 	// model
 	v = Info_ValueForKey( configstring, "model" );
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
-		if ( local_team != newInfo.team ) {
-			enemy = 1;
-		} else {
-			enemy = 0;
-		}
-	} else {
-		if ( cg.clientNum == clientNum ) {
-			enemy = 0;
-		} else {
-			enemy = 1;
-		}
-	}
 
-	if ( ( enemy && cg_enemyModel.string[0] ) || ( !enemy && cg_teamModel.string[0] ) ) {
-		if ( enemy ) {
+	if ( ( CG_IsEnemy( clientNum ) && cg_enemyModel.string[0] ) || ( !CG_IsEnemy( clientNum ) && cg_teamModel.string[0] ) ) {
+		if ( CG_IsEnemy( clientNum ) ) {
 			Q_strncpyz( newInfo.modelName, cg_enemyModel.string, sizeof( newInfo.modelName ) );
 		} else {
 			Q_strncpyz( newInfo.modelName, cg_teamModel.string, sizeof( newInfo.modelName ) );
@@ -1037,8 +1056,8 @@ void CG_NewClientInfo( int clientNum ) {
 
 	// head model
 	v = Info_ValueForKey( configstring, "hmodel" );
-	if ( ( enemy && cg_enemyModel.string[0] ) || ( !enemy && cg_teamModel.string[0] ) ) {
-		if ( enemy ) {
+	if ( ( CG_IsEnemy( clientNum ) && cg_enemyModel.string[0] ) || ( !CG_IsEnemy( clientNum ) && cg_teamModel.string[0] ) ) {
+		if ( CG_IsEnemy( clientNum ) ) {
 			Q_strncpyz( newInfo.headModelName, cg_enemyModel.string, sizeof( newInfo.headModelName ) );
 		} else {
 			Q_strncpyz( newInfo.headModelName, cg_teamModel.string, sizeof( newInfo.headModelName ) );
@@ -2208,16 +2227,6 @@ static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadow
 	vec3_t end, mins = { -15, -15, 0 }, maxs = { 15, 15, 2 };
 	trace_t trace;
 	float alpha;
-	int enemy;
-	int myteam;
-
-	myteam = cg.snap->ps.persistant[PERS_TEAM];
-
-	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE && myteam == TEAM_RED ) ) {
-		enemy = 1;
-	} else {
-		enemy = 0;
-	}
 
 	*shadowPlane = 0;
 
@@ -2259,7 +2268,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadow
 	// without taking a spot in the cg_marks array
 	if ( cg_shadows.integer == 4 ) {
 		if ( cg_brightPlayers.integer ) {
-			if ( enemy ) {
+			if ( CG_IsEnemy( cent->currentState.clientNum ) ) {
 				if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
 					CG_ImpactMark( cgs.media.shadow2RedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha, alpha, alpha, 1, qfalse, 24, qtrue );
 				} else if ( Q_stricmp( cg_enemyColor.string, "yellow" ) == 0 ) {
@@ -2281,7 +2290,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadow
 				} else {
 					CG_ImpactMark( cgs.media.shadow2GreenMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha, alpha, alpha, 1, qfalse, 24, qtrue );
 				}
-			} else if ( !enemy ) {
+			} else if ( !CG_IsEnemy( cent->currentState.clientNum ) ) {
 				if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
 					CG_ImpactMark( cgs.media.shadow2RedMarkShader, trace.endpos, trace.plane.normal, cent->pe.legs.yawAngle, alpha, alpha, alpha, 1, qfalse, 24, qtrue );
 				} else if ( Q_stricmp( cg_teamColor.string, "yellow" ) == 0 ) {
@@ -2416,22 +2425,13 @@ Also called by CG_Missile for quad rockets, but nobody can tell...
 void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int team, qboolean isMissile, int clientNum ) {
 	clientInfo_t *ci;
 	clientInfo_t *self;
-	int enemy;
-	int myteam;
 
-	myteam = cg.snap->ps.persistant[PERS_TEAM];
 	self = &cgs.clientinfo[cg.clientNum];
 
 	if ( (unsigned)clientNum >= MAX_CLIENTS ) {
 		clientNum = 0;
 	}
 	ci = &cgs.clientinfo[clientNum];
-
-	if ( ( team == TEAM_FREE ) || ( team == TEAM_RED && myteam == TEAM_BLUE ) || ( team == TEAM_BLUE && myteam == TEAM_RED ) ) {
-		enemy = 1;
-	} else {
-		enemy = 0;
-	}
 
 	if ( state->powerups & ( 1 << PW_INVIS ) ) {
 		if ( ( cgs.dmflags & DF_INVIS ) == 0 ) {
@@ -2449,7 +2449,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 			} else if ( cg_brightPlayers.integer ) {
 				ent->customShader = cgs.media.brightPlayers;
 			}
-			if ( enemy ) {
+			if ( CG_IsEnemy( clientNum ) ) {
 				if ( Q_stricmp( cg_enemyColor.string, "red" ) == 0 ) {
 					ent->shaderRGBA[0] = 255;
 					ent->shaderRGBA[1] = 0;
@@ -2491,7 +2491,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 					ent->shaderRGBA[1] = 255;
 					ent->shaderRGBA[2] = 0;
 				}
-			} else if ( !enemy ) {
+			} else if ( !CG_IsEnemy( clientNum ) ) {
 				if ( Q_stricmp( cg_teamColor.string, "red" ) == 0 ) {
 					ent->shaderRGBA[0] = 255;
 					ent->shaderRGBA[1] = 0;
