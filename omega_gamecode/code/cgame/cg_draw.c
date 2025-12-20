@@ -2668,7 +2668,7 @@ static void CG_DrawCrosshair( void ) {
 
 	if ( cg_hitmarker.integer && cg.lastHitTime > 0 && cg.time - cg.lastHitTime < 250 ) {
 		float animTime = (float)( cg.time - cg.lastHitTime ) / 250.0f;
-		float offset, offset2;
+		float offset, offset2 = 0.0f;
 		float size;
 		vec4_t color;
 
