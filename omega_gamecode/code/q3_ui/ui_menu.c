@@ -337,5 +337,5 @@ void UI_MainMenu( void ) {
 	trap_Key_SetCatcher( KEYCATCH_UI );
 	uis.menusp = 0;
 	UI_PushMenu( &s_main.menu );
-	trap_S_StartBackgroundTrack( "sound/misc/menu_background.ogg", NULL );
+	trap_S_StartBackgroundTrack( "sound/misc/menu_background.wav", NULL );
 }
