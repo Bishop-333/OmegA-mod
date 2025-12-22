@@ -1955,7 +1955,7 @@ static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 		rf = 0;
 	}
 
-	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		scale = 1.5f;
 		offset = 12;
 	} else {
@@ -2640,7 +2640,7 @@ void CG_Player( centity_t *cent ) {
 	CG_PlayerAngles( cent, legs.axis, torso.axis, head.axis );
 
 	// scale juggernaut players
-	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		VectorScale( legs.axis[0], 1.5, legs.axis[0] );
 		VectorScale( legs.axis[1], 1.5, legs.axis[1] );
 		VectorScale( legs.axis[2], 1.5, legs.axis[2] );
@@ -2695,7 +2695,7 @@ void CG_Player( centity_t *cent ) {
 
 	VectorCopy( cent->lerpOrigin, legs.origin );
 
-	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		legs.origin[2] += 12;
 	}
 

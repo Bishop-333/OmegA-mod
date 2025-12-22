@@ -1718,7 +1718,7 @@ static float CG_DrawPowerups( float y ) {
 		t = ps->powerups[i] - cg.time;
 		// ZOID--don't draw if the power up has unlimited time (999 seconds)
 		// This is true of the CTF flags
-		if ( t < 0 || t > 999000 ) {
+		if ( ( t < 0 || t > 999000 ) && i != PW_JUGGERNAUT ) {
 			continue;
 		}
 
@@ -1753,7 +1753,9 @@ static float CG_DrawPowerups( float y ) {
 			y -= ICON_SIZE;
 
 			trap_R_SetColor( colors[color] );
-			CG_DrawField( x, y, 2, sortedTime[i] / 1000, CHAR_WIDTH, CHAR_HEIGHT );
+			if ( sorted[i] != PW_JUGGERNAUT ) {
+				CG_DrawField( x, y, 2, sortedTime[i] / 1000, CHAR_WIDTH, CHAR_HEIGHT );
+			}
 
 			t = ps->powerups[sorted[i]];
 			if ( t - cg.time >= POWERUP_BLINKS * POWERUP_BLINK_TIME ) {
@@ -2908,7 +2910,7 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 	Q_strncpyz( name, ci->name, sizeof( names[0] ) );
 	Q_CleanStr( name );
 
-	if ( cent->currentState.generic1 & GEN_JUGGERNAUT ) {
+	if ( cg.snap->ps.powerups[PW_JUGGERNAUT] ) {
 		scale = 1.5f;
 		offset = 12;
 	} else {

@@ -163,7 +163,7 @@ void TossClientItems( gentity_t *self ) {
 		for ( i = 1; i < PW_NUM_POWERUPS; i++ ) {
 			if ( self->client->ps.powerups[i] > level.time ) {
 				item = BG_FindItemForPowerup( i );
-				if ( !item ) {
+				if ( !item || i == PW_JUGGERNAUT ) {
 					continue;
 				}
 				drop = Drop_Item( self, item, angle );
@@ -489,8 +489,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		self->client->sess.deaths += 1;
 	}
 
-	if ( self->client->ps.generic1 & GEN_JUGGERNAUT ) {
-		self->client->ps.generic1 &= ~GEN_JUGGERNAUT;
+	if ( self->client->ps.powerups[PW_JUGGERNAUT] ) {
+		self->client->ps.powerups[PW_JUGGERNAUT] = 0;
 	}
 
 	//unlagged - backward reconciliation #2

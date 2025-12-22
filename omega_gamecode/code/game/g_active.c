@@ -947,6 +947,12 @@ static void ClientThink_real( gentity_t *ent ) {
 		client->ps.speed *= 1.3;
 	}
 
+	if ( client->ps.powerups[PW_JUGGERNAUT] ) {
+		client->ps.stats[STAT_MAX_HEALTH] = 400;
+        client->ps.stats[STAT_HEALTH] = 400;
+        client->ps.stats[STAT_ARMOR] = 200;
+	}
+
 	// Let go of the hook if we aren't firing
 	if ( client->ps.weapon == WP_GRAPPLING_HOOK &&
 	     client->hook && !( ucmd->buttons & BUTTON_ATTACK ) ) {
