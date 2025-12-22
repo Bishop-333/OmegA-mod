@@ -2557,7 +2557,7 @@ static void CG_DrawCrosshair( void ) {
 		return;
 	}
 
-	if ( cg.renderingThirdPerson && ( !cg_drawThirdPersonCrosshair.integer || trap_Key_GetCatcher() & KEYCATCH_CONSOLE || cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) ) {
+	if ( cg.renderingThirdPerson ) {
 		return;
 	}
 
@@ -2724,7 +2724,7 @@ static void CG_DrawCrosshair3D( void ) {
 		return;
 	}
 
-	if ( cg.renderingThirdPerson ) {
+	if ( cg.renderingThirdPerson && ( !cg_drawThirdPersonCrosshair.integer || trap_Key_GetCatcher() & KEYCATCH_CONSOLE || cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) ) {
 		return;
 	}
 
@@ -2768,11 +2768,23 @@ static void CG_DrawCrosshair3D( void ) {
 	ent.reType = RT_SPRITE;
 	ent.renderfx = RF_DEPTHHACK | RF_CROSSHAIR;
 
+	if ( cg.renderingThirdPerson && cg_drawThirdPersonCrosshair.integer ) {
+		VectorCopy( cg.predictedPlayerState.origin, ent.origin );
+		ent.origin[2] += cg.predictedPlayerState.viewheight;
+		AnglesToAxis( cg.predictedPlayerState.viewangles, ent.axis );
+		VectorMA(ent.origin, maxdist, ent.axis[0], endpos);
+		CG_Trace( &trace, ent.origin, NULL, NULL, endpos, cg.snap->ps.clientNum, MASK_SHOT );
+	}
+
 	VectorCopy( trace.endpos, ent.origin );
 
 	// scale the crosshair so it appears the same size for all distances
 	ent.radius = w / 640 * xmax * trace.fraction * maxdist / zProj;
 	ent.customShader = hShader;
+	ent.shaderRGBA[0] = cg_crosshairColorRed.value * 255;
+	ent.shaderRGBA[1] = cg_crosshairColorGreen.value * 255;
+	ent.shaderRGBA[2] = cg_crosshairColorBlue.value * 255;
+	ent.shaderRGBA[3] = 255;
 
 	trap_R_AddRefEntityToScene( &ent );
 }
@@ -3416,7 +3428,7 @@ void CG_DrawActive( stereoFrame_t stereoView ) {
 	// clear around the rendered view if sized down
 	CG_TileClear();
 
-	if ( stereoView != STEREO_CENTER )
+	if ( stereoView != STEREO_CENTER || cg.renderingThirdPerson )
 		CG_DrawCrosshair3D();
 
 	// draw 3D view
