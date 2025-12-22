@@ -1558,7 +1558,7 @@ int CG_RewardTime( int idx );
 void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci );
 
 //
-// cg_player.c
+// cg_players.c
 //
 void CG_Player( centity_t *cent );
 void CG_ResetPlayerEntity( centity_t *cent );
