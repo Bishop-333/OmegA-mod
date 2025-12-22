@@ -449,7 +449,7 @@ static qboolean PM_CheckWaterJump( void ) {
 	}
 
 	spot[2] += 16;
-	if ( pm->ps->generic1 & GEN_JUGGERNAUT ) {
+	if ( pm->ps->powerups[PW_JUGGERNAUT] ) {
 		spot[2] *= 1.5;
 	}
 	cont = pm->pointcontents( spot, pm->ps->clientNum );
@@ -1326,7 +1326,7 @@ static void PM_CheckDuck( void ) {
 		pm->ps->viewheight = DEFAULT_VIEWHEIGHT;
 	}
 
-	if ( pm->ps->generic1 & GEN_JUGGERNAUT ) {
+	if ( pm->ps->powerups[PW_JUGGERNAUT] ) {
 		pm->maxs[2] = (int)( DEFAULT_HEIGHT * 1.5 );
 		pm->ps->viewheight = (int)( DEFAULT_VIEWHEIGHT * 1.5 );
 	}

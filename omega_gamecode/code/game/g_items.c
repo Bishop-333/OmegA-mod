@@ -69,6 +69,26 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 
 	other->client->ps.powerups[ent->item->giTag] += quantity * 1000;
 
+	if ( other->client->ps.powerups[PW_JUGGERNAUT] ) {
+		int clientNum = other->client->ps.clientNum;
+		char userinfo[MAX_INFO_STRING];
+		float handicap;
+		int max;
+
+		trap_GetUserinfo( clientNum, userinfo, sizeof( userinfo ) );
+		handicap = atof( Info_ValueForKey( userinfo, "handicap" ) );
+		if ( handicap <= 0.0f || handicap > 100.0f ) {
+			handicap = 100.0f;
+		}
+		max = (int)( 2 * handicap );
+
+		other->health = max;
+		other->client->ps.stats[STAT_HEALTH] = max;
+		other->client->ps.stats[STAT_MAX_HEALTH] = max;
+		other->client->ps.stats[STAT_ARMOR] = max;
+		other->client->pers.maxHealth = max;
+	}
+
 	// give any nearby players a "denied" anti-reward
 	for ( i = 0; i < level.maxclients; i++ ) {
 		vec3_t delta;

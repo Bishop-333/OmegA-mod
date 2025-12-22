@@ -290,8 +290,20 @@ void G_RunStreakLogic( gentity_t *attacker, gentity_t *victim ) {
 		//Let's check for a killingspree for the attacker
 		G_CheckForSpree( attacker, attacker->client->pers.killstreak, qtrue );
 
-		if ( g_juggernaut.integer && attacker->client->pers.killstreak >= g_juggernaut.integer && !( attacker->client->ps.generic1 & GEN_JUGGERNAUT ) ) {
-			attacker->client->ps.generic1 |= GEN_JUGGERNAUT;
+		if ( g_juggernaut.integer && attacker->client->pers.killstreak >= g_juggernaut.integer && !( attacker->client->ps.powerups[PW_JUGGERNAUT] ) ) {
+			gitem_t *it = BG_FindItem( "juggernaut" );
+			gentity_t *it_ent = G_Spawn();
+			trace_t trace;
+
+			VectorCopy( attacker->r.currentOrigin, it_ent->s.origin );
+			it_ent->classname = it->classname;
+			G_SpawnItem( it_ent, it );
+			FinishSpawningItem( it_ent );
+			memset( &trace, 0, sizeof( trace ) );
+			Touch_Item( it_ent, attacker, &trace );
+			if ( it_ent->inuse ) {
+				G_FreeEntity( it_ent );
+			}
 			G_Printf( "%s is a Juggernaut!\n", attacker->client->pers.netname );
 		}
 	}
