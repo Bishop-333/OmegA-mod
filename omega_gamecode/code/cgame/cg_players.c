@@ -2568,12 +2568,18 @@ void CG_Corpse( centity_t *cent, int playerNum, float *bodySinkOffset, float *sh
 
 	// After sitting around for five seconds, fall into the ground and dissapear.
 	if ( cg.time - cent->currentState.pos.trTime > BODY_SINK_DELAY ) {
-		float sinkFrac;
+		if ( cg_smoothBodySink.integer ) {
+			float sinkFrac;
 
-		sinkFrac = ( cg.time - cent->currentState.pos.trTime - BODY_SINK_DELAY ) / (float)BODY_SINK_TIME;
-		offset = sinkFrac * BODY_SINK_DIST;
+			sinkFrac = ( cg.time - cent->currentState.pos.trTime - BODY_SINK_DELAY ) / (float)BODY_SINK_TIME;
+			offset = sinkFrac * BODY_SINK_DIST;
 
-		*shadowAlpha = 1.0f - sinkFrac;
+			*shadowAlpha = 1.0f - sinkFrac;
+		} else {
+			// snap time to move in ( BODY_SINK_TIME / BODY_SINK_DIST ) msec jumps
+			offset = ( cg.time - cent->currentState.pos.trTime - BODY_SINK_DELAY ) / (int)( (float)BODY_SINK_TIME / BODY_SINK_DIST );
+			*shadowAlpha = 1;
+		}
 	} else {
 		offset = 0;
 		*shadowAlpha = 1;
