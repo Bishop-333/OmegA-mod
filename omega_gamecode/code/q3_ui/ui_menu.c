@@ -338,6 +338,6 @@ void UI_MainMenu( void ) {
 	uis.menusp = 0;
 	UI_PushMenu( &s_main.menu );
 	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
-		trap_S_StartBackgroundTrack( "sound/misc/menu_background.wav", NULL );
+		trap_S_StartBackgroundTrack( "sound/misc/menu_background.ogg", NULL );
 	}
 }
