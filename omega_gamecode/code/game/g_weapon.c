@@ -686,7 +686,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 		ent->client->accuracy[WP_RAILGUN][1]++;
 	}
 
-	if ( ent->client->railgunRapidFire ) {
+	if ( ent->client->railgunRapidFire && ent->client->ps.weaponTime > RAIL_RELOAD_FAST ) {
 		ent->client->ps.weaponTime = RAIL_RELOAD_FAST;
 	}
 }
