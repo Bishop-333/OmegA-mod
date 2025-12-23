@@ -382,6 +382,7 @@ struct gclient_s {
 	// timeResidual is used to handle events that happen every second
 	// like health / armor countdowns and regeneration
 	int timeResidual;
+	qboolean noHead;
 
 	gentity_t *persistantPowerup;
 	int portalID;

@@ -2928,7 +2928,7 @@ void CG_Player( centity_t *cent ) {
 	//
 	// add the head
 	//
-	if ( cent->currentState.generic1 & GEN_BODY_NOHEAD ) return;
+	if ( cent->pe.noHead ) return;
 
 	head.hModel = ci->headModel;
 	if ( !head.hModel ) {
@@ -3001,6 +3001,8 @@ void CG_ResetPlayerEntity( centity_t *cent ) {
 	cent->pe.torso.yawing = qfalse;
 	cent->pe.torso.pitchAngle = cent->rawAngles[PITCH];
 	cent->pe.torso.pitching = qfalse;
+
+	cent->pe.noHead = qfalse;
 
 	if ( cg_debugPosition.integer ) {
 		CG_Printf( "%i ResetPlayerEntity yaw=%f\n", cent->currentState.number, cent->pe.torso.yawAngle );

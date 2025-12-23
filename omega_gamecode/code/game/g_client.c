@@ -335,12 +335,7 @@ void CopyToBodyQue( gentity_t *ent ) {
 	}
 
 	body->s = ent->s;
-	if ( body->s.generic1 & GEN_BODY_NOHEAD ) {
-		body->s.eFlags = EF_DEAD;
-		body->s.generic1 = GEN_BODY_NOHEAD;
-	} else {
-		body->s.eFlags = EF_DEAD; // clear EF_TALK, etc
-	}
+	body->s.eFlags = EF_DEAD; // clear EF_TALK, etc
 	if ( ent->s.eFlags & EF_KAMIKAZE ) {
 		ent->s.eFlags &= ~EF_KAMIKAZE;
 		body->s.eFlags |= EF_KAMIKAZE;
@@ -411,6 +406,10 @@ void CopyToBodyQue( gentity_t *ent ) {
 		body->takedamage = qfalse;
 	} else {
 		body->takedamage = qtrue;
+	}
+
+	if ( ent->client->noHead ) {
+		G_AddEvent( body, EV_BODY_NOHEAD, 0 );
 	}
 
 	VectorCopy( body->s.pos.trBase, body->r.currentOrigin );
@@ -1802,6 +1801,8 @@ void ClientSpawn( gentity_t *ent ) {
 	if ( ent->client->sess.spectatorState != SPECTATOR_FOLLOW ) {
 		ClientEndFrame( ent );
 	}
+
+	ent->client->noHead = qfalse;
 
 	// clear entity state values
 	BG_PlayerStateToEntityState( &client->ps, &ent->s, qtrue );
