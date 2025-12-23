@@ -351,7 +351,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_rankings, "g_rankings", "0", 0, 0, qfalse },
     { &g_localTeamPref, "g_localTeamPref", "", 0, 0, qfalse },
     { &g_music, "g_music", "", 0, 0, qfalse },
-    { &g_spawnprotect, "g_spawnprotect", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    { &g_spawnprotect, "g_spawnprotect", "1000", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     //Now for elimination stuff:
     { &g_elimination_selfdamage, "elimination_selfdamage", "0", 0, 0, qtrue },
     { &g_elimination_startHealth, "elimination_startHealth", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
