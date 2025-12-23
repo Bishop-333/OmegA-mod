@@ -408,6 +408,19 @@ static void ClientTimerActions( gentity_t *ent, int msec ) {
 	while ( client->timeResidual >= 1000 ) {
 		client->timeResidual -= 1000;
 
+		if ( !client->ps.powerups[PW_JUGGERNAUT] && client->ps.stats[STAT_MAX_HEALTH] > 100 ) {
+			char userinfo[MAX_INFO_STRING];
+			float handicap;
+
+			trap_GetUserinfo( ent->s.clientNum, userinfo, sizeof( userinfo ) );
+			handicap = atoi( Info_ValueForKey( userinfo, "handicap" ) );
+			if ( handicap <= 0.0f || handicap > 100.0f ) {
+				handicap = 100.0f;
+			}
+			client->ps.stats[STAT_MAX_HEALTH] = handicap;
+			client->pers.maxHealth = handicap;
+		}
+
 		//Stop in elimination!!!
 		if ( client->ps.pm_flags & PMF_ELIMWARMUP )
 			continue;

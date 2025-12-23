@@ -593,7 +593,7 @@ gitem_t bg_itemlist[] =
               NULL, NULL, NULL },
             /* icon */ "icons/juggernaut",
             /* pickup */ "Juggernaut",
-            60,
+            30,
             IT_POWERUP,
             PW_JUGGERNAUT,
             /* precache */ "",
