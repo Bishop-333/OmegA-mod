@@ -1197,36 +1197,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 			}
 		}
 
-		if ( mod == MOD_PLASMA_SPLASH ) {
-			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
-				return;
-			}
-			if ( targ == attacker ) {
-				return;
-			}
-		} else if ( mod == MOD_GRENADE_SPLASH ) {
-			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
-				return;
-			}
-			if ( targ == attacker ) {
-				return;
-			}
-		} else if ( mod == MOD_BFG_SPLASH ) {
-			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
-				return;
-			}
-			if ( targ == attacker ) {
-				return;
-			}
-		} else if ( mod == MOD_ROCKET_SPLASH ) {
-			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
-				return;
-			}
-			if ( targ == attacker ) {
-				return;
-			}
-		}
-
 		if ( mod == MOD_RAILJUMP ) {
 			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
 				return;
@@ -1279,12 +1249,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	if ( targ == attacker && ( g_dmflags.integer & DF_NO_SELF_DAMAGE ) )
 		damage = 0;
 
-	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_LMS || g_elimination_allgametypes.integer ) && g_elimination_selfdamage.integer < 1 && ( targ == attacker || mod == MOD_FALLING ) ) {
+	if ( ( BG_IsEliminationGT( g_gametype.integer ) || g_elimination_allgametypes.integer ) && g_elimination_selfdamage.integer < 1 && ( targ == attacker || mod == MOD_FALLING ) ) {
 		damage = 0;
 	}
 
 	//So people can be telefragged!
-	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_LMS ) && level.time < level.roundStartTime && ( ( mod == MOD_LAVA ) || ( mod == MOD_SLIME ) ) ) {
+	if ( BG_IsEliminationGT( g_gametype.integer ) && level.time < level.roundStartTime && ( ( mod == MOD_LAVA ) || ( mod == MOD_SLIME ) ) ) {
 		damage = 1000;
 	}
 
