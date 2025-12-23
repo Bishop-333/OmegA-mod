@@ -2772,7 +2772,7 @@ static void CG_DrawCrosshair3D( void ) {
 		VectorCopy( cg.predictedPlayerState.origin, ent.origin );
 		ent.origin[2] += cg.predictedPlayerState.viewheight;
 		AnglesToAxis( cg.predictedPlayerState.viewangles, ent.axis );
-		VectorMA(ent.origin, maxdist, ent.axis[0], endpos);
+		VectorMA( ent.origin, maxdist, ent.axis[0], endpos );
 		CG_Trace( &trace, ent.origin, NULL, NULL, endpos, cg.snap->ps.clientNum, MASK_SHOT );
 		if ( trace.entityNum && trace.entityNum < MAX_CLIENTS ) {
 			cg.crosshairClientNum = trace.entityNum;

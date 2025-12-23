@@ -1398,7 +1398,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			cent->pe.noHead = qtrue;
 			CG_GibPlayerHeadshot( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta );
 			break;
-		
+
 		case EV_BODY_NOHEAD:
 			DEBUGNAME( "EV_BODY_NOHEAD" );
 			cent->pe.noHead = qtrue;

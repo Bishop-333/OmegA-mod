@@ -268,10 +268,11 @@ vmCvar_t cg_killsound;
 vmCvar_t cg_noInvisWalls;
 vmCvar_t cg_omegaFlags;
 vmCvar_t cg_omegaInitialized;
+vmCvar_t cg_predictWeapons;
 vmCvar_t cg_screenshake;
 vmCvar_t cg_selfSounds;
 vmCvar_t cg_shotgunSparks;
-vmCvar_t cg_showSpawns; //from ratmod
+vmCvar_t cg_showSpawns;
 vmCvar_t cg_showSpecZoom;
 vmCvar_t cg_smoothBodySink;
 vmCvar_t cg_statusBarStyle;
@@ -350,7 +351,6 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_nopredict, "cg_nopredict", "0", 0 },
     { &cg_noPlayerAnims, "cg_noplayeranims", "0", CVAR_CHEAT },
     { &cg_showmiss, "cg_showmiss", "0", 0 },
-    { &cg_smoothBodySink, "cg_smoothBodySink", "1", CVAR_ARCHIVE },
     { &cg_footsteps, "cg_footsteps", "1", CVAR_CHEAT },
     { &cg_tracerChance, "cg_tracerchance", "0.4", CVAR_CHEAT },
     { &cg_tracerWidth, "cg_tracerwidth", "1", CVAR_CHEAT },
@@ -487,11 +487,13 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
     { &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
+    { &cg_predictWeapons, "cg_predictWeapons", "1", CVAR_ARCHIVE },
     { &cg_screenshake, "cg_screenshake", "1", CVAR_ARCHIVE },
     { &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE },
     { &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE },
     { &cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE },
     { &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE },
+    { &cg_smoothBodySink, "cg_smoothBodySink", "1", CVAR_ARCHIVE },
     { &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE },
     { &cg_switchCycle, "cg_switchCycle", "1", CVAR_ARCHIVE },
     { &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE },
