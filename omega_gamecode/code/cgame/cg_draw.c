@@ -2924,7 +2924,7 @@ void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci ) {
 	Q_strncpyz( name, ci->name, sizeof( names[0] ) );
 	Q_CleanStr( name );
 
-	if ( cent->currentState.powerups & PW_JUGGERNAUT ) {
+	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		scale = 1.5f;
 		offset = 12;
 	} else {
