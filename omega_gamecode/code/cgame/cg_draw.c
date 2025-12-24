@@ -610,7 +610,11 @@ static void CG_DrawStatusBar( void ) {
 	value = ps->stats[STAT_ARMOR];
 	if ( value > 100 ) {
 		trap_R_SetColor( colors[0] );
-		CG_DrawField( 355, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
+		if ( cg_statusBarStyle.integer == 3 ) {
+			CG_DrawField( 370, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
+		} else {
+			CG_DrawField( 355, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
+		}
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
