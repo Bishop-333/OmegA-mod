@@ -1904,6 +1904,8 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 	if ( powerups & ( 1 << PW_REDFLAG ) ) {
 		if ( ci->newAnims ) {
 			CG_PlayerFlag( cent, cgs.media.redFlagFlapSkin, torso );
+		} else if ( cg_thirdPerson.integer && cent->currentState.number == cg.snap->ps.clientNum ) {
+			CG_PlayerFloatSprite( cent, cgs.media.redFlagShader[0] );
 		} else {
 			CG_TrailItem( cent, cgs.media.redFlagModel );
 		}
@@ -1914,6 +1916,8 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 	if ( powerups & ( 1 << PW_BLUEFLAG ) ) {
 		if ( ci->newAnims ) {
 			CG_PlayerFlag( cent, cgs.media.blueFlagFlapSkin, torso );
+		} else if ( cg_thirdPerson.integer && cent->currentState.number == cg.snap->ps.clientNum ) {
+			CG_PlayerFloatSprite( cent, cgs.media.blueFlagShader[0] );
 		} else {
 			CG_TrailItem( cent, cgs.media.blueFlagModel );
 		}
