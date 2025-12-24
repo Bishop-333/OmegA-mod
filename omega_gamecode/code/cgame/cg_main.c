@@ -261,12 +261,12 @@ vmCvar_t cg_elimination_activewarmup;
 vmCvar_t cg_enemyColor;
 vmCvar_t cg_enemyModel;
 vmCvar_t cg_enemySounds;
+vmCvar_t cg_flagStyle;
 vmCvar_t cg_forceTeamSkins;
 vmCvar_t cg_guidedRockets;
 vmCvar_t cg_hitmarker;
 vmCvar_t cg_killsound;
 vmCvar_t cg_noInvisWalls;
-vmCvar_t cg_omegaFlags;
 vmCvar_t cg_omegaInitialized;
 vmCvar_t cg_predictWeapons;
 vmCvar_t cg_screenshake;
@@ -281,6 +281,7 @@ vmCvar_t cg_teamColor;
 vmCvar_t cg_teamModel;
 vmCvar_t cg_teamSounds;
 vmCvar_t cg_thinLightningBolt;
+vmCvar_t cg_thirdPersonFlagSprite;
 vmCvar_t cg_timerHeight;
 vmCvar_t cg_timerWidth;
 vmCvar_t cg_timerX;
@@ -480,12 +481,12 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_enemyColor, "cg_enemyColor", "", CVAR_ARCHIVE },
     { &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE },
     { &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE },
+    { &cg_flagStyle, "cg_flagStyle", "2", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE },
     { &cg_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE },
     { &cg_hitmarker, "cg_hitmarker", "1", CVAR_ARCHIVE },
     { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
     { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
-    { &cg_omegaFlags, "cg_omegaFlags", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
     { &cg_predictWeapons, "cg_predictWeapons", "1", CVAR_ARCHIVE },
     { &cg_screenshake, "cg_screenshake", "1", CVAR_ARCHIVE },
@@ -500,6 +501,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE },
     { &cg_teamSounds, "cg_teamSounds", "", CVAR_ARCHIVE },
     { &cg_thinLightningBolt, "cg_thinLightningBolt", "0", CVAR_ARCHIVE | CVAR_LATCH },
+    { &cg_thirdPersonFlagSprite, "cg_thirdPersonFlagSprite", "0", CVAR_ARCHIVE },
     { &cg_timerHeight, "cg_timerHeight", "25", CVAR_ARCHIVE },
     { &cg_timerWidth, "cg_timerWidth", "25", CVAR_ARCHIVE },
     { &cg_timerX, "cg_timerX", "318", CVAR_ARCHIVE },
@@ -1174,9 +1176,9 @@ static void CG_RegisterGraphics( void ) {
 	}
 
 	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_1FCTF || cgs.gametype == GT_POSSESSION || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
-		if ( cg_omegaFlags.integer ) {
-			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags_omega/r_flag.md3" );
-			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags_omega/b_flag.md3" );
+		if ( cg_flagStyle.integer == 2 ) {
+			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags2/r_flag.md3" );
+			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags2/b_flag.md3" );
 		} else {
 			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags/r_flag.md3" );
 			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags/b_flag.md3" );

@@ -112,7 +112,7 @@ models/flags/bflagface
 	nopicmip
 	nomipmaps
 	{
-		clampmap models/flags_omega/bflagface1.jpg
+		clampmap models/flags2/bflagface1.jpg
 		blendfunc add
 	}
 }
@@ -123,7 +123,7 @@ models/flags/rflagface
 	nopicmip
 	nomipmaps
 	{
-		clampmap models/flags_omega/rflagface1.jpg
+		clampmap models/flags2/rflagface1.jpg
 		blendfunc add
 	}
 }

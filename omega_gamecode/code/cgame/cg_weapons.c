@@ -964,16 +964,16 @@ CG_GetFlagModel
 ==========================
 */
 static const char *CG_GetFlagModel( gitem_t *item ) {
-	if ( item->giType == IT_TEAM && item->giTag == PW_REDFLAG && cg_omegaFlags.integer ) {
-		const char *omgRedFlag = "models/flags_omega/r_flag.md3";
+	if ( item->giType == IT_TEAM && item->giTag == PW_REDFLAG && cg_flagStyle.integer == 2 ) {
+		const char *omgRedFlag = "models/flags2/r_flag.md3";
 		qhandle_t model = trap_R_RegisterModel( omgRedFlag );
 		if ( model != 0 ) {
 			return omgRedFlag;
 		}
 	}
 
-	if ( item->giType == IT_TEAM && item->giTag == PW_BLUEFLAG && cg_omegaFlags.integer ) {
-		const char *omgBlueFlag = "models/flags_omega/b_flag.md3";
+	if ( item->giType == IT_TEAM && item->giTag == PW_BLUEFLAG && cg_flagStyle.integer == 2 ) {
+		const char *omgBlueFlag = "models/flags2/b_flag.md3";
 		qhandle_t model = trap_R_RegisterModel( omgBlueFlag );
 		if ( model != 0 ) {
 			return omgBlueFlag;
