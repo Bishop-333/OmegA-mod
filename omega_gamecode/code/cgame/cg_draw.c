@@ -501,6 +501,7 @@ static void CG_DrawStatusBar( void ) {
 		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
 		if ( cg_statusBarStyle.integer != 3 ) {
 			CG_Draw3DModel( 25 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 429 - CHAR_HEIGHT / 3, ICON_SIZE * 1.25, ICON_SIZE * 1.25, cgs.media.smallCrossModel, 0, origin, angles );
+			CG_Draw3DModel( 25 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 429 - CHAR_HEIGHT / 3, ICON_SIZE * 1.25, ICON_SIZE * 1.25, cgs.media.smallSphereModel, 0, origin, angles );
 		}
 	}
 
