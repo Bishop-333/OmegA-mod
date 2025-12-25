@@ -191,6 +191,7 @@ vmCvar_t ui_setupchecked;
 
 //OmegA
 vmCvar_t ui_mapvote_filter;
+vmCvar_t ui_saved_maxfps;
 
 // bk001129 - made static to avoid aliasing.
 static cvarTable_t cvarTable[] = {
@@ -289,7 +290,8 @@ static cvarTable_t cvarTable[] = {
     { &ui_browserHidePrivate, "ui_browserHidePrivate", "1", CVAR_ARCHIVE },
 
     //OmegA
-    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 } };
+    { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
+    { &ui_saved_maxfps, "ui_saved_maxfps", "", CVAR_ROM } };
 
 // bk001129 - made static to avoid aliasing
 static int cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );

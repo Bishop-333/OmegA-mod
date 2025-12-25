@@ -43,7 +43,8 @@ DISPLAY OPTIONS MENU
 #define ID_NETWORK 13
 #define ID_BRIGHTNESS 14
 #define ID_MAXFPS 15
-#define ID_BACK 16
+#define ID_VSYNC 16
+#define ID_BACK 17
 
 typedef struct {
 	menuframework_s menu;
@@ -93,6 +94,12 @@ DisplayOptions_UpdateMenuItems
 */
 static void DisplayOptions_UpdateMenuItems( void ) {
 	displayOptionsInfo.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
+
+	if ( displayOptionsInfo.vsync.curvalue == 1 ) {
+		displayOptionsInfo.maxfps.generic.flags |= QMF_GRAYED;
+	} else {
+		displayOptionsInfo.maxfps.generic.flags &= ~QMF_GRAYED;
+	}
 
 	if ( s_ido.hdr != displayOptionsInfo.hdr.curvalue ) {
 		displayOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
@@ -155,6 +162,17 @@ static void UI_DisplayOptionsMenu_Event( void *ptr, int event ) {
 				trap_Cvar_SetValue( "com_maxfps", 0 );
 			} else {
 				trap_Cvar_SetValue( "com_maxfps", (int)displayOptionsInfo.maxfps.curvalue );
+			}
+			break;
+
+		case ID_VSYNC:
+			if ( displayOptionsInfo.vsync.curvalue == 1 ) {
+				trap_Cvar_SetValue( "ui_saved_maxfps", (int)displayOptionsInfo.maxfps.curvalue );
+				displayOptionsInfo.maxfps.curvalue = displayOptionsInfo.maxfps.maxvalue;
+				trap_Cvar_SetValue( "com_maxfps", 0 );
+			} else {
+				displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue( "ui_saved_maxfps" );
+				trap_Cvar_SetValue( "com_maxfps", trap_Cvar_VariableValue( "ui_saved_maxfps" ) );
 			}
 			break;
 
@@ -335,6 +353,8 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.vsync.generic.type = MTYPE_SPINCONTROL;
 	displayOptionsInfo.vsync.generic.name = "V-Sync:";
 	displayOptionsInfo.vsync.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	displayOptionsInfo.vsync.generic.callback = UI_DisplayOptionsMenu_Event;
+	displayOptionsInfo.vsync.generic.id = ID_VSYNC;
 	displayOptionsInfo.vsync.generic.x = 400;
 	displayOptionsInfo.vsync.generic.y = y;
 	displayOptionsInfo.vsync.itemnames = enabled_names;
