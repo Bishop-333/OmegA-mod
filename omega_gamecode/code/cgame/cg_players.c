@@ -2208,7 +2208,13 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
 	       team == TEAM_FREE ) ) {
 		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum ) {
-			CG_PlayerFloatSprite( cent, origin, cgs.media.enemyShader );
+			trace_t trace;
+
+			trap_CM_BoxTrace( &trace, cg.refdef.vieworg, origin, 0, 0, 0, MASK_SOLID );
+
+			if ( trace.fraction == 1.0f ) {
+				CG_PlayerFloatSprite( cent, origin, cgs.media.enemyShader );
+			}
 		}
 		return;
 	}
