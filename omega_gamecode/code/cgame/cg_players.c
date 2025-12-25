@@ -1904,9 +1904,7 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 	if ( powerups & ( 1 << PW_REDFLAG ) ) {
 		if ( ci->newAnims ) {
 			CG_PlayerFlag( cent, cgs.media.redFlagFlapSkin, torso );
-		} else if ( cg_thirdPersonFlagSprite.integer && cg_thirdPerson.integer && cent->currentState.number == cg.snap->ps.clientNum ) {
-			CG_PlayerFloatSprite( cent, cgs.media.redFlagShader[0] );
-		} else {
+		} else if ( !( cent->currentState.number == cg.snap->ps.clientNum && cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) {
 			CG_TrailItem( cent, cgs.media.redFlagModel );
 		}
 		trap_R_AddLightToScene( cent->lerpOrigin, 200 + ( rand() & 31 ), 1.0, 0.2f, 0.2f );
@@ -1916,9 +1914,7 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 	if ( powerups & ( 1 << PW_BLUEFLAG ) ) {
 		if ( ci->newAnims ) {
 			CG_PlayerFlag( cent, cgs.media.blueFlagFlapSkin, torso );
-		} else if ( cg_thirdPersonFlagSprite.integer && cg_thirdPerson.integer && cent->currentState.number == cg.snap->ps.clientNum ) {
-			CG_PlayerFloatSprite( cent, cgs.media.blueFlagShader[0] );
-		} else {
+		} else if ( !( cent->currentState.number == cg.snap->ps.clientNum && cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) {
 			CG_TrailItem( cent, cgs.media.blueFlagModel );
 		}
 		trap_R_AddLightToScene( cent->lerpOrigin, 200 + ( rand() & 31 ), 0.2f, 0.2f, 1.0f );
@@ -1928,7 +1924,7 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 	if ( powerups & ( 1 << PW_NEUTRALFLAG ) ) {
 		if ( ci->newAnims ) {
 			CG_PlayerFlag( cent, cgs.media.neutralFlagFlapSkin, torso );
-		} else {
+		} else if ( !( cent->currentState.number == cg.snap->ps.clientNum && cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) {
 			CG_TrailItem( cent, cgs.media.neutralFlagModel );
 		}
 		trap_R_AddLightToScene( cent->lerpOrigin, 200 + ( rand() & 31 ), 1.0f, 1.0f, 1.0f );
@@ -1947,7 +1943,7 @@ CG_PlayerFloatSprite
 Float a sprite over the player's head
 ===============
 */
-static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
+static void CG_PlayerFloatSprite( centity_t *cent, vec3_t origin, qhandle_t shader ) {
 	int rf;
 	int offset;
 	refEntity_t ent;
@@ -1961,15 +1957,13 @@ static void CG_PlayerFloatSprite( centity_t *cent, qhandle_t shader ) {
 
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		scale = 1.5f;
-		offset = 12;
 	} else {
 		scale = 1.0f;
-		offset = 0;
 	}
 
 	memset( &ent, 0, sizeof( ent ) );
 	VectorCopy( cent->lerpOrigin, ent.origin );
-	ent.origin[2] += 45 * scale + offset;
+	ent.origin[2] = origin[2] + 35 * scale;
 	ent.reType = RT_SPRITE;
 	ent.customShader = shader;
 	ent.radius = 9 * scale;
@@ -2105,72 +2099,75 @@ CG_PlayerSprites
 Float sprites over the player's head
 ===============
 */
-static void CG_PlayerSprites( centity_t *cent ) {
+static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 	int team;
+	vec3_t origin;
+
+	VectorCopy( parent->origin, origin );
 
 	if ( cent->currentState.eFlags & EF_CONNECTION ) {
-		CG_PlayerFloatSprite( cent, cgs.media.connectionShader );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.connectionShader );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_TALK ) {
-		CG_PlayerFloatSprite( cent, cgs.media.balloonShader );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.balloonShader );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_IMPRESSIVE ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalImpressive );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalImpressive );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_EXCELLENT ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalExcellent );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalExcellent );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_GAUNTLET ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalGauntlet );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalGauntlet );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_DEFEND ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalDefend );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalDefend );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_ASSIST ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalAssist );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalAssist );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_CAP ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalCapture );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalCapture );
 		return;
 	}
 
 	if ( cent->currentState.eFlags & EF_AWARD_HEADSHOT ) {
-		CG_PlayerFloatSprite( cent, cgs.media.medalHeadshot );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.medalHeadshot );
 		return;
 	}
 
 	if ( cg_drawEmotes.integer ) {
 		if ( cent->currentState.generic1 & GEN_SMILEY_HAPPY ) {
-			CG_PlayerFloatSprite( cent, cgs.media.smileyHappy );
+			CG_PlayerFloatSprite( cent, origin, cgs.media.smileyHappy );
 			return;
 		}
 
 		if ( cent->currentState.generic1 & GEN_SMILEY_SAD ) {
-			CG_PlayerFloatSprite( cent, cgs.media.smileySad );
+			CG_PlayerFloatSprite( cent, origin, cgs.media.smileySad );
 			return;
 		}
 
 		if ( cent->currentState.generic1 & GEN_SMILEY_ANGRY ) {
-			CG_PlayerFloatSprite( cent, cgs.media.smileyAngry );
+			CG_PlayerFloatSprite( cent, origin, cgs.media.smileyAngry );
 			return;
 		}
 
 		if ( cent->currentState.generic1 & GEN_SMILEY_MOON ) {
-			CG_PlayerFloatSprite( cent, cgs.media.smileyMoon );
+			CG_PlayerFloatSprite( cent, origin, cgs.media.smileyMoon );
 			return;
 		}
 	}
@@ -2181,26 +2178,26 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 &&
 	     cg_drawFriendSkulls.integer && cg_drawFriendThroughWalls.integer ) {
-		CG_PlayerFloatSprite( cent, cgs.media.skullShader );
+		CG_PlayerFloatSprite( cent, origin, cgs.media.skullShader );
 		return;
 	}
 
 	if ( !( cent->currentState.eFlags & EF_DEAD ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
-		if ( cg_drawFriend.integer && cent->currentState.clientNum != cg.snap->ps.clientNum ) {
+		if ( cg_drawFriend.integer && ( cent->currentState.clientNum != cg.snap->ps.clientNum || ( cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) ) {
 			if ( cg_drawFriendThroughWalls.integer ) {
 				if ( cent->currentState.powerups & ( 1 << PW_REDFLAG ) ) {
-					CG_PlayerFloatSprite( cent, cgs.media.redFlagShader[0] );
+					CG_PlayerFloatSprite( cent, origin, cgs.media.redFlagShader[0] );
 				} else if ( cent->currentState.powerups & ( 1 << PW_BLUEFLAG ) ) {
-					CG_PlayerFloatSprite( cent, cgs.media.blueFlagShader[0] );
+					CG_PlayerFloatSprite( cent, origin, cgs.media.blueFlagShader[0] );
 				} else if ( cent->currentState.powerups & ( 1 << PW_NEUTRALFLAG ) ) {
-					CG_PlayerFloatSprite( cent, cgs.media.flagShader[0] );
-				} else {
-					CG_PlayerFloatSprite( cent, cgs.media.friendThroughWallsShader );
+					CG_PlayerFloatSprite( cent, origin, cgs.media.flagShader[0] );
+				} else if ( cent->currentState.clientNum != cg.snap->ps.clientNum ) {
+					CG_PlayerFloatSprite( cent, origin, cgs.media.friendThroughWallsShader );
 				}
-			} else {
-				CG_PlayerFloatSprite( cent, cgs.media.friendShader );
+			} else if ( cent->currentState.clientNum != cg.snap->ps.clientNum ) {
+				CG_PlayerFloatSprite( cent, origin, cgs.media.friendShader );
 			}
 		}
 		return;
@@ -2211,7 +2208,7 @@ static void CG_PlayerSprites( centity_t *cent ) {
 	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
 	       team == TEAM_FREE ) ) {
 		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum ) {
-			CG_PlayerFloatSprite( cent, cgs.media.enemyShader );
+			CG_PlayerFloatSprite( cent, origin, cgs.media.enemyShader );
 		}
 		return;
 	}
@@ -2660,9 +2657,6 @@ void CG_Player( centity_t *cent ) {
 	CG_PlayerAnimation( cent, &legs.oldframe, &legs.frame, &legs.backlerp,
 	                    &torso.oldframe, &torso.frame, &torso.backlerp );
 
-	// add the talk baloon or disconnect icon
-	CG_PlayerSprites( cent );
-
 	if ( cent->currentState.number != clientNum ) {
 		CG_Corpse( cent, clientNum, &bodySinkOffset, &shadowAlpha );
 	} else {
@@ -2929,6 +2923,9 @@ void CG_Player( centity_t *cent ) {
 
 	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse, cent->currentState.number );
 
+	// add the talk baloon or disconnect icon
+	CG_PlayerSprites( cent, &torso );
+
 	//
 	// add the head
 	//
@@ -2961,7 +2958,7 @@ void CG_Player( centity_t *cent ) {
 
 	CG_DustTrail( cent );
 
-	CG_Draw3DCrosshairName( cent, ci );
+	CG_Draw3DCrosshairNames( cent, &torso, ci );
 
 	//
 	// add the gun / barrel / flash

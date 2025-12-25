@@ -1559,7 +1559,7 @@ qboolean CG_YourTeamHasFlag( void );
 qboolean CG_OtherTeamHasFlag( void );
 qhandle_t CG_StatusHandle( int task );
 int CG_RewardTime( int idx );
-void CG_Draw3DCrosshairName( centity_t *cent, clientInfo_t *ci );
+void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t *ci );
 
 //
 // cg_players.c
