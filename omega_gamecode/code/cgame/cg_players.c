@@ -1945,7 +1945,6 @@ Float a sprite over the player's head
 */
 static void CG_PlayerFloatSprite( centity_t *cent, vec3_t origin, qhandle_t shader ) {
 	int rf;
-	int offset;
 	refEntity_t ent;
 	float scale;
 
