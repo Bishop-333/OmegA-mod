@@ -737,10 +737,6 @@ typedef struct {
 	qhandle_t harvesterBlueSkin;
 	qhandle_t harvesterNeutralModel;
 
-	qhandle_t smallCrossModel;
-	qhandle_t smallSphereModel;
-	qhandle_t healthIcon;
-
 	qhandle_t armorModel;
 	qhandle_t armorIcon;
 
@@ -1417,7 +1413,6 @@ extern vmCvar_t cg_shotgunSparks;
 extern vmCvar_t cg_showSpawns;
 extern vmCvar_t cg_showSpecZoom;
 extern vmCvar_t cg_smoothBodySink;
-extern vmCvar_t cg_statusBarStyle;
 extern vmCvar_t cg_switchCycle;
 extern vmCvar_t cg_teamColor;
 extern vmCvar_t cg_teamModel;

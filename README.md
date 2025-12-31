@@ -32,7 +32,6 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | :--- | :--- |
 | `cg_transparentGun` | Renders your weapon model transparent to have a better field of view. |
 | `cg_drawItemPickup` | Displays pickup item names. |
-| `cg_statusBarStyle` | Changes the visual style of the status bar. |
 | `cg_timerWidth` / `cg_timerHeight` / `cg_timerX` / `cg_timerY` | Adjusts timer size and position. |
 | `cg_zoomAnim` / `cg_zoomAnimSpeed` / `cg_zoomToggle` | Configures zoom. |
 

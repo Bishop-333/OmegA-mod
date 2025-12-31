@@ -275,7 +275,6 @@ vmCvar_t cg_shotgunSparks;
 vmCvar_t cg_showSpawns;
 vmCvar_t cg_showSpecZoom;
 vmCvar_t cg_smoothBodySink;
-vmCvar_t cg_statusBarStyle;
 vmCvar_t cg_switchCycle;
 vmCvar_t cg_teamColor;
 vmCvar_t cg_teamModel;
@@ -495,7 +494,6 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_shotgunSparks, "cg_shotgunSparks", "1", CVAR_ARCHIVE },
     { &cg_showSpecZoom, "cg_showSpecZoom", "1", CVAR_ARCHIVE },
     { &cg_smoothBodySink, "cg_smoothBodySink", "1", CVAR_ARCHIVE },
-    { &cg_statusBarStyle, "cg_statusBarStyle", "1", CVAR_ARCHIVE },
     { &cg_switchCycle, "cg_switchCycle", "1", CVAR_ARCHIVE },
     { &cg_teamColor, "cg_teamColor", "", CVAR_ARCHIVE },
     { &cg_teamModel, "cg_teamModel", "", CVAR_ARCHIVE },
@@ -1238,10 +1236,6 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.enemyShader = trap_R_RegisterShader( "sprites/foe3" );
 
 	cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
-
-	cgs.media.smallCrossModel = trap_R_RegisterModel( "models/powerups/health/small_cross.md3" );
-	cgs.media.smallSphereModel = trap_R_RegisterModel( "models/powerups/health/small_sphere.md3" );
-	cgs.media.healthIcon = trap_R_RegisterShaderNoMip( "icons/iconh_green" );
 
 	cgs.media.armorModel = trap_R_RegisterModel( "models/powerups/armor/armor_yel.md3" );
 	cgs.media.armorIcon = trap_R_RegisterShaderNoMip( "icons/iconr_yellow" );

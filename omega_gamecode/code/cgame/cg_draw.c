@@ -344,12 +344,7 @@ static void CG_DrawStatusBarHead( float x ) {
 	angles[YAW] = cg.headStartYaw + ( cg.headEndYaw - cg.headStartYaw ) * frac;
 	angles[PITCH] = cg.headStartPitch + ( cg.headEndPitch - cg.headStartPitch ) * frac;
 
-	if ( cg_statusBarStyle.integer == 2 ) {
-		return;
-	} else {
-		CG_DrawHead( x, 480 - size, size, size,
-		             cg.snap->ps.clientNum, angles );
-	}
+	CG_DrawHead( x, 480 - size, size, size, cg.snap->ps.clientNum, angles );
 }
 
 /*
@@ -435,7 +430,6 @@ static void CG_DrawStatusBar( void ) {
 	vec3_t origin;
 	qhandle_t handle;
 	int weaponSelect = CG_GetWeaponSelect();
-	int flagX;
 
 	static float colors[4][4] = {
 	    { 1.0f, 0.69f, 0.0f, 1.0f },  // normal
@@ -460,38 +454,22 @@ static void CG_DrawStatusBar( void ) {
 	VectorClear( angles );
 
 	// draw any 3D icons first, so the changes back to 2D are minimized
-	if ( cent->currentState.weapon && cg_weapons[cent->currentState.weapon].ammoModel && cg_statusBarStyle.integer != 2 ) {
+	if ( cent->currentState.weapon && cg_weapons[cent->currentState.weapon].ammoModel ) {
 		origin[0] = 70;
 		origin[1] = 0;
 		origin[2] = 0;
 		angles[YAW] = 90 + 20 * sin( cg.time / 1000.0 );
-		if ( cg_statusBarStyle.integer == 3 ) {
-			CG_Draw3DModel( CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE,
-			                cg_weapons[cent->currentState.weapon].ammoModel, 0, origin, angles );
-		} else {
-			CG_Draw3DModel( CHAR_WIDTH * 1.5 + TEXT_ICON_SPACE, 450, ICON_SIZE / 1.5, ICON_SIZE / 1.5,
-			                cg_weapons[cent->currentState.weapon].ammoModel, 0, origin, angles );
-		}
+		CG_Draw3DModel( CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cg_weapons[cent->currentState.weapon].ammoModel, 0, origin, angles );
 	}
 
-	if ( cg_statusBarStyle.integer == 3 ) {
-		CG_DrawStatusBarHead( 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE );
-	} else {
-		CG_DrawStatusBarHead( 189 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE );
-	}
-
-	if ( cg_statusBarStyle.integer == 3 ) {
-		flagX = 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE;
-	} else {
-		flagX = 422 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE;
-	}
+	CG_DrawStatusBarHead( 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE );
 
 	if ( cg.predictedPlayerState.powerups[PW_REDFLAG] ) {
-		CG_DrawStatusBarFlag( flagX, TEAM_RED );
+		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_RED );
 	} else if ( cg.predictedPlayerState.powerups[PW_BLUEFLAG] ) {
-		CG_DrawStatusBarFlag( flagX, TEAM_BLUE );
+		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_BLUE );
 	} else if ( cg.predictedPlayerState.powerups[PW_NEUTRALFLAG] ) {
-		CG_DrawStatusBarFlag( flagX, TEAM_FREE );
+		CG_DrawStatusBarFlag( 185 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE + ICON_SIZE, TEAM_FREE );
 	}
 
 	if ( ps->stats[STAT_HEALTH] ) {
@@ -499,12 +477,6 @@ static void CG_DrawStatusBar( void ) {
 		origin[1] = 0;
 		origin[2] = -10;
 		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
-		if ( cg_statusBarStyle.integer != 3 ) {
-			CG_Draw3DModel( 25 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 429 - CHAR_HEIGHT / 3, ICON_SIZE * 1.25, ICON_SIZE * 1.25, cgs.media.smallCrossModel, 0, origin, angles );
-			if ( cg_drawSmallHealthSphere.integer ) {
-				CG_Draw3DModel( 25 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 429 - CHAR_HEIGHT / 3, ICON_SIZE * 1.25, ICON_SIZE * 1.25, cgs.media.smallSphereModel, 0, origin, angles );
-			}
-		}
 	}
 
 	if ( ps->stats[STAT_ARMOR] ) {
@@ -512,11 +484,7 @@ static void CG_DrawStatusBar( void ) {
 		origin[1] = 0;
 		origin[2] = -10;
 		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
-		if ( cg_statusBarStyle.integer == 3 ) {
-			CG_Draw3DModel( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorModel, 0, origin, angles );
-		} else {
-			CG_Draw3DModel( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 429, ICON_SIZE, ICON_SIZE, cgs.media.armorModel, 0, origin, angles );
-		}
+		CG_Draw3DModel( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorModel, 0, origin, angles );
 	}
 
 	if ( cgs.gametype == GT_HARVESTER ) {
@@ -545,34 +513,16 @@ static void CG_DrawStatusBar( void ) {
 				trap_R_SetColor( CG_GetWeaponColor( weaponSelect ) );
 			}
 
-			if ( cg_statusBarStyle.integer == 2 ) {
-				if ( value >= 100 ) {
-					CG_DrawField( 295, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT );
-				} else if ( value >= 10 ) {
-					CG_DrawField( 287, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT );
-				} else {
-					CG_DrawField( 279, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT );
-				}
-			} else if ( cg_statusBarStyle.integer == 3 ) {
-				CG_DrawField( 0, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-			} else {
-				CG_DrawField( 0, 452, 3, value, AMMO_CHAR_WIDTH, AMMO_CHAR_HEIGHT );
-			}
+			CG_DrawField( 0, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
 			trap_R_SetColor( NULL );
 
 			// draw a 2D icon for ammo
-			if ( ( !cg_draw3dIcons.integer || cg_statusBarStyle.integer == 2 ) && cg_drawIcons.integer ) {
+			if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
 				qhandle_t icon;
 
 				icon = cg_weapons[weaponSelect].ammoIcon;
 				if ( icon ) {
-					if ( cg_statusBarStyle.integer == 2 ) {
-						CG_DrawPic( 307, 422, ICON_SIZE / 2, ICON_SIZE / 2, icon );
-					} else if ( cg_statusBarStyle.integer == 3 ) {
-						CG_DrawPic( CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, icon );
-					} else {
-						CG_DrawPic( AMMO_CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 452, ICON_SIZE / 2, ICON_SIZE / 2, icon );
-					}
+					CG_DrawPic( CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, icon );
 				}
 			}
 		}
@@ -594,18 +544,10 @@ static void CG_DrawStatusBar( void ) {
 	}
 
 	// stretch the health up when taking damage
-	if ( cg_statusBarStyle.integer == 3 ) {
-		CG_DrawField( 185, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-	} else {
-		CG_DrawField( 185, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-	}
+	CG_DrawField( 185, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
 
 	CG_ColorForHealth( hcolor );
 	trap_R_SetColor( hcolor );
-	// if we didn't draw a 3D icon, draw a 2D icon for health
-	if ( !cg_draw3dIcons.integer && cg_drawIcons.integer && cg_statusBarStyle.integer != 3 ) {
-		CG_DrawPic( 185 - CHAR_WIDTH * 1.5 - TEXT_ICON_SPACE, 428, ICON_SIZE, ICON_SIZE, cgs.media.healthIcon );
-	}
 
 	//
 	// armor
@@ -613,35 +555,19 @@ static void CG_DrawStatusBar( void ) {
 	value = ps->stats[STAT_ARMOR];
 	if ( value > 100 ) {
 		trap_R_SetColor( colors[0] );
-		if ( cg_statusBarStyle.integer == 3 ) {
-			CG_DrawField( 370, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-		} else {
-			CG_DrawField( 355, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-		}
+		CG_DrawField( 370, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
-			if ( cg_statusBarStyle.integer == 3 ) {
-				CG_DrawPic( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
-			} else {
-				CG_DrawPic( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 428, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
-			}
+			CG_DrawPic( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
 		}
 	} else if ( value > 0 ) {
 		trap_R_SetColor( colors[3] ); // white
-		if ( cg_statusBarStyle.integer == 3 ) {
-			CG_DrawField( 370, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-		} else {
-			CG_DrawField( 355, 429, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
-		}
+		CG_DrawField( 370, 432, 3, value, CHAR_WIDTH, CHAR_HEIGHT );
 		trap_R_SetColor( NULL );
 		// if we didn't draw a 3D icon, draw a 2D icon for armor
 		if ( !cg_draw3dIcons.integer && cg_drawIcons.integer ) {
-			if ( cg_statusBarStyle.integer == 3 ) {
-				CG_DrawPic( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
-			} else {
-				CG_DrawPic( 355 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 428, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
-			}
+			CG_DrawPic( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorIcon );
 		}
 	}
 
