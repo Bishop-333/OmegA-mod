@@ -352,6 +352,7 @@ extern	vec3_t	bytedirs[NUMVERTEXNORMALS];
 
 extern	vec4_t		colorBlack;
 extern	vec4_t		colorCornellRed;
+extern	vec4_t		colorTtRed;
 extern	vec4_t		colorRed;
 extern	vec4_t		colorTtGreen;
 extern	vec4_t		colorGreen;
