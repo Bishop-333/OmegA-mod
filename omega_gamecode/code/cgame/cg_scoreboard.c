@@ -220,29 +220,115 @@ static void CG_DrawOldClientScore( int y, score_t *score, float *color, float fa
 
 /*
 =================
+CG_DrawClientScoreHeader
+=================
+*/
+static void CG_DrawClientScoreHeader( int y ) {
+	const char *s;
+	const char *info;
+	const char *sysInfo;
+	vec3_t angles;
+	vec3_t origin;
+	int x;
+
+	info = CG_ConfigString( CS_SERVERINFO );
+	sysInfo = CG_ConfigString( CS_SYSTEMINFO );
+
+	x = SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 );
+
+	// draw the server name
+	s = Info_ValueForKey( info, "sv_hostname" );
+	CG_DrawStringExt( x, y, s, colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
+
+	// draw the slashs
+	CG_DrawStringExt( x + 2, y, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x + 4, y, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+
+	x += 11;
+
+	// draw gametype
+	if ( cgs.gametype == GT_FFA ) {
+		s = "Free For All";
+	} else if ( cgs.gametype == GT_TOURNAMENT ) {
+		s = "Tournament";
+	} else if ( cgs.gametype == GT_TEAM ) {
+		s = "Team Deathmatch";
+	} else if ( cgs.gametype == GT_CTF ) {
+		s = "Capture the Flag";
+	} else if ( cgs.gametype == GT_ELIMINATION ) {
+		s = "Elimination";
+	} else if ( cgs.gametype == GT_CTF_ELIMINATION ) {
+		s = "CTF Elimination";
+	} else if ( cgs.gametype == GT_LMS ) {
+		s = "Last Man Standing";
+	} else if ( cgs.gametype == GT_DOUBLE_D ) {
+		s = "Double Domination";
+	} else if ( cgs.gametype == GT_1FCTF ) {
+		s = "One Flag CTF";
+	} else if ( cgs.gametype == GT_OBELISK ) {
+		s = "Overload";
+	} else if ( cgs.gametype == GT_HARVESTER ) {
+		s = "Harvester";
+	} else if ( cgs.gametype == GT_DOMINATION ) {
+		s = "Domination";
+	} else {
+		s = "";
+	}
+	CG_DrawStringExt( x, y, s, colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
+
+	// draw the slashs
+	CG_DrawStringExt( x + 2, y, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x + 4, y, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+
+	x += 11;
+
+	// draw the map name
+	s = Info_ValueForKey( info, "mapname" );
+	CG_DrawStringExt( x, y, Info_ValueForKey( info, "mapname" ), colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
+
+	s = Info_ValueForKey( sysInfo, "sv_cheats" );
+	if ( s[0] == '1' ) {
+		// draw the slashs
+		CG_DrawStringExt( x + 2, y, "/", colorRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+		CG_DrawStringExt( x + 4, y, "/", colorTtRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+
+		x += 11;
+
+		// draw cheats
+		CG_DrawStringExt( x, y, "cheats enabled", colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	}
+
+	// draw omega logo
+	VectorClear( angles );
+	origin[0] = 90;
+	origin[1] = 0;
+	origin[2] = -10;
+	angles[YAW] = cg.time * 360 / 2048.0;
+	CG_Draw3DModel( 592, 432, ICON_SIZE, ICON_SIZE, cgs.media.omegaLogoModel, 0, origin, angles );
+}
+
+/*
+=================
 CG_DrawClientScore
 =================
 */
 static void CG_DrawClientScore( int y, score_t *score, float *color, float fade, qboolean largeFormat ) {
-	const char *s;
-	const char *info;
-	const char *sysInfo;
 	char string[1024];
 	vec3_t headAngles;
-	vec3_t angles;
-	vec3_t origin;
 	centity_t *cent;
 	clientInfo_t *ci;
 	int iconx, headx;
-	int x;
 
 	if ( score->client < 0 || score->client >= cgs.maxclients ) {
 		Com_Printf( "Bad score->client: %i\n", score->client );
 		return;
 	}
-
-	info = CG_ConfigString( CS_SERVERINFO );
-	sysInfo = CG_ConfigString( CS_SYSTEMINFO );
 
 	cent = &cg_entities[score->client];
 	ci = &cgs.clientinfo[score->client];
@@ -306,84 +392,6 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	if ( cg.snap->ps.stats[STAT_TEAM_LOCKED] & LOCKED ) {
 		CG_DrawTinyString( 260, 92, "Teams are locked", 0.5 );
 	}
-
-	x = 5;
-
-	// draw the server name
-	s = Info_ValueForKey( info, "sv_hostname" );
-	CG_DrawStringExt( x, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
-
-	// draw the slashs
-	CG_DrawStringExt( x + 2, 470, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-	CG_DrawStringExt( x + 4, 470, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-
-	x += 11;
-
-	// draw gametype
-	if ( cgs.gametype == GT_FFA ) {
-		s = "Free For All";
-	} else if ( cgs.gametype == GT_TOURNAMENT ) {
-		s = "Tournament";
-	} else if ( cgs.gametype == GT_TEAM ) {
-		s = "Team Deathmatch";
-	} else if ( cgs.gametype == GT_CTF ) {
-		s = "Capture the Flag";
-	} else if ( cgs.gametype == GT_ELIMINATION ) {
-		s = "Elimination";
-	} else if ( cgs.gametype == GT_CTF_ELIMINATION ) {
-		s = "CTF Elimination";
-	} else if ( cgs.gametype == GT_LMS ) {
-		s = "Last Man Standing";
-	} else if ( cgs.gametype == GT_DOUBLE_D ) {
-		s = "Double Domination";
-	} else if ( cgs.gametype == GT_1FCTF ) {
-		s = "One Flag CTF";
-	} else if ( cgs.gametype == GT_OBELISK ) {
-		s = "Overload";
-	} else if ( cgs.gametype == GT_HARVESTER ) {
-		s = "Harvester";
-	} else if ( cgs.gametype == GT_DOMINATION ) {
-		s = "Domination";
-	} else {
-		s = "";
-	}
-	CG_DrawStringExt( x, 470, s, color, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
-
-	// draw the slashs
-	CG_DrawStringExt( x + 2, 470, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-	CG_DrawStringExt( x + 4, 470, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-
-	x += 11;
-
-	// draw the map name
-	s = Info_ValueForKey( info, "mapname" );
-	CG_DrawStringExt( x, 470, Info_ValueForKey( info, "mapname" ), color, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
-
-	s = Info_ValueForKey( sysInfo, "sv_cheats" );
-	if ( s[0] == '1' ) {
-		// draw the slashs
-		CG_DrawStringExt( x + 2, 470, "/", colorRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-		CG_DrawStringExt( x + 4, 470, "/", colorTtRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-
-		x += 11;
-
-		// draw cheats
-		CG_DrawStringExt( x, 470, "cheats enabled", color, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-	}
-
-	// draw omega logo
-	VectorClear( angles );
-	origin[0] = 90;
-	origin[1] = 0;
-	origin[2] = -10;
-	angles[YAW] = cg.time * 360 / 2048.0;
-	CG_Draw3DModel( 592, 432, ICON_SIZE, ICON_SIZE, cgs.media.omegaLogoModel, 0, origin, angles );
 
 	// highlight your position
 	if ( score->client == cg.snap->ps.clientNum ) {
@@ -847,6 +855,8 @@ qboolean CG_DrawNewScoreboard( void ) {
 			}
 		}
 	}
+
+	CG_DrawClientScoreHeader( y - lineHeight / 1.25 );
 
 	// load any models that have been deferred
 	if ( ++cg.deferredPlayerLoading > 10 ) {
