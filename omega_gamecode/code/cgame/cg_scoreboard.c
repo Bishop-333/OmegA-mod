@@ -701,13 +701,11 @@ Draw the new in-game scoreboard
 =================
 */
 qboolean CG_DrawNewScoreboard( void ) {
-	int x, x1, x2, y, w, w1, i, n1, n2;
+	int x, y, w, i, n1, n2;
 	float fade = 0.0;
 	float *fadeColor;
 	float color[4];
 	char *s;
-	char *s1;
-	char *s2;
 	int maxClients;
 	int lineHeight;
 	int topBorderSize, bottomBorderSize;
@@ -772,17 +770,25 @@ qboolean CG_DrawNewScoreboard( void ) {
 			CG_DrawMediumString( x, y + 5, s, fade );
 		}
 	} else {
-		x = ( SCREEN_WIDTH - 2 * MEDIUMCHAR_WIDTH ) / 2;
-		CG_DrawMediumString( x, 67, "to", fade );
+		if ( cg.teamScores[0] == cg.teamScores[1] ) {
+			CG_DrawStringExt( ( SCREEN_WIDTH - 5 * SMALLCHAR_WIDTH ) / 2, 54, "Teams", colorWhite, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( ( SCREEN_WIDTH - 4 * SMALLCHAR_WIDTH ) / 2, 54 + SMALLCHAR_HEIGHT, "tied", colorWhite, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+		} else if ( cg.teamScores[0] > cg.teamScores[1] ) {
+			CG_DrawStringExt( ( SCREEN_WIDTH - 3 * SMALLCHAR_WIDTH ) / 2, 54, "Red", colorCornellRed, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( ( SCREEN_WIDTH - 5 * SMALLCHAR_WIDTH ) / 2, 54 + SMALLCHAR_HEIGHT, "leads", colorCornellRed, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+		} else {
+			CG_DrawStringExt( ( SCREEN_WIDTH - 4 * SMALLCHAR_WIDTH ) / 2, 54, "Blue", colorRoyalBlue, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+			CG_DrawStringExt( ( SCREEN_WIDTH - 5 * SMALLCHAR_WIDTH ) / 2, 54 + SMALLCHAR_HEIGHT, "leads", colorRoyalBlue, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
+		}
 
-		s1 = va( "%i", cg.teamScores[0] );
-		w1 = CG_DrawStrlen( s1 ) * GIANTCHAR_WIDTH * 2;
-		x1 = ( SCREEN_WIDTH - w1 ) / 2 - 21;
-		CG_DrawStringExt( x1, 47, s1, colorCornellRed, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
+		s = va( "%i", cg.teamScores[0] );
+		w = CG_DrawStrlen( s ) * GIANTCHAR_WIDTH * 2;
+		x = ( SCREEN_WIDTH - w ) / 2 - 26;
+		CG_DrawStringExt( x, 47, s, colorCornellRed, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
 
-		s2 = va( "%i", cg.teamScores[1] );
-		x2 = SCREEN_WIDTH / 2 + 22;
-		CG_DrawStringExt( x2, 47, s2, colorRoyalBlue, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
+		s = va( "%i", cg.teamScores[1] );
+		x = SCREEN_WIDTH / 2 + 27;
+		CG_DrawStringExt( x, 47, s, colorRoyalBlue, qtrue, qtrue, GIANTCHAR_WIDTH, GIANTCHAR_HEIGHT, 0 );
 	}
 
 	// scoreboard
