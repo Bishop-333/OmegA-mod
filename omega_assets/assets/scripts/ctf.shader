@@ -114,6 +114,7 @@ models/flags/bflagface
 	{
 		clampmap models/flags2/bflagface1.jpg
 		blendfunc add
+		rgbGen identity
 	}
 }
 
@@ -125,6 +126,7 @@ models/flags/rflagface
 	{
 		clampmap models/flags2/rflagface1.jpg
 		blendfunc add
+		rgbGen identity
 	}
 }
 
