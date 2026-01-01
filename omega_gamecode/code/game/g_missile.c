@@ -721,7 +721,7 @@ gentity_t *fire_plasma( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_LINEAR;
 
 	//unlagged - plasma
-	if ( self->client ) {
+	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
 		plasmatime = self->client->pers.cmd.serverTime + 50;
 	} else {
 		plasmatime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
@@ -779,7 +779,7 @@ gentity_t *fire_grenade( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_GRAVITY;
 
 	//unlagged - grenade
-	if ( self->client ) {
+	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
 		grenadetime = self->client->pers.cmd.serverTime + 50;
 	} else {
 		grenadetime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
@@ -836,7 +836,7 @@ gentity_t *fire_bfg( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_LINEAR;
 
 	//unlagged - bfg
-	if ( self->client ) {
+	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
 		bfgtime = self->client->pers.cmd.serverTime + 50;
 	} else {
 		bfgtime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
@@ -941,7 +941,7 @@ gentity_t *fire_rocket( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_LINEAR;
 
 	//unlagged - rocket
-	if ( self->client ) {
+	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
 		rockettime = self->client->pers.cmd.serverTime + 50;
 	} else {
 		rockettime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
@@ -1108,7 +1108,7 @@ gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_GRAVITY;
 
 	//unlagged - prox
-	if ( self->client ) {
+	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
 		proxtime = self->client->pers.cmd.serverTime + 50;
 	} else {
 		proxtime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
