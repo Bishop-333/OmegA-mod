@@ -889,7 +889,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		}
 
 		if ( g_spectateOnDeath.integer ) {
-			self->client->ps.pm_time = 2000;
+			self->client->ps.legsTimer = 2000;
 		}
 	}
 
