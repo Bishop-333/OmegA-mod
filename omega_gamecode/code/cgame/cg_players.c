@@ -2934,7 +2934,13 @@ void CG_Player( centity_t *cent ) {
 	//
 	// add the head
 	//
-	if ( cent->pe.noHead ) return;
+	if ( cent->pe.noHead ) {
+		if ( !( cent->currentState.eFlags & EF_DEAD ) ) {
+			cent->pe.noHead = qfalse;
+		} else {
+			return;
+		}
+	}
 
 	head.hModel = ci->headModel;
 	if ( !head.hModel ) {

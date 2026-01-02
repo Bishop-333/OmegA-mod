@@ -1396,12 +1396,18 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			DEBUGNAME( "EV_GIB_PLAYER_HEADSHOT" );
 			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
 			cent->pe.noHead = qtrue;
+			if ( es->number == cg.snap->ps.clientNum ) {
+				cg.predictedPlayerEntity.pe.noHead = qtrue;
+			}
 			CG_GibPlayerHeadshot( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta );
 			break;
 
 		case EV_BODY_NOHEAD:
 			DEBUGNAME( "EV_BODY_NOHEAD" );
 			cent->pe.noHead = qtrue;
+			if ( es->number == cg.snap->ps.clientNum ) {
+				cg.predictedPlayerEntity.pe.noHead = qtrue;
+			}
 			break;
 
 		case EV_STOPLOOPINGSOUND:
