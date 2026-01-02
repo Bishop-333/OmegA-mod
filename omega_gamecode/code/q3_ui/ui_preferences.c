@@ -45,17 +45,16 @@ GAME OPTIONS MENU
 #define ID_SYNCEVERYFRAME 132
 #define ID_FORCEMODEL 133
 #define ID_DRAWTEAMOVERLAY 134
-#define ID_AUTOSWITCH 135
-#define ID_BACK 136
+#define ID_BACK 135
 //Elimination
-#define ID_WEAPONBAR 137
-#define ID_COLORRED 138
-#define ID_COLORGREEN 139
-#define ID_COLORBLUE 140
-#define ID_CROSSHAIRHEALTH 141
-#define ID_DRAWGUN 142
-#define ID_BOBGUN 143
-#define ID_SCREENSHAKE 144
+#define ID_WEAPONBAR 136
+#define ID_COLORRED 137
+#define ID_COLORGREEN 138
+#define ID_COLORBLUE 139
+#define ID_CROSSHAIRHEALTH 140
+#define ID_DRAWGUN 141
+#define ID_BOBGUN 142
+#define ID_SCREENSHAKE 143
 
 #undef NUM_CROSSHAIRS
 #define NUM_CROSSHAIRS 99
@@ -83,7 +82,6 @@ typedef struct {
 	menuradiobutton_s synceveryframe;
 	menuradiobutton_s forcemodel;
 	menulist_s drawteamoverlay;
-	menuradiobutton_s autoswitch;
 	menulist_s drawgun;
 	menuradiobutton_s bobgun;
 	menuradiobutton_s screenshake;
@@ -154,7 +152,6 @@ static void Preferences_SetMenuItems( void ) {
 	s_preferences.synceveryframe.curvalue = trap_Cvar_VariableValue( "r_finish" ) != 0;
 	s_preferences.forcemodel.curvalue = trap_Cvar_VariableValue( "cg_forcemodel" ) != 0;
 	s_preferences.drawteamoverlay.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawTeamOverlay" ) );
-	s_preferences.autoswitch.curvalue = trap_Cvar_VariableValue( "cg_autoswitch" ) != 0;
 	s_preferences.drawgun.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "cg_drawGun" ) );
 	s_preferences.bobgun.curvalue = trap_Cvar_VariableValue( "cg_bobgun" ) != 0;
 	s_preferences.screenshake.curvalue = trap_Cvar_VariableValue( "cg_screenshake" ) != 0;
@@ -223,10 +220,6 @@ static void Preferences_Event( void *ptr, int notification ) {
 
 		case ID_DRAWTEAMOVERLAY:
 			trap_Cvar_SetValue( "cg_drawTeamOverlay", s_preferences.drawteamoverlay.curvalue );
-			break;
-
-		case ID_AUTOSWITCH:
-			trap_Cvar_SetValue( "cg_autoswitch", s_preferences.autoswitch.curvalue );
 			break;
 
 		case ID_DRAWGUN:
@@ -483,15 +476,6 @@ static void Preferences_MenuInit( void ) {
 	s_preferences.drawteamoverlay.itemnames = teamoverlay_names;
 
 	y += BIGCHAR_HEIGHT + 2;
-	s_preferences.autoswitch.generic.type = MTYPE_RADIOBUTTON;
-	s_preferences.autoswitch.generic.name = "Automatic Weapons Switching:";
-	s_preferences.autoswitch.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_preferences.autoswitch.generic.callback = Preferences_Event;
-	s_preferences.autoswitch.generic.id = ID_AUTOSWITCH;
-	s_preferences.autoswitch.generic.x = PREFERENCES_X_POS;
-	s_preferences.autoswitch.generic.y = y;
-
-	y += BIGCHAR_HEIGHT + 2;
 	s_preferences.drawgun.generic.type = MTYPE_SPINCONTROL;
 	s_preferences.drawgun.generic.name = "Gun Position:";
 	s_preferences.drawgun.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -548,7 +532,6 @@ static void Preferences_MenuInit( void ) {
 	Menu_AddItem( &s_preferences.menu, &s_preferences.synceveryframe );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.forcemodel );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.drawteamoverlay );
-	Menu_AddItem( &s_preferences.menu, &s_preferences.autoswitch );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.drawgun );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.bobgun );
 	Menu_AddItem( &s_preferences.menu, &s_preferences.screenshake );

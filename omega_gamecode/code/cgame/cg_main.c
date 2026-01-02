@@ -396,7 +396,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_cameraMode, "com_cameraMode", "0", CVAR_CHEAT },
 
     { &pmove_fixed, "pmove_fixed", "0", CVAR_SYSTEMINFO },
-    { &pmove_msec, "pmove_msec", "11", CVAR_SYSTEMINFO },
+    { &pmove_msec, "pmove_msec", "8", CVAR_SYSTEMINFO },
     { &pmove_float, "pmove_float", "1", CVAR_SYSTEMINFO },
     { &cg_noTaunt, "cg_noTaunt", "0", CVAR_ARCHIVE },
     { &cg_noProjectileTrail, "cg_noProjectileTrail", "0", CVAR_ARCHIVE },
@@ -413,7 +413,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_delag, "cg_delag", "1", CVAR_ARCHIVE | CVAR_USERINFO },
     { &cg_cmdTimeNudge, "cg_cmdTimeNudge", "0", CVAR_ARCHIVE | CVAR_USERINFO },
     // this will be automagically copied from the server
-    { &sv_fps, "sv_fps", "20", CVAR_SYSTEMINFO },
+    { &sv_fps, "sv_fps", "40", CVAR_SYSTEMINFO },
     { &cg_projectileNudge, "cg_projectileNudge", "0", CVAR_ARCHIVE },
     { &cg_optimizePrediction, "cg_optimizePrediction", "1", CVAR_ARCHIVE },
     { &cl_timeNudge, "cl_timeNudge", "0", CVAR_ARCHIVE },
