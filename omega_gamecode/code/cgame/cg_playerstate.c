@@ -236,6 +236,42 @@ static void CG_CheckPlayerstateEvents( const playerState_t *ps, const playerStat
 
 /*
 ==================
+CG_CheckChangedPredictableEvents
+==================
+*/
+void CG_CheckChangedPredictableEvents( playerState_t *ps ) {
+	int i;
+	int event;
+	centity_t *cent;
+
+	cent = &cg.predictedPlayerEntity;
+	for ( i = ps->eventSequence - MAX_PS_EVENTS; i < ps->eventSequence; i++ ) {
+		//
+		if ( i >= cg.eventSequence ) {
+			continue;
+		}
+		// if this event is not further back in than the maximum predictable events we remember
+		if ( i > cg.eventSequence - MAX_PREDICTED_EVENTS ) {
+			// if the new playerstate event is different from a previously predicted one
+			if ( ps->events[i & ( MAX_PS_EVENTS - 1 )] != cg.predictableEvents[i & ( MAX_PREDICTED_EVENTS - 1 )] ) {
+
+				event = ps->events[i & ( MAX_PS_EVENTS - 1 )];
+				cent->currentState.event = event;
+				cent->currentState.eventParm = ps->eventParms[i & ( MAX_PS_EVENTS - 1 )];
+				CG_EntityEvent( cent, cent->lerpOrigin );
+
+				cg.predictableEvents[i & ( MAX_PREDICTED_EVENTS - 1 )] = event;
+
+				if ( cg_showmiss.integer ) {
+					CG_Printf( "WARNING: changed predicted event\n" );
+				}
+			}
+		}
+	}
+}
+
+/*
+==================
 pushReward
 ==================
 */
