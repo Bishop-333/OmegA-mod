@@ -1487,7 +1487,7 @@ static void CG_PlayerAngles( centity_t *cent, vec3_t legs[3], vec3_t torso[3], v
 	torsoAngles[YAW] = headAngles[YAW] + 0.25 * movementOffsets[dir];
 
 	// torso
-	if ( cg.renderingThirdPerson ) {
+	if ( cg.renderingThirdPerson && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
 		CG_SwingAngles( torsoAngles[YAW], 360, 90, cg_swingSpeed.value, &cent->pe.torso.yawAngle, &cent->pe.torso.yawing );
 		CG_SwingAngles( legsAngles[YAW], 360, 90, cg_swingSpeed.value, &cent->pe.legs.yawAngle, &cent->pe.legs.yawing );
 	} else {
@@ -1556,7 +1556,7 @@ static void CG_PlayerAngles( centity_t *cent, vec3_t legs[3], vec3_t torso[3], v
 	AnglesSubtract( torsoAngles, legsAngles, torsoAngles );
 	AnglesToAxis( legsAngles, legs );
 	AnglesToAxis( torsoAngles, torso );
-	if ( cg.renderingThirdPerson ) {
+	if ( cg.renderingThirdPerson && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
 		AnglesToAxis( torsoAngles, head );
 	} else {
 		AnglesToAxis( headAngles, head );
