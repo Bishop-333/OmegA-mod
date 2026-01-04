@@ -62,15 +62,15 @@ G_TeleportMissile
 */
 static void G_TeleportMissile( gentity_t *ent, trace_t *trace, gentity_t *portal ) {
 	gentity_t *dest;
-	gentity_t *tmp_ent;
-	vec_t length_norm, length_neg_norm;
-	vec3_t portalInAngles;
-	vec3_t portalInVec;
-	vec3_t rotationAngles;
-	vec3_t rotationMatrix[3];
-	vec3_t tmp;
 	vec3_t velocity;
 	int hitTime;
+	vec3_t portalInVec;
+	vec3_t portalInAngles;
+	vec3_t rotationAngles;
+	vec3_t rotationMatrix[3];
+	vec_t length_norm, length_neg_norm;
+	vec3_t tmp;
+	gentity_t *tmp_ent;
 
 	dest = G_PickTarget( portal->target );
 	if ( !dest ) {
@@ -128,9 +128,7 @@ G_PushGrenade
 static void G_PushGrenade( gentity_t *ent, trace_t *trace, gentity_t *jumppad ) {
 	VectorCopy( ent->r.currentOrigin, ent->s.pos.trBase );
 	VectorCopy( jumppad->s.origin2, ent->s.pos.trDelta );
-
 	ent->s.pos.trTime = level.time;
-
 	G_AddEvent( ent, EV_JUMP_PAD, 0 );
 }
 

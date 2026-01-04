@@ -744,7 +744,6 @@ free fall from their spawn points
 void FinishSpawningItem( gentity_t *ent ) {
 	trace_t tr;
 	vec3_t dest;
-	qboolean isEliminationMode = ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer );
 
 	VectorSet( ent->r.mins, -ITEM_RADIUS, -ITEM_RADIUS, -ITEM_RADIUS );
 	VectorSet( ent->r.maxs, ITEM_RADIUS, ITEM_RADIUS, ITEM_RADIUS );
@@ -785,7 +784,7 @@ void FinishSpawningItem( gentity_t *ent ) {
 	}
 
 	// powerups don't spawn in for a while (but not in elimination)
-	if ( ( ( isEliminationMode && g_elimination_items.integer ) || !isEliminationMode ) && ( ( g_gametype.integer == GT_LMS && g_elimination_items.integer ) || g_gametype.integer != GT_LMS ) && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
+	if ( ( ( !BG_IsEliminationGT( g_gametype.integer ) && !g_elimination_allgametypes.integer ) || g_elimination_items.integer ) && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
 		if ( ent->item->giType == IT_POWERUP ) {
 			float respawn;
 
@@ -923,7 +922,7 @@ void ClearRegisteredItems( void ) {
 		// players always start with the base weapon
 		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 		RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
-		if ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_LMS || g_elimination_allgametypes.integer || g_weaponArena.integer == 13 ) {
+		if ( BG_IsEliminationGT( g_gametype.integer ) || g_elimination_allgametypes.integer || g_weaponArena.integer == 13 ) {
 			RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_GRENADE_LAUNCHER ) );
 			RegisterItem( BG_FindItemForWeapon( WP_ROCKET_LAUNCHER ) );
