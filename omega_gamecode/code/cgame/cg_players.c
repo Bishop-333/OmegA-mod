@@ -2176,7 +2176,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 	if ( ( cent->currentState.eFlags & EF_DEAD ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 &&
-	     cg_drawFriendSkulls.integer && cg_drawFriendThroughWalls.integer ) {
+	     cg_drawFriendSkulls.integer && cg_drawFriendThroughWalls.integer && cg.time - cent->currentState.time < BODY_SINK_DELAY ) {
 		CG_PlayerFloatSprite( cent, origin, cgs.media.skullShader );
 		return;
 	}

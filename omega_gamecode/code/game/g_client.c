@@ -369,6 +369,7 @@ void CopyToBodyQue( gentity_t *ent ) {
 	body->s.loopSound = 0; // clear lava burning
 	body->s.number = body - g_entities;
 	body->timestamp = level.time;
+	body->s.time = level.time;
 	body->physicsObject = qtrue;
 	body->physicsBounce = 0; // don't bounce
 	if ( body->s.groundEntityNum == ENTITYNUM_NONE ) {
@@ -470,7 +471,9 @@ void ClientRespawn( gentity_t *ent ) {
 		//Must always be false in other gametypes
 		ent->client->isEliminated = qfalse;
 	}
-	CopyToBodyQue( ent ); //Unlinks ent
+	if ( ent->client->ps.pm_type != PM_SPECTATOR ) {
+		CopyToBodyQue( ent ); //Unlinks ent
+	}
 
 	if ( g_gametype.integer == GT_LMS ) {
 		if ( ent->client->pers.livesLeft > 0 ) {

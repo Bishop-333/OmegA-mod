@@ -374,6 +374,8 @@ struct gclient_s {
 
 	int lastKillTime; // for multiple kill rewards
 
+	int deathTime;
+
 	qboolean fireHeld; // used for hook
 	gentity_t *hook;   // grapple hook if out
 
