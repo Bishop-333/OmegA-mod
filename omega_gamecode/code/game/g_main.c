@@ -202,7 +202,6 @@ vmCvar_t g_allowDuplicateGuid;
 vmCvar_t g_allowThirdPerson;
 vmCvar_t g_beheading;
 vmCvar_t g_chaos;
-vmCvar_t g_noInvisWalls; //from ratmod
 vmCvar_t g_damagePlums;
 vmCvar_t g_dropFlag;
 vmCvar_t g_easierPickup;
@@ -213,11 +212,13 @@ vmCvar_t g_guidedRockets;
 vmCvar_t g_headDamageMultiplicator;
 vmCvar_t g_headShotOnly;
 vmCvar_t g_juggernaut;
-vmCvar_t g_jumppadGrenades; //from ratmod
+vmCvar_t g_jumppadGrenades;
+vmCvar_t g_leaveCorpse;
 vmCvar_t g_lightningDamage;
 vmCvar_t g_machinegunDamage;
 vmCvar_t g_machinegunTeamDamage;
 vmCvar_t g_muteSpectators;
+vmCvar_t g_noInvisWalls;
 vmCvar_t g_plasmaBounce;
 vmCvar_t g_railgunDamage;
 vmCvar_t g_railgunFireRate;
@@ -231,7 +232,7 @@ vmCvar_t g_spectateOnDeath;
 vmCvar_t g_startWhenReady;
 vmCvar_t g_survivorsRespawn;
 vmCvar_t g_teamPush;
-vmCvar_t g_teleportMissiles; //from ratmod
+vmCvar_t g_teleportMissiles;
 vmCvar_t g_waterDamage;
 vmCvar_t g_weaponArena;
 vmCvar_t pmove_aircontrol;
@@ -440,7 +441,6 @@ static cvarTable_t gameCvarTable[] = {
     { &g_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
     { &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue },
-    { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
     { &g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
@@ -452,10 +452,12 @@ static cvarTable_t gameCvarTable[] = {
     { &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_juggernaut, "g_juggernaut", "7", CVAR_ARCHIVE, 0, qtrue },
     { &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
+	{ &g_leaveCorpse, "g_leaveCorpse", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue },
     { &g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue },
     { &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
     { &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
     { &g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue },

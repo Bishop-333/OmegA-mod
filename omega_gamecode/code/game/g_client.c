@@ -319,6 +319,18 @@ void CopyToBodyQue( gentity_t *ent ) {
 		return;
 	}
 
+	if ( g_leaveCorpse.integer ) {
+		// Remove player's old corpse if it exists
+		for ( i = 0; i < BODY_QUEUE_SIZE; i++ ) {
+			body = level.bodyQue[i];
+			if ( body && body->r.ownerNum == ent->s.number ) {
+				body->s.pos.trTime = level.time;
+				body->nextthink = level.time + BODY_SINK_DELAY + BODY_SINK_TIME;
+				body->think = BodyQueFree;
+			}
+		}
+	}
+
 	// if client is in a nodrop area, don't leave the body
 	contents = trap_PointContents( ent->s.origin, -1 );
 	if ( ( contents & CONTENTS_NODROP ) && !( ent->s.eFlags & EF_KAMIKAZE ) ) { //the check for kamikaze is a workaround for ctf4ish
@@ -396,8 +408,14 @@ void CopyToBodyQue( gentity_t *ent ) {
 	body->r.contents = CONTENTS_CORPSE;
 	body->r.ownerNum = ent->s.number;
 
-	body->nextthink = level.time + BODY_SINK_DELAY + BODY_SINK_TIME;
-	body->think = BodyQueFree;
+	if ( g_leaveCorpse.integer ) {
+		body->s.pos.trTime = 0;
+		body->nextthink = 0;
+		body->think = NULL;
+	} else {
+		body->nextthink = level.time + BODY_SINK_DELAY + BODY_SINK_TIME;
+		body->think = BodyQueFree;
+	}
 
 	body->die = body_die;
 

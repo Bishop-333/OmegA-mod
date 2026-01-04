@@ -32,7 +32,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // the "gameversion" client command will print this plus compile date
 #define GAMEVERSION BASEGAME
 
-#define BODY_QUEUE_SIZE 8
+#define BODY_QUEUE_SIZE 64
 
 #define INFINITE 1000000
 
@@ -1160,7 +1160,6 @@ extern vmCvar_t g_allowDuplicateGuid;
 extern vmCvar_t g_allowThirdPerson;
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_chaos;
-extern vmCvar_t g_noInvisWalls;
 extern vmCvar_t g_damagePlums;
 extern vmCvar_t g_dropFlag;
 extern vmCvar_t g_easierPickup;
@@ -1171,11 +1170,13 @@ extern vmCvar_t g_guidedRockets;
 extern vmCvar_t g_headDamageMultiplicator;
 extern vmCvar_t g_headShotOnly;
 extern vmCvar_t g_juggernaut;
-extern vmCvar_t g_jumppadGrenades; //from ratmod
+extern vmCvar_t g_jumppadGrenades;
+extern vmCvar_t g_leaveCorpse;
 extern vmCvar_t g_lightningDamage;
 extern vmCvar_t g_machinegunDamage;
 extern vmCvar_t g_machinegunTeamDamage;
 extern vmCvar_t g_muteSpectators;
+extern vmCvar_t g_noInvisWalls;
 extern vmCvar_t g_plasmaBounce;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railgunFireRate;
@@ -1189,7 +1190,7 @@ extern vmCvar_t g_startWhenReady;
 extern vmCvar_t g_spectateOnDeath;
 extern vmCvar_t g_survivorsRespawn;
 extern vmCvar_t g_teamPush;
-extern vmCvar_t g_teleportMissiles; //from ratmod
+extern vmCvar_t g_teleportMissiles;
 extern vmCvar_t g_waterDamage;
 extern vmCvar_t g_weaponArena;
 extern vmCvar_t pmove_aircontrol;

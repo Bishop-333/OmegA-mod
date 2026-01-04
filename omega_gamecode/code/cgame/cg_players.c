@@ -2569,11 +2569,11 @@ CG_Corpse
 ===============
 */
 #define BODY_SINK_DIST 15
-void CG_Corpse( centity_t *cent, int playerNum, float *bodySinkOffset, float *shadowAlpha ) {
+static void CG_Corpse( centity_t *cent, int playerNum, float *bodySinkOffset, float *shadowAlpha ) {
 	float offset;
 
-	// After sitting around for five seconds, fall into the ground and dissapear.
-	if ( cg.time - cent->currentState.pos.trTime > BODY_SINK_DELAY ) {
+	// After sitting around for five seconds, fall into the ground and disappear.
+	if ( cent->currentState.pos.trTime > 0 && cg.time - cent->currentState.pos.trTime > BODY_SINK_DELAY ) {
 		if ( cg_smoothBodySink.integer ) {
 			float sinkFrac;
 
