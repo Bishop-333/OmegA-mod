@@ -53,6 +53,8 @@ typedef struct {
 	menutext_s exit;
 
 	qhandle_t bannerModel;
+
+	qboolean musicStarted;
 } mainmenu_t;
 
 static mainmenu_t s_main;
@@ -205,6 +207,13 @@ static void Main_MenuDraw( void ) {
 	UI_DrawString( 640 - 40, 480 - 20, "^7" PRODUCT_VERSION, UI_SMALLFONT, color );
 	if ( (int)trap_Cvar_VariableValue( "protocol" ) != 71 )
 		UI_DrawString( 0, 480 - 14, va( "^7Protocol: %i", (int)trap_Cvar_VariableValue( "protocol" ) ), UI_SMALLFONT, color );
+
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		if ( !s_main.musicStarted ) {
+			s_main.musicStarted = qtrue;
+			trap_S_StartBackgroundTrack( "sound/misc/menu_background.ogg", NULL );
+		}
+	}
 }
 
 /*
@@ -337,7 +346,4 @@ void UI_MainMenu( void ) {
 	trap_Key_SetCatcher( KEYCATCH_UI );
 	uis.menusp = 0;
 	UI_PushMenu( &s_main.menu );
-	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
-		trap_S_StartBackgroundTrack( "sound/misc/menu_background.ogg", NULL );
-	}
 }

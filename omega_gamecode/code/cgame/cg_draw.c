@@ -507,7 +507,7 @@ static void CG_DrawStatusBar( void ) {
 		if ( cg_predictAmmo.integer ) {
 			value = cg.predictedPlayerState.ammo[weaponSelect];
 		} else {
-			value = cg.snap->ps.ammo[weaponSelect];
+			value = ps->ammo[weaponSelect];
 		}
 		if ( value > -1 ) {
 			if ( cg.predictedPlayerState.weaponstate == WEAPON_FIRING && cg.predictedPlayerState.weaponTime > 100 ) {

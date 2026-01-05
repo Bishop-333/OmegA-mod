@@ -506,7 +506,7 @@ typedef struct {
 	qboolean renderingThirdPerson; // during deaths, chasecams, etc
 
 	// prediction state
-	qboolean hyperspace;    // true if prediction has hit a trigger_teleport
+	qboolean hyperspace; // true if prediction has hit a trigger_teleport
 	playerState_t predictedPlayerState;
 	centity_t predictedPlayerEntity;
 	qboolean validPPS; // clear until the first call to CG_PredictPlayerState
