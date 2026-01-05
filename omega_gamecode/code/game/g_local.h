@@ -1163,6 +1163,7 @@ extern vmCvar_t g_allowThirdPerson;
 extern vmCvar_t g_beheading;
 extern vmCvar_t g_chaos;
 extern vmCvar_t g_damagePlums;
+extern vmCvar_t g_delagProjectiles;
 extern vmCvar_t g_dropFlag;
 extern vmCvar_t g_easierPickup;
 extern vmCvar_t g_forcespectator;

@@ -686,9 +686,6 @@ fire_plasma
 */
 gentity_t *fire_plasma( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
-	//unlagged - plasma
-	int plasmatime;
-	//unlagged - plasma
 
 	VectorNormalize( dir );
 
@@ -719,13 +716,7 @@ gentity_t *fire_plasma( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_LINEAR;
 
 	//unlagged - plasma
-	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
-		plasmatime = self->client->pers.cmd.serverTime + 50;
-	} else {
-		plasmatime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
-	}
-
-	bolt->s.pos.trTime = plasmatime;
+	bolt->s.pos.trTime = level.time - G_LagNudge( self ); // move a bit on the very first frame
 	//unlagged - plasma
 
 	VectorCopy( start, bolt->s.pos.trBase );
@@ -746,9 +737,6 @@ fire_grenade
 */
 gentity_t *fire_grenade( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
-	//unlagged - grenade
-	int grenadetime;
-	//unlagged - grenade
 
 	VectorNormalize( dir );
 
@@ -777,13 +765,7 @@ gentity_t *fire_grenade( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_GRAVITY;
 
 	//unlagged - grenade
-	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
-		grenadetime = self->client->pers.cmd.serverTime + 50;
-	} else {
-		grenadetime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
-	}
-
-	bolt->s.pos.trTime = grenadetime;
+	bolt->s.pos.trTime = level.time - G_LagNudge( self ); // move a bit on the very first frame
 	//unlagged - grenade
 
 	VectorCopy( start, bolt->s.pos.trBase );
@@ -804,9 +786,6 @@ fire_bfg
 */
 gentity_t *fire_bfg( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
-	//unlagged - bfg
-	int bfgtime;
-	//unlagged - bfg
 
 	VectorNormalize( dir );
 
@@ -834,13 +813,7 @@ gentity_t *fire_bfg( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_LINEAR;
 
 	//unlagged - bfg
-	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
-		bfgtime = self->client->pers.cmd.serverTime + 50;
-	} else {
-		bfgtime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
-	}
-
-	bolt->s.pos.trTime = bfgtime;
+	bolt->s.pos.trTime = level.time - G_LagNudge( self ); // move a bit on the very first frame
 	//unlagged - bfg
 
 	VectorCopy( start, bolt->s.pos.trBase );
@@ -881,7 +854,7 @@ static void G_GuideMissile( gentity_t *missile ) {
 	VectorCopy( missile->r.currentOrigin, missile->s.pos.trBase );
 
 	missile->s.pos.trType = TR_LINEAR;
-	missile->s.pos.trTime = level.time - MISSILE_PRESTEP_TIME;
+	missile->s.pos.trTime = level.time - 50;
 
 	VectorSubtract( muzzle, missile->r.currentOrigin, muzzle );
 
@@ -904,9 +877,6 @@ fire_rocket
 */
 gentity_t *fire_rocket( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
-	//unlagged - rocket
-	int rockettime;
-	//unlagged - rocket
 
 	VectorNormalize( dir );
 
@@ -939,13 +909,7 @@ gentity_t *fire_rocket( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_LINEAR;
 
 	//unlagged - rocket
-	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
-		rockettime = self->client->pers.cmd.serverTime + 50;
-	} else {
-		rockettime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
-	}
-
-	bolt->s.pos.trTime = rockettime;
+	bolt->s.pos.trTime = level.time - G_LagNudge( self ); // move a bit on the very first frame
 	//unlagged - rocket
 
 	VectorCopy( start, bolt->s.pos.trBase );
@@ -992,7 +956,7 @@ gentity_t *fire_grapple( gentity_t *self, vec3_t start, vec3_t dir ) {
 	if ( self->client ) {
 		hooktime = self->client->pers.cmd.serverTime + 50;
 	} else {
-		hooktime = level.time - MISSILE_PRESTEP_TIME;
+		hooktime = level.time - G_LagNudge( self );
 	}
 
 	hook->s.pos.trTime = hooktime;
@@ -1069,9 +1033,6 @@ fire_prox
 */
 gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
-	//unlagged - prox
-	int proxtime;
-	//unlagged - prox
 
 	VectorNormalize( dir );
 
@@ -1106,13 +1067,7 @@ gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t dir ) {
 	bolt->s.pos.trType = TR_GRAVITY;
 
 	//unlagged - prox
-	if ( self->client && !( self->r.svFlags & SVF_BOT ) ) {
-		proxtime = self->client->pers.cmd.serverTime + 50;
-	} else {
-		proxtime = level.time - MISSILE_PRESTEP_TIME; // move a bit on the very first frame
-	}
-
-	bolt->s.pos.trTime = proxtime;
+	bolt->s.pos.trTime = level.time - G_LagNudge( self ); // move a bit on the very first frame
 	//unlagged - prox
 
 	VectorCopy( start, bolt->s.pos.trBase );
@@ -1122,4 +1077,45 @@ gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t dir ) {
 	VectorCopy( start, bolt->r.currentOrigin );
 
 	return bolt;
+}
+
+/*
+==================
+G_LagNudge
+
+This does the anti lag stuff for projectiles.
+==================
+*/
+int G_LagNudge( gentity_t *myself ) {
+	if ( trap_Cvar_VariableValue( "sv_running" ) == 0 ) {
+		return 0; // the server deals with the nudge, not clients
+	}
+
+	if ( g_delagProjectiles.integer <= 0 ) {
+		return 0; // old behavior
+	} else if ( g_delagProjectiles.integer == 1 ) {
+		return MISSILE_PRESTEP_TIME; // less old behavior, unlagged versions use this
+	} else if ( g_delagProjectiles.integer == 2 ) {
+		return 1000 / sv_fps.integer; // accurate to 1 server snap, usually no different from 50msec
+	} else {
+		int ping, offset;
+
+		ping = myself->client->pers.realPing; // use "realPing", should be smoother
+
+		if ( ping > g_delagProjectiles.integer ) {
+			ping = g_delagProjectiles.integer;
+		}
+
+		// use the best approximation we have to the number of ms into a frame, instead of the
+		// maximum possible offset given by the interval between server snaps
+		offset = level.time - ( level.previousTime + myself->client->frameOffset );
+
+		if ( offset < 0 ) {
+			offset = 0;
+		}
+
+		offset = ( offset <= 1000 / sv_fps.integer ) ? offset : 1000 / sv_fps.integer;
+
+		return ping + offset;
+	}
 }
