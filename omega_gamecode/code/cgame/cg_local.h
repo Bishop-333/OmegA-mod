@@ -1406,7 +1406,7 @@ extern vmCvar_t cg_guidedRockets;
 extern vmCvar_t cg_hitmarker;
 extern vmCvar_t cg_killsound;
 extern vmCvar_t cg_noInvisWalls;
-extern vmCvar_t cg_predictWeapons;
+extern vmCvar_t cg_predictAmmo;
 extern vmCvar_t cg_screenshake;
 extern vmCvar_t cg_selfSounds;
 extern vmCvar_t cg_shotgunSparks;

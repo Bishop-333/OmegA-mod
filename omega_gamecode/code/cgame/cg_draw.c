@@ -504,7 +504,7 @@ static void CG_DrawStatusBar( void ) {
 	// ammo
 	//
 	if ( cent->currentState.weapon ) {
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			value = cg.predictedPlayerState.ammo[weaponSelect];
 		} else {
 			value = cg.snap->ps.ammo[weaponSelect];

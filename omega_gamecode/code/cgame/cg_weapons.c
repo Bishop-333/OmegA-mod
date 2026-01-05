@@ -1655,7 +1655,7 @@ void CG_DrawWeaponSelect( void ) {
 	trap_R_SetColor( color );
 
 	// count the number of weapons owned
-	if ( cg_predictWeapons.integer ) {
+	if ( cg_predictAmmo.integer ) {
 		bits = cg.predictedPlayerState.stats[STAT_WEAPONS];
 	} else {
 		bits = cg.snap->ps.stats[STAT_WEAPONS];
@@ -1734,7 +1734,7 @@ void CG_DrawWeaponBar0( int count, int bits ) {
 			CG_DrawRect( x - 4, y - 4, 40, 40, 1, colorWhite );
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -1798,7 +1798,7 @@ void CG_DrawWeaponBar1( int count, int bits ) {
 			continue;
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -1926,7 +1926,7 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2021,7 +2021,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2154,7 +2154,7 @@ void CG_DrawWeaponBar4( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2277,7 +2277,7 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 				i = 0;
 			continue;
 		}
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2368,7 +2368,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2500,7 +2500,7 @@ void CG_DrawWeaponBar7( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2624,7 +2624,7 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 				i = 0;
 			continue;
 		}
-		if ( cg_predictWeapons.integer ) {
+		if ( cg_predictAmmo.integer ) {
 			ammoSaved = cg.predictedPlayerState.ammo[i];
 		} else {
 			ammoSaved = cg.snap->ps.ammo[i];
@@ -2810,7 +2810,7 @@ void CG_Weapon_f( void ) {
 
 	cg.weaponSelectTime = cg.time;
 
-	if ( !( cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << num ) ) && ( !cg_predictWeapons.integer || ( cg_predictWeapons.integer && !( cg.predictedPlayerState.stats[STAT_WEAPONS] & ( 1 << num ) ) ) ) ) {
+	if ( !( cg.snap->ps.stats[STAT_WEAPONS] & ( 1 << num ) ) && ( !cg_predictAmmo.integer || ( cg_predictAmmo.integer && !( cg.predictedPlayerState.stats[STAT_WEAPONS] & ( 1 << num ) ) ) ) ) {
 		return; // don't have the weapon
 	}
 

@@ -268,7 +268,7 @@ vmCvar_t cg_hitmarker;
 vmCvar_t cg_killsound;
 vmCvar_t cg_noInvisWalls;
 vmCvar_t cg_omegaInitialized;
-vmCvar_t cg_predictWeapons;
+vmCvar_t cg_predictAmmo;
 vmCvar_t cg_screenshake;
 vmCvar_t cg_selfSounds;
 vmCvar_t cg_shotgunSparks;
@@ -487,7 +487,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
     { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
-    { &cg_predictWeapons, "cg_predictWeapons", "1", CVAR_ARCHIVE },
+    { &cg_predictAmmo, "cg_predictAmmo", "1", CVAR_ARCHIVE },
     { &cg_screenshake, "cg_screenshake", "1", CVAR_ARCHIVE },
     { &cg_selfSounds, "cg_selfSounds", "", CVAR_ARCHIVE },
     { &cg_showSpawns, "cg_showSpawns", "1", CVAR_ARCHIVE },
