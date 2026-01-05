@@ -507,7 +507,6 @@ typedef struct {
 
 	// prediction state
 	qboolean hyperspace;    // true if prediction has hit a trigger_teleport
-	int predictedTeleports; // number of predicted teleports
 	playerState_t predictedPlayerState;
 	centity_t predictedPlayerEntity;
 	qboolean validPPS; // clear until the first call to CG_PredictPlayerState
@@ -1289,7 +1288,6 @@ extern vmCvar_t cg_buildScript;
 extern vmCvar_t cg_paused;
 extern vmCvar_t cg_blood;
 extern vmCvar_t cg_predictItems;
-extern vmCvar_t cg_predictTeleport;
 extern vmCvar_t cg_deferPlayers;
 extern vmCvar_t cg_drawFriend;
 extern vmCvar_t cg_teamChatsOnly;
