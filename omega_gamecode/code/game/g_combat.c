@@ -1167,7 +1167,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 			targ->client->ps.pm_time = t;
 			targ->client->ps.pm_flags |= PMF_TIME_KNOCKBACK;
 		}
-		//Remeber the last person to hurt the player
+		//Remember the last person to hurt the player
 		if ( !g_awardpushing.integer || targ == attacker || OnSameTeam( targ, attacker ) ) {
 			targ->client->lastSentFlying = -1;
 		} else {
@@ -1256,6 +1256,32 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		damage = 1000;
 	}
 
+	// See if the player hit the enemy head
+	if ( targ->client && attacker->client && targ->health > 0 ) {
+		targ_maxs2 = targ->r.maxs[2];
+
+		// check if the target is crouched because it doesn't make the same height
+		if ( targ->client->ps.pm_flags & PMF_DUCKED ) {
+			height = ( fabs( targ->r.mins[2] ) + targ_maxs2 ) * 0.75;
+		} else {
+			height = fabs( targ->r.mins[2] ) + targ_maxs2;
+		}
+
+		z_rel = point[2] - targ->r.currentOrigin[2] + fabs( targ->r.mins[2] );
+		z_ratio = z_rel / height;
+
+		if ( z_ratio < 0.95 ) {
+			if ( g_headShotOnly.integer ) {
+				damage = 0;
+			}
+		} else {
+			if ( g_beheading.integer && inflictor->s.weapon == WP_RAILGUN ) {
+				mod = MOD_HEADSHOT;
+			}
+			damage *= g_headDamageMultiplicator.integer;
+		}
+	}
+
 	take = damage;
 
 	// save some from armor
@@ -1299,33 +1325,6 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		// set the last client who damaged the target
 		targ->client->lasthurt_client = attacker->s.number;
 		targ->client->lasthurt_mod = mod;
-	}
-
-	// See if the player hit the enemy head
-	if ( targ->client && attacker->client && targ->health > 0 ) {
-		targ_maxs2 = targ->r.maxs[2];
-
-		// check if the target is crouched because it doesn't make the same height
-		if ( targ->client->ps.pm_flags & PMF_DUCKED ) {
-			height = ( fabs( targ->r.mins[2] ) + targ_maxs2 ) * 0.75;
-		} else {
-			height = fabs( targ->r.mins[2] ) + targ_maxs2;
-		}
-
-		z_rel = point[2] - targ->r.currentOrigin[2] + fabs( targ->r.mins[2] );
-		z_ratio = z_rel / height;
-
-		if ( z_ratio < 0.95 ) {
-			if ( g_headShotOnly.integer ) {
-				take *= 0;
-			}
-		} else {
-			if ( g_beheading.integer && inflictor->s.weapon == WP_RAILGUN ) {
-				mod = MOD_HEADSHOT;
-			}
-			damage *= g_headDamageMultiplicator.integer;
-			take *= g_headDamageMultiplicator.integer;
-		}
 	}
 
 	// add to the attacker's hit counter (if the target isn't a general entity like a prox mine)
