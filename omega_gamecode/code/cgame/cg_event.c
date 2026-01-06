@@ -1399,7 +1399,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			if ( es->number == cg.snap->ps.clientNum ) {
 				cg.predictedPlayerEntity.pe.noHead = qtrue;
 			}
-			CG_GibPlayerHeadshot( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta );
+			CG_GibPlayerHead( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, cent );
 			break;
 
 		case EV_BODY_NOHEAD:

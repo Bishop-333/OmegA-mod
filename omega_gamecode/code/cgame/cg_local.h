@@ -1671,7 +1671,7 @@ void CG_ScorePlum( int client, vec3_t org, int score );
 void CG_DamagePlum( int client, vec3_t org, int score );
 
 void CG_GibPlayer( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity );
-void CG_GibPlayerHeadshot( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity );
+void CG_GibPlayerHead( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity, centity_t *cent );
 void CG_BigExplode( vec3_t playerOrigin );
 
 void CG_Bleed( vec3_t origin, int entityNum );
