@@ -680,6 +680,47 @@ void G_RunMissile( gentity_t *ent ) {
 //=============================================================================
 
 /*
+==================
+G_LagNudge
+
+This does the anti lag stuff for projectiles.
+==================
+*/
+static int G_LagNudge( gentity_t *myself ) {
+	if ( trap_Cvar_VariableValue( "sv_running" ) == 0 ) {
+		return 0; // the server deals with the nudge, not clients
+	}
+
+	if ( g_delagProjectiles.integer <= 0 ) {
+		return 0; // old behavior
+	} else if ( g_delagProjectiles.integer == 1 ) {
+		return MISSILE_PRESTEP_TIME; // less old behavior, unlagged versions use this
+	} else if ( g_delagProjectiles.integer == 2 ) {
+		return 1000 / sv_fps.integer; // accurate to 1 server snap, usually no different from 50msec
+	} else {
+		int ping, offset;
+
+		ping = myself->client->pers.realPing; // use "realPing", should be smoother
+
+		if ( ping > g_delagProjectiles.integer ) {
+			ping = g_delagProjectiles.integer;
+		}
+
+		// use the best approximation we have to the number of ms into a frame, instead of the
+		// maximum possible offset given by the interval between server snaps
+		offset = level.time - ( level.previousTime + myself->client->frameOffset );
+
+		if ( offset < 0 ) {
+			offset = 0;
+		}
+
+		offset = ( offset <= 1000 / sv_fps.integer ) ? offset : 1000 / sv_fps.integer;
+
+		return ping + offset;
+	}
+}
+
+/*
 =================
 fire_plasma
 =================
@@ -1077,45 +1118,4 @@ gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t dir ) {
 	VectorCopy( start, bolt->r.currentOrigin );
 
 	return bolt;
-}
-
-/*
-==================
-G_LagNudge
-
-This does the anti lag stuff for projectiles.
-==================
-*/
-int G_LagNudge( gentity_t *myself ) {
-	if ( trap_Cvar_VariableValue( "sv_running" ) == 0 ) {
-		return 0; // the server deals with the nudge, not clients
-	}
-
-	if ( g_delagProjectiles.integer <= 0 ) {
-		return 0; // old behavior
-	} else if ( g_delagProjectiles.integer == 1 ) {
-		return MISSILE_PRESTEP_TIME; // less old behavior, unlagged versions use this
-	} else if ( g_delagProjectiles.integer == 2 ) {
-		return 1000 / sv_fps.integer; // accurate to 1 server snap, usually no different from 50msec
-	} else {
-		int ping, offset;
-
-		ping = myself->client->pers.realPing; // use "realPing", should be smoother
-
-		if ( ping > g_delagProjectiles.integer ) {
-			ping = g_delagProjectiles.integer;
-		}
-
-		// use the best approximation we have to the number of ms into a frame, instead of the
-		// maximum possible offset given by the interval between server snaps
-		offset = level.time - ( level.previousTime + myself->client->frameOffset );
-
-		if ( offset < 0 ) {
-			offset = 0;
-		}
-
-		offset = ( offset <= 1000 / sv_fps.integer ) ? offset : 1000 / sv_fps.integer;
-
-		return ping + offset;
-	}
 }
