@@ -2206,7 +2206,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 	     ( ( cg.snap->ps.persistant[PERS_TEAM] != team &&
 	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
 	       team == TEAM_FREE ) ) {
-		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum ) {
+		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum && !( cent->currentState.powerups & ( 1 << PW_INVIS ) ) ) {
 			trace_t trace;
 
 			trap_CM_BoxTrace( &trace, cg.refdef.vieworg, origin, 0, 0, 0, MASK_SOLID );
