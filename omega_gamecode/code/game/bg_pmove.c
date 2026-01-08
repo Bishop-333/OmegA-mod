@@ -1667,7 +1667,7 @@ static void PM_Weapon( void ) {
 			addTime = 100 - pm->chaos * 100;
 			break;
 		case WP_GRENADE_LAUNCHER:
-			addTime = 800 - pm->chaos * 800;
+			addTime = 800 - pm->chaos * 700;
 			break;
 		case WP_ROCKET_LAUNCHER:
 			addTime = 1600 - pm->rocketFireRate - pm->chaos * 800;
@@ -1688,7 +1688,7 @@ static void PM_Weapon( void ) {
 			addTime = 1000 - pm->chaos * 900;
 			break;
 		case WP_PROX_LAUNCHER:
-			addTime = 800 - pm->chaos * 800;
+			addTime = 800 - pm->chaos * 500;
 			break;
 		case WP_CHAINGUN:
 			addTime = 30 - pm->chaos * 30;

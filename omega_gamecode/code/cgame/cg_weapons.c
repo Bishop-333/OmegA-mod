@@ -698,7 +698,7 @@ void CG_GrappleTrail( centity_t *ent, const weaponInfo_t *wi ) {
 
 /*
 ==========================
-CG_GrenadeTrail
+CG_RocketTrail
 ==========================
 */
 // LEILEI enhancment
@@ -711,6 +711,11 @@ static void CG_RocketTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	}
 }
 
+/*
+==========================
+CG_PlasmaTrail
+==========================
+*/
 static void CG_PlasmaTrail( centity_t *ent, const weaponInfo_t *wi ) {
 
 	if ( cg_leiEnhancement.integer ) {
@@ -718,10 +723,6 @@ static void CG_PlasmaTrail( centity_t *ent, const weaponInfo_t *wi ) {
 	} else {
 		CG_OldPlasmaTrail( ent, wi );
 	}
-}
-
-static void CG_GrenadeTrail( centity_t *ent, const weaponInfo_t *wi ) {
-	CG_OldRocketTrail( ent, wi );
 }
 
 /*
@@ -875,7 +876,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 			weaponInfo->wiTrailTime = 2000;
 			weaponInfo->trailRadius = 6;
 
-			MAKERGB( weaponInfo->missileDlightColor, 1, 0.50f, 0 );
+			MAKERGB( weaponInfo->missileDlightColor, 1, 0.75f, 0 );
 			MAKERGB( weaponInfo->flashDlightColor, 1, 0.75f, 0 );
 
 			weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/rocket/rocklf1a.wav", qfalse );
@@ -892,7 +893,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 		case WP_GRENADE_LAUNCHER:
 			weaponInfo->missileModel = trap_R_RegisterModel( "models/ammo/grenade1.md3" );
-			weaponInfo->missileTrailFunc = CG_GrenadeTrail;
 			weaponInfo->wiTrailTime = 700;
 			weaponInfo->trailRadius = 32;
 			MAKERGB( weaponInfo->flashDlightColor, 1, 0.50f, 0 );
@@ -926,7 +926,6 @@ void CG_RegisterWeapon( int weaponNum ) {
 
 		case WP_RAILGUN:
 			weaponInfo->readySound = trap_S_RegisterSound( "sound/weapons/railgun/rg_hum.wav", qfalse );
-			MAKERGB( weaponInfo->flashDlightColor, 1, 0.5f, 0 );
 			weaponInfo->flashSound[0] = trap_S_RegisterSound( "sound/weapons/railgun/railgf1a.wav", qfalse );
 			cgs.media.railExplosionShader = trap_R_RegisterShader( "railExplosion" );
 			cgs.media.railRingsShader = trap_R_RegisterShader( "railDisc" );
@@ -2976,6 +2975,9 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 			radius = 64;
 			light = 300;
 			isSprite = qtrue;
+			lightColor[0] = 1.0;
+			lightColor[1] = 0.75;
+			lightColor[2] = 0.0;
 			// LEILEI START enhancement
 			if ( cg_leiEnhancement.integer ) {
 				// some more fireball, fireball, fireball, fire fire!
@@ -3011,6 +3013,9 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 			radius = 64;
 			light = 300;
 			isSprite = qtrue;
+			lightColor[0] = 1.0;
+			lightColor[1] = 0.75;
+			lightColor[2] = 0.0;
 			// LEILEI START enhancement
 			if ( cg_leiEnhancement.integer ) {
 				// some more fireball, fireball, fireball, fire fire!
