@@ -466,6 +466,31 @@ static void CheckAlmostScored( gentity_t *self, gentity_t *attacker ) {
 
 /*
 ==================
+rampage_notify
+==================
+*/
+void rampage_notify( gentity_t *attacker ) {
+	if ( attacker->client->pers.multiKillCount % 3 != 0 ) {
+		return;
+	}
+
+	if ( !attacker->client ) {
+		return;
+	}
+
+	if ( !level.hadBots ) //There has not been any bots
+		ChallengeMessage( attacker, AWARD_RAMPAGE );
+
+	attacker->client->pers.rampageCount++;
+	G_LogPrintf( "Award: %i %i: %s gained the %s award!\n", attacker->client->ps.clientNum, 0, attacker->client->pers.netname, "RAMPAGE" );
+
+	trap_SendServerCommand( attacker->s.number, va( "rampage %i", attacker->client->pers.rampageCount ) );
+
+	return;
+}
+
+/*
+==================
 player_die
 ==================
 */
@@ -739,6 +764,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 				attacker->client->ps.eFlags &= ~( EF_AWARD_IMPRESSIVE | EF_AWARD_EXCELLENT | EF_AWARD_GAUNTLET | EF_AWARD_ASSIST | EF_AWARD_DEFEND | EF_AWARD_CAP | EF_AWARD_HEADSHOT );
 				attacker->client->ps.eFlags |= EF_AWARD_EXCELLENT;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
+				attacker->client->pers.multiKillCount++;
+				rampage_notify( attacker );
 			} else {
 				//KK-OAX Clear multikill count
 				//Must be 1 so the correct number of kills are displayed to the clients.

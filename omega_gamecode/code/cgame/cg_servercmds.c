@@ -74,7 +74,6 @@ static void CG_ParseScores( void ) {
 		cg.scores[i].isDead = atoi( CG_Argv( i * NUM_DATA + FIRST_DATA + 15 ) );
 		cg.scores[i].kills = atoi( CG_Argv( i * NUM_DATA + FIRST_DATA + 16 ) );
 		cg.scores[i].deaths = atoi( CG_Argv( i * NUM_DATA + FIRST_DATA + 17 ) );
-		//cgs.roundStartTime =
 
 		if ( cg.scores[i].client < 0 || cg.scores[i].client >= MAX_CLIENTS ) {
 			cg.scores[i].client = 0;
@@ -920,6 +919,12 @@ static void CG_ServerCommand( void ) {
 		if ( cg_drawEmotes.integer ) {
 			trap_S_StartLocalSound( cgs.media.notificationSound, CHAN_ANNOUNCER );
 		}
+		return;
+	}
+
+	if ( !strcmp( cmd, "rampage" ) ) {
+		int count = atoi( CG_Argv( 1 ) );
+		pushReward( cgs.media.rampageSound, cgs.media.medalRampage, count );
 		return;
 	}
 

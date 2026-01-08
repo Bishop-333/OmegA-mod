@@ -955,6 +955,7 @@ static void CG_RegisterSounds( void ) {
 	cgs.media.assistSound = trap_S_RegisterSound( "sound/feedback/assist.wav", qtrue );
 	cgs.media.defendSound = trap_S_RegisterSound( "sound/feedback/defense.wav", qtrue );
 	cgs.media.headshotSound = trap_S_RegisterSound( "sound/feedback/accuracy.wav", qtrue );
+	cgs.media.rampageSound = trap_S_RegisterSound( "sound/feedback/frags.wav", qtrue );
 
 	cgs.media.notificationSound = trap_S_RegisterSound( "sound/misc/notification.wav", qtrue );
 
@@ -1287,6 +1288,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.medalAssist = trap_R_RegisterShaderNoMip( "medal_assist" );
 	cgs.media.medalCapture = trap_R_RegisterShaderNoMip( "medal_capture" );
 	cgs.media.medalHeadshot = trap_R_RegisterShaderNoMip( "medal_headshot" );
+	cgs.media.medalRampage = trap_R_RegisterShaderNoMip( "medal_frags" );
 
 	cgs.media.smileyHappy = trap_R_RegisterShader( "sprites/happy" );
 	cgs.media.smileySad = trap_R_RegisterShader( "sprites/sad" );

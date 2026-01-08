@@ -901,6 +901,7 @@ typedef struct {
 	qhandle_t medalAssist;
 	qhandle_t medalCapture;
 	qhandle_t medalHeadshot;
+	qhandle_t medalRampage;
 
 	// smiley sprites
 	qhandle_t smileyHappy;
@@ -1011,6 +1012,7 @@ typedef struct {
 	sfxHandle_t assistSound;
 	sfxHandle_t defendSound;
 	sfxHandle_t headshotSound;
+	sfxHandle_t rampageSound;
 
 	sfxHandle_t notificationSound;
 

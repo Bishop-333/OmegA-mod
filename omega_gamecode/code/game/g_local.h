@@ -289,6 +289,7 @@ typedef struct {
 	int deathstreak;
 	qboolean onSpree;
 	int multiKillCount;
+	int rampageCount;
 
 	//KK-OAX Admin Stuff
 	char guid[33];
