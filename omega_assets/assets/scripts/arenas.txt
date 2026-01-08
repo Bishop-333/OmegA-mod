@@ -1,0 +1,361 @@
+//Tier 1
+{
+map		"oa_rpg3dm2"
+longname	"Trial By Error"
+bots		"ayumi jenna"
+fraglimit	"15"
+type		"single ffa lms tourney"
+}
+{
+map		"oa_minia"
+longname	"Kit's Mini Arena"
+bots		"tony penguin"
+fraglimit	"15"
+type		"single ffa lms tourney elimination dd"
+}
+{
+map		"pul1duel-oa"
+longname	"Five Steps Ahead"
+bots		"ayumi jenna tony penguin"
+fraglimit	"20"
+type		"single ffa lms tourney"
+}
+{
+map		"slimefac"
+longname	"Slime Facility"
+bots		"skelebot"
+fraglimit	"10"
+type		"single ffa lms tourney"
+}
+//Tier 2
+{
+map		"oa_dm5"
+longname	"Inner Cistern"
+bots		"ghost merman"
+fraglimit	"15"
+type		"single ffa lms team"
+}
+{
+map		"oa_dm7"
+longname	"Outer Cistern"
+bots		"broadklin morgan"
+fraglimit	"15"
+type		"single ffa lms tourney"
+}
+{
+map		"sleekgrinder"
+longname	"Sleek Grinder"
+bots		"ghost merman broadklin morgan assassin"
+fraglimit	"20"
+type		"single ffa lms team dom"
+}
+{
+map		"pxlfan"
+longname	"The Fan Of Death!"
+bots		"cyber-garg"
+fraglimit	"10"
+type		"single ffa lms team tourney dom"
+}
+//Tier 3
+{
+map		"am_lavaarena"
+longname	"Lava Arena"
+bots		"headcrash sergei"
+fraglimit	"15"
+type		"single ffa lms tourney dom"
+}
+{
+map		"oa_dm3"
+longname	"Abandoned Base"
+bots		"major beret"
+fraglimit	"15"
+type		"single ffa lms team"
+}
+{
+map		"am_underworks2"
+longname	"Under Working 2.0"
+bots		"major beret headcrash sergei assassin"
+fraglimit	"20"
+type	        "single ffa lms team elimination dom"
+}
+{
+map		"blitzkrieg3"
+longname	"Blitzkrieg Base"
+bots		"metalbot"
+fraglimit	"15"
+type		"single ffa lms tourney"
+}
+//Tier 4
+{
+map		"czest1dm"
+longname	"Monastery At Night"
+bots		"nekoyss arachna"
+fraglimit	"15"
+type		"single ffa lms tourney team elimination dom"
+}
+{
+map		"mlca1"
+longname	"Meisterlampe's Temple"
+bots		"liz neko gargoyle"
+fraglimit	"15"
+type		"single ffa lms team elimination dom"
+}
+{
+map		"oa_koth2"
+longname	"Floating Tower"
+bots		"nekoyss arachna liz neko gargoyle"
+fraglimit	"20"
+type		"single ffa lms team dom"
+}
+{
+map		"oa_dm1"
+longname	"Think Twice Or Die"
+bots		"sorceress"
+fraglimit	"10"
+type		"single ffa lms team"
+}
+//Tier 5
+{
+map		"dm6ish"
+longname	"Darkest Hour"
+bots		"nekoyss tanisha"
+fraglimit	"20"
+type		"single ffa lms tourney"
+}
+{
+map		"am_galmevish2"
+longname	"Galmevish Yards"
+bots		"arachna rai"
+fraglimit	"20"
+type		"single ffa lms tourney harvester dd"
+}
+{
+map		"oa_koth1"
+longname	"Repulsive Castle"
+bots		"arachna rai nekoyss tanisha"
+fraglimit	"30"
+type		"single ffa lms team"
+}
+{
+map		"aggressor"
+longname	"Aggressive Tendencies"
+bots		"sorceress angelyss"
+fraglimit	"20"
+type		"single ffa lms tourney dom"
+}
+//Tier 6
+{
+map		"oa_shouse"
+longname	"Strange House"
+bots		"dark murielle"
+fraglimit	"20"
+type		"single ffa lms team elimination tourney dd dom"
+}
+{
+map		"oa_dm4"
+longname	"A Bad Place"
+bots		"tanisha rai"
+fraglimit	"20"
+type		"single ffa lms tourney"
+}
+{
+map		"kaos2"
+longname	"Khaos Everywhere!"
+bots		"dark murielle tanisha rai"
+fraglimit	"30"
+type		"single ffa lms team"
+}
+{
+map		"ce1m7"
+longname	"Lava House Of Thon"
+bots		"angelyss"
+fraglimit	"15"
+type		"single ffa lms"
+}
+//Tier 7
+{
+map		"wrackdm17"
+longname	"Never Ending Yard"
+bots		"grism andriy"
+fraglimit	"20"
+type		"single ffa lms"
+}
+{
+map		"oa_shine"
+longname	"Shine In The Atmosphere"
+bots		"sarge grunt"
+fraglimit	"20"
+type		"single ffa lms"
+}
+{
+map		"am_spacecont"
+longname	"Space Contact"
+bots		"grism andriy sarge grunt"
+fraglimit	"30"
+type		"single ffa lms"
+}
+{
+map		"suspended"
+longname	"Suspended Satellite"
+bots		"s_marine"
+fraglimit	"15"
+type		"single ffa lms"
+}
+//Tier 8
+{
+map		"czest1tourney"
+longname	"The Space Spire"
+special		"Final"
+fraglimit	"15"
+bots		"kyonshi"
+type		"single ffa lms"
+}
+//Other
+{
+map		"oa_pvomit"
+longname	"Projectile Vomit"
+type		"ffa lms"
+}
+{
+map		"oa_dm2"
+longname	"Trappie Land"
+type		"ffa lms"
+}
+// CTF maps
+{
+map		"oasago2"
+longname	"Sago's Outer Castle"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"am_lavactf"
+longname	"Lava Arena (CTF)"
+type		"ctf ctfelimination oneflag harvester overload elimination dd"
+}
+{
+map		"am_lavactfxl"
+longname	"Lava Arena (CTF XL)"
+type		"ctf ctfelimination oneflag harvester overload elimination dd"
+}
+{
+map		"am_mckinleyish2"
+longname	"McKinleyish Retribution"
+type		"ctf ctfelimination oneflag harvester overload elimination dd"
+}
+{
+map		"am_thornish"
+longname	"Thornish Revenge"
+type		"ctf ctfelimination oneflag harvester overload elimination dd"
+}
+{
+map		"cbctf1"
+longname	"Capture The Space"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"ctf_compromise"
+longname	"Foul Compromise"
+type		"ctf oneflag elimination ctfelimination dd dom"
+}
+{
+map		"ctf_gate1"
+longname	"Outer Gates"
+type		"ctf elimination ctfelimination dd dom"
+}
+{
+map		"ctf_inyard"
+longname	"Inner Yard"
+type		"ctf oneflag elimination ctfelimination dd dom"
+}
+{
+map		"czest2ctf"
+longname	"The Bridge of Despair"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"czest3ctf"
+longname	"Holy Wars"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"delta"
+longname	"Mission Over Mars"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"hydronex2"
+longname	"Hydrocapture 2.0"
+type		"ctf oneflag harvester overload elimination ctfelimination dd dom"
+}
+{
+map		"mlctf1beta"
+longname	"Encephalomalacia"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_bases3"
+longname	"Some Bases"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_bases3plus3"
+longname	"Some Bases (Improved)"
+type		"ctf oneflag harvester overload elimination ctfelimination dd dom"
+}
+{
+map		"oa_bases3p3ta"
+longname	"Some Bases (Improved TA)"
+type		"ctf oneflag harvester overload elimination ctfelimination dd dom"
+}
+{
+map		"oa_bases7"
+longname	"Some Awful Bases"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_ctf2"
+longname	"OA_CTF2"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_ctf4ish"
+longname	"Free Space"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_reptctf11"
+longname	"Colliding in the Factory"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oasago1"
+longname	"Sago's Inner Castle"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_spirit3"
+longname	"Where Fears Collide"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"oa_thor"
+longname	"Thor's Valhalla"
+type		"ctf oneflag harvester overload elimination ctfelimination dd dom"
+}
+{
+map		"ps37ctf2"
+longname	"Obey 37 2.0"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"ps9ctf"
+longname	"Obey 9"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+{
+map		"pul1ctf"
+longname	"Der Koberwascher"
+type		"ctf oneflag harvester overload elimination ctfelimination dd"
+}
+
+// See which maps were dummied out in the wiki.
