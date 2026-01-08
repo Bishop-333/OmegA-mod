@@ -44,6 +44,7 @@ INGAME MENU
 #define ID_RESUME 18
 #define ID_TEAMORDERS 19
 #define ID_VOTE 20
+#define ID_CHALLENGES 21
 
 typedef struct {
 	menuframework_s menu;
@@ -60,6 +61,7 @@ typedef struct {
 	menutext_s quit;
 	menutext_s resume;
 	menutext_s vote;
+	menutext_s challenges;
 } ingamemenu_t;
 
 static ingamemenu_t s_ingame;
@@ -146,6 +148,10 @@ static void InGame_Event( void *ptr, int notification ) {
 
 		case ID_VOTE:
 			UI_VoteMenuMenu();
+			break;
+
+		case ID_CHALLENGES:
+			UI_Challenges();
 			break;
 	}
 }
@@ -256,6 +262,7 @@ static void InGame_MenuInit( void ) {
 		s_ingame.removebots.generic.flags |= QMF_GRAYED;
 	}
 
+#if 0
 	y += INGAME_MENU_VERTICAL_SPACING;
 	s_ingame.teamorders.generic.type = MTYPE_PTEXT;
 	s_ingame.teamorders.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -276,6 +283,7 @@ static void InGame_MenuInit( void ) {
 			s_ingame.teamorders.generic.flags |= QMF_GRAYED;
 		}
 	}
+#endif
 
 	y += INGAME_MENU_VERTICAL_SPACING;
 	s_ingame.vote.generic.type = MTYPE_PTEXT;
@@ -313,6 +321,17 @@ static void InGame_MenuInit( void ) {
 	s_ingame.server.string = "SERVER INFO";
 	s_ingame.server.color = color_red;
 	s_ingame.server.style = UI_CENTER | UI_SMALLFONT;
+
+	y += INGAME_MENU_VERTICAL_SPACING;
+	s_ingame.challenges.generic.type = MTYPE_PTEXT;
+	s_ingame.challenges.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
+	s_ingame.challenges.generic.x = 320;
+	s_ingame.challenges.generic.y = y;
+	s_ingame.challenges.generic.id = ID_CHALLENGES;
+	s_ingame.challenges.generic.callback = InGame_Event;
+	s_ingame.challenges.string = "STATISTICS";
+	s_ingame.challenges.color = color_red;
+	s_ingame.challenges.style = UI_CENTER | UI_SMALLFONT;
 
 	y += INGAME_MENU_VERTICAL_SPACING;
 	s_ingame.restart.generic.type = MTYPE_PTEXT;
@@ -364,10 +383,11 @@ static void InGame_MenuInit( void ) {
 	Menu_AddItem( &s_ingame.menu, &s_ingame.team );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.addbots );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.removebots );
-	Menu_AddItem( &s_ingame.menu, &s_ingame.teamorders );
+	//Menu_AddItem( &s_ingame.menu, &s_ingame.teamorders );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.vote );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.setup );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.server );
+	Menu_AddItem( &s_ingame.menu, &s_ingame.challenges );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.restart );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.resume );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.leave );
