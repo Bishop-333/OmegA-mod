@@ -510,7 +510,13 @@ static void CG_DrawStatusBar( void ) {
 			value = ps->ammo[weaponSelect];
 		}
 		if ( value > -1 ) {
-			if ( cg.predictedPlayerState.weaponstate == WEAPON_FIRING && cg.predictedPlayerState.weaponTime > 100 ) {
+			int reloadThreshold = 0;
+
+			if ( weaponSelect == WP_MACHINEGUN || weaponSelect == WP_LIGHTNING || weaponSelect == WP_PLASMAGUN || weaponSelect == WP_BFG || weaponSelect == WP_CHAINGUN ) {
+				reloadThreshold = 200;
+			}
+
+			if ( cg.predictedPlayerState.weaponstate == WEAPON_FIRING && cg.predictedPlayerState.weaponTime > reloadThreshold ) {
 				// draw as dark grey when reloading
 				trap_R_SetColor( colors[2] ); // dark grey
 			} else {
