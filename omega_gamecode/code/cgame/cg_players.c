@@ -2772,8 +2772,6 @@ void CG_Player( centity_t *cent ) {
 
 			skull.hModel = cgs.media.kamikazeHeadModel;
 			trap_R_AddRefEntityToScene( &skull );
-			skull.hModel = cgs.media.kamikazeHeadTrail;
-			trap_R_AddRefEntityToScene( &skull );
 		} else {
 			// three skulls spinning around the player
 			angle = ( ( cg.time / 4 ) & 255 ) * ( M_PI * 2 ) / 255;
@@ -2793,8 +2791,6 @@ void CG_Player( centity_t *cent ) {
 			trap_R_AddRefEntityToScene( &skull );
 			// flip the trail because this skull is spinning in the other direction
 			VectorInverse( skull.axis[1] );
-			skull.hModel = cgs.media.kamikazeHeadTrail;
-			trap_R_AddRefEntityToScene( &skull );
 
 			angle = ( ( cg.time / 4 ) & 255 ) * ( M_PI * 2 ) / 255 + M_PI;
 			if ( angle > M_PI * 2 )
@@ -2813,8 +2809,6 @@ void CG_Player( centity_t *cent ) {
 
 			skull.hModel = cgs.media.kamikazeHeadModel;
 			trap_R_AddRefEntityToScene( &skull );
-			skull.hModel = cgs.media.kamikazeHeadTrail;
-			trap_R_AddRefEntityToScene( &skull );
 
 			angle = ( ( cg.time / 3 ) & 255 ) * ( M_PI * 2 ) / 255 + 0.5 * M_PI;
 			if ( angle > M_PI * 2 )
@@ -2830,8 +2824,6 @@ void CG_Player( centity_t *cent ) {
 			CrossProduct( skull.axis[1], skull.axis[2], skull.axis[0] );
 
 			skull.hModel = cgs.media.kamikazeHeadModel;
-			trap_R_AddRefEntityToScene( &skull );
-			skull.hModel = cgs.media.kamikazeHeadTrail;
 			trap_R_AddRefEntityToScene( &skull );
 		}
 	}

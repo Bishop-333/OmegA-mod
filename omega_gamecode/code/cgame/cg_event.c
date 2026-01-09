@@ -274,7 +274,9 @@ static void CG_Obituary( entityState_t *ent ) {
 					s = va( "You fragged %s", targetName );
 			}
 		}
-		if ( cg_killsound.integer ) {
+		if ( cg_killsound.integer == 2 ) {
+			trap_S_StartLocalSound( cgs.media.cashSound, CHAN_LOCAL_SOUND );
+		} else if ( cg_killsound.integer ) {
 			trap_S_StartLocalSound( cgs.media.killSound, CHAN_LOCAL_SOUND );
 		}
 		cg.lastHitWasKill = qtrue;

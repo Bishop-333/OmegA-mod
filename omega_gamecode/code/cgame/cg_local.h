@@ -876,7 +876,6 @@ typedef struct {
 	qhandle_t kamikazeEffectModel;
 	qhandle_t kamikazeShockWave;
 	qhandle_t kamikazeHeadModel;
-	qhandle_t kamikazeHeadTrail;
 	qhandle_t guardPowerupModel;
 	qhandle_t scoutPowerupModel;
 	qhandle_t doublerPowerupModel;
@@ -1005,6 +1004,7 @@ typedef struct {
 	sfxHandle_t hitSoundLowArmor;
 	sfxHandle_t hitTeamSound;
 	sfxHandle_t killSound;
+	sfxHandle_t cashSound;
 	sfxHandle_t impressiveSound;
 	sfxHandle_t excellentSound;
 	sfxHandle_t deniedSound;
