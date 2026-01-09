@@ -708,20 +708,39 @@ Cmd_Kill_f
 =================
 */
 static void Cmd_Kill_f( gentity_t *ent ) {
-	if ( ( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) || ent->client->isEliminated ) {
+	gentity_t *target;
+	char *name;
+	int clientNum;
+
+	target = ent;
+
+	if ( trap_Argc() > 1 ) {
+		if ( !CheatsOk( ent ) ) {
+			return;
+		}
+		name = ConcatArgs( 1 );
+		clientNum = ClientNumberFromString( ent, name );
+		if ( clientNum != -1 ) {
+			target = &g_entities[clientNum];
+		} else {
+			return;
+		}
+	}
+
+	if ( ( target->client->sess.sessionTeam == TEAM_SPECTATOR ) || target->client->isEliminated ) {
 		return;
 	}
-	if ( ent->health <= 0 ) {
+	if ( target->health <= 0 ) {
 		return;
 	}
-	ent->flags &= ~FL_GODMODE;
-	ent->client->ps.stats[STAT_HEALTH] = ent->health = -999;
-	ent->client->sess.kills -= 1;
-	if ( ent->client->lastSentFlying > -1 )
+	target->flags &= ~FL_GODMODE;
+	target->client->ps.stats[STAT_HEALTH] = target->health = -999;
+	target->client->sess.kills -= 1;
+	if ( target->client->lastSentFlying > -1 )
 		//If player is in the air because of knockback we give credit to the person who sent it flying
-		player_die( ent, ent, &g_entities[ent->client->lastSentFlying], 100000, MOD_FALLING );
+		player_die( target, target, &g_entities[target->client->lastSentFlying], 100000, MOD_FALLING );
 	else
-		player_die( ent, ent, ent, 100000, MOD_SUICIDE );
+		player_die( target, target, target, 100000, MOD_SUICIDE );
 }
 
 /*
