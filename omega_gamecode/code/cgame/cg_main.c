@@ -264,6 +264,7 @@ vmCvar_t cg_enemySounds;
 vmCvar_t cg_flagStyle;
 vmCvar_t cg_forceTeamSkins;
 vmCvar_t cg_guidedRockets;
+vmCvar_t cg_juggernautScale;
 vmCvar_t cg_hitmarker;
 vmCvar_t cg_killsound;
 vmCvar_t cg_noInvisWalls;
@@ -462,7 +463,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_teamChatBeep, "cg_teamChatBeep", "1", CVAR_ARCHIVE },
 
     //OmegA
-    { &cg_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_SYSTEMINFO },
+    { &cg_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_SERVERINFO },
     { &cg_ambient, "cg_ambient", "1", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_bobgun, "cg_bobgun", "1", CVAR_ARCHIVE },
     { &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE },
@@ -482,10 +483,11 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE },
     { &cg_flagStyle, "cg_flagStyle", "2", CVAR_ARCHIVE | CVAR_LATCH },
     { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE },
-    { &cg_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE },
+    { &cg_guidedRockets, "g_guidedRockets", "0", CVAR_SYSTEMINFO },
+    { &cg_juggernautScale, "g_juggernautScale", "1.5", CVAR_SYSTEMINFO },
     { &cg_hitmarker, "cg_hitmarker", "1", CVAR_ARCHIVE },
     { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
-    { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE },
+    { &cg_noInvisWalls, "g_noInvisWalls", "0", CVAR_SYSTEMINFO },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ROM },
     { &cg_predictAmmo, "cg_predictAmmo", "1", CVAR_ARCHIVE },
     { &cg_screenshake, "cg_screenshake", "1", CVAR_ARCHIVE },

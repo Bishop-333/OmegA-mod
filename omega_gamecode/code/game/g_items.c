@@ -80,7 +80,7 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 		if ( handicap <= 0.0f || handicap > 100.0f ) {
 			handicap = 100.0f;
 		}
-		max = (int)( 2 * handicap );
+		max = (int)( g_juggernautScale.value * handicap );
 
 		other->health = max;
 		other->client->ps.stats[STAT_HEALTH] = max;

@@ -1034,6 +1034,7 @@ static void ClientThink_real( gentity_t *ent ) {
 	pm.chaos = g_chaos.integer;
 	pm.noInvisWalls = g_noInvisWalls.integer;
 	pm.guidedRockets = g_guidedRockets.integer;
+	pm.juggernautScale = g_juggernautScale.value;
 	pm.rocketFireRate = g_rocketFireRate.integer;
 	pm.railgunFireRate = g_railgunFireRate.integer;
 	pm.slickGround = g_slickGround.integer;

@@ -238,6 +238,7 @@ typedef struct {
 	int chaos;
 	int noInvisWalls;
 	int guidedRockets;
+	float juggernautScale;
 	int railgunFireRate;
 	int rocketFireRate;
 	int slickGround;

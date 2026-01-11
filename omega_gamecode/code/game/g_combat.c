@@ -1139,7 +1139,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		}
 		damage = damage * max / 100;
 		if ( targ->client->ps.powerups[PW_JUGGERNAUT] ) {
-			damage *= 0.5;
+			damage /= g_juggernautScale.value;
 		}
 	}
 

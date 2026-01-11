@@ -1174,6 +1174,7 @@ extern vmCvar_t g_guidedRockets;
 extern vmCvar_t g_headDamageMultiplicator;
 extern vmCvar_t g_headShotOnly;
 extern vmCvar_t g_juggernaut;
+extern vmCvar_t g_juggernautScale;
 extern vmCvar_t g_jumppadGrenades;
 extern vmCvar_t g_leaveCorpse;
 extern vmCvar_t g_lightningDamage;

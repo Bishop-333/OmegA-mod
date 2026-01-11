@@ -1405,6 +1405,7 @@ extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_flagStyle;
 extern vmCvar_t cg_forceTeamSkins;
 extern vmCvar_t cg_guidedRockets;
+extern vmCvar_t cg_juggernautScale;
 extern vmCvar_t cg_hitmarker;
 extern vmCvar_t cg_killsound;
 extern vmCvar_t cg_noInvisWalls;

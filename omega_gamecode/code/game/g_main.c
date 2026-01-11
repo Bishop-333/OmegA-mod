@@ -213,6 +213,7 @@ vmCvar_t g_guidedRockets;
 vmCvar_t g_headDamageMultiplicator;
 vmCvar_t g_headShotOnly;
 vmCvar_t g_juggernaut;
+vmCvar_t g_juggernautScale;
 vmCvar_t g_jumppadGrenades;
 vmCvar_t g_leaveCorpse;
 vmCvar_t g_lightningDamage;
@@ -450,17 +451,18 @@ static cvarTable_t gameCvarTable[] = {
     { &g_forcespectator, "g_forcespectator", "0", 0, 0, qtrue },
     { &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
     { &g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue },
-    { &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue },
     { &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_juggernaut, "g_juggernaut", "7", CVAR_ARCHIVE, 0, qtrue },
+    { &g_juggernautScale, "g_juggernautScale", "1.5", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_leaveCorpse, "g_leaveCorpse", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_lightningDamage, "g_lightningDamage", "7", 0, 0, qtrue },
     { &g_machinegunDamage, "g_machinegunDamage", "6", 0, 0, qtrue },
     { &g_machinegunTeamDamage, "g_machinegunTeamDamage", "7", 0, 0, qtrue },
     { &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
-    { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_omegaInitialized, "g_omegaInitialized", "0", CVAR_ROM, 0, qfalse },
     { &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },

@@ -643,6 +643,8 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_flags = cgs.dmflags;
 
 	//OmegA
+	cg_pmove.guidedRockets = cg_guidedRockets.integer;
+	cg_pmove.juggernautScale = cg_juggernautScale.value;
 	cg_pmove.noInvisWalls = cg_noInvisWalls.integer;
 	cg_pmove.pmove_aircontrol = pmove_aircontrol.integer;
 	cg_pmove.pmove_autohop = pmove_autohop.integer;

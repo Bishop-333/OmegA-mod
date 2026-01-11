@@ -448,9 +448,10 @@ static qboolean PM_CheckWaterJump( void ) {
 		return qfalse;
 	}
 
-	spot[2] += 16;
 	if ( pm->ps->powerups[PW_JUGGERNAUT] ) {
-		spot[2] *= 1.5;
+		spot[2] += 16 * pm->juggernautScale;
+	} else {
+		spot[2] += 16;
 	}
 	cont = pm->pointcontents( spot, pm->ps->clientNum );
 	if ( cont & ( CONTENTS_SOLID | CONTENTS_PLAYERCLIP | CONTENTS_BODY ) ) {
@@ -1327,8 +1328,8 @@ static void PM_CheckDuck( void ) {
 	}
 
 	if ( pm->ps->powerups[PW_JUGGERNAUT] ) {
-		pm->maxs[2] = (int)( DEFAULT_HEIGHT * 1.5 );
-		pm->ps->viewheight = (int)( DEFAULT_VIEWHEIGHT * 1.5 );
+		pm->maxs[2] = (int)( pm->maxs[2] * pm->juggernautScale );
+		pm->ps->viewheight = (int)( pm->ps->viewheight * pm->juggernautScale );
 	}
 }
 
