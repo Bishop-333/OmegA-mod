@@ -441,7 +441,7 @@ static cvarTable_t gameCvarTable[] = {
 
     //OmegA
     { &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
-    { &g_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_chaos, "g_chaos", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
