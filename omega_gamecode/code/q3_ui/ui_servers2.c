@@ -1214,7 +1214,7 @@ static void ArenaServers_StartRefreshNoClearList( void ) {
 
 	if ( g_servertype == UIAS_LOCAL || g_servertype == UIAS_ALL_LOCAL ) {
 		if ( g_servertype == UIAS_ALL_LOCAL )
-			g_arenaservers.refreshtime = uis.realtime + 2000; // Less ping time for local servers
+			g_arenaservers.refreshtime = uis.realtime + 1000; // Less ping time for local servers
 		trap_Cmd_ExecuteText( EXEC_APPEND, "localservers\n" );
 		return;
 	}
