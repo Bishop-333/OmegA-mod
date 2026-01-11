@@ -540,7 +540,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		killer = attacker->s.number;
 		if ( attacker->client ) {
 			killerName = attacker->client->pers.netname;
-			attacker->client->sess.kills += 1;
+			if ( self != attacker ) {
+				attacker->client->sess.kills += 1;
+			}
 		} else {
 			killerName = "<non-client>";
 		}
