@@ -372,17 +372,29 @@ void CG_ParseServerinfo( void ) {
 	//unlagged - server options
 	// we'll need this for deciding whether or not to predict weapon effects
 	cgs.delagHitscan = atoi( Info_ValueForKey( info, "g_delagHitscan" ) );
-	trap_Cvar_Set( "g_delagHitscan", va( "%i", cgs.delagHitscan ) );
 	//unlagged - server options
 
 	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
-	trap_Cvar_Set( "g_easierPickup", va( "%i", cgs.easierPickup ) );
-
 	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
-	trap_Cvar_Set( "g_startWhenReady", va( "%i", cgs.startWhenReady ) );
 
 	//Copy allowed votes directly to the client:
 	trap_Cvar_Set( "cg_voteflags", Info_ValueForKey( info, "voteflags" ) );
+}
+
+/*
+================
+CG_ParseSysteminfo
+================
+*/
+void CG_ParseSysteminfo( void ) {
+	const char *info;
+
+	info = CG_ConfigString( CS_SYSTEMINFO );
+
+	cgs.allowThirdperson = atoi( Info_ValueForKey( info, "g_allowThirdperson" ) );
+	cgs.guidedRockets = atoi( Info_ValueForKey( info, "g_guidedRockets" ) );
+	cgs.juggernautScale = atof( Info_ValueForKey( info, "g_juggernautScale" ) );
+	cgs.noInvisWalls = atoi( Info_ValueForKey( info, "g_noInvisWalls" ) );
 }
 
 /*
@@ -520,6 +532,8 @@ static void CG_ConfigStringModified( void ) {
 		CG_StartMusic();
 	} else if ( num == CS_SERVERINFO ) {
 		CG_ParseServerinfo();
+	} else if ( num == CS_SYSTEMINFO ) {
+		CG_ParseSysteminfo();
 	} else if ( num == CS_WARMUP ) {
 		CG_ParseWarmup();
 	} else if ( num == CS_SCORES1 ) {

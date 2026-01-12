@@ -1955,7 +1955,7 @@ static void CG_PlayerFloatSprite( centity_t *cent, vec3_t origin, qhandle_t shad
 	}
 
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
-		scale = cg_juggernautScale.value;
+		scale = cgs.juggernautScale;
 	} else {
 		scale = 1.0f;
 	}
@@ -2653,9 +2653,9 @@ void CG_Player( centity_t *cent ) {
 
 	// scale juggernaut players
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
-		VectorScale( legs.axis[0], cg_juggernautScale.value, legs.axis[0] );
-		VectorScale( legs.axis[1], cg_juggernautScale.value, legs.axis[1] );
-		VectorScale( legs.axis[2], cg_juggernautScale.value, legs.axis[2] );
+		VectorScale( legs.axis[0], cgs.juggernautScale, legs.axis[0] );
+		VectorScale( legs.axis[1], cgs.juggernautScale, legs.axis[1] );
+		VectorScale( legs.axis[2], cgs.juggernautScale, legs.axis[2] );
 	}
 
 	// get the animation state (after rotation, to allow feet shuffle)
@@ -2705,7 +2705,7 @@ void CG_Player( centity_t *cent ) {
 	VectorCopy( cent->lerpOrigin, legs.origin );
 
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
-		legs.origin[2] += 24 * ( cg_juggernautScale.value - 1 );
+		legs.origin[2] += 24 * ( cgs.juggernautScale - 1 );
 	}
 
 	VectorCopy( cent->lerpOrigin, legs.lightingOrigin );

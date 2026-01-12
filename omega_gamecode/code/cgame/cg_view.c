@@ -284,7 +284,7 @@ static void CG_OffsetThirdPersonView( void ) {
 	} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE ) {
 		range = 40.0f;
 		offset = 0.0f;
-	} else if ( cg_allowThirdPerson.integer < 2 ) {
+	} else if ( cgs.allowThirdperson < 2 ) {
 		angle = 0.0f;
 		range = 40.0f;
 		offset = 25.0f;
@@ -999,7 +999,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 	CG_PredictPlayerState();
 
 	// decide on third person view
-	cg.renderingThirdPerson = ( ( cg_thirdPerson.integer && cg_allowThirdPerson.integer ) || cg.snap->ps.stats[STAT_HEALTH] <= 0 || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !cg_paused.integer ) ) && cg.snap->ps.pm_type != PM_SPECTATOR;
+	cg.renderingThirdPerson = ( ( cg_thirdPerson.integer && cgs.allowThirdperson ) || cg.snap->ps.stats[STAT_HEALTH] <= 0 || ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !cg_paused.integer ) ) && cg.snap->ps.pm_type != PM_SPECTATOR;
 
 	CG_SpecZooming();
 

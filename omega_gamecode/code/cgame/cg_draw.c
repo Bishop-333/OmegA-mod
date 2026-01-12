@@ -2870,7 +2870,7 @@ void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t 
 	Q_CleanStr( name );
 
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
-		scale = cg_juggernautScale.value;
+		scale = cgs.juggernautScale;
 	} else {
 		scale = 1.0f;
 	}

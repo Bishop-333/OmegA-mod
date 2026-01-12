@@ -643,9 +643,9 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_flags = cgs.dmflags;
 
 	//OmegA
-	cg_pmove.guidedRockets = cg_guidedRockets.integer;
-	cg_pmove.juggernautScale = cg_juggernautScale.value;
-	cg_pmove.noInvisWalls = cg_noInvisWalls.integer;
+	cg_pmove.guidedRockets = cgs.guidedRockets;
+	cg_pmove.juggernautScale = cgs.juggernautScale;
+	cg_pmove.noInvisWalls = cgs.noInvisWalls;
 	cg_pmove.pmove_aircontrol = pmove_aircontrol.integer;
 	cg_pmove.pmove_autohop = pmove_autohop.integer;
 	cg_pmove.pmove_doublejump = pmove_doublejump.integer;
@@ -815,8 +815,6 @@ void CG_PredictPlayerState( void ) {
 		if ( cg_pmove.pmove_fixed ) {
 			cg_pmove.cmd.serverTime = ( ( cg_pmove.cmd.serverTime + pmove_msec.integer - 1 ) / pmove_msec.integer ) * pmove_msec.integer;
 		}
-
-		cg_pmove.guidedRockets = cg_guidedRockets.integer;
 
 		//unlagged - optimized prediction
 		if ( cg_optimizePrediction.integer ) {

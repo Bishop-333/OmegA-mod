@@ -1211,6 +1211,11 @@ typedef struct {
 
 	int easierPickup;
 	int startWhenReady;
+
+	int allowThirdperson;
+	int guidedRockets;
+	float juggernautScale;
+	int noInvisWalls;
 } cgs_t;
 
 //==============================================================================
@@ -1384,7 +1389,6 @@ extern vmCvar_t cg_chatBeep;
 extern vmCvar_t cg_teamChatBeep;
 
 //OmegA
-extern vmCvar_t cg_allowThirdPerson;
 extern vmCvar_t cg_ambient;
 extern vmCvar_t cg_bobgun;
 extern vmCvar_t cg_brightPlayers;
@@ -1404,11 +1408,8 @@ extern vmCvar_t cg_enemyModel;
 extern vmCvar_t cg_enemySounds;
 extern vmCvar_t cg_flagStyle;
 extern vmCvar_t cg_forceTeamSkins;
-extern vmCvar_t cg_guidedRockets;
-extern vmCvar_t cg_juggernautScale;
 extern vmCvar_t cg_hitmarker;
 extern vmCvar_t cg_killsound;
-extern vmCvar_t cg_noInvisWalls;
 extern vmCvar_t cg_predictAmmo;
 extern vmCvar_t cg_screenshake;
 extern vmCvar_t cg_selfSounds;
@@ -1725,6 +1726,7 @@ void CG_InitConsoleCommands( void );
 //
 void CG_ExecuteNewServerCommands( int latestSequence );
 void CG_ParseServerinfo( void );
+void CG_ParseSysteminfo( void );
 void CG_SetConfigValues( void );
 void CG_ShaderStateChanged( void );
 
