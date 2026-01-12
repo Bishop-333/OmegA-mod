@@ -2355,7 +2355,7 @@ static void CG_DrawCenter1FctfString( void ) {
 		default:
 			return;
 	};
-	y = 100;
+	y = 120;
 
 	w = cg.centerPrintCharWidth * CG_DrawStrlen( line );
 
@@ -2423,7 +2423,7 @@ static void CG_DrawCenterDDString( void ) {
 	}
 	lastDDSec = sec;
 
-	y = 100;
+	y = 120;
 
 	w = cg.centerPrintCharWidth * CG_DrawStrlen( line );
 
