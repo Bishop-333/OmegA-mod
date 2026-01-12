@@ -1,20 +1,24 @@
-//Example spree file
-
-//Here are the killsprees
 [kspree]
 level = 1
 printpos = 2
-message = [n] ^7is on a killing spree with [k] kills
-sound = sound/feedback/excellent.wav
+message = [n] ^7is on a ^1killing spree ^7with [k] kills!
 
-//Add more kill sprees here (level 2,3,4 etc.)
+[kspree]
+level = 2
+printpos = 2
+message = [n] ^7is on a ^1killing frenzy ^7with [k] kills!
 
-//Here comes death sprees. Useful to get people to leave your server
-//[dspree]
-//level = 1
-//printpos = 2
-//message = [n] keeps on fighting despite [k] deaths
-//sound = sound/feedback/humiliation.wav
+[kspree]
+level = 3
+printpos = 2
+message = [n] ^7is on a ^1running riot ^7with [k] kills!
 
-//Add more death sprees here (level 2,3,4 etc.)
+[kspree]
+level = 4
+printpos = 2
+message = [n] ^7is on a ^1rampage ^7with [k] kills!
 
+[kspree]
+level = 5
+printpos = 2
+message = [n] ^7is a ^1NIGHTMARE ^7with [k] kills!

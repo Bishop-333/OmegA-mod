@@ -53,7 +53,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SINK_TIME 1000 // time for fragments to sink into ground before going away
 #define ATTACKER_HEAD_TIME 10000
 #define REWARD_TIME 3000
-#define REWARD_SOUNDDELAY 750
+#define REWARD_SOUNDDELAY 1000
 
 #define PULSE_SCALE 1.5 // amount to scale up the icons when activating
 
@@ -453,7 +453,7 @@ typedef struct {
 } worldstring_t;
 
 #define MAX_REWARDSTACK 10
-#define MAX_SOUNDBUFFER 20
+#define MAX_SOUNDBUFFER 30
 
 //======================================================================
 

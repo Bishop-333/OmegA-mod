@@ -304,7 +304,7 @@ void G_RunStreakLogic( gentity_t *attacker, gentity_t *victim ) {
 			if ( it_ent->inuse ) {
 				G_FreeEntity( it_ent );
 			}
-			G_Printf( "%s is a Juggernaut!\n", attacker->client->pers.netname );
+			G_Printf( "%s ^7has become a ^2Juggernaut^7 with %i kills!\n", attacker->client->pers.netname, attacker->client->pers.killstreak );
 		}
 	}
 }
@@ -339,7 +339,7 @@ void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree )
 	int i;
 	char *returnedString;
 	//If somebody want's to award killing sprees above 99 kills he/she can mod this his/herself!!! :)
-	char streakcount[3];
+	char streakcount[5];
 	char *sound;
 	int position;
 	int soundIndex;
@@ -420,9 +420,10 @@ void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree )
 			returnedString = CreateMessage( ent, killSprees[level.kSpreeUBound]->spreeMsg, streakcount );
 			position = killSprees[level.kSpreeUBound]->position;
 			sound = killSprees[level.kSpreeUBound]->sound2Play;
-			soundIndex = G_SoundIndex( sound );
-			soundIndex = G_SoundIndex( sound );
-			G_Sound( ent, 0, soundIndex );
+			if ( strlen( sound ) ) {
+				soundIndex = G_SoundIndex( sound );
+				G_Sound( ent, 0, soundIndex );
+			}
 			AP( va( "print \"%s\n\"", returnedString ) );
 		} else {
 			for ( i = 0; killSprees[i]; i++ ) {
@@ -431,9 +432,10 @@ void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree )
 					returnedString = CreateMessage( ent, killSprees[i]->spreeMsg, streakcount );
 					position = killSprees[i]->position;
 					sound = killSprees[i]->sound2Play;
-					soundIndex = G_SoundIndex( sound );
-					soundIndex = G_SoundIndex( sound );
-					G_Sound( ent, 0, soundIndex );
+					if ( strlen( sound ) ) {
+						soundIndex = G_SoundIndex( sound );
+						G_Sound( ent, 0, soundIndex );
+					}
 					AP( va( "print \"%s\n\"", returnedString ) );
 					break;
 				}
