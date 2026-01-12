@@ -408,7 +408,7 @@ static void ClientTimerActions( gentity_t *ent, int msec ) {
 	while ( client->timeResidual >= 1000 ) {
 		client->timeResidual -= 1000;
 
-		if ( !client->ps.powerups[PW_JUGGERNAUT] && client->ps.stats[STAT_MAX_HEALTH] > 100 ) {
+		if ( !client->ps.powerups[PW_GUARD] && !client->ps.powerups[PW_JUGGERNAUT] && client->ps.stats[STAT_MAX_HEALTH] > 100 ) {
 			char userinfo[MAX_INFO_STRING];
 			float handicap;
 
