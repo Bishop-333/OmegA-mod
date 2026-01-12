@@ -125,15 +125,15 @@ typedef enum {
 	UI_FS_SEEK,
 	UI_SET_PBCLSTATUS,
 
-	UI_MEMSET = 100,
-	UI_MEMCPY,
-	UI_STRNCPY,
-	UI_SIN,
-	UI_COS,
-	UI_ATAN2,
-	UI_SQRT,
-	UI_FLOOR,
-	UI_CEIL
+	UI_FLOOR = 107,
+	UI_CEIL,
+
+	// engine extensions
+	UI_R_ADDREFENTITYTOSCENE2,
+	UI_R_ADDLINEARLIGHTTOSCENE,
+	UI_CVAR_SETDESCRIPTION,
+	UI_TRAP_GETVALUE = 700,
+
 } uiImport_t;
 
 typedef enum {
@@ -163,7 +163,7 @@ typedef enum {
 	//	void	UI_Shutdown( void );
 
 	UI_KEY_EVENT,
-	//	void	UI_KeyEvent( int key );
+	//	void	UI_KeyEvent( int key, int down );
 
 	UI_MOUSE_EVENT,
 	//	void	UI_MouseEvent( int dx, int dy );
@@ -182,10 +182,13 @@ typedef enum {
 
 	UI_DRAW_CONNECT_SCREEN,
 	//	void	UI_DrawConnectScreen( qboolean overlay );
-	UI_HASUNIQUECDKEY
+
+	UI_HASUNIQUECDKEY,
 	// if !overlay, the background will be drawn, otherwise it will be
 	// overlayed over whatever the cgame has drawn.
 	// a GetClientState syscall will be made to get the current strings
+
+	UI_EXPORT_LAST,
 } uiExport_t;
 
 #endif

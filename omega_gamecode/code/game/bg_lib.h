@@ -94,9 +94,9 @@ int atoi( const char *string );
 int _atoi( const char **stringPtr );
 long strtol( const char *nptr, char **endptr, int base );
 
-int Q_vsnprintf( char *buffer, size_t length, const char *fmt, va_list argptr ) Q_PRINTF_FUNC( 3, 0 );
+int Q_vsnprintf( char *buffer, size_t length, const char *fmt, va_list argptr );
 
-int sscanf( const char *buffer, const char *fmt, ... ) Q_SCANF_FUNC( 2, 3 );
+int sscanf( const char *buffer, const char *fmt, ... );
 
 // Memory functions
 void *memmove( void *dest, const void *src, size_t count );

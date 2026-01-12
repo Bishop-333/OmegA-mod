@@ -162,18 +162,26 @@ typedef enum {
 	// 1.32
 	CG_FS_SEEK,
 
-	CG_MEMSET = 100,
-	CG_MEMCPY,
-	CG_STRNCPY,
-	CG_SIN,
-	CG_COS,
-	CG_ATAN2,
-	CG_SQRT,
-	CG_FLOOR,
+	/*
+	CG_LOADCAMERA,
+	CG_STARTCAMERA,
+	CG_GETCAMERAINFO,
+*/
+
+	CG_FLOOR = 107,
 	CG_CEIL,
 	CG_TESTPRINTINT,
 	CG_TESTPRINTFLOAT,
-	CG_ACOS
+	CG_ACOS,
+
+	// engine extensions
+	CG_R_ADDREFENTITYTOSCENE2,
+	CG_R_FORCEFIXEDDLIGHTS,
+	CG_R_ADDLINEARLIGHTTOSCENE,
+	CG_IS_RECORDING_DEMO,
+	CG_CVAR_SETDESCRIPTION,
+	CG_TRAP_GETVALUE = 700,
+
 } cgameImport_t;
 
 /*
@@ -221,8 +229,11 @@ typedef enum {
 
 	CG_MOUSE_EVENT,
 	//	void	(*CG_MouseEvent)( int dx, int dy );
-	CG_EVENT_HANDLING
+
+	CG_EVENT_HANDLING,
 	//	void (*CG_EventHandling)(int type);
+
+	CG_EXPORT_LAST,
 } cgameExport_t;
 
 //----------------------------------------------

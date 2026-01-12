@@ -19,339 +19,200 @@ along with Quake III Arena source code; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
-
+//
 #ifndef __Q_PLATFORM_H
 #define __Q_PLATFORM_H
 
-// this is for determining if we have an asm version of a C function
-#define idx64 0
-
-#ifdef Q3_VM
-
-#define id386 0
-#define idppc 0
-#define idppc_altivec 0
-#define idsparc 0
-
-#else
-
-#if ( defined _M_IX86 || defined __i386__ ) && !defined( C_ONLY )
-#define id386 1
-#else
-#define id386 0
-#endif
-
-#if ( defined( powerc ) || defined( powerpc ) || defined( ppc ) || \
-      defined( __ppc ) || defined( __ppc__ ) ) &&                  \
-    !defined( C_ONLY )
-#define idppc 1
-#if defined( __VEC__ )
-#define idppc_altivec 1
-#ifdef __APPLE__ // Apple's GCC does this differently than the FSF.
-#define VECCONST_UINT8( a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p ) \
-	(vector unsigned char)( a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p )
-#else
-#define VECCONST_UINT8( a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p ) \
-	( vector unsigned char ) { a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p }
-#endif
-#else
-#define idppc_altivec 0
-#endif
-#else
-#define idppc 0
-#define idppc_altivec 0
-#endif
-
-#if defined( __sparc__ ) && !defined( C_ONLY )
-#define idsparc 1
-#else
-#define idsparc 0
-#endif
-
-#endif
-
-// for windows fastcall option
 #define QDECL
-#define QCALL
 
-//================================================================= WIN64/32 ===
+#define id386 0
+#define idx64 0
+#define arm32 0
+#define arm64 0
 
-#if defined( _WIN64 ) || defined( __WIN64__ )
+// ============================== Win32 ====================================
 
-#undef QDECL
-#define QDECL __cdecl
-
-#undef QCALL
-#define QCALL __stdcall
-
-#if defined( _MSC_VER )
-#define OS_STRING "win_msvc64"
-#elif defined __MINGW64__
-#define OS_STRING "win_mingw64"
-#endif
-
-#define ID_INLINE __inline
-#define PATH_SEP '\\'
-
-#if defined( __x86_64__ ) || defined( _M_X64 )
-#undef idx64
-#define idx64 1
-#define ARCH_STRING "x86_64"
-#define HAVE_VM_COMPILED
-#elif defined( __aarch64__ ) || defined( __ARM64__ ) || defined( _M_ARM64 )
-#define ARCH_STRING "arm64"
-#endif
-
-#define Q3_LITTLE_ENDIAN
-
-#define DLL_EXT ".dll"
-
-#elif defined( _WIN32 ) || defined( __WIN32__ )
+#ifdef _WIN32
 
 #undef QDECL
 #define QDECL __cdecl
+#define Q_NEWLINE "\r\n"
 
-#undef QCALL
-#define QCALL __stdcall
+#if defined (_WIN32_WINNT)
+#if _WIN32_WINNT < 0x0501
+#undef _WIN32_WINNT
+#define _WIN32_WINNT 0x0501
+#endif
+#else
+#define _WIN32_WINNT 0x0501
+#endif
 
-#if defined( _MSC_VER )
+#if defined( _MSC_VER ) && _MSC_VER >= 1400 // MSVC++ 8.0 at least
 #define OS_STRING "win_msvc"
 #elif defined __MINGW32__
 #define OS_STRING "win_mingw"
+#elif defined __MINGW64__
+#define OS_STRING "win_mingw64"
+#else
+#error "Compiler not supported"
 #endif
 
 #define ID_INLINE __inline
 #define PATH_SEP '\\'
-
-#if defined( _M_IX86 ) || defined( __i386__ )
-#define ARCH_STRING "x86"
-#define HAVE_VM_COMPILED
-#elif defined( __arm__ ) || defined( _M_ARM )
-#define ARCH_STRING "arm"
-#endif
-
-#define Q3_LITTLE_ENDIAN
-
+#define PATH_SEP_FOREIGN '/'
 #define DLL_EXT ".dll"
 
-#endif
-
-//================================================================ MAC OS ===
-
-#if defined( __APPLE__ ) || defined( __APPLE_CC__ )
-
-#define OS_STRING "macosx"
-#define ID_INLINE inline
-#define PATH_SEP '/'
-
-#ifdef __ppc__
-#define ARCH_STRING "ppc"
-#define Q3_BIG_ENDIAN
-#define HAVE_VM_COMPILED
-#elif defined __i386__
+#if defined( _M_IX86 )
 #define ARCH_STRING "x86"
 #define Q3_LITTLE_ENDIAN
-#define HAVE_VM_COMPILED
-#elif defined __x86_64__
-#undef idx64
-#define idx64 1
+#undef id386
+#define id386 1
+#ifndef __WORDSIZE
+#define __WORDSIZE 32
+#endif
+#endif
+
+#if defined( _M_AMD64 )
 #define ARCH_STRING "x86_64"
 #define Q3_LITTLE_ENDIAN
-#define HAVE_VM_COMPILED
-#elif defined __aarch64__
+#undef idx64
+#define idx64 1
+//#define UNICODE
+#ifndef __WORDSIZE
+#define __WORDSIZE 64
+#endif
+#endif
+
+#if defined( _M_ARM64 )
 #define ARCH_STRING "arm64"
 #define Q3_LITTLE_ENDIAN
+#undef arm64
+#define arm64 1
+#ifndef __WORDSIZE
+#define __WORDSIZE 64
+#endif
 #endif
 
-#define DLL_EXT ".dylib"
+#else // !defined _WIN32
 
-#endif
+// common unix platforms parameters
 
-//================================================================= LINUX ===
+#define Q_NEWLINE "\n"
+#define PATH_SEP '/'
+#define PATH_SEP_FOREIGN '\\'
+#define DLL_EXT ".so"
 
-#if defined( __linux__ ) || defined( __FreeBSD_kernel__ ) || defined( __GNU__ )
+#if defined (__i386__)
+#define ARCH_STRING "i386"
+#define Q3_LITTLE_ENDIAN
+#undef id386
+#define id386 1
+#endif // __i386__
+
+#if defined (__x86_64__) || defined (__amd64__)
+#define ARCH_STRING "x86_64"
+#define Q3_LITTLE_ENDIAN
+#undef idx64
+#define idx64 1
+#endif // __x86_64__ || __amd64__
+
+#if defined (__arm__)
+#define ARCH_STRING "arm"
+#define Q3_LITTLE_ENDIAN
+#undef arm32
+#define arm32 1
+#endif // __arm__
+
+#if defined (__aarch64__)
+#define ARCH_STRING "aarch64"
+#define Q3_LITTLE_ENDIAN
+#undef arm64
+#define arm64 1
+#endif // __arm64__
+
+#if defined (__PPC64__)
+#if defined (__LITTLE_ENDIAN__)
+#define ARCH_STRING "ppc64le"
+#define Q3_LITTLE_ENDIAN
+#else
+#define ARCH_STRING "ppc64"
+#define Q3_BIG_ENDIAN
+#endif // !__LITTLE_ENDIAN__
+#endif // __PPC64__
+
+#endif // !_WIN32
+
+// ============================== Linux ====================================
+
+#ifdef __linux__
 
 #include <endian.h>
 
-#if defined( __linux__ )
 #define OS_STRING "linux"
-#elif defined( __FreeBSD_kernel__ )
-#define OS_STRING "kFreeBSD"
-#else
-#define OS_STRING "GNU"
-#endif
-
 #define ID_INLINE inline
 
-#define PATH_SEP '/'
+#endif // __linux___
 
-#if defined( __x86_64__ ) || defined( __amd64__ )
-#define ARCH_STRING "x86_64"
-#define HAVE_VM_COMPILED
-#elif defined( __i386__ )
-#define ARCH_STRING "x86"
-#define HAVE_VM_COMPILED
-#elif defined( __aarch64__ )
-#define ARCH_STRING "arm64"
-#elif defined( __arm__ )
-#define ARCH_STRING "arm"
-#define HAVE_VM_COMPILED
-#elif defined( __powerpc64__ ) || defined( __ppc64__ )
-#define ARCH_STRING "ppc64"
-#define HAVE_VM_COMPILED
-#elif defined( __powerpc__ ) || defined( __ppc__ )
-#define ARCH_STRING "ppc"
-#define HAVE_VM_COMPILED
-#elif defined( __alpha__ )
-#define ARCH_STRING "alpha"
-#endif
+// =============================== BSD =====================================
 
-#if defined __x86_64__
-#undef idx64
-#define idx64 1
-#endif
-
-#if __FLOAT_WORD_ORDER == __BIG_ENDIAN
-#define Q3_BIG_ENDIAN
-#else
-#define Q3_LITTLE_ENDIAN
-#endif
-
-#define DLL_EXT ".so"
-
-#endif
-
-//=================================================================== BSD ===
-
-#if defined( __FreeBSD__ ) || defined( __OpenBSD__ ) || defined( __NetBSD__ )
+#if defined (__FreeBSD__) || defined (__NetBSD__) || defined (__OpenBSD__)
 
 #include <sys/types.h>
 #include <machine/endian.h>
 
-#ifndef __BSD__
-#define __BSD__
-#endif
 
-#if defined( __FreeBSD__ )
+#if defined (__FreeBSD__)
 #define OS_STRING "freebsd"
-#elif defined( __OpenBSD__ )
-#define OS_STRING "openbsd"
-#elif defined( __NetBSD__ )
+#elif defined (__NetBSD__)
 #define OS_STRING "netbsd"
+#elif defined (__OpenBSD__)
+#define OS_STRING "openbsd"
 #endif
 
 #define ID_INLINE inline
-#define PATH_SEP '/'
-
-#ifdef __i386__
-#define ARCH_STRING "x86"
-#define HAVE_VM_COMPILED
-#elif defined __amd64__
-#undef idx64
-#define idx64 1
-#define ARCH_STRING "x86_64"
-#define HAVE_VM_COMPILED
-#elif defined __axp__
-#define ARCH_STRING "alpha"
-#endif
-
 #if BYTE_ORDER == BIG_ENDIAN
 #define Q3_BIG_ENDIAN
 #else
 #define Q3_LITTLE_ENDIAN
 #endif
 
-#define DLL_EXT ".so"
+#endif // __FreeBSD__ || __NetBSD__ || __OpenBSD__
 
-#endif
+// ================================ APPLE ===================================
 
-//================================================================= SUNOS ===
+#ifdef __APPLE__
 
-#ifdef __sun
-
-#include <stdint.h>
-#include <sys/byteorder.h>
-
-#define OS_STRING "solaris"
+#define OS_STRING "macos"
 #define ID_INLINE inline
-#define PATH_SEP '/'
+#undef DLL_EXT
+#define DLL_EXT ".dylib"
 
-#ifdef __i386__
-#define ARCH_STRING "x86"
-#define HAVE_VM_COMPILED
-#elif defined __sparc
-#define ARCH_STRING "sparc"
-#define HAVE_VM_COMPILED
-#endif
+#endif // __APPLE__
 
-#if defined( _BIG_ENDIAN )
-#define Q3_BIG_ENDIAN
-#elif defined( _LITTLE_ENDIAN )
-#define Q3_LITTLE_ENDIAN
-#endif
-
-#define DLL_EXT ".so"
-
-#endif
-
-//================================================================== IRIX ===
-
-#ifdef __sgi
-
-#define OS_STRING "irix"
-#define ID_INLINE __inline
-#define PATH_SEP '/'
-
-#define ARCH_STRING "mips"
-
-#define Q3_BIG_ENDIAN // SGI's MIPS are always big endian
-
-#define DLL_EXT ".so"
-
-#endif
-
-//============================================================ EMSCRIPTEN ===
-
-#ifdef __EMSCRIPTEN__
-
-#define OS_STRING "emscripten"
-#define ID_INLINE inline
-#define PATH_SEP '/'
-
-#define ARCH_STRING "wasm32"
-
-#define Q3_LITTLE_ENDIAN
-
-#define DLL_EXT ".wasm"
-
-#endif
-
-//================================================================== Q3VM ===
+// ================================ Q3VM ===================================
 
 #ifdef Q3_VM
 
 #define OS_STRING "q3vm"
 #define ID_INLINE
-#define PATH_SEP '/'
 
 #define ARCH_STRING "bytecode"
+#define Q3_LITTLE_ENDIAN
 
+#undef DLL_EXT
 #define DLL_EXT ".qvm"
 
 #endif
 
-//===========================================================================
+// =========================================================================
 
-// Catch missing defines in above blocks
-
-#ifndef OS_STRING
+//catch missing defines in above blocks
+#if !defined( OS_STRING )
 #error "Operating system not supported"
 #endif
 
-#ifndef ARCH_STRING
-// ARCH_STRING is (mostly) only used for informational purposes, so we allow
-// it to be undefined so that more diverse architectures may be compiled
-#define ARCH_STRING "unknown"
+#if !defined( ARCH_STRING )
+#error "Architecture not supported"
 #endif
 
 #ifndef ID_INLINE
@@ -362,59 +223,62 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #error "PATH_SEP not defined"
 #endif
 
+#ifndef PATH_SEP_FOREIGN
+#error "PATH_SEP_FOREIGN not defined"
+#endif
+
 #ifndef DLL_EXT
 #error "DLL_EXT not defined"
 #endif
 
-//endianness
-void CopyShortSwap( void *dest, void *src );
-void CopyLongSwap( void *dest, void *src );
-short ShortSwap( short l );
-int LongSwap( int l );
-float FloatSwap( const float *f );
+// Endianess
 
 #if defined( Q3_BIG_ENDIAN ) && defined( Q3_LITTLE_ENDIAN )
+
 #error "Endianness defined as both big and little"
+
 #elif defined( Q3_BIG_ENDIAN )
 
-#define CopyLittleShort( dest, src ) CopyShortSwap( dest, src )
-#define CopyLittleLong( dest, src ) CopyLongSwap( dest, src )
-#define LittleShort( x ) ShortSwap( x )
-#define LittleLong( x ) LongSwap( x )
-#define LittleFloat( x ) FloatSwap( &x )
+#define CopyLittleShort(dest, src) CopyShortSwap(dest, src)
+#define CopyLittleLong(dest, src) CopyLongSwap(dest, src)
+#define LittleShort(x) ShortSwap(x)
+#define LittleLong(x) LongSwap(x)
+#define LittleFloat(x) FloatSwap(&x)
 #define BigShort
 #define BigLong
 #define BigFloat
 
 #elif defined( Q3_LITTLE_ENDIAN )
 
-#define CopyLittleShort( dest, src ) Com_Memcpy( dest, src, 2 )
-#define CopyLittleLong( dest, src ) Com_Memcpy( dest, src, 4 )
+#define CopyLittleShort(dest, src) Com_Memcpy(dest, src, 2)
+#define CopyLittleLong(dest, src) Com_Memcpy(dest, src, 4)
 #define LittleShort
 #define LittleLong
 #define LittleFloat
-#define BigShort( x ) ShortSwap( x )
-#define BigLong( x ) LongSwap( x )
-#define BigFloat( x ) FloatSwap( &x )
-
-#elif defined( Q3_VM )
-
-#define LittleShort
-#define LittleLong
-#define LittleFloat
-#define BigShort
-#define BigLong
-#define BigFloat
+#define BigShort(x) ShortSwap(x)
+#define BigLong(x) LongSwap(x)
+#define BigFloat(x) FloatSwap(&x)
 
 #else
+
 #error "Endianness not defined"
+
 #endif
 
-//platform string
+// Platform string
+
 #ifdef NDEBUG
 #define PLATFORM_STRING OS_STRING "-" ARCH_STRING
 #else
 #define PLATFORM_STRING OS_STRING "-" ARCH_STRING "-debug"
 #endif
 
+#if idx64
+#ifdef _MSC_VER
+#define _MSC_SSE2
+#else
+#define _GCC_SSE2
 #endif
+#endif // idx64
+
+#endif // __Q_PLATFORM_H

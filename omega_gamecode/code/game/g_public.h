@@ -48,11 +48,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define SVF_NOTSINGLECLIENT 0x00000800    /* send entity to everyone but one client
 	                                         (entityShared_t->singleClient) */
 
+#define SVF_SELF_PORTAL2 0x00020000 // merge a second pvs at entity->r.s.origin2 into snapshots
+
 //===============================================================
 
 typedef struct {
-	entityState_t unused; // apparently this field was put here accidentally
-	                      //  (and is kept only for compatibility, as a struct pad)
+	entityState_t s; // communicated by server to clients
 
 	qboolean linked; // qfalse if not in any good cluster
 	int linkcount;
@@ -74,15 +75,15 @@ typedef struct {
 	// currentOrigin will be used for all collision detection and world linking.
 	// it will not necessarily be the same as the trajectory evaluation for the current
 	// time, because each entity must be moved one at a time after time is advanced
-	// to avoid simultanious collision issues
+	// to avoid simultaneous collision issues
 	vec3_t currentOrigin;
 	vec3_t currentAngles;
 
 	// when a trace call is made and passEntityNum != ENTITYNUM_NONE,
 	// an ent will be excluded from testing if:
 	// ent->s.number == passEntityNum	(don't interact with self)
-	// ent->r.ownerNum == passEntityNum	(don't interact with your own missiles)
-	// entity[ent->r.ownerNum].r.ownerNum == passEntityNum	(don't interact with other missiles from owner)
+	// ent->s.ownerNum = passEntityNum	(don't interact with your own missiles)
+	// entity[ent->s.ownerNum].ownerNum = passEntityNum	(don't interact with other missiles from owner)
 	int ownerNum;
 } entityShared_t;
 
@@ -143,7 +144,7 @@ typedef enum {
 	G_DROP_CLIENT, // ( int clientNum, const char *reason );
 	// kick a client off the server with a message
 
-	G_SEND_SERVER_COMMAND, // ( int clientNum, const char *fmt, ... );
+	G_SEND_SERVER_COMMAND, // ( int clientNum, const char *text );
 	// reliably sends a command string to be interpreted by the given
 	// client.  If clientNum is -1, it will be sent to all clients
 
@@ -221,6 +222,14 @@ typedef enum {
 
 	// 1.32
 	G_FS_SEEK,
+
+	G_MATRIXMULTIPLY = 107,
+	G_ANGLEVECTORS,
+	G_PERPENDICULARVECTOR,
+	G_FLOOR,
+	G_CEIL,
+	G_TESTPRINTINT,
+	G_TESTPRINTFLOAT,
 
 	BOTLIB_SETUP = 200, // ( void );
 	BOTLIB_SHUTDOWN,    // ( void );
@@ -378,7 +387,11 @@ typedef enum {
 	BOTLIB_PC_LOAD_SOURCE,
 	BOTLIB_PC_FREE_SOURCE,
 	BOTLIB_PC_READ_TOKEN,
-	BOTLIB_PC_SOURCE_FILE_AND_LINE
+	BOTLIB_PC_SOURCE_FILE_AND_LINE,
+
+	// engine extensions
+	G_CVAR_SETDESCRIPTION,
+	G_TRAP_GETVALUE = 700
 
 } gameImport_t;
 
@@ -391,7 +404,7 @@ typedef enum {
 	// The game should call G_GET_ENTITY_TOKEN to parse through all the
 	// entity configuration text and spawn gentities.
 
-	GAME_SHUTDOWN, // (void);
+	GAME_SHUTDOWN, // ( int restart );
 
 	GAME_CLIENT_CONNECT, // ( int clientNum, qboolean firstTime, qboolean isBot );
 	// return NULL if the client is allowed to connect, otherwise return
@@ -415,5 +428,7 @@ typedef enum {
 	// The game can issue trap_argc() / trap_argv() commands to get the command
 	// and parameters.  Return qfalse if the game doesn't recognize it as a command.
 
-	BOTAI_START_FRAME // ( int time );
+	BOTAI_START_FRAME, // ( int time );
+
+	GAME_EXPORT_LAST
 } gameExport_t;
