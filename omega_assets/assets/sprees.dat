@@ -1,24 +1,24 @@
 [kspree]
 level = 1
 printpos = 2
-message = [n] ^7is on a ^1killing spree ^7with [k] kills!
+message = [n] ^7is on a ^ekilling spree ^7with [k] kills!
 
 [kspree]
 level = 2
 printpos = 2
-message = [n] ^7is on a ^1killing frenzy ^7with [k] kills!
+message = [n] ^7is on a ^dkilling frenzy ^7with [k] kills!
 
 [kspree]
 level = 3
 printpos = 2
-message = [n] ^7is on a ^1running riot ^7with [k] kills!
+message = [n] ^7is on a ^cRUNNING RIOT ^7with [k] kills!
 
 [kspree]
 level = 4
 printpos = 2
-message = [n] ^7is on a ^1rampage ^7with [k] kills!
+message = [n] ^7is on a ^bRAMPAGE ^7with [k] kills!
 
 [kspree]
 level = 5
 printpos = 2
-message = [n] ^7is a ^1NIGHTMARE ^7with [k] kills!
+message = [n] ^7is a ^aNIGHTMARE ^7with [k] kills!

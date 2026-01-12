@@ -657,7 +657,7 @@ static void UI_DrawString2( int x, int y, const char *str, vec4_t color, int cha
 	while ( *s ) {
 		if ( Q_IsColorString( s ) ) {
 			if ( !forceColor ) {
-				memcpy( tempcolor, g_color_table[ColorIndex( s[1] )], sizeof( tempcolor ) );
+				memcpy( tempcolor, g_color_table[ColorIndexFromChar( s[1] )], sizeof( tempcolor ) );
 				tempcolor[3] = color[3];
 				trap_R_SetColor( tempcolor );
 			}

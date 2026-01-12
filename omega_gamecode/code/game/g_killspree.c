@@ -304,7 +304,7 @@ void G_RunStreakLogic( gentity_t *attacker, gentity_t *victim ) {
 			if ( it_ent->inuse ) {
 				G_FreeEntity( it_ent );
 			}
-			G_Printf( "%s ^7has become a ^2Juggernaut^7 with %i kills!\n", attacker->client->pers.netname, attacker->client->pers.killstreak );
+			G_Printf( "%s ^7has become a ^gJUGGERNAUT^7 with %i kills!\n", attacker->client->pers.netname, attacker->client->pers.killstreak );
 		}
 	}
 }

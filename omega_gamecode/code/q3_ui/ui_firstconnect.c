@@ -117,7 +117,7 @@ static void PlayerSettings_DrawName2( void *self ) {
 	x = basex;
 	while ( ( c = *txt ) != 0 ) {
 		if ( !focus && Q_IsColorString( txt ) ) {
-			n = ColorIndex( *( txt + 1 ) );
+			n = ColorIndexFromChar( *( txt + 1 ) );
 			if ( n == 0 ) {
 				n = 7;
 			}
