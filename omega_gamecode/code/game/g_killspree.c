@@ -55,7 +55,7 @@ qboolean G_ReadAltKillSettings( gentity_t *ent, int skiparg ) {
 	qboolean kspree_read;
 	qboolean dspree_read;
 	qboolean mkill_read;
-	char *cnf, *cnf2;
+	const char *cnf, *cnf2;
 	char *t;
 
 	//Let's clear out any existing killing sprees/death sprees. YAYY BG_FREE!!!!!

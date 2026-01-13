@@ -615,8 +615,8 @@ void SanitizeString( char *in, char *out );
 // KK-OAX Added this for common file stuff between Admin and Sprees.
 // g_fileops.c
 //
-void readFile_int( char **cnf, int *v );
-void readFile_string( char **cnf, char *s, int size );
+void readFile_int( const char **cnf, int *v );
+void readFile_string( const char **cnf, char *s, int size );
 void writeFile_int( int v, fileHandle_t f );
 void writeFile_string( char *s, fileHandle_t f );
 

@@ -241,7 +241,7 @@ void CG_DrawBigString( int x, int y, const char *s, float alpha ) {
 CG_DrawBigStringColor
 ===============
 */
-void CG_DrawBigStringColor( int x, int y, const char *s, vec4_t color ) {
+void CG_DrawBigStringColor( int x, int y, const char *s, const vec4_t color ) {
 	CG_DrawStringExt( x, y, s, color, qtrue, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 }
 

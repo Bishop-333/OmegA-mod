@@ -662,7 +662,7 @@ CG_DrawSpeedMeter
 ================
 */
 static float CG_DrawSpeedMeter( float y ) {
-	char *s;
+	const char *s;
 	int w;
 	vec_t *vel;
 	int speed;
@@ -697,7 +697,7 @@ CG_DrawSnapshot
 ==================
 */
 static float CG_DrawSnapshot( float y ) {
-	char *s;
+	const char *s;
 	int w;
 
 	s = va( "time:%i snap:%i cmd:%i", cg.snap->serverTime,
@@ -716,7 +716,7 @@ CG_DrawFPS
 */
 #define FPS_FRAMES 4
 static float CG_DrawFPS( float y ) {
-	char *s;
+	const char *s;
 	int w;
 	static int previousTimes[FPS_FRAMES];
 	static int index;
@@ -764,7 +764,7 @@ CG_DrawPossessionString
 */
 static float CG_DrawPossessionString( float y ) {
 	vec4_t *color;
-	char *line;
+	const char *line;
 	int timeUntilWon;
 	int i;
 	int w;
@@ -814,7 +814,7 @@ CG_DrawTimer
 =================
 */
 static float CG_DrawTimer( int y ) {
-	char *s;
+	const char *s;
 	int mins, seconds, tens;
 	int msec;
 	int timerX, timerY, timerW, timerH;
@@ -877,7 +877,7 @@ CG_DrawLMSmode
 =================
 */
 static float CG_DrawLMSmode( float y ) {
-	char *s;
+	const char *s;
 	int w;
 
 	if ( cgs.lms_mode == 0 ) {
@@ -903,7 +903,7 @@ CG_DrawCTFoneway
 =================
 */
 static float CG_DrawCTFoneway( float y ) {
-	char *s;
+	const char *s;
 	int w;
 	vec4_t color;
 
@@ -936,7 +936,7 @@ CG_DrawDomStatus
 */
 static float CG_DrawDomStatus( float y ) {
 	int i, w;
-	char *s;
+	const char *s;
 	vec4_t color;
 
 	for ( i = 0; i < cgs.domination_points_count; i++ ) {
@@ -967,7 +967,7 @@ CG_DrawEliminationTimer
 =================
 */
 static float CG_DrawEliminationTimer( float y ) {
-	char *s;
+	const char *s;
 	int w;
 	int mins, seconds, tens, sec;
 	int msec;
@@ -2330,7 +2330,7 @@ CG_DrawCenter1FctfString
 static void CG_DrawCenter1FctfString( void ) {
 	int x, y, w;
 	float *color;
-	char *line;
+	const char *line;
 	int status;
 
 	if ( cgs.gametype != GT_1FCTF )
@@ -2373,7 +2373,7 @@ CG_DrawCenterDDString
 static void CG_DrawCenterDDString( void ) {
 	int x, y, w;
 	float *color;
-	char *line;
+	const char *line;
 	int statusA, statusB;
 	int sec;
 	static int lastDDSec = -100;
@@ -2914,7 +2914,7 @@ CG_DrawVote
 =================
 */
 static void CG_DrawVote( void ) {
-	char *s;
+	const char *s;
 	int sec;
 
 	if ( !cgs.voteTime ) {
@@ -2941,7 +2941,7 @@ CG_DrawTeamVote
 =================
 */
 static void CG_DrawTeamVote( void ) {
-	char *s;
+	const char *s;
 	int sec, cs_offset;
 
 	if ( cgs.clientinfo[cg.clientNum].team == TEAM_RED )
@@ -2976,7 +2976,7 @@ CG_DrawScoreboard
 =================
 */
 static qboolean CG_DrawScoreboard( void ) {
-	char *s;
+	const char *s;
 	int w;
 	if ( cg.respawnTime && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && ( cgs.gametype < GT_ELIMINATION || cgs.gametype > GT_LMS ) ) {
 		if ( cg.respawnTime > cg.time ) {
@@ -3125,7 +3125,7 @@ CG_DrawProxWarning
 =================
 */
 static void CG_DrawProxWarning( void ) {
-	char s[32];
+	char *s;
 	int w;
 	static int proxTime;
 	static int proxCounter;

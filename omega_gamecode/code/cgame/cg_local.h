@@ -1499,7 +1499,7 @@ void CG_DrawString( float x, float y, const char *string, float charWidth, float
 
 void CG_DrawStringExt( int x, int y, const char *string, const float *setColor, qboolean forceColor, qboolean shadow, int charWidth, int charHeight, int maxChars );
 void CG_DrawBigString( int x, int y, const char *s, float alpha );
-void CG_DrawBigStringColor( int x, int y, const char *s, vec4_t color );
+void CG_DrawBigStringColor( int x, int y, const char *s, const vec4_t color );
 void CG_DrawMediumString( int x, int y, const char *s, float alpha );
 void CG_DrawMediumStringColor( int x, int y, const char *s, vec4_t color );
 void CG_DrawSmallString( int x, int y, const char *s, float alpha );

@@ -205,8 +205,8 @@ typedef enum { qfalse = 0, qtrue } qboolean;
 
 typedef union floatint_u
 {
-	int32_t i;
-	uint32_t u;
+	int i;
+	unsigned int u;
 	float f;
 	byte b[4];
 }
@@ -214,7 +214,7 @@ floatint_t;
 
 typedef union {
 	byte rgba[4];
-	uint32_t u32;
+	unsigned int u32;
 } color4ub_t;
 
 

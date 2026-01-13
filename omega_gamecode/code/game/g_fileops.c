@@ -31,7 +31,7 @@ readFile_int
 This parses an integer for the "tag" specified (cnf)
 ================
 */
-void readFile_int( char **cnf, int *v ) {
+void readFile_int( const char **cnf, int *v ) {
 	char *t;
 
 	t = COM_ParseExt( cnf, qfalse );

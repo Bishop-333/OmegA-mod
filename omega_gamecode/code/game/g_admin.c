@@ -2962,7 +2962,7 @@ qboolean G_admin_shuffle( gentity_t *ent, int skipargs ) {
  that it prints the message to the server console if ent is not defined.
 ================
 */
-void G_admin_print( gentity_t *ent, char *m ) {
+void G_admin_print( gentity_t *ent, const char *m ) {
 	if ( ent )
 		trap_SendServerCommand( ent - level.gentities, va( "print \"%s\"", m ) );
 	else {
@@ -2983,7 +2983,7 @@ void G_admin_buffer_end( gentity_t *ent ) {
 	ADMP( g_bfb );
 }
 
-void G_admin_buffer_print( gentity_t *ent, char *m ) {
+void G_admin_buffer_print( gentity_t *ent, const char *m ) {
 	// 1022 - strlen("print 64 \"\"") - 1
 	if ( strlen( m ) + strlen( g_bfb ) >= 1009 ) {
 		ADMP( g_bfb );
