@@ -256,8 +256,8 @@ typedef struct {
 	menulist_s ratio;
 	menulist_s mode;
 	menulist_s fs;
-	menulist_s flares;
 	menulist_s fbo;
+	menulist_s flares;
 	menulist_s bloom;
 	menulist_s dynamiclights;
 	menulist_s drawfps;
@@ -278,8 +278,8 @@ typedef struct
 	qboolean desktop;
 	int mode;
 	qboolean fullscreen;
-	qboolean flares;
 	qboolean fbo;
+	qboolean flares;
 	qboolean bloom;
 	qboolean dynamiclights;
 	qboolean drawfps;
@@ -434,8 +434,8 @@ static void GraphicsOptions_GetInitialVideo( void ) {
 	s_ivo.desktop = s_graphicsoptions.desktop.curvalue;
 	s_ivo.mode = s_graphicsoptions.mode.curvalue;
 	s_ivo.fullscreen = s_graphicsoptions.fs.curvalue;
-	s_ivo.flares = s_graphicsoptions.flares.curvalue;
 	s_ivo.fbo = s_graphicsoptions.fbo.curvalue;
+	s_ivo.flares = s_graphicsoptions.flares.curvalue;
 	s_ivo.bloom = s_graphicsoptions.bloom.curvalue;
 	s_ivo.dynamiclights = s_graphicsoptions.dynamiclights.curvalue;
 	s_ivo.drawfps = s_graphicsoptions.drawfps.curvalue;
@@ -509,10 +509,10 @@ static void GraphicsOptions_UpdateMenuItems( void ) {
 	if ( s_ivo.fullscreen != s_graphicsoptions.fs.curvalue ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
-	if ( s_ivo.flares != s_graphicsoptions.flares.curvalue ) {
+	if ( s_ivo.fbo != s_graphicsoptions.fbo.curvalue ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
-	if ( s_ivo.fbo != s_graphicsoptions.fbo.curvalue ) {
+	if ( s_ivo.flares != s_graphicsoptions.flares.curvalue ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 	if ( s_ivo.bloom != s_graphicsoptions.bloom.curvalue ) {
@@ -585,8 +585,8 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification ) {
 	trap_Cvar_SetValue( "r_colorbits", 0 );
 	trap_Cvar_SetValue( "r_depthbits", 0 );
 	trap_Cvar_SetValue( "r_stencilbits", 0 );
-	trap_Cvar_SetValue( "r_flares", s_graphicsoptions.flares.curvalue );
 	trap_Cvar_SetValue( "r_fbo", s_graphicsoptions.fbo.curvalue );
+	trap_Cvar_SetValue( "r_flares", s_graphicsoptions.flares.curvalue );
 	trap_Cvar_SetValue( "r_bloom", s_graphicsoptions.bloom.curvalue );
 	trap_Cvar_SetValue( "r_dynamiclight", s_graphicsoptions.dynamiclights.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
@@ -744,8 +744,8 @@ static void GraphicsOptions_SetMenuItems( void ) {
 	} else {
 		s_graphicsoptions.desktop.curvalue = 0;
 	}
-	s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue( "r_flares" );
 	s_graphicsoptions.fbo.curvalue = trap_Cvar_VariableValue( "r_fbo" );
+	s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue( "r_flares" );
 	s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue( "r_bloom" );
 	s_graphicsoptions.dynamiclights.curvalue = trap_Cvar_VariableValue( "r_dynamiclight" );
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue( "cg_drawFPS" );
@@ -903,7 +903,7 @@ void GraphicsOptions_MenuInit( void ) {
 	y += BIGCHAR_HEIGHT + 2;
 
 	s_graphicsoptions.desktop.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.desktop.generic.name = "Use Desktop Resolution:";
+	s_graphicsoptions.desktop.generic.name = "Native Resolution:";
 	s_graphicsoptions.desktop.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.desktop.generic.x = 400;
 	s_graphicsoptions.desktop.generic.y = y;
@@ -940,15 +940,6 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.fs.itemnames = enabled_names;
 	y += BIGCHAR_HEIGHT + 2;
 
-	// references/modifies "r_flares"
-	s_graphicsoptions.flares.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.flares.generic.name = "Flares:";
-	s_graphicsoptions.flares.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.flares.generic.x = 400;
-	s_graphicsoptions.flares.generic.y = y;
-	s_graphicsoptions.flares.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
-
 	// references/modifies "r_fbo"
 	if ( ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) ) {
 		s_graphicsoptions.fbo.generic.type = MTYPE_SPINCONTROL;
@@ -959,6 +950,15 @@ void GraphicsOptions_MenuInit( void ) {
 		s_graphicsoptions.fbo.itemnames = enabled_names;
 		y += BIGCHAR_HEIGHT + 2;
 	}
+
+	// references/modifies "r_flares"
+	s_graphicsoptions.flares.generic.type = MTYPE_SPINCONTROL;
+	s_graphicsoptions.flares.generic.name = "Flares:";
+	s_graphicsoptions.flares.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_graphicsoptions.flares.generic.x = 400;
+	s_graphicsoptions.flares.generic.y = y;
+	s_graphicsoptions.flares.itemnames = enabled_names;
+	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_bloom"
 	s_graphicsoptions.bloom.generic.type = MTYPE_SPINCONTROL;
@@ -1081,10 +1081,10 @@ void GraphicsOptions_MenuInit( void ) {
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.ratio );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.mode );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.fs );
-	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.flares );
 	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
 		Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.fbo );
 	}
+	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.flares );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.bloom );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.dynamiclights );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.drawfps );
