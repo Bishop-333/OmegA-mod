@@ -857,19 +857,19 @@ default values.
 ==========================================================
 */
 
-#define CVAR_ARCHIVE 0x0001      // set to cause it to be saved to vars.rc
-                                 // used for system variables, not for player
-                                 // specific configurations
+#define CVAR_ARCHIVE 0x0001      /* set to cause it to be saved to vars.rc
+	                                used for system variables, not for player
+	                                specific configurations */
 #define CVAR_USERINFO 0x0002     // sent to server on connect or change
 #define CVAR_SERVERINFO 0x0004   // sent in response to front end requests
 #define CVAR_SYSTEMINFO 0x0008   // these cvars will be duplicated on all clients
-#define CVAR_INIT 0x0010         // don't allow change from console at all,
-                                 // but can be set from the command line
-#define CVAR_LATCH 0x0020        // will only change when C code next does
-                                 // a Cvar_Get(), so it can't be changed
-                                 // without proper initialization.  modified
-                                 // will be set, even though the value hasn't
-                                 // changed yet
+#define CVAR_INIT 0x0010         /* don't allow change from console at all,
+	                                but can be set from the command line */
+#define CVAR_LATCH 0x0020        /* will only change when C code next does
+	                                a Cvar_Get(), so it can't be changed
+	                                without proper initialization.  modified
+	                                will be set, even though the value hasn't
+	                                changed yet */
 #define CVAR_ROM 0x0040          // display only, cannot be set by user at all
 #define CVAR_USER_CREATED 0x0080 // created by a set command
 #define CVAR_TEMP 0x0100         // can be set even when cheats are disabled, but is not archived
@@ -1174,11 +1174,11 @@ typedef struct playerState_s {
 #define BUTTON_TALK 2 // displays talk balloon and disables actions
 #define BUTTON_USE_HOLDABLE 4
 #define BUTTON_GESTURE 8
-#define BUTTON_WALKING 16 // walking can't just be inferred from MOVE_RUN    \
-	                      // because a key pressed late in the frame will    \
-	                      // only generate a small move value for that frame \
-	                      // walking will use different animations and       \
-	                      // won't generate footsteps
+#define BUTTON_WALKING 16 /* walking can't just be inferred from MOVE_RUN
+	                         because a key pressed late in the frame will
+	                         only generate a small move value for that frame
+	                         walking will use different animations and
+	                         won't generate footsteps */
 #define BUTTON_AFFIRMATIVE 32
 #define BUTTON_NEGATIVE 64
 
@@ -1189,8 +1189,8 @@ typedef struct playerState_s {
 
 #define BUTTON_ANY 2048 // any key whatsoever
 
-#define MOVE_RUN 120 // if forwardmove or rightmove are >= MOVE_RUN, \
-	                 // then BUTTON_WALKING should be set
+#define MOVE_RUN 120 /* if forwardmove or rightmove are >= MOVE_RUN,
+	                    then BUTTON_WALKING should be set */
 
 // usercmd_t is sent to the server each client frame
 typedef struct usercmd_s {
