@@ -407,7 +407,7 @@ typedef enum {
 #define PLAYEREVENT_HOLYSHIT 0x0004
 
 // entityState_t->event values
-// entity events are for effects that take place reletive
+// entity events are for effects that take place relative
 // to an existing entities origin. Very network efficient.
 
 // two bits at the top of the entityState->event field
@@ -519,7 +519,7 @@ typedef enum {
 
 	EV_DEBUG_LINE,
 	EV_STOPLOOPINGSOUND,
-	EV_TAUNT,
+	EV_TAUNT
 
 } entity_event_t;
 
@@ -583,8 +583,6 @@ typedef enum {
 	TORSO_FOLLOWME,
 	TORSO_AFFIRMATIVE,
 	TORSO_NEGATIVE,
-
-	//	BOTH_POSE,		// leilei - crappy ui posing code trying
 
 	MAX_ANIMATIONS,
 
