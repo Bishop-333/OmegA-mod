@@ -584,21 +584,6 @@ gitem_t bg_itemlist[] =
             /* precache */ "",
             /* sounds */ "sound/items/flight.wav" },
 
-        /*QUAKED item_juggernaut (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
-*/
-        {
-            "item_juggernaut",
-            "sound/world/growl3.wav",
-            { "models/powerups/instant/quad.md3",
-              NULL, NULL, NULL },
-            /* icon */ "icons/juggernaut",
-            /* pickup */ "Juggernaut",
-            30,
-            IT_POWERUP,
-            PW_JUGGERNAUT,
-            /* precache */ "",
-            /* sounds */ "" },
-
         /*QUAKED team_CTF_redflag (1 0 0) (-16 -16 -16) (16 16 16)
 Only in CTF games
 */
@@ -673,6 +658,21 @@ Only in CTF games
             60,
             IT_HOLDABLE,
             HI_INVULNERABILITY,
+            /* precache */ "",
+            /* sounds */ "" },
+
+        /*QUAKED item_juggernaut (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+        {
+            "item_juggernaut",
+            "sound/world/growl3.wav",
+            { "models/powerups/instant/quad.md3",
+              NULL, NULL, NULL },
+            /* icon */ "icons/juggernaut",
+            /* pickup */ "Juggernaut",
+            30,
+            IT_POWERUP,
+            PW_JUGGERNAUT,
             /* precache */ "",
             /* sounds */ "" },
 
