@@ -172,7 +172,7 @@ static void InGame_MenuDraw( void ) {
 	}
 
 	elapsed = uis.realtime - menuStartTime;
-	fadeDuration = 90.0f;
+	fadeDuration = 100.0f;
 	alpha = (float)elapsed / fadeDuration;
 
 	if ( alpha > 1.0f ) {

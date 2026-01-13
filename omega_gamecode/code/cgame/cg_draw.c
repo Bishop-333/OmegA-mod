@@ -1256,50 +1256,70 @@ static void CG_DrawFragMsgIcons( fragInfo_t fi, int i ) {
 	int x_offset;
 	int spacing;
 	int h;
+	int timeDelta;
 	vec4_t hcolor;
+	float alpha;
+	float decay, scale;
+	float iconX, iconY, iconW, iconH;
 
 	h = ( cgs.teamChatPos - cgs.teamLastChatPos ) * TINYCHAR_HEIGHT;
 
-	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0;
+	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0f;
 	trap_R_SetColor( hcolor );
 	spacing = 3;
 
+	timeDelta = cg.time - cgs.fragMsg[i].fragTime;
+
+	if ( timeDelta >= 0 && timeDelta < 250 ) {
+		alpha = (float)timeDelta / 250.0f;
+		decay = 1.0f - ( timeDelta / 250.0f );
+		scale = 1.0f + ( 3.0f * ( decay * decay ) );
+	} else if ( timeDelta > ( FRAGMSG_FADETIME - 250 ) ) {
+		alpha = ( (float)( FRAGMSG_FADETIME - timeDelta ) ) / 250.0f;
+		scale = ( (float)( FRAGMSG_FADETIME - timeDelta ) ) / 250.0f;
+	} else {
+		alpha = 1.0f;
+		scale = 1.0f;
+	}
+
 	if ( fi.attackerName[0] != '\0' ) {
 		if ( fi.attackerTeam == TEAM_RED ) {
-			CG_DrawStringExt( FRAGMSG_X, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-			                  fi.attackerName, colorCornellRed, qtrue, qfalse,
-			                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+			VectorCopy( colorCornellRed, hcolor );
 		} else if ( fi.attackerTeam == TEAM_BLUE ) {
-			CG_DrawStringExt( FRAGMSG_X, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-			                  fi.attackerName, colorRoyalBlue, qtrue, qfalse,
-			                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+			VectorCopy( colorRoyalBlue, hcolor );
 		} else {
-			CG_DrawStringExt( FRAGMSG_X, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-			                  fi.attackerName, hcolor, qfalse, qfalse,
-			                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+			VectorCopy( colorWhite, hcolor );
 		}
+		hcolor[3] = alpha;
+		CG_DrawStringExt( FRAGMSG_X, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
+		                  fi.attackerName, hcolor, qtrue, qfalse,
+		                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 		x_offset = CG_DrawStrlen( fi.attackerName ) * TINYCHAR_WIDTH + spacing;
-	} else
+	} else {
 		x_offset = 0;
+	}
 
-	CG_DrawPic( FRAGMSG_X + x_offset, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-	            TINYCHAR_WIDTH, TINYCHAR_HEIGHT, fi.causeShader );
+	iconW = TINYCHAR_WIDTH * scale;
+	iconH = TINYCHAR_HEIGHT * scale;
+	iconX = ( FRAGMSG_X + x_offset ) - ( ( iconW - TINYCHAR_WIDTH ) * 0.5f );
+	iconY = ( FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h ) - ( ( iconH - TINYCHAR_HEIGHT ) * 0.5f );
+
+	CG_DrawPic( iconX, iconY, iconW, iconH, fi.causeShader );
 
 	x_offset += TINYCHAR_WIDTH + spacing;
 
 	if ( fi.targetTeam == TEAM_RED ) {
-		CG_DrawStringExt( FRAGMSG_X + x_offset, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-		                  fi.targetName, colorCornellRed, qtrue, qfalse,
-		                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		VectorCopy( colorCornellRed, hcolor );
+
 	} else if ( fi.targetTeam == TEAM_BLUE ) {
-		CG_DrawStringExt( FRAGMSG_X + x_offset, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-		                  fi.targetName, colorRoyalBlue, qtrue, qfalse,
-		                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		VectorCopy( colorRoyalBlue, hcolor );
 	} else {
-		CG_DrawStringExt( FRAGMSG_X + x_offset, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-		                  fi.targetName, hcolor, qfalse, qfalse,
-		                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
+		VectorCopy( colorWhite, hcolor );
 	}
+	hcolor[3] = alpha;
+	CG_DrawStringExt( FRAGMSG_X + x_offset, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
+	                  fi.targetName, hcolor, qfalse, qfalse,
+	                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 
 	if ( fi.teamFrag ) {
 		x_offset += CG_DrawStrlen( fi.targetName ) * TINYCHAR_WIDTH + spacing;
