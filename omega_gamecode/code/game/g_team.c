@@ -1462,6 +1462,9 @@ int Pickup_Team( gentity_t *ent, gentity_t *other ) {
 	if ( g_gametype.integer == GT_HARVESTER ) {
 		// the only team items that can be picked up in harvester are the cubes
 		if ( ent->spawnflags != cl->sess.sessionTeam ) {
+			if ( ( cl->ps.generic1 & 0x0F ) >= 15 ) {
+				return 0;
+			}
 			cl->ps.generic1 += 1; //Skull pickedup
 			G_LogPrintf( "HARVESTER: %i %i %i %i %i: %s picked up a skull.\n",
 			             cl->ps.clientNum, cl->sess.sessionTeam, 3, -1, 1,
@@ -1471,7 +1474,7 @@ int Pickup_Team( gentity_t *ent, gentity_t *other ) {
 			             cl->ps.clientNum, cl->sess.sessionTeam, 2, -1, 1,
 			             cl->pers.netname );
 		}
-		G_FreeEntity( ent ); //Destory skull
+		G_FreeEntity( ent ); //Destroy skull
 		return 0;
 	}
 	if ( g_gametype.integer == GT_DOMINATION ) {
