@@ -1261,6 +1261,7 @@ static void CG_DrawFragMsgIcons( fragInfo_t fi, int i ) {
 	float alpha;
 	float decay, scale;
 	float iconX, iconY, iconW, iconH;
+	qboolean forceColor;
 
 	h = ( cgs.teamChatPos - cgs.teamLastChatPos ) * TINYCHAR_HEIGHT;
 
@@ -1285,14 +1286,17 @@ static void CG_DrawFragMsgIcons( fragInfo_t fi, int i ) {
 	if ( fi.attackerName[0] != '\0' ) {
 		if ( fi.attackerTeam == TEAM_RED ) {
 			VectorCopy( colorCornellRed, hcolor );
+			forceColor = qtrue;
 		} else if ( fi.attackerTeam == TEAM_BLUE ) {
 			VectorCopy( colorRoyalBlue, hcolor );
+			forceColor = qtrue;
 		} else {
 			VectorCopy( colorWhite, hcolor );
+			forceColor = qfalse;
 		}
 		hcolor[3] = alpha;
 		CG_DrawStringExt( FRAGMSG_X, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-		                  fi.attackerName, hcolor, qtrue, qfalse,
+		                  fi.attackerName, hcolor, forceColor, qfalse,
 		                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 		x_offset = CG_DrawStrlen( fi.attackerName ) * TINYCHAR_WIDTH + spacing;
 	} else {
@@ -1310,15 +1314,17 @@ static void CG_DrawFragMsgIcons( fragInfo_t fi, int i ) {
 
 	if ( fi.targetTeam == TEAM_RED ) {
 		VectorCopy( colorCornellRed, hcolor );
-
+		forceColor = qtrue;
 	} else if ( fi.targetTeam == TEAM_BLUE ) {
 		VectorCopy( colorRoyalBlue, hcolor );
+		forceColor = qtrue;
 	} else {
 		VectorCopy( colorWhite, hcolor );
+		forceColor = qfalse;
 	}
 	hcolor[3] = alpha;
 	CG_DrawStringExt( FRAGMSG_X + x_offset, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
-	                  fi.targetName, hcolor, qfalse, qfalse,
+	                  fi.targetName, hcolor, forceColor, qfalse,
 	                  TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 
 	if ( fi.teamFrag ) {
