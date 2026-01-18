@@ -769,6 +769,36 @@ gfx/2d/bigchars
 		rgbgen vertex
 	}
 }
+gfx/2d/bigchars16
+{
+	nopicmip
+	nomipmaps
+	{
+		map gfx/2d/bigchars16
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		rgbgen vertex
+	}
+}
+gfx/2d/bigchars32
+{
+	nopicmip
+	nomipmaps
+	{
+		map gfx/2d/bigchars32
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		rgbgen vertex
+	}
+}
+gfx/2d/bigchars64
+{
+	nopicmip
+	nomipmaps
+	{
+		map gfx/2d/bigchars64
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		rgbgen vertex
+	}
+}
 gfx/2d/select
 {
 	nopicmip
