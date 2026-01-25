@@ -141,7 +141,7 @@ ifeq ($(PLATFORM),linux)
 
   SHLIBEXT=so
   SHLIBCFLAGS=-fPIC -fvisibility=hidden
-  SHLIBLDFLAGS=-shared $(LDFLAGS)
+  SHLIBLDFLAGS=-shared $(LDFLAGS) $(STRIP_FLAG)
 
   LIBS= -lm
 
@@ -193,7 +193,7 @@ ifdef MINGW
 
   SHLIBEXT=dll
   SHLIBCFLAGS=-fPIC -fvisibility=hidden
-  SHLIBLDFLAGS=-shared $(LDFLAGS)
+  SHLIBLDFLAGS=-shared $(LDFLAGS) $(STRIP_FLAG)
 
   LIBS= -lm
 
@@ -308,7 +308,7 @@ all: debug release
 
 debug:
 	@$(MAKE) targets B=$(BD) CFLAGS="$(CFLAGS) $(BASE_CFLAGS)" \
-	  OPTIMIZE="$(DEBUG_CFLAGS)" V=$(V)
+	  OPTIMIZE="$(DEBUG_CFLAGS)" V=$(V) NO_STRIP=1
 
 release:
 	@$(MAKE) targets B=$(BR) CFLAGS="$(CFLAGS) $(BASE_CFLAGS)" \
