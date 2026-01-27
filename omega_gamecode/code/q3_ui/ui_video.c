@@ -36,6 +36,9 @@ DRIVER INFORMATION MENU
 #define DRIVERINFO_FRAMER "menu/art_blueish/frame1_r"
 #define DRIVERINFO_BACK0 "menu/art_blueish/back_0"
 #define DRIVERINFO_BACK1 "menu/art_blueish/back_1"
+#define DRIVERINFO_ARROWS0 "menu/art_blueish/arrows_vert_0"
+#define DRIVERINFO_ARROWS_UP "menu/art_blueish/arrows_vert_top"
+#define DRIVERINFO_ARROWS_DOWN "menu/art_blueish/arrows_vert_bot"
 
 static char *driverinfo_artlist[] =
     {
@@ -43,9 +46,14 @@ static char *driverinfo_artlist[] =
         DRIVERINFO_FRAMER,
         DRIVERINFO_BACK0,
         DRIVERINFO_BACK1,
+        DRIVERINFO_ARROWS0,
+        DRIVERINFO_ARROWS_UP,
+        DRIVERINFO_ARROWS_DOWN,
         NULL,
 };
 
+#define ID_SCROLL_UP 98
+#define ID_SCROLL_DOWN 99
 #define ID_DRIVERINFOBACK 100
 
 typedef struct
@@ -55,9 +63,13 @@ typedef struct
 	menubitmap_s back;
 	menubitmap_s framel;
 	menubitmap_s framer;
-	char stringbuff[1024];
-	char *strings[64];
+	menubitmap_s arrows;
+	menubitmap_s up;
+	menubitmap_s down;
+	char stringbuff[4096];
+	char *strings[256];
 	int numstrings;
+	int row;
 } driverinfo_t;
 
 static driverinfo_t s_driverinfo;
@@ -72,6 +84,18 @@ static void DriverInfo_Event( void *ptr, int event ) {
 		return;
 
 	switch ( ( (menucommon_s *)ptr )->id ) {
+		case ID_SCROLL_UP:
+			if ( s_driverinfo.row > 0 ) {
+				s_driverinfo.row--;
+			}
+			break;
+
+		case ID_SCROLL_DOWN:
+			if ( s_driverinfo.row + 13 < s_driverinfo.numstrings / 2 ) {
+				s_driverinfo.row++;
+			}
+			break;
+
 		case ID_DRIVERINFOBACK:
 			UI_PopMenu();
 			break;
@@ -100,7 +124,7 @@ static void DriverInfo_MenuDraw( void ) {
 
 	// double column
 	y = 192 + 16;
-	for ( i = 0; i < s_driverinfo.numstrings / 2; i++ ) {
+	for ( i = s_driverinfo.row; i < s_driverinfo.row + 13; i++ ) {
 		UI_DrawString( 320 - 4, y, s_driverinfo.strings[i * 2], UI_RIGHT | UI_SMALLFONT, text_color_normal );
 		UI_DrawString( 320 + 4, y, s_driverinfo.strings[i * 2 + 1], UI_LEFT | UI_SMALLFONT, text_color_normal );
 		y += SMALLCHAR_HEIGHT;
@@ -108,6 +132,33 @@ static void DriverInfo_MenuDraw( void ) {
 
 	if ( s_driverinfo.numstrings & 1 )
 		UI_DrawString( 320, y, s_driverinfo.strings[s_driverinfo.numstrings - 1], UI_CENTER | UI_SMALLFONT, text_color_normal );
+}
+
+/*
+=================
+DriverInfo_MenuKey
+=================
+*/
+static sfxHandle_t DriverInfo_MenuKey( int key ) {
+	if ( key == K_MWHEELUP || key == K_UPARROW ) {
+		if ( s_driverinfo.row > 0 ) {
+			s_driverinfo.row--;
+			return menu_move_sound;
+		} else if ( key == K_UPARROW ) {
+			return menu_buzz_sound;
+		}
+	}
+
+	if ( key == K_MWHEELDOWN || key == K_DOWNARROW ) {
+		if ( s_driverinfo.row + 13 < s_driverinfo.numstrings / 2 ) {
+			s_driverinfo.row++;
+			return menu_move_sound;
+		} else if ( key == K_DOWNARROW ) {
+			return menu_buzz_sound;
+		}
+	}
+
+	return Menu_DefaultKey( &s_driverinfo.menu, key );
 }
 
 /*
@@ -143,6 +194,7 @@ static void UI_DriverInfo_Menu( void ) {
 
 	s_driverinfo.menu.fullscreen = qtrue;
 	s_driverinfo.menu.draw = DriverInfo_MenuDraw;
+	s_driverinfo.menu.key = DriverInfo_MenuKey;
 
 	s_driverinfo.banner.generic.type = MTYPE_BTEXT;
 	s_driverinfo.banner.generic.x = 320;
@@ -167,6 +219,35 @@ static void UI_DriverInfo_Menu( void ) {
 	s_driverinfo.framer.width = 256;
 	s_driverinfo.framer.height = 334;
 
+	s_driverinfo.arrows.generic.type = MTYPE_BITMAP;
+	s_driverinfo.arrows.generic.name = DRIVERINFO_ARROWS0;
+	s_driverinfo.arrows.generic.flags = QMF_LEFT_JUSTIFY | QMF_INACTIVE;
+	s_driverinfo.arrows.generic.callback = DriverInfo_Event;
+	s_driverinfo.arrows.generic.x = 512 + 48 + 48;
+	s_driverinfo.arrows.generic.y = 240 - 64 + 48;
+	s_driverinfo.arrows.width = 64;
+	s_driverinfo.arrows.height = 128;
+
+	s_driverinfo.up.generic.type = MTYPE_BITMAP;
+	s_driverinfo.up.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_MOUSEONLY;
+	s_driverinfo.up.generic.callback = DriverInfo_Event;
+	s_driverinfo.up.generic.id = ID_SCROLL_UP;
+	s_driverinfo.up.generic.x = 512 + 48 + 48;
+	s_driverinfo.up.generic.y = 240 - 64 + 48;
+	s_driverinfo.up.width = 64;
+	s_driverinfo.up.height = 64;
+	s_driverinfo.up.focuspic = DRIVERINFO_ARROWS_UP;
+
+	s_driverinfo.down.generic.type = MTYPE_BITMAP;
+	s_driverinfo.down.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_MOUSEONLY;
+	s_driverinfo.down.generic.callback = DriverInfo_Event;
+	s_driverinfo.down.generic.id = ID_SCROLL_DOWN;
+	s_driverinfo.down.generic.x = 512 + 48 + 48;
+	s_driverinfo.down.generic.y = 240 + 48;
+	s_driverinfo.down.width = 64;
+	s_driverinfo.down.height = 64;
+	s_driverinfo.down.focuspic = DRIVERINFO_ARROWS_DOWN;
+
 	s_driverinfo.back.generic.type = MTYPE_BITMAP;
 	s_driverinfo.back.generic.name = DRIVERINFO_BACK0;
 	s_driverinfo.back.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -182,11 +263,11 @@ static void UI_DriverInfo_Menu( void ) {
 	// https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=399
 	// NOTE: could have pushed the size of stringbuff, but the list is already out of the screen
 	// (no matter what your resolution)
-	Q_strncpyz( s_driverinfo.stringbuff, uis.glconfig.extensions_string, 1024 );
+	Q_strncpyz( s_driverinfo.stringbuff, uis.glconfig.extensions_string, 4096 );
 
 	// build null terminated extension strings
 	eptr = s_driverinfo.stringbuff;
-	while ( s_driverinfo.numstrings < 40 && *eptr ) {
+	while ( s_driverinfo.numstrings < 160 && *eptr ) {
 		while ( *eptr == ' ' )
 			*eptr++ = '\0';
 
@@ -201,7 +282,7 @@ static void UI_DriverInfo_Menu( void ) {
 	// safety length strings for display
 	for ( i = 0; i < s_driverinfo.numstrings; i++ ) {
 		len = strlen( s_driverinfo.strings[i] );
-		if ( len > 32 ) {
+		if ( len > 128 ) {
 			s_driverinfo.strings[i][len - 1] = '>';
 			s_driverinfo.strings[i][len] = '\0';
 		}
@@ -210,6 +291,9 @@ static void UI_DriverInfo_Menu( void ) {
 	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.banner );
 	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.framel );
 	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.framer );
+	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.arrows );
+	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.up );
+	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.down );
 	Menu_AddItem( &s_driverinfo.menu, &s_driverinfo.back );
 
 	UI_PushMenu( &s_driverinfo.menu );
