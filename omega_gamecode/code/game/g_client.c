@@ -1232,10 +1232,13 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	//Sago: Changed the message
 	//unlagged - backward reconciliation #5
 	// announce it
-	if ( g_delagHitscan.integer ) {
-		trap_SendServerCommand( clientNum, "print \"Full lag compensation is ON!\n\"" );
+	if ( g_delagProjectiles.integer > 0 ) {
+		trap_SendServerCommand( clientNum, va( "print \"Lag compensation: hitscan %s^7, projectiles ^2ON ^7(up to %ims)\n\"",
+		                                       g_delagHitscan.integer ? "^2ON^7" : "^1OFF^7",
+		                                       g_delagProjectiles.integer ) );
 	} else {
-		trap_SendServerCommand( clientNum, "print \"Full lag compensation is OFF!\n\"" );
+		trap_SendServerCommand( clientNum, va( "print \"Lag compensation: hitscan %s^7, projectiles ^1OFF\n\"",
+		                                       g_delagHitscan.integer ? "^2ON" : "^1OFF" ) );
 	}
 
 	//unlagged - backward reconciliation #5
