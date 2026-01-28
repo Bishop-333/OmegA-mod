@@ -1203,6 +1203,7 @@ extern vmCvar_t g_weaponArena;
 extern vmCvar_t pmove_aircontrol;
 extern vmCvar_t pmove_autohop;
 extern vmCvar_t pmove_doublejump;
+extern vmCvar_t pmove_overbounce;
 
 void trap_Printf( const char *fmt );
 void trap_Error( const char *text ) Q_NO_RETURN;

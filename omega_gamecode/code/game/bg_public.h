@@ -245,6 +245,7 @@ typedef struct {
 	int pmove_aircontrol;
 	int pmove_autohop;
 	int pmove_doublejump;
+	int pmove_overbounce;
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles
