@@ -292,8 +292,8 @@ static cvarTable_t cvarTable[] = {
 
     //OmegA
     { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
-    { &ui_saved_desktop, "ui_saved_desktop", "", CVAR_ROM },
-    { &ui_saved_maxfps, "ui_saved_maxfps", "", CVAR_ROM } };
+    { &ui_saved_desktop, "ui_saved_desktop", "", CVAR_ARCHIVE | CVAR_ROM },
+    { &ui_saved_maxfps, "ui_saved_maxfps", "", CVAR_ARCHIVE | CVAR_ROM } };
 
 // bk001129 - made static to avoid aliasing
 static int cvarTableSize = sizeof( cvarTable ) / sizeof( cvarTable[0] );

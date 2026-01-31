@@ -118,6 +118,12 @@ static void DisplayOptions_ApplyChanges( void *unused, int notification ) {
 	if ( notification != QM_ACTIVATED )
 		return;
 
+	if ( displayOptionsInfo.vsync.curvalue == 1 ) {
+		trap_Cvar_SetValue( "com_maxfps", 0 );
+	} else {
+		trap_Cvar_SetValue( "com_maxfps", trap_Cvar_VariableValue( "ui_saved_maxfps" ) );
+	}
+
 	trap_Cvar_SetValue( "r_hdr", displayOptionsInfo.hdr.curvalue );
 	trap_Cvar_SetValue( "r_swapInterval", displayOptionsInfo.vsync.curvalue );
 
@@ -169,10 +175,8 @@ static void UI_DisplayOptionsMenu_Event( void *ptr, int event ) {
 			if ( displayOptionsInfo.vsync.curvalue == 1 ) {
 				trap_Cvar_SetValue( "ui_saved_maxfps", (int)displayOptionsInfo.maxfps.curvalue );
 				displayOptionsInfo.maxfps.curvalue = displayOptionsInfo.maxfps.maxvalue;
-				trap_Cvar_SetValue( "com_maxfps", 0 );
 			} else {
 				displayOptionsInfo.maxfps.curvalue = trap_Cvar_VariableValue( "ui_saved_maxfps" );
-				trap_Cvar_SetValue( "com_maxfps", trap_Cvar_VariableValue( "ui_saved_maxfps" ) );
 			}
 			break;
 
