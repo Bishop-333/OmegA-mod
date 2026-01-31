@@ -132,6 +132,7 @@ extern vmCvar_t ui_browserHidePrivate;
 
 //OmegA
 extern vmCvar_t ui_mapvote_filter;
+extern vmCvar_t ui_saved_desktop;
 extern vmCvar_t ui_saved_maxfps;
 
 //

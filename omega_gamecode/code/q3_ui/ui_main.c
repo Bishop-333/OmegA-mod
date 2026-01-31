@@ -191,6 +191,7 @@ vmCvar_t ui_setupchecked;
 
 //OmegA
 vmCvar_t ui_mapvote_filter;
+vmCvar_t ui_saved_desktop;
 vmCvar_t ui_saved_maxfps;
 
 // bk001129 - made static to avoid aliasing.
@@ -291,6 +292,7 @@ static cvarTable_t cvarTable[] = {
 
     //OmegA
     { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
+    { &ui_saved_desktop, "ui_saved_desktop", "", CVAR_ROM },
     { &ui_saved_maxfps, "ui_saved_maxfps", "", CVAR_ROM } };
 
 // bk001129 - made static to avoid aliasing

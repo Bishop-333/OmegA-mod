@@ -315,13 +315,14 @@ GRAPHICS OPTIONS MENU
 #define GRAPHICSOPTIONS_ACCEPT1 "menu/art_blueish/accept_1"
 
 #define ID_BACK2 101
-#define ID_MODE 102
-#define ID_DRIVERINFO 103
-#define ID_GRAPHICS 104
-#define ID_DISPLAY 105
-#define ID_SOUND 106
-#define ID_NETWORK 107
-#define ID_RATIO 108
+#define ID_FULLSCREEN 102
+#define ID_MODE 103
+#define ID_DRIVERINFO 104
+#define ID_GRAPHICS 105
+#define ID_DISPLAY 106
+#define ID_SOUND 107
+#define ID_NETWORK 108
+#define ID_RATIO 109
 
 typedef struct {
 	menuframework_s menu;
@@ -361,7 +362,7 @@ typedef struct
 	int renderer;
 	qboolean desktop;
 	int mode;
-	qboolean fullscreen;
+	int fullscreen;
 	qboolean fbo;
 	qboolean flares;
 	qboolean bloom;
@@ -563,6 +564,12 @@ GraphicsOptions_UpdateMenuItems
 static void GraphicsOptions_UpdateMenuItems( void ) {
 	s_graphicsoptions.ratio.curvalue = resToRatio[s_graphicsoptions.mode.curvalue];
 
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 && s_graphicsoptions.fs.curvalue == 2 ) {
+		s_graphicsoptions.desktop.generic.flags |= QMF_GRAYED;
+	} else {
+		s_graphicsoptions.desktop.generic.flags &= ~QMF_GRAYED;
+	}
+
 	if ( s_graphicsoptions.desktop.curvalue == 1 ) {
 		s_graphicsoptions.ratio.generic.flags |= QMF_GRAYED;
 		s_graphicsoptions.mode.generic.flags |= QMF_GRAYED;
@@ -722,6 +729,15 @@ static void GraphicsOptions_Event( void *ptr, int event ) {
 			s_graphicsoptions.ratio.curvalue = resToRatio[s_graphicsoptions.mode.curvalue];
 			break;
 
+		case ID_FULLSCREEN:
+			if ( s_graphicsoptions.fs.curvalue == 2 ) {
+				trap_Cvar_SetValue( "ui_saved_desktop", s_graphicsoptions.desktop.curvalue );
+				s_graphicsoptions.desktop.curvalue = 1;
+			} else {
+				s_graphicsoptions.desktop.curvalue = trap_Cvar_VariableValue( "ui_saved_desktop" );
+			}
+			break;
+
 		case ID_DRIVERINFO:
 			UI_DriverInfo_Menu();
 			break;
@@ -823,7 +839,7 @@ static void GraphicsOptions_SetMenuItems( void ) {
 		memset( str, 0, sizeof( str ) );
 	}
 
-	if ( trap_Cvar_VariableValue( "r_mode" ) == -2 || strlen( str ) > 0 ) {
+	if ( trap_Cvar_VariableValue( "r_fullscreen" ) == 2 || !Q_stricmp( str, "-2" ) || ( str[0] == '\0' && trap_Cvar_VariableValue( "r_mode" ) == -2 ) ) {
 		s_graphicsoptions.desktop.curvalue = 1;
 	} else {
 		s_graphicsoptions.desktop.curvalue = 0;
@@ -859,6 +875,13 @@ void GraphicsOptions_MenuInit( void ) {
 	    {
 	        "OpenGL",
 	        "Vulkan",
+	        NULL };
+
+	static const char *fullscreen_names[] =
+	    {
+	        "Off",
+	        "On",
+	        "Borderless",
 	        NULL };
 
 	static const char *shadows_names[] =
@@ -1021,7 +1044,13 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.fs.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.fs.generic.x = 400;
 	s_graphicsoptions.fs.generic.y = y;
-	s_graphicsoptions.fs.itemnames = enabled_names;
+	if ( ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) ) {
+		s_graphicsoptions.fs.itemnames = fullscreen_names;
+		s_graphicsoptions.fs.generic.callback = GraphicsOptions_Event;
+		s_graphicsoptions.fs.generic.id = ID_FULLSCREEN;
+	} else {
+		s_graphicsoptions.fs.itemnames = enabled_names;
+	}
 	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_fbo"
