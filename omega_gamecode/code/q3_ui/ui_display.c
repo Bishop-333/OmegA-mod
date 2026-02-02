@@ -61,8 +61,8 @@ typedef struct {
 	menuslider_s brightness;
 	menuslider_s maxfps;
 
-	menulist_s hdr;
 	menulist_s vsync;
+	menulist_s hdr;
 
 	menubitmap_s apply;
 	menubitmap_s back;
@@ -70,8 +70,8 @@ typedef struct {
 
 typedef struct
 {
-	qboolean hdr;
 	qboolean vsync;
+	qboolean hdr;
 } InitialVideoOptions_s;
 
 static InitialVideoOptions_s s_ido;
@@ -83,8 +83,8 @@ DisplayOptions_GetInitialDisplay
 =================
 */
 static void DisplayOptions_GetInitialDisplay( void ) {
-	s_ido.hdr = displayOptionsInfo.hdr.curvalue;
 	s_ido.vsync = displayOptionsInfo.vsync.curvalue;
+	s_ido.hdr = displayOptionsInfo.hdr.curvalue;
 }
 
 /*
@@ -101,10 +101,10 @@ static void DisplayOptions_UpdateMenuItems( void ) {
 		displayOptionsInfo.maxfps.generic.flags &= ~QMF_GRAYED;
 	}
 
-	if ( s_ido.hdr != displayOptionsInfo.hdr.curvalue ) {
+	if ( s_ido.vsync != displayOptionsInfo.vsync.curvalue ) {
 		displayOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
-	if ( s_ido.vsync != displayOptionsInfo.vsync.curvalue ) {
+	if ( s_ido.hdr != displayOptionsInfo.hdr.curvalue ) {
 		displayOptionsInfo.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 }
@@ -124,8 +124,8 @@ static void DisplayOptions_ApplyChanges( void *unused, int notification ) {
 		trap_Cvar_SetValue( "com_maxfps", trap_Cvar_VariableValue( "ui_saved_maxfps" ) );
 	}
 
-	trap_Cvar_SetValue( "r_hdr", displayOptionsInfo.hdr.curvalue );
 	trap_Cvar_SetValue( "r_swapInterval", displayOptionsInfo.vsync.curvalue );
+	trap_Cvar_SetValue( "r_hdr", displayOptionsInfo.hdr.curvalue );
 
 	trap_Cmd_ExecuteText( EXEC_APPEND, "vid_restart\n" );
 }
@@ -231,8 +231,8 @@ DisplayOptions_SetMenuItems
 =================
 */
 static void DisplayOptions_SetMenuItems( void ) {
-	displayOptionsInfo.hdr.curvalue = trap_Cvar_VariableValue( "r_hdr" );
 	displayOptionsInfo.vsync.curvalue = trap_Cvar_VariableValue( "r_swapInterval" );
+	displayOptionsInfo.hdr.curvalue = trap_Cvar_VariableValue( "r_hdr" );
 }
 
 /*
@@ -346,14 +346,6 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.maxfps.maxvalue = 254;
 
 	y += BIGCHAR_HEIGHT + 2;
-	displayOptionsInfo.hdr.generic.type = MTYPE_SPINCONTROL;
-	displayOptionsInfo.hdr.generic.name = "HDR:";
-	displayOptionsInfo.hdr.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	displayOptionsInfo.hdr.generic.x = 400;
-	displayOptionsInfo.hdr.generic.y = y;
-	displayOptionsInfo.hdr.itemnames = enabled_names;
-
-	y += BIGCHAR_HEIGHT + 2;
 	displayOptionsInfo.vsync.generic.type = MTYPE_SPINCONTROL;
 	displayOptionsInfo.vsync.generic.name = "V-Sync:";
 	displayOptionsInfo.vsync.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -362,6 +354,14 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.vsync.generic.x = 400;
 	displayOptionsInfo.vsync.generic.y = y;
 	displayOptionsInfo.vsync.itemnames = enabled_names;
+
+	y += BIGCHAR_HEIGHT + 2;
+	displayOptionsInfo.hdr.generic.type = MTYPE_SPINCONTROL;
+	displayOptionsInfo.hdr.generic.name = "HDR:";
+	displayOptionsInfo.hdr.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	displayOptionsInfo.hdr.generic.x = 400;
+	displayOptionsInfo.hdr.generic.y = y;
+	displayOptionsInfo.hdr.itemnames = enabled_names;
 
 	displayOptionsInfo.back.generic.type = MTYPE_BITMAP;
 	displayOptionsInfo.back.generic.name = ART_BACK0;
@@ -395,10 +395,9 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.maxfps );
 	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.back );
 	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.apply );
-
+	Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.vsync );
 	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
 		Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.hdr );
-		Menu_AddItem( &displayOptionsInfo.menu, (void *)&displayOptionsInfo.vsync );
 	}
 
 	displayOptionsInfo.brightness.curvalue = trap_Cvar_VariableValue( "r_gamma" ) * 10;

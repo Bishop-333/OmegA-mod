@@ -321,16 +321,18 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.musicvolume.minvalue = 0;
 	soundOptionsInfo.musicvolume.maxvalue = 10;
 
-	y += BIGCHAR_HEIGHT + 2;
-	soundOptionsInfo.worldvolume.generic.type = MTYPE_SLIDER;
-	soundOptionsInfo.worldvolume.generic.name = "World Volume:";
-	soundOptionsInfo.worldvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
-	soundOptionsInfo.worldvolume.generic.callback = UI_SoundOptionsMenu_Event;
-	soundOptionsInfo.worldvolume.generic.id = ID_WORLDVOLUME;
-	soundOptionsInfo.worldvolume.generic.x = 400;
-	soundOptionsInfo.worldvolume.generic.y = y;
-	soundOptionsInfo.worldvolume.minvalue = 0;
-	soundOptionsInfo.worldvolume.maxvalue = 10;
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		y += BIGCHAR_HEIGHT + 2;
+		soundOptionsInfo.worldvolume.generic.type = MTYPE_SLIDER;
+		soundOptionsInfo.worldvolume.generic.name = "World Volume:";
+		soundOptionsInfo.worldvolume.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
+		soundOptionsInfo.worldvolume.generic.callback = UI_SoundOptionsMenu_Event;
+		soundOptionsInfo.worldvolume.generic.id = ID_WORLDVOLUME;
+		soundOptionsInfo.worldvolume.generic.x = 400;
+		soundOptionsInfo.worldvolume.generic.y = y;
+		soundOptionsInfo.worldvolume.minvalue = 0;
+		soundOptionsInfo.worldvolume.maxvalue = 10;
+	}
 
 	y += BIGCHAR_HEIGHT + 2;
 	soundOptionsInfo.quality.generic.type = MTYPE_SPINCONTROL;

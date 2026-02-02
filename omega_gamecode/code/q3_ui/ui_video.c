@@ -575,7 +575,7 @@ static void GraphicsOptions_UpdateMenuItems( void ) {
 		s_graphicsoptions.desktop.generic.flags &= ~QMF_GRAYED;
 	}
 
-	if ( s_graphicsoptions.fbo.curvalue == 0 ) {
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 && s_graphicsoptions.fbo.curvalue == 0 ) {
 		s_graphicsoptions.bloom.generic.flags |= QMF_GRAYED;
 		s_graphicsoptions.anti.generic.flags |= QMF_GRAYED;
 	} else {
@@ -837,7 +837,11 @@ static void GraphicsOptions_SetMenuItems( void ) {
 		s_graphicsoptions.desktop.curvalue = 0;
 	}
 
-	s_graphicsoptions.fs.curvalue = trap_Cvar_VariableValue( "r_fullscreen" );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		s_graphicsoptions.fs.curvalue = Com_Clamp( 0, 2, trap_Cvar_VariableValue( "r_fullscreen" ) );
+	} else {
+		s_graphicsoptions.fs.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "r_fullscreen" ) );
+	}
 	s_graphicsoptions.fbo.curvalue = trap_Cvar_VariableValue( "r_fbo" );
 	s_graphicsoptions.flares.curvalue = trap_Cvar_VariableValue( "r_flares" );
 	s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue( "r_bloom" );
