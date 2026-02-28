@@ -1209,6 +1209,7 @@ typedef struct {
 	//KK-OAX For storing whether or not the server has multikills enabled.
 	int altExcellent;
 
+	int chaos;
 	int easierPickup;
 	int startWhenReady;
 

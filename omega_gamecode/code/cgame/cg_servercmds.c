@@ -374,6 +374,7 @@ void CG_ParseServerinfo( void ) {
 	cgs.delagHitscan = atoi( Info_ValueForKey( info, "g_delagHitscan" ) );
 	//unlagged - server options
 
+	cgs.chaos = atoi( Info_ValueForKey( info, "g_chaos" ) );
 	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
 	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
 

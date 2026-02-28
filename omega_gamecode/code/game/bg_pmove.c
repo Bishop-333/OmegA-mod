@@ -1650,7 +1650,7 @@ static void PM_Weapon( void ) {
 			addTime = 800 - pm->chaos * 700;
 			break;
 		case WP_ROCKET_LAUNCHER:
-			addTime = 1600 - pm->rocketFireRate - pm->chaos * 800;
+			addTime = 1600 - pm->rocketFireRate - pm->chaos * 700;
 			break;
 		case WP_PLASMAGUN:
 			addTime = 100 - pm->chaos * 100;
@@ -1659,7 +1659,7 @@ static void PM_Weapon( void ) {
 			addTime = 3000 - pm->railgunFireRate - pm->chaos * 1500;
 			break;
 		case WP_BFG:
-			addTime = 200 - pm->chaos * 200;
+			addTime = 200 - pm->chaos * 150;
 			break;
 		case WP_GRAPPLING_HOOK:
 			addTime = 400;

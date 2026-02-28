@@ -3169,6 +3169,9 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 	// create the explosion
 	//
 	if ( mod ) {
+		if ( cgs.chaos && mod == cgs.media.bulletFlashModel ) {
+			duration = 60;
+		}
 		le = CG_MakeExplosion( origin, dir, mod, shader, duration, isSprite );
 		le->light = light;
 		VectorCopy( lightColor, le->lightColor );
