@@ -378,6 +378,7 @@ static void InGame_MenuInit( void ) {
 	s_ingame.quit.color = color_red;
 	s_ingame.quit.style = UI_CENTER | UI_SMALLFONT;
 
+	Menu_AddItem( &s_ingame.menu, &s_ingame.resume );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.team );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.addbots );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.removebots );
@@ -387,7 +388,6 @@ static void InGame_MenuInit( void ) {
 	Menu_AddItem( &s_ingame.menu, &s_ingame.server );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.challenges );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.restart );
-	Menu_AddItem( &s_ingame.menu, &s_ingame.resume );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.leave );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.quit );
 }
