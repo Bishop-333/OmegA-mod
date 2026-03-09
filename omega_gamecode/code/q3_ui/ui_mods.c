@@ -224,7 +224,7 @@ static void UI_Mods_MenuInit( void ) {
 	s_mods.list.generic.x = 320;
 	s_mods.list.generic.y = 130;
 	s_mods.list.width = 48;
-	s_mods.list.height = 14;
+	s_mods.list.height = 20;
 
 	UI_Mods_LoadMods();
 
