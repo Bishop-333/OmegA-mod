@@ -109,7 +109,6 @@ vmCvar_t g_elimination_selfdamage;
 vmCvar_t g_elimination_startHealth;
 vmCvar_t g_elimination_startArmor;
 vmCvar_t g_elimination_bfg;
-vmCvar_t g_elimination_grapple;
 vmCvar_t g_elimination_roundtime;
 vmCvar_t g_elimination_warmup;
 vmCvar_t g_elimination_activewarmup;
@@ -196,6 +195,8 @@ vmCvar_t g_minNameChangePeriod;
 vmCvar_t g_maxNameChanges;
 
 vmCvar_t g_timestamp_startgame;
+
+vmCvar_t g_grapple;
 
 vmCvar_t g_developer;
 
@@ -363,7 +364,6 @@ static cvarTable_t gameCvarTable[] = {
     { &g_elimination_startHealth, "elimination_startHealth", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_startArmor, "elimination_startArmor", "150", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_bfg, "elimination_bfg", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
-    { &g_elimination_grapple, "elimination_grapple", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_roundtime, "elimination_roundtime", "120", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_warmup, "elimination_warmup", "7", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_ARCHIVE | CVAR_NORESTART | CVAR_SYSTEMINFO, 0, qtrue },
@@ -440,6 +440,8 @@ static cvarTable_t gameCvarTable[] = {
     { &g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse },
 
     { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse },
+
+    { &g_grapple, "g_grapple", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse },
 
     { &g_developer, "developer", "0", CVAR_CHEAT, 0, qtrue },
 

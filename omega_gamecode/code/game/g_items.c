@@ -891,13 +891,7 @@ ClearRegisteredItems
 void ClearRegisteredItems( void ) {
 	memset( itemRegistered, 0, sizeof( itemRegistered ) );
 
-	if ( g_instantgib.integer || g_weaponArena.integer == 7 ) {
-		if ( g_instantgib.integer & 2 )
-			RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
-		RegisterItem( BG_FindItemForWeapon( WP_RAILGUN ) );
-	} else if ( g_rockets.integer || g_weaponArena.integer == 5 ) {
-		RegisterItem( BG_FindItemForWeapon( WP_ROCKET_LAUNCHER ) );
-	} else if ( g_weaponArena.integer == 1 ) {
+	if ( g_weaponArena.integer == 1 ) {
 		RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
 	} else if ( g_weaponArena.integer == 2 ) {
 		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
@@ -906,8 +900,14 @@ void ClearRegisteredItems( void ) {
 		RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 	} else if ( g_weaponArena.integer == 4 ) {
 		RegisterItem( BG_FindItemForWeapon( WP_GRENADE_LAUNCHER ) );
+	} else if ( g_weaponArena.integer == 5 || g_rockets.integer ) {
+		RegisterItem( BG_FindItemForWeapon( WP_ROCKET_LAUNCHER ) );
 	} else if ( g_weaponArena.integer == 6 ) {
 		RegisterItem( BG_FindItemForWeapon( WP_LIGHTNING ) );
+	} else if ( g_weaponArena.integer == 7 || g_instantgib.integer ) {
+		if ( g_instantgib.integer & 2 )
+			RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
+		RegisterItem( BG_FindItemForWeapon( WP_RAILGUN ) );
 	} else if ( g_weaponArena.integer == 8 ) {
 		RegisterItem( BG_FindItemForWeapon( WP_PLASMAGUN ) );
 	} else if ( g_weaponArena.integer == 9 ) {
@@ -934,6 +934,9 @@ void ClearRegisteredItems( void ) {
 			RegisterItem( BG_FindItemForWeapon( WP_PROX_LAUNCHER ) );
 			RegisterItem( BG_FindItemForWeapon( WP_CHAINGUN ) );
 		}
+	}
+	if ( g_grapple.integer ) {
+		RegisterItem( BG_FindItemForWeapon( WP_GRAPPLING_HOOK ) );
 	}
 	if ( g_gametype.integer == GT_HARVESTER ) {
 		RegisterItem( BG_FindItem( "Red Cube" ) );

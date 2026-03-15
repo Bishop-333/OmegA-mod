@@ -1066,7 +1066,6 @@ extern vmCvar_t g_elimination_selfdamage;
 extern vmCvar_t g_elimination_startHealth;
 extern vmCvar_t g_elimination_startArmor;
 extern vmCvar_t g_elimination_bfg;
-extern vmCvar_t g_elimination_grapple;
 extern vmCvar_t g_elimination_roundtime;
 extern vmCvar_t g_elimination_warmup;
 extern vmCvar_t g_elimination_activewarmup;
@@ -1159,6 +1158,8 @@ extern vmCvar_t g_warningExpire;
 
 extern vmCvar_t g_minNameChangePeriod;
 extern vmCvar_t g_maxNameChanges;
+
+extern vmCvar_t g_grapple;
 
 extern vmCvar_t g_developer;
 
