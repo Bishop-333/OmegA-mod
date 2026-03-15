@@ -69,14 +69,6 @@ models/weapons2/lightning/skinlightning
 		tcMod scale 8 8
 		detail
 	}
-	{
-		map gfx/fx/spec/robawt.tga
-		blendfunc gl_dst_color gl_dst_alpha
-		rgbGen lightingDiffuse
-		tcGen environment 
-		alphaGen lightingSpecular
-		detail
-	}
 }
 
 models/weapons2/plasma/skin

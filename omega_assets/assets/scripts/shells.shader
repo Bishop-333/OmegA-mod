@@ -123,6 +123,7 @@ powerups/quad
 powerups/quade
 {
 	cull disable
+	nopicmip
 	deformVertexes wave 100 sin 1 0 0 0 
 	{
 		map textures/oafx/quadmultshell
@@ -145,6 +146,7 @@ powerups/quade
 
 powerups/quadWeapong
 {
+	nopicmip
 	deformVertexes wave 100 sin 1 0 0 0 
 	{
 		map textures/oafx/quadmultshell
@@ -243,6 +245,7 @@ brightPlayers
 	cull disable
 	deformVertexes wave 100 sin 0.5 0 0 0
 	cull back
+	nopicmip
 	{
 		map textures/suction/solid_white
 		blendfunc add

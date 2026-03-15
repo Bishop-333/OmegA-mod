@@ -62,7 +62,6 @@ models/weapons2/bfg/bfgbody
 models/weapons2/bfg/bfgtube
 {
 	cull disable
-	nopicmip
 	{
 		map models/weapons2/bfg/bfgtube.tga
 		blendfunc blend

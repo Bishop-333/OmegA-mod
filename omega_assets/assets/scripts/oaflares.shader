@@ -1,5 +1,6 @@
 dflareShader
 {
+	nopicmip
 	{
 		clampmap textures/flares/flarey.tga
 		blendfunc add
@@ -26,6 +27,7 @@ flareShader
 
 sun
 {
+	nopicmip
 	{
 		clampmap textures/flares/flarey.tga
 		blendfunc add
@@ -115,6 +117,7 @@ flareShader-lava
 
 flareShader-portal
 {
+	nopicmip
 	{
 		clampmap textures/flares/portalflare.tga
 		blendfunc add

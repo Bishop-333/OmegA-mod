@@ -14,7 +14,7 @@ models/weaphits/proxflare_b
 	nopicmip
 	deformVertexes autosprite
 	{
-		map textures/flares/flarey.tga
+		clampmap textures/flares/flarey.tga
 		blendfunc add
 		rgbGen const ( 0 0 1 )
 	}
