@@ -1033,7 +1033,7 @@ void ClientUserinfoChanged( int clientNum ) {
 		Q_strncpyz( headModel, Info_ValueForKey( userinfo, "headmodel" ), sizeof( headModel ) );
 	}
 
-	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 && !( ent->r.svFlags & SVF_BOT ) ) {
 		client->pers.teamInfo = qtrue;
 	} else {
 		s = Info_ValueForKey( userinfo, "teamoverlay" );

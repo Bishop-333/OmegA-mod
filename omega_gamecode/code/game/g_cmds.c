@@ -95,7 +95,7 @@ void DeathmatchScoreboardMessage( gentity_t *ent ) {
 			             cl->sess.deaths );
 		}
 		j = strlen( entry );
-		if ( stringlength + j > 1024 )
+		if ( stringlength + j >= sizeof( string ) )
 			break;
 		strcpy( string + stringlength, entry );
 		stringlength += j;

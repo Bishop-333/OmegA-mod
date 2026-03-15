@@ -1814,17 +1814,31 @@ void TeamplayInfoMessage( gentity_t *ent ) {
 	int cnt;
 	int h, a, w;
 	int clients[TEAM_MAXOVERLAY];
+	int team;
 
 	if ( !ent->client->pers.teamInfo )
 		return;
+
+	// send team info to spectator for team of followed client
+	if ( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) {
+		if ( ent->client->sess.spectatorState != SPECTATOR_FOLLOW || ent->client->sess.spectatorClient < 0 ) {
+			return;
+		}
+		team = g_entities[ent->client->sess.spectatorClient].client->sess.sessionTeam;
+	} else {
+		team = ent->client->sess.sessionTeam;
+	}
+
+	if ( team != TEAM_RED && team != TEAM_BLUE ) {
+		return;
+	}
 
 	// figure out what client should be on the display
 	// we are limited to 8, but we want to use the top eight players
 	// but in client order (so they don't keep changing position on the overlay)
 	for ( i = 0, cnt = 0; i < g_maxclients.integer && cnt < TEAM_MAXOVERLAY; i++ ) {
 		player = g_entities + level.sortedClients[i];
-		if ( player->inuse && player->client->sess.sessionTeam ==
-		                          ent->client->sess.sessionTeam ) {
+		if ( player->inuse && player->client->sess.sessionTeam == team ) {
 			clients[cnt++] = level.sortedClients[i];
 		}
 	}
@@ -1838,8 +1852,7 @@ void TeamplayInfoMessage( gentity_t *ent ) {
 
 	for ( i = 0, cnt = 0; i < g_maxclients.integer && cnt < TEAM_MAXOVERLAY; i++ ) {
 		player = g_entities + i;
-		if ( player->inuse && player->client->sess.sessionTeam ==
-		                          ent->client->sess.sessionTeam ) {
+		if ( player->inuse && player->client->sess.sessionTeam == team ) {
 
 			h = player->client->ps.stats[STAT_HEALTH];
 			a = player->client->ps.stats[STAT_ARMOR];
@@ -1857,7 +1870,7 @@ void TeamplayInfoMessage( gentity_t *ent ) {
 			             i, player->client->pers.teamState.location, h, a,
 			             w, player->s.powerups );
 			j = strlen( entry );
-			if ( stringlength + j > sizeof( string ) )
+			if ( stringlength + j >= sizeof( string ) )
 				break;
 			strcpy( string + stringlength, entry );
 			stringlength += j;
@@ -1935,7 +1948,7 @@ void CheckTeamStatus( void ) {
 				continue;
 			}
 
-			if ( ent->inuse && ( ent->client->sess.sessionTeam == TEAM_RED || ent->client->sess.sessionTeam == TEAM_BLUE ) ) {
+			if ( ent->inuse ) {
 				TeamplayInfoMessage( ent );
 			}
 		}
