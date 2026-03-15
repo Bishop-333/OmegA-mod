@@ -1388,6 +1388,7 @@ extern vmCvar_t cg_weaponBarStyle;
 extern vmCvar_t cg_weaponOrder;
 extern vmCvar_t cg_chatBeep;
 extern vmCvar_t cg_teamChatBeep;
+extern vmCvar_t cg_developer;
 
 //OmegA
 extern vmCvar_t cg_ambient;

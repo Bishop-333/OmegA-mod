@@ -130,6 +130,8 @@ extern vmCvar_t ui_setupchecked;
 extern vmCvar_t ui_browserOnlyHumans;
 extern vmCvar_t ui_browserHidePrivate;
 
+extern vmCvar_t ui_developer;
+
 //OmegA
 extern vmCvar_t ui_mapvote_filter;
 extern vmCvar_t ui_saved_desktop;

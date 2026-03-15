@@ -197,6 +197,8 @@ vmCvar_t g_maxNameChanges;
 
 vmCvar_t g_timestamp_startgame;
 
+vmCvar_t g_developer;
+
 //OmegA
 vmCvar_t g_allowDuplicateGuid;
 vmCvar_t g_allowThirdPerson;
@@ -438,6 +440,8 @@ static cvarTable_t gameCvarTable[] = {
     { &g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse },
 
     { &g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse },
+
+    { &g_developer, "developer", "0", CVAR_CHEAT, 0, qtrue },
 
     //OmegA
     { &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },

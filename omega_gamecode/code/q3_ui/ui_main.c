@@ -189,6 +189,8 @@ vmCvar_t ui_browserHidePrivate;
 //new in beta 37:
 vmCvar_t ui_setupchecked;
 
+vmCvar_t ui_developer;
+
 //OmegA
 vmCvar_t ui_mapvote_filter;
 vmCvar_t ui_saved_desktop;
@@ -281,6 +283,7 @@ static cvarTable_t cvarTable[] = {
     { &ui_server14, "server14", "", CVAR_ARCHIVE },
     { &ui_server15, "server15", "", CVAR_ARCHIVE },
     { &ui_server16, "server16", "", CVAR_ARCHIVE },
+    { &ui_developer, "developer", "0", CVAR_CHEAT },
     { NULL, "g_localTeamPref", "", 0 },
 
     //new in beta 23:

@@ -241,6 +241,7 @@ vmCvar_t cg_crosshairColorBlue;
 vmCvar_t cg_weaponBarStyle;
 vmCvar_t cg_chatBeep;
 vmCvar_t cg_teamChatBeep;
+vmCvar_t cg_developer;
 
 //OmegA
 vmCvar_t cg_ambient;
@@ -458,6 +459,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_weaponOrder, "cg_weaponOrder", "/1/2/4/3/6/7/8/9/5/", CVAR_ARCHIVE },
     { &cg_chatBeep, "cg_chatBeep", "1", CVAR_ARCHIVE },
     { &cg_teamChatBeep, "cg_teamChatBeep", "1", CVAR_ARCHIVE },
+    { &cg_developer, "developer", "0", CVAR_CHEAT },
 
     //OmegA
     { &cg_ambient, "cg_ambient", "1", CVAR_ARCHIVE | CVAR_LATCH },

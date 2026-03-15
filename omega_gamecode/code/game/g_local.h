@@ -1160,6 +1160,8 @@ extern vmCvar_t g_warningExpire;
 extern vmCvar_t g_minNameChangePeriod;
 extern vmCvar_t g_maxNameChanges;
 
+extern vmCvar_t g_developer;
+
 //OmegA
 extern vmCvar_t g_allowDuplicateGuid;
 extern vmCvar_t g_allowThirdPerson;
