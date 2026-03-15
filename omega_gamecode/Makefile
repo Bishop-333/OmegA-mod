@@ -205,14 +205,14 @@ endif
 
 
 #############################################################################
-# SETUP AND BUILD -- LINUX
+# SETUP AND BUILD -- MACOS
 #############################################################################
 
 ifeq ($(PLATFORM),darwin)
 
   BASE_CFLAGS = -Wall -Wimplicit -Wstrict-prototypes
 
-  OPTIMIZE = -ffast-math
+  OPTIMIZE = -O2 -fvisibility=hidden -ffast-math
 
   SHLIBEXT=dylib
   SHLIBCFLAGS=-fPIC -fno-common
