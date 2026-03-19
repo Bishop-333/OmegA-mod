@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 //
 #include "ui_local.h"
+#include "../game/challenges.h"
 
 #define MODEL_BACK0 "menu/art_blueish/back_0"
 #define MODEL_BACK1 "menu/art_blueish/back_1"
@@ -398,6 +399,9 @@ static void PlayerModel_BuildList( void ) {
 
 			// look for icon_????
 			if ( !Q_stricmpn( skinname, "icon_", 5 ) || !Q_stricmpn( skinname, "iconh_", 6 ) ) {
+				if ( !Q_stricmp( dirptr, "kyonshi" ) && !Q_stricmp( skinname, "iconh_beh" ) && !getChallenge( AWARD_EXCELLENT ) ) {
+					continue;
+				}
 				Com_sprintf( s_playermodel.modelnames[s_playermodel.nummodels++],
 				             sizeof( s_playermodel.modelnames[s_playermodel.nummodels] ),
 				             "models/players/%s/%s", dirptr, skinname );
