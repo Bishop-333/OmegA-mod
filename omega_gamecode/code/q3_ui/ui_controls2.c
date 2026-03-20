@@ -1237,7 +1237,7 @@ static void Controls_MenuInit( void ) {
 	s_controls.banner.generic.flags = QMF_CENTER_JUSTIFY;
 	s_controls.banner.generic.x = 320;
 	s_controls.banner.generic.y = 16;
-	s_controls.banner.string = "CONTROLS";
+	s_controls.banner.string = UI_Translate( "CONTROLS" );
 	s_controls.banner.color = color_white;
 	s_controls.banner.style = UI_CENTER;
 
@@ -1259,10 +1259,10 @@ static void Controls_MenuInit( void ) {
 
 	y = 240 - 2 * PROP_HEIGHT;
 
-	Controls_Menu_AddPText( &s_controls.looking, &y, ID_LOOKING, "LOOK" );
-	Controls_Menu_AddPText( &s_controls.movement, &y, ID_MOVEMENT, "MOVE" );
-	Controls_Menu_AddPText( &s_controls.weapons, &y, ID_WEAPONS, "SHOOT" );
-	Controls_Menu_AddPText( &s_controls.misc, &y, ID_MISC, "MISC" );
+	Controls_Menu_AddPText( &s_controls.looking, &y, ID_LOOKING, UI_Translate( "LOOK" ) );
+	Controls_Menu_AddPText( &s_controls.movement, &y, ID_MOVEMENT, UI_Translate( "MOVE" ) );
+	Controls_Menu_AddPText( &s_controls.weapons, &y, ID_WEAPONS, UI_Translate( "SHOOT" ) );
+	Controls_Menu_AddPText( &s_controls.misc, &y, ID_MISC, UI_Translate( "MISC" ) );
 
 	s_controls.back.generic.type = MTYPE_BITMAP;
 	s_controls.back.generic.name = ART_BACK0;

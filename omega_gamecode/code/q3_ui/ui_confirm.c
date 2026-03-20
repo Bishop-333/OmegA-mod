@@ -199,7 +199,7 @@ void UI_ConfirmMenu_Style( const char *question, int style, void ( *draw )( void
 	s_confirm.yes.generic.id = ID_CONFIRM_YES;
 	s_confirm.yes.generic.x = l1;
 	s_confirm.yes.generic.y = 264;
-	s_confirm.yes.string = "YES";
+	s_confirm.yes.string = UI_Translate( "YES" );
 	s_confirm.yes.color = color_red;
 	s_confirm.yes.style = UI_LEFT;
 
@@ -209,7 +209,7 @@ void UI_ConfirmMenu_Style( const char *question, int style, void ( *draw )( void
 	s_confirm.no.generic.id = ID_CONFIRM_NO;
 	s_confirm.no.generic.x = l3;
 	s_confirm.no.generic.y = 264;
-	s_confirm.no.string = "NO";
+	s_confirm.no.string = UI_Translate( "NO" );
 	s_confirm.no.color = color_red;
 	s_confirm.no.style = UI_LEFT;
 

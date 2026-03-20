@@ -239,7 +239,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.banner.generic.flags = QMF_CENTER_JUSTIFY;
 	soundOptionsInfo.banner.generic.x = 320;
 	soundOptionsInfo.banner.generic.y = 16;
-	soundOptionsInfo.banner.string = "SYSTEM SETUP";
+	soundOptionsInfo.banner.string = UI_Translate( "SYSTEM SETUP" );
 	soundOptionsInfo.banner.color = color_white;
 	soundOptionsInfo.banner.style = UI_CENTER;
 
@@ -265,7 +265,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.graphics.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.graphics.generic.x = 216;
 	soundOptionsInfo.graphics.generic.y = 240 - 2 * PROP_HEIGHT;
-	soundOptionsInfo.graphics.string = "GRAPHICS";
+	soundOptionsInfo.graphics.string = UI_Translate( "GRAPHICS" );
 	soundOptionsInfo.graphics.style = UI_RIGHT;
 	soundOptionsInfo.graphics.color = color_red;
 
@@ -275,7 +275,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.display.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.display.generic.x = 216;
 	soundOptionsInfo.display.generic.y = 240 - PROP_HEIGHT;
-	soundOptionsInfo.display.string = "DISPLAY";
+	soundOptionsInfo.display.string = UI_Translate( "DISPLAY" );
 	soundOptionsInfo.display.style = UI_RIGHT;
 	soundOptionsInfo.display.color = color_red;
 
@@ -285,7 +285,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.sound.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.sound.generic.x = 216;
 	soundOptionsInfo.sound.generic.y = 240;
-	soundOptionsInfo.sound.string = "SOUND";
+	soundOptionsInfo.sound.string = UI_Translate( "SOUND" );
 	soundOptionsInfo.sound.style = UI_RIGHT;
 	soundOptionsInfo.sound.color = color_red;
 
@@ -295,7 +295,7 @@ static void UI_SoundOptionsMenu_Init( void ) {
 	soundOptionsInfo.network.generic.callback = UI_SoundOptionsMenu_Event;
 	soundOptionsInfo.network.generic.x = 216;
 	soundOptionsInfo.network.generic.y = 240 + PROP_HEIGHT;
-	soundOptionsInfo.network.string = "NETWORK";
+	soundOptionsInfo.network.string = UI_Translate( "NETWORK" );
 	soundOptionsInfo.network.style = UI_RIGHT;
 	soundOptionsInfo.network.color = color_red;
 
