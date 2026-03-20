@@ -469,7 +469,7 @@ static void CheckAlmostScored( gentity_t *self, gentity_t *attacker ) {
 rampage_notify
 ==================
 */
-void rampage_notify( gentity_t *attacker ) {
+static void rampage_notify( gentity_t *attacker ) {
 	if ( attacker->client->pers.multiKillCount % 3 != 0 ) {
 		return;
 	}
