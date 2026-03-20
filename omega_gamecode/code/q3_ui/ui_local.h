@@ -133,6 +133,7 @@ extern vmCvar_t ui_browserHidePrivate;
 extern vmCvar_t ui_developer;
 
 //OmegA
+extern vmCvar_t ui_language;
 extern vmCvar_t ui_mapvote_filter;
 extern vmCvar_t ui_saved_desktop;
 extern vmCvar_t ui_saved_maxfps;
@@ -726,6 +727,7 @@ extern void UI_Refresh( int time );
 extern void UI_StartDemoLoop( void );
 extern qboolean m_entersound;
 extern uiStatic_t uis;
+extern char *UI_Translate( const char *text );
 
 //
 // ui_spLevel.c

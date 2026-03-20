@@ -765,6 +765,47 @@ void UI_DrawChar( int x, int y, int ch, int style, vec4_t color ) {
 	UI_DrawString( x, y, buff, style, color );
 }
 
+typedef struct {
+	char *en;
+	char *fr;
+} uiTranslation_t;
+
+static const uiTranslation_t uiTranslations[] = {
+	{ "DISPLAY", "AFFICHAGE" },
+	{ "EXIT", "QUITTER" },
+	{ "GRAPHICS", "GRAPHISMES" },
+	{ "MULTIPLAYER", "MULTIJOUEUR" },
+	{ "SETUP", "CONFIGURATION" },
+	{ "SINGLE PLAYER", "SOLO" },
+	{ "SOUND", "SON" },
+	{ "SYSTEM SETUP", "CONFIGURATION SYSTEME" },
+	{ "NETWORK", "RESEAU" },
+	{ NULL, NULL }
+};
+
+/*
+=================
+UI_Translate
+=================
+*/
+char *UI_Translate( const char *text ) {
+	int i;
+
+	if ( !ui_language.string[0] || !Q_stricmpn( ui_language.string, "en", 2 ) ) {
+		return (char *)text;
+	}
+
+	for ( i = 0; uiTranslations[i].en; i++ ) {
+		if ( !Q_stricmp( text, uiTranslations[i].en ) ) {
+			if ( !Q_stricmpn( ui_language.string, "fr", 2 ) ) {
+				return uiTranslations[i].fr;
+			}
+		}
+	}
+
+	return (char *)text;
+}
+
 qboolean UI_IsFullscreen( void ) {
 	if ( uis.activemenu && ( trap_Key_GetCatcher() & KEYCATCH_UI ) ) {
 		return uis.activemenu->fullscreen;

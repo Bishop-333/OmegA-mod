@@ -265,7 +265,7 @@ void UI_MainMenu( void ) {
 	s_main.singleplayer.generic.y = y;
 	s_main.singleplayer.generic.id = ID_SINGLEPLAYER;
 	s_main.singleplayer.generic.callback = Main_MenuEvent;
-	s_main.singleplayer.string = "SINGLE PLAYER";
+	s_main.singleplayer.string = UI_Translate( "SINGLE PLAYER" );
 	s_main.singleplayer.color = color_red;
 	s_main.singleplayer.style = style;
 
@@ -276,7 +276,7 @@ void UI_MainMenu( void ) {
 	s_main.multiplayer.generic.y = y;
 	s_main.multiplayer.generic.id = ID_MULTIPLAYER;
 	s_main.multiplayer.generic.callback = Main_MenuEvent;
-	s_main.multiplayer.string = "MULTIPLAYER";
+	s_main.multiplayer.string = UI_Translate( "MULTIPLAYER" );
 	s_main.multiplayer.color = color_red;
 	s_main.multiplayer.style = style;
 
@@ -287,7 +287,7 @@ void UI_MainMenu( void ) {
 	s_main.setup.generic.y = y;
 	s_main.setup.generic.id = ID_SETUP;
 	s_main.setup.generic.callback = Main_MenuEvent;
-	s_main.setup.string = "SETUP";
+	s_main.setup.string = UI_Translate( "SETUP" );
 	s_main.setup.color = color_red;
 	s_main.setup.style = style;
 
@@ -331,7 +331,7 @@ void UI_MainMenu( void ) {
 	s_main.exit.generic.y = y;
 	s_main.exit.generic.id = ID_EXIT;
 	s_main.exit.generic.callback = Main_MenuEvent;
-	s_main.exit.string = "EXIT";
+	s_main.exit.string = UI_Translate( "QUITTER" );
 	s_main.exit.color = color_red;
 	s_main.exit.style = style;
 

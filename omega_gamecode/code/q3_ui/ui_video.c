@@ -935,7 +935,7 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.banner.generic.type = MTYPE_BTEXT;
 	s_graphicsoptions.banner.generic.x = 320;
 	s_graphicsoptions.banner.generic.y = 16;
-	s_graphicsoptions.banner.string = "SYSTEM SETUP";
+	s_graphicsoptions.banner.string = UI_Translate( "SYSTEM SETUP" );
 	s_graphicsoptions.banner.color = color_white;
 	s_graphicsoptions.banner.style = UI_CENTER;
 
@@ -961,7 +961,7 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.graphics.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.graphics.generic.x = 216;
 	s_graphicsoptions.graphics.generic.y = 240 - 2 * PROP_HEIGHT;
-	s_graphicsoptions.graphics.string = "GRAPHICS";
+	s_graphicsoptions.graphics.string = UI_Translate( "GRAPHICS" );
 	s_graphicsoptions.graphics.style = UI_RIGHT;
 	s_graphicsoptions.graphics.color = color_red;
 
@@ -971,7 +971,7 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.display.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.display.generic.x = 216;
 	s_graphicsoptions.display.generic.y = 240 - PROP_HEIGHT;
-	s_graphicsoptions.display.string = "DISPLAY";
+	s_graphicsoptions.display.string = UI_Translate( "DISPLAY" );
 	s_graphicsoptions.display.style = UI_RIGHT;
 	s_graphicsoptions.display.color = color_red;
 
@@ -981,7 +981,7 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.sound.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.sound.generic.x = 216;
 	s_graphicsoptions.sound.generic.y = 240;
-	s_graphicsoptions.sound.string = "SOUND";
+	s_graphicsoptions.sound.string = UI_Translate( "SOUND" );
 	s_graphicsoptions.sound.style = UI_RIGHT;
 	s_graphicsoptions.sound.color = color_red;
 
@@ -991,7 +991,7 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.network.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.network.generic.x = 216;
 	s_graphicsoptions.network.generic.y = 240 + PROP_HEIGHT;
-	s_graphicsoptions.network.string = "NETWORK";
+	s_graphicsoptions.network.string = UI_Translate( "NETWORK" );
 	s_graphicsoptions.network.style = UI_RIGHT;
 	s_graphicsoptions.network.color = color_red;
 

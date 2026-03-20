@@ -195,6 +195,7 @@ vmCvar_t ui_developer;
 vmCvar_t ui_mapvote_filter;
 vmCvar_t ui_saved_desktop;
 vmCvar_t ui_saved_maxfps;
+vmCvar_t ui_language;
 
 // bk001129 - made static to avoid aliasing.
 static cvarTable_t cvarTable[] = {
@@ -294,6 +295,7 @@ static cvarTable_t cvarTable[] = {
     { &ui_browserHidePrivate, "ui_browserHidePrivate", "1", CVAR_ARCHIVE },
 
     //OmegA
+    { &ui_language, "ui_language", "en", CVAR_ARCHIVE | CVAR_LATCH },
     { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
     { &ui_saved_desktop, "ui_saved_desktop", "", CVAR_ARCHIVE },
     { &ui_saved_maxfps, "ui_saved_maxfps", "", CVAR_ARCHIVE } };

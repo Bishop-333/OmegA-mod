@@ -260,7 +260,7 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.banner.generic.flags = QMF_CENTER_JUSTIFY;
 	displayOptionsInfo.banner.generic.x = 320;
 	displayOptionsInfo.banner.generic.y = 16;
-	displayOptionsInfo.banner.string = "SYSTEM SETUP";
+	displayOptionsInfo.banner.string = UI_Translate( "SYSTEM SETUP" );
 	displayOptionsInfo.banner.color = color_white;
 	displayOptionsInfo.banner.style = UI_CENTER;
 
@@ -286,7 +286,7 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.graphics.generic.callback = UI_DisplayOptionsMenu_Event;
 	displayOptionsInfo.graphics.generic.x = 216;
 	displayOptionsInfo.graphics.generic.y = 240 - 2 * PROP_HEIGHT;
-	displayOptionsInfo.graphics.string = "GRAPHICS";
+	displayOptionsInfo.graphics.string = UI_Translate( "GRAPHICS" );
 	displayOptionsInfo.graphics.style = UI_RIGHT;
 	displayOptionsInfo.graphics.color = color_red;
 
@@ -296,7 +296,7 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.display.generic.callback = UI_DisplayOptionsMenu_Event;
 	displayOptionsInfo.display.generic.x = 216;
 	displayOptionsInfo.display.generic.y = 240 - PROP_HEIGHT;
-	displayOptionsInfo.display.string = "DISPLAY";
+	displayOptionsInfo.display.string = UI_Translate( "DISPLAY" );
 	displayOptionsInfo.display.style = UI_RIGHT;
 	displayOptionsInfo.display.color = color_red;
 
@@ -306,7 +306,7 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.sound.generic.callback = UI_DisplayOptionsMenu_Event;
 	displayOptionsInfo.sound.generic.x = 216;
 	displayOptionsInfo.sound.generic.y = 240;
-	displayOptionsInfo.sound.string = "SOUND";
+	displayOptionsInfo.sound.string = UI_Translate( "SOUND" );
 	displayOptionsInfo.sound.style = UI_RIGHT;
 	displayOptionsInfo.sound.color = color_red;
 
@@ -316,7 +316,7 @@ static void UI_DisplayOptionsMenu_Init( void ) {
 	displayOptionsInfo.network.generic.callback = UI_DisplayOptionsMenu_Event;
 	displayOptionsInfo.network.generic.x = 216;
 	displayOptionsInfo.network.generic.y = 240 + PROP_HEIGHT;
-	displayOptionsInfo.network.string = "NETWORK";
+	displayOptionsInfo.network.string = UI_Translate( "NETWORK" );
 	displayOptionsInfo.network.style = UI_RIGHT;
 	displayOptionsInfo.network.color = color_red;
 
