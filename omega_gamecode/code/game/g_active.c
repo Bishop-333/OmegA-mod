@@ -824,7 +824,11 @@ static void ClientThink_real( gentity_t *ent ) {
 		//		G_Printf("serverTime >>>>>\n" );
 	}
 
-	ent->r.svFlags |= SVF_BROADCAST;
+	if ( ( g_cheats.integer || ( g_gametype.integer >= GT_TEAM && !g_ffa_gt ) ) && ent->client->sess.sessionTeam != TEAM_SPECTATOR ) {
+		ent->r.svFlags |= SVF_BROADCAST;
+	} else {
+		ent->r.svFlags &= ~SVF_BROADCAST;
+	}
 
 	//Here comes the unlagged bit!
 	//unlagged - backward reconciliation #4
