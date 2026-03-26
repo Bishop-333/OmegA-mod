@@ -130,7 +130,7 @@ static void DriverInfo_MenuDraw( void ) {
 		y += SMALLCHAR_HEIGHT;
 	}
 
-	if ( s_driverinfo.numstrings & 1 )
+	if ( s_driverinfo.numstrings & 1 && s_driverinfo.row + 13 >= s_driverinfo.numstrings / 2 )
 		UI_DrawString( 320, y, s_driverinfo.strings[s_driverinfo.numstrings - 1], UI_CENTER | UI_SMALLFONT, text_color_normal );
 }
 
