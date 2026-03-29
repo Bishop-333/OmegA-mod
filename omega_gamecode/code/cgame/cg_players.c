@@ -2647,7 +2647,7 @@ void CG_Player( centity_t *cent ) {
 		return;
 	}
 
-	if ( cgs.prophunt && ci->isProp ) {
+	if ( ci->isProp ) {
 		refEntity_t ent;
 		float scale;
 
