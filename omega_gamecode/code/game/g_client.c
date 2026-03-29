@@ -962,7 +962,7 @@ void ClientUserinfoChanged( int clientNum ) {
 
 	//KK-OAPub Added From Tremulous-Control Name Changes
 	if ( strcmp( oldname, client->pers.netname ) ) {
-		if ( client->pers.nameChangeTime && ( level.time - client->pers.nameChangeTime ) <= ( g_minNameChangePeriod.value * 1000 ) ) {
+		if ( client->pers.nameChangeTime && ( level.time - client->pers.nameChangeTime ) <= ( g_minNameChangePeriod.value * 1000 ) && !G_admin_permission( ent, ADMF_NOCENSORFLOOD ) ) {
 			trap_SendServerCommand( ent - g_entities, va( "print \"Name change spam protection (g_minNameChangePeriod = %d)\n\"", g_minNameChangePeriod.integer ) );
 			revertName = qtrue;
 		} else if ( g_maxNameChanges.integer > 0 && client->pers.nameChanges >= g_maxNameChanges.integer ) {

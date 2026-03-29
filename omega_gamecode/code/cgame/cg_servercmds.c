@@ -118,6 +118,33 @@ static void CG_ParseElimination( void ) {
 
 /*
 =================
+CG_ParseCustomVotes
+=================
+*/
+static void CG_ParseCustomVotes( void ) {
+	char customvotes[MAX_CVAR_VALUE_STRING] = "";
+	const char *temp;
+	const char *c;
+	int i;
+
+	memset( &customvotes, 0, sizeof( customvotes ) );
+
+	for ( i = 1; i <= 12; i++ ) {
+		temp = CG_Argv( i );
+		for ( c = temp; *c; ++c ) {
+			if ( !( isalnum( *c ) || *c == '-' || *c == '_' || *c == '+' ) ) {
+				//The server tried something bad!
+				Com_Printf( "Error: illegal character %c in customvotes received from server\n", *c );
+				return;
+			}
+		}
+		Q_strcat( customvotes, sizeof( customvotes ), va( "%s ", temp ) );
+	}
+	trap_Cvar_Set( "cg_vote_custom_commands", customvotes );
+}
+
+/*
+=================
 CG_ParseMappage
 
 Sago: This parses values from the server rather directly. Some checks are performed, but beware if you change it or new
@@ -926,16 +953,7 @@ static void CG_ServerCommand( void ) {
 	}
 
 	if ( !strcmp( cmd, "customvotes" ) ) {
-		char infoString[1024];
-		int i;
-		//TODO: Create a ParseCustomvotes function
-		memset( &infoString, 0, sizeof( infoString ) );
-		for ( i = 1; i <= 12; i++ ) {
-			Q_strcat( infoString, sizeof( infoString ), CG_Argv( i ) );
-			Q_strcat( infoString, sizeof( infoString ), " " );
-		}
-		trap_Cvar_Set( "cg_vote_custom_commands", infoString );
-		return;
+		CG_ParseCustomVotes();
 	}
 
 	if ( !strcmp( cmd, "notification" ) ) {

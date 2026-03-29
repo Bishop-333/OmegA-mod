@@ -2364,17 +2364,16 @@ static void CG_DrawCenter1FctfString( void ) {
 
 	status = cgs.flagStatus;
 
-	//Sago: TODO: Find the proper defines instead of hardcoded values.
 	switch ( status ) {
-		case 2:
+		case FLAG_TAKEN_RED:
 			line = va( "Red has the flag!" );
 			color = colorRed;
 			break;
-		case 3:
+		case FLAG_TAKEN_BLUE:
 			line = va( "Blue has the flag!" );
 			color = colorBlue;
 			break;
-		case 4:
+		case FLAG_DROPPED:
 			line = va( "Flag dropped!" );
 			color = colorWhite;
 			break;
