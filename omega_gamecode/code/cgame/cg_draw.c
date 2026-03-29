@@ -1451,6 +1451,8 @@ static float CG_DrawScores( float y ) {
 	float y1;
 	gitem_t *item;
 	int statusA, statusB;
+	static int lastSecondScore;
+	static float frac;
 
 	statusA = cgs.redflag;
 	statusB = cgs.blueflag;
@@ -1598,9 +1600,20 @@ static float CG_DrawScores( float y ) {
 			s2 = score;
 		}
 		if ( s2 != SCORE_NOT_PRESENT ) {
-			s = va( "%2i", s2 );
-			w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH + 8;
-			x -= w;
+			lastSecondScore = s2;
+			frac += cg.frametime / 150.0f;
+		} else {
+			frac -= cg.frametime / 150.0f;
+		}
+		if ( frac < 0.0f ) {
+			frac = 0.0f;
+		} else if ( frac > 1.0f ) {
+			frac = 1.0f;
+		}
+		s = va( "%2i", lastSecondScore );
+		w = CG_DrawStrlen( s ) * BIGCHAR_WIDTH + 8;
+		x -= frac * w;
+		if ( x < 640 ) {
 			if ( !spectator && score == s2 && score != s1 ) {
 				color[0] = 1.0f;
 				color[1] = 0.5f;
