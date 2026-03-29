@@ -383,6 +383,7 @@ typedef struct {
 	sfxHandle_t sounds[MAX_CUSTOM_SOUNDS];
 
 	int isDead;
+	qboolean isProp;
 } clientInfo_t;
 
 // each WP_* weapon enum has an associated weaponInfo_t

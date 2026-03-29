@@ -564,6 +564,11 @@ static qboolean CG_RegisterClientModelname( clientInfo_t *ci, const char *modelN
 	const char *headName;
 	char newTeamName[MAX_QPATH * 2];
 
+	if ( ci->isProp ) {
+		ci->legsModel = trap_R_RegisterModel( modelName );
+		return qtrue;
+	}
+
 	if ( headModelName[0] == '\0' ) {
 		headName = modelName;
 	} else {
@@ -934,6 +939,7 @@ void CG_NewClientInfo( int clientNum ) {
 	const char *local_config;
 	const char *v;
 	char *slash;
+	char *md3;
 
 	ci = &cgs.clientinfo[clientNum];
 
@@ -1043,14 +1049,20 @@ void CG_NewClientInfo( int clientNum ) {
 	} else {
 		Q_strncpyz( newInfo.modelName, v, sizeof( newInfo.modelName ) );
 
-		slash = strchr( newInfo.modelName, '/' );
-		if ( !slash ) {
-			// modelName didn not include a skin name
+		md3 = strstr( newInfo.modelName, ".md3" );
+		if ( cgs.prophunt && md3 ) {
+			newInfo.isProp = qtrue;
 			Q_strncpyz( newInfo.skinName, "default", sizeof( newInfo.skinName ) );
 		} else {
-			Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
-			// truncate modelName
-			*slash = 0;
+			slash = strchr( newInfo.modelName, '/' );
+			if ( !slash ) {
+				// modelName didn not include a skin name
+				Q_strncpyz( newInfo.skinName, "default", sizeof( newInfo.skinName ) );
+			} else {
+				Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
+				// truncate modelName
+				*slash = 0;
+			}
 		}
 	}
 
