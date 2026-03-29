@@ -533,7 +533,14 @@ static void CG_ConfigStringModified( void ) {
 	if ( num == CS_MUSIC ) {
 		CG_StartMusic();
 	} else if ( num == CS_SERVERINFO ) {
+		int oldProphunt = cgs.prophunt;
+		int i;
 		CG_ParseServerinfo();
+		if ( oldProphunt != cgs.prophunt ) {
+			for ( i = 0; i < cgs.maxclients; i++ ) {
+				CG_NewClientInfo( i );
+			}
+		}
 	} else if ( num == CS_SYSTEMINFO ) {
 		CG_ParseSysteminfo();
 	} else if ( num == CS_WARMUP ) {
