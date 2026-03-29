@@ -2647,6 +2647,36 @@ void CG_Player( centity_t *cent ) {
 		return;
 	}
 
+	if ( cgs.prophunt && ci->isProp ) {
+		refEntity_t ent;
+		float scale;
+
+		scale = 0.005 + cent->currentState.number * 0.00001;
+		cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
+
+		memset( &ent, 0, sizeof( ent ) );
+
+		VectorCopy( cg.autoAngles, cent->lerpAngles );
+		AxisCopy( cg.autoAxis, ent.axis );
+
+		ent.hModel = ci->legsModel;
+
+		VectorCopy( cent->lerpOrigin, ent.origin );
+		VectorCopy( cent->lerpOrigin, ent.oldorigin );
+
+		if ( strstr( ci->modelName, "models/weapons" ) ) {
+			VectorScale( ent.axis[0], 1.5, ent.axis[0] );
+			VectorScale( ent.axis[1], 1.5, ent.axis[1] );
+			VectorScale( ent.axis[2], 1.5, ent.axis[2] );
+			trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
+		}
+
+		if ( VectorLength( cent->currentState.pos.trDelta ) < 1 ) {
+			trap_R_AddRefEntityToScene( &ent );
+			return;
+		}
+	}
+
 	// get the player model information
 	renderfx = 0;
 	if ( cent->currentState.number == cg.snap->ps.clientNum ) {
