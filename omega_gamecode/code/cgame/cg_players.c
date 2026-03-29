@@ -2656,14 +2656,6 @@ void CG_Player( centity_t *cent ) {
 
 		memset( &ent, 0, sizeof( ent ) );
 
-		if ( strstr( ci->modelName, "models/powerups/health" ) ) {
-			VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
-			AxisCopy( cg.autoAxisFast, ent.axis );
-		} else {
-			VectorCopy( cg.autoAngles, cent->lerpAngles );
-			AxisCopy( cg.autoAxis, ent.axis );
-		}
-
 		ent.hModel = ci->legsModel;
 
 		VectorCopy( cent->lerpOrigin, ent.origin );
@@ -2677,6 +2669,13 @@ void CG_Player( centity_t *cent ) {
 		}
 
 		if ( VectorLength( cent->currentState.pos.trDelta ) < 1 ) {
+			if ( strstr( ci->modelName, "models/powerups/health" ) ) {
+				VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
+				AxisCopy( cg.autoAxisFast, ent.axis );
+			} else {
+				VectorCopy( cg.autoAngles, cent->lerpAngles );
+				AxisCopy( cg.autoAxis, ent.axis );
+			}
 			trap_R_AddRefEntityToScene( &ent );
 			return;
 		}
