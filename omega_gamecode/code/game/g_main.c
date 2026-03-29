@@ -225,6 +225,7 @@ vmCvar_t g_machinegunTeamDamage;
 vmCvar_t g_muteSpectators;
 vmCvar_t g_noInvisWalls;
 vmCvar_t g_plasmaBounce;
+vmCvar_t g_prophunt;
 vmCvar_t g_railgunDamage;
 vmCvar_t g_railgunFireRate;
 vmCvar_t g_railgunImpressiveFastReload;
@@ -470,6 +471,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_muteSpectators, "g_muteSpectators", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_noInvisWalls, "g_noInvisWalls", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_plasmaBounce, "g_plasmaBounce", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_prophunt, "g_prophunt", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
     { &g_railgunDamage, "g_railgunDamage", "80", 0, 0, qtrue },
     { &g_railgunFireRate, "g_railgunFireRate", "1500", 0, 0, qtrue },
     { &g_railgunImpressiveFastReload, "g_railgunImpressiveFastReload", "1", 0, 0, qtrue },
