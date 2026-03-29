@@ -552,6 +552,15 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace ) {
 		G_AddEvent( other, EV_ITEM_PICKUP, ent->s.modelindex );
 	}
 
+	if ( g_prophunt.integer && ent->item->world_model[0][0] ) {
+		char userinfo[MAX_INFO_STRING];
+
+		trap_GetUserinfo( other->s.clientNum, userinfo, sizeof( userinfo ) );
+		Info_SetValueForKey( userinfo, "model", ent->item->world_model[0] );
+		trap_SetUserinfo( other->s.clientNum, userinfo );
+		ClientUserinfoChanged( other->s.clientNum );
+	}
+
 	// powerup pickups are global broadcasts
 	if ( ent->item->giType == IT_POWERUP || ent->item->giType == IT_TEAM ) {
 		// if we want the global sound to play

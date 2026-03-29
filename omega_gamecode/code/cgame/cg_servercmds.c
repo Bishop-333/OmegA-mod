@@ -376,6 +376,7 @@ void CG_ParseServerinfo( void ) {
 
 	cgs.chaos = atoi( Info_ValueForKey( info, "g_chaos" ) );
 	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
+	cgs.prophunt = atoi( Info_ValueForKey( info, "g_prophunt" ) );
 	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
 
 	//Copy allowed votes directly to the client:
@@ -532,7 +533,14 @@ static void CG_ConfigStringModified( void ) {
 	if ( num == CS_MUSIC ) {
 		CG_StartMusic();
 	} else if ( num == CS_SERVERINFO ) {
+		int oldProphunt = cgs.prophunt;
+		int i;
 		CG_ParseServerinfo();
+		if ( oldProphunt != cgs.prophunt ) {
+			for ( i = 0; i < cgs.maxclients; i++ ) {
+				CG_NewClientInfo( i );
+			}
+		}
 	} else if ( num == CS_SYSTEMINFO ) {
 		CG_ParseSysteminfo();
 	} else if ( num == CS_WARMUP ) {

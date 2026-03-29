@@ -564,6 +564,11 @@ static qboolean CG_RegisterClientModelname( clientInfo_t *ci, const char *modelN
 	const char *headName;
 	char newTeamName[MAX_QPATH * 2];
 
+	if ( ci->isProp ) {
+		ci->legsModel = trap_R_RegisterModel( modelName );
+		return qtrue;
+	}
+
 	if ( headModelName[0] == '\0' ) {
 		headName = modelName;
 	} else {
@@ -934,6 +939,7 @@ void CG_NewClientInfo( int clientNum ) {
 	const char *local_config;
 	const char *v;
 	char *slash;
+	char *md3;
 
 	ci = &cgs.clientinfo[clientNum];
 
@@ -1043,14 +1049,19 @@ void CG_NewClientInfo( int clientNum ) {
 	} else {
 		Q_strncpyz( newInfo.modelName, v, sizeof( newInfo.modelName ) );
 
-		slash = strchr( newInfo.modelName, '/' );
-		if ( !slash ) {
-			// modelName didn not include a skin name
-			Q_strncpyz( newInfo.skinName, "default", sizeof( newInfo.skinName ) );
+		md3 = strstr( newInfo.modelName, ".md3" );
+		if ( cgs.prophunt && md3 ) {
+			newInfo.isProp = qtrue;
 		} else {
-			Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
-			// truncate modelName
-			*slash = 0;
+			slash = strchr( newInfo.modelName, '/' );
+			if ( !slash ) {
+				// modelName didn not include a skin name
+				Q_strncpyz( newInfo.skinName, "default", sizeof( newInfo.skinName ) );
+			} else {
+				Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
+				// truncate modelName
+				*slash = 0;
+			}
 		}
 	}
 
@@ -2633,6 +2644,39 @@ void CG_Player( centity_t *cent ) {
 	// not have valid clientinfo
 	if ( !ci->infoValid ) {
 		return;
+	}
+
+	if ( ci->isProp ) {
+		refEntity_t ent;
+		float scale;
+
+		scale = 0.005 + cent->currentState.number * 0.00001;
+		cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
+
+		memset( &ent, 0, sizeof( ent ) );
+
+		ent.hModel = ci->legsModel;
+
+		VectorCopy( cent->lerpOrigin, ent.origin );
+		VectorCopy( cent->lerpOrigin, ent.oldorigin );
+
+		if ( VectorLength( cent->currentState.pos.trDelta ) < 1 ) {
+			if ( strstr( ci->modelName, "models/powerups/health" ) ) {
+				VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
+				AxisCopy( cg.autoAxisFast, ent.axis );
+			} else {
+				VectorCopy( cg.autoAngles, cent->lerpAngles );
+				AxisCopy( cg.autoAxis, ent.axis );
+			}
+			if ( strstr( ci->modelName, "models/weapons" ) ) {
+				VectorScale( ent.axis[0], 1.5, ent.axis[0] );
+				VectorScale( ent.axis[1], 1.5, ent.axis[1] );
+				VectorScale( ent.axis[2], 1.5, ent.axis[2] );
+				trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
+			}
+			trap_R_AddRefEntityToScene( &ent );
+			return;
+		}
 	}
 
 	// get the player model information

@@ -1188,6 +1188,7 @@ extern vmCvar_t g_machinegunTeamDamage;
 extern vmCvar_t g_muteSpectators;
 extern vmCvar_t g_noInvisWalls;
 extern vmCvar_t g_plasmaBounce;
+extern vmCvar_t g_prophunt;
 extern vmCvar_t g_railgunDamage;
 extern vmCvar_t g_railgunFireRate;
 extern vmCvar_t g_railgunImpressiveFastReload;
