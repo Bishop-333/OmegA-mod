@@ -596,9 +596,6 @@ static void CG_ItemPickup( int itemNum ) {
 		}
 		//
 	}
-	if ( cgs.prophunt ) {
-		trap_Cvar_Set( "model", bg_itemlist[itemNum].world_model[0] );
-	}
 }
 
 /*
