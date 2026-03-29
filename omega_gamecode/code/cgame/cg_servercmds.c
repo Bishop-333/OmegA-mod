@@ -376,6 +376,7 @@ void CG_ParseServerinfo( void ) {
 
 	cgs.chaos = atoi( Info_ValueForKey( info, "g_chaos" ) );
 	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
+	cgs.prophunt = atoi( Info_ValueForKey( info, "g_prophunt" ) );
 	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
 
 	//Copy allowed votes directly to the client:

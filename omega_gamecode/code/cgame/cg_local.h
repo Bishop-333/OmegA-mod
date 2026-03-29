@@ -1211,6 +1211,7 @@ typedef struct {
 
 	int chaos;
 	int easierPickup;
+	int prophunt;
 	int startWhenReady;
 
 	int allowThirdperson;
