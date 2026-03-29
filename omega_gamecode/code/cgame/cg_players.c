@@ -2656,8 +2656,13 @@ void CG_Player( centity_t *cent ) {
 
 		memset( &ent, 0, sizeof( ent ) );
 
-		VectorCopy( cg.autoAngles, cent->lerpAngles );
-		AxisCopy( cg.autoAxis, ent.axis );
+		if ( strstr( ci->modelName, "models/powerups/health" ) ) {
+			VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
+			AxisCopy( cg.autoAxisFast, ent.axis );
+		} else {
+			VectorCopy( cg.autoAngles, cent->lerpAngles );
+			AxisCopy( cg.autoAxis, ent.axis );
+		}
 
 		ent.hModel = ci->legsModel;
 
