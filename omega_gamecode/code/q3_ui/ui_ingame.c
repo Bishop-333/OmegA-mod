@@ -44,7 +44,7 @@ INGAME MENU
 #define ID_RESUME 18
 #define ID_TEAMORDERS 19
 #define ID_VOTE 20
-#define ID_CHALLENGES 21
+#define ID_CREATE 21
 
 typedef struct {
 	menuframework_s menu;
@@ -55,13 +55,13 @@ typedef struct {
 	menutext_s server;
 	menutext_s leave;
 	menutext_s restart;
+	menutext_s startnew;
 	menutext_s addbots;
 	menutext_s removebots;
 	menutext_s teamorders;
 	menutext_s quit;
 	menutext_s resume;
 	menutext_s vote;
-	menutext_s challenges;
 } ingamemenu_t;
 
 static ingamemenu_t s_ingame;
@@ -122,6 +122,10 @@ static void InGame_Event( void *ptr, int notification ) {
 			UI_ConfirmMenu( "RESTART ARENA?", 0, InGame_RestartAction );
 			break;
 
+		case ID_CREATE:
+			UI_StartServerMenu( qtrue );
+			break;
+
 		case ID_QUIT:
 			UI_ConfirmMenu( "EXIT GAME?", 0, InGame_QuitAction );
 			break;
@@ -148,10 +152,6 @@ static void InGame_Event( void *ptr, int notification ) {
 
 		case ID_VOTE:
 			UI_VoteMenuMenu();
-			break;
-
-		case ID_CHALLENGES:
-			UI_Challenges();
 			break;
 	}
 }
@@ -332,15 +332,18 @@ static void InGame_MenuInit( void ) {
 	s_ingame.server.style = UI_CENTER | UI_SMALLFONT;
 
 	y += INGAME_MENU_VERTICAL_SPACING;
-	s_ingame.challenges.generic.type = MTYPE_PTEXT;
-	s_ingame.challenges.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
-	s_ingame.challenges.generic.x = 320;
-	s_ingame.challenges.generic.y = y;
-	s_ingame.challenges.generic.id = ID_CHALLENGES;
-	s_ingame.challenges.generic.callback = InGame_Event;
-	s_ingame.challenges.string = "STATISTICS";
-	s_ingame.challenges.color = color_red;
-	s_ingame.challenges.style = UI_CENTER | UI_SMALLFONT;
+	s_ingame.startnew.generic.type = MTYPE_PTEXT;
+	s_ingame.startnew.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
+	s_ingame.startnew.generic.x = 320;
+	s_ingame.startnew.generic.y = y;
+	s_ingame.startnew.generic.id = ID_CREATE;
+	s_ingame.startnew.generic.callback = InGame_Event;
+	s_ingame.startnew.string = "START NEW ARENA";
+	s_ingame.startnew.color = color_red;
+	s_ingame.startnew.style = UI_CENTER | UI_SMALLFONT;
+	if ( !trap_Cvar_VariableValue( "sv_running" ) ) {
+		s_ingame.startnew.generic.flags |= QMF_GRAYED;
+	}
 
 	y += INGAME_MENU_VERTICAL_SPACING;
 	s_ingame.restart.generic.type = MTYPE_PTEXT;
@@ -386,8 +389,8 @@ static void InGame_MenuInit( void ) {
 	Menu_AddItem( &s_ingame.menu, &s_ingame.vote );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.setup );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.server );
-	Menu_AddItem( &s_ingame.menu, &s_ingame.challenges );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.restart );
+	Menu_AddItem( &s_ingame.menu, &s_ingame.startnew );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.leave );
 	Menu_AddItem( &s_ingame.menu, &s_ingame.quit );
 }
