@@ -34,12 +34,13 @@ MAIN MENU
 #define ID_MULTIPLAYER 11
 #define ID_SETUP 12
 #define ID_DEMOS 13
-#define ID_OPENARENA 14
-#define ID_MODS 15
-#define ID_EXIT 16
+#define ID_CHALLENGES 14
+#define ID_OPENARENA 15
+#define ID_MODS 16
+#define ID_EXIT 17
 
 #define MAIN_BANNER_MODEL "models/mapobjects/banner/banner5.md3"
-#define MAIN_MENU_VERTICAL_SPACING 34
+#define MAIN_MENU_VERTICAL_SPACING 32
 
 typedef struct {
 	menuframework_s menu;
@@ -48,6 +49,7 @@ typedef struct {
 	menutext_s multiplayer;
 	menutext_s setup;
 	menutext_s demos;
+	menutext_s challenges;
 	menutext_s openArena;
 	menutext_s mods;
 	menutext_s exit;
@@ -94,6 +96,10 @@ static void Main_MenuEvent( void *ptr, int event ) {
 
 		case ID_DEMOS:
 			UI_DemosMenu();
+			break;
+
+		case ID_CHALLENGES:
+			UI_Challenges();
 			break;
 
 		case ID_MODS:
@@ -197,11 +203,11 @@ static void Main_MenuDraw( void ) {
 		Menu_Draw( &s_main.menu );
 	}
 
-	UI_DrawString( 320, 386, "OmegA(c) 2021-2026 Bishop-333", UI_CENTER | UI_SMALLFONT, color );
-	UI_DrawString( 320, 400, "mod based on OpenArena(c) 2005-2012 OpenArena Team", UI_CENTER | UI_SMALLFONT, color );
-	UI_DrawString( 320, 414, "OmegA/OpenArena comes with ABSOLUTELY NO WARRANTY; this is free software", UI_CENTER | UI_SMALLFONT, color );
-	UI_DrawString( 320, 428, "and you are welcome to redistribute it under certain conditions;", UI_CENTER | UI_SMALLFONT, color );
-	UI_DrawString( 320, 444, "read COPYING for details.", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 396, "OmegA(c) 2021-2026 Bishop-333", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 410, "mod based on OpenArena(c) 2005-2012 OpenArena Team", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 424, "OmegA/OpenArena comes with ABSOLUTELY NO WARRANTY; this is free software", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 438, "and you are welcome to redistribute it under certain conditions;", UI_CENTER | UI_SMALLFONT, color );
+	UI_DrawString( 320, 454, "read COPYING for details.", UI_CENTER | UI_SMALLFONT, color );
 
 	//Draw version.
 	UI_DrawString( 640 - 40, 480 - 20, "^7" PRODUCT_VERSION, UI_SMALLFONT, color );
@@ -303,6 +309,17 @@ void UI_MainMenu( void ) {
 	s_main.demos.style = style;
 
 	y += MAIN_MENU_VERTICAL_SPACING;
+	s_main.challenges.generic.type = MTYPE_PTEXT;
+	s_main.challenges.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
+	s_main.challenges.generic.x = 320;
+	s_main.challenges.generic.y = y;
+	s_main.challenges.generic.id = ID_CHALLENGES;
+	s_main.challenges.generic.callback = Main_MenuEvent;
+	s_main.challenges.string = "STATISTICS";
+	s_main.challenges.color = color_red;
+	s_main.challenges.style = style;
+
+	y += MAIN_MENU_VERTICAL_SPACING;
 	s_main.openArena.generic.type = MTYPE_PTEXT;
 	s_main.openArena.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
 	s_main.openArena.generic.x = 320;
@@ -339,6 +356,7 @@ void UI_MainMenu( void ) {
 	Menu_AddItem( &s_main.menu, &s_main.multiplayer );
 	Menu_AddItem( &s_main.menu, &s_main.setup );
 	Menu_AddItem( &s_main.menu, &s_main.demos );
+	Menu_AddItem( &s_main.menu, &s_main.challenges );
 	Menu_AddItem( &s_main.menu, &s_main.openArena );
 	Menu_AddItem( &s_main.menu, &s_main.mods );
 	Menu_AddItem( &s_main.menu, &s_main.exit );
