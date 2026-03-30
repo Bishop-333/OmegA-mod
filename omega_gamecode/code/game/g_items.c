@@ -557,6 +557,7 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace ) {
 
 		trap_GetUserinfo( other->s.clientNum, userinfo, sizeof( userinfo ) );
 		Info_SetValueForKey( userinfo, "model", ent->item->world_model[0] );
+		Info_SetValueForKey( userinfo, "team_model", ent->item->world_model[0] );
 		trap_SetUserinfo( other->s.clientNum, userinfo );
 		ClientUserinfoChanged( other->s.clientNum );
 	}
