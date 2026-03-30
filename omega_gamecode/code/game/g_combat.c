@@ -804,6 +804,17 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	// if client is in a nodrop area, don't drop anything (but return CTF flags!)
 	TossClientItems( self );
 
+	if ( g_prophunt.integer && self->client->isProp ) {
+		char userinfo[MAX_INFO_STRING];
+
+		self->client->isProp = qfalse;
+		trap_GetUserinfo( self->s.number, userinfo, sizeof( userinfo ) );
+		Info_SetValueForKey( userinfo, "model", self->client->originalModel );
+		Info_SetValueForKey( userinfo, "team_model", self->client->originalTeamModel );
+		trap_SetUserinfo( self->s.number, userinfo );
+		ClientUserinfoChanged( self->s.number );
+	}
+
 	Cmd_Score_f( self ); // show scores
 	// send updated scores to any clients that are following this one,
 	// or they would get stale scoreboards

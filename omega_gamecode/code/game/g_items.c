@@ -556,7 +556,14 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace ) {
 		char userinfo[MAX_INFO_STRING];
 
 		trap_GetUserinfo( other->s.clientNum, userinfo, sizeof( userinfo ) );
-		Info_SetValueForKey( userinfo, "model", ent->item->world_model[0] );
+		if ( !other->client->isProp ) {
+			Q_strncpyz( other->client->originalModel, Info_ValueForKey( userinfo, "model" ), sizeof( other->client->originalModel ) );
+			Q_strncpyz( other->client->originalTeamModel, Info_ValueForKey( userinfo, "team_model" ), sizeof( other->client->originalTeamModel ) );
+			other->client->isProp = qtrue;
+		}
+		Q_strncpyz( other->client->propModel, ent->item->world_model[0], sizeof( other->client->propModel ) );
+		Info_SetValueForKey( userinfo, "model", other->client->propModel );
+		Info_SetValueForKey( userinfo, "team_model", other->client->propModel );
 		trap_SetUserinfo( other->s.clientNum, userinfo );
 		ClientUserinfoChanged( other->s.clientNum );
 	}

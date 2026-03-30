@@ -1604,6 +1604,8 @@ void CG_AdjustPositionForMover( const vec3_t in, int moverNum, int fromTime, int
 void CG_PositionEntityOnTag( refEntity_t *entity, const refEntity_t *parent, qhandle_t parentModel, const char *tagName );
 void CG_PositionRotatedEntityOnTag( refEntity_t *entity, const refEntity_t *parent, qhandle_t parentModel, const char *tagName );
 
+void CG_Prop( centity_t *cent, clientInfo_t *ci );
+
 //
 // cg_weapons.c
 //

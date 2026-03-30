@@ -1033,6 +1033,15 @@ void ClientUserinfoChanged( int clientNum ) {
 		Q_strncpyz( headModel, Info_ValueForKey( userinfo, "headmodel" ), sizeof( headModel ) );
 	}
 
+	if ( g_prophunt.integer && client->isProp ) {
+		if ( Q_stricmp( model, client->propModel ) != 0 ) {
+			Q_strncpyz( model, client->propModel, sizeof( model ) );
+			Info_SetValueForKey( userinfo, "model", model );
+			Info_SetValueForKey( userinfo, "team_model", model );
+			trap_SetUserinfo( clientNum, userinfo );
+		}
+	}
+
 	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 && !( ent->r.svFlags & SVF_BOT ) ) {
 		client->pers.teamInfo = qtrue;
 	} else {

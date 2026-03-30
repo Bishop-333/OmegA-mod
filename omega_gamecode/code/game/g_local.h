@@ -429,6 +429,11 @@ struct gclient_s {
 	int accuracy[WP_NUM_WEAPONS][2];
 
 	int railgunRapidFire;
+
+	qboolean isProp;
+	char originalModel[MAX_QPATH];
+	char originalTeamModel[MAX_QPATH];
+	char propModel[MAX_QPATH];
 };
 
 //

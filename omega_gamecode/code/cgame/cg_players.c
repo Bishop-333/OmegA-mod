@@ -2647,34 +2647,8 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	if ( ci->isProp ) {
-		refEntity_t ent;
-		float scale;
-
-		scale = 0.005 + cent->currentState.number * 0.00001;
-		cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
-
-		memset( &ent, 0, sizeof( ent ) );
-
-		ent.hModel = ci->legsModel;
-
-		VectorCopy( cent->lerpOrigin, ent.origin );
-		VectorCopy( cent->lerpOrigin, ent.oldorigin );
-
 		if ( VectorLength( cent->currentState.pos.trDelta ) < 1 ) {
-			if ( strstr( ci->modelName, "models/powerups/health" ) ) {
-				VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
-				AxisCopy( cg.autoAxisFast, ent.axis );
-			} else {
-				VectorCopy( cg.autoAngles, cent->lerpAngles );
-				AxisCopy( cg.autoAxis, ent.axis );
-			}
-			if ( strstr( ci->modelName, "models/weapons" ) ) {
-				VectorScale( ent.axis[0], 1.5, ent.axis[0] );
-				VectorScale( ent.axis[1], 1.5, ent.axis[1] );
-				VectorScale( ent.axis[2], 1.5, ent.axis[2] );
-				trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
-			}
-			trap_R_AddRefEntityToScene( &ent );
+			CG_Prop( cent, ci );
 			return;
 		}
 	}
