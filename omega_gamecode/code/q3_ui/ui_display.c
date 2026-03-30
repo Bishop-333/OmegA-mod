@@ -204,7 +204,9 @@ static void DisplayOptions_MenuDraw( void ) {
 	style = UI_SMALLFONT;
 	focus = displayOptionsInfo.maxfps.generic.parent->cursor == displayOptionsInfo.maxfps.generic.menuPosition;
 
-	if ( focus ) {
+	if ( displayOptionsInfo.maxfps.generic.flags & QMF_GRAYED ) {
+		color = text_color_disabled;
+	} else if ( focus ) {
 		color = text_color_highlight;
 		style |= UI_PULSE;
 	} else {
