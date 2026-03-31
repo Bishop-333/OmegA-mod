@@ -286,7 +286,11 @@ static void CG_OffsetThirdPersonView( void ) {
 		offset = 0.0f;
 	} else if ( cgs.allowThirdperson < 2 ) {
 		angle = 0.0f;
-		range = 40.0f;
+		if ( cgs.clientinfo[cg.snap->ps.clientNum].isProp ) {
+			range = 80.0f;
+		} else {
+			range = 40.0f;
+		}
 		offset = 25.0f;
 	}
 
