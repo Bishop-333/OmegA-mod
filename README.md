@@ -80,5 +80,5 @@ make
 
 ## Donate
 
-I develop during my free time, if you enjoyed my mod or my engine/fork please consider supporting me by donating !
+I develop during my free time, if you enjoyed my mod or my engine please consider supporting me by donating !
 * paypal.me/fatsakura

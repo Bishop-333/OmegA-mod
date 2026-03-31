@@ -150,3 +150,35 @@
 - add mutliple explicit cvars (`pmove_doublejump`, `g_spectateOnDeath`, `g_noInvisWalls`)
 - add `g_railgunImpressiveReward` which double the reload speed of the railgun after an "Impressive" medal
 - add Possession gametype from OpenArena (OAX)
+
+## 3.3.6
+- menu cleanup
+- add `g_railgunImpressiveFastReload` which increase railgun fire rate after an impressive reward
+- add `g_allowThirdPerson` which when set to 2 authorize people to change `cg_thirdpersonRange`, `cg_thirdpersonAngle` and `cg_thirdpersonAngle`
+- louder Sarge and S_Marine sounds
+- better friend/foe sprites
+- new killsound with `cg_killsound`
+- add hitmarkers with `cg_hitmarker`
+- better thirdperson
+- add juggernaut powerup which gives you extra health and increases your size after a killstreak, configurable with `g_juggernaut`
+- smooth corpse sinking from mint-arena (`cg_smoothBodySink`)
+- better font
+- add `cg_friendSkulls` which displays skulls icons where teammates were killed
+- menu music
+
+## 3.3.7
+- adaptative thirdperson crosshair thanks to OpenSandbox
+- `cg_predictAmmo` from ratmod
+- status bar is back to it's classic look
+- better dynamic light colors for weapons
+- `g_leaveCorpse` to allow more corpses on the battlefield (the first sinks when a second appears)
+- better missile delag from aftershock
+- better headshot gib
+- add rampage/frags award (3 quick kills)
+- add `g_juggernautScale` to adjust size of juggernaut players (hitbox and health are dependent)
+- a lot of bug fixes
+
+## 3.3.8
+- ui cleanup
+- add `pmove_overbounce` if you want to enable overbounce back
+- memory fix
