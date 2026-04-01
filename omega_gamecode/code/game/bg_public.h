@@ -236,9 +236,10 @@ typedef struct {
 
 	//OmegA
 	int chaos;
-	int noInvisWalls;
+	int fastSwitch;
 	int guidedRockets;
 	float juggernautScale;
+	int noInvisWalls;
 	int railgunFireRate;
 	int rocketFireRate;
 	int slickGround;

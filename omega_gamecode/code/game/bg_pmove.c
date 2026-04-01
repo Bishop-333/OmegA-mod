@@ -1466,7 +1466,11 @@ static void PM_BeginWeaponChange( int weapon ) {
 	} else {
 		PM_AddEvent( EV_CHANGE_WEAPON );
 		pm->ps->weaponstate = WEAPON_DROPPING;
-		pm->ps->weaponTime += 200;
+		if ( pm->fastSwitch ) {
+			pm->ps->weaponTime += 100;
+		} else {
+			pm->ps->weaponTime += 200;
+		}
 		PM_StartTorsoAnim( TORSO_DROP );
 	}
 }

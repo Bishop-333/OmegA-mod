@@ -210,6 +210,7 @@ vmCvar_t g_damagePlums;
 vmCvar_t g_delagProjectiles;
 vmCvar_t g_dropFlag;
 vmCvar_t g_easierPickup;
+vmCvar_t g_fastSwitch;
 vmCvar_t g_forcespectator;
 vmCvar_t g_gauntletDamage;
 vmCvar_t g_grenadeSpeed;
@@ -457,6 +458,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_delagProjectiles, "g_delagProjectiles", "150", CVAR_SYSTEMINFO, 0, qfalse },
     { &g_dropFlag, "g_dropFlag", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_easierPickup, "g_easierPickup", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
+    { &g_fastSwitch, "g_fastSwitch", "1", CVAR_ARCHIVE, 0, qtrue },
     { &g_forcespectator, "g_forcespectator", "0", 0, 0, qtrue },
     { &g_gauntletDamage, "g_gauntletDamage", "50", 0, 0, qtrue },
     { &g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue },
