@@ -699,6 +699,7 @@ int G_InvulnerabilityEffect( gentity_t *targ, vec3_t dir, vec3_t point, vec3_t i
 void body_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int meansOfDeath );
 void TossClientItems( gentity_t *self );
 void TossClientPersistantPowerups( gentity_t *self );
+void TossClientCubesValues( vec3_t angles, vec3_t origin, vec3_t velocity );
 void TossClientCubes( gentity_t *self );
 void DamagePlum( gentity_t *ent, vec3_t origin, int score );
 
@@ -1165,6 +1166,7 @@ extern vmCvar_t g_minNameChangePeriod;
 extern vmCvar_t g_maxNameChanges;
 
 extern vmCvar_t g_grapple;
+extern vmCvar_t g_harvesterFromBodies;
 
 extern vmCvar_t g_developer;
 
