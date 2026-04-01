@@ -945,6 +945,8 @@ static void UI_Cache_f( void ) {
 	UI_DisplayOptionsMenu_Cache();
 	UI_SoundOptionsMenu_Cache();
 	UI_NetworkOptionsMenu_Cache();
+	UI_DMflagsOptionsMenu_Cache();
+	UI_MutatorsOptionsMenu_Cache();
 	UI_SPLevelMenu_Cache();
 	UI_SPSkillMenu_Cache();
 	UI_SPPostgameMenu_Cache();

@@ -812,6 +812,13 @@ static void ClientThink_real( gentity_t *ent ) {
 	if ( client->pers.connected != CON_CONNECTED ) {
 		return;
 	}
+
+	if ( !g_broadcastClients.integer || client->sess.sessionTeam == TEAM_SPECTATOR || ( client->isEliminated || client->ps.stats[STAT_HEALTH] <= 0 ) ) {
+		ent->r.svFlags &= ~SVF_BROADCAST;
+	} else {
+		ent->r.svFlags |= SVF_BROADCAST;
+	}
+
 	// mark the time, so the connection sprite can be removed
 	ucmd = &ent->client->pers.cmd;
 
@@ -822,12 +829,6 @@ static void ClientThink_real( gentity_t *ent ) {
 	} else if ( ucmd->serverTime < level.time - 1000 ) {
 		ucmd->serverTime = level.time - 1000;
 		//		G_Printf("serverTime >>>>>\n" );
-	}
-
-	if ( ( g_cheats.integer || ( g_gametype.integer >= GT_TEAM && !g_ffa_gt ) ) && ent->client->sess.sessionTeam != TEAM_SPECTATOR ) {
-		ent->r.svFlags |= SVF_BROADCAST;
-	} else {
-		ent->r.svFlags &= ~SVF_BROADCAST;
 	}
 
 	//Here comes the unlagged bit!

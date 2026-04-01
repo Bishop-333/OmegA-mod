@@ -708,6 +708,7 @@ SERVER OPTIONS MENU *****
 #define ID_GO 27
 #define ID_BACK 28
 #define ID_DMFLAGS 29
+#define ID_MUTATORS 30
 
 #define PLAYER_SLOTS 12
 
@@ -735,6 +736,7 @@ typedef struct {
 	menuradiobutton_s respawn;
 	menulist_s botSkill;
 	menutext_s dmflags;
+	menutext_s mutators;
 
 	menutext_s player0;
 	menulist_s playerType[PLAYER_SLOTS];
@@ -1098,6 +1100,12 @@ static void ServerOptions_Event( void *ptr, int event ) {
 				break;
 			}
 			UI_DMflagsOptionsMenu();
+			break;
+		case ID_MUTATORS:
+			if ( event != QM_ACTIVATED ) {
+				break;
+			}
+			UI_MutatorsOptionsMenu();
 			break;
 		case ID_GO:
 			if ( event != QM_ACTIVATED ) {
@@ -1704,6 +1712,17 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	s_serveroptions.dmflags.style = UI_SMALLFONT;
 	s_serveroptions.dmflags.color = text_color_normal;
 
+	y += BIGCHAR_HEIGHT + 2;
+	s_serveroptions.mutators.generic.type = MTYPE_CTEXT;
+	s_serveroptions.mutators.string = "Mutators";
+	s_serveroptions.mutators.generic.flags = QMF_PULSEIFFOCUS;
+	s_serveroptions.mutators.generic.callback = ServerOptions_Event;
+	s_serveroptions.mutators.generic.id = ID_MUTATORS;
+	s_serveroptions.mutators.generic.x = 40;
+	s_serveroptions.mutators.generic.y = y;
+	s_serveroptions.mutators.style = UI_SMALLFONT;
+	s_serveroptions.mutators.color = text_color_normal;
+
 	s_serveroptions.back.generic.type = MTYPE_BITMAP;
 	s_serveroptions.back.generic.name = GAMESERVER_BACK0;
 	s_serveroptions.back.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -1756,6 +1775,7 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	}
 
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.dmflags );
+	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.mutators );
 
 	if ( s_serveroptions.gametype < GT_CTF || s_serveroptions.gametype == GT_LMS || s_serveroptions.gametype == GT_POSSESSION ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.fraglimit );

@@ -204,6 +204,7 @@ vmCvar_t g_developer;
 vmCvar_t g_allowDuplicateGuid;
 vmCvar_t g_allowThirdPerson;
 vmCvar_t g_beheading;
+vmCvar_t g_broadcastClients;
 vmCvar_t g_chaos;
 vmCvar_t g_damagePlums;
 vmCvar_t g_delagProjectiles;
@@ -214,7 +215,7 @@ vmCvar_t g_gauntletDamage;
 vmCvar_t g_grenadeSpeed;
 vmCvar_t g_guidedRockets;
 vmCvar_t g_headDamageMultiplicator;
-vmCvar_t g_headShotOnly;
+vmCvar_t g_headshotOnly;
 vmCvar_t g_juggernaut;
 vmCvar_t g_juggernautScale;
 vmCvar_t g_jumppadGrenades;
@@ -450,6 +451,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_allowDuplicateGuid, "g_allowDuplicateGuid", "1", 0, 0, qfalse },
     { &g_allowThirdPerson, "g_allowThirdPerson", "1", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_beheading, "g_beheading", "1", CVAR_ARCHIVE, 0, qtrue },
+    { &g_broadcastClients, "g_broadcastClients", "1", 0, 0, qfalse },
     { &g_chaos, "g_chaos", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, 0, qtrue },
     { &g_damagePlums, "g_damagePlums", "1", CVAR_ARCHIVE, 0, qfalse },
     { &g_delagProjectiles, "g_delagProjectiles", "150", CVAR_SYSTEMINFO, 0, qfalse },
@@ -460,7 +462,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_grenadeSpeed, "g_grenadeSpeed", "700", 0, 0, qtrue },
     { &g_guidedRockets, "g_guidedRockets", "0", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_headDamageMultiplicator, "g_headDamageMultiplicator", "1", 0, 0, qtrue },
-    { &g_headShotOnly, "g_headShotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
+    { &g_headshotOnly, "g_headshotOnly", "0", CVAR_ARCHIVE, 0, qtrue },
     { &g_juggernaut, "g_juggernaut", "7", CVAR_ARCHIVE, 0, qtrue },
     { &g_juggernautScale, "g_juggernautScale", "1.5", CVAR_ARCHIVE | CVAR_SYSTEMINFO, 0, qtrue },
     { &g_jumppadGrenades, "g_jumppadGrenades", "1", CVAR_ARCHIVE, 0, qtrue },

@@ -653,6 +653,7 @@ UIOBJ_ = \
   $(B)/$(MOD)/ui/ui_menu.o \
   $(B)/$(MOD)/ui/ui_mfield.o \
   $(B)/$(MOD)/ui/ui_mods.o \
+  $(B)/$(MOD)/ui/ui_mutators.o \
   $(B)/$(MOD)/ui/ui_network.o \
   $(B)/$(MOD)/ui/ui_password.o \
   $(B)/$(MOD)/ui/ui_playermodel.o \
