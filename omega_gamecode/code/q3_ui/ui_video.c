@@ -349,7 +349,8 @@ typedef struct {
 	menulist_s shadows;
 	menuslider_s tq;
 	menulist_s aniso;
-	menulist_s anti;
+	menulist_s msaa;
+	menulist_s fxaa;
 	menutext_s driverinfo;
 
 	menubitmap_s apply;
@@ -370,7 +371,8 @@ typedef struct
 	int shadows;
 	int tq;
 	int aniso;
-	int anti;
+	int msaa;
+	int fxaa;
 } InitialVideoOptions_s;
 
 static InitialVideoOptions_s s_ivo;
@@ -525,7 +527,8 @@ static void GraphicsOptions_GetInitialVideo( void ) {
 	s_ivo.shadows = s_graphicsoptions.shadows.curvalue;
 	s_ivo.tq = s_graphicsoptions.tq.curvalue;
 	s_ivo.aniso = s_graphicsoptions.aniso.curvalue;
-	s_ivo.anti = s_graphicsoptions.anti.curvalue;
+	s_ivo.msaa = s_graphicsoptions.msaa.curvalue;
+	s_ivo.fxaa = s_graphicsoptions.fxaa.curvalue;
 }
 
 /*
@@ -577,10 +580,16 @@ static void GraphicsOptions_UpdateMenuItems( void ) {
 
 	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 && s_graphicsoptions.fbo.curvalue == 0 ) {
 		s_graphicsoptions.bloom.generic.flags |= QMF_GRAYED;
-		s_graphicsoptions.anti.generic.flags |= QMF_GRAYED;
+		s_graphicsoptions.msaa.generic.flags |= QMF_GRAYED;
 	} else {
 		s_graphicsoptions.bloom.generic.flags &= ~QMF_GRAYED;
-		s_graphicsoptions.anti.generic.flags &= ~QMF_GRAYED;
+		s_graphicsoptions.msaa.generic.flags &= ~QMF_GRAYED;
+	}
+
+	if ( s_graphicsoptions.fbo.curvalue == 0 || s_graphicsoptions.renderer.curvalue != 1 ) {
+		s_graphicsoptions.fxaa.generic.flags |= QMF_GRAYED;
+	} else {
+		s_graphicsoptions.fxaa.generic.flags &= ~QMF_GRAYED;
 	}
 
 	s_graphicsoptions.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
@@ -621,7 +630,10 @@ static void GraphicsOptions_UpdateMenuItems( void ) {
 	if ( s_ivo.aniso != s_graphicsoptions.aniso.curvalue ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
-	if ( s_ivo.anti != s_graphicsoptions.anti.curvalue ) {
+	if ( s_ivo.msaa != s_graphicsoptions.msaa.curvalue ) {
+		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
+	}
+	if ( s_ivo.fxaa != s_graphicsoptions.fxaa.curvalue ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 }
@@ -675,7 +687,8 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification ) {
 	trap_Cvar_SetValue( "r_bloom", s_graphicsoptions.bloom.curvalue );
 	trap_Cvar_SetValue( "r_dynamiclight", s_graphicsoptions.dynamiclights.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
-	trap_Cvar_SetValue( "r_ext_multisample", s_graphicsoptions.anti.curvalue * 2 );
+	trap_Cvar_SetValue( "r_ext_multisample", s_graphicsoptions.msaa.curvalue * 2 );
+	trap_Cvar_SetValue( "r_ext_fxaa", s_graphicsoptions.fxaa.curvalue );
 
 	//r_ext_texture_filter_anisotropic is special
 	if ( s_graphicsoptions.aniso.curvalue ) {
@@ -848,7 +861,8 @@ static void GraphicsOptions_SetMenuItems( void ) {
 	s_graphicsoptions.dynamiclights.curvalue = trap_Cvar_VariableValue( "r_dynamiclight" );
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue( "cg_drawFPS" );
 	s_graphicsoptions.shadows.curvalue = trap_Cvar_VariableValue( "cg_shadows" );
-	s_graphicsoptions.anti.curvalue = trap_Cvar_VariableValue( "r_ext_multisample" ) / 2;
+	s_graphicsoptions.msaa.curvalue = trap_Cvar_VariableValue( "r_ext_multisample" ) / 2;
+	s_graphicsoptions.fxaa.curvalue = trap_Cvar_VariableValue( "r_ext_fxaa" );
 	if ( trap_Cvar_VariableValue( "r_ext_texture_filter_anisotropic" ) ) {
 		s_graphicsoptions.aniso.curvalue = trap_Cvar_VariableValue( "r_ext_max_anisotropy" ) / 2;
 	}
@@ -903,7 +917,7 @@ void GraphicsOptions_MenuInit( void ) {
 	        "16x",
 	        NULL };
 
-	static const char *anti_names[] =
+	static const char *msaa_names[] =
 	    {
 	        "Off",
 	        "2x",
@@ -1004,16 +1018,16 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.renderer.generic.x = 400;
 	s_graphicsoptions.renderer.generic.y = y;
 	s_graphicsoptions.renderer.itemnames = renderer_names;
-	y += BIGCHAR_HEIGHT + 2;
 
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.desktop.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.desktop.generic.name = "Native Resolution:";
 	s_graphicsoptions.desktop.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.desktop.generic.x = 400;
 	s_graphicsoptions.desktop.generic.y = y;
 	s_graphicsoptions.desktop.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
 
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.ratio.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.ratio.generic.name = "Aspect Ratio:";
 	s_graphicsoptions.ratio.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1022,9 +1036,9 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.ratio.itemnames = ratios;
 	s_graphicsoptions.ratio.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.ratio.generic.id = ID_RATIO;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_mode"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.mode.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.mode.generic.name = "Resolution:";
 	s_graphicsoptions.mode.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1033,9 +1047,9 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.mode.itemnames = resolutions;
 	s_graphicsoptions.mode.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.mode.generic.id = ID_MODE;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_fullscreen"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.fs.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.fs.generic.name = "Fullscreen:";
 	s_graphicsoptions.fs.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1048,64 +1062,65 @@ void GraphicsOptions_MenuInit( void ) {
 	} else {
 		s_graphicsoptions.fs.itemnames = enabled_names;
 	}
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_fbo"
 	if ( ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) ) {
+		y += BIGCHAR_HEIGHT + 2;
 		s_graphicsoptions.fbo.generic.type = MTYPE_SPINCONTROL;
 		s_graphicsoptions.fbo.generic.name = "FBO:";
 		s_graphicsoptions.fbo.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 		s_graphicsoptions.fbo.generic.x = 400;
 		s_graphicsoptions.fbo.generic.y = y;
 		s_graphicsoptions.fbo.itemnames = enabled_names;
-		y += BIGCHAR_HEIGHT + 2;
 	}
 
 	// references/modifies "r_flares"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.flares.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.flares.generic.name = "Flares:";
 	s_graphicsoptions.flares.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.flares.generic.x = 400;
 	s_graphicsoptions.flares.generic.y = y;
 	s_graphicsoptions.flares.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_bloom"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.bloom.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.bloom.generic.name = "Bloom:";
 	s_graphicsoptions.bloom.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.bloom.generic.x = 400;
 	s_graphicsoptions.bloom.generic.y = y;
 	s_graphicsoptions.bloom.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_dynamiclight"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.dynamiclights.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.dynamiclights.generic.name = "Dynamic Lights:";
 	s_graphicsoptions.dynamiclights.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.dynamiclights.generic.x = 400;
 	s_graphicsoptions.dynamiclights.generic.y = y;
 	s_graphicsoptions.dynamiclights.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
 
+	// references/modifies "cg_drawFPS"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.drawfps.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.drawfps.generic.name = "Draw FPS:";
 	s_graphicsoptions.drawfps.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.drawfps.generic.x = 400;
 	s_graphicsoptions.drawfps.generic.y = y;
 	s_graphicsoptions.drawfps.itemnames = enabled_names;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "cg_shadows"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.shadows.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.shadows.generic.name = "Shadows:";
 	s_graphicsoptions.shadows.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.shadows.generic.x = 400;
 	s_graphicsoptions.shadows.generic.y = y;
 	s_graphicsoptions.shadows.itemnames = shadows_names;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_picmip"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.tq.generic.type = MTYPE_SLIDER;
 	s_graphicsoptions.tq.generic.name = "Texture Detail:";
 	s_graphicsoptions.tq.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1114,36 +1129,46 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.tq.minvalue = 0;
 	s_graphicsoptions.tq.maxvalue = 3;
 	s_graphicsoptions.tq.generic.callback = GraphicsOptions_TQEvent;
-	y += BIGCHAR_HEIGHT + 2;
 
 	// references/modifies "r_ext_max_anisotropy"
+	y += BIGCHAR_HEIGHT + 2;
 	s_graphicsoptions.aniso.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.aniso.generic.name = "Anisotropy:";
 	s_graphicsoptions.aniso.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_graphicsoptions.aniso.generic.x = 400;
 	s_graphicsoptions.aniso.generic.y = y;
 	s_graphicsoptions.aniso.itemnames = aniso_names;
-	y += 2 + BIGCHAR_HEIGHT;
 
 	// references/modifies "r_ext_multisample"
-	s_graphicsoptions.anti.generic.type = MTYPE_SPINCONTROL;
-	s_graphicsoptions.anti.generic.name = "Anti-Aliasing:";
-	s_graphicsoptions.anti.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.anti.generic.x = 400;
-	s_graphicsoptions.anti.generic.y = y;
-	s_graphicsoptions.anti.itemnames = anti_names;
-	y += 3 * BIGCHAR_HEIGHT;
+	y += 2 + BIGCHAR_HEIGHT;
+	s_graphicsoptions.msaa.generic.type = MTYPE_SPINCONTROL;
+	s_graphicsoptions.msaa.generic.name = "MSAA:";
+	s_graphicsoptions.msaa.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_graphicsoptions.msaa.generic.x = 400;
+	s_graphicsoptions.msaa.generic.y = y;
+	s_graphicsoptions.msaa.itemnames = msaa_names;
 
+	// references/modifies "r_ext_fxaa"
+	if ( ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) ) {
+		y += 2 + BIGCHAR_HEIGHT;
+		s_graphicsoptions.fxaa.generic.type = MTYPE_SPINCONTROL;
+		s_graphicsoptions.fxaa.generic.name = "FXAA:";
+		s_graphicsoptions.fxaa.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+		s_graphicsoptions.fxaa.generic.x = 400;
+		s_graphicsoptions.fxaa.generic.y = y;
+		s_graphicsoptions.fxaa.itemnames = enabled_names;
+	}
+
+	y += 2 * BIGCHAR_HEIGHT;
 	s_graphicsoptions.driverinfo.generic.type = MTYPE_PTEXT;
 	s_graphicsoptions.driverinfo.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
 	s_graphicsoptions.driverinfo.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.driverinfo.generic.id = ID_DRIVERINFO;
 	s_graphicsoptions.driverinfo.generic.x = 320;
-	s_graphicsoptions.driverinfo.generic.y = 396;
+	s_graphicsoptions.driverinfo.generic.y = y;
 	s_graphicsoptions.driverinfo.string = "Driver Info";
 	s_graphicsoptions.driverinfo.style = UI_CENTER | UI_SMALLFONT;
 	s_graphicsoptions.driverinfo.color = color_red;
-	y += BIGCHAR_HEIGHT + 2;
 
 	s_graphicsoptions.back.generic.type = MTYPE_BITMAP;
 	s_graphicsoptions.back.generic.name = GRAPHICSOPTIONS_BACK0;
@@ -1192,7 +1217,10 @@ void GraphicsOptions_MenuInit( void ) {
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.shadows );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.tq );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.aniso );
-	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.anti );
+	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.msaa );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.fxaa );
+	}
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.driverinfo );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.back );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.apply );
