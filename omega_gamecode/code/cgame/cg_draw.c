@@ -2517,6 +2517,69 @@ CROSSHAIR
 
 /*
 =================
+CG_DrawHitmarkerCorners
+=================
+*/
+static void CG_DrawHitmarkerCorners( float centerX, float centerY, float offsetX, float offsetY, float width, float height ) {
+	trap_R_DrawStretchPic( centerX - offsetX, centerY - offsetY, width, height, 0, 0, 1, 1, cgs.media.whiteShader );
+	trap_R_DrawStretchPic( centerX + offsetX, centerY - offsetY, width, height, 0, 0, 1, 1, cgs.media.whiteShader );
+	trap_R_DrawStretchPic( centerX - offsetX, centerY + offsetY, width, height, 0, 0, 1, 1, cgs.media.whiteShader );
+	trap_R_DrawStretchPic( centerX + offsetX, centerY + offsetY, width, height, 0, 0, 1, 1, cgs.media.whiteShader );
+}
+
+/*
+=================
+CG_DrawHitmarker
+=================
+*/
+#define HITMARKER_SCALE 0.25f
+static void CG_DrawHitmarker( float x, float y, float w, float h ) {
+	float animTime = (float)( cg.time - cg.lastHitTime ) / 250.0f;
+	float offset, killOffset = 0.0f;
+	float size;
+	float centerX, centerY;
+	float offsetX, offsetY, killOffsetX, killOffsetY;
+	float sizeX, sizeY, killSizeX, killSizeY;
+	vec4_t color;
+
+	if ( !cg_hitmarker.integer ) {
+		return;
+	}
+
+	if ( cg.lastHitWasKill ) {
+		offset = ( 7.5f + animTime * 75.0f ) * HITMARKER_SCALE;
+		killOffset = ( 50.0f - animTime * 50.0f ) * HITMARKER_SCALE;
+		size = 7.5f * HITMARKER_SCALE;
+		VectorCopy( colorRed, color );
+	} else {
+		offset = ( 5.0f + animTime * 50.0f ) * HITMARKER_SCALE;
+		size = 5.0f * HITMARKER_SCALE;
+		VectorCopy( colorWhite, color );
+	}
+	color[3] = 1.0f - animTime;
+	trap_R_SetColor( color );
+
+	centerX = x + cg.refdef.x + 0.5f * ( cg.refdef.width - w ) + w * 0.5f;
+	centerY = y + cg.refdef.y + 0.5f * ( cg.refdef.height - h ) + h * 0.5f;
+
+	offsetX = offset * cgs.screenXScale;
+	offsetY = offset * cgs.screenYScale;
+	killOffsetX = killOffset * cgs.screenXScale;
+	killOffsetY = killOffset * cgs.screenYScale;
+
+	sizeX = size * cgs.screenXScale;
+	sizeY = size * cgs.screenYScale;
+	killSizeX = 1.25f * cgs.screenXScale;
+	killSizeY = 1.25f * cgs.screenYScale;
+
+	if ( cg.lastHitWasKill ) {
+		CG_DrawHitmarkerCorners( centerX, centerY, killOffsetX, killOffsetY, killSizeX, killSizeY );
+	}
+	CG_DrawHitmarkerCorners( centerX, centerY, offsetX, offsetY, sizeX, sizeY );
+}
+
+/*
+=================
 CG_DrawCrosshair
 =================
 */
@@ -2647,35 +2710,8 @@ static void CG_DrawCrosshair( void ) {
 	                       y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ),
 	                       w, h, 0, 0, 1, 1, hShader );
 
-	if ( cg_hitmarker.integer && cg.lastHitTime > 0 && cg.time - cg.lastHitTime < 250 ) {
-		float animTime = (float)( cg.time - cg.lastHitTime ) / 250.0f;
-		float offset, offset2 = 0.0f;
-		float size;
-		vec4_t color;
-
-		if ( cg.lastHitWasKill ) {
-			offset = 7.5f + animTime * 75.0f;
-			offset2 = 50.0f - animTime * 50.0f;
-			size = 7.5f;
-			VectorCopy( colorRed, color );
-		} else {
-			offset = 5.0f + animTime * 50.0f;
-			size = 5.0f;
-			VectorCopy( colorWhite, color );
-		}
-		color[3] = 1.0f - animTime;
-		trap_R_SetColor( color );
-
-		if ( cg.lastHitWasKill ) {
-			trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f - offset2, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f - offset2, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
-			trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f + offset2, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f - offset2, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
-			trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f - offset2, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f + offset2, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
-			trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f + offset2, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f + offset2, 5, 5, 0, 0, 1, 1, cgs.media.whiteShader );
-		}
-		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f - offset, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f - offset, size, size, 0, 0, 1, 1, cgs.media.whiteShader );
-		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f + offset, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f - offset, size, size, 0, 0, 1, 1, cgs.media.whiteShader );
-		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f - offset, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f + offset, size, size, 0, 0, 1, 1, cgs.media.whiteShader );
-		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ) + w * 0.5f + offset, y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ) + h * 0.5f + offset, size, size, 0, 0, 1, 1, cgs.media.whiteShader );
+	if ( cg.lastHitTime > 0 && cg.time - cg.lastHitTime < 250 ) {
+		CG_DrawHitmarker( x, y, w, h );
 	}
 	trap_R_SetColor( NULL );
 }
