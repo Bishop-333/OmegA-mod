@@ -1724,7 +1724,7 @@ static float CG_DrawPowerups( float y ) {
 	}
 
 	// draw the icons and timers
-	x = 640 - ICON_SIZE - CHAR_WIDTH * 2;
+	x = 640 - ICON_SIZE - CHAR_WIDTH * 3;
 	for ( i = 0; i < active; i++ ) {
 		item = BG_FindItemForPowerup( sorted[i] );
 
@@ -1735,7 +1735,7 @@ static float CG_DrawPowerups( float y ) {
 			y -= ICON_SIZE;
 
 			trap_R_SetColor( colors[color] );
-			CG_DrawField( x, y, 2, sortedTime[i] / 1000, CHAR_WIDTH, CHAR_HEIGHT );
+			CG_DrawField( x, y, 3, sortedTime[i] / 1000, CHAR_WIDTH, CHAR_HEIGHT );
 
 			t = ps->powerups[sorted[i]];
 			if ( t - cg.time >= POWERUP_BLINKS * POWERUP_BLINK_TIME ) {
