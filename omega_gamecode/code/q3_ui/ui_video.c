@@ -323,6 +323,8 @@ GRAPHICS OPTIONS MENU
 #define ID_SOUND 107
 #define ID_NETWORK 108
 #define ID_RATIO 109
+#define ID_RENDERER 110
+#define ID_FBO 111
 
 typedef struct {
 	menuframework_s menu;
@@ -727,6 +729,21 @@ static void GraphicsOptions_Event( void *ptr, int event ) {
 	}
 
 	switch ( ( (menucommon_s *)ptr )->id ) {
+		case ID_RENDERER:
+			if ( s_graphicsoptions.renderer.curvalue != 1 ) {
+				if ( s_graphicsoptions.fxaa.curvalue != 0 ) {
+					trap_Cvar_SetValue( "ui_saved_fxaa", s_graphicsoptions.fxaa.curvalue );
+				}
+				s_graphicsoptions.fxaa.curvalue = 0;
+			} else if ( s_graphicsoptions.renderer.curvalue == 1 ) {
+				if ( s_graphicsoptions.fbo.curvalue != 0 ) {
+					s_graphicsoptions.fxaa.curvalue = trap_Cvar_VariableValue( "ui_saved_fxaa" );
+				} else {
+					s_graphicsoptions.fxaa.curvalue = 0;
+				}
+			}
+			break;
+
 		case ID_RATIO:
 			s_graphicsoptions.mode.curvalue = ratioToRes[s_graphicsoptions.ratio.curvalue];
 			// fall through to apply mode constraints
@@ -741,6 +758,27 @@ static void GraphicsOptions_Event( void *ptr, int event ) {
 				s_graphicsoptions.desktop.curvalue = 1;
 			} else if ( s_graphicsoptions.fs.curvalue == 0 ) {
 				s_graphicsoptions.desktop.curvalue = trap_Cvar_VariableValue( "ui_saved_desktop" );
+			}
+			break;
+
+		case ID_FBO:
+			if ( s_graphicsoptions.fbo.curvalue == 0 ) {
+				trap_Cvar_SetValue( "ui_saved_bloom", s_graphicsoptions.bloom.curvalue );
+				trap_Cvar_SetValue( "ui_saved_msaa", s_graphicsoptions.msaa.curvalue );
+				if ( s_graphicsoptions.fxaa.curvalue != 0 ) {
+					trap_Cvar_SetValue( "ui_saved_fxaa", s_graphicsoptions.fxaa.curvalue );
+				}
+				s_graphicsoptions.bloom.curvalue = 0;
+				s_graphicsoptions.msaa.curvalue = 0;
+				s_graphicsoptions.fxaa.curvalue = 0;
+			} else if ( s_graphicsoptions.fbo.curvalue != 0 ) {
+				s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue( "ui_saved_bloom" );
+				s_graphicsoptions.msaa.curvalue = trap_Cvar_VariableValue( "ui_saved_msaa" );
+				if ( s_graphicsoptions.renderer.curvalue == 1 ) {
+					s_graphicsoptions.fxaa.curvalue = trap_Cvar_VariableValue( "ui_saved_fxaa" );
+				} else {
+					s_graphicsoptions.fxaa.curvalue = 0;
+				}
 			}
 			break;
 
@@ -1015,6 +1053,8 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.renderer.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.renderer.generic.name = "Renderer:";
 	s_graphicsoptions.renderer.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_graphicsoptions.renderer.generic.id = ID_RENDERER;
+	s_graphicsoptions.renderer.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.renderer.generic.x = 400;
 	s_graphicsoptions.renderer.generic.y = y;
 	s_graphicsoptions.renderer.itemnames = renderer_names;
@@ -1069,6 +1109,8 @@ void GraphicsOptions_MenuInit( void ) {
 		s_graphicsoptions.fbo.generic.type = MTYPE_SPINCONTROL;
 		s_graphicsoptions.fbo.generic.name = "FBO:";
 		s_graphicsoptions.fbo.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+		s_graphicsoptions.fbo.generic.id = ID_FBO;
+		s_graphicsoptions.fbo.generic.callback = GraphicsOptions_Event;
 		s_graphicsoptions.fbo.generic.x = 400;
 		s_graphicsoptions.fbo.generic.y = y;
 		s_graphicsoptions.fbo.itemnames = enabled_names;
