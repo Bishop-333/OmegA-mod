@@ -445,7 +445,7 @@ int UI_ProportionalStringWidth( const char *str ) {
 	return width;
 }
 
-static void UI_DrawProportionalString2( int x, int y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
+void UI_DrawProportionalString2( float x, float y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
 	const char *s;
 	unsigned char ch; // bk001204 - unsigned
 	float ax;
@@ -500,20 +500,17 @@ float UI_ProportionalSizeScale( int style ) {
 
 /*
 =================
-UI_DrawProportionalString
+UI_DrawProportionalStringScale
 =================
 */
-void UI_DrawProportionalString( int x, int y, const char *str, int style, vec4_t color ) {
+void UI_DrawProportionalStringScale( float x, float y, const char *str, int style, vec4_t color, float sizeScale ) {
 	vec4_t drawcolor;
-	int width;
-	float sizeScale;
-
-	sizeScale = UI_ProportionalSizeScale( style );
+	float width;
 
 	switch ( style & UI_FORMATMASK ) {
 		case UI_CENTER:
 			width = UI_ProportionalStringWidth( str ) * sizeScale;
-			x -= width / 2;
+			x -= width * 0.5f;
 			break;
 
 		case UI_RIGHT:
@@ -555,13 +552,23 @@ void UI_DrawProportionalString( int x, int y, const char *str, int style, vec4_t
 		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetPropGlow );
 
 		if ( style & UI_SELECTED ) {
-			UI_DrawNamedPic( x - width / 2, y - sizeScale, width * 2, (float)PROP_HEIGHT * 1.25 * sizeScale, ART_SELECTED );
+			width = UI_ProportionalStringWidth( str ) * sizeScale;
+			UI_DrawNamedPic( x - width * 0.5f, y - sizeScale, width * 2, (float)PROP_HEIGHT * 1.25 * sizeScale, ART_SELECTED );
 		}
 
 		return;
 	}
 
 	UI_DrawProportionalString2( x, y, str, color, sizeScale, uis.charsetProp );
+}
+
+/*
+=================
+UI_DrawProportionalString
+=================
+*/
+void UI_DrawProportionalString( int x, int y, const char *str, int style, vec4_t color ) {
+	UI_DrawProportionalStringScale( x, y, str, style, color, UI_ProportionalSizeScale( style ) );
 }
 
 /*

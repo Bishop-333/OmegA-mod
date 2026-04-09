@@ -41,6 +41,7 @@ MAIN MENU
 
 #define MAIN_BANNER_MODEL "models/mapobjects/banner/banner5.md3"
 #define MAIN_MENU_VERTICAL_SPACING 32
+#define MAIN_MENU_ITEM_COUNT 8
 
 typedef struct {
 	menuframework_s menu;
@@ -67,6 +68,36 @@ typedef struct {
 } errorMessage_t;
 
 static errorMessage_t s_errorMessage;
+
+/*
+=================
+Main_MenuTextDraw
+=================
+*/
+static void Main_MenuTextDraw( void *self ) {
+	menutext_s *text = (menutext_s *)self;
+	static float hoverScale[MAIN_MENU_ITEM_COUNT];
+	float *scale;
+	float targetScale;
+	int style;
+
+	scale = &hoverScale[text->generic.id - ID_SINGLEPLAYER];
+	if ( *scale == 0.0f ) {
+		*scale = 1.0f;
+	}
+
+	if ( Menu_ItemAtCursor( text->generic.parent ) == text ) {
+		targetScale = 1.05f;
+		style = ( text->style & ~( UI_INVERSE | UI_PULSE ) ) | UI_PULSE;
+	} else {
+		targetScale = 1.0f;
+		style = ( text->style & ~( UI_INVERSE | UI_PULSE ) ) | UI_INVERSE;
+	}
+
+	*scale += ( targetScale - *scale ) * Com_Clamp( 0.0f, 1.0f, uis.frametime * 0.025f );
+
+	UI_DrawProportionalStringScale( text->generic.x, text->generic.y - PROP_HEIGHT * ( *scale - 1.0f ) * 0.5f, text->string, style, text->color, *scale );
+}
 
 /*
 =================
@@ -271,6 +302,7 @@ void UI_MainMenu( void ) {
 	s_main.singleplayer.generic.y = y;
 	s_main.singleplayer.generic.id = ID_SINGLEPLAYER;
 	s_main.singleplayer.generic.callback = Main_MenuEvent;
+	s_main.singleplayer.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.singleplayer.string = "SINGLE PLAYER";
 	s_main.singleplayer.color = color_red;
 	s_main.singleplayer.style = style;
@@ -282,6 +314,7 @@ void UI_MainMenu( void ) {
 	s_main.multiplayer.generic.y = y;
 	s_main.multiplayer.generic.id = ID_MULTIPLAYER;
 	s_main.multiplayer.generic.callback = Main_MenuEvent;
+	s_main.multiplayer.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.multiplayer.string = "MULTIPLAYER";
 	s_main.multiplayer.color = color_red;
 	s_main.multiplayer.style = style;
@@ -293,6 +326,7 @@ void UI_MainMenu( void ) {
 	s_main.setup.generic.y = y;
 	s_main.setup.generic.id = ID_SETUP;
 	s_main.setup.generic.callback = Main_MenuEvent;
+	s_main.setup.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.setup.string = "SETUP";
 	s_main.setup.color = color_red;
 	s_main.setup.style = style;
@@ -304,6 +338,7 @@ void UI_MainMenu( void ) {
 	s_main.demos.generic.y = y;
 	s_main.demos.generic.id = ID_DEMOS;
 	s_main.demos.generic.callback = Main_MenuEvent;
+	s_main.demos.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.demos.string = "DEMOS";
 	s_main.demos.color = color_red;
 	s_main.demos.style = style;
@@ -315,6 +350,7 @@ void UI_MainMenu( void ) {
 	s_main.challenges.generic.y = y;
 	s_main.challenges.generic.id = ID_CHALLENGES;
 	s_main.challenges.generic.callback = Main_MenuEvent;
+	s_main.challenges.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.challenges.string = "STATISTICS";
 	s_main.challenges.color = color_red;
 	s_main.challenges.style = style;
@@ -326,6 +362,7 @@ void UI_MainMenu( void ) {
 	s_main.openArena.generic.y = y;
 	s_main.openArena.generic.id = ID_OPENARENA;
 	s_main.openArena.generic.callback = Main_MenuEvent;
+	s_main.openArena.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.openArena.string = "OPENARENA";
 	s_main.openArena.color = color_red;
 	s_main.openArena.style = style;
@@ -337,6 +374,7 @@ void UI_MainMenu( void ) {
 	s_main.mods.generic.y = y;
 	s_main.mods.generic.id = ID_MODS;
 	s_main.mods.generic.callback = Main_MenuEvent;
+	s_main.mods.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.mods.string = "MODS";
 	s_main.mods.color = color_red;
 	s_main.mods.style = style;
@@ -348,6 +386,7 @@ void UI_MainMenu( void ) {
 	s_main.exit.generic.y = y;
 	s_main.exit.generic.id = ID_EXIT;
 	s_main.exit.generic.callback = Main_MenuEvent;
+	s_main.exit.generic.ownerdraw = Main_MenuTextDraw;
 	s_main.exit.string = "EXIT";
 	s_main.exit.color = color_red;
 	s_main.exit.style = style;
