@@ -260,7 +260,7 @@ typedef enum {
 #define PROP_SMALL_SIZE_SCALE	0.75
 
 #define BLINK_DIVISOR			200
-#define PULSE_DIVISOR			75
+#define PULSE_DIVISOR			150.0
 
 #define UI_LEFT			0x00000000	// default
 #define UI_CENTER		0x00000001
