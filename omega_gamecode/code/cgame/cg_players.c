@@ -755,7 +755,7 @@ static void CG_LoadClientInfo( int clientNum, clientInfo_t *ci ) {
 
 	for ( i = 0; i < MAX_CUSTOM_SOUNDS; i++ ) {
 		s = cg_customSoundNames[i];
-		if ( !s ) {
+		if ( !s || ci->isProp ) {
 			break;
 		}
 		ci->sounds[i] = 0;
