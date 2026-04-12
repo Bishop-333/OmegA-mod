@@ -445,7 +445,7 @@ int UI_ProportionalStringWidth( const char *str ) {
 	return width;
 }
 
-void UI_DrawProportionalString2( float x, float y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
+static void UI_DrawProportionalString2( float x, float y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
 	const char *s;
 	unsigned char ch; // bk001204 - unsigned
 	float ax;
@@ -503,7 +503,7 @@ float UI_ProportionalSizeScale( int style ) {
 UI_DrawProportionalStringScale
 =================
 */
-void UI_DrawProportionalStringScale( float x, float y, const char *str, int style, vec4_t color, float sizeScale ) {
+static void UI_DrawProportionalStringScale( float x, float y, const char *str, int style, vec4_t color, float sizeScale ) {
 	vec4_t drawcolor;
 	float width;
 
@@ -560,6 +560,33 @@ void UI_DrawProportionalStringScale( float x, float y, const char *str, int styl
 	}
 
 	UI_DrawProportionalString2( x, y, str, color, sizeScale, uis.charsetProp );
+}
+
+/*
+=================
+UI_DrawMenuString
+=================
+*/
+void UI_DrawMenuString( void *self ) {
+	menutext_s *text = (menutext_s *)self;
+	float targetScale;
+	int style;
+
+	if ( text->generic.scale == 0.0f ) {
+		text->generic.scale = 1.0f;
+	}
+
+	if ( Menu_ItemAtCursor( text->generic.parent ) == text ) {
+		targetScale = 1.05f;
+		style = ( text->style & ~( UI_INVERSE | UI_PULSE ) ) | UI_PULSE;
+	} else {
+		targetScale = 1.0f;
+		style = ( text->style & ~( UI_INVERSE | UI_PULSE ) ) | UI_INVERSE;
+	}
+
+	text->generic.scale += ( targetScale - text->generic.scale ) * Com_Clamp( 0.0f, 1.0f, uis.frametime * 0.025f );
+
+	UI_DrawProportionalStringScale( text->generic.x, text->generic.y - PROP_HEIGHT * ( text->generic.scale - 1.0f ) * 0.5f, text->string, style, text->color, text->generic.scale );
 }
 
 /*

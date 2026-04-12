@@ -166,6 +166,7 @@ static void UI_SetupMenu_Init( void ) {
 	setupMenuInfo.setupplayer.generic.y = y;
 	setupMenuInfo.setupplayer.generic.id = ID_CUSTOMIZEPLAYER;
 	setupMenuInfo.setupplayer.generic.callback = UI_SetupMenu_Event;
+	setupMenuInfo.setupplayer.generic.ownerdraw = UI_DrawMenuString;
 	setupMenuInfo.setupplayer.string = "PLAYER";
 	setupMenuInfo.setupplayer.color = color_red;
 	setupMenuInfo.setupplayer.style = UI_CENTER;
@@ -177,6 +178,7 @@ static void UI_SetupMenu_Init( void ) {
 	setupMenuInfo.setupcontrols.generic.y = y;
 	setupMenuInfo.setupcontrols.generic.id = ID_CUSTOMIZECONTROLS;
 	setupMenuInfo.setupcontrols.generic.callback = UI_SetupMenu_Event;
+	setupMenuInfo.setupcontrols.generic.ownerdraw = UI_DrawMenuString;
 	setupMenuInfo.setupcontrols.string = "CONTROLS";
 	setupMenuInfo.setupcontrols.color = color_red;
 	setupMenuInfo.setupcontrols.style = UI_CENTER;
@@ -188,6 +190,7 @@ static void UI_SetupMenu_Init( void ) {
 	setupMenuInfo.setupsystem.generic.y = y;
 	setupMenuInfo.setupsystem.generic.id = ID_SYSTEMCONFIG;
 	setupMenuInfo.setupsystem.generic.callback = UI_SetupMenu_Event;
+	setupMenuInfo.setupsystem.generic.ownerdraw = UI_DrawMenuString;
 	setupMenuInfo.setupsystem.string = "SYSTEM";
 	setupMenuInfo.setupsystem.color = color_red;
 	setupMenuInfo.setupsystem.style = UI_CENTER;
@@ -199,6 +202,7 @@ static void UI_SetupMenu_Init( void ) {
 	setupMenuInfo.game.generic.y = y;
 	setupMenuInfo.game.generic.id = ID_GAME;
 	setupMenuInfo.game.generic.callback = UI_SetupMenu_Event;
+	setupMenuInfo.game.generic.ownerdraw = UI_DrawMenuString;
 	setupMenuInfo.game.string = "GAME OPTIONS";
 	setupMenuInfo.game.color = color_red;
 	setupMenuInfo.game.style = UI_CENTER;
@@ -211,6 +215,7 @@ static void UI_SetupMenu_Init( void ) {
 		setupMenuInfo.defaults.generic.y = y;
 		setupMenuInfo.defaults.generic.id = ID_DEFAULTS;
 		setupMenuInfo.defaults.generic.callback = UI_SetupMenu_Event;
+		setupMenuInfo.defaults.generic.ownerdraw = UI_DrawMenuString;
 		setupMenuInfo.defaults.string = "DEFAULTS";
 		setupMenuInfo.defaults.color = color_red;
 		setupMenuInfo.defaults.style = UI_CENTER;

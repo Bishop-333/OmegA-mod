@@ -225,6 +225,7 @@ typedef struct
 	menuframework_s *parent;
 	int menuPosition;
 	unsigned flags;
+	float scale;
 
 	void ( *callback )( void *self, int event );
 	void ( *statusbar )( void *self );
@@ -710,9 +711,8 @@ extern void UI_SetColor( const float *rgba );
 extern void UI_LerpColor( vec4_t a, vec4_t b, vec4_t c, float t );
 extern void UI_DrawBannerString( int x, int y, const char *str, int style, vec4_t color );
 extern float UI_ProportionalSizeScale( int style );
+extern void UI_DrawMenuString( void *self );
 extern void UI_DrawProportionalString( int x, int y, const char *str, int style, vec4_t color );
-extern void UI_DrawProportionalString2( float x, float y, const char *str, vec4_t color, float sizeScale, qhandle_t charset );
-extern void UI_DrawProportionalStringScale( float x, float y, const char *str, int style, vec4_t color, float sizeScale );
 extern void UI_DrawProportionalString_AutoWrapped( int x, int ystart, int xmax, int ystep, const char *str, int style, vec4_t color );
 extern int UI_ProportionalStringWidth( const char *str );
 extern void UI_DrawString( int x, int y, const char *str, int style, vec4_t color );
