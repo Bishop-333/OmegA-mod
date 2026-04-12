@@ -388,7 +388,7 @@ CG_Prop
 */
 void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	refEntity_t ent;
-	const gitem_t *item;
+	const gitem_t *item = NULL;
 	int itemIndex;
 	int msec;
 	float frac;
@@ -422,8 +422,13 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	}
 
 	// items bob up and down continuously
-	scale = 0.005 + cent->currentState.number * 0.00001;
-	cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
+	if ( item ) {
+		scale = 0.005 + cent->currentState.number * 0.00001;
+		cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
+	} else {
+		cent->lerpOrigin[2] -= 24;
+
+	}
 
 	memset( &ent, 0, sizeof( ent ) );
 
@@ -431,9 +436,13 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	if ( item->giType == IT_HEALTH ) {
 		VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
 		AxisCopy( cg.autoAxisFast, ent.axis );
-	} else {
+	} else if ( item ) {
 		VectorCopy( cg.autoAngles, cent->lerpAngles );
 		AxisCopy( cg.autoAxis, ent.axis );
+	} else {
+		cent->lerpAngles[PITCH] = 0;
+		cent->lerpAngles[ROLL] = 0;
+		AnglesToAxis( cent->lerpAngles, ent.axis );
 	}
 
 	wi = NULL;
