@@ -424,10 +424,9 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	// items bob up and down continuously
 	if ( item ) {
 		scale = 0.005 + cent->currentState.number * 0.00001;
-		cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
+		cent->lerpOrigin[2] += -5 + cos( ( cg.time + 1000 ) * scale ) * 4;
 	} else {
 		cent->lerpOrigin[2] -= 24;
-
 	}
 
 	memset( &ent, 0, sizeof( ent ) );
@@ -916,7 +915,6 @@ static void CG_InterpolateEntityPosition( centity_t *cent ) {
 /*
 ===============
 CG_CalcEntityLerpPositions
-
 ===============
 */
 static void CG_CalcEntityLerpPositions( centity_t *cent ) {
