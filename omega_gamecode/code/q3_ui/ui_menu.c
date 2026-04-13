@@ -217,7 +217,7 @@ static void Main_MenuDraw( void ) {
 	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
 		if ( !s_main.musicStarted ) {
 			s_main.musicStarted = qtrue;
-			trap_S_StartBackgroundTrack( "sound/misc/menu_background.ogg", NULL );
+			trap_S_StartBackgroundTrack( "music/menu_background", NULL );
 		}
 	}
 }
