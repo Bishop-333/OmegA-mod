@@ -195,7 +195,6 @@ vmCvar_t ui_developer;
 vmCvar_t ui_mapvote_filter;
 vmCvar_t ui_saved_bloom;
 vmCvar_t ui_saved_desktop;
-vmCvar_t ui_saved_fxaa;
 vmCvar_t ui_saved_maxfps;
 vmCvar_t ui_saved_msaa;
 
@@ -300,7 +299,6 @@ static cvarTable_t cvarTable[] = {
     { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
     { &ui_saved_bloom, "ui_saved_bloom", "", CVAR_ARCHIVE },
     { &ui_saved_desktop, "ui_saved_desktop", "", CVAR_ARCHIVE },
-    { &ui_saved_fxaa, "ui_saved_fxaa", "", CVAR_ARCHIVE },
     { &ui_saved_maxfps, "ui_saved_maxfps", "", CVAR_ARCHIVE },
     { &ui_saved_msaa, "ui_saved_msaa", "", CVAR_ARCHIVE } };
 

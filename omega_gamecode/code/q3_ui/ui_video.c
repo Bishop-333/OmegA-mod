@@ -323,7 +323,6 @@ GRAPHICS OPTIONS MENU
 #define ID_SOUND 107
 #define ID_NETWORK 108
 #define ID_RATIO 109
-#define ID_RENDERER 110
 #define ID_FBO 111
 
 typedef struct {
@@ -352,7 +351,6 @@ typedef struct {
 	menuslider_s tq;
 	menulist_s aniso;
 	menulist_s msaa;
-	menulist_s fxaa;
 	menutext_s driverinfo;
 
 	menubitmap_s apply;
@@ -374,7 +372,6 @@ typedef struct
 	int tq;
 	int aniso;
 	int msaa;
-	int fxaa;
 } InitialVideoOptions_s;
 
 static InitialVideoOptions_s s_ivo;
@@ -530,7 +527,6 @@ static void GraphicsOptions_GetInitialVideo( void ) {
 	s_ivo.tq = s_graphicsoptions.tq.curvalue;
 	s_ivo.aniso = s_graphicsoptions.aniso.curvalue;
 	s_ivo.msaa = s_graphicsoptions.msaa.curvalue;
-	s_ivo.fxaa = s_graphicsoptions.fxaa.curvalue;
 }
 
 /*
@@ -588,12 +584,6 @@ static void GraphicsOptions_UpdateMenuItems( void ) {
 		s_graphicsoptions.msaa.generic.flags &= ~QMF_GRAYED;
 	}
 
-	if ( s_graphicsoptions.fbo.curvalue == 0 || s_graphicsoptions.renderer.curvalue != 1 ) {
-		s_graphicsoptions.fxaa.generic.flags |= QMF_GRAYED;
-	} else {
-		s_graphicsoptions.fxaa.generic.flags &= ~QMF_GRAYED;
-	}
-
 	s_graphicsoptions.apply.generic.flags |= QMF_HIDDEN | QMF_INACTIVE;
 
 	if ( s_ivo.renderer != s_graphicsoptions.renderer.curvalue ) {
@@ -633,9 +623,6 @@ static void GraphicsOptions_UpdateMenuItems( void ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 	if ( s_ivo.msaa != s_graphicsoptions.msaa.curvalue ) {
-		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
-	}
-	if ( s_ivo.fxaa != s_graphicsoptions.fxaa.curvalue ) {
 		s_graphicsoptions.apply.generic.flags &= ~( QMF_HIDDEN | QMF_INACTIVE );
 	}
 }
@@ -690,7 +677,6 @@ static void GraphicsOptions_ApplyChanges( void *unused, int notification ) {
 	trap_Cvar_SetValue( "r_dynamiclight", s_graphicsoptions.dynamiclights.curvalue );
 	trap_Cvar_SetValue( "cg_drawFPS", s_graphicsoptions.drawfps.curvalue );
 	trap_Cvar_SetValue( "r_ext_multisample", s_graphicsoptions.msaa.curvalue * 2 );
-	trap_Cvar_SetValue( "r_ext_fxaa", s_graphicsoptions.fxaa.curvalue );
 
 	//r_ext_texture_filter_anisotropic is special
 	if ( s_graphicsoptions.aniso.curvalue ) {
@@ -729,21 +715,6 @@ static void GraphicsOptions_Event( void *ptr, int event ) {
 	}
 
 	switch ( ( (menucommon_s *)ptr )->id ) {
-		case ID_RENDERER:
-			if ( s_graphicsoptions.renderer.curvalue != 1 ) {
-				if ( s_graphicsoptions.fxaa.curvalue != 0 ) {
-					trap_Cvar_SetValue( "ui_saved_fxaa", s_graphicsoptions.fxaa.curvalue );
-				}
-				s_graphicsoptions.fxaa.curvalue = 0;
-			} else if ( s_graphicsoptions.renderer.curvalue == 1 ) {
-				if ( s_graphicsoptions.fbo.curvalue != 0 ) {
-					s_graphicsoptions.fxaa.curvalue = trap_Cvar_VariableValue( "ui_saved_fxaa" );
-				} else {
-					s_graphicsoptions.fxaa.curvalue = 0;
-				}
-			}
-			break;
-
 		case ID_RATIO:
 			s_graphicsoptions.mode.curvalue = ratioToRes[s_graphicsoptions.ratio.curvalue];
 			// fall through to apply mode constraints
@@ -765,20 +736,11 @@ static void GraphicsOptions_Event( void *ptr, int event ) {
 			if ( s_graphicsoptions.fbo.curvalue == 0 ) {
 				trap_Cvar_SetValue( "ui_saved_bloom", s_graphicsoptions.bloom.curvalue );
 				trap_Cvar_SetValue( "ui_saved_msaa", s_graphicsoptions.msaa.curvalue );
-				if ( s_graphicsoptions.fxaa.curvalue != 0 ) {
-					trap_Cvar_SetValue( "ui_saved_fxaa", s_graphicsoptions.fxaa.curvalue );
-				}
 				s_graphicsoptions.bloom.curvalue = 0;
 				s_graphicsoptions.msaa.curvalue = 0;
-				s_graphicsoptions.fxaa.curvalue = 0;
 			} else if ( s_graphicsoptions.fbo.curvalue != 0 ) {
 				s_graphicsoptions.bloom.curvalue = trap_Cvar_VariableValue( "ui_saved_bloom" );
 				s_graphicsoptions.msaa.curvalue = trap_Cvar_VariableValue( "ui_saved_msaa" );
-				if ( s_graphicsoptions.renderer.curvalue == 1 ) {
-					s_graphicsoptions.fxaa.curvalue = trap_Cvar_VariableValue( "ui_saved_fxaa" );
-				} else {
-					s_graphicsoptions.fxaa.curvalue = 0;
-				}
 			}
 			break;
 
@@ -900,7 +862,6 @@ static void GraphicsOptions_SetMenuItems( void ) {
 	s_graphicsoptions.drawfps.curvalue = trap_Cvar_VariableValue( "cg_drawFPS" );
 	s_graphicsoptions.shadows.curvalue = trap_Cvar_VariableValue( "cg_shadows" );
 	s_graphicsoptions.msaa.curvalue = trap_Cvar_VariableValue( "r_ext_multisample" ) / 2;
-	s_graphicsoptions.fxaa.curvalue = trap_Cvar_VariableValue( "r_ext_fxaa" );
 	if ( trap_Cvar_VariableValue( "r_ext_texture_filter_anisotropic" ) ) {
 		s_graphicsoptions.aniso.curvalue = trap_Cvar_VariableValue( "r_ext_max_anisotropy" ) / 2;
 	}
@@ -1053,7 +1014,6 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.renderer.generic.type = MTYPE_SPINCONTROL;
 	s_graphicsoptions.renderer.generic.name = "Renderer:";
 	s_graphicsoptions.renderer.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-	s_graphicsoptions.renderer.generic.id = ID_RENDERER;
 	s_graphicsoptions.renderer.generic.callback = GraphicsOptions_Event;
 	s_graphicsoptions.renderer.generic.x = 400;
 	s_graphicsoptions.renderer.generic.y = y;
@@ -1190,17 +1150,6 @@ void GraphicsOptions_MenuInit( void ) {
 	s_graphicsoptions.msaa.generic.y = y;
 	s_graphicsoptions.msaa.itemnames = msaa_names;
 
-	// references/modifies "r_ext_fxaa"
-	if ( ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) ) {
-		y += 2 + BIGCHAR_HEIGHT;
-		s_graphicsoptions.fxaa.generic.type = MTYPE_SPINCONTROL;
-		s_graphicsoptions.fxaa.generic.name = "FXAA:";
-		s_graphicsoptions.fxaa.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-		s_graphicsoptions.fxaa.generic.x = 400;
-		s_graphicsoptions.fxaa.generic.y = y;
-		s_graphicsoptions.fxaa.itemnames = enabled_names;
-	}
-
 	y += 2 * BIGCHAR_HEIGHT;
 	s_graphicsoptions.driverinfo.generic.type = MTYPE_PTEXT;
 	s_graphicsoptions.driverinfo.generic.flags = QMF_CENTER_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -1260,9 +1209,6 @@ void GraphicsOptions_MenuInit( void ) {
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.tq );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.aniso );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.msaa );
-	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
-		Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.fxaa );
-	}
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.driverinfo );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.back );
 	Menu_AddItem( &s_graphicsoptions.menu, (void *)&s_graphicsoptions.apply );
