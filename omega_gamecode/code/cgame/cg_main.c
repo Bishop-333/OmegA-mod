@@ -506,7 +506,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_zoomAnim, "cg_zoomAnim", "1", CVAR_ARCHIVE },
     { &cg_zoomAnimSpeed, "cg_zoomAnimSpeed", "2", CVAR_ARCHIVE },
     { &cg_zoomToggle, "cg_zoomToggle", "0", CVAR_ARCHIVE },
-    { &com_maxfps, "com_maxfps", "125", CVAR_ARCHIVE },
+    { &com_maxfps, "com_maxfps", "250", CVAR_ARCHIVE },
     { &pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO },
     { &pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO },
     { &pmove_doublejump, "pmove_doublejump", "0", CVAR_SYSTEMINFO },
