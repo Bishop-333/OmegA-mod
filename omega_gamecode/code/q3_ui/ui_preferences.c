@@ -554,10 +554,7 @@ void Preferences_Cache( void ) {
 	trap_R_RegisterShaderNoMip( ART_BACK0 );
 	trap_R_RegisterShaderNoMip( ART_BACK1 );
 	for ( n = 0; n < NUM_CROSSHAIRS; n++ ) {
-		if ( n < 10 )
-			s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip( va( "gfx/2d/crosshair%c", 'a' + n ) );
-		else
-			s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip( va( "gfx/2d/crosshair%02d", n - 10 ) );
+		s_preferences.crosshairShader[n] = trap_R_RegisterShaderNoMip( va( "gfx/2d/crosshairs/crosshair%d", n ) );
 	}
 }
 

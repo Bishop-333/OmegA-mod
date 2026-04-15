@@ -2532,7 +2532,6 @@ static void CG_DrawHitmarkerCorners( float centerX, float centerY, float offsetX
 CG_DrawHitmarker
 =================
 */
-#define HITMARKER_SCALE 0.25f
 static void CG_DrawHitmarker( float x, float y, float w, float h ) {
 	float animTime = (float)( cg.time - cg.lastHitTime ) / 250.0f;
 	float offset, killOffset = 0.0f;
@@ -2547,13 +2546,13 @@ static void CG_DrawHitmarker( float x, float y, float w, float h ) {
 	}
 
 	if ( cg.lastHitWasKill ) {
-		offset = ( 7.5f + animTime * 75.0f ) * HITMARKER_SCALE;
-		killOffset = ( 50.0f - animTime * 50.0f ) * HITMARKER_SCALE;
-		size = 7.5f * HITMARKER_SCALE;
+		offset = ( 7.5f + animTime * 75.0f ) * ( cg_crosshairSize.value / 100 );
+		killOffset = ( 50.0f - animTime * 50.0f ) * ( cg_crosshairSize.value / 100 );
+		size = 7.5f * ( cg_crosshairSize.value / 100 );
 		VectorCopy( colorRed, color );
 	} else {
-		offset = ( 5.0f + animTime * 50.0f ) * HITMARKER_SCALE;
-		size = 5.0f * HITMARKER_SCALE;
+		offset = ( 5.0f + animTime * 50.0f ) * ( cg_crosshairSize.value / 100 );
+		size = 5.0f * ( cg_crosshairSize.value / 100 );
 		VectorCopy( colorWhite, color );
 	}
 	color[3] = 1.0f - animTime;
@@ -2585,7 +2584,7 @@ CG_DrawCrosshair
 */
 static void CG_DrawCrosshair( void ) {
 	float w, h;
-	qhandle_t hShader;
+	qhandle_t hShader, hShaderOutline;
 	float f;
 	float x, y;
 	int ca = 0; //only to get rid of the warning(not useful)
@@ -2708,9 +2707,19 @@ static void CG_DrawCrosshair( void ) {
 		ca = 0;
 	}
 	hShader = cgs.media.crosshairShader[ca % NUM_CROSSHAIRS];
+	hShaderOutline = cgs.media.crosshairOutlineShader[ca % NUM_CROSSHAIRS];
 
-	if ( !hShader )
+	if ( !hShader ) {
 		hShader = cgs.media.crosshairShader[ca % 10];
+		hShaderOutline = cgs.media.crosshairOutlineShader[ca % 10];
+	}
+
+	// draw the outline under the white crosshair
+	if ( hShaderOutline ) {
+		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ),
+		                       y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ),
+		                       w, h, 0, 0, 1, 1, hShaderOutline );
+	}
 
 	trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ),
 	                       y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ),

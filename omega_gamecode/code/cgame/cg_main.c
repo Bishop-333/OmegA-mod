@@ -320,7 +320,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_drawAmmoWarning, "cg_drawAmmoWarning", "1", CVAR_ARCHIVE },
     { &cg_drawAttacker, "cg_drawAttacker", "0", CVAR_ARCHIVE },
     { &cg_drawSpeed, "cg_drawSpeed", "0", CVAR_ARCHIVE },
-    { &cg_drawCrosshair, "cg_drawCrosshair", "4", CVAR_ARCHIVE },
+    { &cg_drawCrosshair, "cg_drawCrosshair", "1", CVAR_ARCHIVE },
     { &cg_drawCrosshairNames, "cg_drawCrosshairNames", "1", CVAR_ARCHIVE },
     { &cg_drawRewards, "cg_drawRewards", "1", CVAR_ARCHIVE },
     { &cg_crosshairSize, "cg_crosshairSize", "24", CVAR_ARCHIVE },
@@ -1126,10 +1126,8 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.skullShader = trap_R_RegisterShader( "icons/skull" );
 
 	for ( i = 0; i < NUM_CROSSHAIRS; i++ ) {
-		if ( i < 10 )
-			cgs.media.crosshairShader[i] = trap_R_RegisterShader( va( "gfx/2d/crosshair%c", 'a' + i ) );
-		else
-			cgs.media.crosshairShader[i] = trap_R_RegisterShader( va( "gfx/2d/crosshair%02d", i - 10 ) );
+		cgs.media.crosshairShader[i] = trap_R_RegisterShader( va( "gfx/2d/crosshairs/crosshair%d", i ) );
+		cgs.media.crosshairOutlineShader[i] = trap_R_RegisterShader( va( "gfx/2d/crosshairs/crosshair%d_outline", i ) );
 	}
 
 	cgs.media.backTileShader = trap_R_RegisterShader( "gfx/2d/backtile" );
