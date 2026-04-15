@@ -1,3 +1,3 @@
+Emmanuel Bell (Biox1dE)	- promode-ish flags
 Kevin MacLeod		- Abstract Anxiety (sonic6.ogg)
-RatMod			- pul1ctf textures
-zzz.promode_board_flags	- omega flag model
+RatMod			- pul1ctf textures, crosshairs
