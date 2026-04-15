@@ -236,15 +236,15 @@ static void CG_DrawClientScoreHeader( int y ) {
 
 	x = SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 );
 
-	// draw the server name
-	s = Info_ValueForKey( info, "sv_hostname" );
-	CG_DrawStringExt( x, y, s, colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	// draw the map name
+	s = Info_ValueForKey( info, "mapname" );
+	CG_DrawStringExt( x, y, Info_ValueForKey( info, "mapname" ), colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.6;
 
 	// draw the slashs
-	CG_DrawStringExt( x + 2, y, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-	CG_DrawStringExt( x + 4, y, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x + 2, y, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x + 4, y, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 
 	x += 11;
 
@@ -276,32 +276,33 @@ static void CG_DrawClientScoreHeader( int y ) {
 	} else {
 		s = "";
 	}
-	CG_DrawStringExt( x, y, s, colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x, y, s, colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.6;
 
 	// draw the slashs
-	CG_DrawStringExt( x + 2, y, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-	CG_DrawStringExt( x + 4, y, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x + 2, y, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
+	CG_DrawStringExt( x + 4, y, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 
 	x += 11;
 
-	// draw the map name
-	s = Info_ValueForKey( info, "mapname" );
-	CG_DrawStringExt( x, y, Info_ValueForKey( info, "mapname" ), colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+	// draw the server name
+	s = Info_ValueForKey( info, "sv_hostname" );
+	Q_strupr( (char *)s );
+	CG_DrawStringExt( x, y, s, colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 
-	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.33;
+	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.6;
 
 	s = Info_ValueForKey( sysInfo, "sv_cheats" );
 	if ( s[0] == '1' ) {
 		// draw the slashs
-		CG_DrawStringExt( x + 2, y, "/", colorRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
-		CG_DrawStringExt( x + 4, y, "/", colorTtRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+		CG_DrawStringExt( x + 2, y, "/", colorRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
+		CG_DrawStringExt( x + 4, y, "/", colorTtRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 
 		x += 11;
 
 		// draw cheats
-		CG_DrawStringExt( x, y, "cheats enabled", colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.25, TINYCHAR_HEIGHT / 1.25, 0 );
+		CG_DrawStringExt( x, y, "cheats enabled", colorWhite, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT / 1.25, 0 );
 	}
 
 	// draw omega logo
