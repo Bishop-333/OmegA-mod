@@ -385,7 +385,11 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		CG_DrawPic( headx + 2, y + 2, BIGCHAR_HEIGHT + 7, BIGCHAR_HEIGHT + 7, cgs.media.skullShader );
 	} else {
 		VectorClear( headAngles );
-		headAngles[YAW] = 180 + 60 * sin( cg.time / 2000.0 );
+		if ( score->client == cg.snap->ps.clientNum ) {
+			headAngles[YAW] = 180 + 60 * sin( cg.time / 2000.0 );
+		} else {
+			headAngles[YAW] = 180;
+		}
 		CG_DrawHead( headx, y, BIGCHAR_HEIGHT + 11, BIGCHAR_HEIGHT + 11, score->client, headAngles );
 	}
 
