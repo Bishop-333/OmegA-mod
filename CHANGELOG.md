@@ -182,3 +182,12 @@
 - ui cleanup
 - add `pmove_overbounce` if you want to enable overbounce back
 - memory fix
+
+## 3.3.9
+- backport `g_grapple` from OpenArena
+- add `g_prophunt`
+- add "start new arena" button in the ingame menu
+- add new ui and hud animations
+- add `g_fastSwitch`
+- backport `g_harvesterFromBodies` from OpenArena. Allows Harvester mode skulls to spawn where the frag happened instead of at the skull generator in the middle of the map. In case those skulls end up in a "nodrop" zone, they will respawn at the skull generator instead.
+- import new crosshairs from ratmod
