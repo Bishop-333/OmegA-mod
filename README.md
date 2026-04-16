@@ -25,7 +25,7 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | `cg_damagePlums` | Displays floating numbers indicating the damage dealt when hitting an enemy. |
 | `g_dropFlag` | Allows the flag carrier to drop it manually (requires binding a key). |
 | `g_easierPickup` | Increases the item pickup hitbox height. |
-| `g_startWhenReady` | Match waits for all players to type `/ready` to start (requires `g_doWarmup`). |
+| `g_startWhenReady` | Waits for all players to type `/ready` to start the match (requires `g_doWarmup`). |
 
 ### HUD
 | Cvar | Description |
@@ -43,7 +43,7 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | `g_railgunFireRate` / `g_rocketFireRate` | Configures weapon fire rate. |
 | `g_guidedRockets` | Enables guided missiles when you hold the attack button. |
 | `g_plasmaBounce` | Enables plasma orbs bouncing off walls instead of exploding on impact. |
-| `g_railJump` | Allows rocket jumps for the railgun. |
+| `g_railJump` | Allows railgun jumping. |
 | `g_teleportMissiles` | Enables projectiles teleporting through portals. |
 
 ### Misc
@@ -56,17 +56,17 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | `g_weaponArena` | Restricts the match to specific weapons. |
 
 ## New assets
-- font
-- icons
-- models
-- music (can be heard in slimefac)
-- sfx
-- skins
-- sprites
+- Font
+- Icons
+- Models
+- Music (can be heard in slimefac)
+- SFX
+- Skins
+- Sprites
 
 ## Building a pk3
 
-Simply go to your terminal and type :
+Simply go to your terminal and type:
 
 ```sh
 cd path/to/your/folder/
@@ -75,10 +75,10 @@ make
 
 ## Links
 
-* Mod DB page : https://www.moddb.com/mods/openarena-omega
-* Custom OmegA engine : https://github.com/Bishop-333/OmegA-engine
+* Mod DB page: https://www.moddb.com/mods/openarena-omega
+* Custom OmegA-engine: https://github.com/Bishop-333/OmegA-engine
 
 ## Donate
 
-I develop during my free time, if you enjoyed my mod or my engine please consider supporting me by donating !
+I develop in my free time. If you enjoy my mod or my engine, please consider supporting me with a donation!
 * paypal.me/fatsakura
