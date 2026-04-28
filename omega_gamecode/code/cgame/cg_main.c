@@ -1333,12 +1333,6 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.energyMarkShader = trap_R_RegisterShader( "gfx/damage/plasma_mrk" );
 	cgs.media.shadowMarkShader = trap_R_RegisterShader( "markShadow" );
 	cgs.media.shadow2MarkShader = trap_R_RegisterShader( "markShadow2" );
-	cgs.media.shadow2RedMarkShader = trap_R_RegisterShader( "markRedShadow2" );
-	cgs.media.shadow2YellowMarkShader = trap_R_RegisterShader( "markYellowShadow2" );
-	cgs.media.shadow2GreenMarkShader = trap_R_RegisterShader( "markGreenShadow2" );
-	cgs.media.shadow2CyanMarkShader = trap_R_RegisterShader( "markCyanShadow2" );
-	cgs.media.shadow2BlueMarkShader = trap_R_RegisterShader( "markBlueShadow2" );
-	cgs.media.shadow2PinkMarkShader = trap_R_RegisterShader( "markPinkShadow2" );
 	cgs.media.wakeMarkShader = trap_R_RegisterShader( "wake" );
 	cgs.media.bloodMarkShader = trap_R_RegisterShader( "bloodMark" );
 

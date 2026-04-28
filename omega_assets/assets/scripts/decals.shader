@@ -104,78 +104,7 @@ markShadow2
 	{
 		map gfx/damage/shadow2.jpg
 		blendfunc gl_one gl_one
-	}
-}
-
-markRedShadow2
-{
-	nopicmip
-	nomipmaps
-	polygonoffset
-	{
-		map gfx/damage/shadow2.jpg
-		blendfunc gl_one gl_one
-		rgbGen const ( 1 0 0 )
-	}
-}
-
-markYellowShadow2
-{
-	nopicmip
-	nomipmaps
-	polygonoffset
-	{
-		map gfx/damage/shadow2.jpg
-		blendfunc gl_one gl_one
-		rgbGen const ( 1 1 0 )
-	}
-}
-
-markGreenShadow2
-{
-	nopicmip
-	nomipmaps
-	polygonoffset
-	{
-		map gfx/damage/shadow2.jpg
-		blendfunc gl_one gl_one
-		rgbGen const ( 0 1 0 )
-	}
-}
-
-markCyanShadow2
-{
-	nopicmip
-	nomipmaps
-	polygonoffset
-	{
-		map gfx/damage/shadow2.jpg
-		blendfunc gl_one gl_one
-		rgbGen const ( 0 1 1 )
-	}
-}
-
-markBlueShadow2
-{
-	nopicmip
-	nomipmaps
-	polygonoffset
-	{
-		map gfx/damage/shadow2.jpg
-		blendfunc gl_one gl_one
-		rgbGen const ( 0 0 1 )
-	}
-}
-
-markPinkShadow2
-{
-	nopicmip
-	nomipmaps
-	polygonoffset
-	{
-		map gfx/damage/shadow2.jpg
-		blendfunc gl_one gl_one
-		rgbGen const ( 1 0 1 )
+		rgbGen Vertex
 	}
 }
 

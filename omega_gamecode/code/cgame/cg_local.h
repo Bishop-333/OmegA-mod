@@ -822,12 +822,6 @@ typedef struct {
 
 	qhandle_t shadowMarkShader;
 	qhandle_t shadow2MarkShader;
-	qhandle_t shadow2RedMarkShader;
-	qhandle_t shadow2YellowMarkShader;
-	qhandle_t shadow2GreenMarkShader;
-	qhandle_t shadow2CyanMarkShader;
-	qhandle_t shadow2BlueMarkShader;
-	qhandle_t shadow2PinkMarkShader;
 
 	qhandle_t botSkillShaders[5];
 
