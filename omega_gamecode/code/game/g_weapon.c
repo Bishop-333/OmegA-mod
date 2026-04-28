@@ -542,6 +542,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	int damage;
 	int i;
 	int hits;
+	int kills;
 	int unlinked;
 	int passent;
 	gentity_t *unlinkedEntities[MAX_RAIL_HITS];
@@ -561,6 +562,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	// trace only against the solids, so the railgun will go through people
 	unlinked = 0;
 	hits = 0;
+	kills = 0;
 	passent = ent->s.number;
 	do {
 		if ( g_railThroughWalls.integer ) {
@@ -609,6 +611,9 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 					hits++;
 				}
 				G_Damage( traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_RAILGUN );
+				if ( traceEnt->health <= 0 ) {
+					kills++;
+				}
 			}
 		}
 		if ( trace.contents & CONTENTS_SOLID ) {
@@ -684,6 +689,11 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 		}
 		ent->client->accuracy_hits++;
 		ent->client->accuracy[WP_RAILGUN][1]++;
+	}
+
+	if ( kills >= 2 ) {
+		G_Printf( "%s ^7got a %i-kill ^1COLLATERAL ^7with one rail!\n", ent->client->pers.netname, kills );
+		trap_SendServerCommand( ent->client->ps.clientNum, "collateral" );
 	}
 
 	if ( ent->client->railgunRapidFire && ent->client->ps.weaponTime > RAIL_RELOAD_FAST ) {

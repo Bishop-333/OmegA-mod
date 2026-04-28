@@ -963,6 +963,11 @@ static void CG_ServerCommand( void ) {
 		return;
 	}
 
+	if ( !strcmp( cmd, "collateral" ) ) {
+		CG_AddBufferedRewardSound( cgs.media.holyShitSound );
+		return;
+	}
+
 	if ( !strcmp( cmd, "rampage" ) ) {
 		int count = atoi( CG_Argv( 1 ) );
 		pushReward( cgs.media.rampageSound, cgs.media.medalRampage, count );

@@ -879,8 +879,9 @@ static void CG_RegisterSounds( void ) {
 
 	if ( cgs.gametype == GT_1FCTF || cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_POSSESSION || cg_buildScript.integer ) {
 		cgs.media.youHaveFlagSound = trap_S_RegisterSound( "sound/teamplay/voc_you_flag.wav", qtrue );
-		cgs.media.holyShitSound = trap_S_RegisterSound( "sound/feedback/voc_holyshit.wav", qtrue );
 	}
+
+	cgs.media.holyShitSound = trap_S_RegisterSound( "sound/feedback/voc_holyshit.wav", qtrue );
 
 	cgs.media.tracerSound = trap_S_RegisterSound( "sound/weapons/machinegun/buletby1.wav", qfalse );
 	cgs.media.selectSound = trap_S_RegisterSound( "sound/weapons/change.wav", qfalse );
