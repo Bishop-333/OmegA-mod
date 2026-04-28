@@ -1396,7 +1396,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 			attacker->health = g_vampireMaxHealth.integer;
 	}
 
-	if ( damage && targ->client && targ != attacker && g_damagePlums.integer && targ->health > 0 && !g_instantgib.integer ) {
+	if ( damage && targ->client && targ != attacker && g_damagePlums.integer && targ->health > 0 ) {
 		if ( !g_headshotOnly.integer || ( g_headshotOnly.integer && z_ratio > 0.95 ) ) {
 			if ( mod != MOD_SHOTGUN ) {
 				DamagePlum( attacker, targ->r.currentOrigin, damage );

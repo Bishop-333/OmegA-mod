@@ -226,7 +226,6 @@ redArmor
 
 yellowArmor
 {
-	nopicmip
 	{
 		map models/powerups/armor/yellowarmor.tga
 		rgbGen lightingDiffuse

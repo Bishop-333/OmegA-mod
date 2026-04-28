@@ -27,7 +27,6 @@ models/weapons2/railgun/flare
 
 models/weapons2/railgun/skin
 {
-	nopicmip
 	{
 		map models/weapons2/railgun/skin.tga
 		rgbGen lightingDiffuse
@@ -49,7 +48,6 @@ models/weapons2/railgun/skin
 
 models/weapons2/railgun/energy
 {
-	nopicmip
 	{
 		map models/weapons2/railgun/scrolly.tga
 		rgbGen entity
@@ -129,7 +127,6 @@ railCore
 {
 	sort nearest
 	cull disable
-	nopicmip
 	{
 		map models/weapons2/railgun/railcore.tga
 		blendfunc add

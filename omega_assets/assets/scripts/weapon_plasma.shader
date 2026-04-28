@@ -58,7 +58,6 @@ models/weapons2/plasma/muzzlecenter
 
 models/weapons2/lightning/skinlightning
 {
-	nopicmip
 	{
 		map models/weapons2/lightning/skinlightning.tga
 		rgbGen lightingDiffuse
@@ -73,7 +72,6 @@ models/weapons2/lightning/skinlightning
 
 models/weapons2/plasma/skin
 {
-	nopicmip
 	{
 		map models/weapons2/plasma/skin.tga
 		rgbGen identity

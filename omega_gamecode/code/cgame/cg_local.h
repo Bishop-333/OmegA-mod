@@ -83,7 +83,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define GIANT_WIDTH 32
 #define GIANT_HEIGHT 48
 
-#define NUM_CROSSHAIRS 64
+#define NUM_CROSSHAIRS 39
 
 #define TEAM_OVERLAY_MAXNAME_WIDTH 12
 #define TEAM_OVERLAY_MAXLOCATION_WIDTH 16
@@ -1571,6 +1571,7 @@ void CG_ResetPlayerEntity( centity_t *cent );
 void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int team, qboolean isMissile, int clientnum );
 void CG_NewClientInfo( int clientNum );
 sfxHandle_t CG_CustomSound( int clientNum, const char *soundName );
+qboolean CG_FileExists( const char *filename );
 void CG_ForceSoundsChange( void );
 
 //

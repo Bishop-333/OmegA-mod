@@ -35,7 +35,6 @@ rocketThrust
 
 models/weapons2/rocketl/skin
 {
-	nopicmip
 	{
 		map models/weapons2/rocketl/skin.tga
 		rgbGen lightingDiffuse

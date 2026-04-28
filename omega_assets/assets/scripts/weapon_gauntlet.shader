@@ -1,6 +1,5 @@
 models/weapons2/gauntlet/gauntlet1
 {
-	nopicmip
 	{
 		map models/weapons2/gauntlet/gauntlet1.tga
 		rgbGen lightingDiffuse
@@ -22,7 +21,6 @@ models/weapons2/gauntlet/gauntlet1
 
 models/weapons2/gauntlet/gauntlet2
 {
-	nopicmip
 	{
 		map models/weapons2/gauntlet/gauntlet2.tga
 		rgbGen lightingDiffuse

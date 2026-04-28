@@ -2706,8 +2706,8 @@ static void CG_DrawCrosshair( void ) {
 	if ( ca < 0 ) {
 		ca = 0;
 	}
-	hShader = cgs.media.crosshairShader[ca % NUM_CROSSHAIRS];
-	hShaderOutline = cgs.media.crosshairOutlineShader[ca % NUM_CROSSHAIRS];
+	hShader = cgs.media.crosshairShader[( ca - 1 ) % NUM_CROSSHAIRS];
+	hShaderOutline = cgs.media.crosshairOutlineShader[( ca - 1 ) % NUM_CROSSHAIRS];
 
 	if ( !hShader ) {
 		hShader = cgs.media.crosshairShader[ca % 10];

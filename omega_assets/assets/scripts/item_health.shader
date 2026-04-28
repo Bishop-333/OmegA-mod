@@ -1,7 +1,7 @@
 smallCross
 {
 	{
-		map models/powerups/armor/shard_env2.jpg
+		map textures/cosmo_liquids/greenliqu1.jpg
 		tcMod rotate -76
 		tcGen environment 
 	}

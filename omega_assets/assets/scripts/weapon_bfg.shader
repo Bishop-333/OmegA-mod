@@ -39,7 +39,6 @@ f_bfg1
 models/weapons2/bfg/bfgbody
 {
 	cull disable
-	nopicmip
 	{
 		map models/weapons2/bfg/bfgbody.tga
 		rgbGen lightingDiffuse

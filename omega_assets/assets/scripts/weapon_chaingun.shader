@@ -33,7 +33,6 @@ vulcanFlash
 
 models/weapons/vulcan/skin
 {
-	nopicmip
 	{
 		map models/weapons/vulcan/skin.tga
 		rgbGen lightingDiffuse

@@ -56,7 +56,7 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define ART_ARROWS0 "menu/art_blueish/arrows_vert_0"
 #define ART_ARROWS_UP "menu/art_blueish/arrows_vert_top"
 #define ART_ARROWS_DOWN "menu/art_blueish/arrows_vert_bot"
-#define ART_UNKNOWNMAP "menu/art_blueish/unknownmap"
+#define ART_UNKNOWNMAP "menu/art/unknownmap"
 #define ART_REMOVE0 "menu/art_blueish/delete_0"
 #define ART_REMOVE1 "menu/art_blueish/delete_1"
 #define ART_SAVE0 "menu/art_blueish/save_0"

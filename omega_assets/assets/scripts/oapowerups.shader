@@ -195,7 +195,7 @@ models/powerups/armor/shard
 models/powerups/armor/shard_env
 {
 	{
-		map models/powerups/armor/shard_env2.jpg
+		map textures/cosmo_liquids/greenliqu1.jpg
 		blendfunc add
 		tcgen environment
 	}

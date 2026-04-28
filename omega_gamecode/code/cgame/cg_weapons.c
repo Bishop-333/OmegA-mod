@@ -787,17 +787,23 @@ void CG_RegisterWeapon( int weaponNum ) {
 	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
 	COM_StripExtension( path, path, sizeof( path ) );
 	strcat( path, "_flash.md3" );
-	weaponInfo->flashModel = trap_R_RegisterModel( path );
+	if ( CG_FileExists( path ) ) {
+		weaponInfo->flashModel = trap_R_RegisterModel( path );
+	}
 
 	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
 	COM_StripExtension( path, path, sizeof( path ) );
 	strcat( path, "_barrel.md3" );
-	weaponInfo->barrelModel = trap_R_RegisterModel( path );
+	if ( CG_FileExists( path ) ) {
+		weaponInfo->barrelModel = trap_R_RegisterModel( path );
+	}
 
 	Q_strncpyz( path, item->world_model[0], MAX_QPATH );
 	COM_StripExtension( path, path, sizeof( path ) );
 	strcat( path, "_hand.md3" );
-	weaponInfo->handsModel = trap_R_RegisterModel( path );
+	if ( CG_FileExists( path ) ) {
+		weaponInfo->handsModel = trap_R_RegisterModel( path );
+	}
 
 	if ( !weaponInfo->handsModel ) {
 		weaponInfo->handsModel = trap_R_RegisterModel( "models/weapons2/shotgun/shotgun_hand.md3" );

@@ -383,7 +383,7 @@ static qboolean CG_ParseAnimationFile( const char *filename, clientInfo_t *ci ) 
 CG_FileExists
 ==========================
 */
-static qboolean CG_FileExists( const char *filename ) {
+qboolean CG_FileExists( const char *filename ) {
 	int len;
 
 	len = trap_FS_FOpenFile( filename, NULL, FS_READ );

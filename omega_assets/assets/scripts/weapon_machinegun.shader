@@ -82,7 +82,6 @@ models/weapons2/machinegun/flare
 
 models/weapons2/machinegun/skin
 {
-	nopicmip
 	{
 		map models/weapons2/machinegun/mgun.tga
 		rgbGen lightingDiffuse

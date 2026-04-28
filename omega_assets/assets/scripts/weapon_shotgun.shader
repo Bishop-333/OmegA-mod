@@ -1,6 +1,5 @@
 models/weapons2/shotgun/skinoa
 {
-	nopicmip
 	{
 		map models/weapons2/shotgun/shotgun.tga
 		rgbGen lightingDiffuse
