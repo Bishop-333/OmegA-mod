@@ -73,7 +73,8 @@ static char *playermodel_artlist[] =
 #define ID_PLAYERPIC15 15
 #define ID_PREVPAGE 100
 #define ID_NEXTPAGE 101
-#define ID_BACK 102
+#define ID_HIDEMATURE 102
+#define ID_BACK 103
 
 typedef struct
 {
@@ -93,6 +94,7 @@ typedef struct
 	menutext_s skinname;
 	menutext_s playername;
 	playerInfo_t playerinfo;
+	menuradiobutton_s hideMature;
 	int nummodels;
 	char modelnames[MAX_PLAYERMODELS][128];
 	int modelpage;
@@ -102,6 +104,8 @@ typedef struct
 } playermodel_t;
 
 static playermodel_t s_playermodel;
+static void PlayerModel_BuildList( void );
+static void PlayerModel_SetMenuItems( void );
 
 /*
 =================
@@ -210,8 +214,15 @@ static void PlayerModel_MenuEvent( void *ptr, int event ) {
 			}
 			break;
 
+		case ID_HIDEMATURE:
+			trap_Cvar_SetValue( "ui_hide_mature", s_playermodel.hideMature.curvalue );
+			PlayerModel_BuildList();
+			PlayerModel_SetMenuItems();
+			PlayerModel_UpdateGrid();
+			PlayerModel_UpdateModel();
+			break;
+
 		case ID_BACK:
-			PlayerModel_SaveChanges();
 			UI_PopMenu();
 			break;
 	}
@@ -262,11 +273,6 @@ static sfxHandle_t PlayerModel_MenuKey( int key ) {
 				} else
 					return ( menu_buzz_sound );
 			}
-			break;
-
-		case K_MOUSE2:
-		case K_ESCAPE:
-			PlayerModel_SaveChanges();
 			break;
 	}
 
@@ -332,6 +338,8 @@ static void PlayerModel_PicEvent( void *ptr, int event ) {
 		if ( trap_MemoryRemaining() > LOW_MEMORY ) {
 			PlayerModel_UpdateModel();
 		}
+
+		PlayerModel_SaveChanges();
 	}
 }
 
@@ -387,6 +395,11 @@ static void PlayerModel_BuildList( void ) {
 
 		if ( !strcmp( dirptr, "." ) || !strcmp( dirptr, ".." ) )
 			continue;
+
+		if ( trap_Cvar_VariableValue( "ui_hide_mature" ) == 1 ) {
+			if ( !Q_stricmp( dirptr, "angelyss" ) || !Q_stricmp( dirptr, "arachna" ) || !Q_stricmp( dirptr, "neko" ) || !Q_stricmp( dirptr, "sorceress" ) )
+				continue;
+		}
 
 		// iterate all skin files in directory
 		numfiles = trap_FS_GetFileList( va( "models/players/%s", dirptr ), "tga", filelist, 2048 );
@@ -628,6 +641,15 @@ static void PlayerModel_MenuInit( void ) {
 	s_playermodel.right.height = 32;
 	s_playermodel.right.focuspic = MODEL_ARROWSR;
 
+	s_playermodel.hideMature.generic.type = MTYPE_RADIOBUTTON;
+	s_playermodel.hideMature.generic.name = "Hide Mature";
+	s_playermodel.hideMature.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	s_playermodel.hideMature.generic.callback = PlayerModel_MenuEvent;
+	s_playermodel.hideMature.generic.id = ID_HIDEMATURE;
+	s_playermodel.hideMature.generic.x = 585;
+	s_playermodel.hideMature.generic.y = 440;
+	s_playermodel.hideMature.curvalue = trap_Cvar_VariableValue( "ui_hide_mature" );
+
 	s_playermodel.back.generic.type = MTYPE_BITMAP;
 	s_playermodel.back.generic.name = MODEL_BACK0;
 	s_playermodel.back.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -655,6 +677,7 @@ static void PlayerModel_MenuInit( void ) {
 	Menu_AddItem( &s_playermodel.menu, &s_playermodel.arrows );
 	Menu_AddItem( &s_playermodel.menu, &s_playermodel.left );
 	Menu_AddItem( &s_playermodel.menu, &s_playermodel.right );
+	Menu_AddItem( &s_playermodel.menu, &s_playermodel.hideMature );
 	Menu_AddItem( &s_playermodel.menu, &s_playermodel.back );
 
 	// set initial states

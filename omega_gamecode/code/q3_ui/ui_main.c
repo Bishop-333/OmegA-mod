@@ -192,6 +192,7 @@ vmCvar_t ui_setupchecked;
 vmCvar_t ui_developer;
 
 //OmegA
+vmCvar_t ui_hide_mature;
 vmCvar_t ui_mapvote_filter;
 vmCvar_t ui_saved_bloom;
 vmCvar_t ui_saved_desktop;
@@ -296,6 +297,7 @@ static cvarTable_t cvarTable[] = {
     { &ui_browserHidePrivate, "ui_browserHidePrivate", "1", CVAR_ARCHIVE },
 
     //OmegA
+    { &ui_hide_mature, "ui_hide_mature", "1", CVAR_ARCHIVE },
     { &ui_mapvote_filter, "ui_mapvote_filter", "", 0 },
     { &ui_saved_bloom, "ui_saved_bloom", "", CVAR_ARCHIVE },
     { &ui_saved_desktop, "ui_saved_desktop", "", CVAR_ARCHIVE },
