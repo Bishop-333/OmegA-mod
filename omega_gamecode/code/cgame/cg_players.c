@@ -104,6 +104,10 @@ static void CG_GetClientColor( int clientNum, clientInfo_t *ci, int team, vec3_t
 		VectorSet( color, 1, 0, 1 );
 	} else if ( !Q_stricmp( colorName, "white" ) ) {
 		VectorSet( color, 1, 1, 1 );
+	} else if ( !Q_stricmp( colorName, "rainbow" ) ) {
+		color[0] = 0.5f + 0.5f * sin( cg.time * 0.002f );
+		color[1] = 0.5f + 0.5f * sin( cg.time * 0.002f + ( 2.0f * M_PI / 3.0f ) );
+		color[2] = 0.5f + 0.5f * sin( cg.time * 0.002f + ( 4.0f * M_PI / 3.0f ) );
 	} else if ( team == TEAM_RED ) {
 		VectorSet( color, 1, 0, 0 );
 	} else if ( team == TEAM_BLUE ) {
