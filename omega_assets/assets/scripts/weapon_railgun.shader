@@ -68,6 +68,11 @@ models/weapons2/railgun/energy
 		tcMod scale 1.1 1
 		tcMod scroll -3 0
 	}
+	{
+		map gfx/damage/shadow.tga
+		blendfunc filter
+		tcMod scale 1 1
+	}
 }
 
 models/weapons2/railgun/glass
