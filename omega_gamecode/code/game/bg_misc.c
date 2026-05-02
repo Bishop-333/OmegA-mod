@@ -661,21 +661,6 @@ Only in CTF games
             /* precache */ "",
             /* sounds */ "" },
 
-        /*QUAKED item_juggernaut (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
-*/
-        {
-            "item_juggernaut",
-            "sound/world/growl3.wav",
-            { "models/powerups/instant/quad.md3",
-              NULL, NULL, NULL },
-            /* icon */ "icons/juggernaut",
-            /* pickup */ "Juggernaut",
-            30,
-            IT_POWERUP,
-            PW_JUGGERNAUT,
-            /* precache */ "",
-            /* sounds */ "" },
-
         /*QUAKED ammo_nails (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
 */
         {
@@ -1016,6 +1001,21 @@ Only in Domination games
             0,
             IT_TEAM,
             DOM_POINTBLUE,
+            /* precache */ "",
+            /* sounds */ "" },
+
+        /*QUAKED item_juggernaut (.3 .3 1) (-16 -16 -16) (16 16 16) suspended
+*/
+        {
+            "item_juggernaut",
+            "sound/world/growl3.wav",
+            { "models/powerups/instant/quad.md3",
+              NULL, NULL, NULL },
+            /* icon */ "icons/juggernaut",
+            /* pickup */ "Juggernaut",
+            30,
+            IT_POWERUP,
+            PW_JUGGERNAUT,
             /* precache */ "",
             /* sounds */ "" },
 
