@@ -5340,7 +5340,7 @@ void BotSetupDeathmatchAI( void ) {
 		else
 			BotSetEntityNumForGoal( &dom_points_bot[0], va( "domination_point%i", 0 ) );
 		for ( i = 1; i < level.domination_points_count; i++ ) {
-			//Find next from the privius found entity
+			//Find next from the previous found entity
 			ent = untrap_BotGetLevelItemGoal( ent, "Domination point", &dom_points_bot[i] );
 			if ( ent < 0 )
 				BotAI_Print( PRT_WARNING, "Domination point %i not found!\n", i );
