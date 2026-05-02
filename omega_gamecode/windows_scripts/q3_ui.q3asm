@@ -11,6 +11,7 @@ ui_demo2
 ui_dmflags
 ui_mfield
 ui_menu
+ui_mutators
 ui_ingame
 ui_confirm
 ui_setup
