@@ -169,6 +169,26 @@ BotGetMessageTeamGoal
 */
 static int BotGetMessageTeamGoal( bot_state_t *bs, char *goalname, bot_goal_t *goal ) {
 	bot_waypoint_t *cp;
+	char *comma;
+
+	if ( ( goalname[0] >= '0' && goalname[0] <= '9' ) || goalname[0] == '-' ) {
+		goal->origin[0] = atof( goalname );
+		comma = strchr( goalname, ',' );
+
+		if ( comma ) {
+			goal->origin[1] = atof( comma + 1 );
+			comma = strchr( comma + 1, ',' );
+
+			if ( comma ) {
+				goal->origin[2] = atof( comma + 1 );
+
+				goal->areanum = BotPointAreaNum( goal->origin );
+				if ( goal->areanum ) {
+					return qtrue;
+				}
+			}
+		}
+	}
 
 	if ( BotGetItemTeamGoal( goalname, goal ) ) return qtrue;
 
