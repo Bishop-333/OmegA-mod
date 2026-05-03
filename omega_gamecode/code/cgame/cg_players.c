@@ -113,7 +113,7 @@ static void CG_GetClientColor( int clientNum, clientInfo_t *ci, int team, vec3_t
 	} else if ( team == TEAM_BLUE ) {
 		VectorSet( color, 0, 0, 1 );
 	} else {
-		VectorCopy( ci->color2, color );
+		VectorSet( color, 0, 1, 0 );
 	}
 }
 

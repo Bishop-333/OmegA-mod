@@ -181,7 +181,6 @@ static int BotGetMessageTeamGoal( bot_state_t *bs, char *goalname, bot_goal_t *g
 
 			if ( comma ) {
 				goal->origin[2] = atof( comma + 1 );
-
 				goal->areanum = BotPointAreaNum( goal->origin );
 				if ( goal->areanum ) {
 					return qtrue;
