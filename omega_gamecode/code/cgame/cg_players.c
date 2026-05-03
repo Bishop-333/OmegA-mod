@@ -81,10 +81,13 @@ static qboolean CG_IsEnemy( int clientNum ) {
 CG_GetClientColor
 ================
 */
-static void CG_GetClientColor( int clientNum, clientInfo_t *ci, int team, vec3_t color ) {
+static void CG_GetClientColor( entityState_t *state, clientInfo_t *ci, int team, vec3_t color ) {
 	const char *colorName;
+	int clientNum = state->clientNum;
 
-	if ( CG_IsEnemy( clientNum ) ) {
+	if ( state->eFlags & EF_DEAD ) {
+		colorName = cg_deadColor.string;
+	} else if ( CG_IsEnemy( clientNum ) ) {
 		colorName = cg_enemyColor.string;
 	} else {
 		colorName = cg_teamColor.string;
@@ -2309,7 +2312,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadow
 	// without taking a spot in the cg_marks array
 	if ( cg_shadows.integer == 4 ) {
 		shader = cgs.media.shadow2MarkShader;
-		CG_GetClientColor( cent->currentState.clientNum, &cgs.clientinfo[cent->currentState.clientNum], team, color );
+		CG_GetClientColor( &cent->currentState, &cgs.clientinfo[cent->currentState.clientNum], team, color );
 	} else {
 		shader = cgs.media.shadowMarkShader;
 		VectorSet( color, 1, 1, 1 );
@@ -2443,7 +2446,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 			} else if ( cg_brightPlayers.integer ) {
 				ent->customShader = cgs.media.brightPlayers;
 			}
-			CG_GetClientColor( clientNum, ci, team, color );
+			CG_GetClientColor( state, ci, team, color );
 			ent->shaderRGBA[0] = color[0] * 255;
 			ent->shaderRGBA[1] = color[1] * 255;
 			ent->shaderRGBA[2] = color[2] * 255;
@@ -2499,6 +2502,37 @@ static void CG_Corpse( centity_t *cent, int playerNum, float *bodySinkOffset, fl
 	}
 
 	*bodySinkOffset = offset;
+}
+
+/*
+===============
+CG_ProModeColor
+===============
+*/
+static void CG_ProModeColor( centity_t *cent, clientInfo_t *ci, refEntity_t *ent ) {
+	vec3_t deadColor;
+
+	if ( cent->currentState.eFlags & EF_DEAD ) {
+		if ( cg_deadColor.string[0] && cg_deadColor.string[0] != '0' ) {
+			CG_GetClientColor( &cent->currentState, ci, ci->team, deadColor );
+			ent->shaderRGBA[0] = deadColor[0] * 255;
+			ent->shaderRGBA[1] = deadColor[1] * 255;
+			ent->shaderRGBA[2] = deadColor[2] * 255;
+		} else if ( cg_deadColor.string[0] == '0' ) {
+			ent->shaderRGBA[0] = ci->color2[0] * 255;
+			ent->shaderRGBA[1] = ci->color2[1] * 255;
+			ent->shaderRGBA[2] = ci->color2[2] * 255;
+		} else {
+			ent->shaderRGBA[0] = ci->color2[0] * 51;
+			ent->shaderRGBA[1] = ci->color2[1] * 51;
+			ent->shaderRGBA[2] = ci->color2[2] * 51;
+		}
+	} else {
+		ent->shaderRGBA[0] = ci->color2[0] * 255;
+		ent->shaderRGBA[1] = ci->color2[1] * 255;
+		ent->shaderRGBA[2] = ci->color2[2] * 255;
+	}
+	ent->shaderRGBA[3] = 255;
 }
 
 /*
@@ -2607,14 +2641,7 @@ void CG_Player( centity_t *cent ) {
 	//
 	legs.hModel = ci->legsModel;
 	legs.customSkin = ci->legsSkin;
-	if ( cent->currentState.eFlags & EF_DEAD ) {
-		legs.shaderRGBA[0] = legs.shaderRGBA[1] = legs.shaderRGBA[2] = 25;
-	} else {
-		legs.shaderRGBA[0] = ci->color2[0] * 255;
-		legs.shaderRGBA[1] = ci->color2[1] * 255;
-		legs.shaderRGBA[2] = ci->color2[2] * 255;
-	}
-	legs.shaderRGBA[3] = 255;
+	CG_ProModeColor( cent, ci, &legs );
 
 	VectorCopy( cent->lerpOrigin, legs.origin );
 
@@ -2643,14 +2670,7 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	torso.customSkin = ci->torsoSkin;
-	if ( cent->currentState.eFlags & EF_DEAD ) {
-		torso.shaderRGBA[0] = torso.shaderRGBA[1] = torso.shaderRGBA[2] = 25;
-	} else {
-		torso.shaderRGBA[0] = ci->color2[0] * 255;
-		torso.shaderRGBA[1] = ci->color2[1] * 255;
-		torso.shaderRGBA[2] = ci->color2[2] * 255;
-	}
-	torso.shaderRGBA[3] = 255;
+	CG_ProModeColor( cent, ci, &torso );
 
 	VectorCopy( cent->lerpOrigin, torso.lightingOrigin );
 
@@ -2853,14 +2873,7 @@ void CG_Player( centity_t *cent ) {
 		return;
 	}
 	head.customSkin = ci->headSkin;
-	if ( cent->currentState.eFlags & EF_DEAD ) {
-		head.shaderRGBA[0] = head.shaderRGBA[1] = head.shaderRGBA[2] = 25;
-	} else {
-		head.shaderRGBA[0] = ci->color2[0] * 255;
-		head.shaderRGBA[1] = ci->color2[1] * 255;
-		head.shaderRGBA[2] = ci->color2[2] * 255;
-	}
-	head.shaderRGBA[3] = 255;
+	CG_ProModeColor( cent, ci, &head );
 
 	VectorCopy( cent->lerpOrigin, head.lightingOrigin );
 

@@ -1394,6 +1394,7 @@ extern vmCvar_t cg_ambient;
 extern vmCvar_t cg_bobgun;
 extern vmCvar_t cg_brightPlayers;
 extern vmCvar_t cg_damagePlums;
+extern vmCvar_t cg_deadColor;
 extern vmCvar_t cg_drawEmotes;
 extern vmCvar_t cg_drawEnemy;
 extern vmCvar_t cg_drawFriendSkulls;
