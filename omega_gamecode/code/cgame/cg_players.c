@@ -2116,7 +2116,7 @@ static void CG_FriendHudMarker( centity_t *cent ) {
 
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
 
-	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || ( cent->currentState.eFlags & EF_DEAD ) || cent->currentState.number == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
+	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || (cent->currentState.eFlags & EF_DEAD && !CG_IsFrozenPlayer(cent)) || cent->currentState.number == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
 		return;
 	}
 
@@ -2217,10 +2217,14 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 		return;
 	}
 
-	if ( !( cent->currentState.eFlags & EF_DEAD ) &&
+	if ( (!(cent->currentState.eFlags & EF_DEAD) || CG_IsFrozenPlayer(cent)) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
 		if ( cg_drawFriend.integer && ( cent->currentState.clientNum != cg.snap->ps.clientNum || ( cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) ) {
+			if (CG_IsFrozenPlayer(cent)) {
+				CG_PlayerFloatSprite( cent, origin, cgs.media.friendFrozenShader);
+				return;
+			}
 			if ( cg_drawFriendThroughWalls.integer ) {
 				if ( cent->currentState.powerups & ( 1 << PW_REDFLAG ) ) {
 					CG_PlayerFloatSprite( cent, origin, cgs.media.redFlagShader[0] );
@@ -2451,6 +2455,20 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 			ent->shaderRGBA[1] = color[1] * 255;
 			ent->shaderRGBA[2] = color[2] * 255;
 			trap_R_AddRefEntityToScene( ent );
+		}
+
+		if (CG_IsFrozenPlayerState(state)) {
+			byte alpha_save = ent->shaderRGBA[3];
+			float thawfrac = 1.0 - (float)(state->generic1 >> 1)/0x7f;
+			if (state->generic1 & 1) {
+				ent->customShader = cgs.media.thawingShader;
+			} else {
+				ent->customShader = cgs.media.frozenShader;
+			}
+			// never make the ice shell entirely transparent
+			ent->shaderRGBA[3] = (byte)85 + 170*thawfrac;
+			trap_R_AddRefEntityToScene( ent );
+			ent->shaderRGBA[3] = alpha_save;
 		}
 
 		if ( state->powerups & ( 1 << PW_QUAD ) ) {
@@ -2938,4 +2956,12 @@ void CG_ResetPlayerEntity( centity_t *cent ) {
 	if ( cg_debugPosition.integer ) {
 		CG_Printf( "%i ResetPlayerEntity yaw=%f\n", cent->currentState.number, cent->pe.torso.yawAngle );
 	}
+}
+
+qboolean CG_IsFrozenPlayerState( entityState_t *state ) {
+	return (cgs.freezetag && (state->eFlags & EF_DEAD));
+}
+
+qboolean CG_IsFrozenPlayer( centity_t *cent ) {
+	return CG_IsFrozenPlayerState(&cent->currentState);
 }

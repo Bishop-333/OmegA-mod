@@ -267,7 +267,8 @@ typedef enum {
 	STAT_CLIENTS_READY, // bit mask of clients wishing to exit the intermission (FIXME: configstring?)
 	STAT_MAX_HEALTH,    // health / armor limit, changable by handicap
 	STAT_SPEC_ZOOM,
-	STAT_TEAM_LOCKED
+	STAT_TEAM_LOCKED,
+	STAT_FROZENSTATE				// used to store frozen/thawing state if g_freeze = 1
 } statIndex_t;
 
 // player_state->persistant[] indexes
@@ -318,6 +319,7 @@ typedef enum {
 #define EF_AWARD_ASSIST 0x00020000     // draw a assist sprite
 #define EF_AWARD_HEADSHOT 0x00040000   // draw a headshot sprite
 #define EF_TEAMVOTED 0x00080000        // already cast a team vote
+#define EF_FROZEN		0x00100000
 
 // entityState_t->generic1
 #define GEN_SMILEY_HAPPY 0x00000010    // draw a happy smiley sprite
@@ -521,7 +523,8 @@ typedef enum {
 
 	EV_DEBUG_LINE,
 	EV_STOPLOOPINGSOUND,
-	EV_TAUNT
+	EV_TAUNT,
+	EV_FREEZE
 
 } entity_event_t;
 

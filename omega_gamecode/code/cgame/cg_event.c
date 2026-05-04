@@ -1425,6 +1425,11 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			es->loopSound = 0;
 			break;
 
+		case EV_FREEZE:
+			DEBUGNAME("EV_FREEZE");
+			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.freezeSound );
+			break;
+
 		case EV_DEBUG_LINE:
 			DEBUGNAME( "EV_DEBUG_LINE" );
 			CG_Beam( cent );

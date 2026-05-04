@@ -773,6 +773,8 @@ typedef struct {
 	qhandle_t friendThroughWallsShader;
 	qhandle_t enemyShader;
 
+	qhandle_t	friendFrozenShader;
+
 	qhandle_t balloonShader;
 	qhandle_t connectionShader;
 
@@ -844,6 +846,8 @@ typedef struct {
 	qhandle_t hastePuffShader;
 	qhandle_t redKamikazeShader;
 	qhandle_t blueKamikazeShader;
+	qhandle_t frozenShader;
+	qhandle_t thawingShader;
 	qhandle_t spawnPointShader;
 	qhandle_t transparentWeaponShader;
 
@@ -1074,6 +1078,7 @@ typedef struct {
 	sfxHandle_t wstbimpmSound;
 	sfxHandle_t wstbimpdSound;
 	sfxHandle_t wstbactvSound;
+	sfxHandle_t	freezeSound;
 
 } cgMedia_t;
 
@@ -1574,6 +1579,8 @@ void CG_NewClientInfo( int clientNum );
 sfxHandle_t CG_CustomSound( int clientNum, const char *soundName );
 qboolean CG_FileExists( const char *filename );
 void CG_ForceSoundsChange( void );
+qboolean CG_IsFrozenPlayer( centity_t *cent );
+qboolean CG_IsFrozenPlayerState( entityState_t *state );
 
 //
 // cg_predict.c

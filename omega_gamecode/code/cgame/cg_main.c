@@ -1041,6 +1041,8 @@ static void CG_RegisterSounds( void ) {
 	cgs.media.n_healthSound = trap_S_RegisterSound( "sound/items/n_health.wav", qfalse );
 	cgs.media.hgrenb1aSound = trap_S_RegisterSound( "sound/weapons/grenade/hgrenb1a.wav", qfalse );
 	cgs.media.hgrenb2aSound = trap_S_RegisterSound( "sound/weapons/grenade/hgrenb2a.wav", qfalse );
+
+	cgs.media.freezeSound = trap_S_RegisterSound("sound/player/freeze.wav", qfalse);
 }
 
 //===================================================================================
@@ -1146,6 +1148,8 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.invisShader = trap_R_RegisterShader( "powerups/invisibility" );
 	cgs.media.regenShader = trap_R_RegisterShader( "powerups/regen" );
 	cgs.media.hastePuffShader = trap_R_RegisterShader( "hasteSmokePuff" );
+	cgs.media.frozenShader = trap_R_RegisterShader("playerIceShell" );
+	cgs.media.thawingShader = trap_R_RegisterShader("playerThawingShell" );
 	cgs.media.spawnPointShader = trap_R_RegisterShader( "spawnPoint" );
 	cgs.media.transparentWeaponShader = trap_R_RegisterShader( "transparentWeapon" );
 
@@ -1232,6 +1236,7 @@ static void CG_RegisterGraphics( void ) {
 		cgs.media.friendThroughWallsShader = trap_R_RegisterShader( "sprites/foe2.tga" );
 		cgs.media.redQuadShader = trap_R_RegisterShader( "powerups/blueflag" );
 		cgs.media.blueKamikazeShader = trap_R_RegisterShader( "models/weaphits/kamikblu" );
+		cgs.media.friendFrozenShader = trap_R_RegisterShaderNoMip("sprites/friendFrozen.tga");
 	}
 	cgs.media.enemyShader = trap_R_RegisterShader( "sprites/foe3" );
 
