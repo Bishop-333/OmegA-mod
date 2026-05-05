@@ -1280,7 +1280,7 @@ static void PM_CheckDuck( void ) {
 
 	pm->mins[2] = MINS_Z;
 
-	if ( pm->ps->pm_type == PM_DEAD ) {
+	if ( pm->ps->pm_type == PM_DEAD && !(pm->ps->stats[STAT_FROZENSTATE] & FROZENSTATE_FROZEN) ) {
 		pm->maxs[2] = DEAD_HEIGHT;
 		pm->ps->viewheight = DEAD_VIEWHEIGHT;
 		return;
@@ -1820,7 +1820,7 @@ static void PmoveSingle( pmove_t *pmove ) {
 	pm->watertype = 0;
 	pm->waterlevel = 0;
 
-	if ( pm->ps->stats[STAT_HEALTH] <= 0 ) {
+	if ( pm->ps->stats[STAT_HEALTH] <= 0 && !(pm->ps->stats[STAT_FROZENSTATE] & FROZENSTATE_FROZEN) ) {
 		pm->tracemask &= ~CONTENTS_BODY; // corpses can fly through bodies
 	}
 

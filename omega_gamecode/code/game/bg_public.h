@@ -194,6 +194,10 @@ typedef enum {
 
 #define PMF_ALL_TIMES ( PMF_TIME_WATERJUMP | PMF_TIME_LAND | PMF_TIME_KNOCKBACK )
 
+// ps->stats[STAT_FROZENSTATE]
+#define FROZENSTATE_FROZEN	1
+#define FROZENSTATE_THAWING	2
+
 #define MAXTOUCH 32
 typedef struct {
 	// state (in / out)
