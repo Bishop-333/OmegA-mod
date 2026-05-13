@@ -285,3 +285,30 @@ transparentWeapon
 		tcGen environment
 	}
 }
+
+playerIceShell
+{
+	cull disable
+	nopicmip
+	deformVertexes wave 100 sin 3 0 0 0 
+	{
+		map textures/oafx/iceshell
+		blendFunc blend
+		tcGen environment
+		alphaGen entity
+	}
+}
+
+playerThawingShell
+{
+	cull disable
+	nopicmip
+	deformVertexes wave 100 sin 3 0 0 0 
+	{
+		map textures/oafx/iceshell
+		blendFunc blend
+		tcMod scroll 2 1
+		tcGen environment
+		alphaGen entity
+	}
+}

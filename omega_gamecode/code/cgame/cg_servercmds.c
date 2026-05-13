@@ -45,7 +45,7 @@ static void CG_ParseScores( void ) {
 	cgs.roundStartTime = atoi( CG_Argv( 4 ) );
 
 	//Update thing in lower-right corner
-	if ( cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION ) {
+	if ( BG_IsElimTeamGametype( cgs.gametype ) ) {
 		cgs.scores1 = cg.teamScores[0];
 		cgs.scores2 = cg.teamScores[1];
 	}
@@ -109,7 +109,7 @@ CG_ParseElimination
 =================
 */
 static void CG_ParseElimination( void ) {
-	if ( cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION ) {
+	if ( BG_IsElimTeamGametype( cgs.gametype ) ) {
 		cgs.scores1 = atoi( CG_Argv( 1 ) );
 		cgs.scores2 = atoi( CG_Argv( 2 ) );
 	}
@@ -292,7 +292,7 @@ static void CG_ParseTeamCount( void ) {
 		isDead = ( cg.snap->ps.pm_type == PM_DEAD );
 	} else if ( cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR ) {
 		team = cg.predictedPlayerState.persistant[PERS_TEAM];
-		isDead = ( cg.predictedPlayerState.pm_type == PM_DEAD );
+		isDead = ( cg.predictedPlayerState.pm_type == PM_DEAD || cg.predictedPlayerState.pm_type == PM_SPECTATOR );
 	}
 
 	totalRed = atoi( CG_Argv( 3 ) );
@@ -310,13 +310,13 @@ static void CG_ParseTeamCount( void ) {
 	totalBlue = atoi( CG_Argv( 4 ) );
 
 	if ( team == TEAM_RED && totalRed > 1 && livingRed == 1 && livingRed != cgs.redLivingCount && !isDead ) {
-		CG_CenterPrint( va( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
-		CG_AddBufferedSound( cgs.media.takenOpponentSound );
+		CG_CenterPrint( va( "You are the last standing" ), 120, MEDIUMCHAR_WIDTH );
+		CG_AddBufferedSound( cgs.media.suddenDeathSound );
 	}
 
 	if ( team == TEAM_BLUE && totalBlue != 1 && livingBlue == 1 && livingBlue != cgs.blueLivingCount && !isDead ) {
-		CG_CenterPrint( va( "You are the last one standing" ), 120, BIGCHAR_WIDTH );
-		CG_AddBufferedSound( cgs.media.takenOpponentSound );
+		CG_CenterPrint( va( "You are the last standing" ), 120, MEDIUMCHAR_WIDTH );
+		CG_AddBufferedSound( cgs.media.suddenDeathSound );
 	}
 
 	cgs.redLivingCount = livingRed;
@@ -403,7 +403,9 @@ void CG_ParseServerinfo( void ) {
 
 	cgs.chaos = atoi( Info_ValueForKey( info, "g_chaos" ) );
 	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
+	cgs.freezetag = atoi( Info_ValueForKey( info, "g_freeze" ) );
 	cgs.prophunt = atoi( Info_ValueForKey( info, "g_prophunt" ) );
+	cgs.spectateOnDeath = atoi( Info_ValueForKey( info, "g_spectateOnDeath" ) );
 	cgs.startWhenReady = atoi( Info_ValueForKey( info, "g_startWhenReady" ) );
 
 	//Copy allowed votes directly to the client:
@@ -736,7 +738,7 @@ static void CG_MapRestart( void ) {
 	// we really should clear more parts of cg here and stop sounds
 
 	// play the "fight" sound if this is a restart without warmup
-	if ( cg.warmup == 0 ) {
+	if ( cg.warmup == 0 && !BG_IsElimGametype( cgs.gametype ) ) {
 		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
 		CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH * 2 );
 	}
@@ -808,6 +810,11 @@ static void CG_ServerCommand( void ) {
 
 	if ( !strcmp( cmd, "cp" ) ) {
 		CG_CenterPrint( CG_Argv( 1 ), SCREEN_HEIGHT * 0.30, BIGCHAR_WIDTH );
+		return;
+	}
+
+	if ( !strcmp( cmd, "cpm" ) ) {
+		CG_CenterPrint( CG_Argv( 1 ), SCREEN_HEIGHT * 0.30, (int)( MEDIUMCHAR_WIDTH * cg_fragmsgsize.value ) );
 		return;
 	}
 

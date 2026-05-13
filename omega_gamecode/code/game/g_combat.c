@@ -290,7 +290,7 @@ static void LookAtKiller( gentity_t *self, gentity_t *inflictor, gentity_t *atta
 GibEntity
 ==================
 */
-static void GibEntity( gentity_t *self, int killer ) {
+void GibEntity( gentity_t *self, int killer ) {
 	gentity_t *ent;
 	int i;
 
@@ -581,7 +581,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	ent->s.otherEntityNum2 = killer;
 	//Sago: Hmmm... generic? Can I transmit anything I like? Like if it is a team kill? Let's try
 	ent->s.generic1 = OnSameTeam( self, attacker );
-	if ( !( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) && level.time < level.roundStartTime ) )
+	if ( !( G_IsElimTeamGametype() && level.time < level.roundStartTime ) )
 		ent->r.svFlags = SVF_BROADCAST; // send to everyone (if not an elimination gametype during active warmup)
 	else
 		ent->r.svFlags = SVF_NOCLIENT;
@@ -594,7 +594,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		attacker->client->lastkilled_client = self->s.number;
 
 		if ( attacker == self || OnSameTeam( self, attacker ) ) {
-			if ( !BG_IsEliminationGT( g_gametype.integer ) && g_gametype.integer != GT_POSSESSION && level.time < level.roundStartTime )
+			if ( !G_IsElimGametype() && g_gametype.integer != GT_POSSESSION && level.time < level.roundStartTime )
 				if ( ( g_gametype.integer < GT_TEAM && g_ffa_gt != 1 && self->client->ps.persistant[PERS_SCORE] > 0 ) || level.numNonSpectatorClients < 3 ) //Cannot get negative scores by suicide
 					AddScore( attacker, self->r.currentOrigin, -1 );
 		} else {
@@ -784,7 +784,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			attacker->client->lastKillTime = level.time;
 		}
 	} else {
-		if ( !BG_IsEliminationGT( g_gametype.integer ) && g_gametype.integer != GT_POSSESSION && level.time < level.roundStartTime )
+		if ( !G_IsElimGametype() && g_gametype.integer != GT_POSSESSION && level.time < level.roundStartTime )
 			if ( self->client->ps.persistant[PERS_SCORE] > 0 || level.numNonSpectatorClients < 3 ) //Cannot get negative scores by suicide
 				AddScore( self, self->r.currentOrigin, -1 );
 	}
@@ -841,21 +841,51 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		}
 	}
 
+	self->client->frozen = FROZEN_NOT;
+	if ( g_freeze.integer ) {
+		self->client->frozen = FROZEN_DIED;
+		self->client->freezetag_thawedBy = -1;
+		self->client->freezetag_thawed = 0.0;
+		self->client->freezetag_autoThawed = 0.0;
+
+		if ( meansOfDeath != MOD_LAVA && meansOfDeath != MOD_SLIME && meansOfDeath != MOD_TRIGGER_HURT && meansOfDeath != MOD_CRUSH && meansOfDeath != MOD_UNKNOWN && meansOfDeath != MOD_WATER && meansOfDeath != MOD_TARGET_LASER && meansOfDeath != MOD_TELEFRAG && meansOfDeath != MOD_JUICED ) {
+			self->client->frozen = FROZEN_ONMAP;
+			G_CreateFrozenPlayer( self );
+			if ( self->frozenPlayer ) {
+				G_AddEvent( self->frozenPlayer, EV_FREEZE, killer );
+			}
+			trap_UnlinkEntity( self );
+		}
+		if ( self->health > GIB_HEALTH || self->client->ps.stats[STAT_HEALTH] > GIB_HEALTH ) {
+			// make sure no body is left behind
+			self->health = GIB_HEALTH;
+			self->client->ps.stats[STAT_HEALTH] = GIB_HEALTH;
+		}
+	}
+
 	self->takedamage = qtrue; // can still be gibbed
 
 	self->s.weapon = WP_NONE;
 	self->s.powerups = 0;
 	self->r.contents = CONTENTS_CORPSE;
 
-	self->s.angles[0] = 0;
-	self->s.angles[2] = 0;
-	LookAtKiller( self, inflictor, attacker );
+	if ( self->client->frozen == FROZEN_ONMAP ) {
+		self->client->ps.stats[STAT_DEAD_YAW] = self->client->ps.viewangles[YAW];
+		self->client->ps.viewangles[PITCH] = 0;
+		self->client->ps.viewangles[ROLL] = 0;
+		VectorCopy( self->client->ps.viewangles, self->s.angles );
+	} else {
+		self->s.angles[0] = 0;
+		self->s.angles[2] = 0;
+		LookAtKiller( self, inflictor, attacker );
+
+		self->r.maxs[2] = DEAD_HEIGHT;
+		VectorCopy( self->s.angles, self->client->ps.viewangles );
+	}
 
 	VectorCopy( self->s.angles, self->client->ps.viewangles );
 
 	self->s.loopSound = 0;
-
-	self->r.maxs[2] = DEAD_HEIGHT;
 
 	// don't allow respawn until the death anim is done
 	// g_forcerespawn may force spawning at some later time
@@ -879,7 +909,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	//For testing:
 	//G_Printf("Respawntime: %i\n",self->client->respawnTime);
 	//However during warm up, we should respawn quicker!
-	if ( BG_IsEliminationGT( g_gametype.integer ) )
+	if ( G_IsElimGametype() )
 		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer )
 			self->client->respawnTime = level.time + rand() % 800;
 
@@ -888,58 +918,68 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	// remove powerups
 	memset( self->client->ps.powerups, 0, sizeof( self->client->ps.powerups ) );
 
-	// never gib in a nodrop
-	contents = trap_PointContents( self->r.currentOrigin, -1 );
+	if ( self->client->frozen != FROZEN_ONMAP ) {
+		// never gib in a nodrop
+		contents = trap_PointContents( self->r.currentOrigin, -1 );
 
-	if ( ( self->health <= GIB_HEALTH && !( contents & CONTENTS_NODROP ) && g_blood.integer && meansOfDeath != MOD_HEADSHOT ) || meansOfDeath == MOD_SUICIDE ) {
-		// gib death
-		GibEntity( self, killer );
+		if ( ( self->health <= GIB_HEALTH && !( contents & CONTENTS_NODROP ) && g_blood.integer && meansOfDeath != MOD_HEADSHOT ) || meansOfDeath == MOD_SUICIDE || self->client->frozen ) {
+			// gib death
+			GibEntity( self, killer );
+		} else {
+			// normal death
+			static int i;
+
+			switch ( i ) {
+				case 0:
+					anim = BOTH_DEATH1;
+					break;
+				case 1:
+					anim = BOTH_DEATH2;
+					break;
+				case 2:
+				default:
+					anim = BOTH_DEATH3;
+					break;
+			}
+
+			// for the no-blood option, we need to prevent the health
+			// from going to gib level
+			if ( self->health <= GIB_HEALTH ) {
+				self->health = GIB_HEALTH + 1;
+			}
+
+			self->client->ps.legsAnim = ( ( self->client->ps.legsAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
+			self->client->ps.torsoAnim = ( ( self->client->ps.torsoAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
+
+			G_AddEvent( self, EV_DEATH1 + i, killer );
+
+			if ( meansOfDeath == MOD_HEADSHOT ) {
+				G_AddEvent( self, EV_GIB_PLAYER_HEADSHOT, 0 );
+			}
+
+			// the body can still be gibbed
+			self->die = body_die;
+
+			// globally cycle through the different death animations
+			i = ( i + 1 ) % 3;
+
+			if ( self->s.eFlags & EF_KAMIKAZE ) {
+				Kamikaze_DeathTimer( self );
+			}
+
+			self->client->deathTime = level.time;
+		}
+
+		trap_LinkEntity( self );
+
 	} else {
-		// normal death
-		static int i;
-
-		switch ( i ) {
-			case 0:
-				anim = BOTH_DEATH1;
-				break;
-			case 1:
-				anim = BOTH_DEATH2;
-				break;
-			case 2:
-			default:
-				anim = BOTH_DEATH3;
-				break;
-		}
-
-		// for the no-blood option, we need to prevent the health
-		// from going to gib level
-		if ( self->health <= GIB_HEALTH ) {
-			self->health = GIB_HEALTH + 1;
-		}
-
-		self->client->ps.legsAnim = ( ( self->client->ps.legsAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
-		self->client->ps.torsoAnim = ( ( self->client->ps.torsoAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
-
-		G_AddEvent( self, EV_DEATH1 + i, killer );
-
-		if ( meansOfDeath == MOD_HEADSHOT ) {
-			G_AddEvent( self, EV_GIB_PLAYER_HEADSHOT, 0 );
-		}
-
-		// the body can still be gibbed
-		self->die = body_die;
-
-		// globally cycle through the different death animations
-		i = ( i + 1 ) % 3;
-
-		if ( self->s.eFlags & EF_KAMIKAZE ) {
-			Kamikaze_DeathTimer( self );
-		}
-
-		self->client->deathTime = level.time;
+		// created a frozen player copy, so make the real player entity invisible
+		self->takedamage = qfalse;
+		self->s.eType = ET_INVISIBLE;
+		self->r.contents = 0;
+		// prevent other code from showing this player again
+		self->health = GIB_HEALTH;
 	}
-
-	trap_LinkEntity( self );
 
 	if ( G_IsElimTeamGametype() ) {
 		CheckTeamCount();
@@ -1124,6 +1164,13 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	//Sago: This was moved up
 	client = targ->client;
 
+	if ( g_freeze.integer ) {
+		if ( G_IsFrozenPlayerRemnant( targ ) ) {
+			G_FrozenPlayerDamage( targ->frozenPlayer, targ, attacker, inflictor, dir, damage, mod );
+			return;
+		}
+	}
+
 	//Sago: See if the client was sent flying
 	//Check if damage is by somebody who is not a player!
 	if ( ( !attacker || attacker->s.eType != ET_PLAYER ) && client && client->lastSentFlying > -1 && ( mod == MOD_FALLING || mod == MOD_LAVA || mod == MOD_SLIME || mod == MOD_TRIGGER_HURT || mod == MOD_SUICIDE ) ) {
@@ -1230,7 +1277,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		// if TF_NO_FRIENDLY_FIRE is set, don't do damage to the target
 		// if the attacker was on the same team
 		if ( mod != MOD_JUICED && mod != MOD_CRUSH && targ != attacker && !( dflags & DAMAGE_NO_TEAM_PROTECTION ) && OnSameTeam( targ, attacker ) ) {
-			if ( ( !g_friendlyFire.integer && g_gametype.integer != GT_ELIMINATION && g_gametype.integer != GT_CTF_ELIMINATION ) || ( g_elimination_selfdamage.integer < 2 && ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) ) ) {
+			if ( ( !g_friendlyFire.integer && !G_IsElimTeamGametype() ) || ( g_elimination_selfdamage.integer < 2 && G_IsElimTeamGametype() ) ) {
 				return;
 			}
 		}
@@ -1295,12 +1342,12 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	if ( targ == attacker && ( g_dmflags.integer & DF_NO_SELF_DAMAGE ) )
 		damage = 0;
 
-	if ( ( BG_IsEliminationGT( g_gametype.integer ) || g_elimination_allgametypes.integer ) && g_elimination_selfdamage.integer < 1 && ( targ == attacker || mod == MOD_FALLING ) ) {
+	if ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && g_elimination_selfdamage.integer < 1 && ( targ == attacker || mod == MOD_FALLING ) ) {
 		damage = 0;
 	}
 
 	//So people can be telefragged!
-	if ( BG_IsEliminationGT( g_gametype.integer ) && level.time < level.roundStartTime && ( ( mod == MOD_LAVA ) || ( mod == MOD_SLIME ) ) ) {
+	if ( G_IsElimGametype() && level.time < level.roundStartTime && ( ( mod == MOD_LAVA ) || ( mod == MOD_SLIME ) ) ) {
 		damage = 1000;
 	}
 

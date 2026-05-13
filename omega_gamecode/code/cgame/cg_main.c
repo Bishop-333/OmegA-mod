@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "cg_local.h"
 
 int forceModelModificationCount = -1;
+int forceTeamSkinsModificationCount = -1;
 int enemyModelModificationCount = -1;
 int teamModelModificationCount = -1;
 int selfSoundsModificationCount = -1;
@@ -249,8 +250,8 @@ vmCvar_t cg_bobgun;
 vmCvar_t cg_brightPlayers;
 vmCvar_t cg_damagePlums;
 vmCvar_t cg_deadColor;
+vmCvar_t cg_draw3DCrosshairNames;
 vmCvar_t cg_drawEmotes;
-vmCvar_t cg_drawEnemy;
 vmCvar_t cg_drawFriendSkulls;
 vmCvar_t cg_drawFriendThroughWalls;
 vmCvar_t cg_drawItemPickup;
@@ -468,8 +469,8 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_brightPlayers, "cg_brightPlayers", "1", CVAR_ARCHIVE },
     { &cg_damagePlums, "cg_damagePlums", "1", CVAR_USERINFO | CVAR_ARCHIVE },
     { &cg_deadColor, "cg_deadColor", "", CVAR_ARCHIVE },
+    { &cg_draw3DCrosshairNames, "cg_draw3DCrosshairNames", "1", CVAR_ARCHIVE },
     { &cg_drawEmotes, "cg_drawEmotes", "1", CVAR_ARCHIVE },
-    { &cg_drawEnemy, "cg_drawEnemy", "1", CVAR_ARCHIVE },
     { &cg_drawFriendSkulls, "cg_friendSkulls", "1", CVAR_ARCHIVE },
     { &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
     { &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE },
@@ -482,7 +483,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_enemyModel, "cg_enemyModel", "", CVAR_ARCHIVE },
     { &cg_enemySounds, "cg_enemySounds", "", CVAR_ARCHIVE },
     { &cg_flagStyle, "cg_flagStyle", "2", CVAR_ARCHIVE | CVAR_LATCH },
-    { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE | CVAR_LATCH },
+    { &cg_forceTeamSkins, "cg_forceTeamSkins", "1", CVAR_ARCHIVE },
     { &cg_hitmarker, "cg_hitmarker", "1", CVAR_ARCHIVE },
     { &cg_killsound, "cg_killsound", "1", CVAR_ARCHIVE },
     { &cg_omegaInitialized, "cg_omegaInitialized", "0", CVAR_ARCHIVE },
@@ -536,6 +537,7 @@ static void CG_RegisterCvars( void ) {
 	cgs.localServer = atoi( var );
 
 	forceModelModificationCount = cg_forceModel.modificationCount;
+	forceTeamSkinsModificationCount = cg_forceTeamSkins.modificationCount;
 	enemyModelModificationCount = cg_enemyModel.modificationCount;
 	teamModelModificationCount = cg_teamModel.modificationCount;
 
@@ -572,6 +574,10 @@ CG_ForceModelChange
 */
 static void CG_ForceModelChange( void ) {
 	int i;
+
+	for ( i = 0; i < MAX_CLIENTS; i++ ) {
+		cgs.clientinfo[i].infoValid = qfalse;
+	}
 
 	for ( i = 0; i < MAX_CLIENTS; i++ ) {
 		const char *clientInfo;
@@ -632,6 +638,10 @@ void CG_UpdateCvars( void ) {
 	// if force model changed
 	if ( forceModelModificationCount != cg_forceModel.modificationCount ) {
 		forceModelModificationCount = cg_forceModel.modificationCount;
+		CG_ForceModelChange();
+	}
+	if ( forceTeamSkinsModificationCount != cg_forceTeamSkins.modificationCount ) {
+		forceTeamSkinsModificationCount = cg_forceTeamSkins.modificationCount;
 		CG_ForceModelChange();
 	}
 	if ( enemyModelModificationCount != cg_enemyModel.modificationCount ) {
@@ -1041,6 +1051,8 @@ static void CG_RegisterSounds( void ) {
 	cgs.media.n_healthSound = trap_S_RegisterSound( "sound/items/n_health.wav", qfalse );
 	cgs.media.hgrenb1aSound = trap_S_RegisterSound( "sound/weapons/grenade/hgrenb1a.wav", qfalse );
 	cgs.media.hgrenb2aSound = trap_S_RegisterSound( "sound/weapons/grenade/hgrenb2a.wav", qfalse );
+
+	cgs.media.freezeSound = trap_S_RegisterSound( "sound/player/freeze.ogg", qfalse );
 }
 
 //===================================================================================
@@ -1106,6 +1118,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.blueProxMine = trap_R_RegisterModel( "models/weaphits/proxmineb.md3" );
 	cgs.media.plasmaBallShader = trap_R_RegisterShader( "sprites/plasma1" );
 	cgs.media.bloodTrailShader = trap_R_RegisterShader( "bloodTrail" );
+	cgs.media.snowTrailShader = trap_R_RegisterShader( "snowTrail" );
 	cgs.media.lagometerShader = trap_R_RegisterShader( "gfx/2d/lag.tga" );
 	cgs.media.connectionShader = trap_R_RegisterShader( "disconnected" );
 
@@ -1146,10 +1159,12 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.invisShader = trap_R_RegisterShader( "powerups/invisibility" );
 	cgs.media.regenShader = trap_R_RegisterShader( "powerups/regen" );
 	cgs.media.hastePuffShader = trap_R_RegisterShader( "hasteSmokePuff" );
+	cgs.media.frozenShader = trap_R_RegisterShader( "playerIceShell" );
+	cgs.media.thawingShader = trap_R_RegisterShader( "playerThawingShell" );
 	cgs.media.spawnPointShader = trap_R_RegisterShader( "spawnPoint" );
 	cgs.media.transparentWeaponShader = trap_R_RegisterShader( "transparentWeapon" );
 
-	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_1FCTF || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
+	if ( cgs.gametype == GT_CTF || BG_IsElimTeamGametype( cgs.gametype ) || cgs.gametype == GT_1FCTF || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
 		cgs.media.redCubeModel = trap_R_RegisterModel( "models/powerups/orb/r_orb.md3" );
 		cgs.media.blueCubeModel = trap_R_RegisterModel( "models/powerups/orb/b_orb.md3" );
 		cgs.media.redCubeIcon = trap_R_RegisterShader( "icons/skull_red" );
@@ -1233,7 +1248,6 @@ static void CG_RegisterGraphics( void ) {
 		cgs.media.redQuadShader = trap_R_RegisterShader( "powerups/blueflag" );
 		cgs.media.blueKamikazeShader = trap_R_RegisterShader( "models/weaphits/kamikblu" );
 	}
-	cgs.media.enemyShader = trap_R_RegisterShader( "sprites/foe3" );
 
 	cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
 

@@ -733,8 +733,9 @@ typedef struct {
 	menulist_s weaponarena;
 	menuradiobutton_s cheats;
 	menulist_s lmsMode;
-	menuradiobutton_s respawn;
+	menuradiobutton_s freeze;
 	menulist_s botSkill;
+	
 	menutext_s dmflags;
 	menutext_s mutators;
 
@@ -827,7 +828,7 @@ static void ServerOptions_Start( void ) {
 	int cheats;
 	int oneway;
 	int lmsMode;
-	int respawn;
+	int freeze;
 	int skill;
 	int n;
 	const char *info;
@@ -843,8 +844,7 @@ static void ServerOptions_Start( void ) {
 	cheats = s_serveroptions.cheats.curvalue;
 	oneway = s_serveroptions.oneway.curvalue;
 	lmsMode = s_serveroptions.lmsMode.curvalue;
-	;
-	respawn = s_serveroptions.respawn.curvalue;
+	freeze = s_serveroptions.freeze.curvalue;
 	skill = s_serveroptions.botSkill.curvalue + 1;
 
 	//set maxclients
@@ -942,7 +942,7 @@ static void ServerOptions_Start( void ) {
 	trap_Cvar_SetValue( "g_instantgib", instantgib );
 	trap_Cvar_SetValue( "g_weaponArena", weaponarena );
 	trap_Cvar_SetValue( "g_lms_mode", lmsMode );
-	trap_Cvar_SetValue( "g_survivorsRespawn", respawn );
+	trap_Cvar_SetValue( "g_freeze", freeze );
 	trap_Cvar_SetValue( "elimination_ctf_oneway", oneway );
 	trap_Cvar_Set( "sv_hostname", s_serveroptions.hostname.field.buffer );
 
@@ -1420,7 +1420,7 @@ static void ServerOptions_SetMenuItems( void ) {
 	s_serveroptions.instantgib.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "g_instantgib" ) );
 	s_serveroptions.weaponarena.curvalue = Com_Clamp( 0, 13, trap_Cvar_VariableValue( "g_weaponArena" ) );
 	s_serveroptions.lmsMode.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "g_lms_mode" ) );
-	s_serveroptions.respawn.curvalue = Com_Clamp( 1, 1, trap_Cvar_VariableValue( "g_survivorsRespawn" ) );
+	s_serveroptions.freeze.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "g_freeze" ) );
 	s_serveroptions.oneway.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "elimination_ctf_oneway" ) );
 
 	// set the map pic
@@ -1567,7 +1567,7 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	s_serveroptions.timelimit.field.widthInChars = 3;
 	s_serveroptions.timelimit.field.maxchars = 3;
 
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION && s_serveroptions.gametype != GT_ELIMINATION && s_serveroptions.gametype != GT_CTF_ELIMINATION ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && !BG_IsElimGametype( s_serveroptions.gametype ) && s_serveroptions.gametype != GT_POSSESSION ) {
 		y += BIGCHAR_HEIGHT + 2;
 		s_serveroptions.friendlyfire.generic.type = MTYPE_RADIOBUTTON;
 		s_serveroptions.friendlyfire.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -1631,13 +1631,13 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 		s_serveroptions.lmsMode.itemnames = lmsMode_list;
 	}
 
-	if ( s_serveroptions.gametype == GT_LMS || s_serveroptions.gametype == GT_ELIMINATION || s_serveroptions.gametype == GT_CTF_ELIMINATION ) {
+	if ( BG_IsElimGametype( s_serveroptions.gametype ) ) {
 		y += BIGCHAR_HEIGHT + 2;
-		s_serveroptions.respawn.generic.type = MTYPE_RADIOBUTTON;
-		s_serveroptions.respawn.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
-		s_serveroptions.respawn.generic.name = "Respawn Survivors:";
-		s_serveroptions.respawn.generic.x = OPTIONS_X;
-		s_serveroptions.respawn.generic.y = y;
+		s_serveroptions.freeze.generic.type = MTYPE_RADIOBUTTON;
+		s_serveroptions.freeze.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+		s_serveroptions.freeze.generic.name = "Freeze Tag:";
+		s_serveroptions.freeze.generic.x = OPTIONS_X;
+		s_serveroptions.freeze.generic.y = y;
 	}
 
 	if ( s_serveroptions.multiplayer ) {
@@ -1658,7 +1658,7 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	s_serveroptions.botSkill.generic.x = 32 + ( strlen( s_serveroptions.botSkill.generic.name ) + 2 ) * SMALLCHAR_WIDTH;
 	s_serveroptions.botSkill.generic.y = y;
 	s_serveroptions.botSkill.itemnames = botSkill_list;
-	s_serveroptions.botSkill.curvalue = 1;
+	s_serveroptions.botSkill.curvalue = 2;
 
 	y += ( 2 * SMALLCHAR_HEIGHT );
 	s_serveroptions.player0.generic.type = MTYPE_TEXT;
@@ -1783,7 +1783,7 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.flaglimit );
 	}
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.timelimit );
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION && s_serveroptions.gametype != GT_ELIMINATION && s_serveroptions.gametype != GT_CTF_ELIMINATION ) {
+	if ( s_serveroptions.gametype >= GT_TEAM && !BG_IsElimGametype( s_serveroptions.gametype ) && s_serveroptions.gametype != GT_POSSESSION ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.friendlyfire );
 	}
 	Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.pure );
@@ -1796,8 +1796,8 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 	if ( s_serveroptions.gametype == GT_CTF_ELIMINATION ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.oneway );
 	}
-	if ( s_serveroptions.gametype == GT_LMS || s_serveroptions.gametype == GT_ELIMINATION || s_serveroptions.gametype == GT_CTF_ELIMINATION ) {
-		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.respawn );
+	if ( BG_IsElimGametype( s_serveroptions.gametype ) ) {
+		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.freeze );
 	}
 	if ( s_serveroptions.multiplayer ) {
 		Menu_AddItem( &s_serveroptions.menu, &s_serveroptions.hostname );

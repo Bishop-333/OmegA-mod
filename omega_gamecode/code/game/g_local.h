@@ -61,6 +61,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define FL_NO_HUMANS 0x00004000     // spawn point just for bots
 #define FL_FORCE_GESTURE 0x00008000 // force gesture on client
 
+typedef enum {
+	FROZEN_NOT = 0,          // not frozen
+	FROZEN_ONMAP,            // remnant is still around
+	FROZEN_REMNANTDESTROYED, // remnant was destroyed
+	FROZEN_DIED,             // died without producing a remnant
+} frozen_t;
+
 // movers are things like doors, plats, buttons, etc
 typedef enum {
 	MOVER_POS1,
@@ -188,6 +195,11 @@ struct gentity_s {
 	gitem_t *item; // for bonus items
 
 	int pushed_at; // for jumppadGrenades
+
+	// for freezetag
+	// links the frozen remnant to the actual player entity
+	gentity_t *frozenPlayer;
+	qboolean frozenPlayer_finalized;
 };
 
 typedef enum {
@@ -375,6 +387,12 @@ struct gclient_s {
 
 	int airOutTime;
 
+	// increases during thawing out of frozen clients (g_freeze)
+	float freezetag_thawed;
+	float freezetag_autoThawed;
+	int freezetag_thawedBy;
+	frozen_t frozen;
+
 	int lastKillTime; // for multiple kill rewards
 
 	int deathTime;
@@ -428,6 +446,9 @@ struct gclient_s {
 
 	int accuracy[WP_NUM_WEAPONS][2];
 
+	// to prevent switching back and forth too fast
+	int lastSpecatorSwitchTime;
+
 	int railgunRapidFire;
 
 	qboolean isProp;
@@ -477,6 +498,8 @@ typedef struct {
 	int follow1, follow2;           // clientNums for auto-follow spectators
 
 	int snd_fry; // sound index for standing in lava
+
+	int snd_thaw; // sound index for thawing (freezetag)
 
 	int warmupModificationCount; // for detecting if g_warmup is changed
 
@@ -650,6 +673,7 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace );
 void ClearRegisteredItems( void );
 void RegisterItem( gitem_t *item );
 void SaveRegisteredItems( void );
+void G_BounceItem( gentity_t *ent, trace_t *trace );
 
 //
 // g_utils.c
@@ -702,6 +726,8 @@ void TossClientPersistantPowerups( gentity_t *self );
 void TossClientCubesValues( vec3_t angles, vec3_t origin, vec3_t velocity );
 void TossClientCubes( gentity_t *self );
 void DamagePlum( gentity_t *ent, vec3_t origin, int score );
+void GibEntity( gentity_t *self, int killer );
+void G_SetRespawntime( gentity_t *self, int notBefore );
 
 // damage flags
 #define DAMAGE_RADIUS 0x00000001             // damage was indirect
@@ -735,6 +761,7 @@ void Touch_DoorTrigger( gentity_t *ent, gentity_t *other, trace_t *trace );
 // g_trigger.c
 //
 void trigger_teleporter_touch( gentity_t *self, gentity_t *other, trace_t *trace );
+void hurt_touch( gentity_t *self, gentity_t *other, trace_t *trace );
 
 //
 // g_misc.c
@@ -779,7 +806,6 @@ void EnableWeapons( void );
 void DisableWeapons( void );
 void EndEliminationRound( void );
 void LMSpoint( void );
-//void wins2score( void );
 int TeamLeader( int team );
 team_t PickTeam( int ignoreClientNum );
 void SetClientViewAngle( gentity_t *ent, vec3_t angle );
@@ -795,6 +821,12 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 void AddScore( gentity_t *ent, vec3_t origin, int score );
 void CalculateRanks( void );
 qboolean SpotWouldTelefrag( gentity_t *spot );
+void G_DestroyFrozenPlayer( gentity_t *player );
+void G_CreateFrozenPlayer( gentity_t *player );
+void G_UpdateFrozenPlayer( gentity_t *player );
+qboolean G_IsFrozenPlayerFinalized( gentity_t *player );
+void G_RunFrozenPlayer( gentity_t *frozen );
+qboolean G_IsFrozenPlayerRemnant( gentity_t *ent );
 
 //
 // g_svcmds.c
@@ -844,6 +876,7 @@ void SetLeader( int team, int client );
 void CheckTeamLeader( int team );
 void G_RunThink( gentity_t *ent );
 qboolean G_IsElimTeamGametype( void );
+qboolean G_IsElimGametype( void );
 void AddTournamentQueue( gclient_t *client );
 void ExitLevel( void );
 void QDECL G_LogPrintf( const char *fmt, ... );
@@ -873,6 +906,12 @@ void ClientCommand( int clientNum );
 void ClientThink( int clientNum );
 void ClientEndFrame( gentity_t *ent );
 void G_RunClient( gentity_t *ent );
+int G_FreezeThawSound( void );
+void G_ClientThawNow( gentity_t *ent, int thawedBy );
+void G_ClientSetFrozenState( gentity_t *ent );
+void G_FrozenPlayerDamage( gentity_t *targPlayer, gentity_t *targ, gentity_t *attacker, gentity_t *inflictor, vec3_t dir, int damage, int mod );
+void G_FrozenTouchTriggers( gentity_t *ent );
+void P_WorldEffectsFrozen( gentity_t *ent );
 
 //
 // g_team.c
@@ -883,6 +922,7 @@ qboolean CheckObeliskAttack( gentity_t *obelisk, gentity_t *attacker );
 void ShuffleTeams( void );
 //KK-OAX Added for Command Handling Changes (r24)
 team_t G_TeamFromString( char *str );
+void EliminationRespawnClient( gentity_t *ent );
 void CheckTeamCount( void );
 /**
  * Picks a random location.
@@ -1066,6 +1106,12 @@ extern vmCvar_t g_proxMineTimeout;
 extern vmCvar_t g_localTeamPref;
 extern vmCvar_t g_music;
 extern vmCvar_t g_spawnprotect;
+
+//freezetag
+extern vmCvar_t g_freeze;
+extern vmCvar_t g_freezeRespawnInplace;
+extern vmCvar_t g_thawTime;
+extern vmCvar_t g_autoThawTime;
 
 //elimination:
 extern vmCvar_t g_elimination_selfdamage;

@@ -250,28 +250,29 @@ static void CG_Obituary( entityState_t *ent ) {
 	// check for kill messages from the current clientNum
 	if ( attacker == cg.snap->ps.clientNum ) {
 		char *s;
+		const char *action = cgs.freezetag ? "froze" : "fragged";
 
 		if ( mod == MOD_HEADSHOT ) {
 			if ( cgs.gametype < GT_TEAM ) {
-				s = va( "^1Headshot!^7\nYou fragged %s\n%s place with %i", targetName,
+				s = va( "^1Headshot!^7\nYou %s %s\n%s place with %i", action, targetName,
 				        CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
 				        cg.snap->ps.persistant[PERS_SCORE] );
 			} else {
 				if ( ent->generic1 )
-					s = va( "^1Headshot!^7\nYou fragged your ^1TEAMMATE^7 %s\nTry aiming for the right heads", targetName );
+					s = va( "^1Headshot!^7\nYou %s your ^1TEAMMATE^7 %s\nTry aiming for enemy heads", action, targetName );
 				else
-					s = va( "^1Headshot!^7\nYou fragged %s", targetName );
+					s = va( "^1Headshot!^7\nYou %s %s", action, targetName );
 			}
 		} else {
 			if ( cgs.gametype < GT_TEAM ) {
-				s = va( "You fragged %s\n%s place with %i", targetName,
+				s = va( "You %s %s\n%s place with %i", action, targetName,
 				        CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
 				        cg.snap->ps.persistant[PERS_SCORE] );
 			} else {
 				if ( ent->generic1 )
-					s = va( "You fragged your ^1TEAMMATE^7 %s", targetName );
+					s = va( "You %s your ^1TEAMMATE^7 %s", action, targetName );
 				else
-					s = va( "You fragged %s", targetName );
+					s = va( "You %s %s", action, targetName );
 			}
 		}
 		if ( cg_killsound.integer == 2 ) {
@@ -1398,7 +1399,7 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			if ( !( es->eFlags & EF_KAMIKAZE ) ) {
 				trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
 			}
-			CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta );
+			CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, qfalse );
 			break;
 
 		case EV_GIB_PLAYER_HEADSHOT:
@@ -1409,6 +1410,12 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 				cg.predictedPlayerEntity.pe.noHead = qtrue;
 			}
 			CG_GibPlayerHead( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, cent );
+			break;
+
+		case EV_GIB_PLAYER_FROZEN:
+			DEBUGNAME( "EV_GIB_PLAYER_FROZEN" );
+			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.freezeSound );
+			CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, qtrue );
 			break;
 
 		case EV_BODY_NOHEAD:
@@ -1423,6 +1430,11 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			DEBUGNAME( "EV_STOPLOOPINGSOUND" );
 			trap_S_StopLoopingSound( es->number );
 			es->loopSound = 0;
+			break;
+
+		case EV_FREEZE:
+			DEBUGNAME( "EV_FREEZE" );
+			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.freezeSound );
 			break;
 
 		case EV_DEBUG_LINE:

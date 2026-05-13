@@ -1482,7 +1482,8 @@ char *eventnames[] = {
 
     "EV_DEBUG_LINE",
     "EV_STOPLOOPINGSOUND",
-    "EV_TAUNT"
+    "EV_TAUNT",
+    "EV_FREEZE"
 
 };
 
@@ -1733,11 +1734,22 @@ char *BG_TeamName( team_t team ) {
 
 /*
 ================
-BG_IsEliminationGT
+BG_IsElimTeamGametype
+
+Returns true if the gametype is a team elimination mode.
+================
+*/
+qboolean BG_IsElimTeamGametype( gametype_t gametype ) {
+	return gametype == GT_ELIMINATION || gametype == GT_CTF_ELIMINATION;
+}
+
+/*
+================
+BG_IsElimGametype
 
 Returns true if the gametype is an elimination mode.
 ================
 */
-qboolean BG_IsEliminationGT( gametype_t gametype ) {
-	return gametype == GT_ELIMINATION || gametype == GT_CTF_ELIMINATION || gametype == GT_LMS;
+qboolean BG_IsElimGametype( gametype_t gametype ) {
+	return BG_IsElimTeamGametype( gametype ) || gametype == GT_LMS;
 }

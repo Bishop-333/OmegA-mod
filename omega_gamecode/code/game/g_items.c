@@ -465,11 +465,11 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace ) {
 		return;
 
 	//Cannot touch items before round starts
-	if ( ( g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_ELIMINATION ) && level.roundNumber != level.roundNumberStarted && g_elimination_activewarmup.integer )
+	if ( G_IsElimTeamGametype() && level.roundNumber != level.roundNumberStarted && level.warmupTime == 0 )
 		return;
 
 	//Cannot take ctf elimination oneway
-	if ( g_gametype.integer == GT_CTF_ELIMINATION && g_elimination_ctf_oneway.integer != 0 ) {
+	if ( g_gametype.integer == GT_CTF_ELIMINATION && ent->item->giType == IT_TEAM && g_elimination_ctf_oneway.integer != 0 ) {
 		if ( ( strcmp( ent->classname, "team_CTF_redflag" ) == 0 && other->client->sess.sessionTeam == TEAM_BLUE && G_GetAttackingTeam() == TEAM_RED ) ||
 		     ( strcmp( ent->classname, "team_CTF_blueflag" ) == 0 && other->client->sess.sessionTeam == TEAM_RED && G_GetAttackingTeam() == TEAM_BLUE ) ) {
 			return;
@@ -800,7 +800,7 @@ void FinishSpawningItem( gentity_t *ent ) {
 	}
 
 	// powerups don't spawn in for a while (but not in elimination)
-	if ( ( ( !BG_IsEliminationGT( g_gametype.integer ) && !g_elimination_allgametypes.integer ) || g_elimination_items.integer ) && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
+	if ( ( ( !G_IsElimGametype() && !g_elimination_allgametypes.integer ) || g_elimination_items.integer ) && !g_instantgib.integer && !g_rockets.integer && !g_weaponArena.integer )
 		if ( ent->item->giType == IT_POWERUP ) {
 			float respawn;
 
@@ -938,7 +938,7 @@ void ClearRegisteredItems( void ) {
 		// players always start with the base weapon
 		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 		RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
-		if ( BG_IsEliminationGT( g_gametype.integer ) || g_elimination_allgametypes.integer || g_weaponArena.integer == 13 ) {
+		if ( BG_IsElimGametype( g_gametype.integer ) || g_elimination_allgametypes.integer || g_weaponArena.integer == 13 ) {
 			RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_GRENADE_LAUNCHER ) );
 			RegisterItem( BG_FindItemForWeapon( WP_ROCKET_LAUNCHER ) );
@@ -1096,7 +1096,7 @@ void G_SpawnItem( gentity_t *ent, gitem_t *item ) {
 G_BounceItem
 ================
 */
-static void G_BounceItem( gentity_t *ent, trace_t *trace ) {
+void G_BounceItem( gentity_t *ent, trace_t *trace ) {
 	vec3_t velocity;
 	float dot;
 	int hitTime;
@@ -1113,7 +1113,9 @@ static void G_BounceItem( gentity_t *ent, trace_t *trace ) {
 	// check for stop
 	if ( trace->plane.normal[2] > 0 && ent->s.pos.trDelta[2] < 40 ) {
 		trace->endpos[2] += 1.0; // make sure it is off ground
-		SnapVector( trace->endpos );
+		if ( !G_IsFrozenPlayerRemnant( ent ) ) {
+			SnapVector( trace->endpos );
+		}
 		G_SetOrigin( ent, trace->endpos );
 		ent->s.groundEntityNum = trace->entityNum;
 		return;

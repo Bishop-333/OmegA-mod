@@ -383,7 +383,7 @@ static void hurt_use( gentity_t *self, gentity_t *other, gentity_t *activator ) 
 hurt_touch
 =================
 */
-static void hurt_touch( gentity_t *self, gentity_t *other, trace_t *trace ) {
+void hurt_touch( gentity_t *self, gentity_t *other, trace_t *trace ) {
 	int dflags;
 
 	if ( !other->takedamage ) {

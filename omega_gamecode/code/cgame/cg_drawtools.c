@@ -371,6 +371,7 @@ CG_Draw3DString
 void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, qboolean useTrace ) {
 	vec3_t dir, worldPos;
 	vec4_t fadeColor;
+	vec4_t hcolor;
 	trace_t trace;
 	float finalX, finalY, localZ;
 	float scale, fovScale;
@@ -439,6 +440,14 @@ void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, 
 	CG_AdjustFrom640( &scrX, &scrY, &scrW, &scrH );
 
 	while ( *s ) {
+		if ( Q_IsColorString( s ) ) {
+			memcpy( hcolor, g_color_table[ColorIndexFromChar( *( s + 1 ) )], sizeof( hcolor ) );
+			hcolor[3] = fadeColor[3];
+			trap_R_SetColor( hcolor );
+			s += 2;
+			continue;
+		}
+
 		row = ( *s ) >> 4;
 		col = ( *s ) & 15;
 		frow = row * size;

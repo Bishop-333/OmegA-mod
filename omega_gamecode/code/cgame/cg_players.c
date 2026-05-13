@@ -52,7 +52,7 @@ static qboolean CG_IsEnemy( int clientNum ) {
 		myteam = cgs.clientinfo[cg.snap->ps.clientNum].team;
 		self = &cgs.clientinfo[cg.snap->ps.clientNum];
 	} else {
-		myteam = cg.snap->ps.persistant[PERS_TEAM];
+		myteam = cgs.clientinfo[cg.clientNum].team;
 		self = &cgs.clientinfo[cg.clientNum];
 	}
 
@@ -1008,6 +1008,7 @@ void CG_NewClientInfo( int clientNum ) {
 	// team
 	v = Info_ValueForKey( configstring, "t" );
 	newInfo.team = atoi( v );
+	cgs.clientinfo[clientNum].team = newInfo.team;
 
 	// team task
 	v = Info_ValueForKey( configstring, "tt" );
@@ -1357,6 +1358,20 @@ static void CG_PlayerAnimation( centity_t *cent, int *legsOld, int *legs, float 
 	}
 
 	ci = &cgs.clientinfo[clientNum];
+
+	if ( CG_IsFrozenPlayerState( &cent->currentState ) ) {
+		if ( cent->pe.legs.animationNumber != LEGS_IDLE ) {
+			CG_RunLerpFrame( ci, &cent->pe.legs, LEGS_IDLE, 1.0f );
+		}
+		if ( cent->pe.torso.animationNumber != TORSO_STAND ) {
+			CG_RunLerpFrame( ci, &cent->pe.torso, TORSO_STAND, 1.0f );
+		}
+		*legsOld = *legs = cent->pe.legs.frame;
+		*legsBackLerp = 0;
+		*torsoOld = *torso = cent->pe.torso.frame;
+		*torsoBackLerp = 0;
+		return;
+	}
 
 	// do the shuffle turn frames locally
 	if ( cent->pe.legs.yawing && ( cent->currentState.legsAnim & ~ANIM_TOGGLEBIT ) == LEGS_IDLE ) {
@@ -1974,12 +1989,12 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 
 /*
 ===============
-CG_PlayerFloatSprite
+CG_PlayerFloatSpriteColor
 
-Float a sprite over the player's head
+Float a colorized sprite over the player's head
 ===============
 */
-static void CG_PlayerFloatSprite( centity_t *cent, vec3_t origin, qhandle_t shader ) {
+static void CG_PlayerFloatSpriteColor( centity_t *cent, vec3_t origin, qhandle_t shader, vec4_t color ) {
 	int rf;
 	refEntity_t ent;
 	float scale;
@@ -2003,11 +2018,22 @@ static void CG_PlayerFloatSprite( centity_t *cent, vec3_t origin, qhandle_t shad
 	ent.customShader = shader;
 	ent.radius = 9 * scale;
 	ent.renderfx = rf;
-	ent.shaderRGBA[0] = 255;
-	ent.shaderRGBA[1] = 255;
-	ent.shaderRGBA[2] = 255;
-	ent.shaderRGBA[3] = 255;
+	ent.shaderRGBA[0] = color[0] * 255;
+	ent.shaderRGBA[1] = color[1] * 255;
+	ent.shaderRGBA[2] = color[2] * 255;
+	ent.shaderRGBA[3] = color[3] * 255;
 	trap_R_AddRefEntityToScene( &ent );
+}
+
+/*
+===============
+CG_PlayerFloatSprite
+
+Float a sprite over the player's head
+===============
+*/
+static void CG_PlayerFloatSprite( centity_t *cent, vec3_t origin, qhandle_t shader ) {
+	CG_PlayerFloatSpriteColor( cent, origin, shader, colorWhite );
 }
 
 /*
@@ -2017,7 +2043,7 @@ CG_HudBorderMarker
 Draw an indicator at the screen border
 ===============
 */
-static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandle_t shader, int baseAngle ) {
+static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandle_t shader, int baseAngle, vec4_t color ) {
 	vec3_t dir;
 	float front, left, up;
 	vec3_t flu;
@@ -2067,9 +2093,9 @@ static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandl
 		// make sure it stays the same size regardless of fov
 		ent.radius = 0.5 * radius * tan( hfov_x );
 		ent.customShader = shader;
-		ent.shaderRGBA[0] = 255;
-		ent.shaderRGBA[1] = 255;
-		ent.shaderRGBA[2] = 255;
+		ent.shaderRGBA[0] = color[0] * 255;
+		ent.shaderRGBA[1] = color[1] * 255;
+		ent.shaderRGBA[2] = color[2] * 255;
 		ent.shaderRGBA[3] = 0xff * alpha;
 
 		ratio = tan( hfov_y ) / tan( hfov_x );
@@ -2116,7 +2142,7 @@ static void CG_FriendHudMarker( centity_t *cent ) {
 
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
 
-	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || ( cent->currentState.eFlags & EF_DEAD ) || cent->currentState.number == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
+	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || ( cent->currentState.eFlags & EF_DEAD && !CG_IsFrozenPlayer( cent ) ) || cent->currentState.number == cg.snap->ps.clientNum || cent->currentState.clientNum == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
 		return;
 	}
 
@@ -2124,7 +2150,11 @@ static void CG_FriendHudMarker( centity_t *cent ) {
 	hfov_x = cg.refdef.fov_x * M_PI / 360;
 	size = 1.0 / tan( hfov_x ) * 150 / distance;
 
-	CG_HudBorderMarker( cent->lerpOrigin, 1.0, size, cgs.media.friendShader, 270 );
+	if ( CG_IsFrozenPlayer( cent ) ) {
+		CG_HudBorderMarker( cent->lerpOrigin, 1.0, size, cgs.media.friendShader, 270, colorCyan );
+	} else {
+		CG_HudBorderMarker( cent->lerpOrigin, 1.0, size, cgs.media.friendShader, 270, colorGreen );
+	}
 }
 
 /*
@@ -2210,6 +2240,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
 
 	if ( ( cent->currentState.eFlags & EF_DEAD ) &&
+	     !CG_IsFrozenPlayer( cent ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 &&
 	     cg_drawFriendSkulls.integer && cg_drawFriendThroughWalls.integer && cg.time - cent->currentState.time < BODY_SINK_DELAY ) {
@@ -2217,7 +2248,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 		return;
 	}
 
-	if ( !( cent->currentState.eFlags & EF_DEAD ) &&
+	if ( ( !( cent->currentState.eFlags & EF_DEAD ) || CG_IsFrozenPlayer( cent ) ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
 	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
 		if ( cg_drawFriend.integer && ( cent->currentState.clientNum != cg.snap->ps.clientNum || ( cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) ) {
@@ -2229,26 +2260,18 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 				} else if ( cent->currentState.powerups & ( 1 << PW_NEUTRALFLAG ) ) {
 					CG_PlayerFloatSprite( cent, origin, cgs.media.flagShader[0] );
 				} else if ( cent->currentState.clientNum != cg.snap->ps.clientNum ) {
-					CG_PlayerFloatSprite( cent, origin, cgs.media.friendThroughWallsShader );
+					if ( CG_IsFrozenPlayer( cent ) ) {
+						CG_PlayerFloatSpriteColor( cent, origin, cgs.media.friendThroughWallsShader, colorCyan );
+					} else {
+						CG_PlayerFloatSpriteColor( cent, origin, cgs.media.friendThroughWallsShader, colorGreen );
+					}
 				}
 			} else if ( cent->currentState.clientNum != cg.snap->ps.clientNum ) {
-				CG_PlayerFloatSprite( cent, origin, cgs.media.friendShader );
-			}
-		}
-		return;
-	}
-
-	if ( !( cent->currentState.eFlags & EF_DEAD ) &&
-	     ( ( cg.snap->ps.persistant[PERS_TEAM] != team &&
-	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
-	       team == TEAM_FREE ) ) {
-		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum && !( cent->currentState.powerups & ( 1 << PW_INVIS ) ) ) {
-			trace_t trace;
-
-			trap_CM_BoxTrace( &trace, cg.refdef.vieworg, origin, 0, 0, 0, MASK_SOLID );
-
-			if ( trace.fraction == 1.0f ) {
-				CG_PlayerFloatSprite( cent, origin, cgs.media.enemyShader );
+				if ( CG_IsFrozenPlayer( cent ) ) {
+					CG_PlayerFloatSpriteColor( cent, origin, cgs.media.friendShader, colorCyan );
+				} else {
+					CG_PlayerFloatSpriteColor( cent, origin, cgs.media.friendShader, colorGreen );
+				}
 			}
 		}
 		return;
@@ -2453,6 +2476,20 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 			trap_R_AddRefEntityToScene( ent );
 		}
 
+		if ( CG_IsFrozenPlayerState( state ) ) {
+			byte alpha_save = ent->shaderRGBA[3];
+			float thawfrac = 1.0 - (float)( state->modelindex2 >> 1 ) / 0x7f;
+			if ( state->modelindex2 & 1 ) {
+				ent->customShader = cgs.media.thawingShader;
+			} else {
+				ent->customShader = cgs.media.frozenShader;
+			}
+			// never make the ice shell entirely transparent
+			ent->shaderRGBA[3] = (byte)85 + 170 * thawfrac;
+			trap_R_AddRefEntityToScene( ent );
+			ent->shaderRGBA[3] = alpha_save;
+		}
+
 		if ( state->powerups & ( 1 << PW_QUAD ) ) {
 			if ( team == TEAM_RED )
 				ent->customShader = cgs.media.redQuadShader;
@@ -2512,7 +2549,7 @@ CG_ProModeColor
 static void CG_ProModeColor( centity_t *cent, clientInfo_t *ci, refEntity_t *ent ) {
 	vec3_t deadColor;
 
-	if ( cent->currentState.eFlags & EF_DEAD ) {
+	if ( cent->currentState.eFlags & EF_DEAD && !CG_IsFrozenPlayerState( &cent->currentState ) ) {
 		if ( cg_deadColor.string[0] && cg_deadColor.string[0] != '0' ) {
 			CG_GetClientColor( &cent->currentState, ci, ci->team, deadColor );
 			ent->shaderRGBA[0] = deadColor[0] * 255;
@@ -2523,9 +2560,9 @@ static void CG_ProModeColor( centity_t *cent, clientInfo_t *ci, refEntity_t *ent
 			ent->shaderRGBA[1] = ci->color2[1] * 255;
 			ent->shaderRGBA[2] = ci->color2[2] * 255;
 		} else {
-			ent->shaderRGBA[0] = ci->color2[0] * 51;
-			ent->shaderRGBA[1] = ci->color2[1] * 51;
-			ent->shaderRGBA[2] = ci->color2[2] * 51;
+			ent->shaderRGBA[0] = 25;
+			ent->shaderRGBA[1] = 25;
+			ent->shaderRGBA[2] = 25;
 		}
 	} else {
 		ent->shaderRGBA[0] = ci->color2[0] * 255;
@@ -2938,4 +2975,12 @@ void CG_ResetPlayerEntity( centity_t *cent ) {
 	if ( cg_debugPosition.integer ) {
 		CG_Printf( "%i ResetPlayerEntity yaw=%f\n", cent->currentState.number, cent->pe.torso.yawAngle );
 	}
+}
+
+qboolean CG_IsFrozenPlayerState( entityState_t *state ) {
+	return ( cgs.freezetag && ( state->eFlags & EF_DEAD ) );
+}
+
+qboolean CG_IsFrozenPlayer( centity_t *cent ) {
+	return CG_IsFrozenPlayerState( &cent->currentState );
 }

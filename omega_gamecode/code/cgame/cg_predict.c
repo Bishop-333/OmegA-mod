@@ -255,6 +255,11 @@ CG_TouchItem
 static void CG_TouchItem( centity_t *cent ) {
 	const gitem_t *item;
 
+	// items can only be picked up during the round
+	if (BG_IsElimGametype(cgs.gametype) && cgs.roundStartTime > cg.time && cg.warmup == 0) {
+		return;
+	}
+
 	if ( !cg_predictItems.integer ) {
 		return;
 	}
@@ -278,6 +283,10 @@ static void CG_TouchItem( centity_t *cent ) {
 	}
 
 	item = &bg_itemlist[cent->currentState.modelindex];
+
+	if ( item->giType == IT_POWERUP ) {
+		return;
+	}
 
 	if ( item->giType == IT_TEAM ) {
 		if ( cgs.gametype == GT_CTF_ELIMINATION ) {
@@ -586,7 +595,7 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.ps = &cg.predictedPlayerState;
 	cg_pmove.trace = CG_Trace;
 	cg_pmove.pointcontents = CG_PointContents;
-	if ( cg_pmove.ps->pm_type == PM_DEAD ) {
+	if ( cg_pmove.ps->pm_type == PM_DEAD || ( cgs.spectateOnDeath && cg_pmove.ps->pm_type == PM_SPECTATOR ) ) {
 		cg_pmove.tracemask = MASK_PLAYERSOLID & ~CONTENTS_BODY;
 	} else {
 		cg_pmove.tracemask = MASK_PLAYERSOLID;

@@ -1409,7 +1409,7 @@ static void CG_DrawUpperRight( stereoFrame_t stereoFrame ) {
 	if ( cg_drawFPS.integer && ( stereoFrame == STEREO_CENTER || stereoFrame == STEREO_RIGHT ) ) {
 		y = CG_DrawFPS( y );
 	}
-	if ( cgs.gametype == GT_ELIMINATION || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_LMS ) {
+	if ( BG_IsElimGametype( cgs.gametype ) ) {
 		y = CG_DrawEliminationTimer( y );
 	}
 
@@ -1559,7 +1559,7 @@ static float CG_DrawScores( float y ) {
 			CG_DrawStringExt( x + 4, y, s, colorWhite, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 		}
 
-		if ( cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_ELIMINATION ) {
+		if ( BG_IsElimTeamGametype( cgs.gametype ) ) {
 			if ( cgs.gametype == GT_CTF_ELIMINATION ) {
 				y1 = y - BIGCHAR_HEIGHT - 34;
 			} else {
@@ -2774,7 +2774,7 @@ static void CG_DrawCrosshair3D( void ) {
 	if ( ca < 0 ) {
 		ca = 0;
 	}
-	hShader = cgs.media.crosshairShader[ca % NUM_CROSSHAIRS];
+	hShader = cgs.media.crosshairShader[( ca - 1 ) % NUM_CROSSHAIRS];
 
 	if ( !hShader )
 		hShader = cgs.media.crosshairShader[ca % 10];
@@ -2834,14 +2834,24 @@ static void CG_ScanForCrosshairEntity( void ) {
 	trace_t trace;
 	vec3_t start, end;
 	int content;
+	int clientNum;
 
 	VectorCopy( cg.refdef.vieworg, start );
 	VectorMA( start, 131072, cg.refdef.viewaxis[0], end );
 
 	CG_Trace( &trace, start, vec3_origin, vec3_origin, end,
 	          cg.snap->ps.clientNum, CONTENTS_SOLID | CONTENTS_BODY );
-	if ( trace.entityNum >= MAX_CLIENTS ) {
+	if ( trace.entityNum >= MAX_CLIENTS && !CG_IsFrozenPlayer( &cg_entities[trace.entityNum] ) ) {
 		return;
+	}
+
+	if ( trace.entityNum >= MAX_CLIENTS ) {
+		clientNum = cg_entities[trace.entityNum].currentState.clientNum;
+		if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
+			return;
+		}
+	} else {
+		clientNum = trace.entityNum;
 	}
 
 	// if the player is in fog, don't show it
@@ -2856,8 +2866,9 @@ static void CG_ScanForCrosshairEntity( void ) {
 	}
 
 	// update the fade timer
-	cg.crosshairClientNum = trace.entityNum;
+	cg.crosshairClientNum = clientNum;
 	cg.crosshairClientTime = cg.time;
+	cg.crosshairEntityNum = trace.entityNum;
 }
 
 /*
@@ -2869,9 +2880,14 @@ static void CG_DrawCrosshairNames( void ) {
 	float *color;
 	float enemyColor[4];
 	char *name;
+	char *thaw;
 	float w;
+	int progress;
 
 	if ( !cg_drawCrosshair.integer ) {
+		return;
+	}
+	if ( !cg_drawCrosshairNames.integer ) {
 		return;
 	}
 	if ( cg.renderingThirdPerson ) {
@@ -2880,10 +2896,6 @@ static void CG_DrawCrosshairNames( void ) {
 
 	// scan the known entities to see if the crosshair is sighted on one
 	CG_ScanForCrosshairEntity();
-
-	if ( cg_drawCrosshairNames.integer != 2 ) {
-		return;
-	}
 
 	// draw the name of the player being looked at
 	color = CG_FadeColor( cg.crosshairClientTime, 750 );
@@ -2896,6 +2908,16 @@ static void CG_DrawCrosshairNames( void ) {
 	w = CG_DrawStrlen( name ) * SMALLCHAR_WIDTH;
 	if ( cgs.clientinfo[cg.crosshairClientNum].team == cg.snap->ps.persistant[PERS_TEAM] && cgs.clientinfo[cg.crosshairClientNum].team != TEAM_FREE ) {
 		CG_DrawSmallString( 320 - w / 2, 250, name, color[3] * 0.5f );
+		if ( CG_IsFrozenPlayer( &cg_entities[cg.crosshairEntityNum] ) ) {
+			progress = ( cg_entities[cg.crosshairEntityNum].currentState.modelindex2 >> 1 ) * 100 / 0x7f;
+			thaw = va( "%i%%", progress );
+			w = CG_DrawStrlen( thaw ) * SMALLCHAR_WIDTH;
+			if ( cg_entities[cg.crosshairEntityNum].currentState.modelindex2 & 1 ) {
+				CG_DrawSmallStringColor( 320 - w / 2, 250 + SMALLCHAR_HEIGHT, thaw, colorGreen );
+			} else {
+				CG_DrawSmallStringColor( 320 - w / 2, 250 + SMALLCHAR_HEIGHT, thaw, colorCyan );
+			}
+		}
 	} else {
 		enemyColor[0] = 1.0f;
 		enemyColor[1] = 0.5f;
@@ -2913,20 +2935,18 @@ CG_Draw3DCrosshairNames
 */
 void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t *ci ) {
 	int enemy;
-	float *fadeColor;
 	float scale;
+	float offset;
 	vec4_t hcolor;
-	static char names[MAX_CLIENTS][32];
-	char *name;
 	vec3_t origin;
 
 	VectorCopy( torso->origin, origin );
 
-	if ( !cg_drawCrosshairNames.integer || cg_drawCrosshairNames.integer == 2 ) {
+	if ( !cg_draw3DCrosshairNames.integer ) {
 		return;
 	}
 
-	if ( cent->currentState.number == cg.snap->ps.clientNum || cent->currentState.eFlags & EF_DEAD ) {
+	if ( cent->currentState.clientNum == cg.snap->ps.clientNum || ( ( cent->currentState.eFlags & EF_DEAD ) && !CG_IsFrozenPlayer( cent ) ) ) {
 		return;
 	}
 
@@ -2936,27 +2956,7 @@ void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t 
 		enemy = 0;
 	}
 
-	// scan the known entities to see if the crosshair is sighted on one
-	if ( cent->currentState.number != cg.crosshairClientNum && enemy ) {
-		return;
-	}
-
-	fadeColor = CG_FadeColor( cg.crosshairClientTime, 750 );
-
-	if ( !enemy && cg_drawFriendThroughWalls.integer ) {
-		hcolor[3] = 1.0f;
-	} else {
-		if ( !fadeColor ) {
-			trap_R_SetColor( NULL );
-			return;
-		}
-		hcolor[3] = fadeColor[3];
-	}
-
-	// clear the color from the names
-	name = names[cent->currentState.clientNum];
-	Q_strncpyz( name, ci->name, sizeof( names[0] ) );
-	Q_CleanStr( name );
+	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0f;
 
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		scale = cgs.juggernautScale;
@@ -2964,21 +2964,13 @@ void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t 
 		scale = 1.0f;
 	}
 
-	if ( enemy ) {
-		VectorCopy( colorCornellRed, hcolor );
-		if ( cg_drawEnemy.integer ) {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], origin[2] + 48 * scale, name, hcolor, qtrue );
-		} else {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], origin[2] + 35 * scale, name, hcolor, qtrue );
-		}
+	if ( !enemy && cg_drawFriend.integer ) {
+		offset = 48 * scale;
 	} else {
-		VectorCopy( colorGreen, hcolor );
-		if ( cg_drawFriend.integer ) {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], origin[2] + 48 * scale, name, hcolor, qfalse );
-		} else {
-			CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], origin[2] + 35 * scale, name, hcolor, qfalse );
-		}
+		offset = 35 * scale;
 	}
+
+	CG_Add3DString( cent->lerpOrigin[0], cent->lerpOrigin[1], origin[2] + offset, ci->name, hcolor, enemy );
 }
 
 //==============================================================================
@@ -3061,13 +3053,56 @@ static void CG_DrawTeamVote( void ) {
 
 /*
 =================
+CG_DrawThawing
+=================
+*/
+static qboolean CG_DrawThawing( void ) {
+	char *s;
+	int w;
+	unsigned int frozenState = cg.snap->ps.stats[STAT_FROZENSTATE];
+	float thawFrac;
+	float color[4];
+	float width, height, x, y;
+
+	if ( !( frozenState & FROZENSTATE_FROZEN ) ) {
+		return qfalse;
+	}
+
+	thawFrac = (float)( frozenState >> 2 ) / 0xff;
+	s = va( "Thawing: %i%%", (int)( thawFrac * 100 ) );
+	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorYellow );
+
+	color[3] = 1.0;
+	if ( frozenState & FROZENSTATE_THAWING ) {
+		color[0] = 0.0;
+		color[1] = 1.0;
+		color[2] = 0.0;
+	} else {
+		color[0] = 0.0;
+		color[1] = 0.31;
+		color[2] = 1.0;
+	}
+
+	height = 10;
+	width = 180;
+	x = 320 - width / 2;
+	y = 335;
+	CG_FillRect( x, y, thawFrac * width, height, color );
+	CG_DrawRect( x, y, width, height, 1, color );
+
+	return qtrue;
+}
+
+/*
+=================
 CG_DrawScoreboard
 =================
 */
 static qboolean CG_DrawScoreboard( void ) {
 	char *s;
 	int w;
-	if ( cg.respawnTime && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && ( cgs.gametype < GT_ELIMINATION || cgs.gametype > GT_LMS ) ) {
+	if ( !CG_DrawThawing() && cg.respawnTime && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !BG_IsElimGametype( cgs.gametype ) ) {
 		if ( cg.respawnTime > cg.time ) {
 			s = va( "Respawn in: %2.2f", ( (double)cg.respawnTime - (double)cg.time ) / 1000.0 );
 			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
@@ -3381,6 +3416,8 @@ static void CG_Draw2D( stereoFrame_t stereoFrame ) {
 		if ( !cg.showScores && cg.snap->ps.stats[STAT_HEALTH] > 0 ) {
 
 			CG_DrawStatusBar();
+
+			CG_DrawThawing();
 
 			CG_DrawAmmoWarning();
 
