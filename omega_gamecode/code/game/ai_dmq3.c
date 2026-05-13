@@ -2241,7 +2241,7 @@ qboolean BotCanCamp( bot_state_t *bs ) {
 		return qfalse;
 	}
 	// if we are playing in elimination
-	if ( BG_IsEliminationGT( g_gametype.integer ) || g_gametype.integer == GT_TOURNAMENT ) return qfalse;
+	if ( G_IsElimGametype() || g_gametype.integer == GT_TOURNAMENT ) return qfalse;
 
 	return qtrue;
 }
@@ -2441,7 +2441,7 @@ int BotCanAndWantsToRocketJump( bot_state_t *bs ) {
 	//if low on rockets
 	if ( bs->inventory[INVENTORY_ROCKETS] < 3 ) return qfalse;
 	//Sago: Special rule - always happy to rocket jump in elimination, eCTF end LMS if
-	if ( BG_IsEliminationGT( g_gametype.integer ) && g_elimination_selfdamage.integer == 0 ) {
+	if ( G_IsElimGametype() && g_elimination_selfdamage.integer == 0 ) {
 		return qtrue;
 	}
 	//never rocket jump with the Quad

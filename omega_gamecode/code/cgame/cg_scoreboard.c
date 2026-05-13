@@ -382,7 +382,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 
 	// draw the face
-	if ( ( cent->currentState.eFlags & EF_DEAD && !BG_IsEliminationGT( cgs.gametype ) ) || ( ci->isDead && cgs.gametype != GT_LMS ) ) {
+	if ( ( cent->currentState.eFlags & EF_DEAD && !BG_IsElimGametype( cgs.gametype ) ) || ( ci->isDead && cgs.gametype != GT_LMS ) ) {
 		CG_DrawPic( headx + 2, y + 2, BIGCHAR_HEIGHT + 7, BIGCHAR_HEIGHT + 7, cgs.media.skullShader );
 	} else {
 		VectorClear( headAngles );
@@ -568,7 +568,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 		return qfalse;
 	}
 
-	if ( cg.showScores || cg.predictedPlayerState.pm_type == PM_DEAD ||
+	if ( cg.showScores || ( cg.predictedPlayerState.pm_type == PM_DEAD && !cgs.spectateOnDeath ) ||
 	     cg.predictedPlayerState.pm_type == PM_INTERMISSION ) {
 		fade = 1.0;
 		fadeColor = colorWhite;
@@ -736,7 +736,7 @@ qboolean CG_DrawNewScoreboard( void ) {
 		return qfalse;
 	}
 
-	if ( cg.showScores || cg.predictedPlayerState.pm_type == PM_DEAD ||
+	if ( cg.showScores || ( cg.predictedPlayerState.pm_type == PM_DEAD && !cgs.spectateOnDeath ) ||
 	     cg.predictedPlayerState.pm_type == PM_INTERMISSION ) {
 		fade = 1.0;
 		fadeColor = colorWhite;

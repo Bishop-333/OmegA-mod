@@ -181,6 +181,42 @@ static void CG_SmallBloodTrail( localEntity_t *le ) {
 
 /*
 ================
+CG_SnowTrail
+
+Leave expanding snow puffs behind frozen gibs
+================
+*/
+static void CG_SnowTrail( localEntity_t *le ) {
+	int t;
+	int t2;
+	int step;
+	vec3_t newOrigin;
+	localEntity_t *snow;
+
+	step = 150;
+	t = step * ( ( cg.time - cg.frametime + step ) / step );
+	t2 = step * ( cg.time / step );
+
+	for ( ; t <= t2; t += step ) {
+		BG_EvaluateTrajectory( &le->pos, t, newOrigin );
+
+		snow = CG_SmokePuff( newOrigin, vec3_origin,
+		                      20,         // radius
+		                      1, 1, 1, 1, // color
+		                      2000,       // trailTime
+		                      t,          // startTime
+		                      0,          // fadeInTime
+		                      0,          // flags
+		                      cgs.media.snowTrailShader );
+		// use the optimized version
+		snow->leType = LE_FALL_SCALE_FADE;
+		// drop a total of 40 units over its lifetime
+		snow->pos.trDelta[2] = 40;
+	}
+}
+
+/*
+================
 CG_FragmentBounceMark
 ================
 */
@@ -327,6 +363,23 @@ static void CG_ReflectVelocity( localEntity_t *le, trace_t *trace ) {
 
 /*
 ================
+CG_AddFragmentRefEntity
+================
+*/
+static void CG_AddFragmentRefEntity( localEntity_t *le ) {
+	refEntity_t re;
+
+	trap_R_AddRefEntityToScene( &le->refEntity );
+
+	if ( le->leFlags & LEF_FROZEN ) {
+		re = le->refEntity;
+		re.customShader = cgs.media.frozenShader;
+		trap_R_AddRefEntityToScene( &re );
+	}
+}
+
+/*
+================
 CG_AddFragment
 ================
 */
@@ -348,10 +401,10 @@ static void CG_AddFragment( localEntity_t *le ) {
 			le->refEntity.renderfx |= RF_LIGHTING_ORIGIN;
 			oldZ = le->refEntity.origin[2];
 			le->refEntity.origin[2] -= 16 * ( 1.0 - (float)t / SINK_TIME );
-			trap_R_AddRefEntityToScene( &le->refEntity );
+			CG_AddFragmentRefEntity( le );
 			le->refEntity.origin[2] = oldZ;
 		} else {
-			trap_R_AddRefEntityToScene( &le->refEntity );
+			CG_AddFragmentRefEntity( le );
 		}
 
 		return;
@@ -373,11 +426,16 @@ static void CG_AddFragment( localEntity_t *le ) {
 			AnglesToAxis( angles, le->refEntity.axis );
 		}
 
-		trap_R_AddRefEntityToScene( &le->refEntity );
+		CG_AddFragmentRefEntity( le );
 
 		// add a blood trail
 		if ( le->leBounceSoundType == LEBS_BLOOD ) {
 			CG_BloodTrail( le );
+		}
+
+		// add a snow trail
+		if ( le->leFlags & LEF_FROZEN ) {
+			CG_SnowTrail( le );
 		}
 
 		return;
@@ -400,7 +458,7 @@ static void CG_AddFragment( localEntity_t *le ) {
 	// reflect the velocity on the trace plane
 	CG_ReflectVelocity( le, &trace );
 
-	trap_R_AddRefEntityToScene( &le->refEntity );
+	CG_AddFragmentRefEntity( le );
 }
 
 /*
@@ -866,7 +924,7 @@ static void CG_AddInvulnerabilityJuiced( localEntity_t *le ) {
 		VectorClear( angles );
 
 		le->endTime = 0;
-		CG_GibPlayer( le->refEntity.origin, angles, le->pos.trDelta );
+		CG_GibPlayer( le->refEntity.origin, angles, le->pos.trDelta, qfalse );
 	} else {
 		trap_R_AddRefEntityToScene( &le->refEntity );
 	}

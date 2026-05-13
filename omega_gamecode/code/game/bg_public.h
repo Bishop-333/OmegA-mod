@@ -194,6 +194,10 @@ typedef enum {
 
 #define PMF_ALL_TIMES ( PMF_TIME_WATERJUMP | PMF_TIME_LAND | PMF_TIME_KNOCKBACK )
 
+// ps->stats[STAT_FROZENSTATE]
+#define FROZENSTATE_FROZEN 1
+#define FROZENSTATE_THAWING 2
+
 #define MAXTOUCH 32
 typedef struct {
 	// state (in / out)
@@ -267,7 +271,8 @@ typedef enum {
 	STAT_CLIENTS_READY, // bit mask of clients wishing to exit the intermission (FIXME: configstring?)
 	STAT_MAX_HEALTH,    // health / armor limit, changable by handicap
 	STAT_SPEC_ZOOM,
-	STAT_TEAM_LOCKED
+	STAT_TEAM_LOCKED,
+	STAT_FROZENSTATE // used to store frozen/thawing state if g_freeze = 1
 } statIndex_t;
 
 // player_state->persistant[] indexes
@@ -318,12 +323,13 @@ typedef enum {
 #define EF_AWARD_ASSIST 0x00020000     // draw a assist sprite
 #define EF_AWARD_HEADSHOT 0x00040000   // draw a headshot sprite
 #define EF_TEAMVOTED 0x00080000        // already cast a team vote
+#define EF_FROZEN 0x00100000
 
 // entityState_t->generic1
-#define GEN_SMILEY_HAPPY 0x00000010    // draw a happy smiley sprite
-#define GEN_SMILEY_SAD 0x00000020      // draw a sad smiley sprite
-#define GEN_SMILEY_ANGRY 0x00000040    // draw a angry smiley sprite
-#define GEN_SMILEY_MOON 0x00000080     // draw a moon smiley sprite
+#define GEN_SMILEY_HAPPY 0x00000010 // draw a happy smiley sprite
+#define GEN_SMILEY_SAD 0x00000020   // draw a sad smiley sprite
+#define GEN_SMILEY_ANGRY 0x00000040 // draw a angry smiley sprite
+#define GEN_SMILEY_MOON 0x00000080  // draw a moon smiley sprite
 
 // NOTE: may not have more than 16
 typedef enum {
@@ -506,6 +512,7 @@ typedef enum {
 
 	EV_GIB_PLAYER, // gib a previously living player
 	EV_GIB_PLAYER_HEADSHOT,
+	EV_GIB_PLAYER_FROZEN,
 	EV_BODY_NOHEAD,
 	EV_SCOREPLUM,  // score plum
 	EV_DAMAGEPLUM, // damage plum
@@ -521,7 +528,8 @@ typedef enum {
 
 	EV_DEBUG_LINE,
 	EV_STOPLOOPINGSOUND,
-	EV_TAUNT
+	EV_TAUNT,
+	EV_FREEZE
 
 } entity_event_t;
 
@@ -847,7 +855,8 @@ qboolean BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTim
 //KK-OAX
 //bg_misc.c
 char *BG_TeamName( team_t team );
-qboolean BG_IsEliminationGT( gametype_t gametype );
+qboolean BG_IsElimTeamGametype( gametype_t gametype );
+qboolean BG_IsElimGametype( gametype_t gametype );
 
 //OmegA
 extern vmCvar_t autohop;

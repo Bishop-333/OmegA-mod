@@ -1162,6 +1162,42 @@ static int BotLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t *g
 
 /*
 ==================
+BotFreezetagThawGoal
+==================
+*/
+static int BotFreezetagThawGoal( bot_state_t *bs, bot_goal_t *goal ) {
+	int i;
+	int areanum;
+	gentity_t *ent;
+	gentity_t *frozen;
+
+	if ( !g_freeze.integer || g_gametype.integer < GT_TEAM || g_ffa_gt == 1 ) {
+		return qfalse;
+	}
+
+	for ( i = 0; i < level.maxclients; i++ ) {
+		ent = &g_entities[i];
+		if ( !ent->client || ent->client->sess.sessionTeam != BotTeam( bs ) || ent->client->frozen != FROZEN_ONMAP ) {
+			continue;
+		}
+		frozen = g_entities[i].frozenPlayer;
+		if ( frozen ) {
+			areanum = BotPointAreaNum( frozen->r.currentOrigin );
+			if ( trap_AAS_AreaReachability( areanum ) ) {
+				goal->entitynum = frozen - g_entities;
+				goal->areanum = areanum;
+				VectorCopy( frozen->r.currentOrigin, goal->origin );
+				VectorSet( goal->mins, -8, -8, -8 );
+				VectorSet( goal->maxs, 8, 8, 8 );
+				return qtrue;
+			}
+		}
+	}
+	return qfalse;
+}
+
+/*
+==================
 AIEnter_Intermission
 ==================
 */
@@ -1879,13 +1915,23 @@ int AINode_Seek_LTG( bot_state_t *bs ) {
 		}
 	}
 	//
-	BotTeamGoals( bs, qfalse );
-	//get the current long term goal
-	if ( !BotLongTermGoal( bs, bs->tfl, qfalse, &goal ) ) {
-		return qtrue;
+	if ( BotFreezetagThawGoal( bs, &goal ) ) {
+		VectorSubtract( goal.origin, bs->origin, dir );
+		if ( VectorLengthSquared( dir ) < Square( 100 ) ) {
+			trap_BotResetAvoidReach( bs->ms );
+			vectoangles( dir, bs->ideal_viewangles );
+			bs->ideal_viewangles[2] *= 0.5;
+			return qtrue;
+		}
+	} else {
+		BotTeamGoals( bs, qfalse );
+		//get the current long term goal
+		if ( !BotLongTermGoal( bs, bs->tfl, qfalse, &goal ) ) {
+			return qtrue;
+		}
 	}
 	//check for nearby goals periodicly
-	if ( bs->check_time < FloatTime() ) {
+	if ( !BotFreezetagThawGoal( bs, &goal ) && bs->check_time < FloatTime() ) {
 		bs->check_time = FloatTime() + 0.5;
 		//check if the bot wants to camp
 		BotWantsToCamp( bs );

@@ -242,7 +242,8 @@ typedef enum {
 	LEF_PUFF_DONT_SCALE = 0x0001, // do not scale size over time
 	LEF_TUMBLE = 0x0002,          // tumble over time, used for ejecting shells
 	LEF_SOUND1 = 0x0004,          // sound 1 for kamikaze
-	LEF_SOUND2 = 0x0008           // sound 2 for kamikaze
+	LEF_SOUND2 = 0x0008,          // sound 2 for kamikaze
+	LEF_FROZEN = 0x0010
 } leFlag_t;
 
 typedef enum {
@@ -593,6 +594,7 @@ typedef struct {
 	// crosshair client ID
 	int crosshairClientNum;
 	int crosshairClientTime;
+	int crosshairEntityNum;
 
 	// powerup active flashing
 	int powerupActive;
@@ -771,7 +773,6 @@ typedef struct {
 
 	qhandle_t friendShader;
 	qhandle_t friendThroughWallsShader;
-	qhandle_t enemyShader;
 
 	qhandle_t balloonShader;
 	qhandle_t connectionShader;
@@ -791,6 +792,7 @@ typedef struct {
 	qhandle_t plasmaBallShader;
 	qhandle_t waterBubbleShader;
 	qhandle_t bloodTrailShader;
+	qhandle_t snowTrailShader;
 
 	// LEILEI shaders
 
@@ -844,6 +846,8 @@ typedef struct {
 	qhandle_t hastePuffShader;
 	qhandle_t redKamikazeShader;
 	qhandle_t blueKamikazeShader;
+	qhandle_t frozenShader;
+	qhandle_t thawingShader;
 	qhandle_t spawnPointShader;
 	qhandle_t transparentWeaponShader;
 
@@ -1074,6 +1078,7 @@ typedef struct {
 	sfxHandle_t wstbimpmSound;
 	sfxHandle_t wstbimpdSound;
 	sfxHandle_t wstbactvSound;
+	sfxHandle_t freezeSound;
 
 } cgMedia_t;
 
@@ -1209,7 +1214,9 @@ typedef struct {
 
 	int chaos;
 	int easierPickup;
+	int freezetag;
 	int prophunt;
+	int spectateOnDeath;
 	int startWhenReady;
 
 	int allowThirdperson;
@@ -1395,8 +1402,8 @@ extern vmCvar_t cg_bobgun;
 extern vmCvar_t cg_brightPlayers;
 extern vmCvar_t cg_damagePlums;
 extern vmCvar_t cg_deadColor;
+extern vmCvar_t cg_draw3DCrosshairNames;
 extern vmCvar_t cg_drawEmotes;
-extern vmCvar_t cg_drawEnemy;
 extern vmCvar_t cg_drawFriendSkulls;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t cg_drawItemPickup;
@@ -1574,6 +1581,8 @@ void CG_NewClientInfo( int clientNum );
 sfxHandle_t CG_CustomSound( int clientNum, const char *soundName );
 qboolean CG_FileExists( const char *filename );
 void CG_ForceSoundsChange( void );
+qboolean CG_IsFrozenPlayer( centity_t *cent );
+qboolean CG_IsFrozenPlayerState( entityState_t *state );
 
 //
 // cg_predict.c
@@ -1680,7 +1689,7 @@ void CG_LightningBoltBeam( vec3_t start, vec3_t end );
 void CG_ScorePlum( int client, vec3_t org, int score );
 void CG_DamagePlum( int client, vec3_t org, int score );
 
-void CG_GibPlayer( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity );
+void CG_GibPlayer( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity, qboolean frozen );
 void CG_GibPlayerHead( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity, centity_t *cent );
 void CG_BigExplode( vec3_t playerOrigin );
 

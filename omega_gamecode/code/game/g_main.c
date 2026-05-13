@@ -104,6 +104,11 @@ vmCvar_t g_enableBreath;
 vmCvar_t g_proxMineTimeout;
 vmCvar_t g_music;
 vmCvar_t g_spawnprotect;
+//Following for freezetag:
+vmCvar_t g_freeze;
+vmCvar_t g_freezeRespawnInplace;
+vmCvar_t g_thawTime;
+vmCvar_t g_autoThawTime;
 //Following for elimination:
 vmCvar_t g_elimination_selfdamage;
 vmCvar_t g_elimination_startHealth;
@@ -363,6 +368,11 @@ static cvarTable_t gameCvarTable[] = {
     { &g_localTeamPref, "g_localTeamPref", "", 0, 0, qfalse },
     { &g_music, "g_music", "", 0, 0, qfalse },
     { &g_spawnprotect, "g_spawnprotect", "1000", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
+    //Now for freezetag stuff:
+    { &g_freeze, "g_freeze", "0", CVAR_SERVERINFO | CVAR_LATCH, 0, qtrue },
+    { &g_freezeRespawnInplace, "g_freezeRespawnInplace", "1", CVAR_ARCHIVE, 0, qfalse },
+    { &g_thawTime, "g_thawTime", "3", CVAR_ARCHIVE, 0, qfalse },
+    { &g_autoThawTime, "g_autoThawTime", "60", CVAR_ARCHIVE, 0, qfalse },
     //Now for elimination stuff:
     { &g_elimination_selfdamage, "elimination_selfdamage", "0", 0, 0, qtrue },
     { &g_elimination_startHealth, "elimination_startHealth", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
@@ -388,7 +398,7 @@ static cvarTable_t gameCvarTable[] = {
 
     { &g_elimination_lockspectator, "elimination_lockspectator", "0", CVAR_NORESTART, 0, qtrue },
 
-    { &g_elimination_items, "elimination_items", "0", CVAR_LATCH, 0, qtrue },
+    { &g_elimination_items, "elimination_items", "0", CVAR_LATCH | CVAR_NORESTART, 0, qtrue },
 
     { &g_awardpushing, "g_awardpushing", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
 
@@ -743,7 +753,16 @@ G_IsElimTeamGametype
 =================
 */
 qboolean G_IsElimTeamGametype( void ) {
-	return g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == 8;
+	return BG_IsElimTeamGametype( g_gametype.integer );
+}
+
+/*
+=================
+G_IsElimGametype
+=================
+*/
+qboolean G_IsElimGametype( void ) {
+	return BG_IsElimGametype( g_gametype.integer );
 }
 
 /*
@@ -802,6 +821,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	level.startTime = levelTime;
 
 	level.snd_fry = G_SoundIndex( "sound/player/fry.wav" ); // FIXME standing in lava / slime
+	level.snd_thaw = G_FreezeThawSound();
 
 	if ( g_gametype.integer != GT_SINGLE_PLAYER && g_logfile.string[0] ) {
 		if ( g_logfileSync.integer ) {
@@ -1184,7 +1204,7 @@ int QDECL SortRanks( const void *a, const void *b ) {
 	}
 
 	//In elimination and CTF elimination, sort dead players last
-	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) && level.roundNumber == level.roundNumberStarted && ( ca->isEliminated != cb->isEliminated ) ) {
+	if ( G_IsElimTeamGametype() && level.roundNumber == level.roundNumberStarted && ( ca->isEliminated != cb->isEliminated ) ) {
 		if ( ca->isEliminated )
 			return 1;
 		if ( cb->isEliminated )
@@ -2235,7 +2255,7 @@ static void CheckElimination( void ) {
 	activeWarmup = g_elimination_activewarmup.integer;
 
 	if ( level.numPlayingClients < 1 ) {
-		if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) &&
+		if ( G_IsElimTeamGametype() &&
 		     ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) )
 			RestartEliminationRound(); //For spectators
 		return;
@@ -2249,7 +2269,7 @@ static void CheckElimination( void ) {
 		return;
 	}
 
-	if ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) {
+	if ( G_IsElimTeamGametype() ) {
 		int counts[TEAM_NUM_TEAMS];
 		int countsLiving[TEAM_NUM_TEAMS];
 		int countsHealth[TEAM_NUM_TEAMS];
@@ -2747,7 +2767,7 @@ void G_RunFrame( int levelTime ) {
 	// get any cvar changes
 	G_UpdateCvars();
 
-	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_CTF_ELIMINATION ) && !( g_elimflags.integer & EF_NO_FREESPEC ) && g_elimination_lockspectator.integer > 1 )
+	if ( G_IsElimTeamGametype() && !( g_elimflags.integer & EF_NO_FREESPEC ) && g_elimination_lockspectator.integer > 1 )
 		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer | EF_NO_FREESPEC ) );
 	else if ( ( g_elimflags.integer & EF_NO_FREESPEC ) && g_elimination_lockspectator.integer < 2 )
 		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer & ( ~EF_NO_FREESPEC ) ) );
@@ -2794,6 +2814,11 @@ void G_RunFrame( int levelTime ) {
 		}
 
 		if ( !ent->r.linked && ent->neverFree ) {
+			continue;
+		}
+
+		if ( G_IsFrozenPlayerRemnant( ent ) ) {
+			G_RunFrozenPlayer( ent );
 			continue;
 		}
 

@@ -14,15 +14,7 @@ sprites/foe
 	{
 		map sprites/foe2.tga
 		blendfunc blend
-	}
-}
-
-sprites/foe3
-{
-	nomipmaps
-	{
-		map sprites/foe3.tga
-		blendfunc blend
+		rgbGen vertex
 	}
 }
 
