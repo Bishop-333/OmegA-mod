@@ -1404,6 +1404,7 @@ extern vmCvar_t cg_damagePlums;
 extern vmCvar_t cg_deadColor;
 extern vmCvar_t cg_draw3DCrosshairNames;
 extern vmCvar_t cg_drawEmotes;
+extern vmCvar_t cg_drawEnemy;
 extern vmCvar_t cg_drawFriendSkulls;
 extern vmCvar_t cg_drawFriendThroughWalls;
 extern vmCvar_t cg_drawItemPickup;

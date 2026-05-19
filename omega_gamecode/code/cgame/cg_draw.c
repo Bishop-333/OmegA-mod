@@ -2887,9 +2887,6 @@ static void CG_DrawCrosshairNames( void ) {
 	if ( !cg_drawCrosshair.integer ) {
 		return;
 	}
-	if ( !cg_drawCrosshairNames.integer ) {
-		return;
-	}
 	if ( cg.renderingThirdPerson ) {
 		return;
 	}
@@ -2907,7 +2904,9 @@ static void CG_DrawCrosshairNames( void ) {
 	name = cgs.clientinfo[cg.crosshairClientNum].name;
 	w = CG_DrawStrlen( name ) * SMALLCHAR_WIDTH;
 	if ( cgs.clientinfo[cg.crosshairClientNum].team == cg.snap->ps.persistant[PERS_TEAM] && cgs.clientinfo[cg.crosshairClientNum].team != TEAM_FREE ) {
-		CG_DrawSmallString( 320 - w / 2, 250, name, color[3] * 0.5f );
+		if ( cg_drawCrosshairNames.integer ) {
+			CG_DrawSmallString( 320 - w / 2, 250, name, color[3] * 0.5f );
+		}
 		if ( CG_IsFrozenPlayer( &cg_entities[cg.crosshairEntityNum] ) ) {
 			progress = ( cg_entities[cg.crosshairEntityNum].currentState.modelindex2 >> 1 ) * 100 / 0x7f;
 			thaw = va( "%i%%", progress );
@@ -2919,11 +2918,13 @@ static void CG_DrawCrosshairNames( void ) {
 			}
 		}
 	} else {
-		enemyColor[0] = 1.0f;
-		enemyColor[1] = 0.5f;
-		enemyColor[2] = 0.5f;
-		enemyColor[3] = 0.5f;
-		CG_DrawSmallStringColor( 320 - w / 2, 250, name, enemyColor );
+		if ( cg_drawCrosshairNames.integer ) {
+			enemyColor[0] = 1.0f;
+			enemyColor[1] = 0.5f;
+			enemyColor[2] = 0.5f;
+			enemyColor[3] = 0.5f;
+			CG_DrawSmallStringColor( 320 - w / 2, 250, name, enemyColor );
+		}
 	}
 	trap_R_SetColor( NULL );
 }
@@ -2964,7 +2965,7 @@ void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t 
 		scale = 1.0f;
 	}
 
-	if ( !enemy && cg_drawFriend.integer ) {
+	if ( ( !enemy && cg_drawFriend.integer ) || ( enemy && cg_drawEnemy.integer ) ) {
 		offset = 48 * scale;
 	} else {
 		offset = 35 * scale;

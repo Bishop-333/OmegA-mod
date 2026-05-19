@@ -252,6 +252,7 @@ vmCvar_t cg_damagePlums;
 vmCvar_t cg_deadColor;
 vmCvar_t cg_draw3DCrosshairNames;
 vmCvar_t cg_drawEmotes;
+vmCvar_t cg_drawEnemy;
 vmCvar_t cg_drawFriendSkulls;
 vmCvar_t cg_drawFriendThroughWalls;
 vmCvar_t cg_drawItemPickup;
@@ -323,7 +324,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_drawAttacker, "cg_drawAttacker", "0", CVAR_ARCHIVE },
     { &cg_drawSpeed, "cg_drawSpeed", "0", CVAR_ARCHIVE },
     { &cg_drawCrosshair, "cg_drawCrosshair", "1", CVAR_ARCHIVE },
-    { &cg_drawCrosshairNames, "cg_drawCrosshairNames", "1", CVAR_ARCHIVE },
+    { &cg_drawCrosshairNames, "cg_drawCrosshairNames", "0", CVAR_ARCHIVE },
     { &cg_drawRewards, "cg_drawRewards", "1", CVAR_ARCHIVE },
     { &cg_crosshairSize, "cg_crosshairSize", "24", CVAR_ARCHIVE },
     { &cg_crosshairHealth, "cg_crosshairHealth", "1", CVAR_ARCHIVE },
@@ -471,6 +472,7 @@ static cvarTable_t cvarTable[] = {       // bk001129
     { &cg_deadColor, "cg_deadColor", "", CVAR_ARCHIVE },
     { &cg_draw3DCrosshairNames, "cg_draw3DCrosshairNames", "1", CVAR_ARCHIVE },
     { &cg_drawEmotes, "cg_drawEmotes", "1", CVAR_ARCHIVE },
+    { &cg_drawEnemy, "cg_drawEnemy", "1", CVAR_ARCHIVE },
     { &cg_drawFriendSkulls, "cg_friendSkulls", "1", CVAR_ARCHIVE },
     { &cg_drawFriendThroughWalls, "cg_friendThroughWalls", "1", CVAR_ARCHIVE },
     { &cg_drawItemPickup, "cg_drawItemPickup", "1", CVAR_ARCHIVE },
@@ -1243,11 +1245,11 @@ static void CG_RegisterGraphics( void ) {
 	if ( ( ( cgs.gametype >= GT_TEAM ) && ( cgs.ffa_gt != 1 ) ) ||
 	     cg_buildScript.integer ) {
 
-		cgs.media.friendShader = trap_R_RegisterShader( "sprites/foe" );
 		cgs.media.friendThroughWallsShader = trap_R_RegisterShader( "sprites/foe2.tga" );
 		cgs.media.redQuadShader = trap_R_RegisterShader( "powerups/blueflag" );
 		cgs.media.blueKamikazeShader = trap_R_RegisterShader( "models/weaphits/kamikblu" );
 	}
+	cgs.media.friendShader = trap_R_RegisterShader( "sprites/foe" );
 
 	cgs.media.teamStatusBar = trap_R_RegisterShader( "gfx/2d/colorbar.tga" );
 
