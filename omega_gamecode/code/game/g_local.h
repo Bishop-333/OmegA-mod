@@ -1112,6 +1112,7 @@ extern vmCvar_t g_freeze;
 extern vmCvar_t g_freezeRespawnInplace;
 extern vmCvar_t g_thawTime;
 extern vmCvar_t g_autoThawTime;
+extern vmCvar_t g_freezeEnvironmentalRespawnDelay;
 
 //elimination:
 extern vmCvar_t g_elimination_selfdamage;

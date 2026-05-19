@@ -436,7 +436,7 @@ G_UpdatePlayerFromFrozenRemnant
 */
 void G_UpdatePlayerFromFrozenRemnant( gentity_t *player ) {
 	gentity_t *frozen;
-	if ( player->client->isEliminated || !player->frozenPlayer || player->frozenPlayer->frozenPlayer != player) {
+	if ( player->client->isEliminated || !player->frozenPlayer || player->frozenPlayer->frozenPlayer != player ) {
 		return;
 	}
 	if ( g_spectateOnDeath.integer && player->client->ps.pm_type == PM_SPECTATOR ) {
@@ -466,10 +466,13 @@ void G_ClientThaw( gentity_t *ent ) {
 		G_UpdateFrozenPlayer( ent );
 		G_UpdatePlayerFromFrozenRemnant( ent );
 		G_ClientAcceleratedThaw( ent );
-	}
-
-	if ( g_autoThawTime.integer > 0 ) {
-		client->freezetag_autoThawed += FREEZETAG_THAWRATE( g_autoThawTime.integer );
+		if ( g_autoThawTime.integer > 0 ) {
+			client->freezetag_autoThawed += FREEZETAG_THAWRATE( g_autoThawTime.integer );
+		}
+	} else if ( client->frozen == FROZEN_DIED ) {
+		if ( g_freezeEnvironmentalRespawnDelay.integer > 0 ) {
+			client->freezetag_thawed += FREEZETAG_THAWRATE( g_freezeEnvironmentalRespawnDelay.value );
+		}
 	}
 
 	if ( client->freezetag_autoThawed >= 1.0 ) {

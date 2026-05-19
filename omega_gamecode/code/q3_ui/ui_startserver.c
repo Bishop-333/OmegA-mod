@@ -735,7 +735,7 @@ typedef struct {
 	menulist_s lmsMode;
 	menuradiobutton_s freeze;
 	menulist_s botSkill;
-	
+
 	menutext_s dmflags;
 	menutext_s mutators;
 

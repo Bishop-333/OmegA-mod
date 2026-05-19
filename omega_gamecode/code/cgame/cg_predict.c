@@ -256,7 +256,7 @@ static void CG_TouchItem( centity_t *cent ) {
 	const gitem_t *item;
 
 	// items can only be picked up during the round
-	if (BG_IsElimGametype(cgs.gametype) && cgs.roundStartTime > cg.time && cg.warmup == 0) {
+	if ( BG_IsElimGametype( cgs.gametype ) && cgs.roundStartTime > cg.time && cg.warmup == 0 ) {
 		return;
 	}
 

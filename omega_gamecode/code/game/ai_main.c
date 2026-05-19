@@ -182,7 +182,7 @@ int BotAI_GetEntityState( int entityNum, entityState_t *state ) {
 	memset( state, 0, sizeof( entityState_t ) );
 	if ( !ent->inuse ) return qfalse;
 	if ( !ent->r.linked ) return qfalse;
-	if ( !( ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer) || g_instantgib.integer || g_rockets.integer || g_weaponArena.integer ) && (ent->r.svFlags & SVF_NOCLIENT) ) return qfalse;
+	if ( !( ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer ) || g_instantgib.integer || g_rockets.integer || g_weaponArena.integer ) && ( ent->r.svFlags & SVF_NOCLIENT ) ) return qfalse;
 	memcpy( state, &ent->s, sizeof( entityState_t ) );
 	return qtrue;
 }
@@ -1311,7 +1311,7 @@ int BotAIStartFrame( int time ) {
 				}
 				continue;
 			}
-			if ( !( ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer )||g_instantgib.integer || g_rockets.integer || g_weaponArena.integer ) && ent->r.svFlags & SVF_NOCLIENT) {
+			if ( !( ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer ) || g_instantgib.integer || g_rockets.integer || g_weaponArena.integer ) && ent->r.svFlags & SVF_NOCLIENT ) {
 				if ( *s == qfalse ) {
 					*s = qtrue;
 					trap_BotLibUpdateEntity( i, NULL );

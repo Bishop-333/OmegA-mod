@@ -1689,7 +1689,8 @@ void ClientSpawn( gentity_t *ent ) {
 		if ( ( level.roundNumber == level.roundNumberStarted ) ||
 		     ( ( level.time < level.roundStartTime - g_elimination_activewarmup.integer * 1000 ) &&
 		       TeamCount( -1, TEAM_BLUE ) &&
-		       TeamCount( -1, TEAM_RED ) ) && level.roundNumberStarted > 0 ) {
+		       TeamCount( -1, TEAM_RED ) ) &&
+		         level.roundNumberStarted > 0 ) {
 			client->sess.spectatorState = SPECTATOR_FREE;
 			client->isEliminated = qtrue;
 			if ( g_gametype.integer == GT_LMS )
@@ -1782,7 +1783,7 @@ void ClientSpawn( gentity_t *ent ) {
 	ent->client->saved.leveltime = 0;
 	//unlagged - backward reconciliation #3
 
-	respawn_inplace = (client->frozen == FROZEN_ONMAP && client->freezetag_thawed >= 1.0 && g_freezeRespawnInplace.integer && ent->frozenPlayer && ent->frozenPlayer->frozenPlayer == ent );
+	respawn_inplace = ( client->frozen == FROZEN_ONMAP && client->freezetag_thawed >= 1.0 && g_freezeRespawnInplace.integer && ent->frozenPlayer && ent->frozenPlayer->frozenPlayer == ent );
 	// clear everything but the persistant data
 
 	ready = client->ready;

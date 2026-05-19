@@ -201,13 +201,13 @@ static void CG_SnowTrail( localEntity_t *le ) {
 		BG_EvaluateTrajectory( &le->pos, t, newOrigin );
 
 		snow = CG_SmokePuff( newOrigin, vec3_origin,
-		                      20,         // radius
-		                      1, 1, 1, 1, // color
-		                      2000,       // trailTime
-		                      t,          // startTime
-		                      0,          // fadeInTime
-		                      0,          // flags
-		                      cgs.media.snowTrailShader );
+		                     20,         // radius
+		                     1, 1, 1, 1, // color
+		                     2000,       // trailTime
+		                     t,          // startTime
+		                     0,          // fadeInTime
+		                     0,          // flags
+		                     cgs.media.snowTrailShader );
 		// use the optimized version
 		snow->leType = LE_FALL_SCALE_FADE;
 		// drop a total of 40 units over its lifetime
