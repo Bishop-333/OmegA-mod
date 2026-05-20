@@ -1111,8 +1111,9 @@ extern vmCvar_t g_spawnprotect;
 extern vmCvar_t g_freeze;
 extern vmCvar_t g_freezeRespawnInplace;
 extern vmCvar_t g_thawTime;
-extern vmCvar_t g_autoThawTime;
+extern vmCvar_t g_thawTimeDied;
 extern vmCvar_t g_freezeEnvironmentalRespawnDelay;
+extern vmCvar_t g_autoThawTime;
 
 //elimination:
 extern vmCvar_t g_elimination_selfdamage;

@@ -108,8 +108,9 @@ vmCvar_t g_spawnprotect;
 vmCvar_t g_freeze;
 vmCvar_t g_freezeRespawnInplace;
 vmCvar_t g_thawTime;
-vmCvar_t g_autoThawTime;
 vmCvar_t g_freezeEnvironmentalRespawnDelay;
+vmCvar_t g_thawTimeDied;
+vmCvar_t g_autoThawTime;
 //Following for elimination:
 vmCvar_t g_elimination_selfdamage;
 vmCvar_t g_elimination_startHealth;
@@ -373,8 +374,9 @@ static cvarTable_t gameCvarTable[] = {
     { &g_freeze, "g_freeze", "0", CVAR_SERVERINFO | CVAR_LATCH, 0, qtrue },
     { &g_freezeRespawnInplace, "g_freezeRespawnInplace", "1", CVAR_ARCHIVE, 0, qfalse },
     { &g_thawTime, "g_thawTime", "3", CVAR_ARCHIVE, 0, qfalse },
+    { &g_freezeEnvironmentalRespawnDelay, "g_freezeEnvironmentalRespawnDelay", "2", CVAR_ARCHIVE, 0, qfalse },
+    { &g_thawTimeDied, "g_thawTimeDied", "60", CVAR_ARCHIVE, 0, qfalse },
     { &g_autoThawTime, "g_autoThawTime", "60", CVAR_ARCHIVE, 0, qfalse },
-    { &g_freezeEnvironmentalRespawnDelay, "g_freezeEnvironmentalRespawnDelay", "10", CVAR_ARCHIVE, 0, qfalse },
     //Now for elimination stuff:
     { &g_elimination_selfdamage, "elimination_selfdamage", "0", 0, 0, qtrue },
     { &g_elimination_startHealth, "elimination_startHealth", "200", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
