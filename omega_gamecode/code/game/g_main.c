@@ -384,7 +384,7 @@ static cvarTable_t gameCvarTable[] = {
     { &g_elimination_bfg, "elimination_bfg", "0", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_roundtime, "elimination_roundtime", "120", CVAR_SERVERINFO | CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_warmup, "elimination_warmup", "7", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
-    { &g_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_ARCHIVE | CVAR_NORESTART | CVAR_SYSTEMINFO, 0, qtrue },
+    { &g_elimination_activewarmup, "elimination_activewarmup", "5", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
     { &g_elimination_allgametypes, "g_elimination", "0", CVAR_LATCH | CVAR_NORESTART, 0, qfalse },
 
     { &g_elimination_machinegun, "elimination_machinegun", "500", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue },
@@ -2168,10 +2168,7 @@ CheckLMS
 */
 static void CheckLMS( void ) {
 	int mode;
-	int activeWarmup;
-
 	mode = g_lms_mode.integer;
-	activeWarmup = g_elimination_activewarmup.integer;
 	if ( level.numPlayingClients < 1 ) {
 		return;
 	}
@@ -2208,40 +2205,36 @@ static void CheckLMS( void ) {
 			EndEliminationRound();
 		}
 
-		//This might be better placed another place:
-		if ( activeWarmup < 2 )
-			activeWarmup = 2;                                //We need at least 2 seconds to spawn all players
-		if ( activeWarmup >= g_elimination_warmup.integer )  //This must not be true
-			g_elimination_warmup.integer = activeWarmup + 1; //Increase warmup
-
 		//Force respawn
-		if ( level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * activeWarmup && !level.roundRespawned ) {
+		if ( level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer && !level.roundRespawned ) {
 			level.roundRespawned = qtrue;
 			RespawnAll();
 			DisableWeapons();
 			SendEliminationMessageToAllClients();
 		}
 
-		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * activeWarmup ) {
-			RespawnDead();
+		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer ) {
+			RespawnDead( qfalse );
 		}
 
 		if ( level.roundNumber == level.roundNumberStarted ) {
 			EnableWeapons();
 		}
 
-		if ( ( level.roundNumber > level.roundNumberStarted ) && ( level.time >= level.roundStartTime ) )
+		if ( ( level.roundNumber > level.roundNumberStarted ) && ( level.time >= level.roundStartTime ) ) {
+			RespawnDead( qtrue );
 			StartLMSRound();
+		}
 
 		if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime && level.numPlayingClients < 2 ) {
-			RespawnDead();            //Allow player to run around anyway
+			RespawnDead( qfalse );    //Allow player to run around anyway
 			WarmupEliminationRound(); //Start over
 			return;
 		}
 
 		if ( level.warmupTime != 0 ) {
 			if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) {
-				RespawnDead();
+				RespawnDead( qfalse );
 				WarmupEliminationRound();
 			}
 		}
@@ -2254,9 +2247,6 @@ CheckElimination
 =============
 */
 static void CheckElimination( void ) {
-	int activeWarmup;
-
-	activeWarmup = g_elimination_activewarmup.integer;
 
 	if ( level.numPlayingClients < 1 ) {
 		if ( G_IsElimTeamGametype() &&
@@ -2375,28 +2365,24 @@ static void CheckElimination( void ) {
 			EndEliminationRound();
 		}
 
-		//This might be better placed another place:
-		if ( activeWarmup < 1 )
-			activeWarmup = 1;                                //We need at least 1 second to spawn all players
-		if ( activeWarmup >= g_elimination_warmup.integer )  //This must not be true
-			g_elimination_warmup.integer = activeWarmup + 1; //Increase warmup
-
 		//Force respawn
-		if ( level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * activeWarmup && !level.roundRespawned ) {
+		if ( level.roundNumber != level.roundNumberStarted && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer && !level.roundRespawned ) {
 			level.roundRespawned = qtrue;
 			RespawnAll();
 			SendEliminationMessageToAllClients();
 		}
 
-		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * activeWarmup ) {
-			RespawnDead();
+		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer ) {
+			RespawnDead( qfalse );
 		}
 
-		if ( ( level.roundNumber > level.roundNumberStarted ) && ( level.time >= level.roundStartTime ) )
+		if ( ( level.roundNumber > level.roundNumberStarted ) && ( level.time >= level.roundStartTime ) ) {
+			RespawnDead( qtrue );
 			StartEliminationRound();
+		}
 		if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) {
 			if ( counts[TEAM_BLUE] < 1 || counts[TEAM_RED] < 1 ) {
-				RespawnDead();            //Allow players to run around anyway
+				RespawnDead( qfalse );    //Allow players to run around anyway
 				WarmupEliminationRound(); //Start over
 				return;
 			}
@@ -2404,7 +2390,7 @@ static void CheckElimination( void ) {
 
 		if ( level.warmupTime != 0 ) {
 			if ( level.time + 1000 * g_elimination_warmup.integer - 500 > level.roundStartTime ) {
-				RespawnDead();
+				RespawnDead( qfalse );
 				WarmupEliminationRound();
 			}
 		}

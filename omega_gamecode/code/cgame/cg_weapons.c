@@ -2858,9 +2858,6 @@ void CG_FireWeapon( centity_t *cent ) {
 	int c;
 	weaponInfo_t *weap;
 
-	if ( BG_IsElimTeamGametype( cgs.gametype ) && cgs.roundStartTime >= cg.time && cg.snap->ps.pm_flags & PMF_ELIMWARMUP )
-		return; //if we havn't started in ELIMINATION then do not fire
-
 	ent = &cent->currentState;
 	if ( ent->weapon == WP_NONE ) {
 		return;

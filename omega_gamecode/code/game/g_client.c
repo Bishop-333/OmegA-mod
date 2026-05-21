@@ -915,7 +915,7 @@ RespawnDead
 Forces all *DEAD* clients to respawn.
 ================
 */
-void RespawnDead( void ) {
+void RespawnDead( qboolean force ) {
 	int i;
 	gentity_t *client;
 	for ( i = 0; i < level.maxclients; i++ ) {
@@ -929,8 +929,11 @@ void RespawnDead( void ) {
 		client = g_entities + i;
 		client->client->pers.livesLeft = g_lms_lives.integer - 1;
 		if ( level.clients[i].isEliminated == qfalse ) {
-			continue;
+			if ( !force || level.clients[i].ps.stats[STAT_HEALTH] >= 0 ) {
+				continue;
+			}
 		}
+
 		if ( level.clients[i].sess.sessionTeam == TEAM_SPECTATOR ) {
 			continue;
 		}
@@ -960,9 +963,6 @@ void DisableWeapons( void ) {
 			continue;
 		}
 		if ( level.clients[i].sess.sessionTeam == TEAM_SPECTATOR ) {
-			continue;
-		}
-		if ( !g_elimination_activewarmup.integer ) {
 			continue;
 		}
 		client = g_entities + i;

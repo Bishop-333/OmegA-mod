@@ -801,7 +801,7 @@ int TeamCount( int ignoreClientNum, team_t team );
 int TeamLivingCount( int ignoreClientNum, team_t team ); //Elimination
 int TeamHealthCount( int ignoreClientNum, team_t team ); //Elimination
 void RespawnAll( void );                                 //For round elimination
-void RespawnDead( void );
+void RespawnDead( qboolean force );
 void EnableWeapons( void );
 void DisableWeapons( void );
 void EndEliminationRound( void );

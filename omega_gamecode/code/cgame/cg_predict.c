@@ -595,7 +595,7 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.ps = &cg.predictedPlayerState;
 	cg_pmove.trace = CG_Trace;
 	cg_pmove.pointcontents = CG_PointContents;
-	if ( cg_pmove.ps->pm_type == PM_DEAD || ( cgs.spectateOnDeath && cg_pmove.ps->pm_type == PM_SPECTATOR ) ) {
+	if ( cg_pmove.ps->pm_type == PM_DEAD || cg_pmove.ps->pm_type == PM_SPECTATOR ) {
 		cg_pmove.tracemask = MASK_PLAYERSOLID & ~CONTENTS_BODY;
 	} else {
 		cg_pmove.tracemask = MASK_PLAYERSOLID;

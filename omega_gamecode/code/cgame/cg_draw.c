@@ -979,10 +979,7 @@ static float CG_DrawEliminationTimer( float y ) {
 
 	rst = cgs.roundStartTime;
 
-	if ( cg.time > rst && !cgs.roundtime && cg.time - rst > 100 )
-		return y;
-
-	if ( cg_elimination_activewarmup.integer < 3 && cg.time < rst )
+	if ( cg_elimination_activewarmup.integer < 3 && cg.time <= rst )
 		return y;
 
 	if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR )
@@ -1059,6 +1056,10 @@ Lots of stuff
 		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
 		CG_CenterPrint( "FIGHT!", 80, 24 );
 		fightPlayed = qtrue;
+	}
+
+	if ( cg.time >= rst && !cgs.roundtime ) {
+		return y;
 	}
 
 	seconds = msec / 1000;
@@ -2905,16 +2906,16 @@ static void CG_DrawCrosshairNames( void ) {
 	w = CG_DrawStrlen( name ) * SMALLCHAR_WIDTH;
 	if ( cgs.clientinfo[cg.crosshairClientNum].team == cg.snap->ps.persistant[PERS_TEAM] && cgs.clientinfo[cg.crosshairClientNum].team != TEAM_FREE ) {
 		if ( cg_drawCrosshairNames.integer ) {
-			CG_DrawSmallString( 320 - w / 2, 250, name, color[3] * 0.5f );
+			CG_DrawSmallString( 320 - w / 2, 250 + SMALLCHAR_HEIGHT, name, color[3] * 0.5f );
 		}
 		if ( CG_IsFrozenPlayer( &cg_entities[cg.crosshairEntityNum] ) ) {
 			progress = ( cg_entities[cg.crosshairEntityNum].currentState.modelindex2 >> 1 ) * 100 / 0x7f;
 			thaw = va( "%i%%", progress );
 			w = CG_DrawStrlen( thaw ) * SMALLCHAR_WIDTH;
 			if ( cg_entities[cg.crosshairEntityNum].currentState.modelindex2 & 1 ) {
-				CG_DrawSmallStringColor( 320 - w / 2, 250 + SMALLCHAR_HEIGHT, thaw, colorGreen );
+				CG_DrawSmallStringColor( 320 - w / 2, 250, thaw, colorGreen );
 			} else {
-				CG_DrawSmallStringColor( 320 - w / 2, 250 + SMALLCHAR_HEIGHT, thaw, colorCyan );
+				CG_DrawSmallStringColor( 320 - w / 2, 250, thaw, colorCyan );
 			}
 		}
 	} else {
@@ -2923,7 +2924,7 @@ static void CG_DrawCrosshairNames( void ) {
 			enemyColor[1] = 0.5f;
 			enemyColor[2] = 0.5f;
 			enemyColor[3] = 0.5f;
-			CG_DrawSmallStringColor( 320 - w / 2, 250, name, enemyColor );
+			CG_DrawSmallStringColor( 320 - w / 2, 250 + SMALLCHAR_HEIGHT, name, enemyColor );
 		}
 	}
 	trap_R_SetColor( NULL );

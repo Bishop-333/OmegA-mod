@@ -471,11 +471,11 @@ void G_ClientThaw( gentity_t *ent ) {
 		}
 	} else if ( client->frozen == FROZEN_REMNANTDESTROYED ) {
 		if ( g_freezeEnvironmentalRespawnDelay.integer > 0 ) {
-			client->freezetag_thawed += FREEZETAG_THAWRATE( g_freezeEnvironmentalRespawnDelay.integer );
+			client->freezetag_autoThawed += FREEZETAG_THAWRATE( g_freezeEnvironmentalRespawnDelay.integer );
 		}
 	} else if ( client->frozen == FROZEN_DIED ) {
 		if ( g_thawTimeDied.integer > 0 ) {
-			client->freezetag_thawed += FREEZETAG_THAWRATE( g_thawTimeDied.integer );
+			client->freezetag_autoThawed += FREEZETAG_THAWRATE( g_thawTimeDied.integer );
 		}
 	}
 
