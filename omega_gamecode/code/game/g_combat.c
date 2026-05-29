@@ -517,7 +517,7 @@ static void G_SetRespawntime( gentity_t *self, int notBefore ) {
 	}
 	//However during warm up, we should respawn quicker!
 	if ( G_IsElimGametype() ) {
-		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer ) {
+		if ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * level.activeWarmup ) {
 			self->client->respawnTime = level.time + 400;
 		}
 	}

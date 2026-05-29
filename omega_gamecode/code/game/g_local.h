@@ -556,6 +556,7 @@ typedef struct {
 	int roundBluePlayers;    //used to find winners in a draw.
 	qboolean roundRespawned; //We have respawned for this round!
 	int eliminationSides;    //Random, change red/blue bases
+	int activeWarmup;
 
 	//Added for Double Domination
 	//Points get status: TEAM_FREE for not taking, TEAM_RED/TEAM_BLUE for taken and TEAM_NONE for not spawned yet
@@ -642,6 +643,11 @@ int G_ClientNumberFromString( char *s );
 qboolean G_ClientIsLagging( gclient_t *client );
 void SanitizeString( char *in, char *out );
 
+// g_elimination.c
+void CheckElimination(void);
+void CheckLMS(void);
+void SendAttackingTeamMessageToAllClients( void );
+
 // KK-OAX Added this for common file stuff between Admin and Sprees.
 // g_fileops.c
 //
@@ -727,7 +733,6 @@ void TossClientCubesValues( vec3_t angles, vec3_t origin, vec3_t velocity );
 void TossClientCubes( gentity_t *self );
 void DamagePlum( gentity_t *ent, vec3_t origin, int score );
 void GibEntity( gentity_t *self, int killer );
-void G_SetRespawntime( gentity_t *self, int notBefore );
 
 // damage flags
 #define DAMAGE_RADIUS 0x00000001             // damage was indirect

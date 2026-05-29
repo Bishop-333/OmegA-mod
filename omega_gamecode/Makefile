@@ -109,7 +109,6 @@ BR=$(BUILD_DIR)/release-$(PLATFORM)-$(ARCH)
 QADIR=$(MOUNT_DIR)/game
 CGDIR=$(MOUNT_DIR)/cgame
 Q3UIDIR=$(MOUNT_DIR)/q3_ui
-UIDIR=$(MOUNT_DIR)/ui
 CMDIR=$(MOUNT_DIR)/qcommon
 Q3ASMDIR=$(MOUNT_DIR)/tools/asm
 LBURGDIR=$(MOUNT_DIR)/tools/lcc/lburg
@@ -593,6 +592,7 @@ QAOBJ_ = \
   $(B)/$(MOD)/game/g_cmds.o \
   $(B)/$(MOD)/game/g_cmds_ext.o \
   $(B)/$(MOD)/game/g_combat.o \
+  $(B)/$(MOD)/game/g_elimination.o \
   $(B)/$(MOD)/game/g_fileops.o \
   $(B)/$(MOD)/game/g_killspree.o \
   $(B)/$(MOD)/game/g_items.o \
@@ -649,7 +649,6 @@ UIOBJ_ = \
   $(B)/$(MOD)/ui/ui_firstconnect.o \
   $(B)/$(MOD)/ui/ui_gameinfo.o \
   $(B)/$(MOD)/ui/ui_ingame.o \
-  $(B)/$(MOD)/ui/ui_loadconfig.o \
   $(B)/$(MOD)/ui/ui_menu.o \
   $(B)/$(MOD)/ui/ui_mfield.o \
   $(B)/$(MOD)/ui/ui_mods.o \
@@ -662,7 +661,6 @@ UIOBJ_ = \
   $(B)/$(MOD)/ui/ui_preferences.o \
   $(B)/$(MOD)/ui/ui_qmenu.o \
   $(B)/$(MOD)/ui/ui_removebots.o \
-  $(B)/$(MOD)/ui/ui_saveconfig.o \
   $(B)/$(MOD)/ui/ui_serverinfo.o \
   $(B)/$(MOD)/ui/ui_servers2.o \
   $(B)/$(MOD)/ui/ui_setup.o \
@@ -694,9 +692,9 @@ $(B)/$(MOD)/ui$(SHLIBNAME): $(UIOBJ)
 	$(echo_cmd) "LD $@"
 	$(Q)$(CC) $(CFLAGS) $(SHLIBLDFLAGS) -o $@ $(UIOBJ)
 
-$(B)/$(MOD)/vm/ui.qvm: $(UIVMOBJ) $(UIDIR)/ui_syscalls.asm $(Q3ASM)
+$(B)/$(MOD)/vm/ui.qvm: $(UIVMOBJ) $(Q3UIDIR)/ui_syscalls.asm $(Q3ASM)
 	$(echo_cmd) "Q3ASM $@"
-	$(Q)$(Q3ASM) -o $@ $(UIVMOBJ) $(UIDIR)/ui_syscalls.asm
+	$(Q)$(Q3ASM) -o $@ $(UIVMOBJ) $(Q3UIDIR)/ui_syscalls.asm
 
 #############################################################################
 ## GAME MODULE RULES
@@ -729,7 +727,7 @@ $(B)/$(MOD)/ui/bg_%.o: $(QADIR)/bg_%.c
 $(B)/$(MOD)/ui/%.o: $(Q3UIDIR)/%.c
 	$(DO_UI_CC)
 
-$(B)/$(MOD)/ui/ui_syscalls.o: $(UIDIR)/ui_syscalls.c
+$(B)/$(MOD)/ui/ui_syscalls.o: $(Q3UIDIR)/ui_syscalls.c
 	$(DO_UI_CC)
 
 $(B)/$(MOD)/ui/bg_%.asm: $(QADIR)/bg_%.c $(Q3LCC)

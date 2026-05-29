@@ -273,7 +273,6 @@ void G_FrozenPlayerKnockback( gentity_t *frozenRemnant, int damage, vec3_t dir )
 
 void G_FrozenPlayerDamage( gentity_t *targPlayer, gentity_t *targ, gentity_t *attacker,
                            gentity_t *inflictor, vec3_t dir, int damage, int mod ) {
-	gclient_t *client = targPlayer->client;
 	// client gets killed by the environment
 	if ( mod == MOD_SUICIDE || mod == MOD_FALLING || mod == MOD_LAVA || mod == MOD_SLIME || mod == MOD_TRIGGER_HURT || mod == MOD_CRUSH || mod == MOD_UNKNOWN || mod == MOD_WATER || mod == MOD_TARGET_LASER || mod == MOD_TELEFRAG || mod == MOD_JUICED ) {
 		// we were killed by the environment, destroy the remnant

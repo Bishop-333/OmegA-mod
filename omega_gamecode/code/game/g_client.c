@@ -1686,11 +1686,10 @@ void ClientSpawn( gentity_t *ent ) {
 		// N_G: Another condition that makes no sense to me, see for
 		// yourself if you really meant this
 		// Sago: I beleive the TeamCount is to make sure people can join even if the game can't start
-		if ( ( level.roundNumber == level.roundNumberStarted ) ||
-		     ( ( level.time < level.roundStartTime - g_elimination_activewarmup.integer * 1000 ) &&
-		       TeamCount( -1, TEAM_BLUE ) &&
-		       TeamCount( -1, TEAM_RED ) ) &&
-		         level.roundNumberStarted > 0 ) {
+		if ( ( ( level.roundNumber == level.roundNumberStarted ) ||
+		       ( ( level.time < level.roundStartTime - level.activeWarmup * 1000 ) &&
+		         TeamCount( -1, TEAM_BLUE ) &&
+		         TeamCount( -1, TEAM_RED ) ) ) && level.roundNumberStarted > 0 ) {
 			client->sess.spectatorState = SPECTATOR_FREE;
 			client->isEliminated = qtrue;
 			if ( g_gametype.integer == GT_LMS )
@@ -2035,7 +2034,7 @@ void ClientSpawn( gentity_t *ent ) {
 
 	// the respawned flag will be cleared after the attack and jump keys come up
 	client->ps.pm_flags |= PMF_RESPAWNED;
-	if ( G_IsElimGametype() && level.roundNumber != level.roundNumberStarted )
+	if ( G_IsElimGametype() && level.roundNumber != level.roundNumberStarted && g_elimination_activewarmup.integer )
 		client->ps.pm_flags |= PMF_ELIMWARMUP;
 
 	trap_GetUsercmd( client - level.clients, &ent->client->pers.cmd );

@@ -31,36 +31,27 @@ cd windows\build\q3_ui
 %cc%  ../../../code/q3_ui/ui_firstconnect.c
 %cc%  ../../../code/q3_ui/ui_gameinfo.c
 %cc%  ../../../code/q3_ui/ui_ingame.c
-%cc%  ../../../code/q3_ui/ui_loadconfig.c
-%cc%  ../../../code/q3_ui/ui_login.c
 %cc%  ../../../code/q3_ui/ui_main.c
 %cc%  ../../../code/q3_ui/ui_menu.c
 %cc%  ../../../code/q3_ui/ui_mfield.c
 %cc%  ../../../code/q3_ui/ui_mods.c
 %cc%  ../../../code/q3_ui/ui_mutators.c
 %cc%  ../../../code/q3_ui/ui_network.c
-rem %cc%  ../../../code/q3_ui/ui_options.c
 %cc%  ../../../code/q3_ui/ui_password.c
 %cc%  ../../../code/q3_ui/ui_playermodel.c
 %cc%  ../../../code/q3_ui/ui_players.c
 %cc%  ../../../code/q3_ui/ui_playersettings.c
 %cc%  ../../../code/q3_ui/ui_preferences.c
 %cc%  ../../../code/q3_ui/ui_qmenu.c
-rem %cc%  ../../../code/q3_ui/ui_rankings.c
-rem %cc%  ../../../code/q3_ui/ui_rankstatus.c
 %cc%  ../../../code/q3_ui/ui_removebots.c
-%cc%  ../../../code/q3_ui/ui_saveconfig.c
 %cc%  ../../../code/q3_ui/ui_serverinfo.c
 %cc%  ../../../code/q3_ui/ui_servers2.c
 %cc%  ../../../code/q3_ui/ui_setup.c
-rem %cc%  ../../../code/q3_ui/ui_signup.c
 %cc%  ../../../code/q3_ui/ui_sound.c
 %cc%  ../../../code/q3_ui/ui_sparena.c
-%cc%  ../../../code/q3_ui/ui_specifyleague.c
 %cc%  ../../../code/q3_ui/ui_specifyserver.c
 %cc%  ../../../code/q3_ui/ui_splevel.c
 %cc%  ../../../code/q3_ui/ui_sppostgame.c
-rem %cc%  ../../../code/q3_ui/ui_spreset.c
 %cc%  ../../../code/q3_ui/ui_spskill.c
 %cc%  ../../../code/q3_ui/ui_startserver.c
 %cc%  ../../../code/q3_ui/ui_team.c
@@ -74,7 +65,7 @@ rem %cc%  ../../../code/q3_ui/ui_spreset.c
 %cc%  ../../../code/q3_ui/ui_votemenu_map.c
 %cc%  ../../../code/q3_ui/ui_votemenu_timelimit.c
 
-copy  ..\..\..\code\ui\ui_syscalls.asm ..
+copy  ..\..\..\code\q3_ui\ui_syscalls.asm ..
 
 %cc%  ../../../code/game/bg_lib.c
 %cc%  ../../../code/game/bg_misc.c

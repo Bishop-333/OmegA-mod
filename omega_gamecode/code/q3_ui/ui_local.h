@@ -28,13 +28,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "../qcommon/q_shared.h"
 #include "../renderercommon/tr_types.h"
 //NOTE: include the ui_public.h from the new UI
-#include "../ui/ui_public.h" // bk001205 - yes, do have to use this
+#include "ui_public.h" // bk001205 - yes, do have to use this
 //redefine to old API version
 #undef UI_API_VERSION
 #define UI_API_VERSION 4
 #include "../client/keycodes.h"
 #include "../game/bg_public.h"
-#include "../ui/ui_shared.h"
+#include "ui_shared.h"
 
 typedef void ( *voidfunc_f )( void );
 
@@ -461,12 +461,6 @@ extern void UI_PreferencesMenu( void );
 extern void Preferences_Cache( void );
 
 //
-// ui_specifyleague.c
-//
-extern void UI_SpecifyLeagueMenu( void );
-extern void SpecifyLeague_Cache( void );
-
-//
 // ui_specifyserver.c
 //
 extern void UI_SpecifyServerMenu( void );
@@ -845,18 +839,6 @@ extern void UI_TeamOrdersMenu_f( void );
 extern void UI_TeamOrdersMenu_Cache( void );
 
 //
-// ui_loadconfig.c
-//
-void UI_LoadConfig_Cache( void );
-void UI_LoadConfigMenu( void );
-
-//
-// ui_saveconfig.c
-//
-void UI_SaveConfigMenu_Cache( void );
-void UI_SaveConfigMenu( void );
-
-//
 // ui_display.c
 //
 void UI_DisplayOptionsMenu_Cache( void );
@@ -923,34 +905,5 @@ void UI_SPUnlock_f( void );
 void UI_SPUnlockMedals_f( void );
 
 void UI_InitGameinfo( void );
-
-//GRank
-
-//
-// ui_rankings.c
-//
-void Rankings_DrawText( void *self );
-void Rankings_DrawName( void *self );
-void Rankings_DrawPassword( void *self );
-void Rankings_Cache( void );
-void UI_RankingsMenu( void );
-
-//
-// ui_login.c
-//
-void Login_Cache( void );
-void UI_LoginMenu( void );
-
-//
-// ui_signup.c
-//
-void Signup_Cache( void );
-void UI_SignupMenu( void );
-
-//
-// ui_rankstatus.c
-//
-void RankStatus_Cache( void );
-void UI_RankStatusMenu( void );
 
 #endif

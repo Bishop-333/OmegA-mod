@@ -975,18 +975,22 @@ static float CG_DrawEliminationTimer( float y ) {
 	const char *st;
 	int cw;
 	int rst;
-	static qboolean fightPlayed = qfalse;
+	static qboolean fightPlayed = qtrue;
 
 	rst = cgs.roundStartTime;
 
-	if ( cg_elimination_activewarmup.integer < 3 && cg.time <= rst )
-		return y;
+	if ( cg.time > rst && !fightPlayed ) {
+		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
+		fightPlayed = qtrue;
+	}
 
-	if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR )
+	if ( cg.time > rst && !cgs.roundtime ) {
 		return y;
+	}
 
-	if ( cg.scoreBoardShowing )
+	if ( cg.time <= rst && cgs.activewarmup < 3 ) {
 		return y;
+	}
 
 	//default color is white
 	memcpy( color, g_color_table[ColorIndex( COLOR_WHITE )], sizeof( color ) );
@@ -1042,7 +1046,7 @@ Lots of stuff
 					break;
 			}
 			w = CG_DrawStrlen( st );
-			if ( cg.warmupCount < cg_elimination_activewarmup.integer ) {
+			if ( cg.warmupCount < cgs.activewarmup ) {
 				CG_DrawStringExt( 320 - w * cw / 2, 70, st, colorWhite,
 				                  qfalse, qtrue, cw, (int)( cw * 1.5 ), 0 );
 			}
@@ -1050,16 +1054,6 @@ Lots of stuff
 		/*
 Lots of stuff
 */
-	}
-
-	if ( cg.time > rst && cg.time - rst < 100 && !fightPlayed && cg_elimination_activewarmup.integer ) {
-		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
-		CG_CenterPrint( "FIGHT!", 80, 24 );
-		fightPlayed = qtrue;
-	}
-
-	if ( cg.time >= rst && !cgs.roundtime ) {
-		return y;
 	}
 
 	seconds = msec / 1000;

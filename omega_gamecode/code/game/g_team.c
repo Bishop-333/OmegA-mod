@@ -721,7 +721,7 @@ void Team_CheckHurtCarrier( gentity_t *targ, gentity_t *attacker ) {
 Team_ResetFlag
 ================
 */
-static gentity_t *Team_ResetFlag( int team ) {
+gentity_t *Team_ResetFlag( int team ) {
 	char *c;
 	gentity_t *ent, *rent = NULL;
 
@@ -980,7 +980,7 @@ static void Team_ReturnFlagSound( gentity_t *ent, int team ) {
 	}
 
 	//See if we are during CTF_ELIMINATION warmup
-	if ( ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * g_elimination_activewarmup.integer ) && g_gametype.integer == GT_CTF_ELIMINATION )
+	if ( ( level.time <= level.roundStartTime && level.time > level.roundStartTime - 1000 * level.activeWarmup ) && g_gametype.integer == GT_CTF_ELIMINATION )
 		return;
 
 	te = G_TempEntity( ent->s.pos.trBase, EV_GLOBAL_TEAM_SOUND );

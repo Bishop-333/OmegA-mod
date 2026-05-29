@@ -1143,6 +1143,7 @@ typedef struct {
 	//Elimination
 	int roundStartTime;
 	int roundtime;
+	int activewarmup;
 
 	//CTF Elimination
 	int attackingTeam;
@@ -1412,7 +1413,6 @@ extern vmCvar_t cg_drawOldScoreboard;
 extern vmCvar_t cg_drawSmallHealthSphere;
 extern vmCvar_t cg_drawTeamBackground;
 extern vmCvar_t cg_drawThirdPersonCrosshair;
-extern vmCvar_t cg_elimination_activewarmup;
 extern vmCvar_t cg_enemyColor;
 extern vmCvar_t cg_enemyModel;
 extern vmCvar_t cg_enemySounds;
