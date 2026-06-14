@@ -422,7 +422,7 @@ static void admin_writeconfig( void ) {
 	for ( i = 0; i < MAX_ADMIN_WARNINGS && g_admin_warnings[i]; i++ ) {
 		// don't write expired warnings
 		// if expires is 0, then it's a perm warning
-		// it will get loaded everytime they connect!!!!
+		// it will get loaded every time they connect!!!!
 		if ( g_admin_warnings[i]->expires != 0 &&
 		     ( g_admin_warnings[i]->expires - t ) < 1 )
 			continue;

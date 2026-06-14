@@ -890,7 +890,7 @@ void SetTeam( gentity_t *ent, const char *s ) {
 	client->pers.teamState.state = TEAM_BEGIN;
 	if ( oldTeam != TEAM_SPECTATOR ) {
 		int teamscore = -99;
-		//Prevent a team from loosing point because of player leaving team
+		//Prevent a team from losing point because of player leaving team
 		if ( g_gametype.integer == GT_TEAM && ent->client->ps.stats[STAT_HEALTH] )
 			teamscore = level.teamScores[ent->client->sess.sessionTeam];
 		// Kill him (makes sure he loses flags, etc)
@@ -925,7 +925,7 @@ void SetTeam( gentity_t *ent, const char *s ) {
 		CheckTeamLeader( oldTeam );
 	}
 
-	// get and distribute relevent paramters
+	// get and distribute relevant parameters
 	ClientUserinfoChanged( clientNum );
 
 	// client hasn't spawned yet, they sent an early team command, teampref userinfo, or g_teamAutoJoin is enabled
@@ -1437,7 +1437,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ) 
 		G_Printf( "%s%s\n", name, text );
 	}
 
-	// send it to all the apropriate clients
+	// send it to all the appropriate clients
 	for ( j = 0; j < level.maxclients; j++ ) {
 		other = &g_entities[j];
 		G_SayTo( ent, other, mode, color, name, text );

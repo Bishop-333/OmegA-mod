@@ -832,7 +832,7 @@ static int BotAI( int client, float thinktime ) {
 		if ( !args ) continue;
 		*args++ = '\0';
 
-		//remove color espace sequences from the arguments
+		//remove color escape sequences from the arguments
 		RemoveColorEscapeSequences( args );
 
 		if ( !Q_stricmp( buf, "cp " ) ) {       /*CenterPrintf*/
@@ -993,7 +993,7 @@ int BotAISetupClient( int client, struct bot_settings_s *settings, qboolean rest
 			return qfalse;
 		}
 		botstates[client] = BG_Alloc( sizeof( bot_state_t ) );
-		//BG_Allow will succed or terminate
+		//BG_Allow will succeed or terminate
 	}
 	bs = botstates[client];
 
@@ -1079,7 +1079,7 @@ int BotAISetupClient( int client, struct bot_settings_s *settings, qboolean rest
 	if ( restart ) {
 		BotReadSessionData( bs );
 	}
-	//bot has been setup succesfully
+	//bot has been setup successfully
 	return qtrue;
 }
 

@@ -174,7 +174,7 @@ CLIENT INFO
 ======================
 CG_ParseAnimationFile
 
-Read a configuration file containing animation coutns and rates
+Read a configuration file containing animation counts and rates
 models/players/visor/animation.cfg, etc
 ======================
 */
@@ -1153,7 +1153,7 @@ void CG_NewClientInfo( int clientNum ) {
 
 		forceDefer = trap_MemoryRemaining() < 4000000;
 
-		// if we are defering loads, just have it pick the first valid
+		// if we are deferring loads, just have it pick the first valid
 		if ( forceDefer || ( cg_deferPlayers.integer && !cg_buildScript.integer && !cg.loading ) ) {
 			// keep whatever they had if it won't violate team skins
 			CG_SetDeferredClientInfo( clientNum, &newInfo );
@@ -1487,7 +1487,7 @@ static void CG_AddPainTwitch( centity_t *cent, vec3_t torsoAngles ) {
 ===============
 CG_PlayerAngles
 
-Handles seperate torso motion
+Handles separate torso motion
 
 legs pivot based on direction of movement
 
@@ -2907,7 +2907,7 @@ void CG_Player( centity_t *cent ) {
 
 	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team, qfalse, cent->currentState.number );
 
-	// add the talk baloon or disconnect icon
+	// add the talk balloon or disconnect icon
 	CG_PlayerSprites( cent, &torso );
 
 	//

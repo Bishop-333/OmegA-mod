@@ -49,7 +49,7 @@ static char *votemenu_artlist[] =
 #define ID_CUSTOM 110
 #define ID_SHUFFLE 111
 
-//This sorta dependend on number of vote options
+//This sorta dependent on number of vote options
 #define VOTEMENU_MENU_VERTICAL_SPACING 22
 
 typedef struct
@@ -104,7 +104,7 @@ static void VoteMenu_CheckVoteNames( void ) {
 	s_votemenu.nextmap = voteflags & VF_nextmap;
 	s_votemenu.map = voteflags & VF_map;
 	s_votemenu.gametype = voteflags & VF_g_gametype;
-	//We never use "kick" in menues, always clientkick
+	//We never use "kick" in menus, always clientkick
 	s_votemenu.clientkick = voteflags & VF_clientkick;
 	s_votemenu.g_doWarmup = voteflags & VF_g_doWarmup;
 	s_votemenu.timelimit = voteflags & VF_timelimit;
@@ -152,27 +152,27 @@ static void VoteMenu_Event( void *ptr, int event ) {
 					break;
 				case ID_FRAG:
 					UI_VoteFraglimitMenu();
-					//Don't pop! It will do a double pop if successfull
+					//Don't pop! It will do a double pop if successful
 					break;
 				case ID_CUSTOM:
 					UI_VoteCustomMenu();
-					//Don't pop! It will do a double pop if successfull
+					//Don't pop! It will do a double pop if successful
 					break;
 				case ID_TIME:
 					UI_VoteTimelimitMenu();
-					//Don't pop! It will do a double pop if successfull
+					//Don't pop! It will do a double pop if successful
 					break;
 				case ID_GAMETYPE:
 					UI_VoteGametypeMenu();
-					//Don't pop! It will do a double pop if successfull
+					//Don't pop! It will do a double pop if successful
 					break;
 				case ID_KICK:
 					UI_VoteKickMenu();
-					//Don't pop! It will do a double pop if successfull
+					//Don't pop! It will do a double pop if successful
 					break;
 				case ID_MAP:
 					UI_VoteMapMenu();
-					//Don't pop! It will do a double pop if successfull
+					//Don't pop! It will do a double pop if successful
 					break;
 			};
 			break;

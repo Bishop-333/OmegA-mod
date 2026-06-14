@@ -70,7 +70,7 @@ void BotSetUserInfo( bot_state_t *bs, char *key, char *value );
 void BotSetTeamStatus( bot_state_t *bs );
 //returns the name of the client
 char *ClientName( int client, char *name, int size );
-//returns an simplyfied client name
+//returns an simplified client name
 char *EasyClientName( int client, char *name, int size );
 //returns the skin used by the client
 char *ClientSkin( int client, char *skin, int size );
@@ -136,7 +136,7 @@ int BotPopFromActivateGoalStack( bot_state_t *bs );
 void BotClearActivateGoalStack( bot_state_t *bs );
 //returns the team the bot is in
 int BotTeam( bot_state_t *bs );
-//retuns the opposite team of the bot
+//returns the opposite team of the bot
 int BotOppositeTeam( bot_state_t *bs );
 //returns the flag the bot is carrying (CTFFLAG_?)
 int BotCTFCarryingFlag( bot_state_t *bs );

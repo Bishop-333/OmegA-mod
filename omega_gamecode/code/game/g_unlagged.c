@@ -165,7 +165,7 @@ static void G_TimeShiftClient( gentity_t *ent, int time ) {
 		// print some debugging stuff exactly like what the client does
 
 		// it starts with "No rec:" to let you know it didn't backward-reconcile
-		//Sago: This code looks wierd
+		//Sago: This code looks weird
 	}
 }
 
@@ -451,7 +451,7 @@ static qboolean G_PredictPlayerSlideMove( gentity_t *ent, float frametime ) {
 						continue; // move doesn't interact with the plane
 					}
 
-					// stop dead at a tripple plane interaction
+					// stop dead at a triple plane interaction
 					VectorClear( velocity );
 					VectorCopy( origin, ent->s.pos.trBase );
 					return qtrue;

@@ -420,7 +420,7 @@ qboolean G_ClientIsLagging( gclient_t *client ) {
 			return qfalse;
 	}
 
-	return qfalse; //is a non-existant client lagging? woooo zen
+	return qfalse; //is a non-existent client lagging? woooo zen
 }
 
 /*

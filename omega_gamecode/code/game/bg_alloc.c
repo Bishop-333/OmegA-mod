@@ -58,7 +58,7 @@ qboolean BG_CanAlloc( unsigned int size ) {
 			return qfalse;
 		}
 		if ( fmn->size >= allocsize ) {
-			//At least one useable block
+			//At least one usable block
 			return qtrue;
 		}
 	}

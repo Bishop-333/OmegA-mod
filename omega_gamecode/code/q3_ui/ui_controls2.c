@@ -637,7 +637,6 @@ static void Controls_Update( void ) {
 	// disable all controls in all groups
 	for ( i = 0; i < C_MAX; i++ ) {
 		controls = g_controls[i];
-		// bk001204 - parentheses
 		for ( j = 0; ( control = controls[j] ); j++ ) {
 			control->flags |= ( QMF_HIDDEN | QMF_INACTIVE );
 		}
@@ -646,14 +645,12 @@ static void Controls_Update( void ) {
 	controls = g_controls[s_controls.section];
 
 	// enable controls in active group (and count number of items for vertical centering)
-	// bk001204 - parentheses
 	for ( j = 0; ( control = controls[j] ); j++ ) {
 		control->flags &= ~( QMF_GRAYED | QMF_HIDDEN | QMF_INACTIVE );
 	}
 
 	// position controls
 	y = ( SCREEN_HEIGHT - j * SMALLCHAR_HEIGHT ) / 2;
-	// bk001204 - parentheses
 	for ( j = 0; ( control = controls[j] ); j++, y += SMALLCHAR_HEIGHT ) {
 		control->x = 320;
 		control->y = y;
@@ -1555,7 +1552,7 @@ static void Controls_MenuInit( void ) {
 	s_controls.sensitivity.generic.type = MTYPE_SLIDER;
 	s_controls.sensitivity.generic.x = SCREEN_WIDTH / 2;
 	s_controls.sensitivity.generic.flags = QMF_SMALLFONT;
-	s_controls.sensitivity.generic.name = "mouse sensivity";
+	s_controls.sensitivity.generic.name = "mouse sensitivity";
 	s_controls.sensitivity.generic.id = ID_MOUSESPEED;
 	s_controls.sensitivity.generic.callback = Controls_MenuEvent;
 	s_controls.sensitivity.minvalue = 2;
@@ -1706,10 +1703,10 @@ static void Controls_MenuInit( void ) {
 	// initialize the current config
 	Controls_GetConfig();
 
-	// intialize the model
+	// initialize the model
 	Controls_InitModel();
 
-	// intialize the weapons
+	// initialize the weapons
 	Controls_InitWeapons();
 
 	// initial default section

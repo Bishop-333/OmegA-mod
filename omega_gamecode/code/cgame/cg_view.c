@@ -41,7 +41,7 @@ Testmodel will create a fake entity 100 units in front of the current view
 position, directly facing the viewer. It will remain immobile, so you can
 move around it to view it from different angles.
 
-Testgun will cause the model to follow the player around and supress the real
+Testgun will cause the model to follow the player around and suppress the real
 view weapon model. The default frame 0 of most guns is completely off screen,
 so you will probably have to cycle a couple frames to see it.
 
@@ -172,7 +172,7 @@ static void CG_AddTestModel( void ) {
 		return;
 	}
 
-	// if testing a gun, set the origin reletive to the view origin
+	// if testing a gun, set the origin relative to the view origin
 	if ( cg.testGun ) {
 		VectorCopy( cg.refdef.vieworg, cg.testModelEntity.origin );
 		VectorCopy( cg.refdef.viewaxis[0], cg.testModelEntity.axis[0] );
@@ -202,7 +202,7 @@ Sets the coordinates of the rendered window
 static void CG_CalcVrect( void ) {
 	int size;
 
-	// the intermission should allways be full screen
+	// the intermission should always be full screen
 	if ( cg.snap->ps.pm_type == PM_INTERMISSION ) {
 		size = 100;
 	} else {
@@ -739,7 +739,7 @@ static int CG_CalcViewValues( void ) {
 		CG_OffsetFirstPersonView();
 	}
 
-	// position eye reletive to origin
+	// position eye relative to origin
 	AnglesToAxis( cg.refdefViewAngles, cg.refdef.viewaxis );
 
 	if ( cg.hyperspace ) {
@@ -1016,7 +1016,7 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 
 	// build the render lists
 	if ( !cg.hyperspace ) {
-		CG_AddPacketEntities(); // adter calcViewValues, so predicted player state is correct
+		CG_AddPacketEntities(); // after calcViewValues, so predicted player state is correct
 		CG_AddMarks();
 		CG_AddParticles();
 		CG_AddLocalEntities();

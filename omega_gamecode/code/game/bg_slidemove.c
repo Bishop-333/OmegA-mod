@@ -199,7 +199,7 @@ qboolean PM_SlideMove( qboolean gravity ) {
 						continue; // move doesn't interact with the plane
 					}
 
-					// stop dead at a tripple plane interaction
+					// stop dead at a triple plane interaction
 					VectorClear( pm->ps->velocity );
 					return qtrue;
 				}

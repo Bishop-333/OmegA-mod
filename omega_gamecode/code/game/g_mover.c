@@ -177,7 +177,7 @@ static qboolean G_TryPushingEntity( gentity_t *check, gentity_t *pusher, vec3_t 
 	}
 
 	// if it is ok to leave in the old position, do it
-	// this is only relevent for riding entities, not pushed
+	// this is only relevant for riding entities, not pushed
 	// Sliding trapdoors can cause this.
 	VectorCopy( ( pushed_p - 1 )->origin, check->s.pos.trBase );
 	if ( check->client ) {
@@ -407,7 +407,7 @@ static void G_MoverTeam( gentity_t *ent ) {
 
 	obstacle = NULL;
 
-	// make sure all team slaves can move before commiting
+	// make sure all team slaves can move before committing
 	// any moves or calling any think functions
 	// if the move is blocked, all moved objects will be backed out
 	pushed_p = pushed;
@@ -620,7 +620,7 @@ static void Use_BinaryMover( gentity_t *ent, gentity_t *other, gentity_t *activa
 	ent->activator = activator;
 
 	if ( ent->moverState == MOVER_POS1 ) {
-		// start moving 50 msec later, becase if this was player
+		// start moving 50 msec later, because if this was player
 		// triggered, level.time hasn't been advanced yet
 		MatchTeam( ent, MOVER_1TO2, level.time + 50 );
 
@@ -694,7 +694,7 @@ static void InitMover( gentity_t *ent ) {
 	qboolean lightSet, colorSet;
 	char *sound;
 
-	// if the "model2" key is set, use a seperate model
+	// if the "model2" key is set, use a separate model
 	// for drawing, but clip against the brushes
 	if ( ent->model2 ) {
 		ent->s.modelindex2 = G_ModelIndex( ent->model2 );
@@ -1244,7 +1244,7 @@ static void Reached_Train( gentity_t *ent ) {
 	vec3_t move;
 	float length;
 
-	// copy the apropriate values
+	// copy the appropriate values
 	next = ent->nextTrain;
 	if ( !next || !next->nextTrain ) {
 		return; // just stop

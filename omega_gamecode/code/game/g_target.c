@@ -100,7 +100,7 @@ static void Use_Target_Delay( gentity_t *ent, gentity_t *other, gentity_t *activ
 }
 
 void SP_target_delay( gentity_t *ent ) {
-	// check delay for backwards compatability
+	// check delay for backwards compatibility
 	if ( !G_SpawnFloat( "delay", "0", &ent->wait ) ) {
 		G_SpawnFloat( "wait", "1", &ent->wait );
 	}
@@ -200,7 +200,7 @@ void SP_target_speaker( gentity_t *ent ) {
 		G_Error( "target_speaker without a noise key at %s", vtos( ent->s.origin ) );
 	}
 
-	// force all client reletive sounds to be "activator" speakers that
+	// force all client relative sounds to be "activator" speakers that
 	// play on the entity that activates it
 	if ( s[0] == '*' ) {
 		ent->spawnflags |= 8;

@@ -1205,7 +1205,7 @@ static void BotMatch_CheckPoint( bot_state_t *bs, bot_match_t *match ) {
 	}
 	//create a new check point
 	cp = BotCreateWayPoint( buf, position, areanum );
-	//add the check point to the bot's known chech points
+	//add the check point to the bot's known check points
 	cp->next = bs->checkpoints;
 	if ( bs->checkpoints ) bs->checkpoints->prev = cp;
 	bs->checkpoints = cp;

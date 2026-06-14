@@ -534,7 +534,7 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 				attacker->client->ps.eFlags |= EF_AWARD_DEFEND;
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 
-				return; //Return so we don't recieve credits for point B also
+				return; //Return so we don't receive credits for point B also
 
 			} //We denfended point A
 
@@ -2377,7 +2377,7 @@ void ShuffleTeams( void ) {
 			continue; //Don't sort bots... they are always equal
 
 		if ( level.clients[level.sortedClients[i]].sess.sessionTeam == TEAM_RED || level.clients[level.sortedClients[i]].sess.sessionTeam == TEAM_BLUE ) {
-			//For every second client we chenge team. But we do it a little of to make it slightly more fair
+			//For every second client we change team. But we do it a little of to make it slightly more fair
 			if ( assignedClients > 1 ) {
 				assignedClients = 0;
 				if ( nextTeam == TEAM_RED )

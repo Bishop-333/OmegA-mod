@@ -37,7 +37,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 typedef struct killspree {
 	int spreeLevel;
-	int streakCount; //Added programatically based off SpreeDivisor.
+	int streakCount; //Added programmatically based off SpreeDivisor.
 	char spreeMsg[MAX_STRING_CHARS];
 	char sound2Play[MAX_STRING_CHARS];
 	int position;
@@ -45,7 +45,7 @@ typedef struct killspree {
 
 typedef struct deathspree {
 	int spreeLevel;
-	int streakCount; //Added programatically based off SpreeDivisor.
+	int streakCount; //Added programmatically based off SpreeDivisor.
 	char spreeMsg[MAX_STRING_CHARS];
 	char sound2Play[MAX_STRING_CHARS];
 	int position;

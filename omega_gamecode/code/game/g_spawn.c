@@ -434,7 +434,7 @@ static void G_ParseField( const char *key, const char *value, gentity_t *ent ) {
 G_SpawnGEntityFromSpawnVars
 
 Spawn an entity and fill in all of the level fields from
-level.spawnVars[], then call the class specfic spawn function
+level.spawnVars[], then call the class specific spawn function
 ===================
 */
 static void G_SpawnGEntityFromSpawnVars( void ) {

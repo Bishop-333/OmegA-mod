@@ -438,7 +438,7 @@ static void BotCTFOrders_TeamFlagNotAtBase( bot_state_t *bs ) {
 	numteammates = BotSortTeamMatesByBaseTravelTime( bs, teammates, sizeof( teammates ) );
 	BotSortTeamMatesByTaskPreference( bs, teammates, numteammates );
 
-	//In oneway ctf we must all move out of the base (only one strategi, maybe we can also send some to the enemy base to meet the flag carier?)
+	//In oneway ctf we must all move out of the base (only one strategi, maybe we can also send some to the enemy base to meet the flag carrier?)
 	//We must be defending
 	if ( g_elimination_ctf_oneway.integer > 0 ) {
 		for ( i = 0; i < numteammates; i++ ) {
@@ -1039,7 +1039,7 @@ static void Bot1FCTFOrders_FlagAtCenter( bot_state_t *bs ) {
 				break;
 			}
 		}
-	} else { //agressive
+	} else { //aggressive
 		//different orders based on the number of team mates
 		switch ( numteammates ) {
 			case 1:
@@ -1208,7 +1208,7 @@ static void Bot1FCTFOrders_TeamHasFlag( bot_state_t *bs ) {
 				break;
 			}
 		}
-	} else { //agressive
+	} else { //aggressive
 		//different orders based on the number of team mates
 		switch ( numteammates ) {
 			case 1:
@@ -1377,7 +1377,7 @@ static void Bot1FCTFOrders_EnemyHasFlag( bot_state_t *bs ) {
 				break;
 			}
 		}
-	} else { //agressive
+	} else { //aggressive
 		//different orders based on the number of team mates
 		switch ( numteammates ) {
 			case 1:
@@ -1507,7 +1507,7 @@ static void Bot1FCTFOrders_EnemyDroppedFlag( bot_state_t *bs ) {
 				break;
 			}
 		}
-	} else { //agressive
+	} else { //aggressive
 		//different orders based on the number of team mates
 		switch ( numteammates ) {
 			case 1:

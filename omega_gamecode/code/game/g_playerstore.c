@@ -42,7 +42,7 @@ static int nextAge;
 ===============
 PlayerStoreInit
 
-Resets the player store. Should be called everytime game.qvm is loaded.
+Resets the player store. Should be called every time game.qvm is loaded.
 ===============
 */
 void PlayerStoreInit( void ) {

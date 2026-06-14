@@ -73,7 +73,7 @@ static void CG_FreeLocalEntity( localEntity_t *le ) {
 ===================
 CG_AllocLocalEntity
 
-Will allways succeed, even if it requires freeing an old active entity
+Will always succeed, even if it requires freeing an old active entity
 ===================
 */
 localEntity_t *CG_AllocLocalEntity( void ) {
@@ -376,11 +376,11 @@ static void CG_GetFragmentMinsMaxs( const localEntity_t *le, vec3_t mins, vec3_t
 		// The primary point of this is to ensure
 		// that they don't half-sink into the the ground.
 		// Same for shotgun.
-		VectorSet(mins, -1, -1, -0.2);
-		VectorSet(maxs, 1, 1, 0.2);
+		VectorSet( mins, -1, -1, -0.2 );
+		VectorSet( maxs, 1, 1, 0.2 );
 	} else if ( le->refEntity.hModel == cgs.media.shotgunBrassModel ) {
-		VectorSet(mins, -1, -1, -0.5);
-		VectorSet(maxs, 1, 1, 0.5);
+		VectorSet( mins, -1, -1, -0.5 );
+		VectorSet( maxs, 1, 1, 0.5 );
 	}
 }
 
@@ -409,8 +409,8 @@ CG_AddFragment
 static void CG_AddFragment( localEntity_t *le ) {
 	vec3_t newOrigin;
 	trace_t trace;
-	vec3_t	mins;
-	vec3_t	maxs;
+	vec3_t mins;
+	vec3_t maxs;
 
 	VectorCopy( vec3_origin, mins );
 	VectorCopy( vec3_origin, maxs );

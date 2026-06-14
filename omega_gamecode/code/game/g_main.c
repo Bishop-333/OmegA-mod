@@ -174,7 +174,7 @@ vmCvar_t g_blueTeamClientNumbers;
 vmCvar_t g_delagHitscan;
 vmCvar_t g_truePing;
 vmCvar_t sv_fps;
-vmCvar_t g_lagLightning; //Adds a little lag to the lightninggun to make it less powerfull
+vmCvar_t g_lagLightning; //Adds a little lag to the lightninggun to make it less powerful
 //unlagged - server options
 //KK-OAX
 vmCvar_t g_sprees;
@@ -256,7 +256,6 @@ vmCvar_t pmove_autohop;
 vmCvar_t pmove_doublejump;
 vmCvar_t pmove_overbounce;
 
-// bk001129 - made static to avoid aliasing
 static cvarTable_t gameCvarTable[] = {
     // don't override the cheat state set by the system
     { &g_cheats, "sv_cheats", "", 0, 0, qfalse },
@@ -512,7 +511,6 @@ static cvarTable_t gameCvarTable[] = {
     { &pmove_doublejump, "pmove_doublejump", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue },
     { &pmove_overbounce, "pmove_overbounce", "0", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qtrue } };
 
-// bk001129 - made static to avoid aliasing
 static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[0] );
 
 void G_InitGame( int levelTime, int randomSeed, int restart );
@@ -881,7 +879,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 		g_entities[i].classname = "clientslot";
 	}
 
-	// let the server system know where the entites are
+	// let the server system know where the entities are
 	trap_LocateGameData( level.gentities, level.num_entities, sizeof( gentity_t ),
 	                     &level.clients[0].ps, sizeof( level.clients[0] ) );
 
@@ -1634,7 +1632,7 @@ void ExitLevel( void ) {
 		cl->ps.persistant[PERS_SCORE] = 0;
 	}
 
-	// we need to do this here before chaning to CON_CONNECTING
+	// we need to do this here before changing to CON_CONNECTING
 	G_WriteSessionData();
 
 	// change all client states to connecting, so the early players into the
@@ -1868,7 +1866,7 @@ void CheckExitRules( void ) {
 		CheckIntermissionExit();
 		return;
 	} else {
-		//sago: Find the reason for this to be neccesary.
+		//sago: Find the reason for this to be necessary.
 		for ( i = 0; i < g_maxclients.integer; i++ ) {
 			cl = level.clients + i;
 			if ( cl->pers.connected != CON_CONNECTED ) {
@@ -2387,7 +2385,7 @@ void G_RunFrame( int levelTime ) {
 
 	if ( g_elimination_ctf_oneway.integer && !( g_elimflags.integer & EF_ONEWAY ) ) {
 		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer | EF_ONEWAY ) );
-		//If the server admin has enabled it midgame imidiantly braodcast attacking team
+		//If the server admin has enabled it midgame imidiantly broadcast attacking team
 		SendAttackingTeamMessageToAllClients();
 	} else if ( !g_elimination_ctf_oneway.integer && ( g_elimflags.integer & EF_ONEWAY ) ) {
 		trap_Cvar_Set( "elimflags", va( "%i", g_elimflags.integer & ( ~EF_ONEWAY ) ) );

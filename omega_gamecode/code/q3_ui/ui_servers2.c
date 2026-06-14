@@ -308,7 +308,7 @@ static int ArenaServers_SourceForLAN( void ) {
 =================
 Q_CleanStrWithColor
 
-Removes illigal chars but keeps colors
+Removes illegal chars but keeps colors
 =================
 */
 static char *Q_CleanStrWithColor( char *string ) {
@@ -995,7 +995,7 @@ static void ArenaServers_LoadFavorites( void ) {
 				break;
 
 		if ( j < numtempitems ) {
-			// found server - add exisiting results
+			// found server - add existing results
 			memcpy( &g_favoriteserverlist[g_numfavoriteservers], &templist[j], sizeof( servernode_t ) );
 			found = qtrue;
 		} else {

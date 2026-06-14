@@ -120,7 +120,7 @@ static void UI_DisplayDownloadInfo( const char *downloadName ) {
 			// We do it in K (/1024) because we'd overflow around 4MB
 			n = ( n - ( ( ( downloadCount / 1024 ) * n ) / ( downloadSize / 1024 ) ) ) * 1000;
 
-			UI_PrintTime( dlTimeBuf, sizeof dlTimeBuf, n ); // bk010104
+			UI_PrintTime( dlTimeBuf, sizeof dlTimeBuf, n );
 
 			UI_DrawProportionalString( leftWidth, 160,
 			                           dlTimeBuf, style, color_white );

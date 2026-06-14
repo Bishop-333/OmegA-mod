@@ -663,7 +663,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 				attacker->client->rewardTime = level.time + REWARD_SPRITE_TIME;
 			}
 
-			//If neither attacker or taget is bots and not the same
+			//If neither attacker or target is bots and not the same
 			if ( !( attacker->r.svFlags & SVF_BOT ) && !( self->r.svFlags & SVF_BOT ) && self != attacker ) {
 				switch ( meansOfDeath ) {
 					case MOD_GAUNTLET:
@@ -1151,7 +1151,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		return;
 	}
 
-	// the intermission has allready been qualified for, so don't
+	// the intermission has already been qualified for, so don't
 	// allow any extra scoring
 	if ( level.intermissionQueued ) {
 		return;

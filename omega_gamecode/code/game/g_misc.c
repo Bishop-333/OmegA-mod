@@ -53,7 +53,7 @@ void SP_info_notnull( gentity_t *self ) {
 /*QUAKED light (0 1 0) (-8 -8 -8) (8 8 8) linear
 Non-displayed light.
 "light" overrides the default 300 intensity.
-Linear checbox gives linear falloff instead of inverse square
+Linear checkbox gives linear falloff instead of inverse square
 Lights pointed at a target will be spotlights.
 "radius" overrides the default 64 unit radius of a spotlight at the target point.
 */
@@ -301,7 +301,7 @@ static void InitShooter( gentity_t *ent, int weapon ) {
 
 /*QUAKED shooter_rocket (1 0 0) (-16 -16 -16) (16 16 16)
 Fires at either the target or the current direction.
-"random" the number of degrees of deviance from the taget. (1.0 default)
+"random" the number of degrees of deviance from the target. (1.0 default)
 */
 void SP_shooter_rocket( gentity_t *ent ) {
 	InitShooter( ent, WP_ROCKET_LAUNCHER );
@@ -309,7 +309,7 @@ void SP_shooter_rocket( gentity_t *ent ) {
 
 /*QUAKED shooter_plasma (1 0 0) (-16 -16 -16) (16 16 16)
 Fires at either the target or the current direction.
-"random" is the number of degrees of deviance from the taget. (1.0 default)
+"random" is the number of degrees of deviance from the target. (1.0 default)
 */
 void SP_shooter_plasma( gentity_t *ent ) {
 	InitShooter( ent, WP_PLASMAGUN );
@@ -317,7 +317,7 @@ void SP_shooter_plasma( gentity_t *ent ) {
 
 /*QUAKED shooter_grenade (1 0 0) (-16 -16 -16) (16 16 16)
 Fires at either the target or the current direction.
-"random" is the number of degrees of deviance from the taget. (1.0 default)
+"random" is the number of degrees of deviance from the target. (1.0 default)
 */
 void SP_shooter_grenade( gentity_t *ent ) {
 	InitShooter( ent, WP_GRENADE_LAUNCHER );

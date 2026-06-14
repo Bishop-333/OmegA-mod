@@ -85,13 +85,13 @@ static void CG_MachineGunEjectBrass( centity_t *cent ) {
 
 	le->angles.trType = TR_LINEAR;
 	le->angles.trTime = cg.time;
-	VectorCopy ( cent->lerpAngles, le->angles.trBase );
+	VectorCopy( cent->lerpAngles, le->angles.trBase );
 	le->angles.trBase[PITCH] += 90;
-	le->angles.trBase[0] += rand()&31 - 15;
-	le->angles.trBase[1] += rand()&31 - 15;
-	le->angles.trBase[2] += rand()&31 - 15;
-	le->angles.trDelta[PITCH] = 1750 + rand()&511;
-	le->angles.trDelta[YAW] = le->angles.trDelta[0] / 2 * ((rand()&1)*2 - 1);
+	le->angles.trBase[0] += rand() & 31 - 15;
+	le->angles.trBase[1] += rand() & 31 - 15;
+	le->angles.trBase[2] += rand() & 31 - 15;
+	le->angles.trDelta[PITCH] = 1750 + rand() & 511;
+	le->angles.trDelta[YAW] = le->angles.trDelta[0] / 2 * ( ( rand() & 1 ) * 2 - 1 );
 	le->angles.trDelta[ROLL] = 0;
 
 	le->leFlags = LEF_TUMBLE;
@@ -167,11 +167,11 @@ static void CG_ShotgunEjectBrass( centity_t *cent ) {
 		le->angles.trTime = cg.time;
 		VectorCopy( cent->lerpAngles, le->angles.trBase );
 		le->angles.trBase[PITCH] += 90;
-		le->angles.trBase[0] += rand()&31 - 15;
-		le->angles.trBase[1] += rand()&31 - 15;
-		le->angles.trBase[2] += rand()&31 - 15;
-		le->angles.trDelta[PITCH] = 750 + rand()&511;
-		le->angles.trDelta[YAW] = le->angles.trDelta[0] / 2 * ((rand()&1)*2 - 1);
+		le->angles.trBase[0] += rand() & 31 - 15;
+		le->angles.trBase[1] += rand() & 31 - 15;
+		le->angles.trBase[2] += rand() & 31 - 15;
+		le->angles.trDelta[PITCH] = 750 + rand() & 511;
+		le->angles.trDelta[YAW] = le->angles.trDelta[0] / 2 * ( ( rand() & 1 ) * 2 - 1 );
 		le->angles.trDelta[ROLL] = 0;
 
 		le->leFlags = LEF_TUMBLE;
@@ -709,7 +709,7 @@ void CG_GrappleTrail( centity_t *ent, const weaponInfo_t *wi ) {
 CG_RocketTrail
 ==========================
 */
-// LEILEI enhancment
+// LEILEI enhancement
 static void CG_RocketTrail( centity_t *ent, const weaponInfo_t *wi ) {
 
 	if ( cg_leiEnhancement.integer ) {

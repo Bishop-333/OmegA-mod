@@ -627,7 +627,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText );
 void SendReadyMask( int clientnum );
 void G_SendSpawnpoints( gentity_t *ent );
 
-// KK-OAX Added these in a seperate file to keep g_cmds.c familiar.
+// KK-OAX Added these in a separate file to keep g_cmds.c familiar.
 // g_cmds_ext.c
 //
 int G_SayArgc( void );
@@ -644,8 +644,8 @@ qboolean G_ClientIsLagging( gclient_t *client );
 void SanitizeString( char *in, char *out );
 
 // g_elimination.c
-void CheckElimination(void);
-void CheckLMS(void);
+void CheckElimination( void );
+void CheckLMS( void );
 void SendAttackingTeamMessageToAllClients( void );
 
 // KK-OAX Added this for common file stuff between Admin and Sprees.
@@ -1195,7 +1195,7 @@ extern vmCvar_t sv_fps;
 extern vmCvar_t g_lagLightning;
 //unlagged - server options
 //KK-OAX Killing Sprees
-extern vmCvar_t g_sprees;       //Used for specifiying the config file
+extern vmCvar_t g_sprees;       //Used for specifying the config file
 extern vmCvar_t g_altExcellent; //Turns on Multikills instead of Excellent
 extern vmCvar_t g_spreeDiv;     // Interval of a "streak" that form the spree triggers
 //KK-OAX Command/Chat Flooding/Spamming
@@ -1496,7 +1496,7 @@ typedef struct
 
 //
 // g_svcmds_ext.c
-// These were added to a seperate file to keep g_svcmds.c navigable.
+// These were added to a separate file to keep g_svcmds.c navigable.
 void Svcmd_Status_f( void );
 void Svcmd_TeamMessage_f( void );
 void Svcmd_CenterPrint_f( void );

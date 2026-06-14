@@ -62,7 +62,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * ! - admin commands cannot be used on them
  * @ - does not show up as an admin in !listplayers
  * $ - sees all information in !listplayers 
- * ? - receieves and can send /a admin messages
+ * ? - receives and can send /a admin messages
  */
 #define ADMF_IMMUNITY '1'
 #define ADMF_NOCENSORFLOOD '2'

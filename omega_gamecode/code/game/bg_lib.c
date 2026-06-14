@@ -738,7 +738,7 @@ double atan2( double y, double x ) {
 		dir = 1;
 	}
 
-	// calcualte angle in octant 0
+	// calculate angle in octant 0
 	if ( x == 0 ) {
 		return base;
 	}

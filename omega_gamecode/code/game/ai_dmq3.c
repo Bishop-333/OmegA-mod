@@ -122,7 +122,7 @@ static int untrap_BotGetLevelItemGoal( int start, char *classname, void *goal ) 
 		if ( gametype >= GT_FFA && gametype < GT_MAX_GAME_TYPE ) {
 			gametypeName = gametypeNames[gametype];
 			if ( strstr( allowedGametypes, gametypeName ) ) {
-				//In gametype strig
+				//In gametype string
 				return start;
 			}
 		} else
@@ -2798,7 +2798,7 @@ bot_moveresult_t BotAttackMove( bot_state_t *bs, int tfl ) {
 		bs->flags ^= BFL_STRAFERIGHT;
 		bs->attackstrafe_time = 0;
 	}
-	//bot couldn't do any usefull movement
+	//bot couldn't do any useful movement
 	return moveresult;
 }
 
@@ -2816,7 +2816,7 @@ int BotSameTeam( bot_state_t *bs, int entnum ) {
 	}
 	if ( gametype >= GT_TEAM && g_ffa_gt != 1 ) {
 		/*Sago: I don't know why they decided to check the configstring instead of the real value.
-		For some reason bots sometimes gets a wrong config string when chaning gametypes.
+		For some reason bots sometimes gets a wrong config string when changing gametypes.
 		Now we check the real value: */
 		if ( level.clients[bs->client].sess.sessionTeam == level.clients[entnum].sess.sessionTeam ) return qtrue;
 	}
@@ -3767,7 +3767,6 @@ void BotMapScripts( bot_state_t *bs ) {
 BotSetMovedir
 ==================
 */
-// bk001205 - made these static
 static vec3_t VEC_UP = { 0, -1, 0 };
 static vec3_t MOVEDIR_UP = { 0, 0, 1 };
 static vec3_t VEC_DOWN = { 0, -2, 0 };
@@ -4448,7 +4447,7 @@ void BotAIBlocked( bot_state_t *bs, bot_moveresult_t *moveresult, int activate )
 				//
 				BotGoForActivateGoal( bs, &activategoal );
 			}
-			// if ontop of an obstacle or
+			// if on top of an obstacle or
 			// if the bot is not in a reachability area it'll still
 			// need some dynamic obstacle avoidance, otherwise return
 			if ( !( moveresult->flags & MOVERESULT_ONTOPOFOBSTACLE ) &&

@@ -779,7 +779,7 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 	for ( i = 0; i < 10; i++ ) {
 		VectorMA( muzzle, LIGHTNING_RANGE, forward, end );
 
-		//Sago: I'm not sure this should recieve backward reconciliation. It is not a real instant hit weapon, it can normally be dogded
+		//Sago: I'm not sure this should receive backward reconciliation. It is not a real instant hit weapon, it can normally be dogded
 		//unlagged - backward reconciliation #2
 		// backward-reconcile the other clients
 		G_DoTimeShiftFor( ent );
@@ -971,7 +971,7 @@ FireWeapon
 ===============
 */
 void FireWeapon( gentity_t *ent ) {
-	//Make people drop out of follow mode (this should be moved, so people can change betwean players.)
+	//Make people drop out of follow mode (this should be moved, so people can change between players.)
 	if ( ent->client->sess.spectatorState == SPECTATOR_FOLLOW ) {
 		StopFollowing( ent );
 		return;

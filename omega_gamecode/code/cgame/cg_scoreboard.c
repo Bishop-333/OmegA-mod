@@ -242,7 +242,7 @@ static void CG_DrawClientScoreHeader( int y ) {
 
 	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.6;
 
-	// draw the slashs
+	// draw the slashes
 	CG_DrawStringExt( x + 2, y, "/", colorCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT - 1, 0 );
 	CG_DrawStringExt( x + 4, y, "/", colorTtCyan, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT - 1, 0 );
 
@@ -280,7 +280,7 @@ static void CG_DrawClientScoreHeader( int y ) {
 
 	x += CG_DrawStrlen( s ) * TINYCHAR_WIDTH / 1.6;
 
-	// draw the slashs
+	// draw the slashes
 	CG_DrawStringExt( x + 2, y, "/", colorGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT - 1, 0 );
 	CG_DrawStringExt( x + 4, y, "/", colorTtGreen, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT - 1, 0 );
 
@@ -295,7 +295,7 @@ static void CG_DrawClientScoreHeader( int y ) {
 
 	s = Info_ValueForKey( sysInfo, "sv_cheats" );
 	if ( s[0] == '1' ) {
-		// draw the slashs
+		// draw the slashes
 		CG_DrawStringExt( x + 2, y, "/", colorRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT - 1, 0 );
 		CG_DrawStringExt( x + 4, y, "/", colorTtRed, qfalse, qfalse, TINYCHAR_WIDTH / 1.5, TINYCHAR_HEIGHT - 1, 0 );
 
@@ -949,7 +949,7 @@ void CG_DrawOldTourneyScoreboard( void ) {
 	color[2] = 1;
 	color[3] = 1;
 
-	// print the mesage of the day
+	// print the message of the day
 	s = CG_ConfigString( CS_MOTD );
 	if ( !s[0] ) {
 		s = "Scoreboard";

@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "g_local.h"
 
-
 /*
 ========================
 SendAttackingTeamMessageToAllClients
@@ -300,9 +299,9 @@ void CheckElimination( void ) {
 				trap_SendServerCommand( -1, "print \"Blue Team eliminated!\n\"" );
 				AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
 				if ( g_gametype.integer == GT_ELIMINATION ) {
-					G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, TEAM_RED, 1, TeamName( TEAM_RED ), level.roundNumber );
+					G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i by eliminating the enemy team!\n", level.roundNumber, TEAM_RED, 1, TeamName( TEAM_RED ), level.roundNumber );
 				} else {
-					G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, -1, TEAM_RED, 6, TeamName( TEAM_RED ), level.roundNumber );
+					G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eliminating the enemy team!\n", level.roundNumber, -1, TEAM_RED, 6, TeamName( TEAM_RED ), level.roundNumber );
 				}
 				EndEliminationRound();
 				Team_ForceGesture( TEAM_RED );
@@ -311,9 +310,9 @@ void CheckElimination( void ) {
 				trap_SendServerCommand( -1, "print \"Red Team eliminated!\n\"" );
 				AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
 				if ( g_gametype.integer == GT_ELIMINATION ) {
-					G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, TEAM_BLUE, 1, TeamName( TEAM_BLUE ), level.roundNumber );
+					G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i by eliminating the enemy team!\n", level.roundNumber, TEAM_BLUE, 1, TeamName( TEAM_BLUE ), level.roundNumber );
 				} else {
-					G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eleminating the enemy team!\n", level.roundNumber, -1, TEAM_BLUE, 6, TeamName( TEAM_BLUE ), level.roundNumber );
+					G_LogPrintf( "CTF_ELIMINATION: %i %i %i %i: %s wins round %i by eliminating the enemy team!\n", level.roundNumber, -1, TEAM_BLUE, 6, TeamName( TEAM_BLUE ), level.roundNumber );
 				}
 				EndEliminationRound();
 				Team_ForceGesture( TEAM_BLUE );
@@ -338,7 +337,7 @@ void CheckElimination( void ) {
 					}
 				} else if ( ( (double)countsLiving[TEAM_RED] ) / ( (double)level.roundRedPlayers ) > ( (double)countsLiving[TEAM_BLUE] ) / ( (double)level.roundBluePlayers ) ) {
 					//Red team has higher procentage survivors
-					trap_SendServerCommand( -1, "print \"Red team has most survivers!\n\"" );
+					trap_SendServerCommand( -1, "print \"Red team has most survivors!\n\"" );
 					AddTeamScore( level.intermission_origin, TEAM_RED, 1 );
 					if ( g_gametype.integer == GT_ELIMINATION ) {
 						G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, TEAM_RED, 2, TeamName( TEAM_RED ), level.roundNumber );
@@ -347,7 +346,7 @@ void CheckElimination( void ) {
 					}
 				} else if ( ( (double)countsLiving[TEAM_RED] ) / ( (double)level.roundRedPlayers ) < ( (double)countsLiving[TEAM_BLUE] ) / ( (double)level.roundBluePlayers ) ) {
 					//Blue team has higher procentage survivors
-					trap_SendServerCommand( -1, "print \"Blue team has most survivers!\n\"" );
+					trap_SendServerCommand( -1, "print \"Blue team has most survivors!\n\"" );
 					AddTeamScore( level.intermission_origin, TEAM_BLUE, 1 );
 					if ( g_gametype.integer == GT_ELIMINATION ) {
 						G_LogPrintf( "ELIMINATION: %i %i %i: %s wins round %i due to more survivors!\n", level.roundNumber, TEAM_BLUE, 2, TeamName( TEAM_BLUE ), level.roundNumber );

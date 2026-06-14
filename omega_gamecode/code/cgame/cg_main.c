@@ -303,7 +303,7 @@ typedef struct {
 	int cvarFlags;
 } cvarTable_t;
 
-static cvarTable_t cvarTable[] = {       // bk001129
+static cvarTable_t cvarTable[] = {
     { &cg_ignore, "cg_ignore", "0", 0 }, // used for debugging
     { &cg_autoswitch, "cg_autoswitch", "0", CVAR_ARCHIVE },
     { &cg_drawGun, "cg_drawGun", "1", CVAR_ARCHIVE },
@@ -621,7 +621,7 @@ void CG_UpdateCvars( void ) {
 		trap_Cvar_Update( cv->vmCvar );
 	}
 
-	// check for modications here
+	// check for modifications here
 
 	// If team overlay is on, ask for updates from the server. If its off,
 	// let the server know so we don't receive it
@@ -790,7 +790,7 @@ static void CG_RegisterItemSounds( int itemNum ) {
 		trap_S_RegisterSound( item->pickup_sound, qfalse );
 	}
 
-	// parse the space seperated precache string for other media
+	// parse the space separated precache string for other media
 	s = item->sounds;
 	if ( !s || !s[0] )
 		return;
@@ -1510,7 +1510,7 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 
 	cg.weaponSelect = WP_MACHINEGUN;
 
-	cgs.redflag = cgs.blueflag = -1; // For compatibily, default to unset for
+	cgs.redflag = cgs.blueflag = -1; // For compatibility, default to unset for
 	cgs.flagStatus = -1;
 	// old servers
 

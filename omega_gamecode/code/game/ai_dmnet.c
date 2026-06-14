@@ -370,7 +370,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 				// if the client being followed bumps into this bot then
 				// the bot should back up
 				BotEntityInfo( bs->entitynum, &botinfo );
-				// if the followed client is not standing ontop of the bot
+				// if the followed client is not standing on top of the bot
 				if ( botinfo.origin[2] + botinfo.maxs[2] > entinfo.origin[2] + entinfo.mins[2] ) {
 					// if the bounding boxes touch each other
 					if ( botinfo.origin[0] + botinfo.maxs[0] > entinfo.origin[0] + entinfo.mins[0] - 4 &&
@@ -404,7 +404,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 				}
 				//don't crouch when swimming
 				if ( trap_AAS_Swimming( bs->origin ) ) bs->attackcrouch_time = FloatTime() - 1;
-				//if not arrived yet or arived some time ago
+				//if not arrived yet or arrived some time ago
 				if ( bs->arrive_time < FloatTime() - 2 ) {
 					//if not arrived yet
 					if ( !bs->arrive_time ) {

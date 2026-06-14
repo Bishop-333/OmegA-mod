@@ -154,7 +154,7 @@ typedef struct {
 // and do away with a menu per say.. major issue is not being able to dynamically allocate
 // and destroy stuff.. Another point to consider is adding an alloc free call for vm's and have
 // the engine just allocate the pool for it based on a cvar
-// many of the vars are re-used for different item types, as such they are not always named appropriately
+// many of the vars are reused for different item types, as such they are not always named appropriately
 // the benefits of c++ in DOOM will greatly help crap like this
 // FIXME: need to put a type ptr that points to specific type info per type
 //

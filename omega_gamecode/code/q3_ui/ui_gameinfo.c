@@ -684,7 +684,7 @@ int UI_GetCurrentGame( void ) {
 ===============
 UI_NewGame
 
-Clears the scores and sets the difficutly level
+Clears the scores and sets the difficulty level
 ===============
 */
 void UI_NewGame( void ) {

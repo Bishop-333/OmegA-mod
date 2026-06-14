@@ -338,7 +338,7 @@ G_CheckForSpree
 void G_CheckForSpree( gentity_t *ent, int streak2Test, qboolean checkKillSpree ) {
 	int i;
 	char *returnedString;
-	//If somebody want's to award killing sprees above 99 kills he/she can mod this his/herself!!! :)
+	//If somebody wants to award killing sprees above 99 kills he/she can mod this his/herself!!! :)
 	char streakcount[5];
 	char *sound;
 	int position;

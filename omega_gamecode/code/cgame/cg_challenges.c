@@ -33,13 +33,13 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #define FILENAME "challenges.dat"
 
-//First two static variables that may only be accessed throgh functions in this file
-//The challengeTable is of constant size so there is room for more challenges being added in the furture
+//First two static variables that may only be accessed through functions in this file
+//The challengeTable is of constant size so there is room for more challenges being added in the future
 static unsigned int challengeTable[CHALLENGES_MAX];
 //We have a variable to see if the system is initialized
 static qboolean challengesInitialized = qfalse;
 
-//This function initializes the challenge system. It has no effect if the system is already intialized.
+//This function initializes the challenge system. It has no effect if the system is already initialized.
 void challenges_init( void ) {
 	fileHandle_t file;
 	int fileLen;
@@ -54,7 +54,7 @@ void challenges_init( void ) {
 
 	//If the file not is big enough to contain all challenges then initialize from zero
 	if ( fileLen < sizeof( challengeTable ) ) {
-		trap_FS_FCloseFile( file ); //Lets remeber to close the file before all returns
+		trap_FS_FCloseFile( file ); //Lets remember to close the file before all returns
 		for ( i = 0; i < CHALLENGES_MAX; i++ )
 			challengeTable[i] = 0;     //Init all challenges to zero
 		challengesInitialized = qtrue; //Still consider the system loaded!

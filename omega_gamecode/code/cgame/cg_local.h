@@ -170,7 +170,7 @@ typedef struct {
 
 //=================================================
 
-// centity_t have a direct corespondence with gentity_t in the game, but
+// centity_t have a direct correspondence with gentity_t in the game, but
 // only the entityState_t is directly communicated to the cgame
 typedef struct centity_s {
 	entityState_t currentState; // from cg.frame
@@ -208,7 +208,7 @@ typedef struct centity_s {
 //======================================================================
 
 // local entities are created as a result of events or predicted actions,
-// and live independantly from all server transmitted entities
+// and live independently from all server transmitted entities
 
 typedef struct markPoly_s {
 	struct markPoly_s *prevMark, *nextMark;
@@ -428,7 +428,7 @@ typedef struct weaponInfo_s {
 } weaponInfo_t;
 
 // each IT_* item has an associated itemInfo_t
-// that constains media references necessary to present the
+// that contains media references necessary to present the
 // item and its effects
 typedef struct {
 	qboolean registered;
@@ -479,7 +479,7 @@ typedef struct {
 	qboolean loading;             // don't defer players at initial startup
 	qboolean intermissionStarted; // don't play voice rewards, because game will end shortly
 
-	// there are only one or two snapshot_t that are relevent at a time
+	// there are only one or two snapshot_t that are relevant at a time
 	int latestSnapshotNum;  // the number of snapshots the client system has received
 	int latestSnapshotTime; // the time from latestSnapshotNum, so we don't need to read the snapshot yet
 
@@ -631,7 +631,7 @@ typedef struct {
 
 	int itemPickup;
 	int itemPickupTime;
-	int itemPickupBlendTime; // the pulse around the crosshair is timed seperately
+	int itemPickupBlendTime; // the pulse around the crosshair is timed separately
 
 	int weaponSelectTime;
 	int weaponAnimation;
@@ -1475,7 +1475,7 @@ void CG_RankRunFrame( void );
 void CG_SetScoreSelection( void *menu );
 void CG_BuildSpectatorString( void );
 
-//unlagged, sagos modfication
+//unlagged, sagos modification
 void SnapVectorTowards( vec3_t v, vec3_t to );
 
 void CG_FairCvars( void );
@@ -1875,7 +1875,7 @@ void trap_GetGlconfig( glconfig_t *glconfig );
 void trap_GetGameState( gameState_t *gamestate );
 
 // cgame will poll each frame to see if a newer snapshot has arrived
-// that it is interested in. The time is returned seperately so that
+// that it is interested in. The time is returned separately so that
 // snapshot latency can be calculated.
 void trap_GetCurrentSnapshotNumber( int *snapshotNumber, int *serverTime );
 
@@ -1915,7 +1915,7 @@ typedef enum {
 	SYSTEM_PRINT,
 	CHAT_PRINT,
 	TEAMCHAT_PRINT
-} q3print_t; // bk001201 - warning: useless keyword or type name in empty declaration
+} q3print_t;
 
 int trap_CIN_PlayCinematic( const char *arg0, int xpos, int ypos, int width, int height, int bits );
 e_status trap_CIN_StopCinematic( int handle );

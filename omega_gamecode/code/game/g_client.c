@@ -48,7 +48,7 @@ void SP_info_player_deathmatch( gentity_t *ent ) {
 }
 
 /*QUAKED info_player_start (1 0 0) (-16 -16 -24) (16 16 32)
-equivelant to info_player_deathmatch
+equivalent to info_player_deathmatch
 */
 void SP_info_player_start( gentity_t *ent ) {
 	ent->classname = "info_player_deathmatch";
@@ -464,7 +464,7 @@ static void frozenplayer_die( gentity_t *self, gentity_t *inflictor, gentity_t *
 	if ( self->frozenPlayer ) {
 		self->frozenPlayer->frozenPlayer = NULL;
 	}
-	// remnant was destroyed by the enviroment make the client thaw quickly:
+	// remnant was destroyed by the environment make the client thaw quickly:
 	self->frozenPlayer->client->frozen = FROZEN_REMNANTDESTROYED;
 	G_ClientSetFrozenState( self->frozenPlayer );
 
@@ -834,7 +834,7 @@ int TeamLivingCount( int ignoreClientNum, team_t team ) {
 ================
 TeamHealthCount
 
-Count total number of healthpoints on teh teams used for draws in Elimination
+Count total number of healthpoints on the teams used for draws in Elimination
 ================
 */
 int TeamHealthCount( int ignoreClientNum, team_t team ) {
@@ -1224,7 +1224,7 @@ void ClientUserinfoChanged( int clientNum ) {
 			revertName = qtrue;
 		}
 
-		//Never revert a bots name... just to bad if it hapens... but the bot will always be expendeble :-)
+		//Never revert a bots name... just to bad if it happens... but the bot will always be expendable :-)
 		if ( ent->r.svFlags & SVF_BOT )
 			revertName = qfalse;
 
@@ -1392,7 +1392,7 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 
 	// IP filtering //KK-OAX Has this been obsoleted?
 	// https://zerowing.idsoftware.com/bugzilla/show_bug.cgi?id=500
-	// recommanding PB based IP / GUID banning, the builtin system is pretty limited
+	// recommending PB based IP / GUID banning, the builtin system is pretty limited
 	// check to see if they are on the banned IP list
 	value = Info_ValueForKey( userinfo, "ip" );
 	Q_strncpyz( client->pers.ip, value, sizeof( client->pers.ip ) );
@@ -1469,11 +1469,11 @@ char *ClientConnect( int clientNum, qboolean firstTime, qboolean isBot ) {
 	G_ReadSessionData( client );
 
 	//KK-OAX Swapped these in order...seemed to help the connection process.
-	// get and distribute relevent paramters
+	// get and distribute relevant parameters
 	ClientUserinfoChanged( clientNum );
 	G_LogPrintf( "ClientConnect: %i\n", clientNum );
 
-	// don't do the "xxx connected" messages if they were caried over from previous level
+	// don't do the "xxx connected" messages if they were carried over from previous level
 	if ( firstTime ) {
 		trap_SendServerCommand( -1, va( "print \"%s" S_COLOR_WHITE " connected\n\"", client->pers.netname ) );
 	}
@@ -1685,11 +1685,12 @@ void ClientSpawn( gentity_t *ent ) {
 	    ( client->sess.sessionTeam != TEAM_SPECTATOR ) ) {
 		// N_G: Another condition that makes no sense to me, see for
 		// yourself if you really meant this
-		// Sago: I beleive the TeamCount is to make sure people can join even if the game can't start
+		// Sago: I believe the TeamCount is to make sure people can join even if the game can't start
 		if ( ( ( level.roundNumber == level.roundNumberStarted ) ||
 		       ( ( level.time < level.roundStartTime - level.activeWarmup * 1000 ) &&
 		         TeamCount( -1, TEAM_BLUE ) &&
-		         TeamCount( -1, TEAM_RED ) ) ) && level.roundNumberStarted > 0 ) {
+		         TeamCount( -1, TEAM_RED ) ) ) &&
+		     level.roundNumberStarted > 0 ) {
 			client->sess.spectatorState = SPECTATOR_FREE;
 			client->isEliminated = qtrue;
 			if ( g_gametype.integer == GT_LMS )
@@ -2164,7 +2165,7 @@ void ClientDisconnect( int clientNum ) {
 	i = ( ent->client->ps.stats[STAT_HEALTH] > 0 );
 	//Commit suicide!
 	if ( ent->client->pers.connected == CON_CONNECTED && ent->client->sess.sessionTeam != TEAM_SPECTATOR && i ) {
-		//Prevent a team from loosing point because of player leaving
+		//Prevent a team from losing point because of player leaving
 		int teamscore = 0;
 		if ( g_gametype.integer == GT_TEAM )
 			teamscore = level.teamScores[ent->client->sess.sessionTeam];

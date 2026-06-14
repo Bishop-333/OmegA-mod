@@ -266,7 +266,7 @@ static void CG_Item( centity_t *cent ) {
 	}
 
 	wi = NULL;
-	// the weapons have their origin where they attatch to player
+	// the weapons have their origin where they attach to player
 	// models, so we need to offset them or they will rotate
 	// eccentricly
 	if ( item->giType == IT_WEAPON ) {
@@ -445,7 +445,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	}
 
 	wi = NULL;
-	// the weapons have their origin where they attatch to player
+	// the weapons have their origin where they attach to player
 	// models, so we need to offset them or they will rotate
 	// eccentricly
 	if ( item->giType == IT_WEAPON ) {
@@ -666,7 +666,6 @@ static void CG_Grapple( centity_t *cent ) {
 	// calculate the axis
 	VectorCopy( s1->angles, cent->lerpAngles );
 
-	// FIXME add grapple pull sound here..?
 	// add missile sound
 	if ( weapon->missileSound ) {
 		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, weapon->missileSound );
