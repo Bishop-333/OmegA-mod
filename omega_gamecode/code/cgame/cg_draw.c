@@ -1521,6 +1521,21 @@ static float CG_DrawScores( float y ) {
 			}
 		}
 
+		if ( cgs.gametype == GT_1FCTF ) {
+			// Display neutral flag status
+			y1 = y - BIGCHAR_HEIGHT - 8;
+
+			if ( cgs.flagStatus == FLAG_TAKEN_RED ) {
+				CG_DrawPic( x, y1 - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.redFlagShader[0] );
+			} else if ( cgs.flagStatus == FLAG_TAKEN_BLUE ) {
+				CG_DrawPic( x + w, y1 - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.blueFlagShader[0] );
+			} else if ( cgs.flagStatus == FLAG_DROPPED ) {
+				CG_DrawPic( x + w - w / 2, y1 - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.flagShader[3] );
+			} else {
+				CG_DrawPic( x + w - w / 2, y1 - 4, w, BIGCHAR_HEIGHT + 8, cgs.media.flagShader[0] );
+			}
+		}
+
 		if ( cgs.gametype == GT_DOUBLE_D ) {
 			// Display Domination point status
 
@@ -2358,48 +2373,6 @@ static void CG_DrawCenterString( void ) {
 
 /*
 =====================
-CG_DrawCenter1FctfString
-=====================
-*/
-static void CG_DrawCenter1FctfString( void ) {
-	int x, y, w;
-	float *color;
-	char *line;
-	int status;
-
-	if ( cgs.gametype != GT_1FCTF )
-		return;
-
-	status = cgs.flagStatus;
-
-	switch ( status ) {
-		case FLAG_TAKEN_RED:
-			line = va( "Red has the flag!" );
-			color = colorRed;
-			break;
-		case FLAG_TAKEN_BLUE:
-			line = va( "Blue has the flag!" );
-			color = colorBlue;
-			break;
-		case FLAG_DROPPED:
-			line = va( "Flag dropped!" );
-			color = colorWhite;
-			break;
-		default:
-			return;
-	};
-	y = 100;
-
-	w = cg.centerPrintCharWidth * CG_DrawStrlen( line );
-
-	x = ( SCREEN_WIDTH - w ) / 2;
-
-	CG_DrawStringExt( x, y, line, color, qfalse, qtrue,
-	                  cg.centerPrintCharWidth, (int)( cg.centerPrintCharWidth * 1.5 ), 0 );
-}
-
-/*
-=====================
 CG_DrawCenterDDString
 =====================
 */
@@ -2409,6 +2382,7 @@ static void CG_DrawCenterDDString( void ) {
 	char *line;
 	int statusA, statusB;
 	int sec;
+	int cw;
 	static int lastDDSec = -100;
 
 	if ( cgs.gametype != GT_DOUBLE_D )
@@ -2456,14 +2430,29 @@ static void CG_DrawCenterDDString( void ) {
 	}
 	lastDDSec = sec;
 
+	switch ( sec ) {
+		case 1:
+			cw = MEDIUMCHAR_WIDTH + 6;
+			break;
+		case 2:
+			cw = MEDIUMCHAR_WIDTH + 4;
+			break;
+		case 3:
+			cw = MEDIUMCHAR_WIDTH + 2;
+			break;
+		default:
+			cw = MEDIUMCHAR_WIDTH;
+			break;
+	}
+
 	y = 100;
 
-	w = cg.centerPrintCharWidth * CG_DrawStrlen( line );
+	w = cw * CG_DrawStrlen( line );
 
 	x = ( SCREEN_WIDTH - w ) / 2;
 
 	CG_DrawStringExt( x, y, line, color, qfalse, qtrue,
-	                  cg.centerPrintCharWidth, (int)( cg.centerPrintCharWidth * 1.5 ), 0 );
+	                  cw, (int)( cw * 1.5 ), 0 );
 }
 
 /*
@@ -3448,7 +3437,6 @@ static void CG_Draw2D( stereoFrame_t stereoFrame ) {
 	cg.scoreBoardShowing = CG_DrawScoreboard();
 	if ( !cg.scoreBoardShowing ) {
 		CG_DrawCenterDDString();
-		CG_DrawCenter1FctfString();
 		CG_DrawCenterString();
 
 		if ( cgs.clientinfo[cg.clientNum].team != TEAM_SPECTATOR )

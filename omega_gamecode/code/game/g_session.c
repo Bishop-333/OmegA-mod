@@ -81,8 +81,7 @@ void G_ReadSessionData( gclient_t *client ) {
 	        &client->sess.spectatorClient,
 	        &client->sess.wins,
 	        &client->sess.losses,
-	        &teamLeader
-	);
+	        &teamLeader );
 
 	client->sess.sessionTeam = (team_t)sessionTeam;
 	client->sess.spectatorState = (spectatorState_t)spectatorState;
