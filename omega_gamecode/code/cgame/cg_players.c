@@ -48,7 +48,7 @@ static qboolean CG_IsEnemy( int clientNum ) {
 	clientInfo_t *self;
 	int myteam;
 
-	if ( cg.snap->ps.pm_flags & PMF_FOLLOW && cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
+	if ( cg.snap && ( cg.snap->ps.pm_flags & PMF_FOLLOW ) && cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
 		myteam = cgs.clientinfo[cg.snap->ps.clientNum].team;
 		self = &cgs.clientinfo[cg.snap->ps.clientNum];
 	} else {
