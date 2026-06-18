@@ -536,7 +536,7 @@ void BotCTFSeekGoals( bot_state_t *bs ) {
 					break;
 			}
 			// if the bot picked up the flag very close to the enemy base
-			if ( VectorLength( dir ) < 128 ) {
+			if ( VectorLengthSquared( dir ) < Square( 128 ) ) {
 				// get an alternative route goal through the enemy base
 				BotGetAlternateRouteGoal( bs, BotOppositeTeam( bs ) );
 			} else {

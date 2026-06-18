@@ -43,7 +43,7 @@ static void G_BounceMissile( gentity_t *ent, trace_t *trace ) {
 	if ( ent->s.eFlags & EF_BOUNCE_HALF ) {
 		VectorScale( ent->s.pos.trDelta, 0.65, ent->s.pos.trDelta );
 		// check for stop
-		if ( trace->plane.normal[2] > 0.2 && VectorLength( ent->s.pos.trDelta ) < 40 ) {
+		if ( trace->plane.normal[2] > 0.2 && VectorLengthSquared( ent->s.pos.trDelta ) < Square( 40 ) ) {
 			G_SetOrigin( ent, trace->endpos );
 			ent->s.time = level.time / 4;
 			return;
@@ -208,7 +208,7 @@ void ProximityMine_Trigger( gentity_t *trigger, gentity_t *other, trace_t *trace
 
 	// trigger is a cube, do a distance test now to act as if it's a sphere
 	VectorSubtract( trigger->s.pos.trBase, other->s.pos.trBase, v );
-	if ( VectorLength( v ) > trigger->parent->splashRadius ) {
+	if ( VectorLengthSquared( v ) > Square( trigger->parent->splashRadius ) ) {
 		return;
 	}
 
@@ -267,7 +267,7 @@ static void ProximityMine_Activate( gentity_t *ent ) {
 
 		if ( flag ) {
 			VectorSubtract( ent->r.currentOrigin, flag->r.currentOrigin, v1 );
-			if ( VectorLength( v1 ) < 500 )
+			if ( VectorLengthSquared( v1 ) < Square( 500 ) )
 				nearFlag = qtrue;
 		}
 	}
@@ -436,7 +436,7 @@ static void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 				g_entities[ent->r.ownerNum].client->accuracy[ent->s.weapon][1]++;
 			}
 			BG_EvaluateTrajectoryDelta( &ent->s.pos, level.time, velocity );
-			if ( VectorLength( velocity ) == 0 ) {
+			if ( VectorLengthSquared( velocity ) == 0 ) {
 				velocity[2] = 1; // stepped on a grenade
 			}
 			G_Damage( other, ent, &g_entities[ent->r.ownerNum], velocity,

@@ -336,7 +336,7 @@ void G_ClientAcceleratedThaw( gentity_t *player ) {
 			}
 		}
 
-		if ( VectorLength( v ) > FREEZETAG_THAWRADIUS ) {
+		if ( VectorLengthSquared( v ) > Square( FREEZETAG_THAWRADIUS ) ) {
 			continue;
 		}
 

@@ -2118,7 +2118,7 @@ static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandl
 		if ( h2 < h1 ) {
 			h1 = h2;
 		}
-		if ( VectorLength( ent.origin ) > h1 ) {
+		if ( VectorLengthSquared( ent.origin ) > Square( h1 ) ) {
 			VectorNormalize( ent.origin );
 			VectorScale( ent.origin, h1, ent.origin );
 		}
@@ -2627,7 +2627,7 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	if ( ci->isProp ) {
-		if ( VectorLength( cent->currentState.pos.trDelta ) < 1 ) {
+		if ( VectorLengthSquared( cent->currentState.pos.trDelta ) < 1 ) {
 			CG_Prop( cent, ci );
 			return;
 		}

@@ -373,9 +373,9 @@ void Team_DD_bonusAtPoints( int team ) {
 		//See if the player is close to any of the points:
 		VectorSubtract( player->r.currentOrigin, ddA->r.currentOrigin, v1 );
 		VectorSubtract( player->r.currentOrigin, ddB->r.currentOrigin, v2 );
-		if ( !( ( ( VectorLength( v1 ) < CTF_TARGET_PROTECT_RADIUS &&
+		if ( !( ( ( VectorLengthSquared( v1 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 		            trap_InPVS( ddA->r.currentOrigin, player->r.currentOrigin ) ) ||
-		          ( VectorLength( v2 ) < CTF_TARGET_PROTECT_RADIUS &&
+		          ( VectorLengthSquared( v2 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 		            trap_InPVS( ddB->r.currentOrigin, player->r.currentOrigin ) ) ) ) )
 			return; //Wasn't close to any of the points
 
@@ -511,9 +511,9 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 			VectorSubtract( targ->r.currentOrigin, ddA->r.currentOrigin, v1 );
 			VectorSubtract( attacker->r.currentOrigin, ddA->r.currentOrigin, v2 );
 
-			if ( ( ( VectorLength( v1 ) < CTF_TARGET_PROTECT_RADIUS &&
+			if ( ( ( VectorLengthSquared( v1 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 			         trap_InPVS( ddA->r.currentOrigin, targ->r.currentOrigin ) ) ||
-			       ( VectorLength( v2 ) < CTF_TARGET_PROTECT_RADIUS &&
+			       ( VectorLengthSquared( v2 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 			         trap_InPVS( ddA->r.currentOrigin, attacker->r.currentOrigin ) ) ) &&
 			     attacker->client->sess.sessionTeam != targ->client->sess.sessionTeam ) {
 
@@ -545,9 +545,9 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 			VectorSubtract( targ->r.currentOrigin, ddB->r.currentOrigin, v1 );
 			VectorSubtract( attacker->r.currentOrigin, ddB->r.currentOrigin, v2 );
 
-			if ( ( ( VectorLength( v1 ) < CTF_TARGET_PROTECT_RADIUS &&
+			if ( ( ( VectorLengthSquared( v1 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 			         trap_InPVS( ddB->r.currentOrigin, targ->r.currentOrigin ) ) ||
-			       ( VectorLength( v2 ) < CTF_TARGET_PROTECT_RADIUS &&
+			       ( VectorLengthSquared( v2 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 			         trap_InPVS( ddB->r.currentOrigin, attacker->r.currentOrigin ) ) ) &&
 			     attacker->client->sess.sessionTeam != targ->client->sess.sessionTeam ) {
 
@@ -631,9 +631,9 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 	VectorSubtract( targ->r.currentOrigin, flag->r.currentOrigin, v1 );
 	VectorSubtract( attacker->r.currentOrigin, flag->r.currentOrigin, v2 );
 
-	if ( ( ( VectorLength( v1 ) < CTF_TARGET_PROTECT_RADIUS &&
+	if ( ( ( VectorLengthSquared( v1 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 	         trap_InPVS( flag->r.currentOrigin, targ->r.currentOrigin ) ) ||
-	       ( VectorLength( v2 ) < CTF_TARGET_PROTECT_RADIUS &&
+	       ( VectorLengthSquared( v2 ) < Square( CTF_TARGET_PROTECT_RADIUS ) &&
 	         trap_InPVS( flag->r.currentOrigin, attacker->r.currentOrigin ) ) ) &&
 	     attacker->client->sess.sessionTeam != targ->client->sess.sessionTeam && g_gametype.integer != GT_ELIMINATION &&
 	     ( g_gametype.integer != GT_CTF_ELIMINATION || !g_elimination_ctf_oneway.integer ||
@@ -660,9 +660,9 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 		VectorSubtract( targ->r.currentOrigin, carrier->r.currentOrigin, v1 );
 		VectorSubtract( attacker->r.currentOrigin, carrier->r.currentOrigin, v2 );
 
-		if ( ( ( VectorLength( v1 ) < CTF_ATTACKER_PROTECT_RADIUS &&
+		if ( ( ( VectorLengthSquared( v1 ) < Square( CTF_ATTACKER_PROTECT_RADIUS ) &&
 		         trap_InPVS( carrier->r.currentOrigin, targ->r.currentOrigin ) ) ||
-		       ( VectorLength( v2 ) < CTF_ATTACKER_PROTECT_RADIUS &&
+		       ( VectorLengthSquared( v2 ) < Square( CTF_ATTACKER_PROTECT_RADIUS ) &&
 		         trap_InPVS( carrier->r.currentOrigin, attacker->r.currentOrigin ) ) ) &&
 		     attacker->client->sess.sessionTeam != targ->client->sess.sessionTeam ) {
 			AddScore( attacker, targ->r.currentOrigin, CTF_CARRIER_PROTECT_BONUS );

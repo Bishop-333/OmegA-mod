@@ -1481,8 +1481,8 @@ static float BotNearestVisibleItem( bot_state_t *bs, char *itemname, bot_goal_t 
 		if ( Q_stricmp( itemname, name ) != 0 )
 			continue;
 		VectorSubtract( tmpgoal.origin, bs->origin, dir );
-		dist = VectorLength( dir );
-		if ( dist < bestdist ) {
+		if ( VectorLengthSquared( dir ) < Square( bestdist ) ) {
+			dist = VectorLength( dir );
 			//trace from start to end
 			BotAI_Trace( &trace, bs->eye, NULL, NULL, tmpgoal.origin, bs->client, CONTENTS_SOLID | CONTENTS_PLAYERCLIP );
 			if ( trace.fraction >= 1.0 ) {

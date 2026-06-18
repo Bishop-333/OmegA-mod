@@ -430,7 +430,7 @@ static void CheckAlmostCapture( gentity_t *self, gentity_t *attacker ) {
 		if ( ent && !( ent->r.svFlags & SVF_NOCLIENT ) ) {
 			// if the player was *very* close
 			VectorSubtract( self->client->ps.origin, ent->s.origin, dir );
-			if ( VectorLength( dir ) < 200 ) {
+			if ( VectorLengthSquared( dir ) < Square( 200 ) ) {
 				self->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_HOLYSHIT;
 				if ( attacker->client ) {
 					attacker->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_HOLYSHIT;
@@ -462,7 +462,7 @@ static void CheckAlmostScored( gentity_t *self, gentity_t *attacker ) {
 		if ( ent ) {
 			// if the player was *very* close
 			VectorSubtract( self->client->ps.origin, ent->s.origin, dir );
-			if ( VectorLength( dir ) < 200 ) {
+			if ( VectorLengthSquared( dir ) < Square( 200 ) ) {
 				self->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_HOLYSHIT;
 				if ( attacker->client ) {
 					attacker->client->ps.persistant[PERS_PLAYEREVENTS] ^= PLAYEREVENT_HOLYSHIT;
@@ -1582,10 +1582,10 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float
 			}
 		}
 
-		dist = VectorLength( v );
-		if ( dist >= radius ) {
+		if ( VectorLengthSquared( v ) >= Square( radius ) ) {
 			continue;
 		}
+		dist = VectorLength( v );
 
 		points = damage * ( 1.0 - dist / radius );
 
@@ -1628,10 +1628,10 @@ qboolean G_RailJump( vec3_t origin, gentity_t *attacker ) {
 		}
 	}
 
-	dist = VectorLength( v );
-	if ( dist >= radius ) {
+	if ( VectorLengthSquared( v ) >= Square( radius ) ) {
 		return qfalse;
 	}
+	dist = VectorLength( v );
 
 	points = damage * ( 1.0 - dist / radius );
 
