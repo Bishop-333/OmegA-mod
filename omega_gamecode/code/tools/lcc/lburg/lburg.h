@@ -55,6 +55,7 @@ struct rule {		/* rules: */
 extern Rule rule(char *id, Tree pattern, char *template, char *code);
 
 /* gram.y: */
+int yylex(void);
 void yyerror(char *fmt, ...);
 int yyparse(void);
 void yywarn(char *fmt, ...);
