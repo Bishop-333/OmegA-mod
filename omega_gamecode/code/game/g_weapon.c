@@ -1105,10 +1105,10 @@ static void KamikazeRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
 			}
 		}
 
-		if ( VectorLengthSquared( v ) >= Square( radius ) ) {
+		dist = VectorLengthSquared( v );
+		if ( dist >= Square( radius ) ) {
 			continue;
 		}
-		dist = VectorLength( v );
 
 		VectorSubtract( ent->r.currentOrigin, origin, dir );
 		// push the center of mass higher than the origin so players
@@ -1163,10 +1163,10 @@ static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage,
 			}
 		}
 
-		if ( VectorLengthSquared( v ) >= Square( radius ) ) {
+		dist = VectorLengthSquared( v );
+		if ( dist >= Square( radius ) ) {
 			continue;
 		}
-		dist = VectorLength( v );
 
 		VectorSubtract( ent->r.currentOrigin, origin, dir );
 		dir[2] += 24;
