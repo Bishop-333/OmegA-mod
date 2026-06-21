@@ -470,9 +470,20 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 
 	// draw ratio
 	if ( !( score->ping == -1 || ci->team == TEAM_SPECTATOR ) ) {
+		float hcolor[4];
 		Com_sprintf( string, sizeof( string ),
 		             "%3i/%-3i", score->kills, score->deaths );
-		CG_DrawSmallString( SB_RATIO_X - 64, y + 6, string, fade );
+
+		if ( score->kills > score->deaths ) {
+			Vector4Copy( colorGreen, hcolor );
+		} else if ( score->deaths > score->kills ) {
+			Vector4Copy( colorRed, hcolor );
+		} else {
+			Vector4Copy( colorWhite, hcolor );
+		}
+		hcolor[3] = fade;
+
+		CG_DrawSmallStringColor( SB_RATIO_X - 64, y + 6, string, hcolor );
 	}
 
 	// draw ping
