@@ -314,7 +314,7 @@ void ChallengeMessage( gentity_t *ent, int challenge ) {
 	if ( level.warmupTime != 0 )
 		return; //We don't send anything during warmup
 	trap_SendServerCommand( ent - g_entities, va( "ch %u", challenge ) );
-	G_LogPrintf( "Challenge: %i %i %i: Client %i got award %i\n", ent - g_entities, challenge, 1, ent - g_entities, challenge );
+	G_LogPrintf( "Challenge: %i %i %i: Client %i got award %i\n", (int)( ent - g_entities ), challenge, 1, (int)( ent - g_entities ), challenge );
 }
 
 /*

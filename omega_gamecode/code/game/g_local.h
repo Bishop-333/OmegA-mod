@@ -884,12 +884,12 @@ qboolean G_IsElimTeamGametype( void );
 qboolean G_IsElimGametype( void );
 void AddTournamentQueue( gclient_t *client );
 void ExitLevel( void );
-void QDECL G_LogPrintf( const char *fmt, ... );
+void QDECL G_LogPrintf( const char *fmt, ... ) Q_PRINTF_FUNC( 1, 2 );
 void SendScoreboardMessageToAllClients( void );
 void SendEliminationMessageToAllClients( void );
 void SendDDtimetakenMessageToAllClients( void );
 void SendDominationPointsStatusMessageToAllClients( void );
-void QDECL G_Printf( const char *fmt, ... );
+void QDECL G_Printf( const char *fmt, ... ) Q_PRINTF_FUNC( 1, 2 );
 void QDECL G_Error( const char *fmt, ... ) Q_NO_RETURN Q_PRINTF_FUNC( 1, 2 );
 //KK-OAX Made Accessible for g_admin.c
 void LogExit( const char *string );
