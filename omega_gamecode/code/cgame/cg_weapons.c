@@ -87,10 +87,10 @@ static void CG_MachineGunEjectBrass( centity_t *cent ) {
 	le->angles.trTime = cg.time;
 	VectorCopy( cent->lerpAngles, le->angles.trBase );
 	le->angles.trBase[PITCH] += 90;
-	le->angles.trBase[0] += rand() & 31 - 15;
-	le->angles.trBase[1] += rand() & 31 - 15;
-	le->angles.trBase[2] += rand() & 31 - 15;
-	le->angles.trDelta[PITCH] = 1750 + rand() & 511;
+	le->angles.trBase[0] += ( rand() & 31 ) - 15;
+	le->angles.trBase[1] += ( rand() & 31 ) - 15;
+	le->angles.trBase[2] += ( rand() & 31 ) - 15;
+	le->angles.trDelta[PITCH] = 1750 + ( rand() & 511 );
 	le->angles.trDelta[YAW] = le->angles.trDelta[0] / 2 * ( ( rand() & 1 ) * 2 - 1 );
 	le->angles.trDelta[ROLL] = 0;
 
@@ -167,10 +167,10 @@ static void CG_ShotgunEjectBrass( centity_t *cent ) {
 		le->angles.trTime = cg.time;
 		VectorCopy( cent->lerpAngles, le->angles.trBase );
 		le->angles.trBase[PITCH] += 90;
-		le->angles.trBase[0] += rand() & 31 - 15;
-		le->angles.trBase[1] += rand() & 31 - 15;
-		le->angles.trBase[2] += rand() & 31 - 15;
-		le->angles.trDelta[PITCH] = 750 + rand() & 511;
+		le->angles.trBase[0] += ( rand() & 31 ) - 15;
+		le->angles.trBase[1] += ( rand() & 31 ) - 15;
+		le->angles.trBase[2] += ( rand() & 31 ) - 15;
+		le->angles.trDelta[PITCH] = 750 + ( rand() & 511 );
 		le->angles.trDelta[YAW] = le->angles.trDelta[0] / 2 * ( ( rand() & 1 ) * 2 - 1 );
 		le->angles.trDelta[ROLL] = 0;
 
