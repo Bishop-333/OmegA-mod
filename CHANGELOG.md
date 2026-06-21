@@ -191,3 +191,8 @@
 - add `g_fastSwitch`
 - backport `g_harvesterFromBodies` from OpenArena. Allows Harvester mode skulls to spawn where the frag happened instead of at the skull generator in the middle of the map. In case those skulls end up in a "nodrop" zone, they will respawn at the skull generator instead.
 - import new crosshairs from ratmod
+
+## 3.4.0
+- flag drop sound from ratmod
+- FREEZETAG!
+- lots of bug and warning fixes
