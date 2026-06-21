@@ -621,9 +621,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		attacker->client->lastkilled_client = self->s.number;
 
 		if ( attacker == self || OnSameTeam( self, attacker ) ) {
-			if ( !G_IsElimGametype() && g_gametype.integer != GT_POSSESSION && level.time < level.roundStartTime )
-				if ( ( g_gametype.integer < GT_TEAM && g_ffa_gt != 1 && self->client->ps.persistant[PERS_SCORE] > 0 ) || level.numNonSpectatorClients < 3 ) //Cannot get negative scores by suicide
-					AddScore( attacker, self->r.currentOrigin, -1 );
+			if ( g_gametype.integer != GT_LMS && g_gametype.integer != GT_POSSESSION && !( G_IsElimTeamGametype() && level.time < level.roundStartTime ) )
+				AddScore( attacker, self->r.currentOrigin, -1 );
 		} else {
 			if ( g_gametype.integer != GT_LMS && g_gametype.integer != GT_POSSESSION )
 				AddScore( attacker, self->r.currentOrigin, 1 );
@@ -811,9 +810,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			attacker->client->lastKillTime = level.time;
 		}
 	} else {
-		if ( !G_IsElimGametype() && g_gametype.integer != GT_POSSESSION && level.time < level.roundStartTime )
-			if ( self->client->ps.persistant[PERS_SCORE] > 0 || level.numNonSpectatorClients < 3 ) //Cannot get negative scores by suicide
-				AddScore( self, self->r.currentOrigin, -1 );
+		if ( g_gametype.integer != GT_LMS && g_gametype.integer != GT_POSSESSION && !( G_IsElimTeamGametype() && level.time < level.roundStartTime ) )
+			AddScore( self, self->r.currentOrigin, -1 );
 	}
 
 	// Add team bonuses

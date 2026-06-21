@@ -732,7 +732,6 @@ static void Cmd_Kill_f( gentity_t *ent ) {
 	}
 	target->flags &= ~FL_GODMODE;
 	target->client->ps.stats[STAT_HEALTH] = target->health = -999;
-	target->client->sess.kills -= 1;
 	if ( target->client->lastSentFlying > -1 )
 		//If player is in the air because of knockback we give credit to the person who sent it flying
 		player_die( target, target, &g_entities[target->client->lastSentFlying], 100000, MOD_FALLING );
