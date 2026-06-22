@@ -4,9 +4,14 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
       - name: Build it
-        run: make
+        run: make -j$(nproc)
+      - name: Create archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: omega-mod-release
+          path: build/*.pk3
