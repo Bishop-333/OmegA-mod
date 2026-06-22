@@ -787,8 +787,6 @@ static void PM_WalkMove( void ) {
 	for ( i = 0; i < 3; i++ ) {
 		wishvel[i] = pml.forward[i] * fmove + pml.right[i] * smove;
 	}
-	// when going up or down slopes the wish velocity should Not be zero
-	//	wishvel[2] = 0;
 
 	VectorCopy( wishvel, wishdir );
 	wishspeed = VectorNormalize( wishdir );

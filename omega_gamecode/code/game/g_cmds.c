@@ -1051,7 +1051,6 @@ static void Cmd_Follow_f( gentity_t *ent ) {
 	}
 
 	// first set them to spectator
-	//if ( ent->client->sess.sessionTeam != TEAM_SPECTATOR ) {
 	if ( ent->client->sess.spectatorState == SPECTATOR_NOT ) {
 		SetTeam( ent, "spectator" );
 	}
@@ -2129,7 +2128,6 @@ static void Cmd_GetMappage_f( gentity_t *ent ) {
 	trap_Argv( 1, arg, sizeof( arg ) );
 	page = getMappage( atoi( arg ) );
 	Q_strncpyz( string, va( "mappage %d %s %s %s %s %s %s %s %s %s %s", page.pagenumber, page.mapname[0], page.mapname[1], page.mapname[2], page.mapname[3], page.mapname[4], page.mapname[5], page.mapname[6], page.mapname[7], page.mapname[8], page.mapname[9] ), sizeof( string ) );
-	//G_Printf("Mappage sent: \"%s\"\n", string);
 	trap_SendServerCommand( ent - g_entities, string );
 }
 

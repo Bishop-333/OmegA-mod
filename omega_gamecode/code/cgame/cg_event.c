@@ -1198,11 +1198,9 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 			if ( es->otherEntityNum == cg.predictedPlayerState.clientNum &&
 			     cgs.delagHitscan && ( cg_delag.integer & 1 || cg_delag.integer & 4 ) ) {
 				// do nothing, because it was already predicted
-				//Com_Printf("Ignoring shotgun event\n");
 			} else {
 				// do the shotgun pattern, because it wasn't predicted
 				CG_ShotgunFire( es );
-				//Com_Printf("Non-predicted shotgun pattern\n");
 			}
 			//unlagged - attack prediction #2
 			break;

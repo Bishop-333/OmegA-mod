@@ -766,7 +766,6 @@ static void BotMatch_Camp( bot_state_t *bs, bot_match_t *match ) {
 				VectorCopy( entinfo.origin, bs->teamgoal.origin );
 				VectorSet( bs->teamgoal.mins, -8, -8, -8 );
 				VectorSet( bs->teamgoal.maxs, 8, 8, 8 );
-				//}
 			}
 		}
 		//if the other is not visible

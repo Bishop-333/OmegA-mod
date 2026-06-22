@@ -158,9 +158,6 @@ static int BotGoForAir( bot_state_t *bs, int tfl, bot_goal_t *ltg, float range )
 	//if the bot needs air
 	if ( bs->lastair_time < FloatTime() - 6 ) {
 		//
-#ifdef DEBUG
-		//BotAI_Print(PRT_MESSAGE, "going for air\n");
-#endif //DEBUG
 		//if we can find an air goal
 		if ( BotGetAirGoal( bs, &goal ) ) {
 			trap_BotPushGoal( bs->gs, &goal );
@@ -273,7 +270,6 @@ static int BotGetItemLongTermGoal( bot_state_t *bs, int tfl, bot_goal_t *goal ) 
 
 			BotAI_Print( PRT_MESSAGE, "%s: no valid ltg (probably stuck)\n", ClientName( bs->client, netname, sizeof( netname ) ) );
 #endif
-			//trap_BotDumpAvoidGoals(bs->gs);
 			//reset the avoid goals and the avoid reach
 			trap_BotResetAvoidGoals( bs->gs );
 			trap_BotResetAvoidReach( bs->ms );

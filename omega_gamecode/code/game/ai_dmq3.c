@@ -4169,7 +4169,6 @@ returns the number of the bsp entity to activate
 goal->entitynum will be set to the game entity to activate
 ==================
 */
-//#define OBSTACLEDEBUG
 static int BotGetActivateGoal( bot_state_t *bs, int entitynum, bot_activategoal_t *activategoal ) {
 	int i, ent, cur_entities[10], spawnflags, modelindex, areas[MAX_ACTIVATEAREAS * 2], numareas, t;
 	char model[MAX_INFO_STRING], tmpmodel[128];

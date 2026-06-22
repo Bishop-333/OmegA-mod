@@ -642,7 +642,6 @@ static void BotChangeViewAngles( bot_state_t *bs, float thinktime ) {
 			bs->viewanglespeed[i] *= 0.45 * ( 1 - factor );
 		}
 	}
-	//bs->viewangles[PITCH] = 0;
 	if ( bs->viewangles[PITCH] > 180 ) bs->viewangles[PITCH] -= 360;
 	//elementary action: view
 	trap_EA_View( bs->client, bs->viewangles );

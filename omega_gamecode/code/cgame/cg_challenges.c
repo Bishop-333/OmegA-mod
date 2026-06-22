@@ -76,7 +76,6 @@ void challenges_save( void ) {
 	int i;
 	if ( !challengesInitialized ) {
 		//The challenge system has not been initialized and therefore cannot be saved
-		//CG_Printf("Challenge system not initialized.\n");
 		return;
 	}
 	//Open the challenges file for writing:

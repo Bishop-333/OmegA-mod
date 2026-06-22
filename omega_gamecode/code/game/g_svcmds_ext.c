@@ -189,7 +189,6 @@ void Svcmd_DumpUser_f( void ) {
 	trap_GetUserinfo( cl - level.clients, userinfo, sizeof( userinfo ) );
 	info = &userinfo[0];
 	G_Printf( "userinfo\n--------\n" );
-	//Info_Print( userinfo );
 	while ( 1 ) {
 		Info_NextPair( &info, key, value );
 		if ( !*info )

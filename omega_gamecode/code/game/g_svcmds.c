@@ -453,9 +453,6 @@ static void EndGame_f( void ) {
 	ExitLevel();
 }
 
-//KK-OAX Moved this Declaration to g_local.h
-//char	*ConcatArgs( int start );
-
 /*KK-OAX
 ===============
 Server Command Table

@@ -187,7 +187,6 @@ vmCvar_t cg_enableBreath;
 
 //unlagged - client options
 vmCvar_t cg_delag;
-//vmCvar_t	cg_debugDelag;
 vmCvar_t cg_cmdTimeNudge;
 vmCvar_t sv_fps;
 vmCvar_t cg_projectileNudge;

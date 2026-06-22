@@ -183,7 +183,6 @@ static int BotSortTeamMatesByRelativeTravelTime2ddA( bot_state_t *bs, int *teamm
 	char buf[MAX_INFO_STRING];
 	static int maxclients;
 	double traveltimes[MAX_CLIENTS];
-	//int traveltimes2b[MAX_CLIENTS];
 	bot_goal_t *goalA = &ctf_redflag;
 	bot_goal_t *goalB = &ctf_blueflag;
 

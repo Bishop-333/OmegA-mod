@@ -436,10 +436,8 @@ static void weapon_supershotgun_fire( gentity_t *ent ) {
 	SnapVector( tent->s.origin2 );
 	//Sago: This sound like a bad idea...
 	//unlagged - attack prediction #2
-	// this has to be something the client can predict now
-	//tent->s.eventParm = rand() & 255;		// seed for spread pattern
 	tent->s.eventParm = ent->client->attackTime % 256; // seed for spread pattern
-	                                                   //unlagged - attack prediction #2
+	//unlagged - attack prediction #2
 	tent->s.otherEntityNum = ent->s.number;
 
 	ShotgunPattern( tent->s.pos.trBase, tent->s.origin2, tent->s.eventParm, ent );

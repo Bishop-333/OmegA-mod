@@ -1163,10 +1163,8 @@ static void ClientThink_real( gentity_t *ent ) {
 	// sanity check the command time to prevent speedup cheating
 	if ( ucmd->serverTime > level.time + 200 ) {
 		ucmd->serverTime = level.time + 200;
-		//		G_Printf("serverTime <<<<<\n" );
 	} else if ( ucmd->serverTime < level.time - 1000 ) {
 		ucmd->serverTime = level.time - 1000;
-		//		G_Printf("serverTime >>>>>\n" );
 	}
 
 	//Here comes the unlagged bit!
@@ -1670,8 +1668,4 @@ void ClientEndFrame( gentity_t *ent ) {
 	// store the client's position for backward reconciliation later
 	G_StoreHistory( ent );
 	//unlagged - backward reconciliation #1
-
-	// set the bit for the reachability area the client is currently in
-	//	i = trap_AAS_PointReachabilityAreaIndex( ent->client->ps.origin );
-	//	ent->client->areabits[i >> 3] |= 1 << (i & 7);
 }

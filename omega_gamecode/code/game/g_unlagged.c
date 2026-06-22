@@ -23,8 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //Sago: For some reason the Niels version must use a different char set.
 #include "g_local.h"
 
-//#include "g_local.h"
-
 /*
 ============
 G_ResetHistory
