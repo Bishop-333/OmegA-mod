@@ -209,7 +209,7 @@ endif
 
 ifeq ($(PLATFORM),darwin)
 
-  BASE_CFLAGS = -Wall -Wimplicit -Wstrict-prototypes
+  BASE_CFLAGS = -Wall -fno-strict-aliasing -Wimplicit -Wstrict-prototypes
 
   OPTIMIZE = -O3 -ffast-math -funroll-loops -fomit-frame-pointer
 

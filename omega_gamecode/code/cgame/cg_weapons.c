@@ -1407,7 +1407,14 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 
 	VectorMA( gun.origin, lerped.origin[2], parent->axis[2], gun.origin );
 
-	MatrixMultiply( lerped.axis, parent->axis, gun.axis );
+#if defined( __GNUC__ ) && !defined( __clang__ )
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-overflow"
+#endif
+	MatrixMultiply( lerped.axis, ( (refEntity_t *)parent )->axis, gun.axis );
+#if defined( __GNUC__ ) && !defined( __clang__ )
+#pragma GCC diagnostic pop
+#endif
 	gun.backlerp = parent->backlerp;
 
 	CG_AddWeaponWithPowerups( &gun, cent->currentState.powerups, ps );
