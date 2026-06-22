@@ -25,8 +25,8 @@ PK3_DIR := $(OUTPUT_DIR)/pk3
 
 OMEGA_PK3 = z_omega-v3.4.0.pk3
 
-TIMESTAMP = $(shell cd $(GAMECODE_DIR) && git show -s --format=%cd --date=format:"%Y%m%d%H%M.%S")
-PRODUCT_DATE = $(shell cd $(GAMECODE_DIR) && git show -s --format=%cd --date=format:"%b %d %Y")
+TIMESTAMP = $(shell cd $(GAMECODE_DIR) && LC_ALL=C git show -s --format=%cd --date=format:"%Y%m%d%H%M.%S")
+PRODUCT_DATE = $(shell cd $(GAMECODE_DIR) && LC_ALL=C git show -s --format=%cd --date=format:"%b %d %Y")
 
 release: qvm $(OUTPUT_DIR) 
 	find . -name ".DS_Store" -print -delete
