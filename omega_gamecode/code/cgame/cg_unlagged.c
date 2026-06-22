@@ -113,7 +113,7 @@ void CG_PredictWeaponEffects( centity_t *cent ) {
 			SnapVector( endPoint );
 
 			VectorSubtract( endPoint, muzzlePoint, v );
-			VectorNormalize( v );
+			VectorNormalizeFast( v );
 			VectorScale( v, 32, v );
 			VectorAdd( muzzlePoint, v, v );
 

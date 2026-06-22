@@ -432,12 +432,12 @@ static qboolean G_PredictPlayerSlideMove( gentity_t *ent, float frametime ) {
 
 				// slide the original velocity along the crease
 				CrossProduct( planes[i], planes[j], dir );
-				VectorNormalize( dir );
+				VectorNormalizeFast( dir );
 				d = DotProduct( dir, velocity );
 				VectorScale( dir, d, clipVelocity );
 
 				CrossProduct( planes[i], planes[j], dir );
-				VectorNormalize( dir );
+				VectorNormalizeFast( dir );
 				d = DotProduct( dir, endVelocity );
 				VectorScale( dir, d, endClipVelocity );
 

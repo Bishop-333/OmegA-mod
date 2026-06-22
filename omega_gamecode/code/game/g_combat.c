@@ -1031,7 +1031,7 @@ static int RaySphereIntersections( vec3_t origin, float radius, vec3_t point, ve
 	float b, c, d, t;
 
 	// normalize dir so a = 1
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 	b = 2 * ( dir[0] * ( point[0] - origin[0] ) + dir[1] * ( point[1] - origin[1] ) + dir[2] * ( point[2] - origin[2] ) );
 	c = ( point[0] - origin[0] ) * ( point[0] - origin[0] ) +
 	    ( point[1] - origin[1] ) * ( point[1] - origin[1] ) +
@@ -1082,7 +1082,7 @@ int G_InvulnerabilityEffect( gentity_t *targ, vec3_t dir, vec3_t point, vec3_t i
 		}
 		if ( bouncedir ) {
 			VectorCopy( vec, bouncedir );
-			VectorNormalize( bouncedir );
+			VectorNormalizeFast( bouncedir );
 		}
 		return qtrue;
 	} else {
@@ -1221,7 +1221,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	if ( !dir ) {
 		dflags |= DAMAGE_NO_KNOCKBACK;
 	} else {
-		VectorNormalize( dir );
+		VectorNormalizeFast( dir );
 	}
 
 	knockback = damage;
@@ -1580,10 +1580,10 @@ qboolean G_RadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float
 			}
 		}
 
-		if ( VectorLengthSquared( v ) >= Square( radius ) ) {
+		dist = VectorLength( v );
+		if ( dist >= radius ) {
 			continue;
 		}
-		dist = VectorLength( v );
 
 		points = damage * ( 1.0 - dist / radius );
 
@@ -1626,10 +1626,10 @@ qboolean G_RailJump( vec3_t origin, gentity_t *attacker ) {
 		}
 	}
 
-	if ( VectorLengthSquared( v ) >= Square( radius ) ) {
+	dist = VectorLength( v );
+	if ( dist >= radius ) {
 		return qfalse;
 	}
-	dist = VectorLength( v );
 
 	points = damage * ( 1.0 - dist / radius );
 

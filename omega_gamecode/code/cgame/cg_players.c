@@ -1810,7 +1810,7 @@ static void CG_PlayerFlag( centity_t *cent, qhandle_t hSkin, refEntity_t *torso 
 		VectorCopy( cent->currentState.pos.trDelta, dir );
 		// add gravity
 		dir[2] += 100;
-		VectorNormalize( dir );
+		VectorNormalizeFast( dir );
 		d = DotProduct( pole.axis[2], dir );
 		// if there is anough movement orthogonal to the flag pole
 		if ( fabs( d ) < 0.9 ) {
@@ -1910,7 +1910,7 @@ static void CG_PlayerTokens( centity_t *cent, int renderfx ) {
 	for ( i = 0; i < trail->numpositions; i++ ) {
 		VectorSubtract( origin, trail->positions[i], ent.axis[0] );
 		ent.axis[0][2] = 0;
-		VectorNormalize( ent.axis[0] );
+		VectorNormalizeFast( ent.axis[0] );
 		VectorSet( ent.axis[2], 0, 0, 1 );
 		CrossProduct( ent.axis[0], ent.axis[2], ent.axis[1] );
 
@@ -2119,7 +2119,7 @@ static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandl
 			h1 = h2;
 		}
 		if ( VectorLengthSquared( ent.origin ) > Square( h1 ) ) {
-			VectorNormalize( ent.origin );
+			VectorNormalizeFast( ent.origin );
 			VectorScale( ent.origin, h1, ent.origin );
 		}
 
@@ -2753,7 +2753,7 @@ void CG_Player( centity_t *cent ) {
 
 			dir[2] = 0;
 			VectorCopy( dir, skull.axis[1] );
-			VectorNormalize( skull.axis[1] );
+			VectorNormalizeFast( skull.axis[1] );
 			VectorSet( skull.axis[2], 0, 0, 1 );
 			CrossProduct( skull.axis[1], skull.axis[2], skull.axis[0] );
 
@@ -2806,7 +2806,7 @@ void CG_Player( centity_t *cent ) {
 			VectorAdd( torso.origin, dir, skull.origin );
 
 			VectorCopy( dir, skull.axis[1] );
-			VectorNormalize( skull.axis[1] );
+			VectorNormalizeFast( skull.axis[1] );
 			VectorSet( skull.axis[2], 0, 0, 1 );
 			CrossProduct( skull.axis[1], skull.axis[2], skull.axis[0] );
 

@@ -728,7 +728,7 @@ gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle ) {
 	CalcMuzzlePoint( ent, forward, right, up, muzzle );
 
 	forward[2] += 0.2f;
-	VectorNormalize( forward );
+	VectorNormalizeFast( forward );
 	VectorScale( forward, 350, forward );
 
 	item_ent = LaunchItem( item, muzzle, forward );

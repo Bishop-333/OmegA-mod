@@ -382,9 +382,9 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 								// if the followed client looks in the direction of this bot
 								AngleVectors( entinfo.angles, dir, NULL, NULL );
 								dir[2] = 0;
-								VectorNormalize( dir );
+								VectorNormalizeFast( dir );
 								VectorSubtract( bs->origin, entinfo.origin, dir2 );
-								VectorNormalize( dir2 );
+								VectorNormalizeFast( dir2 );
 								if ( DotProduct( dir, dir2 ) > 0.7 ) {
 									// back up
 									BotSetupForMovement( bs );

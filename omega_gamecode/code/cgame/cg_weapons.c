@@ -1216,7 +1216,7 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 		vec3_t dir;
 
 		VectorSubtract( beam.oldorigin, beam.origin, dir );
-		VectorNormalize( dir );
+		VectorNormalizeFast( dir );
 
 		memset( &beam, 0, sizeof( beam ) );
 		beam.hModel = cgs.media.lightningExplosionModel;
@@ -3412,7 +3412,7 @@ void CG_ShotgunFire( entityState_t *es ) {
 	int contents;
 
 	VectorSubtract( es->origin2, es->pos.trBase, v );
-	VectorNormalize( v );
+	VectorNormalizeFast( v );
 	VectorScale( v, 32, v );
 	VectorAdd( es->pos.trBase, v, v );
 	if ( cgs.glconfig.hardwareType != GLHW_RAGEPRO ) {
@@ -3484,7 +3484,7 @@ static void CG_Tracer( vec3_t source, vec3_t dest ) {
 
 	VectorScale( cg.refdef.viewaxis[1], line[1], right );
 	VectorMA( right, -line[0], cg.refdef.viewaxis[2], right );
-	VectorNormalize( right );
+	VectorNormalizeFast( right );
 
 	VectorMA( finish, cg_tracerWidth.value, right, verts[0].xyz );
 	verts[0].st[0] = 0;

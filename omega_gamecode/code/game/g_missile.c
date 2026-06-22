@@ -411,7 +411,7 @@ static void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 
 				//
 				VectorCopy( ent->s.pos.trDelta, forward );
-				VectorNormalize( forward );
+				VectorNormalizeFast( forward );
 				if ( G_InvulnerabilityEffect( other, forward, ent->s.pos.trBase, impactpoint, bouncedir ) ) {
 					VectorCopy( bouncedir, trace->plane.normal );
 					eFlags = ent->s.eFlags & EF_BOUNCE_HALF;
@@ -728,7 +728,7 @@ fire_plasma
 gentity_t *fire_plasma( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	bolt = G_Spawn();
 	bolt->classname = "plasma";
@@ -779,7 +779,7 @@ fire_grenade
 gentity_t *fire_grenade( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	bolt = G_Spawn();
 	bolt->classname = "grenade";
@@ -828,7 +828,7 @@ fire_bfg
 gentity_t *fire_bfg( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	bolt = G_Spawn();
 	bolt->classname = "bfg";
@@ -903,7 +903,7 @@ static void G_GuideMissile( gentity_t *missile ) {
 	VectorScale( forward, dist, forward );
 
 	VectorAdd( forward, muzzle, muzzle );
-	VectorNormalize( muzzle );
+	VectorNormalizeFast( muzzle );
 	VectorScale( muzzle, g_rocketSpeed.integer * 0.75, forward );
 	VectorCopy( forward, missile->s.pos.trDelta );
 	vectoangles( muzzle, missile->s.angles );
@@ -919,7 +919,7 @@ fire_rocket
 gentity_t *fire_rocket( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	bolt = G_Spawn();
 	bolt->classname = "rocket";
@@ -972,7 +972,7 @@ gentity_t *fire_grapple( gentity_t *self, vec3_t start, vec3_t dir ) {
 	int hooktime;
 	//unlagged - grapple
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	hook = G_Spawn();
 	hook->classname = "hook";
@@ -1056,7 +1056,7 @@ gentity_t *fire_nail( gentity_t *self, vec3_t start, vec3_t forward, vec3_t righ
 	VectorMA( end, r, right, end );
 	VectorMA( end, u, up, end );
 	VectorSubtract( end, start, dir );
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	scale = 555 + random() * 1800;
 	VectorScale( dir, scale, bolt->s.pos.trDelta );
@@ -1075,7 +1075,7 @@ fire_prox
 gentity_t *fire_prox( gentity_t *self, vec3_t start, vec3_t dir ) {
 	gentity_t *bolt;
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 
 	bolt = G_Spawn();
 	bolt->classname = "prox mine";

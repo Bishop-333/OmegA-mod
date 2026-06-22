@@ -266,7 +266,7 @@ void G_FrozenPlayerKnockback( gentity_t *frozenRemnant, int damage, vec3_t dir )
 	VectorCopy( frozenRemnant->r.currentOrigin, frozenRemnant->s.pos.trBase );
 	frozenRemnant->s.groundEntityNum = -1;
 
-	VectorNormalize( dir );
+	VectorNormalizeFast( dir );
 	VectorScale( dir, 1000 * (float)knockback / mass, kvel );
 	VectorAdd( frozenRemnant->s.pos.trDelta, kvel, frozenRemnant->s.pos.trDelta );
 }

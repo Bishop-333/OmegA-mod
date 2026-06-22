@@ -2775,7 +2775,7 @@ bot_moveresult_t BotAttackMove( bot_state_t *bs, int tfl ) {
 		hordir[0] = forward[0];
 		hordir[1] = forward[1];
 		hordir[2] = 0;
-		VectorNormalize( hordir );
+		VectorNormalizeFast( hordir );
 		//get the sideward vector
 		CrossProduct( hordir, up, sideward );
 		//reverse the vector depending on the strafe direction
@@ -3548,7 +3548,7 @@ void BotAimAtEnemy( bot_state_t *bs ) {
 	}
 	//add some random stuff to the aim direction depending on the aim accuracy
 	if ( aim_accuracy < 0.8 ) {
-		VectorNormalize( dir );
+		VectorNormalizeFast( dir );
 		for ( i = 0; i < 3; i++ )
 			dir[i] += 0.3 * crandom() * ( 1 - aim_accuracy );
 	}

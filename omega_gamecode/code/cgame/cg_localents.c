@@ -634,7 +634,6 @@ static void CG_AddMoveScaleFade( localEntity_t *le ) {
 	refEntity_t *re;
 	float c;
 	vec3_t delta;
-	float len;
 
 	re = &le->refEntity;
 
@@ -662,8 +661,7 @@ static void CG_AddMoveScaleFade( localEntity_t *le ) {
 	// if the view would be "inside" the sprite, kill the sprite
 	// so it doesn't add too much overdraw
 	VectorSubtract( re->origin, cg.refdef.vieworg, delta );
-	len = VectorLength( delta );
-	if ( len < le->radius ) {
+	if ( VectorLengthSquared( delta ) < Square( le->radius ) ) {
 		CG_FreeLocalEntity( le );
 		return;
 	}
@@ -684,7 +682,6 @@ static void CG_AddScaleFade( localEntity_t *le ) {
 	refEntity_t *re;
 	float c;
 	vec3_t delta;
-	float len;
 
 	re = &le->refEntity;
 
@@ -697,10 +694,9 @@ static void CG_AddScaleFade( localEntity_t *le ) {
 	// if the view would be "inside" the sprite, kill the sprite
 	// so it doesn't add too much overdraw
 	VectorSubtract( re->origin, cg.refdef.vieworg, delta );
-	len = VectorLength( delta );
 	// LEILEI
 	if ( !cg_leiEnhancement.integer ) {
-		if ( len < le->radius ) {
+		if ( VectorLengthSquared( delta ) < Square( le->radius ) ) {
 			CG_FreeLocalEntity( le );
 			return;
 		}
@@ -722,7 +718,6 @@ static void CG_AddFallScaleFade( localEntity_t *le ) {
 	refEntity_t *re;
 	float c;
 	vec3_t delta;
-	float len;
 
 	re = &le->refEntity;
 
@@ -738,11 +733,10 @@ static void CG_AddFallScaleFade( localEntity_t *le ) {
 	// if the view would be "inside" the sprite, kill the sprite
 	// so it doesn't add too much overdraw
 	VectorSubtract( re->origin, cg.refdef.vieworg, delta );
-	len = VectorLength( delta );
 
 	// LEILEI
 	if ( !cg_leiEnhancement.integer ) {
-		if ( len < le->radius ) {
+		if ( VectorLengthSquared( delta ) < Square( le->radius ) ) {
 			CG_FreeLocalEntity( le );
 			return;
 		}
@@ -998,7 +992,7 @@ CG_AddScorePlum
 static void CG_AddScorePlum( localEntity_t *le ) {
 	refEntity_t *re;
 	vec3_t origin, delta, dir, vec, up = { 0, 0, 1 };
-	float c, len;
+	float c;
 	int i, score, digits[10], numdigits, negative;
 
 	re = &le->refEntity;
@@ -1036,15 +1030,14 @@ static void CG_AddScorePlum( localEntity_t *le ) {
 
 	VectorSubtract( cg.refdef.vieworg, origin, dir );
 	CrossProduct( dir, up, vec );
-	VectorNormalize( vec );
+	VectorNormalizeFast( vec );
 
 	VectorMA( origin, -10 + 20 * sin( c * 2 * M_PI ), vec, origin );
 
 	// if the view would be "inside" the sprite, kill the sprite
 	// so it doesn't add too much overdraw
 	VectorSubtract( origin, cg.refdef.vieworg, delta );
-	len = VectorLength( delta );
-	if ( len < 20 ) {
+	if ( VectorLengthSquared( delta ) < Square( 20 ) ) {
 		CG_FreeLocalEntity( le );
 		return;
 	}
@@ -1122,13 +1115,13 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 
 	VectorSubtract( cg.refdef.vieworg, origin, dir );
 	CrossProduct( dir, up, vec );
-	VectorNormalize( vec );
+	VectorNormalizeFast( vec );
 
 	if ( cg_damagePlums.integer == 2 ) {
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
 		origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
 	} else {
-		VectorNormalize( dir );
+		VectorNormalizeFast( dir );
 		VectorMA( cg.refdef.vieworg, -8, dir, origin );
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
 		origin[2] -= 0.5 * 12 * deltaTime * deltaTime;

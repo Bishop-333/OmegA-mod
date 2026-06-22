@@ -48,7 +48,7 @@ static void G_BounceProjectile( vec3_t start, vec3_t impact, vec3_t dir, vec3_t 
 	dot = DotProduct( v, dir );
 	VectorMA( v, -2 * dot, dir, newv );
 
-	VectorNormalize( newv );
+	VectorNormalizeFast( newv );
 	VectorMA( impact, 8192, newv, endout );
 }
 
@@ -463,7 +463,7 @@ static void weapon_grenadelauncher_fire( gentity_t *ent ) {
 
 	// extra vertical velocity
 	forward[2] += 0.2f;
-	VectorNormalize( forward );
+	VectorNormalizeFast( forward );
 
 	m = fire_grenade( ent, muzzle, forward );
 	m->damage *= s_quadFactor;
@@ -814,7 +814,7 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					VectorCopy( impactpoint, muzzle );
 					VectorSubtract( end, impactpoint, forward );
-					VectorNormalize( forward );
+					VectorNormalizeFast( forward );
 					// the player can hit him/herself with the bounced lightning
 					passent = ENTITYNUM_NONE;
 				} else {
@@ -891,7 +891,7 @@ static void weapon_proxlauncher_fire( gentity_t *ent ) {
 
 	// extra vertical velocity
 	forward[2] += 0.2f;
-	VectorNormalize( forward );
+	VectorNormalizeFast( forward );
 
 	m = fire_prox( ent, muzzle, forward );
 	m->damage *= s_quadFactor;
@@ -1062,7 +1062,6 @@ KamikazeRadiusDamage
 ===============
 */
 static void KamikazeRadiusDamage( vec3_t origin, gentity_t *attacker, float damage, float radius ) {
-	float dist;
 	gentity_t *ent;
 	int entityList[MAX_GENTITIES];
 	int numListedEntities;
@@ -1105,8 +1104,7 @@ static void KamikazeRadiusDamage( vec3_t origin, gentity_t *attacker, float dama
 			}
 		}
 
-		dist = VectorLengthSquared( v );
-		if ( dist >= Square( radius ) ) {
+		if ( VectorLengthSquared( v ) >= Square( radius ) ) {
 			continue;
 		}
 
@@ -1125,7 +1123,6 @@ KamikazeShockWave
 ===============
 */
 static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage, float push, float radius ) {
-	float dist;
 	gentity_t *ent;
 	int entityList[MAX_GENTITIES];
 	int numListedEntities;
@@ -1163,8 +1160,7 @@ static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage,
 			}
 		}
 
-		dist = VectorLengthSquared( v );
-		if ( dist >= Square( radius ) ) {
+		if ( VectorLengthSquared( v ) >= Square( radius ) ) {
 			continue;
 		}
 
@@ -1173,7 +1169,7 @@ static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage,
 		G_Damage( ent, NULL, attacker, dir, origin, damage, DAMAGE_RADIUS | DAMAGE_NO_TEAM_PROTECTION, MOD_KAMIKAZE );
 		//
 		dir[2] = 0;
-		VectorNormalize( dir );
+		VectorNormalizeFast( dir );
 		if ( ent->client ) {
 			ent->client->ps.velocity[0] = dir[0] * push;
 			ent->client->ps.velocity[1] = dir[1] * push;
