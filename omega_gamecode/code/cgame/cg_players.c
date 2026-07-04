@@ -915,20 +915,22 @@ static void CG_SetDeferredClientInfo( int clientNum, clientInfo_t *ci ) {
 			if ( !match->infoValid || match->deferred ) {
 				continue;
 			}
-			if ( Q_stricmp( ci->skinName, match->skinName ) ||
-			     ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && ci->team != match->team ) ) {
+			if ( ci->team != match->team ) {
 				continue;
 			}
 			ci->deferred = qtrue;
 			CG_CopyClientInfoModel( match, ci );
 			return;
 		}
-		// load the full model, because we don't ever want to show
-		// an improper team skin. This will cause a hitch for the first
-		// player, when the second enters. Combat shouldn't be going on
-		// yet, so it shouldn't matter
-		CG_LoadClientInfo( clientNum, ci );
-		return;
+
+		if ( ci->team != TEAM_SPECTATOR ) {
+			// load the full model, because we don't ever want to show
+			// an improper team skin.  This will cause a hitch for the first
+			// player, when the second enters.  Combat shouldn't be going on
+			// yet, so it shouldn't matter
+			CG_LoadClientInfo( clientNum, ci );
+			return;
+		}
 	}
 
 	// find the first valid clientinfo and grab its stuff

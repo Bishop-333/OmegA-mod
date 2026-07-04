@@ -587,6 +587,7 @@ static void CG_ForceModelChange( void ) {
 		}
 		CG_NewClientInfo( i );
 	}
+	CG_LoadDeferredPlayers();
 }
 
 /*
