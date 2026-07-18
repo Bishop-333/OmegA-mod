@@ -719,10 +719,12 @@ static void ArenaServers_UpdateMenu( void ) {
 			pingColor = S_COLOR_BLUE;
 		} else if ( servernodeptr->maxPing && servernodeptr->pingtime > servernodeptr->maxPing ) {
 			pingColor = S_COLOR_BLUE;
-		} else if ( servernodeptr->pingtime < 200 ) {
+		} else if ( servernodeptr->pingtime < 100 ) {
 			pingColor = S_COLOR_GREEN;
-		} else if ( servernodeptr->pingtime < 400 ) {
+		} else if ( servernodeptr->pingtime < 200 ) {
 			pingColor = S_COLOR_YELLOW;
+		} else if ( servernodeptr->pingtime < 300 ) {
+			pingColor = "^8";
 		} else {
 			pingColor = S_COLOR_RED;
 		}
@@ -880,7 +882,6 @@ static void ArenaServers_Insert( char *adrstr, char *info, int pingtime ) {
 
 	Q_strncpyz( servernodeptr->mapname, Info_ValueForKey( info, "mapname" ), MAX_MAPNAMELENGTH );
 	Q_CleanStr( servernodeptr->mapname );
-	Q_strupr( servernodeptr->mapname );
 
 	servernodeptr->numclients = atoi( Info_ValueForKey( info, "clients" ) );
 	servernodeptr->humanclients = atoi( Info_ValueForKey( info, "g_humanplayers" ) );
