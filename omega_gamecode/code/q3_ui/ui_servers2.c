@@ -1492,8 +1492,14 @@ ArenaServers_MenuDraw
 =================
 */
 static void ArenaServers_MenuDraw( void ) {
+	float background[4] = { 0.0f, 0.0f, 0.05f, 0.75f };
+	float border[4] = { 0.125f, 0.125f, 0.125f, 1.0f };
+
 	if ( g_arenaservers.refreshservers )
 		ArenaServers_DoRefresh();
+
+	UI_FillRect( g_arenaservers.list.generic.x - 2, g_arenaservers.list.generic.y, g_arenaservers.list.width * SMALLCHAR_WIDTH + 4, g_arenaservers.list.height * SMALLCHAR_HEIGHT, background );
+	UI_DrawRect( g_arenaservers.list.generic.x - 3, g_arenaservers.list.generic.y - 1, g_arenaservers.list.width * SMALLCHAR_WIDTH + 6, g_arenaservers.list.height * SMALLCHAR_HEIGHT + 2, border );
 
 	Menu_Draw( &g_arenaservers.menu );
 }
@@ -1622,7 +1628,7 @@ static void ArenaServers_MenuInit( void ) {
 
 	y += 2 * SMALLCHAR_HEIGHT;
 	g_arenaservers.list.generic.type = MTYPE_SCROLLLIST;
-	g_arenaservers.list.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
+	g_arenaservers.list.generic.flags = QMF_HIGHLIGHT_IF_FOCUS | QMF_ZEBRA;
 	g_arenaservers.list.generic.id = ID_LIST;
 	g_arenaservers.list.generic.callback = ArenaServers_Event;
 	g_arenaservers.list.generic.x = 22;

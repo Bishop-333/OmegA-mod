@@ -54,8 +54,9 @@ vec4_t pulse_color = { 1.00f, 1.00f, 1.00f, 1.00f };
 vec4_t text_color_disabled = { 0.35f, 0.24f, 0.29f, 1.00f };  // light gray
 vec4_t text_color_normal = { 0.30f, 0.45f, 0.58f, 1.00f };    // light orange
 vec4_t text_color_highlight = { 0.76f, 0.89f, 0.93f, 1.00f }; // bright yellow
-vec4_t listbar_color = { 0.13f, 0.26f, 0.38f, 0.30f };        // transluscent orange
-vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f };    // bright white
+vec4_t listbar_color = { 0.13f, 0.26f, 0.38f, 0.30f };        // transluscent blue
+vec4_t listbar_zebra_color = { 1.00f, 1.00f, 1.00f, 0.035f };
+vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f }; // bright white
 
 // action widget
 static void Action_Init( menuaction_s *a );
@@ -1133,13 +1134,14 @@ void ScrollList_Draw( menulist_s *l ) {
 			if ( i >= l->numitems )
 				break;
 
-			if ( i == l->curvalue ) {
-				u = x - 2;
-				if ( l->generic.flags & QMF_CENTER_JUSTIFY ) {
-					u -= ( l->width * SMALLCHAR_WIDTH ) / 2 + 1;
-				}
+			u = x - 2;
+			if ( l->generic.flags & QMF_CENTER_JUSTIFY ) {
+				u -= ( l->width * SMALLCHAR_WIDTH ) / 2 + 1;
+			}
 
-				UI_FillRect( u, y, l->width * SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT + 2, listbar_color );
+			if ( i == l->curvalue ) {
+				UI_FillRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT, listbar_color );
+				UI_FillRect( u - 1, y, 1, SMALLCHAR_HEIGHT, colorCyan );
 				color = text_color_highlight;
 
 				if ( hasfocus )
@@ -1147,6 +1149,9 @@ void ScrollList_Draw( menulist_s *l ) {
 				else
 					style = UI_LEFT | UI_SMALLFONT;
 			} else {
+				if ( ( l->generic.flags & QMF_ZEBRA ) && ( i % 2 == 0 ) ) {
+					UI_FillRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT, listbar_zebra_color );
+				}
 				color = text_color_normal;
 				style = UI_LEFT | UI_SMALLFONT;
 			}
