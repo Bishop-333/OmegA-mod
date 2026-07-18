@@ -181,8 +181,6 @@ static char *netnames[] = {
     "IP6",
     NULL };
 
-static char quake3worldMessage[] = "Visit moddb.com/mods/openarena-omega - News, Community, Events, Files";
-
 typedef struct {
 	char adrstr[MAX_ADDRESSLENGTH];
 	int start;
@@ -526,9 +524,6 @@ static void ArenaServers_UpdateMenu( void ) {
 	if ( g_arenaservers.numqueriedservers > 0 ) {
 		// servers found
 		if ( g_arenaservers.refreshservers && ( g_arenaservers.currentping <= g_arenaservers.numqueriedservers ) ) {
-			// show progress
-			Com_sprintf( g_arenaservers.status.string, MAX_STATUSLENGTH, "%d of %d Arena Servers.", g_arenaservers.currentping, g_arenaservers.numqueriedservers );
-			g_arenaservers.statusbar.string = "Press SPACE to stop";
 			qsort( g_arenaservers.serverlist, *g_arenaservers.numservers, sizeof( servernode_t ), ArenaServers_Compare );
 		} else {
 			// all servers pinged - enable controls
@@ -543,38 +538,15 @@ static void ArenaServers_UpdateMenu( void ) {
 			g_arenaservers.list.generic.flags &= ~QMF_GRAYED;
 			g_arenaservers.refresh.generic.flags &= ~QMF_GRAYED;
 			g_arenaservers.go.generic.flags &= ~QMF_GRAYED;
-
-			// update status bar
-			if ( ( g_servertype >= UIAS_GLOBAL1 && g_servertype <= UIAS_GLOBAL5 ) || g_servertype == UIAS_ALL_GLOBAL ) {
-				g_arenaservers.statusbar.string = quake3worldMessage;
-			} else {
-				g_arenaservers.statusbar.string = "";
-			}
 		}
 	} else {
 		// no servers found
 		if ( g_arenaservers.refreshservers ) {
-			strcpy( g_arenaservers.status.string, "Scanning For Servers." );
-			g_arenaservers.statusbar.string = "Press SPACE to stop";
-
 			// disable controls during refresh
 			g_arenaservers.list.generic.flags |= QMF_GRAYED;
 			g_arenaservers.refresh.generic.flags |= QMF_GRAYED;
 			g_arenaservers.go.generic.flags |= QMF_GRAYED;
 		} else {
-			if ( g_arenaservers.numqueriedservers < 0 ) {
-				strcpy( g_arenaservers.status.string, "No Response From Master Server." );
-			} else {
-				strcpy( g_arenaservers.status.string, "No Servers Found." );
-			}
-
-			// update status bar
-			if ( ( g_servertype >= UIAS_GLOBAL1 && g_servertype <= UIAS_GLOBAL5 ) || g_servertype == UIAS_ALL_GLOBAL ) {
-				g_arenaservers.statusbar.string = quake3worldMessage;
-			} else {
-				g_arenaservers.statusbar.string = "";
-			}
-
 			// end of refresh - set control state
 			g_arenaservers.list.generic.flags |= QMF_GRAYED;
 			g_arenaservers.refresh.generic.flags &= ~QMF_GRAYED;
@@ -763,6 +735,8 @@ static void ArenaServers_UpdateMenu( void ) {
 	g_arenaservers.list.numitems = j;
 	g_arenaservers.list.curvalue = 0;
 	g_arenaservers.list.top = 0;
+
+	Com_sprintf( g_arenaservers.statusbar.string, MAX_STATUSLENGTH, "%d of %d Servers", g_arenaservers.list.numitems, *g_arenaservers.numservers );
 
 	// update picture
 	ArenaServers_UpdatePicture();
@@ -1492,6 +1466,7 @@ ArenaServers_MenuDraw
 =================
 */
 static void ArenaServers_MenuDraw( void ) {
+	int dots;
 	float background[4] = { 0.0f, 0.0f, 0.05f, 0.75f };
 	float border[4] = { 0.125f, 0.125f, 0.125f, 1.0f };
 
@@ -1502,6 +1477,27 @@ static void ArenaServers_MenuDraw( void ) {
 	UI_DrawRect( g_arenaservers.list.generic.x - 3, g_arenaservers.list.generic.y - 1, g_arenaservers.list.width * SMALLCHAR_WIDTH + 6, g_arenaservers.list.height * SMALLCHAR_HEIGHT + 2, border );
 
 	Menu_Draw( &g_arenaservers.menu );
+
+	if ( g_arenaservers.list.numitems == 0 ) {
+		if ( g_arenaservers.refreshservers ) {
+			dots = ( uis.realtime / 333 ) % 4;
+			if ( dots == 1 ) {
+				strcpy( g_arenaservers.status.string, "Scanning For Servers.  " );
+			} else if ( dots == 2 ) {
+				strcpy( g_arenaservers.status.string, "Scanning For Servers.. " );
+			} else if ( dots == 3 ) {
+				strcpy( g_arenaservers.status.string, "Scanning For Servers..." );
+			} else {
+				strcpy( g_arenaservers.status.string, "Scanning For Servers   " );
+			}
+		} else if ( g_arenaservers.numqueriedservers < 0 ) {
+			strcpy( g_arenaservers.status.string, "No Response From Master Server" );
+		} else {
+			strcpy( g_arenaservers.status.string, "No Servers Found" );
+		}
+
+		UI_DrawString( g_arenaservers.status.generic.x, g_arenaservers.status.generic.y, g_arenaservers.status.string, g_arenaservers.status.style, g_arenaservers.status.color );
+	}
 }
 
 /*
@@ -1634,7 +1630,7 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.list.generic.x = 22;
 	g_arenaservers.list.generic.y = y - 3;
 	g_arenaservers.list.width = MAX_LISTBOXWIDTH;
-	g_arenaservers.list.height = 15;
+	g_arenaservers.list.height = 16;
 	g_arenaservers.list.itemnames = (const char **)g_arenaservers.items;
 	for ( i = 0; i < MAX_LISTBOXITEMS; i++ ) {
 		g_arenaservers.items[i] = g_arenaservers.table[i].buff;
@@ -1677,15 +1673,14 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.down.height = 64;
 	g_arenaservers.down.focuspic = ART_ARROWS_DOWN;
 
-	y = 376;
 	g_arenaservers.status.generic.type = MTYPE_TEXT;
 	g_arenaservers.status.generic.x = 320;
-	g_arenaservers.status.generic.y = y + 10;
+	g_arenaservers.status.generic.y = 254;
 	g_arenaservers.status.string = statusbuffer;
 	g_arenaservers.status.style = UI_CENTER | UI_SMALLFONT;
 	g_arenaservers.status.color = menu_text_color;
 
-	y += SMALLCHAR_HEIGHT;
+	y = 392;
 	g_arenaservers.statusbar.generic.type = MTYPE_TEXT;
 	g_arenaservers.statusbar.generic.x = 320;
 	g_arenaservers.statusbar.generic.y = y + 10;
@@ -1780,7 +1775,6 @@ static void ArenaServers_MenuInit( void ) {
 
 	Menu_AddItem( &g_arenaservers.menu, (void *)&g_arenaservers.mappic );
 	Menu_AddItem( &g_arenaservers.menu, (void *)&g_arenaservers.list );
-	Menu_AddItem( &g_arenaservers.menu, (void *)&g_arenaservers.status );
 	Menu_AddItem( &g_arenaservers.menu, (void *)&g_arenaservers.statusbar );
 	Menu_AddItem( &g_arenaservers.menu, (void *)&g_arenaservers.arrows );
 	Menu_AddItem( &g_arenaservers.menu, (void *)&g_arenaservers.up );
