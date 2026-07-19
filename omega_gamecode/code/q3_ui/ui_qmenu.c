@@ -679,9 +679,8 @@ static void Slider_Draw( menuslider_s *s ) {
 	UI_DrawString( x - SMALLCHAR_WIDTH, y, s->generic.name, UI_RIGHT | style, color );
 
 	// draw slider
-	UI_SetColor( color );
-	UI_DrawHandlePic( x + SMALLCHAR_WIDTH, y, 96, 16, sliderBar );
-	UI_SetColor( NULL );
+	UI_FillRect( x + SMALLCHAR_WIDTH, y + 5, 96, 6, listbar_color );
+	UI_FillRect( x + SMALLCHAR_WIDTH, y + 5, (int)( s->range * 96 ), 6, color );
 
 	// clamp thumb
 	if ( s->maxvalue > s->minvalue ) {
@@ -697,10 +696,9 @@ static void Slider_Draw( menuslider_s *s ) {
 
 	// draw thumb
 	if ( style & UI_PULSE ) {
-		button = sliderButton_1;
-	} else {
-		button = sliderButton_0;
+		UI_FillRect( x + SMALLCHAR_WIDTH + (int)( s->range * 96 ) - 5, y - 2, 10, 20, color );
 	}
+	UI_FillRect( x + SMALLCHAR_WIDTH + (int)( s->range * 96 ) - 3, y, 6, 16, colorWhite );
 
 	// draw value
 	if ( !( s->generic.flags & QMF_SLIDER_NOVALUE ) ) {
@@ -709,10 +707,8 @@ static void Slider_Draw( menuslider_s *s ) {
 		} else {
 			Com_sprintf( buf, sizeof( buf ), "%i", (int)s->curvalue );
 		}
-		UI_DrawString( x + SMALLCHAR_WIDTH + 100, y, buf, UI_LEFT | style, color );
+		UI_DrawString( x + SMALLCHAR_WIDTH + 104, y, buf, UI_LEFT | style, color );
 	}
-
-	UI_DrawHandlePic( (int)( x + 2 * SMALLCHAR_WIDTH + ( SLIDER_RANGE - 1 ) * SMALLCHAR_WIDTH * s->range ) - 2, y - 2, 12, 20, button );
 }
 
 /*
