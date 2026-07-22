@@ -355,7 +355,6 @@ typedef enum {
 	PW_JUGGERNAUT,
 
 	PW_NUM_POWERUPS
-
 } powerup_t;
 
 typedef enum {
@@ -530,7 +529,6 @@ typedef enum {
 	EV_STOPLOOPINGSOUND,
 	EV_TAUNT,
 	EV_FREEZE
-
 } entity_event_t;
 
 typedef enum {

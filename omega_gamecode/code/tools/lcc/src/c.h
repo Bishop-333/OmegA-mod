@@ -370,7 +370,6 @@ struct code {
 			long *values;
 			Symbol *labels;
 		} swtch;
-
 	} u;
 };
 struct swtch {

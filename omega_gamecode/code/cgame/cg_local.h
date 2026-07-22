@@ -1080,7 +1080,6 @@ typedef struct {
 	sfxHandle_t wstbimpdSound;
 	sfxHandle_t wstbactvSound;
 	sfxHandle_t freezeSound;
-
 } cgMedia_t;
 
 typedef struct {
