@@ -963,6 +963,48 @@ static float CG_DrawDomStatus( float y ) {
 
 /*
 =================
+CG_WarmupCountdown
+=================
+*/
+static int CG_WarmupCountdown( int sec ) {
+	int cw;
+
+	if ( sec != cg.warmupCount ) {
+		cg.warmupCount = sec;
+		switch ( sec ) {
+			case 0:
+				trap_S_StartLocalSound( cgs.media.count1Sound, CHAN_ANNOUNCER );
+				break;
+			case 1:
+				trap_S_StartLocalSound( cgs.media.count2Sound, CHAN_ANNOUNCER );
+				break;
+			case 2:
+				trap_S_StartLocalSound( cgs.media.count3Sound, CHAN_ANNOUNCER );
+				break;
+			default:
+				break;
+		}
+	}
+	switch ( cg.warmupCount ) {
+		case 0:
+			cw = 22;
+			break;
+		case 1:
+			cw = 20;
+			break;
+		case 2:
+			cw = 18;
+			break;
+		default:
+			cw = 16;
+			break;
+	}
+
+	return cw;
+}
+
+/*
+=================
 CG_DrawEliminationTimer
 =================
 */
@@ -1015,36 +1057,7 @@ Lots of stuff
 ****/
 		if ( cg.warmup == 0 ) {
 			st = va( "Round in: %i", sec + 1 );
-			if ( sec != cg.warmupCount ) {
-				cg.warmupCount = sec;
-				switch ( sec ) {
-					case 0:
-						trap_S_StartLocalSound( cgs.media.count1Sound, CHAN_ANNOUNCER );
-						break;
-					case 1:
-						trap_S_StartLocalSound( cgs.media.count2Sound, CHAN_ANNOUNCER );
-						break;
-					case 2:
-						trap_S_StartLocalSound( cgs.media.count3Sound, CHAN_ANNOUNCER );
-						break;
-					default:
-						break;
-				}
-			}
-			switch ( cg.warmupCount ) {
-				case 0:
-					cw = 22;
-					break;
-				case 1:
-					cw = 20;
-					break;
-				case 2:
-					cw = 18;
-					break;
-				default:
-					cw = 16;
-					break;
-			}
+			cw = CG_WarmupCountdown( sec );
 			w = CG_DrawStrlen( st );
 			if ( cg.warmupCount < cgs.activewarmup ) {
 				CG_DrawStringExt( 320 - w * cw / 2, 70, st, colorWhite,
@@ -3325,36 +3338,7 @@ static void CG_DrawWarmup( void ) {
 		sec = 0;
 	}
 	s = va( "Starts in: %i", sec + 1 );
-	if ( sec != cg.warmupCount ) {
-		cg.warmupCount = sec;
-		switch ( sec ) {
-			case 0:
-				trap_S_StartLocalSound( cgs.media.count1Sound, CHAN_ANNOUNCER );
-				break;
-			case 1:
-				trap_S_StartLocalSound( cgs.media.count2Sound, CHAN_ANNOUNCER );
-				break;
-			case 2:
-				trap_S_StartLocalSound( cgs.media.count3Sound, CHAN_ANNOUNCER );
-				break;
-			default:
-				break;
-		}
-	}
-	switch ( cg.warmupCount ) {
-		case 0:
-			cw = 22;
-			break;
-		case 1:
-			cw = 20;
-			break;
-		case 2:
-			cw = 18;
-			break;
-		default:
-			cw = 16;
-			break;
-	}
+	cw = CG_WarmupCountdown( sec );
 
 	if ( cgs.gametype == GT_TOURNAMENT ) {
 		w = CG_DrawStrlen( s );
