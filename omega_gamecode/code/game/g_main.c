@@ -682,6 +682,46 @@ static void G_RegisterCvars( void ) {
 
 /*
 =================
+G_UpdateVoteFlags
+=================
+*/
+static void G_UpdateVoteFlags( void ) {
+	int voteflags = 0;
+	if ( allowedVote( "map_restart" ) )
+		voteflags |= VF_map_restart;
+
+	if ( allowedVote( "map" ) )
+		voteflags |= VF_map;
+
+	if ( allowedVote( "clientkick" ) )
+		voteflags |= VF_clientkick;
+
+	if ( allowedVote( "shuffle" ) )
+		voteflags |= VF_shuffle;
+
+	if ( allowedVote( "nextmap" ) )
+		voteflags |= VF_nextmap;
+
+	if ( allowedVote( "g_gametype" ) )
+		voteflags |= VF_g_gametype;
+
+	if ( allowedVote( "g_doWarmup" ) )
+		voteflags |= VF_g_doWarmup;
+
+	if ( allowedVote( "timelimit" ) )
+		voteflags |= VF_timelimit;
+
+	if ( allowedVote( "fraglimit" ) )
+		voteflags |= VF_fraglimit;
+
+	if ( allowedVote( "custom" ) )
+		voteflags |= VF_custom;
+
+	trap_Cvar_Set( "voteflags", va( "%i", voteflags ) );
+}
+
+/*
+=================
 G_UpdateCvars
 =================
 */
@@ -711,38 +751,7 @@ static void G_UpdateCvars( void ) {
 
 				if ( cv->vmCvar == &g_voteNames ) {
 					//Set vote flags
-					int voteflags = 0;
-					if ( allowedVote( "map_restart" ) )
-						voteflags |= VF_map_restart;
-
-					if ( allowedVote( "map" ) )
-						voteflags |= VF_map;
-
-					if ( allowedVote( "clientkick" ) )
-						voteflags |= VF_clientkick;
-
-					if ( allowedVote( "shuffle" ) )
-						voteflags |= VF_shuffle;
-
-					if ( allowedVote( "nextmap" ) )
-						voteflags |= VF_nextmap;
-
-					if ( allowedVote( "g_gametype" ) )
-						voteflags |= VF_g_gametype;
-
-					if ( allowedVote( "g_doWarmup" ) )
-						voteflags |= VF_g_doWarmup;
-
-					if ( allowedVote( "timelimit" ) )
-						voteflags |= VF_timelimit;
-
-					if ( allowedVote( "fraglimit" ) )
-						voteflags |= VF_fraglimit;
-
-					if ( allowedVote( "custom" ) )
-						voteflags |= VF_custom;
-
-					trap_Cvar_Set( "voteflags", va( "%i", voteflags ) );
+					G_UpdateVoteFlags();
 				}
 			}
 		}
@@ -937,40 +946,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	PlayerStoreInit();
 
 	//Set vote flags
-	{
-		int voteflags = 0;
-		if ( allowedVote( "map_restart" ) )
-			voteflags |= VF_map_restart;
-
-		if ( allowedVote( "map" ) )
-			voteflags |= VF_map;
-
-		if ( allowedVote( "clientkick" ) )
-			voteflags |= VF_clientkick;
-
-		if ( allowedVote( "shuffle" ) )
-			voteflags |= VF_shuffle;
-
-		if ( allowedVote( "nextmap" ) )
-			voteflags |= VF_nextmap;
-
-		if ( allowedVote( "g_gametype" ) )
-			voteflags |= VF_g_gametype;
-
-		if ( allowedVote( "g_doWarmup" ) )
-			voteflags |= VF_g_doWarmup;
-
-		if ( allowedVote( "timelimit" ) )
-			voteflags |= VF_timelimit;
-
-		if ( allowedVote( "fraglimit" ) )
-			voteflags |= VF_fraglimit;
-
-		if ( allowedVote( "custom" ) )
-			voteflags |= VF_custom;
-
-		trap_Cvar_Set( "voteflags", va( "%i", voteflags ) );
-	}
+	G_UpdateVoteFlags();
 }
 
 /*
