@@ -859,4 +859,6 @@ qboolean BG_IsElimGametype( gametype_t gametype );
 //OmegA
 extern vmCvar_t autohop;
 
+extern int propMap[128][3];
+
 #endif
