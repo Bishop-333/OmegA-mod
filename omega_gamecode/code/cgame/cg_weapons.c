@@ -1717,6 +1717,40 @@ void CG_DrawWeaponSelect( void ) {
 }
 
 /*
+===================
+CG_GetWeaponMaxAmmo
+===================
+*/
+static int CG_GetWeaponMaxAmmo( int weapon ) {
+	switch ( weapon ) {
+		case WP_MACHINEGUN:
+			return 100;
+		case WP_SHOTGUN:
+			return 10;
+		case WP_GRENADE_LAUNCHER:
+			return 10;
+		case WP_ROCKET_LAUNCHER:
+			return 10;
+		case WP_LIGHTNING:
+			return 100;
+		case WP_RAILGUN:
+			return 10;
+		case WP_PLASMAGUN:
+			return 50;
+		case WP_BFG:
+			return 10;
+		case WP_NAILGUN:
+			return 10;
+		case WP_PROX_LAUNCHER:
+			return 5;
+		case WP_CHAINGUN:
+			return 100;
+		default:
+			return 1;
+	}
+}
+
+/*
 ===============
 CG_DrawWeaponBar0
 
@@ -1821,44 +1855,7 @@ void CG_DrawWeaponBar1( int count, int bits ) {
 		}
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 		if ( ammo >= 100 )
@@ -2044,44 +2041,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 		}
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 		if ( ammo >= 100 )
@@ -2177,44 +2137,7 @@ void CG_DrawWeaponBar4( int count, int bits, float *color ) {
 		}
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 
@@ -2391,44 +2314,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 		}
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 
@@ -2523,44 +2409,7 @@ void CG_DrawWeaponBar7( int count, int bits, float *color ) {
 		}
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 
