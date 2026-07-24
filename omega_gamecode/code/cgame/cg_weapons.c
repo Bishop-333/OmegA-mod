@@ -1936,7 +1936,6 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 	int w;
 	char *s;
 
-
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
 		if ( i == 10 )
@@ -1989,9 +1988,6 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 	int br;
 	int w;
 	char *s;
-
-
-
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2136,7 +2132,6 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 	int w;
 	char *s;
 
-
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
 		if ( i == 10 )
@@ -2184,9 +2179,6 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 	int br;
 	int w;
 	char *s;
-
-
-
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
