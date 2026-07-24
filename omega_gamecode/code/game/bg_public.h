@@ -856,9 +856,14 @@ char *BG_TeamName( team_t team );
 qboolean BG_IsElimTeamGametype( gametype_t gametype );
 qboolean BG_IsElimGametype( gametype_t gametype );
 
+extern int propMap[128][3];
+extern int propMapB[26][3];
+
+#define PROPB_GAP_WIDTH 4
+#define PROPB_SPACE_WIDTH 12
+#define PROPB_HEIGHT 36
+
 //OmegA
 extern vmCvar_t autohop;
-
-extern int propMap[128][3];
 
 #endif

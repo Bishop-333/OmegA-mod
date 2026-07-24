@@ -171,48 +171,7 @@ void UI_LerpColor( vec4_t a, vec4_t b, vec4_t c, float t ) {
 
 /*
 =================
-UI_DrawProportionalString2
-=================
-*/
-static int propMapB[26][3] = {
-    { 11, 12, 33 },
-    { 49, 12, 31 },
-    { 85, 12, 31 },
-    { 120, 12, 30 },
-    { 156, 12, 21 },
-    { 183, 12, 21 },
-    { 207, 12, 32 },
-
-    { 13, 55, 30 },
-    { 49, 55, 13 },
-    { 66, 55, 29 },
-    { 101, 55, 31 },
-    { 135, 55, 21 },
-    { 158, 55, 40 },
-    { 204, 55, 32 },
-
-    { 12, 97, 31 },
-    { 48, 97, 31 },
-    { 82, 97, 30 },
-    { 118, 97, 30 },
-    { 153, 97, 30 },
-    { 185, 97, 25 },
-    { 213, 97, 30 },
-
-    { 11, 139, 32 },
-    { 42, 139, 51 },
-    { 93, 139, 32 },
-    { 126, 139, 31 },
-    { 158, 139, 25 },
-};
-
-#define PROPB_GAP_WIDTH 4
-#define PROPB_SPACE_WIDTH 12
-#define PROPB_HEIGHT 36
-
-/*
-=================
-UI_DrawBannerString
+UI_DrawBannerString2
 =================
 */
 static void UI_DrawBannerString2( int x, int y, const char *str, vec4_t color ) {
@@ -255,6 +214,11 @@ static void UI_DrawBannerString2( int x, int y, const char *str, vec4_t color ) 
 	trap_R_SetColor( NULL );
 }
 
+/*
+=================
+UI_DrawBannerString
+=================
+*/
 void UI_DrawBannerString( int x, int y, const char *str, int style, vec4_t color ) {
 	const char *s;
 	int ch;
@@ -298,6 +262,11 @@ void UI_DrawBannerString( int x, int y, const char *str, int style, vec4_t color
 	UI_DrawBannerString2( x, y, str, color );
 }
 
+/*
+=================
+UI_ProportionalStringWidth
+=================
+*/
 int UI_ProportionalStringWidth( const char *str ) {
 	const char *s;
 	int ch;
@@ -320,6 +289,11 @@ int UI_ProportionalStringWidth( const char *str ) {
 	return width;
 }
 
+/*
+=================
+UI_DrawProportionalString2
+=================
+*/
 static void UI_DrawProportionalString2( float x, float y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
 	const char *s;
 	unsigned char ch;
