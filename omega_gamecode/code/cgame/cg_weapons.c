@@ -1718,6 +1718,19 @@ void CG_DrawWeaponSelect( void ) {
 
 /*
 ===================
+CG_GetWeaponAmmo
+===================
+*/
+static int CG_GetWeaponAmmo( int weapon ) {
+	if ( cg_predictAmmo.integer ) {
+		return cg.predictedPlayerState.ammo[weapon];
+	} else {
+		return cg.snap->ps.ammo[weapon];
+	}
+}
+
+/*
+===================
 CG_GetWeaponMaxAmmo
 ===================
 */
@@ -1784,11 +1797,7 @@ void CG_DrawWeaponBar0( int count, int bits ) {
 			CG_DrawRect( x - 4, y - 4, 40, 40, 1, colorWhite );
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
 		// no ammo cross on top
 		if ( !ammoSaved ) {
@@ -1848,11 +1857,7 @@ void CG_DrawWeaponBar1( int count, int bits ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
 		max = CG_GetWeaponMaxAmmo( i );
@@ -1939,11 +1944,7 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
 		if ( ammoSaved ) {
 			if ( i == cg.weaponSelect ) {
@@ -2034,11 +2035,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
 		max = CG_GetWeaponMaxAmmo( i );
@@ -2130,11 +2127,7 @@ void CG_DrawWeaponBar4( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
 		max = CG_GetWeaponMaxAmmo( i );
@@ -2216,11 +2209,7 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 				i = 0;
 			continue;
 		}
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
 		if ( ammoSaved ) {
 			if ( i == cg.weaponSelect ) {
@@ -2307,11 +2296,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
 		max = CG_GetWeaponMaxAmmo( i );
@@ -2402,11 +2387,7 @@ void CG_DrawWeaponBar7( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
 		max = CG_GetWeaponMaxAmmo( i );
@@ -2489,11 +2470,7 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 				i = 0;
 			continue;
 		}
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
 		if ( i == cg.weaponSelect ) {
 			if ( cg.lowAmmoWarning == 1 ) {
