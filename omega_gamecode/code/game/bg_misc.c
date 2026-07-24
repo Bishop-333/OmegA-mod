@@ -1559,6 +1559,61 @@ void BG_TouchJumpPad( playerState_t *ps, entityState_t *jumppad ) {
 
 /*
 ========================
+BG_PlayerStateToEntityState_Common
+========================
+*/
+static void BG_PlayerStateToEntityState_Common( playerState_t *ps, entityState_t *s, qboolean snap ) {
+	int i;
+
+	s->apos.trType = TR_INTERPOLATE;
+	VectorCopy( ps->viewangles, s->apos.trBase );
+	if ( snap ) {
+		SnapVector( s->apos.trBase );
+	}
+
+	s->angles2[YAW] = ps->movementDir;
+	s->legsAnim = ps->legsAnim;
+	s->torsoAnim = ps->torsoAnim;
+	s->clientNum = ps->clientNum; // ET_PLAYER looks here instead of at number
+	                              // so corpses can also reference the proper config
+	s->eFlags = ps->eFlags;
+	if ( ps->stats[STAT_HEALTH] <= 0 ) {
+		s->eFlags |= EF_DEAD;
+	} else {
+		s->eFlags &= ~EF_DEAD;
+	}
+
+	if ( ps->externalEvent ) {
+		s->event = ps->externalEvent;
+		s->eventParm = ps->externalEventParm;
+	} else if ( ps->entityEventSequence < ps->eventSequence ) {
+		int seq;
+
+		if ( ps->entityEventSequence < ps->eventSequence - MAX_PS_EVENTS ) {
+			ps->entityEventSequence = ps->eventSequence - MAX_PS_EVENTS;
+		}
+		seq = ps->entityEventSequence & ( MAX_PS_EVENTS - 1 );
+		s->event = ps->events[seq] | ( ( ps->entityEventSequence & 3 ) << 8 );
+		s->eventParm = ps->eventParms[seq];
+		ps->entityEventSequence++;
+	}
+
+	s->weapon = ps->weapon;
+	s->groundEntityNum = ps->groundEntityNum;
+
+	s->powerups = 0;
+	for ( i = 0; i < MAX_POWERUPS; i++ ) {
+		if ( ps->powerups[i] ) {
+			s->powerups |= 1 << i;
+		}
+	}
+
+	s->loopSound = ps->loopSound;
+	s->generic1 = ps->generic1;
+}
+
+/*
+========================
 BG_PlayerStateToEntityState
 
 This is done after each set of usercmd_t on the server,
