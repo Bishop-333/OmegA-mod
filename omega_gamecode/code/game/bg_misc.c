@@ -1559,10 +1559,10 @@ void BG_TouchJumpPad( playerState_t *ps, entityState_t *jumppad ) {
 
 /*
 ========================
-BG_PlayerStateToEntityState_Common
+BG_PlayerStateToEntityStateCommon
 ========================
 */
-static void BG_PlayerStateToEntityState_Common( playerState_t *ps, entityState_t *s, qboolean snap ) {
+static void BG_PlayerStateToEntityStateCommon( playerState_t *ps, entityState_t *s, qboolean snap ) {
 	int i;
 
 	s->apos.trType = TR_INTERPOLATE;
@@ -1640,7 +1640,7 @@ void BG_PlayerStateToEntityState( playerState_t *ps, entityState_t *s, qboolean 
 	// set the trDelta for flag direction
 	VectorCopy( ps->velocity, s->pos.trDelta );
 
-	BG_PlayerStateToEntityState_Common( ps, s, snap );
+	BG_PlayerStateToEntityStateCommon( ps, s, snap );
 }
 
 /*
@@ -1675,7 +1675,7 @@ void BG_PlayerStateToEntityStateExtraPolate( playerState_t *ps, entityState_t *s
 	// set maximum extra polation time
 	s->pos.trDuration = 25; // 1000 / sv_fps (default = 20)
 
-	BG_PlayerStateToEntityState_Common( ps, s, snap );
+	BG_PlayerStateToEntityStateCommon( ps, s, snap );
 }
 
 /*
