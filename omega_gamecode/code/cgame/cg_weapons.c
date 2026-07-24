@@ -1763,31 +1763,17 @@ static int CG_GetWeaponMaxAmmo( int weapon ) {
 	}
 }
 
+static vec4_t red = { 1.0f, 0.0f, 0.0f, 0.4f };
+static vec4_t yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+static vec4_t green = { 0.0f, 1.0f, 0.0f, 1.0f };
+static vec4_t blue = { 0.0f, 0.0f, 1.0f, 0.4f };
+
 /*
 ===================
 CG_DrawWeaponBarBackground
 ===================
 */
 static void CG_DrawWeaponBarBackground( int x, int y, int w, int h, int weapon, int ammo ) {
-	float red[4];
-	float yellow[4];
-	float blue[4];
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
-
 	if ( ammo ) {
 		CG_FillRect( x, y, w, h, blue );
 	} else {
@@ -2003,24 +1989,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 	int br;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float green[4];
 
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	green[0] = 0;
-	green[1] = 1.0f;
-	green[2] = 0;
-	green[3] = 1.0f;
 
 
 
@@ -2215,24 +2184,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 	int br;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float green[4];
 
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	green[0] = 0;
-	green[1] = 1.0f;
-	green[2] = 0;
-	green[3] = 1.0f;
 
 
 
