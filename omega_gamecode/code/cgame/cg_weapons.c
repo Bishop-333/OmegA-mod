@@ -1764,6 +1764,42 @@ static int CG_GetWeaponMaxAmmo( int weapon ) {
 }
 
 /*
+===================
+CG_DrawWeaponBarBackground
+===================
+*/
+static void CG_DrawWeaponBarBackground( int x, int y, int w, int h, int weapon, int ammo ) {
+	float red[4];
+	float yellow[4];
+	float blue[4];
+
+	red[0] = 1.0f;
+	red[1] = 0;
+	red[2] = 0;
+	red[3] = 0.4f;
+
+	yellow[0] = 1.0f;
+	yellow[1] = 1.0f;
+	yellow[2] = 0;
+	yellow[3] = 1.0f;
+
+	blue[0] = 0;
+	blue[1] = 0;
+	blue[2] = 1.0f;
+	blue[3] = 0.4f;
+
+	if ( ammo ) {
+		CG_FillRect( x, y, w, h, blue );
+	} else {
+		CG_FillRect( x, y, w, h, red );
+	}
+
+	if ( weapon == cg.weaponSelect ) {
+		CG_DrawRect( x, y, w, h, 2, yellow );
+	}
+}
+
+/*
 ===============
 CG_DrawWeaponBar0
 
@@ -1913,24 +1949,7 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 	int ammoSaved;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float blue[4];
 
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -1946,21 +1965,7 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 
 		ammoSaved = CG_GetWeaponAmmo( i );
 
-		if ( ammoSaved ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, blue );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, red );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 50, 24, i, ammoSaved );
 
 		CG_RegisterWeapon( i );
 		// draw weapon icon
@@ -2001,7 +2006,6 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 	float red[4];
 	float yellow[4];
 	float green[4];
-	float blue[4];
 
 	red[0] = 1.0f;
 	red[1] = 0;
@@ -2018,10 +2022,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 	green[2] = 0;
 	green[3] = 1.0f;
 
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
+
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2055,21 +2056,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 				CG_FillRect( 51, y + 2 + 20 - br, 4, br, green );
 		}
 
-		if ( cg.snap->ps.ammo[i] ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, blue );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, red );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 50, 24, i, ammoSaved );
 		CG_RegisterWeapon( i );
 		// draw weapon icon
 		CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIcon );
@@ -2179,24 +2166,7 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 	int ammoSaved;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float blue[4];
 
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2211,21 +2181,7 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 		}
 		ammoSaved = CG_GetWeaponAmmo( i );
 
-		if ( ammoSaved ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, blue );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, red );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 30, 38, i, ammoSaved );
 		CG_RegisterWeapon( i );
 		CG_DrawPic( x + 7, y + 2, 16, 16, cg_weapons[i].weaponIcon );
 
@@ -2262,7 +2218,6 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 	float red[4];
 	float yellow[4];
 	float green[4];
-	float blue[4];
 
 	red[0] = 1.0f;
 	red[1] = 0;
@@ -2279,10 +2234,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 	green[2] = 0;
 	green[3] = 1.0f;
 
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
+
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2317,21 +2269,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 				CG_FillRect( x + 2, y + 40, br, 4, green );
 		}
 
-		if ( ammoSaved ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, blue );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, red );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 30, 38, i, ammoSaved );
 		CG_RegisterWeapon( i );
 		CG_DrawPic( x + 7, y + 2, 16, 16, cg_weapons[i].weaponIcon );
 
