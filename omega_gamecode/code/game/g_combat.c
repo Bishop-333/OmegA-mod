@@ -1169,6 +1169,54 @@ static int knockback_damage( gentity_t *targ, gentity_t *attacker, vec3_t dir, i
 }
 
 /*
+================
+check_protection
+================
+*/
+static qboolean check_protection( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, int dflags, int mod ) {
+	if ( !( dflags & DAMAGE_NO_PROTECTION ) ) {
+
+		// if TF_NO_FRIENDLY_FIRE is set, don't do damage to the target
+		// if the attacker was on the same team
+		if ( mod != MOD_JUICED && mod != MOD_CRUSH && targ != attacker && !( dflags & DAMAGE_NO_TEAM_PROTECTION ) && OnSameTeam( targ, attacker ) ) {
+			if ( ( !g_friendlyFire.integer && !G_IsElimTeamGametype() ) || ( g_elimination_selfdamage.integer < 2 && G_IsElimTeamGametype() ) ) {
+				return qtrue;
+			}
+		}
+		if ( mod == MOD_PROXIMITY_MINE ) {
+			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
+				return qtrue;
+			}
+			if ( targ == attacker ) {
+				return qtrue;
+			}
+		}
+
+		if ( mod == MOD_RAILJUMP ) {
+			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
+				return qtrue;
+			}
+			if ( targ == attacker ) {
+				return qtrue;
+			}
+		}
+
+		// check for godmode
+		if ( targ->flags & FL_GODMODE ) {
+			return qtrue;
+		}
+
+		if ( targ->client && targ->client->spawnprotected ) {
+			if ( level.time > targ->client->respawnTime + g_spawnprotect.integer )
+				targ->client->spawnprotected = qfalse;
+			else if ( ( mod > MOD_UNKNOWN && mod < MOD_WATER ) || mod == MOD_TELEFRAG || mod > MOD_TRIGGER_HURT )
+				return qtrue;
+		}
+
+	return qfalse;
+}
+
+/*
 ============
 T_Damage
 
@@ -1286,44 +1334,8 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	knockback = knockback_damage( targ, attacker, dir, damage, dflags );
 
 	// check for completely getting out of the damage
-	if ( !( dflags & DAMAGE_NO_PROTECTION ) ) {
-
-		// if TF_NO_FRIENDLY_FIRE is set, don't do damage to the target
-		// if the attacker was on the same team
-		if ( mod != MOD_JUICED && mod != MOD_CRUSH && targ != attacker && !( dflags & DAMAGE_NO_TEAM_PROTECTION ) && OnSameTeam( targ, attacker ) ) {
-			if ( ( !g_friendlyFire.integer && !G_IsElimTeamGametype() ) || ( g_elimination_selfdamage.integer < 2 && G_IsElimTeamGametype() ) ) {
-				return;
-			}
-		}
-		if ( mod == MOD_PROXIMITY_MINE ) {
-			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
-				return;
-			}
-			if ( targ == attacker ) {
-				return;
-			}
-		}
-
-		if ( mod == MOD_RAILJUMP ) {
-			if ( inflictor && inflictor->parent && OnSameTeam( targ, inflictor->parent ) ) {
-				return;
-			}
-			if ( targ == attacker ) {
-				return;
-			}
-		}
-
-		// check for godmode
-		if ( targ->flags & FL_GODMODE ) {
-			return;
-		}
-
-		if ( targ->client && targ->client->spawnprotected ) {
-			if ( level.time > targ->client->respawnTime + g_spawnprotect.integer )
-				targ->client->spawnprotected = qfalse;
-			else if ( ( mod > MOD_UNKNOWN && mod < MOD_WATER ) || mod == MOD_TELEFRAG || mod > MOD_TRIGGER_HURT )
-				return;
-		}
+	if ( check_protection( targ, inflictor, attacker, dflags, mod ) ) {
+		return;
 	}
 
 	// battlesuit protects from all radius damage (but takes knockback)
