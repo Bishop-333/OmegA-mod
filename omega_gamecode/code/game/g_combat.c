@@ -1110,6 +1110,65 @@ static int catchup_damage( int damage, int attacker_points, int target_points ) 
 }
 
 /*
+================
+knockback_damage
+================
+*/
+static int knockback_damage( gentity_t *targ, gentity_t *attacker, vec3_t dir, int damage, int dflags ) {
+	int knockback;
+
+	knockback = damage;
+	if ( knockback > 200 ) {
+		knockback = 200;
+	}
+	if ( targ->flags & FL_NO_KNOCKBACK ) {
+		knockback = 0;
+	}
+	if ( dflags & DAMAGE_NO_KNOCKBACK ) {
+		knockback = 0;
+	}
+	if ( !g_teamPush.integer && !( targ == attacker ) && OnSameTeam( targ, attacker ) ) {
+		knockback = 0;
+	}
+
+	// figure momentum add, even if the damage won't be taken
+	if ( knockback && targ->client ) {
+		vec3_t kvel;
+		float mass;
+
+		mass = 200;
+
+		VectorScale( dir, g_knockback.value * (float)knockback / mass, kvel );
+		VectorAdd( targ->client->ps.velocity, kvel, targ->client->ps.velocity );
+
+		// set the timer so that the other client can't cancel
+		// out the movement immediately
+		if ( !targ->client->ps.pm_time ) {
+			int t;
+
+			t = knockback * 2;
+			if ( t < 50 ) {
+				t = 50;
+			}
+			if ( t > 200 ) {
+				t = 200;
+			}
+			targ->client->ps.pm_time = t;
+			targ->client->ps.pm_flags |= PMF_TIME_KNOCKBACK;
+		}
+		//Remember the last person to hurt the player
+		if ( !g_awardpushing.integer || targ == attacker || OnSameTeam( targ, attacker ) ) {
+			targ->client->lastSentFlying = -1;
+		} else {
+			targ->client->lastSentFlying = attacker->s.number;
+			targ->client->lastSentFlyingTime = level.time;
+		}
+	}
+
+	return knockback;
+}
+
+/*
 ============
 T_Damage
 
@@ -1224,53 +1283,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		VectorNormalizeFast( dir );
 	}
 
-	knockback = damage;
-	if ( knockback > 200 ) {
-		knockback = 200;
-	}
-	if ( targ->flags & FL_NO_KNOCKBACK ) {
-		knockback = 0;
-	}
-	if ( dflags & DAMAGE_NO_KNOCKBACK ) {
-		knockback = 0;
-	}
-	if ( !g_teamPush.integer && !( targ == attacker ) && OnSameTeam( targ, attacker ) ) {
-		knockback = 0;
-	}
-
-	// figure momentum add, even if the damage won't be taken
-	if ( knockback && targ->client ) {
-		vec3_t kvel;
-		float mass;
-
-		mass = 200;
-
-		VectorScale( dir, g_knockback.value * (float)knockback / mass, kvel );
-		VectorAdd( targ->client->ps.velocity, kvel, targ->client->ps.velocity );
-
-		// set the timer so that the other client can't cancel
-		// out the movement immediately
-		if ( !targ->client->ps.pm_time ) {
-			int t;
-
-			t = knockback * 2;
-			if ( t < 50 ) {
-				t = 50;
-			}
-			if ( t > 200 ) {
-				t = 200;
-			}
-			targ->client->ps.pm_time = t;
-			targ->client->ps.pm_flags |= PMF_TIME_KNOCKBACK;
-		}
-		//Remember the last person to hurt the player
-		if ( !g_awardpushing.integer || targ == attacker || OnSameTeam( targ, attacker ) ) {
-			targ->client->lastSentFlying = -1;
-		} else {
-			targ->client->lastSentFlying = attacker->s.number;
-			targ->client->lastSentFlyingTime = level.time;
-		}
-	}
+	knockback = knockback_damage( targ, attacker, dir, damage, dflags );
 
 	// check for completely getting out of the damage
 	if ( !( dflags & DAMAGE_NO_PROTECTION ) ) {
