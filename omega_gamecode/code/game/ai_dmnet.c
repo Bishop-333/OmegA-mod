@@ -674,6 +674,64 @@ static int BotLTG_GetItem( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_Patrol
+==================
+*/
+static int BotLTG_Patrol( bot_state_t *bs, bot_goal_t *goal ) {
+	char buf[MAX_MESSAGE_SIZE];
+	bot_waypoint_t *wp;
+
+	//check for bot typing status message
+	if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+		strcpy( buf, "" );
+		for ( wp = bs->patrolpoints; wp; wp = wp->next ) {
+			strcat( buf, wp->name );
+			if ( wp->next ) strcat( buf, " to " );
+		}
+		BotAI_BotInitialChat( bs, "patrol_start", buf, NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
+		bs->teammessage_time = 0;
+	}
+	//
+	if ( !bs->curpatrolpoint ) {
+		bs->ltgtype = 0;
+		return qfalse;
+	}
+	//if the bot touches the current goal
+	if ( trap_BotTouchingGoal( bs->origin, &bs->curpatrolpoint->goal ) ) {
+		if ( bs->patrolflags & PATROL_BACK ) {
+			if ( bs->curpatrolpoint->prev ) {
+				bs->curpatrolpoint = bs->curpatrolpoint->prev;
+			} else {
+				bs->curpatrolpoint = bs->curpatrolpoint->next;
+				bs->patrolflags &= ~PATROL_BACK;
+			}
+		} else {
+			if ( bs->curpatrolpoint->next ) {
+				bs->curpatrolpoint = bs->curpatrolpoint->next;
+			} else {
+				bs->curpatrolpoint = bs->curpatrolpoint->prev;
+				bs->patrolflags |= PATROL_BACK;
+			}
+		}
+	}
+	//stop after 5 minutes
+	if ( bs->teamgoal_time < FloatTime() ) {
+		BotAI_BotInitialChat( bs, "patrol_stop", NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		bs->ltgtype = 0;
+	}
+	if ( !bs->curpatrolpoint ) {
+		bs->ltgtype = 0;
+		return qfalse;
+	}
+	memcpy( goal, &bs->curpatrolpoint->goal, sizeof( bot_goal_t ) );
+	return qtrue;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
@@ -683,7 +741,6 @@ however this saves us a lot of code
 static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal ) {
 	vec3_t dir;
 	char buf[MAX_MESSAGE_SIZE];
-	bot_waypoint_t *wp;
 
 	if ( bs->ltgtype == LTG_TEAMHELP && !retreat ) {
 		return BotLTG_TeamHelp( bs, goal );
@@ -767,53 +824,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	}
 	//patrolling along several waypoints
 	if ( bs->ltgtype == LTG_PATROL && !retreat ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			strcpy( buf, "" );
-			for ( wp = bs->patrolpoints; wp; wp = wp->next ) {
-				strcat( buf, wp->name );
-				if ( wp->next ) strcat( buf, " to " );
-			}
-			BotAI_BotInitialChat( bs, "patrol_start", buf, NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
-			bs->teammessage_time = 0;
-		}
-		//
-		if ( !bs->curpatrolpoint ) {
-			bs->ltgtype = 0;
-			return qfalse;
-		}
-		//if the bot touches the current goal
-		if ( trap_BotTouchingGoal( bs->origin, &bs->curpatrolpoint->goal ) ) {
-			if ( bs->patrolflags & PATROL_BACK ) {
-				if ( bs->curpatrolpoint->prev ) {
-					bs->curpatrolpoint = bs->curpatrolpoint->prev;
-				} else {
-					bs->curpatrolpoint = bs->curpatrolpoint->next;
-					bs->patrolflags &= ~PATROL_BACK;
-				}
-			} else {
-				if ( bs->curpatrolpoint->next ) {
-					bs->curpatrolpoint = bs->curpatrolpoint->next;
-				} else {
-					bs->curpatrolpoint = bs->curpatrolpoint->prev;
-					bs->patrolflags |= PATROL_BACK;
-				}
-			}
-		}
-		//stop after 5 minutes
-		if ( bs->teamgoal_time < FloatTime() ) {
-			BotAI_BotInitialChat( bs, "patrol_stop", NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			bs->ltgtype = 0;
-		}
-		if ( !bs->curpatrolpoint ) {
-			bs->ltgtype = 0;
-			return qfalse;
-		}
-		memcpy( goal, &bs->curpatrolpoint->goal, sizeof( bot_goal_t ) );
-		return qtrue;
+		return BotLTG_Patrol( bs, goal );
 	}
 #ifdef CTF
 	if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION ) {
