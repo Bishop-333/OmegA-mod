@@ -732,33 +732,14 @@ static int BotLTG_Patrol( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
-BotGetLongTermGoal
-
-we could also create a separate AI node for every long term goal type
-however this saves us a lot of code
+BotLTG_DoubleDomination
 ==================
 */
-static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal ) {
+static int BotLTG_DoubleDomination( bot_state_t *bs, bot_goal_t *goal ) {
 	vec3_t dir;
 	char buf[MAX_MESSAGE_SIZE];
 
-	if ( bs->ltgtype == LTG_TEAMHELP && !retreat ) {
-		return BotLTG_TeamHelp( bs, goal );
-	}
-	//if the bot accompanies someone
-	if ( bs->ltgtype == LTG_TEAMACCOMPANY && !retreat ) {
-		return BotLTG_TeamAccompany( bs, goal );
-	}
-	//
-	if ( bs->ltgtype == LTG_DEFENDKEYAREA ) {
-		if ( trap_AAS_AreaTravelTimeToGoalArea( bs->areanum, bs->origin,
-		                                        bs->teamgoal.areanum, TFL_DEFAULT ) > bs->defendaway_range ) {
-			bs->defendaway_time = 0;
-		}
-	}
-	//For double domination
-	if ( bs->ltgtype == LTG_POINTA &&
-	     bs->defendaway_time < FloatTime() ) {
+	if ( bs->ltgtype == LTG_POINTA ) {
 		//check for bot typing status message
 		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
 			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
@@ -781,8 +762,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 		}
 		return qtrue;
 	}
-	if ( bs->ltgtype == LTG_POINTB &&
-	     bs->defendaway_time < FloatTime() ) {
+	if ( bs->ltgtype == LTG_POINTB ) {
 		//check for bot typing status message
 		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
 			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
@@ -804,6 +784,39 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 			}
 		}
 		return qtrue;
+	}
+	return qfalse;
+}
+
+/*
+==================
+BotGetLongTermGoal
+
+we could also create a separate AI node for every long term goal type
+however this saves us a lot of code
+==================
+*/
+static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal ) {
+	vec3_t dir;
+
+	if ( bs->ltgtype == LTG_TEAMHELP && !retreat ) {
+		return BotLTG_TeamHelp( bs, goal );
+	}
+	//if the bot accompanies someone
+	if ( bs->ltgtype == LTG_TEAMACCOMPANY && !retreat ) {
+		return BotLTG_TeamAccompany( bs, goal );
+	}
+	//
+	if ( bs->ltgtype == LTG_DEFENDKEYAREA ) {
+		if ( trap_AAS_AreaTravelTimeToGoalArea( bs->areanum, bs->origin,
+		                                        bs->teamgoal.areanum, TFL_DEFAULT ) > bs->defendaway_range ) {
+			bs->defendaway_time = 0;
+		}
+	}
+	//For double domination
+	if ( (bs->ltgtype == LTG_POINTA || bs->ltgtype == LTG_POINTB) &&
+	     bs->defendaway_time < FloatTime() ) {
+		return BotLTG_DoubleDomination( bs, goal );
 	}
 	//if defending a key area
 	if ( bs->ltgtype == LTG_DEFENDKEYAREA && !retreat &&
