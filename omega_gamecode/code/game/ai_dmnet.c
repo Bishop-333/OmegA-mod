@@ -282,6 +282,59 @@ static int BotGetItemLongTermGoal( bot_state_t *bs, int tfl, bot_goal_t *goal ) 
 
 /*
 ==================
+BotLTG_TeamHelp
+==================
+*/
+static int BotLTG_TeamHelp( bot_state_t *bs, bot_goal_t *goal ) {
+	vec3_t dir;
+	char netname[MAX_NETNAME];
+	int areanum;
+	aas_entityinfo_t entinfo;
+
+	//check for bot typing status message
+	if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+		BotAI_BotInitialChat( bs, "help_start", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
+		bs->teammessage_time = 0;
+	}
+	//if trying to help the team mate for more than a minute
+	if ( bs->teamgoal_time < FloatTime() )
+		bs->ltgtype = 0;
+	//if the team mate IS visible for quite some time
+	if ( bs->teammatevisible_time < FloatTime() - 10 ) bs->ltgtype = 0;
+	//get entity information of the companion
+	BotEntityInfo( bs->teammate, &entinfo );
+	//if the team mate is visible
+	if ( BotEntityVisible( bs->entitynum, bs->eye, bs->viewangles, 360, bs->teammate ) ) {
+		//if close just stand still there
+		VectorSubtract( entinfo.origin, bs->origin, dir );
+		if ( VectorLengthSquared( dir ) < Square( 100 ) ) {
+			trap_BotResetAvoidReach( bs->ms );
+			return qfalse;
+		}
+	} else {
+		//last time the bot was NOT visible
+		bs->teammatevisible_time = FloatTime();
+	}
+	//if the entity information is valid (entity in PVS)
+	if ( entinfo.valid ) {
+		areanum = BotPointAreaNum( entinfo.origin );
+		if ( areanum && trap_AAS_AreaReachability( areanum ) ) {
+			//update team goal
+			bs->teamgoal.entitynum = bs->teammate;
+			bs->teamgoal.areanum = areanum;
+			VectorCopy( entinfo.origin, bs->teamgoal.origin );
+			VectorSet( bs->teamgoal.mins, -8, -8, -8 );
+			VectorSet( bs->teamgoal.maxs, 8, 8, 8 );
+		}
+		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
+		return qtrue;
+	}
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
@@ -298,46 +351,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	bot_waypoint_t *wp;
 
 	if ( bs->ltgtype == LTG_TEAMHELP && !retreat ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			BotAI_BotInitialChat( bs, "help_start", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
-			bs->teammessage_time = 0;
-		}
-		//if trying to help the team mate for more than a minute
-		if ( bs->teamgoal_time < FloatTime() )
-			bs->ltgtype = 0;
-		//if the team mate IS visible for quite some time
-		if ( bs->teammatevisible_time < FloatTime() - 10 ) bs->ltgtype = 0;
-		//get entity information of the companion
-		BotEntityInfo( bs->teammate, &entinfo );
-		//if the team mate is visible
-		if ( BotEntityVisible( bs->entitynum, bs->eye, bs->viewangles, 360, bs->teammate ) ) {
-			//if close just stand still there
-			VectorSubtract( entinfo.origin, bs->origin, dir );
-			if ( VectorLengthSquared( dir ) < Square( 100 ) ) {
-				trap_BotResetAvoidReach( bs->ms );
-				return qfalse;
-			}
-		} else {
-			//last time the bot was NOT visible
-			bs->teammatevisible_time = FloatTime();
-		}
-		//if the entity information is valid (entity in PVS)
-		if ( entinfo.valid ) {
-			areanum = BotPointAreaNum( entinfo.origin );
-			if ( areanum && trap_AAS_AreaReachability( areanum ) ) {
-				//update team goal
-				bs->teamgoal.entitynum = bs->teammate;
-				bs->teamgoal.areanum = areanum;
-				VectorCopy( entinfo.origin, bs->teamgoal.origin );
-				VectorSet( bs->teamgoal.mins, -8, -8, -8 );
-				VectorSet( bs->teamgoal.maxs, 8, 8, 8 );
-			}
-		}
-		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
-		return qtrue;
+		return BotLTG_TeamHelp( bs, goal );
 	}
 	//if the bot accompanies someone
 	if ( bs->ltgtype == LTG_TEAMACCOMPANY && !retreat ) {
