@@ -606,6 +606,37 @@ static int BotLTG_Camp( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_Kill
+==================
+*/
+static int BotLTG_Kill( bot_state_t *bs, int tfl, bot_goal_t *goal ) {
+	char buf[MAX_MESSAGE_SIZE];
+
+	//check for bot typing status message
+	if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+		EasyClientName( bs->teamgoal.entitynum, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "kill_start", buf, NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		bs->teammessage_time = 0;
+	}
+	//
+	if ( bs->lastkilledplayer == bs->teamgoal.entitynum ) {
+		EasyClientName( bs->teamgoal.entitynum, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "kill_done", buf, NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		bs->lastkilledplayer = -1;
+		bs->ltgtype = 0;
+	}
+	//
+	if ( bs->teamgoal_time < FloatTime() ) {
+		bs->ltgtype = 0;
+	}
+	//just roam around
+	return BotGetItemLongTermGoal( bs, tfl, goal );
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
@@ -687,27 +718,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	}
 	//going to kill someone
 	if ( bs->ltgtype == LTG_KILL && !retreat ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			EasyClientName( bs->teamgoal.entitynum, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "kill_start", buf, NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			bs->teammessage_time = 0;
-		}
-		//
-		if ( bs->lastkilledplayer == bs->teamgoal.entitynum ) {
-			EasyClientName( bs->teamgoal.entitynum, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "kill_done", buf, NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			bs->lastkilledplayer = -1;
-			bs->ltgtype = 0;
-		}
-		//
-		if ( bs->teamgoal_time < FloatTime() ) {
-			bs->ltgtype = 0;
-		}
-		//just roam around
-		return BotGetItemLongTermGoal( bs, tfl, goal );
+		return BotLTG_Kill( bs, tfl, goal );
 	}
 	//get an item
 	if ( bs->ltgtype == LTG_GETITEM && !retreat ) {
