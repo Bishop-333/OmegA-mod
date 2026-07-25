@@ -637,6 +637,43 @@ static int BotLTG_Kill( bot_state_t *bs, int tfl, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_GetItem
+==================
+*/
+static int BotLTG_GetItem( bot_state_t *bs, bot_goal_t *goal ) {
+	char buf[MAX_MESSAGE_SIZE];
+
+	//check for bot typing status message
+	if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+		trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "getitem_start", buf, NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
+		bs->teammessage_time = 0;
+	}
+	//set the bot goal
+	memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
+	//stop after some time
+	if ( bs->teamgoal_time < FloatTime() ) {
+		bs->ltgtype = 0;
+	}
+	//
+	if ( trap_BotItemGoalInVisButNotVisible( bs->entitynum, bs->eye, bs->viewangles, goal ) ) {
+		trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "getitem_notthere", buf, NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		bs->ltgtype = 0;
+	} else if ( BotReachedGoal( bs, goal ) ) {
+		trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "getitem_gotit", buf, NULL );
+		trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		bs->ltgtype = 0;
+	}
+	return qtrue;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
@@ -722,33 +759,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	}
 	//get an item
 	if ( bs->ltgtype == LTG_GETITEM && !retreat ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "getitem_start", buf, NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
-			bs->teammessage_time = 0;
-		}
-		//set the bot goal
-		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
-		//stop after some time
-		if ( bs->teamgoal_time < FloatTime() ) {
-			bs->ltgtype = 0;
-		}
-		//
-		if ( trap_BotItemGoalInVisButNotVisible( bs->entitynum, bs->eye, bs->viewangles, goal ) ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "getitem_notthere", buf, NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			bs->ltgtype = 0;
-		} else if ( BotReachedGoal( bs, goal ) ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "getitem_gotit", buf, NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			bs->ltgtype = 0;
-		}
-		return qtrue;
+		return BotLTG_GetItem( bs, goal );
 	}
 	//if camping somewhere
 	if ( ( bs->ltgtype == LTG_CAMP || bs->ltgtype == LTG_CAMPORDER ) && !retreat ) {
