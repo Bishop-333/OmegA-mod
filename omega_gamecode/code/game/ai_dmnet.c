@@ -342,12 +342,10 @@ however this saves us a lot of code
 ==================
 */
 static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal ) {
-	vec3_t target, dir, dir2;
+	vec3_t target, dir;
 	char netname[MAX_NETNAME];
 	char buf[MAX_MESSAGE_SIZE];
-	int areanum;
 	float croucher;
-	aas_entityinfo_t entinfo, botinfo;
 	bot_waypoint_t *wp;
 
 	if ( bs->ltgtype == LTG_TEAMHELP && !retreat ) {
@@ -355,133 +353,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	}
 	//if the bot accompanies someone
 	if ( bs->ltgtype == LTG_TEAMACCOMPANY && !retreat ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			BotAI_BotInitialChat( bs, "accompany_start", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
-			bs->teammessage_time = 0;
-		}
-		//if accompanying the companion for 3 minutes
-		if ( bs->teamgoal_time < FloatTime() ) {
-			BotAI_BotInitialChat( bs, "accompany_stop", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-			trap_BotEnterChat( bs->cs, bs->teammate, CHAT_TELL );
-			bs->ltgtype = 0;
-		}
-		//get entity information of the companion
-		BotEntityInfo( bs->teammate, &entinfo );
-		//if the companion is visible
-		if ( BotEntityVisible( bs->entitynum, bs->eye, bs->viewangles, 360, bs->teammate ) ) {
-			//update visible time
-			bs->teammatevisible_time = FloatTime();
-			VectorSubtract( entinfo.origin, bs->origin, dir );
-			if ( VectorLengthSquared( dir ) < Square( bs->formation_dist ) ) {
-				//
-				// if the client being followed bumps into this bot then
-				// the bot should back up
-				BotEntityInfo( bs->entitynum, &botinfo );
-				// if the followed client is not standing on top of the bot
-				if ( botinfo.origin[2] + botinfo.maxs[2] > entinfo.origin[2] + entinfo.mins[2] ) {
-					// if the bounding boxes touch each other
-					if ( botinfo.origin[0] + botinfo.maxs[0] > entinfo.origin[0] + entinfo.mins[0] - 4 &&
-					     botinfo.origin[0] + botinfo.mins[0] < entinfo.origin[0] + entinfo.maxs[0] + 4 ) {
-						if ( botinfo.origin[1] + botinfo.maxs[1] > entinfo.origin[1] + entinfo.mins[1] - 4 &&
-						     botinfo.origin[1] + botinfo.mins[1] < entinfo.origin[1] + entinfo.maxs[1] + 4 ) {
-							if ( botinfo.origin[2] + botinfo.maxs[2] > entinfo.origin[2] + entinfo.mins[2] - 4 &&
-							     botinfo.origin[2] + botinfo.mins[2] < entinfo.origin[2] + entinfo.maxs[2] + 4 ) {
-								// if the followed client looks in the direction of this bot
-								AngleVectors( entinfo.angles, dir, NULL, NULL );
-								dir[2] = 0;
-								VectorNormalizeFast( dir );
-								VectorSubtract( bs->origin, entinfo.origin, dir2 );
-								VectorNormalizeFast( dir2 );
-								if ( DotProduct( dir, dir2 ) > 0.7 ) {
-									// back up
-									BotSetupForMovement( bs );
-									trap_BotMoveInDirection( bs->ms, dir2, 400, MOVE_WALK );
-								}
-							}
-						}
-					}
-				}
-				//check if the bot wants to crouch
-				//don't crouch if crouched less than 5 seconds ago
-				if ( bs->attackcrouch_time < FloatTime() - 5 ) {
-					croucher = trap_Characteristic_BFloat( bs->character, CHARACTERISTIC_CROUCHER, 0, 1 );
-					if ( random() < bs->thinktime * croucher ) {
-						bs->attackcrouch_time = FloatTime() + 5 + croucher * 15;
-					}
-				}
-				//don't crouch when swimming
-				if ( trap_AAS_Swimming( bs->origin ) ) bs->attackcrouch_time = FloatTime() - 1;
-				//if not arrived yet or arrived some time ago
-				if ( bs->arrive_time < FloatTime() - 2 ) {
-					//if not arrived yet
-					if ( !bs->arrive_time ) {
-						trap_EA_Gesture( bs->client );
-						BotAI_BotInitialChat( bs, "accompany_arrive", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-						trap_BotEnterChat( bs->cs, bs->teammate, CHAT_TELL );
-						bs->arrive_time = FloatTime();
-					}
-					//if the bot wants to crouch
-					else if ( bs->attackcrouch_time > FloatTime() ) {
-						trap_EA_Crouch( bs->client );
-					}
-					//else do some model taunts
-					else if ( random() < bs->thinktime * 0.05 ) {
-						//do a gesture :)
-						trap_EA_Gesture( bs->client );
-					}
-				}
-				//if just arrived look at the companion
-				if ( bs->arrive_time > FloatTime() - 2 ) {
-					VectorSubtract( entinfo.origin, bs->origin, dir );
-					vectoangles( dir, bs->ideal_viewangles );
-					bs->ideal_viewangles[2] *= 0.5;
-				}
-				//else look strategically around for enemies
-				else if ( random() < bs->thinktime * 0.8 ) {
-					BotRoamGoal( bs, target );
-					VectorSubtract( target, bs->origin, dir );
-					vectoangles( dir, bs->ideal_viewangles );
-					bs->ideal_viewangles[2] *= 0.5;
-				}
-				//check if the bot wants to go for air
-				if ( BotGoForAir( bs, bs->tfl, &bs->teamgoal, 400 ) ) {
-					trap_BotResetLastAvoidReach( bs->ms );
-					//time the bot gets to pick up the nearby goal item
-					bs->nbg_time = FloatTime() + 8;
-					AIEnter_Seek_NBG( bs, "BotLongTermGoal: go for air" );
-					return qfalse;
-				}
-				//
-				trap_BotResetAvoidReach( bs->ms );
-				return qfalse;
-			}
-		}
-		//if the entity information is valid (entity in PVS)
-		if ( entinfo.valid ) {
-			areanum = BotPointAreaNum( entinfo.origin );
-			if ( areanum && trap_AAS_AreaReachability( areanum ) ) {
-				//update team goal
-				bs->teamgoal.entitynum = bs->teammate;
-				bs->teamgoal.areanum = areanum;
-				VectorCopy( entinfo.origin, bs->teamgoal.origin );
-				VectorSet( bs->teamgoal.mins, -8, -8, -8 );
-				VectorSet( bs->teamgoal.maxs, 8, 8, 8 );
-			}
-		}
-		//the goal the bot should go for
-		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
-		//if the companion is NOT visible for too long
-		if ( bs->teammatevisible_time < FloatTime() - 60 ) {
-			BotAI_BotInitialChat( bs, "accompany_cannotfind", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-			trap_BotEnterChat( bs->cs, bs->teammate, CHAT_TELL );
-			bs->ltgtype = 0;
-			// just to make sure the bot won't spam this message
-			bs->teammatevisible_time = FloatTime();
-		}
-		return qtrue;
+		return BotLTG_TeamAccompany( bs, goal );
 	}
 	//
 	if ( bs->ltgtype == LTG_DEFENDKEYAREA ) {
