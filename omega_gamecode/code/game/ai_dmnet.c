@@ -476,6 +476,64 @@ static int BotLTG_TeamAccompany( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_DoubleDomination
+==================
+*/
+static int BotLTG_DoubleDomination( bot_state_t *bs, bot_goal_t *goal ) {
+	vec3_t dir;
+	char buf[MAX_MESSAGE_SIZE];
+
+	if ( bs->ltgtype == LTG_POINTA ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+			BotAI_BotInitialChat( bs, "dd_start_pointa", buf, NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		//set the bot goal
+		memcpy( goal, &ctf_redflag, sizeof( bot_goal_t ) );
+		//if very close... go away for some time
+		VectorSubtract( goal->origin, bs->origin, dir );
+		if ( VectorLengthSquared( dir ) < Square( 70 ) ) {
+			trap_BotResetAvoidReach( bs->ms );
+			bs->defendaway_time = FloatTime() + 3 + 3 * random();
+			if ( BotHasPersistantPowerupAndWeapon( bs ) ) {
+				bs->defendaway_range = 100;
+			} else {
+				bs->defendaway_range = 350;
+			}
+		}
+		return qtrue;
+	}
+	if ( bs->ltgtype == LTG_POINTB ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+			BotAI_BotInitialChat( bs, "dd_start_pointb", buf, NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		//set the bot goal
+		memcpy( goal, &ctf_blueflag, sizeof( bot_goal_t ) );
+		//if very close... go away for some time
+		VectorSubtract( goal->origin, bs->origin, dir );
+		if ( VectorLengthSquared( dir ) < Square( 70 ) ) {
+			trap_BotResetAvoidReach( bs->ms );
+			bs->defendaway_time = FloatTime() + 3 + 3 * random();
+			if ( BotHasPersistantPowerupAndWeapon( bs ) ) {
+				bs->defendaway_range = 100;
+			} else {
+				bs->defendaway_range = 350;
+			}
+		}
+		return qtrue;
+	}
+	return qfalse;
+}
+
+/*
+==================
 BotLTG_DefendKeyArea
 ==================
 */
@@ -732,64 +790,6 @@ static int BotLTG_Patrol( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
-BotLTG_DoubleDomination
-==================
-*/
-static int BotLTG_DoubleDomination( bot_state_t *bs, bot_goal_t *goal ) {
-	vec3_t dir;
-	char buf[MAX_MESSAGE_SIZE];
-
-	if ( bs->ltgtype == LTG_POINTA ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "dd_start_pointa", buf, NULL );
-			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
-			bs->teammessage_time = 0;
-		}
-		//set the bot goal
-		memcpy( goal, &ctf_redflag, sizeof( bot_goal_t ) );
-		//if very close... go away for some time
-		VectorSubtract( goal->origin, bs->origin, dir );
-		if ( VectorLengthSquared( dir ) < Square( 70 ) ) {
-			trap_BotResetAvoidReach( bs->ms );
-			bs->defendaway_time = FloatTime() + 3 + 3 * random();
-			if ( BotHasPersistantPowerupAndWeapon( bs ) ) {
-				bs->defendaway_range = 100;
-			} else {
-				bs->defendaway_range = 350;
-			}
-		}
-		return qtrue;
-	}
-	if ( bs->ltgtype == LTG_POINTB ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "dd_start_pointb", buf, NULL );
-			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
-			bs->teammessage_time = 0;
-		}
-		//set the bot goal
-		memcpy( goal, &ctf_blueflag, sizeof( bot_goal_t ) );
-		//if very close... go away for some time
-		VectorSubtract( goal->origin, bs->origin, dir );
-		if ( VectorLengthSquared( dir ) < Square( 70 ) ) {
-			trap_BotResetAvoidReach( bs->ms );
-			bs->defendaway_time = FloatTime() + 3 + 3 * random();
-			if ( BotHasPersistantPowerupAndWeapon( bs ) ) {
-				bs->defendaway_range = 100;
-			} else {
-				bs->defendaway_range = 350;
-			}
-		}
-		return qtrue;
-	}
-	return qfalse;
-}
-
-/*
-==================
 BotLTG_CTF
 ==================
 */
@@ -895,7 +895,6 @@ static int BotLTG_CTF( bot_state_t *bs, bot_goal_t *goal ) {
 		BotAlternateRoute( bs, goal );
 		return qtrue;
 	}
-
 	return qfalse;
 }
 
