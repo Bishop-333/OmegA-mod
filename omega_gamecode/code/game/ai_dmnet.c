@@ -900,6 +900,106 @@ static int BotLTG_CTF( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_1FCTF
+==================
+*/
+static int BotLTG_1FCTF( bot_state_t *bs, int tfl, bot_goal_t *goal ) {
+	if ( bs->ltgtype == LTG_GETFLAG ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			BotAI_BotInitialChat( bs, "captureflag_start", NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		memcpy( goal, &ctf_neutralflag, sizeof( bot_goal_t ) );
+		//if touching the flag
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			bs->ltgtype = 0;
+		}
+		//stop after 3 minutes
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		return qtrue;
+	}
+	//if rushing to the base
+	if ( bs->ltgtype == LTG_RUSHBASE ) {
+		switch ( BotTeam( bs ) ) {
+			case TEAM_RED:
+				memcpy( goal, &ctf_blueflag, sizeof( bot_goal_t ) );
+				break;
+			case TEAM_BLUE:
+				memcpy( goal, &ctf_redflag, sizeof( bot_goal_t ) );
+				break;
+			default:
+				bs->ltgtype = 0;
+				return qfalse;
+		}
+		//if not carrying the flag anymore
+		if ( !Bot1FCTFCarryingFlag( bs ) ) {
+			bs->ltgtype = 0;
+		}
+		//quit rushing after 2 minutes
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		//if touching the base flag the bot should loose the enemy flag
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			bs->ltgtype = 0;
+		}
+		BotAlternateRoute( bs, goal );
+		return qtrue;
+	}
+	//attack the enemy base
+	if ( bs->ltgtype == LTG_ATTACKENEMYBASE &&
+	     bs->attackaway_time < FloatTime() ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			BotAI_BotInitialChat( bs, "attackenemybase_start", NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		switch ( BotTeam( bs ) ) {
+			case TEAM_RED:
+				memcpy( goal, &ctf_blueflag, sizeof( bot_goal_t ) );
+				break;
+			case TEAM_BLUE:
+				memcpy( goal, &ctf_redflag, sizeof( bot_goal_t ) );
+				break;
+			default:
+				bs->ltgtype = 0;
+				return qfalse;
+		}
+		//quit rushing after 2 minutes
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		//if touching the base flag the bot should loose the enemy flag
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			bs->attackaway_time = FloatTime() + 2 + 5 * random();
+		}
+		return qtrue;
+	}
+	//returning flag
+	if ( bs->ltgtype == LTG_RETURNFLAG ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			BotAI_BotInitialChat( bs, "returnflag_start", NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		//
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		//just roam around
+		return BotGetItemLongTermGoal( bs, tfl, goal );
+	}
+	return qfalse;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
