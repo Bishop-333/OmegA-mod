@@ -476,6 +476,45 @@ static int BotLTG_TeamAccompany( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_DefendKeyArea
+==================
+*/
+static int BotLTG_DefendKeyArea( bot_state_t *bs, bot_goal_t *goal ) {
+	vec3_t dir;
+	char buf[MAX_MESSAGE_SIZE];
+
+	//check for bot typing status message
+	if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+		trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "defend_start", buf, NULL );
+		trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+		bs->teammessage_time = 0;
+	}
+	//set the bot goal
+	memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
+	//stop after 2 minutes
+	if ( bs->teamgoal_time < FloatTime() ) {
+		trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
+		BotAI_BotInitialChat( bs, "defend_stop", buf, NULL );
+		trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+		bs->ltgtype = 0;
+	}
+	//if very close... go away for some time
+	VectorSubtract( goal->origin, bs->origin, dir );
+	if ( VectorLengthSquared( dir ) < Square( 70 ) ) {
+		trap_BotResetAvoidReach( bs->ms );
+		bs->defendaway_time = FloatTime() + 3 + 3 * random();
+		if ( BotHasPersistantPowerupAndWeapon( bs ) ) {
+			bs->defendaway_range = 100;
+		} else {
+			bs->defendaway_range = 350;
+		}
+	}
+	return qtrue;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
@@ -555,34 +594,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	//if defending a key area
 	if ( bs->ltgtype == LTG_DEFENDKEYAREA && !retreat &&
 	     bs->defendaway_time < FloatTime() ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "defend_start", buf, NULL );
-			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
-			bs->teammessage_time = 0;
-		}
-		//set the bot goal
-		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
-		//stop after 2 minutes
-		if ( bs->teamgoal_time < FloatTime() ) {
-			trap_BotGoalName( bs->teamgoal.number, buf, sizeof( buf ) );
-			BotAI_BotInitialChat( bs, "defend_stop", buf, NULL );
-			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
-			bs->ltgtype = 0;
-		}
-		//if very close... go away for some time
-		VectorSubtract( goal->origin, bs->origin, dir );
-		if ( VectorLengthSquared( dir ) < Square( 70 ) ) {
-			trap_BotResetAvoidReach( bs->ms );
-			bs->defendaway_time = FloatTime() + 3 + 3 * random();
-			if ( BotHasPersistantPowerupAndWeapon( bs ) ) {
-				bs->defendaway_range = 100;
-			} else {
-				bs->defendaway_range = 350;
-			}
-		}
-		return qtrue;
+		return BotLTG_DefendKeyArea( bs, goal );
 	}
 	//going to kill someone
 	if ( bs->ltgtype == LTG_KILL && !retreat ) {
