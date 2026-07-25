@@ -1212,6 +1212,7 @@ static qboolean check_protection( gentity_t *targ, gentity_t *inflictor, gentity
 			else if ( ( mod > MOD_UNKNOWN && mod < MOD_WATER ) || mod == MOD_TELEFRAG || mod > MOD_TRIGGER_HURT )
 				return qtrue;
 		}
+	}
 
 	return qfalse;
 }
