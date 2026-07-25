@@ -515,6 +515,97 @@ static int BotLTG_DefendKeyArea( bot_state_t *bs, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_Camp
+==================
+*/
+static int BotLTG_Camp( bot_state_t *bs, bot_goal_t *goal ) {
+	vec3_t target, dir;
+	char netname[MAX_NETNAME];
+	float croucher;
+
+	//check for bot typing status message
+	if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+		if ( bs->ltgtype == LTG_CAMPORDER ) {
+			BotAI_BotInitialChat( bs, "camp_start", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
+			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+			trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
+		}
+		bs->teammessage_time = 0;
+	}
+	//set the bot goal
+	memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
+	//
+	if ( bs->teamgoal_time < FloatTime() ) {
+		if ( bs->ltgtype == LTG_CAMPORDER ) {
+			BotAI_BotInitialChat( bs, "camp_stop", NULL );
+			trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+		}
+		bs->ltgtype = 0;
+	}
+	// if the bot decided to camp
+	if ( !bs->ordered ) {
+		// if the bot should stop camping
+		if ( !BotCanCamp( bs ) ) {
+			bs->ltgtype = 0;
+		}
+	}
+	//if really near the camp spot
+	VectorSubtract( goal->origin, bs->origin, dir );
+	if ( VectorLengthSquared( dir ) < Square( 60 ) ) {
+		//if not arrived yet
+		if ( !bs->arrive_time ) {
+			if ( bs->ltgtype == LTG_CAMPORDER ) {
+				BotAI_BotInitialChat( bs, "camp_arrive", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
+				trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+			}
+			bs->arrive_time = FloatTime();
+		}
+		//look strategically around for enemies
+		if ( random() < bs->thinktime * 0.8 ) {
+			BotRoamGoal( bs, target );
+			VectorSubtract( target, bs->origin, dir );
+			vectoangles( dir, bs->ideal_viewangles );
+			bs->ideal_viewangles[2] *= 0.5;
+		}
+		//check if the bot wants to crouch
+		//don't crouch if crouched less than 5 seconds ago
+		if ( bs->attackcrouch_time < FloatTime() - 5 ) {
+			croucher = trap_Characteristic_BFloat( bs->character, CHARACTERISTIC_CROUCHER, 0, 1 );
+			if ( random() < bs->thinktime * croucher ) {
+				bs->attackcrouch_time = FloatTime() + 5 + croucher * 15;
+			}
+		}
+		//if the bot wants to crouch
+		if ( bs->attackcrouch_time > FloatTime() ) {
+			trap_EA_Crouch( bs->client );
+		}
+		//don't crouch when swimming
+		if ( trap_AAS_Swimming( bs->origin ) ) bs->attackcrouch_time = FloatTime() - 1;
+		//make sure the bot is not gonna drown
+		if ( trap_PointContents( bs->eye, bs->entitynum ) & (CONTENTS_WATER | CONTENTS_SLIME | CONTENTS_LAVA ) ) {
+			if ( bs->ltgtype == LTG_CAMPORDER ) {
+				BotAI_BotInitialChat( bs, "camp_stop", NULL );
+				trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
+				//
+				if ( bs->lastgoal_ltgtype == LTG_CAMPORDER ) {
+					bs->lastgoal_ltgtype = 0;
+				}
+			}
+			bs->ltgtype = 0;
+		}
+		//
+		if ( bs->camp_range > 0 ) {
+			//FIXME: move around a bit
+		}
+		//
+		trap_BotResetAvoidReach( bs->ms );
+		return qfalse;
+	}
+	return qtrue;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
@@ -522,10 +613,8 @@ however this saves us a lot of code
 ==================
 */
 static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t *goal ) {
-	vec3_t target, dir;
-	char netname[MAX_NETNAME];
+	vec3_t dir;
 	char buf[MAX_MESSAGE_SIZE];
-	float croucher;
 	bot_waypoint_t *wp;
 
 	if ( bs->ltgtype == LTG_TEAMHELP && !retreat ) {
@@ -652,85 +741,7 @@ static int BotGetLongTermGoal( bot_state_t *bs, int tfl, int retreat, bot_goal_t
 	}
 	//if camping somewhere
 	if ( ( bs->ltgtype == LTG_CAMP || bs->ltgtype == LTG_CAMPORDER ) && !retreat ) {
-		//check for bot typing status message
-		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
-			if ( bs->ltgtype == LTG_CAMPORDER ) {
-				BotAI_BotInitialChat( bs, "camp_start", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-				trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-				trap_EA_Action( bs->client, ACTION_AFFIRMATIVE );
-			}
-			bs->teammessage_time = 0;
-		}
-		//set the bot goal
-		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
-		//
-		if ( bs->teamgoal_time < FloatTime() ) {
-			if ( bs->ltgtype == LTG_CAMPORDER ) {
-				BotAI_BotInitialChat( bs, "camp_stop", NULL );
-				trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-			}
-			bs->ltgtype = 0;
-		}
-		// if the bot decided to camp
-		if ( !bs->ordered ) {
-			// if the bot should stop camping
-			if ( !BotCanCamp( bs ) ) {
-				bs->ltgtype = 0;
-			}
-		}
-		//if really near the camp spot
-		VectorSubtract( goal->origin, bs->origin, dir );
-		if ( VectorLengthSquared( dir ) < Square( 60 ) ) {
-			//if not arrived yet
-			if ( !bs->arrive_time ) {
-				if ( bs->ltgtype == LTG_CAMPORDER ) {
-					BotAI_BotInitialChat( bs, "camp_arrive", EasyClientName( bs->teammate, netname, sizeof( netname ) ), NULL );
-					trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-				}
-				bs->arrive_time = FloatTime();
-			}
-			//look strategically around for enemies
-			if ( random() < bs->thinktime * 0.8 ) {
-				BotRoamGoal( bs, target );
-				VectorSubtract( target, bs->origin, dir );
-				vectoangles( dir, bs->ideal_viewangles );
-				bs->ideal_viewangles[2] *= 0.5;
-			}
-			//check if the bot wants to crouch
-			//don't crouch if crouched less than 5 seconds ago
-			if ( bs->attackcrouch_time < FloatTime() - 5 ) {
-				croucher = trap_Characteristic_BFloat( bs->character, CHARACTERISTIC_CROUCHER, 0, 1 );
-				if ( random() < bs->thinktime * croucher ) {
-					bs->attackcrouch_time = FloatTime() + 5 + croucher * 15;
-				}
-			}
-			//if the bot wants to crouch
-			if ( bs->attackcrouch_time > FloatTime() ) {
-				trap_EA_Crouch( bs->client );
-			}
-			//don't crouch when swimming
-			if ( trap_AAS_Swimming( bs->origin ) ) bs->attackcrouch_time = FloatTime() - 1;
-			//make sure the bot is not gonna drown
-			if ( trap_PointContents( bs->eye, bs->entitynum ) & ( CONTENTS_WATER | CONTENTS_SLIME | CONTENTS_LAVA ) ) {
-				if ( bs->ltgtype == LTG_CAMPORDER ) {
-					BotAI_BotInitialChat( bs, "camp_stop", NULL );
-					trap_BotEnterChat( bs->cs, bs->decisionmaker, CHAT_TELL );
-					//
-					if ( bs->lastgoal_ltgtype == LTG_CAMPORDER ) {
-						bs->lastgoal_ltgtype = 0;
-					}
-				}
-				bs->ltgtype = 0;
-			}
-			//
-			if ( bs->camp_range > 0 ) {
-				//FIXME: move around a bit
-			}
-			//
-			trap_BotResetAvoidReach( bs->ms );
-			return qfalse;
-		}
-		return qtrue;
+		return BotLTG_Camp( bs, goal );
 	}
 	//patrolling along several waypoints
 	if ( bs->ltgtype == LTG_PATROL && !retreat ) {
