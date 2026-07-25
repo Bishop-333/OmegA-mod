@@ -328,9 +328,9 @@ static int BotLTG_TeamHelp( bot_state_t *bs, bot_goal_t *goal ) {
 			VectorSet( bs->teamgoal.mins, -8, -8, -8 );
 			VectorSet( bs->teamgoal.maxs, 8, 8, 8 );
 		}
-		memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
-		return qtrue;
 	}
+	memcpy( goal, &bs->teamgoal, sizeof( bot_goal_t ) );
+	return qtrue;
 }
 
 /*
