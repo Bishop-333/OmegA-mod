@@ -1717,6 +1717,74 @@ void CG_DrawWeaponSelect( void ) {
 }
 
 /*
+===================
+CG_GetWeaponAmmo
+===================
+*/
+static int CG_GetWeaponAmmo( int weapon ) {
+	if ( cg_predictAmmo.integer ) {
+		return cg.predictedPlayerState.ammo[weapon];
+	} else {
+		return cg.snap->ps.ammo[weapon];
+	}
+}
+
+/*
+===================
+CG_GetWeaponMaxAmmo
+===================
+*/
+static int CG_GetWeaponMaxAmmo( int weapon ) {
+	switch ( weapon ) {
+		case WP_MACHINEGUN:
+			return 100;
+		case WP_SHOTGUN:
+			return 10;
+		case WP_GRENADE_LAUNCHER:
+			return 10;
+		case WP_ROCKET_LAUNCHER:
+			return 10;
+		case WP_LIGHTNING:
+			return 100;
+		case WP_RAILGUN:
+			return 10;
+		case WP_PLASMAGUN:
+			return 50;
+		case WP_BFG:
+			return 10;
+		case WP_NAILGUN:
+			return 10;
+		case WP_PROX_LAUNCHER:
+			return 5;
+		case WP_CHAINGUN:
+			return 100;
+		default:
+			return 1;
+	}
+}
+
+/*
+===================
+CG_DrawWeaponBarBackground
+===================
+*/
+static void CG_DrawWeaponBarBackground( int x, int y, int w, int h, int weapon, int ammo ) {
+	vec4_t red = { 1.0f, 0.0f, 0.0f, 0.4f };
+	vec4_t yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+	vec4_t blue = { 0.0f, 0.0f, 1.0f, 0.4f };
+
+	if ( ammo ) {
+		CG_FillRect( x, y, w, h, blue );
+	} else {
+		CG_FillRect( x, y, w, h, red );
+	}
+
+	if ( weapon == cg.weaponSelect ) {
+		CG_DrawRect( x, y, w, h, 2, yellow );
+	}
+}
+
+/*
 ===============
 CG_DrawWeaponBar0
 
@@ -1750,11 +1818,7 @@ void CG_DrawWeaponBar0( int count, int bits ) {
 			CG_DrawRect( x - 4, y - 4, 40, 40, 1, colorWhite );
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
 		// no ammo cross on top
 		if ( !ammoSaved ) {
@@ -1783,24 +1847,9 @@ void CG_DrawWeaponBar1( int count, int bits ) {
 	int ammoSaved;
 	int br;
 	int max;
-	float red[4];
-	float yellow[4];
-	float green[4];
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 1.0f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 0.6f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	green[0] = 0;
-	green[1] = 1.0f;
-	green[2] = 0;
-	green[3] = 1.0f;
+	vec4_t red = { 1.0f, 0.0f, 0.0f, 1.0f };
+	vec4_t yellow = { 1.0f, 0.6f, 0.0f, 1.0f };
+	vec4_t green = { 0.0f, 1.0f, 0.0f, 1.0f };
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -1814,51 +1863,10 @@ void CG_DrawWeaponBar1( int count, int bits ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 		if ( ammo >= 100 )
@@ -1911,24 +1919,6 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 	int ammoSaved;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float blue[4];
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -1942,27 +1932,9 @@ void CG_DrawWeaponBar2( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
-		if ( ammoSaved ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, blue );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, red );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 50, 24, i, ammoSaved );
 
 		CG_RegisterWeapon( i );
 		// draw weapon icon
@@ -2000,30 +1972,9 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 	int br;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float green[4];
-	float blue[4];
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	green[0] = 0;
-	green[1] = 1.0f;
-	green[2] = 0;
-	green[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
+	vec4_t red = { 1.0f, 0.0f, 0.0f, 0.4f };
+	vec4_t yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+	vec4_t green = { 0.0f, 1.0f, 0.0f, 1.0f };
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2037,51 +1988,10 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 		if ( ammo >= 100 )
@@ -2098,21 +2008,7 @@ void CG_DrawWeaponBar3( int count, int bits, float *color ) {
 				CG_FillRect( 51, y + 2 + 20 - br, 4, br, green );
 		}
 
-		if ( cg.snap->ps.ammo[i] ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, blue );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 50, 24, red );
-				CG_DrawRect( x, y, 50, 24, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 50, 24, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 50, 24, i, ammoSaved );
 		CG_RegisterWeapon( i );
 		// draw weapon icon
 		CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIcon );
@@ -2147,16 +2043,8 @@ void CG_DrawWeaponBar4( int count, int bits, float *color ) {
 	int max;
 	int w;
 	char *s;
-	float boxColor[4];
-	float yellow[4];
-
-	boxColor[1] = 0;
-	boxColor[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
+	vec4_t boxColor = { 0.0f, 0.0f, 0.0f, 0.4f };
+	vec4_t yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2170,51 +2058,10 @@ void CG_DrawWeaponBar4( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 
@@ -2263,24 +2110,6 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 	int ammoSaved;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float blue[4];
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2293,27 +2122,9 @@ void CG_DrawWeaponBar5( int count, int bits, float *color ) {
 				i = 0;
 			continue;
 		}
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
-		if ( ammoSaved ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, blue );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, red );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 30, 38, i, ammoSaved );
 		CG_RegisterWeapon( i );
 		CG_DrawPic( x + 7, y + 2, 16, 16, cg_weapons[i].weaponIcon );
 
@@ -2347,30 +2158,9 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 	int br;
 	int w;
 	char *s;
-	float red[4];
-	float yellow[4];
-	float green[4];
-	float blue[4];
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.4f;
-
-	yellow[0] = 1.0f;
-	yellow[1] = 1.0f;
-	yellow[2] = 0;
-	yellow[3] = 1.0f;
-
-	green[0] = 0;
-	green[1] = 1.0f;
-	green[2] = 0;
-	green[3] = 1.0f;
-
-	blue[0] = 0;
-	blue[1] = 0;
-	blue[2] = 1.0f;
-	blue[3] = 0.4f;
+	vec4_t red = { 1.0f, 0.0f, 0.0f, 0.4f };
+	vec4_t yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+	vec4_t green = { 0.0f, 1.0f, 0.0f, 1.0f };
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2384,51 +2174,10 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 
@@ -2446,21 +2195,7 @@ void CG_DrawWeaponBar6( int count, int bits, float *color ) {
 				CG_FillRect( x + 2, y + 40, br, 4, green );
 		}
 
-		if ( ammoSaved ) {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, blue );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, blue );
-			}
-		} else {
-			if ( i == cg.weaponSelect ) {
-				CG_FillRect( x, y, 30, 38, red );
-				CG_DrawRect( x, y, 30, 38, 2, yellow );
-			} else {
-				CG_FillRect( x, y, 30, 38, red );
-			}
-		}
+		CG_DrawWeaponBarBackground( x, y, 30, 38, i, ammoSaved );
 		CG_RegisterWeapon( i );
 		CG_DrawPic( x + 7, y + 2, 16, 16, cg_weapons[i].weaponIcon );
 
@@ -2516,51 +2251,10 @@ void CG_DrawWeaponBar7( int count, int bits, float *color ) {
 			continue;
 		}
 
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 		ammo = ammoSaved;
 
-		switch ( i ) {
-			case WP_MACHINEGUN:
-				max = 100;
-				break;
-			case WP_SHOTGUN:
-				max = 10;
-				break;
-			case WP_GRENADE_LAUNCHER:
-				max = 10;
-				break;
-			case WP_ROCKET_LAUNCHER:
-				max = 10;
-				break;
-			case WP_LIGHTNING:
-				max = 100;
-				break;
-			case WP_RAILGUN:
-				max = 10;
-				break;
-			case WP_PLASMAGUN:
-				max = 50;
-				break;
-			case WP_BFG:
-				max = 10;
-				break;
-			case WP_NAILGUN:
-				max = 10;
-				break;
-			case WP_PROX_LAUNCHER:
-				max = 5;
-				break;
-			case WP_CHAINGUN:
-				max = 100;
-				break;
-			default:
-				max = 1;
-				break;
-		}
+		max = CG_GetWeaponMaxAmmo( i );
 
 		ammo = ( ammo * 100 ) / max;
 
@@ -2640,11 +2334,7 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 				i = 0;
 			continue;
 		}
-		if ( cg_predictAmmo.integer ) {
-			ammoSaved = cg.predictedPlayerState.ammo[i];
-		} else {
-			ammoSaved = cg.snap->ps.ammo[i];
-		}
+		ammoSaved = CG_GetWeaponAmmo( i );
 
 		if ( i == cg.weaponSelect ) {
 			if ( cg.lowAmmoWarning == 1 ) {

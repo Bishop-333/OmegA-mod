@@ -335,7 +335,7 @@ static int propMapB[26][3] = {
 
 /*
 =================
-UI_DrawBannerString
+UI_DrawBannerString2
 =================
 */
 static void UI_DrawBannerString2( int x, int y, const char *str, vec4_t color ) {
@@ -378,6 +378,11 @@ static void UI_DrawBannerString2( int x, int y, const char *str, vec4_t color ) 
 	trap_R_SetColor( NULL );
 }
 
+/*
+=================
+UI_DrawBannerString
+=================
+*/
 void UI_DrawBannerString( int x, int y, const char *str, int style, vec4_t color ) {
 	const char *s;
 	int ch;
@@ -421,6 +426,11 @@ void UI_DrawBannerString( int x, int y, const char *str, int style, vec4_t color
 	UI_DrawBannerString2( x, y, str, color );
 }
 
+/*
+=================
+UI_ProportionalStringWidth
+=================
+*/
 int UI_ProportionalStringWidth( const char *str ) {
 	const char *s;
 	int ch;
@@ -443,6 +453,11 @@ int UI_ProportionalStringWidth( const char *str ) {
 	return width;
 }
 
+/*
+=================
+UI_DrawProportionalString2
+=================
+*/
 static void UI_DrawProportionalString2( float x, float y, const char *str, vec4_t color, float sizeScale, qhandle_t charset ) {
 	const char *s;
 	unsigned char ch;

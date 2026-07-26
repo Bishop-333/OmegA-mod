@@ -1467,8 +1467,8 @@ ArenaServers_MenuDraw
 */
 static void ArenaServers_MenuDraw( void ) {
 	int dots;
-	float background[4] = { 0.0f, 0.0f, 0.05f, 0.75f };
-	float border[4] = { 0.125f, 0.125f, 0.125f, 1.0f };
+	vec4_t background = { 0.0f, 0.0f, 0.05f, 0.75f };
+	vec4_t border = { 0.125f, 0.125f, 0.125f, 1.0f };
 
 	if ( g_arenaservers.refreshservers )
 		ArenaServers_DoRefresh();

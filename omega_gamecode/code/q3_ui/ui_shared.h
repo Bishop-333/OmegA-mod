@@ -303,7 +303,6 @@ typedef struct {
 	qhandle_t fxBasePic;
 	qhandle_t fxPic[7];
 	qhandle_t crosshairShader[NUM_CROSSHAIRS];
-
 } cachedAssets_t;
 
 typedef struct {
@@ -378,7 +377,6 @@ typedef struct {
 	qhandle_t gradientImage;
 	qhandle_t cursor;
 	float FPS;
-
 } displayContextDef_t;
 
 const char *String_Alloc( const char *p );

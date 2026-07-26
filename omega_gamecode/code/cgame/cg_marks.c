@@ -409,6 +409,76 @@ void CG_ClearParticles( void ) {
 
 /*
 =====================
+CG_GenerateSpriteQuad
+=====================
+*/
+static void CG_GenerateSpriteQuad( cparticle_t *p, vec3_t org, float width, float height, polyVert_t *verts ) {
+	vec3_t point, rr, ru;
+	vec3_t rotate_ang;
+
+	if ( p->roll ) {
+		vectoangles( cg.refdef.viewaxis[0], rotate_ang );
+		rotate_ang[ROLL] += p->roll;
+		AngleVectors( rotate_ang, NULL, rr, ru );
+	}
+
+	if ( p->roll ) {
+		VectorMA( org, -height, ru, point );
+		VectorMA( point, -width, rr, point );
+	} else {
+		VectorMA( org, -height, pvup, point );
+		VectorMA( point, -width, pvright, point );
+	}
+	VectorCopy( point, verts[0].xyz );
+	verts[0].st[0] = 0;
+	verts[0].st[1] = 0;
+	verts[0].modulate[0] = 255;
+	verts[0].modulate[1] = 255;
+	verts[0].modulate[2] = 255;
+	verts[0].modulate[3] = 255;
+
+	if ( p->roll ) {
+		VectorMA( point, 2 * height, ru, point );
+	} else {
+		VectorMA( point, 2 * height, pvup, point );
+	}
+	VectorCopy( point, verts[1].xyz );
+	verts[1].st[0] = 0;
+	verts[1].st[1] = 1;
+	verts[1].modulate[0] = 255;
+	verts[1].modulate[1] = 255;
+	verts[1].modulate[2] = 255;
+	verts[1].modulate[3] = 255;
+
+	if ( p->roll ) {
+		VectorMA( point, 2 * width, rr, point );
+	} else {
+		VectorMA( point, 2 * width, pvright, point );
+	}
+	VectorCopy( point, verts[2].xyz );
+	verts[2].st[0] = 1;
+	verts[2].st[1] = 1;
+	verts[2].modulate[0] = 255;
+	verts[2].modulate[1] = 255;
+	verts[2].modulate[2] = 255;
+	verts[2].modulate[3] = 255;
+
+	if ( p->roll ) {
+		VectorMA( point, -2 * height, ru, point );
+	} else {
+		VectorMA( point, -2 * height, pvup, point );
+	}
+	VectorCopy( point, verts[3].xyz );
+	verts[3].st[0] = 1;
+	verts[3].st[1] = 0;
+	verts[3].modulate[0] = 255;
+	verts[3].modulate[1] = 255;
+	verts[3].modulate[2] = 255;
+	verts[3].modulate[3] = 255;
+}
+
+/*
+=====================
 CG_AddParticleToScene
 =====================
 */
@@ -541,8 +611,6 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 		}
 
 	} else if ( p->type == P_SPRITE ) {
-		vec3_t rr, ru;
-		vec3_t rotate_ang;
 
 		VectorSet( color, 1.0, 1.0, 0.5 );
 		time = cg.time - p->time;
@@ -552,65 +620,7 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 		width = p->width + ( ratio * ( p->endwidth - p->width ) );
 		height = p->height + ( ratio * ( p->endheight - p->height ) );
 
-		if ( p->roll ) {
-			vectoangles( cg.refdef.viewaxis[0], rotate_ang );
-			rotate_ang[ROLL] += p->roll;
-			AngleVectors( rotate_ang, NULL, rr, ru );
-		}
-
-		if ( p->roll ) {
-			VectorMA( org, -height, ru, point );
-			VectorMA( point, -width, rr, point );
-		} else {
-			VectorMA( org, -height, pvup, point );
-			VectorMA( point, -width, pvright, point );
-		}
-		VectorCopy( point, verts[0].xyz );
-		verts[0].st[0] = 0;
-		verts[0].st[1] = 0;
-		verts[0].modulate[0] = 255;
-		verts[0].modulate[1] = 255;
-		verts[0].modulate[2] = 255;
-		verts[0].modulate[3] = 255;
-
-		if ( p->roll ) {
-			VectorMA( point, 2 * height, ru, point );
-		} else {
-			VectorMA( point, 2 * height, pvup, point );
-		}
-		VectorCopy( point, verts[1].xyz );
-		verts[1].st[0] = 0;
-		verts[1].st[1] = 1;
-		verts[1].modulate[0] = 255;
-		verts[1].modulate[1] = 255;
-		verts[1].modulate[2] = 255;
-		verts[1].modulate[3] = 255;
-
-		if ( p->roll ) {
-			VectorMA( point, 2 * width, rr, point );
-		} else {
-			VectorMA( point, 2 * width, pvright, point );
-		}
-		VectorCopy( point, verts[2].xyz );
-		verts[2].st[0] = 1;
-		verts[2].st[1] = 1;
-		verts[2].modulate[0] = 255;
-		verts[2].modulate[1] = 255;
-		verts[2].modulate[2] = 255;
-		verts[2].modulate[3] = 255;
-
-		if ( p->roll ) {
-			VectorMA( point, -2 * height, ru, point );
-		} else {
-			VectorMA( point, -2 * height, pvup, point );
-		}
-		VectorCopy( point, verts[3].xyz );
-		verts[3].st[0] = 1;
-		verts[3].st[1] = 0;
-		verts[3].modulate[0] = 255;
-		verts[3].modulate[1] = 255;
-		verts[3].modulate[2] = 255;
-		verts[3].modulate[3] = 255;
+		CG_GenerateSpriteQuad( p, org, width, height, verts );
 	} else if ( p->type == P_SMOKE || p->type == P_SMOKE_IMPACT ) { // create a front rotating facing polygon
 
 		if ( p->type == P_SMOKE_IMPACT && DistanceSquared( cg.snap->ps.origin, org ) > Square( 1024 ) ) {
@@ -903,8 +913,6 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 	}
 	// Ridah
 	else if ( p->type == P_ANIM ) {
-		vec3_t rr, ru;
-		vec3_t rotate_ang;
 		int i, j;
 
 		time = cg.time - p->time;
@@ -926,65 +934,7 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 		j = (int)floor( ratio * shaderAnimCounts[p->shaderAnim] );
 		p->pshader = shaderAnims[i][j];
 
-		if ( p->roll ) {
-			vectoangles( cg.refdef.viewaxis[0], rotate_ang );
-			rotate_ang[ROLL] += p->roll;
-			AngleVectors( rotate_ang, NULL, rr, ru );
-		}
-
-		if ( p->roll ) {
-			VectorMA( org, -height, ru, point );
-			VectorMA( point, -width, rr, point );
-		} else {
-			VectorMA( org, -height, pvup, point );
-			VectorMA( point, -width, pvright, point );
-		}
-		VectorCopy( point, verts[0].xyz );
-		verts[0].st[0] = 0;
-		verts[0].st[1] = 0;
-		verts[0].modulate[0] = 255;
-		verts[0].modulate[1] = 255;
-		verts[0].modulate[2] = 255;
-		verts[0].modulate[3] = 255;
-
-		if ( p->roll ) {
-			VectorMA( point, 2 * height, ru, point );
-		} else {
-			VectorMA( point, 2 * height, pvup, point );
-		}
-		VectorCopy( point, verts[1].xyz );
-		verts[1].st[0] = 0;
-		verts[1].st[1] = 1;
-		verts[1].modulate[0] = 255;
-		verts[1].modulate[1] = 255;
-		verts[1].modulate[2] = 255;
-		verts[1].modulate[3] = 255;
-
-		if ( p->roll ) {
-			VectorMA( point, 2 * width, rr, point );
-		} else {
-			VectorMA( point, 2 * width, pvright, point );
-		}
-		VectorCopy( point, verts[2].xyz );
-		verts[2].st[0] = 1;
-		verts[2].st[1] = 1;
-		verts[2].modulate[0] = 255;
-		verts[2].modulate[1] = 255;
-		verts[2].modulate[2] = 255;
-		verts[2].modulate[3] = 255;
-
-		if ( p->roll ) {
-			VectorMA( point, -2 * height, ru, point );
-		} else {
-			VectorMA( point, -2 * height, pvup, point );
-		}
-		VectorCopy( point, verts[3].xyz );
-		verts[3].st[0] = 1;
-		verts[3].st[1] = 0;
-		verts[3].modulate[0] = 255;
-		verts[3].modulate[1] = 255;
-		verts[3].modulate[2] = 255;
-		verts[3].modulate[3] = 255;
+		CG_GenerateSpriteQuad( p, org, width, height, verts );
 	}
 	// done.
 

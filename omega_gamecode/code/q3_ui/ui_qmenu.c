@@ -636,7 +636,6 @@ static void Slider_Draw( menuslider_s *s ) {
 	int y;
 	int style;
 	float *color;
-	int button;
 	qboolean focus;
 	int cursorx;
 	float value;
