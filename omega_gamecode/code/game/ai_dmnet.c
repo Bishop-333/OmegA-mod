@@ -1052,6 +1052,96 @@ static int BotLTG_Obelisk( bot_state_t *bs, int tfl, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_Harvester
+==================
+*/
+static int BotLTG_Harvester( bot_state_t *bs, bot_goal_t *goal ) {
+	//if rushing to the base
+	if ( bs->ltgtype == LTG_RUSHBASE ) {
+		switch ( BotTeam( bs ) ) {
+			case TEAM_RED:
+				memcpy( goal, &blueobelisk, sizeof( bot_goal_t ) );
+				break;
+			case TEAM_BLUE:
+				memcpy( goal, &redobelisk, sizeof( bot_goal_t ) );
+				break;
+			default:
+				BotGoHarvest( bs );
+				return qfalse;
+		}
+		//if not carrying any cubes
+		if ( !BotHarvesterCarryingCubes( bs ) ) {
+			BotGoHarvest( bs );
+			return qfalse;
+		}
+		//quit rushing after 2 minutes
+		if ( bs->teamgoal_time < FloatTime() ) {
+			BotGoHarvest( bs );
+			return qfalse;
+		}
+		//if touching the base flag the bot should loose the enemy flag
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			BotGoHarvest( bs );
+			return qfalse;
+		}
+		BotAlternateRoute( bs, goal );
+		return qtrue;
+	}
+	//attack the enemy base
+	if ( bs->ltgtype == LTG_ATTACKENEMYBASE &&
+	     bs->attackaway_time < FloatTime() ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			BotAI_BotInitialChat( bs, "attackenemybase_start", NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		switch ( BotTeam( bs ) ) {
+			case TEAM_RED:
+				memcpy( goal, &blueobelisk, sizeof( bot_goal_t ) );
+				break;
+			case TEAM_BLUE:
+				memcpy( goal, &redobelisk, sizeof( bot_goal_t ) );
+				break;
+			default:
+				bs->ltgtype = 0;
+				return qfalse;
+		}
+		//quit rushing after 2 minutes
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		//if touching the base flag the bot should loose the enemy flag
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			bs->attackaway_time = FloatTime() + 2 + 5 * random();
+		}
+		return qtrue;
+	}
+	//harvest cubes
+	if ( bs->ltgtype == LTG_HARVEST &&
+	     bs->harvestaway_time < FloatTime() ) {
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			BotAI_BotInitialChat( bs, "harvest_start", NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		memcpy( goal, &neutralobelisk, sizeof( bot_goal_t ) );
+		//
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		//
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			bs->harvestaway_time = FloatTime() + 4 + 3 * random();
+		}
+		return qtrue;
+	}
+	return qfalse;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
