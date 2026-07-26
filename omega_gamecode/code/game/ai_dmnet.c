@@ -1000,6 +1000,58 @@ static int BotLTG_1FCTF( bot_state_t *bs, int tfl, bot_goal_t *goal ) {
 
 /*
 ==================
+BotLTG_Obelisk
+==================
+*/
+static int BotLTG_Obelisk( bot_state_t *bs, int tfl, bot_goal_t *goal ) {
+	vec3_t dir;
+
+	if ( bs->ltgtype == LTG_ATTACKENEMYBASE &&
+	     bs->attackaway_time < FloatTime() ) {
+
+		//check for bot typing status message
+		if ( bs->teammessage_time && bs->teammessage_time < FloatTime() ) {
+			BotAI_BotInitialChat( bs, "attackenemybase_start", NULL );
+			trap_BotEnterChat( bs->cs, 0, CHAT_TEAM );
+			bs->teammessage_time = 0;
+		}
+		switch ( BotTeam( bs ) ) {
+			case TEAM_RED:
+				memcpy( goal, &blueobelisk, sizeof( bot_goal_t ) );
+				break;
+			case TEAM_BLUE:
+				memcpy( goal, &redobelisk, sizeof( bot_goal_t ) );
+				break;
+			default:
+				bs->ltgtype = 0;
+				return qfalse;
+		}
+		//if the bot no longer wants to attack the obelisk
+		if ( BotFeelingBad( bs ) > 50 ) {
+			return BotGetItemLongTermGoal( bs, tfl, goal );
+		}
+		//if touching the obelisk
+		if ( trap_BotTouchingGoal( bs->origin, goal ) ) {
+			bs->attackaway_time = FloatTime() + 3 + 5 * random();
+		}
+		// or very close to the obelisk
+		VectorSubtract( bs->origin, goal->origin, dir );
+		if ( VectorLengthSquared( dir ) < Square( 60 ) ) {
+			bs->attackaway_time = FloatTime() + 3 + 5 * random();
+		}
+		//quit rushing after 2 minutes
+		if ( bs->teamgoal_time < FloatTime() ) {
+			bs->ltgtype = 0;
+		}
+		BotAlternateRoute( bs, goal );
+		//just move towards the obelisk
+		return qtrue;
+	}
+	return qfalse;
+}
+
+/*
+==================
 BotGetLongTermGoal
 
 we could also create a separate AI node for every long term goal type
