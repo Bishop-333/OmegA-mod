@@ -1737,4 +1737,16 @@ void CG_ParticleExplosion( char *animStr, vec3_t origin, vec3_t vel, int duratio
 extern qboolean initparticles;
 int CG_NewParticleArea( int num );
 
+// extension interface
+extern qboolean can_trap_Cvar_SetDescription;
+
+#ifdef Q3_VM
+extern void (*trap_Cvar_SetDescription)( const char *var_name, const char *var_description );
+#else
+qboolean trap_GetValue( char *value, int valueSize, const char *key );
+void trap_Cvar_SetDescription( const char *var_name, const char *var_description );
+extern int dll_com_trapGetValue;
+extern int dll_trap_Cvar_SetDescription;
+#endif
+
 // LEILEI ENHANCEMENT

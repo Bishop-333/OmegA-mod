@@ -34,6 +34,17 @@ int teamSoundsModificationCount = -1;
 void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum );
 void CG_Shutdown( void );
 
+// extension interface
+qboolean can_trap_Cvar_SetDescription = qfalse;
+
+#ifdef Q3_VM
+qboolean (*trap_GetValue)( char *value, int valueSize, const char *key );
+void (*trap_Cvar_SetDescription)( const char *var_name, const char *var_description );
+#else
+int dll_com_trapGetValue;
+int dll_trap_Cvar_SetDescription;
+#endif
+
 /*
 ================
 vmMain
@@ -92,6 +103,7 @@ typedef struct {
 	char *cvarName;
 	char *defaultString;
 	int cvarFlags;
+	const char *description;
 } cvarTable_t;
 
 static cvarTable_t cvarTable[] = {
@@ -117,6 +129,9 @@ static void CG_RegisterCvars( void ) {
 	for ( i = 0, cv = cvarTable; i < cvarTableSize; i++, cv++ ) {
 		trap_Cvar_Register( cv->vmCvar, cv->cvarName,
 		                    cv->defaultString, cv->cvarFlags );
+		if ( can_trap_Cvar_SetDescription && cv->description ) {
+			trap_Cvar_SetDescription( cv->cvarName, cv->description );
+		}
 	}
 
 	// see if we are also running the server on this machine
@@ -1066,6 +1081,7 @@ Will perform callbacks to make the loading info screen update.
 =================
 */
 void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
+	char  value[MAX_CVAR_VALUE_STRING];
 	const char *s;
 
 	// clear everything
@@ -1079,6 +1095,23 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 
 	cgs.processedSnapshotNum = serverMessageNum;
 	cgs.serverCommandSequence = serverCommandSequence;
+
+	trap_Cvar_VariableStringBuffer( "//trap_GetValue", value, sizeof( value ) );
+	if ( value[0] ) {
+#ifdef Q3_VM
+		trap_GetValue = (void*)~atoi( value );
+		if ( trap_GetValue( value, sizeof( value ), "trap_Cvar_SetDescription_Q3E" ) ) {
+			trap_Cvar_SetDescription = (void*)~atoi( value );
+			can_trap_Cvar_SetDescription = qtrue;
+		}
+#else
+		dll_com_trapGetValue = atoi( value );
+		if ( trap_GetValue( value, sizeof( value ), "trap_Cvar_SetDescription_Q3E" ) ) {
+			dll_trap_Cvar_SetDescription = atoi( value );
+			can_trap_Cvar_SetDescription = qtrue;
+		}
+#endif
+	}
 
 	// load a few needed things before we do any screen updates
 	cgs.media.charsetShader = trap_R_RegisterShader( "gfx/2d/bigchars" );
