@@ -219,9 +219,6 @@ static char *fillPlaceHolder( char *stringToSearch, char *placeHolder, char *rep
 	if ( !( p = strstr( stringToSearch, placeHolder ) ) )
 		return stringToSearch;
 
-	strncpy( output, stringToSearch, p - stringToSearch );
-	output[p - stringToSearch] = '\0';
-
 	Com_sprintf( output, MAX_SAY_TEXT, "%.*s%s%s", (int)( p - stringToSearch ), stringToSearch, replaceWith, p + strlen( placeHolder ) );
 
 	return output;
