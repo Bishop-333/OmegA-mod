@@ -66,7 +66,6 @@ G_CVAR( g_redrespawntime, "g_redrespawntime", "0", CVAR_ARCHIVE, 0, qtrue, qfals
 G_CVAR( g_inactivity, "g_inactivity", "0", 0, 0, qtrue, qfalse )
 G_CVAR( g_debugMove, "g_debugMove", "0", 0, 0, qfalse, qfalse )
 G_CVAR( g_debugDamage, "g_debugDamage", "0", 0, 0, qfalse, qfalse )
-G_CVAR( g_debugAlloc, "g_debugAlloc", "0", 0, 0, qfalse, qfalse )
 G_CVAR( g_motd, "g_motd", "", 0, 0, qfalse, qfalse )
 G_CVAR( g_motdfile, "g_motdfile", "motd.cfg", 0, 0, qfalse, qfalse )
 G_CVAR( g_blood, "com_blood", "2", 0, 0, qfalse, qfalse )
@@ -114,7 +113,6 @@ G_CVAR( sv_fps, "sv_fps", "40", CVAR_SYSTEMINFO | CVAR_ARCHIVE, 0, qfalse, qfals
 G_CVAR( g_lagLightning, "g_lagLightning", "0", CVAR_ARCHIVE, 0, qtrue, qfalse )
 //unlagged - server options
 
-G_CVAR( g_rankings, "g_rankings", "0", 0, 0, qfalse, qfalse )
 G_CVAR( g_localTeamPref, "g_localTeamPref", "", 0, 0, qfalse, qfalse )
 G_CVAR( g_music, "g_music", "", 0, 0, qfalse, qfalse )
 G_CVAR( g_spawnprotect, "g_spawnprotect", "1000", CVAR_ARCHIVE | CVAR_NORESTART, 0, qtrue, qfalse )
@@ -175,9 +173,6 @@ G_CVAR( g_mappools, "g_mappools", "0\\maps_dm.cfg\\1\\maps_tourney.cfg\\3\\maps_
 \\7\\maps_harvester.cfg\\8\\maps_elimination.cfg\\9\\maps_ctf.cfg\\10\\maps_lms.cfg\\11\\maps_dd.cfg\\12\\maps_dom.cfg\\13\\maps_dm.cfg\\",
         CVAR_ARCHIVE | CVAR_NORESTART, 0, qfalse, qfalse )
 G_CVAR( g_humanplayers, "g_humanplayers", "0", CVAR_ROM | CVAR_NORESTART, 0, qfalse, qfalse )
-//used for voIP
-G_CVAR( g_redTeamClientNumbers, "g_redTeamClientNumbers", "0", CVAR_ROM, 0, qfalse, qfalse )
-G_CVAR( g_blueTeamClientNumbers, "g_blueTeamClientNumbers", "0", CVAR_ROM, 0, qfalse, qfalse )
 
 //KK-OAX
 G_CVAR( g_sprees, "g_sprees", "sprees.dat", 0, 0, qfalse, qfalse )
@@ -196,7 +191,6 @@ G_CVAR( g_adminNameProtect, "g_adminNameProtect", "1", CVAR_ARCHIVE, 0, qfalse, 
 G_CVAR( g_adminTempBan, "g_adminTempBan", "2m", CVAR_ARCHIVE, 0, qfalse, qfalse )
 G_CVAR( g_adminMaxBan, "g_adminMaxBan", "2w", CVAR_ARCHIVE, 0, qfalse, qfalse )
 
-G_CVAR( g_specChat, "g_specChat", "1", CVAR_ARCHIVE, 0, qfalse, qfalse )
 G_CVAR( g_publicAdminMessages, "g_publicAdminMessages", "1", CVAR_ARCHIVE, 0, qfalse, qfalse )
 
 G_CVAR( g_maxWarnings, "g_maxWarnings", "3", CVAR_ARCHIVE, 0, qfalse, qfalse )
@@ -204,8 +198,6 @@ G_CVAR( g_warningExpire, "g_warningExpire", "3600", CVAR_ARCHIVE, 0, qfalse, qfa
 
 G_CVAR( g_minNameChangePeriod, "g_minNameChangePeriod", "10", 0, 0, qfalse, qfalse )
 G_CVAR( g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse, qfalse )
-
-G_CVAR( g_timestamp_startgame, "g_timestamp", "0001-01-01 00:00:00", CVAR_SERVERINFO, 0, qfalse, qfalse )
 
 G_CVAR( g_grapple, "g_grapple", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse, qfalse )
 G_CVAR( g_harvesterFromBodies, "g_harvesterFromBodies", "0", CVAR_ARCHIVE, 0, qfalse, qfalse )

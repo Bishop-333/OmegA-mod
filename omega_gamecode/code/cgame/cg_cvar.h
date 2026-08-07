@@ -10,7 +10,6 @@
 #define CG_CVAR( vmCvar, cvarName, defaultString, cvarFlags, description ) { &vmCvar, cvarName, defaultString, cvarFlags, description },
 #endif
 
-CG_CVAR( cg_ignore, "cg_ignore", "0", 0, NULL ) // used for debugging
 CG_CVAR( cg_autoswitch, "cg_autoswitch", "0", CVAR_ARCHIVE, "Toggle auto-switch weapons on pick-up." )
 CG_CVAR( cg_drawGun, "cg_drawGun", "1", CVAR_ARCHIVE, "Toggles the gun being drawn." )
 CG_CVAR( cg_zoomFov, "cg_zoomfov", "22.5", CVAR_ARCHIVE, "Sets your zoom fov." )
@@ -73,7 +72,6 @@ CG_CVAR( cg_forceModel, "cg_forceModel", "0", CVAR_ARCHIVE, "Force your team to 
 CG_CVAR( cg_predictItems, "cg_predictItems", "1", CVAR_ARCHIVE, "Toggle client-side item prediction." )
 CG_CVAR( cg_deferPlayers, "cg_deferPlayers", "0", CVAR_ARCHIVE, "Prevents the \"hitch\" effect when a player using a new model or skin joins the game after you." )
 CG_CVAR( cg_drawTeamOverlay, "cg_drawTeamOverlay", "0", CVAR_ARCHIVE, "Sets the display location of the team status overlay." )
-CG_CVAR( cg_teamOverlayUserinfo, "teamoverlay", "0", CVAR_ROM | CVAR_USERINFO, NULL )
 CG_CVAR( cg_stats, "cg_stats", "0", 0, NULL )
 CG_CVAR( cg_drawFriend, "cg_drawFriend", "2", CVAR_ARCHIVE, "Toggles the display of a triangle above your team mates." )
 CG_CVAR( cg_teamChatsOnly, "cg_teamChatsOnly", "0", CVAR_ARCHIVE, "Toggles the display of team chats only." )
@@ -107,8 +105,6 @@ CG_CVAR( pmove_fixed, "pmove_fixed", "0", CVAR_SYSTEMINFO, "Fixes the FPS jump b
 CG_CVAR( pmove_msec, "pmove_msec", "8", CVAR_SYSTEMINFO, "Sets the waiting time in milliseconds before calling pmove() again. Can only be used when pmove_fixed is \"1\"." )
 CG_CVAR( pmove_float, "pmove_float", "1", CVAR_SYSTEMINFO, NULL )
 CG_CVAR( cg_noProjectileTrail, "cg_noProjectileTrail", "0", CVAR_ARCHIVE, "Removes underwater bubble trails from weapon fire." )
-CG_CVAR( cg_smallFont, "ui_smallFont", "0.25", CVAR_ARCHIVE, NULL )
-CG_CVAR( cg_bigFont, "ui_bigFont", "0.4", CVAR_ARCHIVE, NULL )
 CG_CVAR( cg_oldRail, "cg_oldRail", "0", CVAR_ARCHIVE, "Sets the style of the rail gun." )
 CG_CVAR( cg_oldRocket, "cg_oldRocket", "1", CVAR_ARCHIVE, "Sets the style of rocket explosions." )
 CG_CVAR( cg_leiEnhancement, "cg_leiEnhancement", "0", CVAR_ARCHIVE, NULL )             // LEILEI default off (in case of wiener)
