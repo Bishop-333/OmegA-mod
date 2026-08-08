@@ -1631,6 +1631,10 @@ qboolean G_RailJump( vec3_t origin, gentity_t *attacker ) {
 		return qfalse;
 	}
 
+	if ( attacker->client->ps.powerups[PW_QUAD] ) {
+		damage *= 4.0f;
+	}
+
 	points = damage * ( 1.0 - dist / radius );
 
 	if ( CanDamage( attacker, origin ) ) {
