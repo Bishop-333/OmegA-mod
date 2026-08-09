@@ -14,6 +14,7 @@ CG_CVAR( cg_autoswitch, "cg_autoswitch", "0", CVAR_ARCHIVE, "Toggle auto-switch 
 CG_CVAR( cg_drawGun, "cg_drawGun", "1", CVAR_ARCHIVE, "Toggles the gun being drawn." )
 CG_CVAR( cg_zoomFov, "cg_zoomfov", "22.5", CVAR_ARCHIVE, "Sets your zoom fov." )
 CG_CVAR( cg_fov, "cg_fov", "110", CVAR_ARCHIVE, "Field of view. Higher values give better peripheral vision while lower values give better frontal vision." )
+CG_CVAR( cg_horplus, "cg_horplus", "0", CVAR_ARCHIVE, NULL )
 CG_CVAR( cg_viewsize, "cg_viewsize", "100", CVAR_ARCHIVE, "Sets the used display size." )
 CG_CVAR( cg_shadows, "cg_shadows", "1", CVAR_ARCHIVE, "Player shadows." )
 CG_CVAR( cg_gibs, "cg_gibs", "1", CVAR_ARCHIVE, "Gibs and blood splatter effect." )
