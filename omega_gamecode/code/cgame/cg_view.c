@@ -921,8 +921,8 @@ CG_SpecZooming
 */
 static void CG_SpecZooming( void ) {
 	if ( cg.specZoomed ) {
-		if ( !cg_showSpecZoom.integer || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR || !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
-			// reset zoom if we are a free spectator;
+		if ( !cg_showSpecZoom.integer || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR || ( !( cg.snap->ps.pm_flags & PMF_FOLLOW ) && !cg.demoPlayback ) ) {
+			// reset spectator zoom if we are in free spec / not following anyone
 			cg.zoomed = qfalse;
 			cg.specZoomed = qfalse;
 			cg.zoomTime = cg.time;
@@ -935,7 +935,7 @@ static void CG_SpecZooming( void ) {
 		}
 	}
 
-	if ( !cg_showSpecZoom.integer || !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
+	if ( !cg_showSpecZoom.integer || ( !( cg.snap->ps.pm_flags & PMF_FOLLOW ) && !cg.demoPlayback ) ) {
 		return;
 	}
 
