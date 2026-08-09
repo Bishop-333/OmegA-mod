@@ -433,6 +433,10 @@ qboolean trap_GetValue( char *value, int valueSize, const char *key ) {
 	return syscall( dll_com_trapGetValue, value, valueSize, key );
 }
 
+void trap_R_AddLinearLightToScene( const vec3_t start, const vec3_t end, float intensity, float r, float g, float b ) {
+	syscall( dll_trap_R_AddLinearLightToScene, start, end, intensity, r, g, b );
+}
+
 void trap_Cvar_SetDescription( const char *var_name, const char *var_description ) {
 	syscall( dll_trap_Cvar_SetDescription, var_name, var_description );
 }

@@ -39,6 +39,7 @@ CG_CVAR( cg_simpleItems, "cg_simpleItems", "0", CVAR_ARCHIVE, "Simple 2D items."
 CG_CVAR( cg_addMarks, "cg_marks", "1", CVAR_ARCHIVE, "Milliseconds marks after explosions are visible." )
 CG_CVAR( cg_lagometer, "cg_lagometer", "1", CVAR_ARCHIVE, "Toggles the display of the Lag-O-Meter in the bottom right corner." )
 CG_CVAR( cg_railTrailTime, "cg_railTrailTime", "400", CVAR_ARCHIVE, "Rail time in milliseconds." )
+CG_CVAR( cg_railTrailRadius, "cg_railTrailRadius", "75", CVAR_ARCHIVE, NULL )
 CG_CVAR( cg_gun_frame, "cg_gun_frame", "", CVAR_ROM, NULL )
 CG_CVAR( cg_gun_x, "cg_gunX", "0", CVAR_ARCHIVE, "Adjusts the X axis weapon position." )
 CG_CVAR( cg_gun_y, "cg_gunY", "0", CVAR_ARCHIVE, "Adjusts the Y axis weapon position." )
