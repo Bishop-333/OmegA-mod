@@ -1,13 +1,13 @@
 #ifdef EXTERN_UI_CVAR
-	#define UI_CVAR( vmCvar, cvarName, defaultString, cvarFlags ) extern vmCvar_t vmCvar;
+#define UI_CVAR( vmCvar, cvarName, defaultString, cvarFlags ) extern vmCvar_t vmCvar;
 #endif
 
 #ifdef DECLARE_UI_CVAR
-	#define UI_CVAR( vmCvar, cvarName, defaultString, cvarFlags ) vmCvar_t vmCvar;
+#define UI_CVAR( vmCvar, cvarName, defaultString, cvarFlags ) vmCvar_t vmCvar;
 #endif
 
 #ifdef UI_CVAR_LIST
-	#define UI_CVAR( vmCvar, cvarName, defaultString, cvarFlags ) { & vmCvar, cvarName, defaultString, cvarFlags },
+#define UI_CVAR( vmCvar, cvarName, defaultString, cvarFlags ) { &vmCvar, cvarName, defaultString, cvarFlags },
 #endif
 
 UI_CVAR( ui_ffa_fraglimit, "ui_ffa_fraglimit", "20", CVAR_ARCHIVE )
@@ -16,19 +16,19 @@ UI_CVAR( ui_ffa_timelimit, "ui_ffa_timelimit", "0", CVAR_ARCHIVE )
 UI_CVAR( ui_tourney_fraglimit, "ui_tourney_fraglimit", "0", CVAR_ARCHIVE )
 UI_CVAR( ui_tourney_timelimit, "ui_tourney_timelimit", "15", CVAR_ARCHIVE )
 
-UI_CVAR(ui_team_fraglimit, "ui_team_fraglimit", "0", CVAR_ARCHIVE )
+UI_CVAR( ui_team_fraglimit, "ui_team_fraglimit", "0", CVAR_ARCHIVE )
 UI_CVAR( ui_team_timelimit, "ui_team_timelimit", "20", CVAR_ARCHIVE )
 UI_CVAR( ui_team_friendly, "ui_team_friendly", "1", CVAR_ARCHIVE )
 
-UI_CVAR(ui_ctf_capturelimit, "ui_ctf_capturelimit", "8", CVAR_ARCHIVE )
+UI_CVAR( ui_ctf_capturelimit, "ui_ctf_capturelimit", "8", CVAR_ARCHIVE )
 UI_CVAR( ui_ctf_timelimit, "ui_ctf_timelimit", "30", CVAR_ARCHIVE )
 UI_CVAR( ui_ctf_friendly, "ui_ctf_friendly", "0", CVAR_ARCHIVE )
 
-UI_CVAR(ui_1fctf_capturelimit, "ui_1fctf_capturelimit", "8", CVAR_ARCHIVE )
+UI_CVAR( ui_1fctf_capturelimit, "ui_1fctf_capturelimit", "8", CVAR_ARCHIVE )
 UI_CVAR( ui_1fctf_timelimit, "ui_1fctf_timelimit", "30", CVAR_ARCHIVE )
 UI_CVAR( ui_1fctf_friendly, "ui_1fctf_friendly", "0", CVAR_ARCHIVE )
 
-UI_CVAR(ui_overload_capturelimit, "ui_overload_capturelimit", "8", CVAR_ARCHIVE )
+UI_CVAR( ui_overload_capturelimit, "ui_overload_capturelimit", "8", CVAR_ARCHIVE )
 UI_CVAR( ui_overload_timelimit, "ui_overload_timelimit", "30", CVAR_ARCHIVE )
 UI_CVAR( ui_overload_friendly, "ui_overload_friendly", "0", CVAR_ARCHIVE )
 
@@ -36,7 +36,7 @@ UI_CVAR( ui_harvester_capturelimit, "ui_harvester_capturelimit", "20", CVAR_ARCH
 UI_CVAR( ui_harvester_timelimit, "ui_harvester_timelimit", "30", CVAR_ARCHIVE )
 UI_CVAR( ui_harvester_friendly, "ui_harvester_friendly", "0", CVAR_ARCHIVE )
 
-UI_CVAR(ui_elimination_capturelimit, "ui_elimination_capturelimit", "8", CVAR_ARCHIVE )
+UI_CVAR( ui_elimination_capturelimit, "ui_elimination_capturelimit", "8", CVAR_ARCHIVE )
 UI_CVAR( ui_elimination_timelimit, "ui_elimination_timelimit", "20", CVAR_ARCHIVE )
 
 UI_CVAR( ui_ctf_elimination_capturelimit, "ui_ctf_elimination_capturelimit", "8", CVAR_ARCHIVE )
@@ -45,18 +45,18 @@ UI_CVAR( ui_ctf_elimination_timelimit, "ui_ctf_elimination_timelimit", "30", CVA
 UI_CVAR( ui_lms_fraglimit, "ui_lms_fraglimit", "20", CVAR_ARCHIVE )
 UI_CVAR( ui_lms_timelimit, "ui_lms_timelimit", "0", CVAR_ARCHIVE )
 
-UI_CVAR(ui_dd_capturelimit, "ui_dd_capturelimit", "8", CVAR_ARCHIVE )
+UI_CVAR( ui_dd_capturelimit, "ui_dd_capturelimit", "8", CVAR_ARCHIVE )
 UI_CVAR( ui_dd_timelimit, "ui_dd_timelimit", "30", CVAR_ARCHIVE )
 UI_CVAR( ui_dd_friendly, "ui_dd_friendly", "0", CVAR_ARCHIVE )
 
-UI_CVAR(ui_dom_capturelimit, "ui_dom_capturelimit", "500", CVAR_ARCHIVE )
+UI_CVAR( ui_dom_capturelimit, "ui_dom_capturelimit", "500", CVAR_ARCHIVE )
 UI_CVAR( ui_dom_timelimit, "ui_dom_timelimit", "30", CVAR_ARCHIVE )
 UI_CVAR( ui_dom_friendly, "ui_dom_friendly", "0", CVAR_ARCHIVE )
 
-UI_CVAR(ui_pos_scorelimit, "ui_pos_scorelimit", "300", CVAR_ARCHIVE )
+UI_CVAR( ui_pos_scorelimit, "ui_pos_scorelimit", "300", CVAR_ARCHIVE )
 UI_CVAR( ui_pos_timelimit, "ui_pos_timelimit", "20", CVAR_ARCHIVE )
 
-UI_CVAR(ui_arenasFile, "g_arenasFile", "", CVAR_INIT | CVAR_ROM )
+UI_CVAR( ui_arenasFile, "g_arenasFile", "", CVAR_INIT | CVAR_ROM )
 UI_CVAR( ui_botsFile, "g_botsFile", "", CVAR_INIT | CVAR_ROM )
 UI_CVAR( ui_spScores1, "g_spScores1", "", CVAR_ARCHIVE )
 UI_CVAR( ui_spScores2, "g_spScores2", "", CVAR_ARCHIVE )

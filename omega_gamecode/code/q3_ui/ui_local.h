@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 typedef void ( *voidfunc_f )( void );
 
 #define EXTERN_UI_CVAR
-	#include "ui_cvar.h"
+#include "ui_cvar.h"
 #undef EXTERN_UI_CVAR
 
 //

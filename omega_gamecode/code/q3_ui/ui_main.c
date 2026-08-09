@@ -97,13 +97,13 @@ typedef struct {
 } cvarTable_t;
 
 #define DECLARE_UI_CVAR
-	#include "ui_cvar.h"
+#include "ui_cvar.h"
 #undef DECLARE_UI_CVAR
 
 static cvarTable_t cvarTable[] = {
 
 #define UI_CVAR_LIST
-	#include "ui_cvar.h"
+#include "ui_cvar.h"
 #undef UI_CVAR_LIST
 
 };

@@ -39,9 +39,9 @@ qboolean linearLight = qfalse;
 qboolean can_trap_Cvar_SetDescription = qfalse;
 
 #ifdef Q3_VM
-qboolean (*trap_GetValue)( char *value, int valueSize, const char *key );
-void (*trap_R_AddLinearLightToScene)( const vec3_t start, const vec3_t end, float intensity, float r, float g, float b );
-void (*trap_Cvar_SetDescription)( const char *var_name, const char *var_description );
+qboolean ( *trap_GetValue )( char *value, int valueSize, const char *key );
+void ( *trap_R_AddLinearLightToScene )( const vec3_t start, const vec3_t end, float intensity, float r, float g, float b );
+void ( *trap_Cvar_SetDescription )( const char *var_name, const char *var_description );
 #else
 int dll_com_trapGetValue;
 int dll_trap_Cvar_SetDescription;
@@ -1083,7 +1083,7 @@ Will perform callbacks to make the loading info screen update.
 =================
 */
 void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
-	char  value[MAX_CVAR_VALUE_STRING];
+	char value[MAX_CVAR_VALUE_STRING];
 	const char *s;
 
 	// clear everything
@@ -1101,13 +1101,13 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 	trap_Cvar_VariableStringBuffer( "//trap_GetValue", value, sizeof( value ) );
 	if ( value[0] ) {
 #ifdef Q3_VM
-		trap_GetValue = (void*)~atoi( value );
+		trap_GetValue = (void *)~atoi( value );
 		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddLinearLightToScene_Q3E" ) ) {
-			trap_R_AddLinearLightToScene = (void*)~atoi( value );
+			trap_R_AddLinearLightToScene = (void *)~atoi( value );
 			linearLight = qtrue;
 		}
 		if ( trap_GetValue( value, sizeof( value ), "trap_Cvar_SetDescription_Q3E" ) ) {
-			trap_Cvar_SetDescription = (void*)~atoi( value );
+			trap_Cvar_SetDescription = (void *)~atoi( value );
 			can_trap_Cvar_SetDescription = qtrue;
 		}
 #else
