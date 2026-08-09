@@ -224,6 +224,7 @@ static void CG_Item( centity_t *cent ) {
 	float frac;
 	float scale;
 	weaponInfo_t *wi;
+	int modulus;
 
 	es = &cent->currentState;
 	if ( es->modelindex >= bg_numItems ) {
@@ -252,7 +253,8 @@ static void CG_Item( centity_t *cent ) {
 
 	// items bob up and down continuously
 	scale = 0.005 + cent->currentState.number * 0.00001;
-	cent->lerpOrigin[2] += 4 + cos( ( cg.time + 1000 ) * scale ) * 4;
+	modulus = 2 * M_PI * 20228 / scale;
+	cent->lerpOrigin[2] += 4 + cos( ( ( cg.time + 1000 ) % modulus ) * scale ) * 4;
 
 	memset( &ent, 0, sizeof( ent ) );
 
@@ -394,6 +396,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	float frac;
 	float scale;
 	weaponInfo_t *wi;
+	int modulus;
 
 	// if set to invisible, skip
 	if ( !ci->legsModel || ( cent->currentState.eFlags & EF_NODRAW ) ) {
@@ -424,7 +427,8 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	// items bob up and down continuously
 	if ( item ) {
 		scale = 0.005 + cent->currentState.number * 0.00001;
-		cent->lerpOrigin[2] += -5 + cos( ( cg.time + 1000 ) * scale ) * 4;
+		modulus = 2 * M_PI * 20228 / scale;
+		cent->lerpOrigin[2] += -5 + cos( ( ( cg.time + 1000 ) % modulus ) * scale ) * 4;
 	} else {
 		cent->lerpOrigin[2] -= 24;
 	}
@@ -632,7 +636,7 @@ static void CG_Missile( centity_t *cent ) {
 
 	// spin as it moves
 	if ( s1->pos.trType != TR_STATIONARY ) {
-		RotateAroundDirection( ent.axis, cg.time / 4 );
+		RotateAroundDirection( ent.axis, ( cg.time % TMOD_004 ) / 4.0 );
 	} else {
 		if ( s1->weapon == WP_PROX_LAUNCHER ) {
 			AnglesToAxis( cent->lerpAngles, ent.axis );

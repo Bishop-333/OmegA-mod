@@ -623,7 +623,10 @@ static void CG_AddFadeRGB( localEntity_t *le ) {
 	re->shaderRGBA[2] = le->color[2] * c;
 	re->shaderRGBA[3] = le->color[3] * c;
 
-	trap_R_AddRefEntityToScene( re );
+	if ( intShaderTime )
+		trap_R_AddRefEntityToScene2( re );
+	else
+		trap_R_AddRefEntityToScene( re );
 }
 
 /*
@@ -667,7 +670,10 @@ static void CG_AddMoveScaleFade( localEntity_t *le ) {
 		return;
 	}
 
-	trap_R_AddRefEntityToScene( re );
+	if ( intShaderTime )
+		trap_R_AddRefEntityToScene2( re );
+	else
+		trap_R_AddRefEntityToScene( re );
 }
 
 /*
@@ -702,7 +708,10 @@ static void CG_AddScaleFade( localEntity_t *le ) {
 			return;
 		}
 	}
-	trap_R_AddRefEntityToScene( re );
+	if ( intShaderTime )
+		trap_R_AddRefEntityToScene2( re );
+	else
+		trap_R_AddRefEntityToScene( re );
 }
 
 /*
@@ -742,7 +751,10 @@ static void CG_AddFallScaleFade( localEntity_t *le ) {
 			return;
 		}
 	}
-	trap_R_AddRefEntityToScene( re );
+	if ( intShaderTime )
+		trap_R_AddRefEntityToScene2( re );
+	else
+		trap_R_AddRefEntityToScene( re );
 }
 
 /*
@@ -756,7 +768,10 @@ static void CG_AddExplosion( localEntity_t *ex ) {
 	ent = &ex->refEntity;
 
 	// add the entity
-	trap_R_AddRefEntityToScene( ent );
+	if ( intShaderTime )
+		trap_R_AddRefEntityToScene2( ent );
+	else
+		trap_R_AddRefEntityToScene( ent );
 
 	// add the dlight
 	if ( ex->light ) {
@@ -797,7 +812,10 @@ static void CG_AddSpriteExplosion( localEntity_t *le ) {
 	re.reType = RT_SPRITE;
 	re.radius = 42 * ( 1.0 - c ) + 30;
 
-	trap_R_AddRefEntityToScene( &re );
+	if ( intShaderTime )
+		trap_R_AddRefEntityToScene2( &re );
+	else
+		trap_R_AddRefEntityToScene( &re );
 
 	// add the dlight
 	if ( le->light ) {
@@ -842,7 +860,12 @@ static void CG_AddKamikaze( localEntity_t *le ) {
 		memset( &shockwave, 0, sizeof( shockwave ) );
 		shockwave.hModel = cgs.media.kamikazeShockWave;
 		shockwave.reType = RT_MODEL;
-		shockwave.shaderTime = re->shaderTime;
+
+		if ( intShaderTime )
+			shockwave.u.intShaderTime = re->u.intShaderTime;
+		else
+			shockwave.u.shaderTime = re->u.shaderTime;
+
 		VectorCopy( re->origin, shockwave.origin );
 
 		c = (float)( t - KAMI_SHOCKWAVE_STARTTIME ) / (float)( KAMI_SHOCKWAVE_ENDTIME - KAMI_SHOCKWAVE_STARTTIME );
@@ -907,7 +930,12 @@ static void CG_AddKamikaze( localEntity_t *le ) {
 		memset( &shockwave, 0, sizeof( shockwave ) );
 		shockwave.hModel = cgs.media.kamikazeShockWave;
 		shockwave.reType = RT_MODEL;
-		shockwave.shaderTime = re->shaderTime;
+
+		if ( intShaderTime )
+			shockwave.u.intShaderTime = re->u.intShaderTime;
+		else
+			shockwave.u.shaderTime = re->u.shaderTime;
+
 		VectorCopy( re->origin, shockwave.origin );
 
 		test[0] = le->angles.trBase[0];

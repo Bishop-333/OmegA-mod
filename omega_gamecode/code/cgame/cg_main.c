@@ -35,15 +35,19 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum );
 void CG_Shutdown( void );
 
 // extension interface
+qboolean intShaderTime = qfalse;
 qboolean linearLight = qfalse;
 qboolean can_trap_Cvar_SetDescription = qfalse;
 
 #ifdef Q3_VM
 qboolean ( *trap_GetValue )( char *value, int valueSize, const char *key );
+void ( *trap_R_AddRefEntityToScene2 )( const refEntity_t *re );
 void ( *trap_R_AddLinearLightToScene )( const vec3_t start, const vec3_t end, float intensity, float r, float g, float b );
 void ( *trap_Cvar_SetDescription )( const char *var_name, const char *var_description );
 #else
 int dll_com_trapGetValue;
+int dll_trap_R_AddRefEntityToScene2;
+int dll_trap_R_AddLinearLightToScene;
 int dll_trap_Cvar_SetDescription;
 #endif
 
@@ -1101,17 +1105,25 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 	trap_Cvar_VariableStringBuffer( "//trap_GetValue", value, sizeof( value ) );
 	if ( value[0] ) {
 #ifdef Q3_VM
-		trap_GetValue = (void *)~atoi( value );
+		trap_GetValue = (qboolean ( * )( char *, int, const char * ))~atoi( value );
+		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddRefEntityToScene2" ) ) {
+			trap_R_AddRefEntityToScene2 = (void ( * )( const refEntity_t *re ))~atoi( value );
+			intShaderTime = qtrue;
+		}
 		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddLinearLightToScene_Q3E" ) ) {
-			trap_R_AddLinearLightToScene = (void *)~atoi( value );
+			trap_R_AddLinearLightToScene = (void ( * )( const vec3_t, const vec3_t, float, float, float, float ))~atoi( value );
 			linearLight = qtrue;
 		}
 		if ( trap_GetValue( value, sizeof( value ), "trap_Cvar_SetDescription_Q3E" ) ) {
-			trap_Cvar_SetDescription = (void *)~atoi( value );
+			trap_Cvar_SetDescription = (void ( * )( const char *, const char * ))~atoi( value );
 			can_trap_Cvar_SetDescription = qtrue;
 		}
 #else
 		dll_com_trapGetValue = atoi( value );
+		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddRefEntityToScene2" ) ) {
+			dll_trap_R_AddRefEntityToScene2 = atoi( value );
+			intShaderTime = qtrue;
+		}
 		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddLinearLightToScene_Q3E" ) ) {
 			dll_trap_R_AddLinearLightToScene = atoi( value );
 			linearLight = qtrue;

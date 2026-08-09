@@ -262,8 +262,7 @@ void CG_DrawFlagModel( float x, float y, float w, float h, int team, qboolean fo
 		len = 0.55 * ( maxs[2] - mins[2] );
 		origin[0] = len / 0.268; // len / tan( fov/2 )
 
-		angles[YAW] = cg.time * 45 / 2048.0;
-		;
+		angles[YAW] = ( cg.time % 16384 ) * 45 / 2048.0;
 
 		if ( team == TEAM_RED ) {
 			handle = cgs.media.redFlagModel;
@@ -458,7 +457,7 @@ static void CG_DrawStatusBar( void ) {
 		origin[0] = 70;
 		origin[1] = 0;
 		origin[2] = 0;
-		angles[YAW] = 90 + 20 * sin( cg.time / 1000.0 );
+		angles[YAW] = 90 + 20 * sin( ( cg.time % TMOD_1000 ) / 1000.0 );
 		CG_Draw3DModel( CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cg_weapons[cent->currentState.weapon].ammoModel, 0, origin, angles );
 	}
 

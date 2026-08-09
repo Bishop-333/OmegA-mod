@@ -809,6 +809,12 @@ void BG_InitMemory( void );
 void BG_Free( void *ptr );
 void BG_DefragmentMemory( void );
 
+// calculated by modulus.c for appropriate dividers:
+#define TMOD_004 4272943
+#define TMOD_075 2292106
+#define TMOD_1000 5730265
+#define TMOD_2000 5730265
+
 void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result );
 void BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t result );
 

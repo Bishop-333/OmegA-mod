@@ -561,7 +561,7 @@ static void UI_DrawProportionalStringScale( float x, float y, const char *str, i
 		drawcolor[0] = color[0];
 		drawcolor[1] = color[1];
 		drawcolor[2] = color[2];
-		drawcolor[3] = 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR );
+		drawcolor[3] = 0.5 + 0.5 * sin( ( uis.realtime % TMOD_075 ) / PULSE_DIVISOR );
 		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, uis.charsetPropGlow );
 
 		if ( style & UI_SELECTED ) {
@@ -766,7 +766,7 @@ void UI_DrawString( int x, int y, const char *str, int style, vec4_t color ) {
 		lowlight[1] = 0.8 * color[1];
 		lowlight[2] = 0.8 * color[2];
 		lowlight[3] = 0.8 * color[3];
-		UI_LerpColor( color, lowlight, newcolor, 0.5 + 0.5 * sin( uis.realtime / PULSE_DIVISOR ) );
+		UI_LerpColor( color, lowlight, newcolor, 0.5 + 0.5 * sin( ( uis.realtime % TMOD_075 ) / PULSE_DIVISOR ) );
 		drawcolor = newcolor;
 	} else
 		drawcolor = color;
