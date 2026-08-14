@@ -1066,7 +1066,7 @@ void CG_NewClientInfo( int clientNum ) {
 
 		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
 			// keep skin name
-			slash = strchr( v, '/' );
+			slash = (char *)strchr( v, '/' );
 			if ( slash ) {
 				Q_strncpyz( newInfo.skinName, slash + 1, sizeof( newInfo.skinName ) );
 			}
@@ -1129,7 +1129,7 @@ void CG_NewClientInfo( int clientNum ) {
 
 		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
 			// keep skin name
-			slash = strchr( v, '/' );
+			slash = (char *)strchr( v, '/' );
 			if ( slash ) {
 				Q_strncpyz( newInfo.headSkinName, slash + 1, sizeof( newInfo.headSkinName ) );
 			}
