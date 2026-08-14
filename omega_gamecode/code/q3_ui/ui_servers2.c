@@ -1624,7 +1624,7 @@ static void ArenaServers_MenuInit( void ) {
 
 	y += 2 * SMALLCHAR_HEIGHT;
 	g_arenaservers.list.generic.type = MTYPE_SCROLLLIST;
-	g_arenaservers.list.generic.flags = QMF_HIGHLIGHT_IF_FOCUS | QMF_ZEBRA;
+	g_arenaservers.list.generic.flags = QMF_HIGHLIGHT_IF_FOCUS;
 	g_arenaservers.list.generic.id = ID_LIST;
 	g_arenaservers.list.generic.callback = ArenaServers_Event;
 	g_arenaservers.list.generic.x = 22;

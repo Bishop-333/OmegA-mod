@@ -93,7 +93,6 @@ typedef void ( *voidfunc_f )( void );
 #define QMF_SILENT (unsigned int)0x00100000
 #define QMF_SLIDER_NOVALUE (unsigned int)0x00200000
 #define QMF_SLIDER_PERCENTAGE (unsigned int)0x00400000
-#define QMF_ZEBRA (unsigned int)0x00800000
 
 // callback notifications
 #define QM_GOTFOCUS 1
