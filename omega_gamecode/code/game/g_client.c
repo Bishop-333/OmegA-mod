@@ -428,7 +428,7 @@ void CopyToBodyQue( gentity_t *ent ) {
 	}
 
 	if ( ent->client->noHead ) {
-		G_AddEvent( body, EV_BODY_NOHEAD, 0 );
+		G_AddEvent( body, EV_GIB_PLAYER_HEADSHOT, 1 );
 	}
 
 	VectorCopy( body->s.pos.trBase, body->r.currentOrigin );
@@ -2024,7 +2024,8 @@ void ClientSpawn( gentity_t *ent ) {
 		VectorCopy( origin, client->ps.origin );
 	} else {
 		if ( ent->frozenPlayer && ent->frozenPlayer->frozenPlayer && ent->frozenPlayer->frozenPlayer == ent ) {
-			tent = G_TempEntity( ent->frozenPlayer->r.currentOrigin, EV_GIB_PLAYER_FROZEN );
+			tent = G_TempEntity( ent->frozenPlayer->r.currentOrigin, EV_GIB_PLAYER );
+			tent->s.eventParm = 1;
 			VectorCopy( ent->frozenPlayer->s.apos.trBase, tent->s.angles );
 		}
 		G_SetOrigin( ent, spawn_origin );

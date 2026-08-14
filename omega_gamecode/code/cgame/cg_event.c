@@ -1391,36 +1391,29 @@ void CG_EntityEvent( centity_t *cent, vec3_t position ) {
 
 		case EV_GIB_PLAYER:
 			DEBUGNAME( "EV_GIB_PLAYER" );
-			// don't play gib sound when using the kamikaze because it interferes
-			// with the kamikaze sound, downside is that the gib sound will also
-			// not be played when someone is gibbed while just carrying the kamikaze
-			if ( !( es->eFlags & EF_KAMIKAZE ) ) {
-				trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
+			if ( es->eventParm ) {
+				trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.freezeSound );
+				CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, qtrue );
+			} else {
+				// don't play gib sound when using the kamikaze because it interferes
+				// with the kamikaze sound, downside is that the gib sound will also
+				// not be played when someone is gibbed while just carrying the kamikaze
+				if ( !( es->eFlags & EF_KAMIKAZE ) ) {
+					trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
+				}
+				CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, qfalse );
 			}
-			CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, qfalse );
 			break;
 
 		case EV_GIB_PLAYER_HEADSHOT:
 			DEBUGNAME( "EV_GIB_PLAYER_HEADSHOT" );
-			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
 			cent->pe.noHead = qtrue;
 			if ( es->number == cg.snap->ps.clientNum ) {
 				cg.predictedPlayerEntity.pe.noHead = qtrue;
 			}
-			CG_GibPlayerHead( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, cent );
-			break;
-
-		case EV_GIB_PLAYER_FROZEN:
-			DEBUGNAME( "EV_GIB_PLAYER_FROZEN" );
-			trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.freezeSound );
-			CG_GibPlayer( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, qtrue );
-			break;
-
-		case EV_BODY_NOHEAD:
-			DEBUGNAME( "EV_BODY_NOHEAD" );
-			cent->pe.noHead = qtrue;
-			if ( es->number == cg.snap->ps.clientNum ) {
-				cg.predictedPlayerEntity.pe.noHead = qtrue;
+			if ( !es->eventParm ) {
+				trap_S_StartSound( NULL, es->number, CHAN_BODY, cgs.media.gibSound );
+				CG_GibPlayerHead( cent->lerpOrigin, cent->lerpAngles, es->pos.trDelta, cent );
 			}
 			break;
 

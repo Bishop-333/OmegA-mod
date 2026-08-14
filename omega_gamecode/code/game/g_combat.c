@@ -309,7 +309,7 @@ void GibEntity( gentity_t *self, int killer ) {
 			break;
 		}
 	}
-	G_AddEvent( self, EV_GIB_PLAYER, killer );
+	G_AddEvent( self, EV_GIB_PLAYER, 0 );
 	self->takedamage = qfalse;
 	self->s.eType = ET_INVISIBLE;
 	self->r.contents = 0;
