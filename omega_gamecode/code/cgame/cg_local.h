@@ -407,6 +407,7 @@ typedef struct weaponInfo_s {
 	sfxHandle_t flashSound[4]; // fast firing weapons randomly choose
 
 	qhandle_t weaponIcon;
+	qhandle_t weaponIconWhite;
 	qhandle_t ammoIcon;
 
 	qhandle_t ammoModel;
@@ -1352,6 +1353,7 @@ void CG_ShowResponseHead( void );
 void CG_SetPrintString( int type, const char *p );
 void CG_InitTeamChat( void );
 void CG_GetTeamColor( vec4_t *color );
+float *CG_GetWeaponColor( int weapon );
 const char *CG_GetGameStatusText( void );
 const char *CG_GetKillerText( void );
 void CG_Draw3DModel( float x, float y, float w, float h, qhandle_t model, qhandle_t skin, vec3_t origin, vec3_t angles );

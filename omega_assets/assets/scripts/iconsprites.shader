@@ -228,7 +228,6 @@ icons/iconw_shotgun
 	{
 		map icons/iconw_shotgun
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
-		rgbgen identitylighting
 	}
 }
 
@@ -282,6 +281,111 @@ icons/iconw_grapple
 	nopicmip
 	{
 		map icons/iconw_grapple
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+
+icons/iconw_gauntlet_white
+{
+	nopicmip
+	{
+		map icons/iconw_gauntlet_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_machinegun_white
+{
+	nopicmip
+	{
+		map icons/iconw_machinegun_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_rocket_white
+{
+	nopicmip
+	{
+		map icons/iconw_rocket_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_shotgun_white
+{
+	nopicmip
+	{
+		map icons/iconw_shotgun_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_grenade_white
+{
+	nopicmip
+	{
+		map icons/iconw_grenade_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_lightning_white
+{
+	nopicmip
+	{
+		map icons/iconw_lightning_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_plasma_white
+{
+	nopicmip
+	{
+		map icons/iconw_plasma_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_railgun_white
+{
+	nopicmip
+	{
+		map icons/iconw_railgun_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_bfg_white
+{
+	nopicmip
+	{
+		map icons/iconw_bfg_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_grapple_white
+{
+	nopicmip
+	{
+		map icons/iconw_grapple_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_chaingun_white
+{
+	nopicmip
+	{
+		map icons/iconw_chaingun_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_nailgun_white
+{
+	nopicmip
+	{
+		map icons/iconw_nailgun_white
+		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+	}
+}
+icons/iconw_proxlauncher_white
+{
+	nopicmip
+	{
+		map icons/iconw_proxlauncher_white
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -981,6 +1085,7 @@ icons/iconw_grapple
 	{
 		map icons/iconw_grapple
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
+		rgbGen vertex
 	}
 }
 

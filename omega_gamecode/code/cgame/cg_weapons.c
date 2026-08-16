@@ -793,6 +793,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 	}
 
 	weaponInfo->weaponIcon = trap_R_RegisterShader( item->icon );
+	weaponInfo->weaponIconWhite = trap_R_RegisterShader( va( "%s_white", item->icon ) );
 	weaponInfo->ammoIcon = trap_R_RegisterShader( item->icon );
 
 	for ( ammo = bg_itemlist + 1; ammo->classname; ammo++ ) {
@@ -2308,32 +2309,31 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 	int x = 0;
 	int i;
 	int ammoSaved;
+	int ammoMax;
+	int barWidth;
 	int w;
 	char *s;
+	int selectTime;
+	float alphaScale;
+	float pulse;
 	float black[4];
-	float blue[4];
-	float orange[4];
-	float red[4];
+	float *baseColor;
+	float weaponColor[4];
+	float solidWeaponColor[4];
+
+	selectTime = cg.time - cg.weaponSelectTime;
+	if ( cg.time > 100 && selectTime < 100 ) {
+		alphaScale = (float)selectTime / 100.0f;
+	} else {
+		alphaScale = 1.0f;
+	}
+
+	pulse = 0.5f + 0.5f * sin( cg.time * 0.015f );
 
 	black[0] = 0;
 	black[1] = 0;
 	black[2] = 0;
 	black[3] = 0.33f;
-
-	blue[0] = 0;
-	blue[1] = 0.5f;
-	blue[2] = 1.0f;
-	blue[3] = 0.5f;
-
-	orange[0] = 1.0f;
-	orange[1] = 0.5f;
-	orange[2] = 0;
-	orange[3] = 0.5f;
-
-	red[0] = 1.0f;
-	red[1] = 0;
-	red[2] = 0;
-	red[3] = 0.5f;
 
 	for ( i = 0; i < MAX_WEAPONS; i++ ) {
 		//Sago: Do mad change of grapple placement:
@@ -2347,22 +2347,46 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 			continue;
 		}
 		ammoSaved = CG_GetWeaponAmmo( i );
+		ammoMax = CG_GetWeaponMaxAmmo( i );
+
+		CG_FillRect( x, y + 2, 50, 20, black );
 
 		if ( i == cg.weaponSelect ) {
-			if ( cg.lowAmmoWarning == 1 ) {
-				CG_FillRect( x, y + 2, 50, 20, orange );
-			} else if ( cg.snap->ps.ammo[i] ) {
-				CG_FillRect( x, y + 2, 50, 20, blue );
+			baseColor = CG_GetWeaponColor( i );
+			if ( !ammoSaved ) {
+				barWidth = 0;
+			} else if ( ammoSaved == -1 ) {
+				barWidth = 50;
 			} else {
-				CG_FillRect( x, y + 2, 50, 20, red );
+				barWidth = ( ammoSaved * 50 ) / ammoMax;
 			}
-		} else {
-			CG_FillRect( x, y + 2, 50, 20, black );
+
+			if ( barWidth > 50 ) {
+				barWidth = 50;
+			}
+
+			VectorCopy( baseColor, solidWeaponColor );
+			solidWeaponColor[3] = 0.75f * alphaScale;
+			CG_DrawRect( x, y + 1, 51, 22, 1, solidWeaponColor );
+
+			if ( barWidth > 0 ) {
+				VectorCopy( baseColor, weaponColor );
+				if ( ammoSaved > 0 && ammoSaved <= ammoMax / 4 ) {
+					weaponColor[3] = ( 0.2f + 0.3f * pulse ) * alphaScale;
+				} else {
+					weaponColor[3] = 0.5f * alphaScale;
+				}
+				CG_FillRect( x, y + 2, barWidth, 20, weaponColor );
+			}
 		}
 
 		CG_RegisterWeapon( i );
 		// draw weapon icon
-		CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIcon );
+		if ( i == cg.weaponSelect ) {
+			CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIconWhite );
+		} else {
+			CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIcon );
+		}
 
 		// no ammo cross on top
 		if ( !ammoSaved ) {

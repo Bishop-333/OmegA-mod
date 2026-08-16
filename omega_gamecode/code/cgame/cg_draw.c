@@ -407,7 +407,7 @@ static vec4_t weaponColors[WP_NUM_WEAPONS] =
         { 0.8, 0.8, 0.8, 1.0 }, // WP_CHAINGUN,
 };
 
-static float *CG_GetWeaponColor( int weapon ) {
+float *CG_GetWeaponColor( int weapon ) {
 	if ( weapon <= WP_NONE || weapon >= WP_NUM_WEAPONS ) {
 		return weaponColors[0];
 	}
