@@ -55,7 +55,7 @@ vec4_t text_color_disabled = { 0.35f, 0.24f, 0.29f, 1.00f };  // light gray
 vec4_t text_color_normal = { 0.30f, 0.45f, 0.58f, 1.00f };    // light orange
 vec4_t text_color_highlight = { 0.76f, 0.89f, 0.93f, 1.00f }; // bright yellow
 vec4_t listbar_color = { 0.13f, 0.26f, 0.38f, 0.30f };        // transluscent blue
-vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f }; // bright white
+vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f };    // bright white
 
 // action widget
 static void Action_Init( menuaction_s *a );
