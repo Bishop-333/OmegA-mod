@@ -2322,8 +2322,8 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 	float solidWeaponColor[4];
 
 	selectTime = cg.time - cg.weaponSelectTime;
-	if ( cg.time > 100 && selectTime < 100 ) {
-		alphaScale = (float)selectTime / 100.0f;
+	if ( selectTime < 175 ) {
+		alphaScale = (float)selectTime / 175.0f;
 	} else {
 		alphaScale = 1.0f;
 	}
