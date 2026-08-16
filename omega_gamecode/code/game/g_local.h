@@ -619,7 +619,6 @@ void StopFollowing( gentity_t *ent );
 void BroadcastTeamChange( gclient_t *client, int oldTeam );
 void SetTeam( gentity_t *ent, const char *s );
 void Cmd_FollowCycle_f( gentity_t *ent ); //KK-OAX Changed to match definition
-void Cmd_FollowKiller_f( gentity_t *ent );
 char *ConcatArgs( int start ); //KK-OAX This declaration moved from g_svccmds.c
 //KK-OAX Added this to make accessible from g_svcmds_ext.c
 void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText );
@@ -662,16 +661,12 @@ void G_CheckTeamItems( void );
 void G_RunItem( gentity_t *ent );
 void RespawnItem( gentity_t *ent );
 
-void UseHoldableItem( gentity_t *ent );
 void PrecacheItem( gitem_t *it );
 gentity_t *Drop_Item( gentity_t *ent, gitem_t *item, float angle );
 gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle );
 gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity );
-void SetRespawn( gentity_t *ent, float delay );
 void G_SpawnItem( gentity_t *ent, gitem_t *item );
 void FinishSpawningItem( gentity_t *ent );
-void Think_Weapon( gentity_t *ent );
-int ArmorIndex( gentity_t *ent );
 void Add_Ammo( gentity_t *ent, int weapon, int count );
 void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace );
 
@@ -704,7 +699,6 @@ void G_FreeEntity( gentity_t *e );
 qboolean G_EntitiesFree( void );
 
 void G_TouchTriggers( gentity_t *ent );
-void G_TouchSolids( gentity_t *ent );
 
 float *tv( float x, float y, float z );
 char *vtos( const vec3_t v );
@@ -817,8 +811,6 @@ gentity_t *SelectSpawnPoint( vec3_t avoidPoint, vec3_t origin, vec3_t angles, in
 void CopyToBodyQue( gentity_t *ent );
 void ClientRespawn( gentity_t *ent );
 void BeginIntermission( void );
-void InitClientPersistant( gclient_t *client );
-void InitClientResp( gclient_t *client );
 void InitBodyQue( void );
 void ClientSpawn( gentity_t *ent );
 void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int damage, int mod );
@@ -852,7 +844,6 @@ void G_StartKamikaze( gentity_t *ent );
 // p_hud.c
 //
 void MoveClientToIntermission( gentity_t *client );
-void G_SetStats( gentity_t *ent );
 
 //
 // g_cmds.c

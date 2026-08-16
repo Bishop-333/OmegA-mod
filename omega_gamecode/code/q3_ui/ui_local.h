@@ -218,7 +218,6 @@ typedef struct {
 extern t_mappage mappage;
 
 extern void Menu_Cache( void );
-extern void Menu_Focus( menucommon_s *m );
 extern void Menu_AddItem( menuframework_s *menu, void *item );
 extern void Menu_AdjustCursor( menuframework_s *menu, int dir );
 extern void Menu_Draw( menuframework_s *menu );

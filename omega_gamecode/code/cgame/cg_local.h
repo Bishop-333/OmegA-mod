@@ -1260,20 +1260,15 @@ void CG_UpdateCvars( void );
 
 int CG_CrosshairPlayer( void );
 int CG_LastAttacker( void );
-void CG_LoadMenus( const char *menuFile );
 void CG_KeyEvent( int key, qboolean down );
 void CG_MouseEvent( int x, int y );
 void CG_EventHandling( int type );
-void CG_RankRunFrame( void );
-void CG_SetScoreSelection( void *menu );
 void CG_BuildSpectatorString( void );
 
 //unlagged, sagos modification
 void SnapVectorTowards( vec3_t v, vec3_t to );
 
 void CG_FairCvars( void );
-
-void CG_SetDefaultsCvars( void );
 
 //
 // cg_view.c
@@ -1299,7 +1294,6 @@ void CG_DrawActiveFrame( int serverTime, stereoFrame_t stereoView, qboolean demo
 void CG_AdjustFrom640( float *x, float *y, float *w, float *h );
 void CG_FillRect( float x, float y, float width, float height, const float *color );
 void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader );
-void CG_DrawString( float x, float y, const char *string, float charWidth, float charHeight, const float *modulate );
 
 void CG_DrawStringExt( int x, int y, const char *string, const float *setColor, qboolean forceColor, qboolean shadow, int charWidth, int charHeight, int maxChars );
 void CG_DrawBigString( int x, int y, const char *s, float alpha );
@@ -1340,29 +1334,11 @@ void CG_DrawHead( float x, float y, float w, float h, int clientNum, vec3_t head
 void CG_DrawActive( stereoFrame_t stereoView );
 void CG_DrawFlagModel( float x, float y, float w, float h, int team, qboolean force2D );
 void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team );
-void CG_OwnerDraw( float x, float y, float w, float h, float text_x, float text_y, int ownerDraw, int ownerDrawFlags, int align, float special, float scale, vec4_t color, qhandle_t shader, int textStyle );
-void CG_Text_Paint( float x, float y, float scale, vec4_t color, const char *text, float adjust, int limit, int style );
-int CG_Text_Width( const char *text, float scale, int limit );
-int CG_Text_Height( const char *text, float scale, int limit );
-void CG_SelectPrevPlayer( void );
-void CG_SelectNextPlayer( void );
-float CG_GetValue( int ownerDraw );
-qboolean CG_OwnerDrawVisible( int flags );
-void CG_RunMenuScript( char **args );
-void CG_ShowResponseHead( void );
-void CG_SetPrintString( int type, const char *p );
-void CG_InitTeamChat( void );
-void CG_GetTeamColor( vec4_t *color );
 float *CG_GetWeaponColor( int weapon );
 const char *CG_GetGameStatusText( void );
 const char *CG_GetKillerText( void );
 void CG_Draw3DModel( float x, float y, float w, float h, qhandle_t model, qhandle_t skin, vec3_t origin, vec3_t angles );
-void CG_Text_PaintChar( float x, float y, float width, float height, float scale, float s, float t, float s2, float t2, qhandle_t hShader );
-void CG_CheckOrderPending( void );
 const char *CG_GameTypeString( void );
-qboolean CG_YourTeamHasFlag( void );
-qboolean CG_OtherTeamHasFlag( void );
-qhandle_t CG_StatusHandle( int task );
 int CG_RewardTime( int idx );
 void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t *ci );
 
@@ -1486,7 +1462,6 @@ void CG_DamagePlum( int client, vec3_t org, int score );
 
 void CG_GibPlayer( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity, qboolean frozen );
 void CG_GibPlayerHead( const vec3_t playerOrigin, const vec3_t playerAngles, const vec3_t playerVelocity, centity_t *cent );
-void CG_BigExplode( vec3_t playerOrigin );
 
 void CG_Bleed( vec3_t origin, int entityNum );
 
