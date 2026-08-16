@@ -559,7 +559,7 @@ qboolean G_IsFrozenPlayerFinalized( gentity_t *player ) {
 G_FinalizeFrozenPlayer
 =============
 */
-void G_FinalizeFrozenPlayer( gentity_t *player ) {
+static void G_FinalizeFrozenPlayer( gentity_t *player ) {
 	gentity_t *frozen = player->frozenPlayer;
 
 	player->frozenPlayer_finalized = qtrue;

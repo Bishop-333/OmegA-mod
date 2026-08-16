@@ -95,7 +95,7 @@ typedef struct
 
 static votemenu_t s_votemenu_Gametype;
 
-void UI_VoteGametypeMenuInternal( void );
+static void UI_VoteGametypeMenuInternal( void );
 
 /*
 =================
@@ -244,7 +244,7 @@ UI_VoteGametypeMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteGametypeMenuInternal( void ) {
+static void UI_VoteGametypeMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Gametype_Cache();

@@ -113,7 +113,7 @@ void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader 
 CG_SelectFont
 ===============
 */
-qhandle_t CG_SelectFont( float width, float height ) {
+static qhandle_t CG_SelectFont( float width, float height ) {
 	if ( height <= 16 ) {
 		return cgs.media.charsetShader16;
 	} else if ( height > 32 ) {

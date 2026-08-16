@@ -251,7 +251,7 @@ void G_FrozenTouchTriggers( gentity_t *ent ) {
 G_FrozenPlayerKnockback
 =============
 */
-void G_FrozenPlayerKnockback( gentity_t *frozenRemnant, int damage, vec3_t dir ) {
+static void G_FrozenPlayerKnockback( gentity_t *frozenRemnant, int damage, vec3_t dir ) {
 	int knockback = damage;
 	float mass;
 	vec3_t kvel;
@@ -292,7 +292,7 @@ G_ClientAcceleratedThaw
 */
 #define FREEZETAG_THAWRATE( thawTime ) ( (float)( 1000.0 / (float)thawTime / (float)sv_fps.integer ) / 1000.0 )
 #define FREEZETAG_THAWRADIUS 125
-void G_ClientAcceleratedThaw( gentity_t *player ) {
+static void G_ClientAcceleratedThaw( gentity_t *player ) {
 	gclient_t *client = player->client;
 	gentity_t *frozenRemnant;
 	int i, e;
@@ -433,7 +433,7 @@ void G_ClientThawNow( gentity_t *ent, int thawedBy ) {
 G_UpdatePlayerFromFrozenRemnant
 =============
 */
-void G_UpdatePlayerFromFrozenRemnant( gentity_t *player ) {
+static void G_UpdatePlayerFromFrozenRemnant( gentity_t *player ) {
 	gentity_t *frozen;
 	if ( player->client->isEliminated || !player->frozenPlayer || player->frozenPlayer->frozenPlayer != player ) {
 		return;
@@ -454,7 +454,7 @@ void G_UpdatePlayerFromFrozenRemnant( gentity_t *player ) {
 G_ClientThaw
 =============
 */
-void G_ClientThaw( gentity_t *ent ) {
+static void G_ClientThaw( gentity_t *ent ) {
 	gclient_t *client = ent->client;
 
 	if ( !g_freeze.integer || client->sess.sessionTeam == TEAM_SPECTATOR || !client->frozen || ( client->freezetag_thawed >= 1.0 || client->freezetag_autoThawed >= 1.0 ) ) {

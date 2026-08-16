@@ -70,7 +70,7 @@ typedef struct
 
 static votemenu_t s_votemenu_Timelmit;
 
-void UI_VoteTimelimitMenuInternal( void );
+static void UI_VoteTimelimitMenuInternal( void );
 
 /*
 =================
@@ -192,7 +192,7 @@ UI_VoteTimelimitMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteTimelimitMenuInternal( void ) {
+static void UI_VoteTimelimitMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Timelimit_Cache();

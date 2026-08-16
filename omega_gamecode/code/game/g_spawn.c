@@ -211,7 +211,7 @@ void SP_team_blueobelisk( gentity_t *ent );
 void SP_team_redobelisk( gentity_t *ent );
 void SP_team_neutralobelisk( gentity_t *ent );
 
-void SP_item_botroam( gentity_t *ent ) {}
+static void SP_item_botroam( gentity_t *ent ) {}
 
 spawn_t spawns[] = {
     // info entities don't do anything at all, but provide positional
@@ -597,7 +597,7 @@ Every map should have exactly one worldspawn.
 "gravity"	800 is default gravity
 "message"	Text to print during connection process
 */
-void SP_worldspawn( void ) {
+static void SP_worldspawn( void ) {
 	char *s;
 
 	G_SpawnString( "classname", "", &s );

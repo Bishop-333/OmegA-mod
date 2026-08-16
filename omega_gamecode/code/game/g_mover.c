@@ -31,7 +31,7 @@ PUSHMOVE
 ===============================================================================
 */
 
-void MatchTeam( gentity_t *teamLeader, int moverState, int time );
+static void MatchTeam( gentity_t *teamLeader, int moverState, int time );
 
 typedef struct {
 	gentity_t *ent;
@@ -531,7 +531,7 @@ All entities in a mover team will move from pos1 to pos2
 in the same amount of time
 ================
 */
-void MatchTeam( gentity_t *teamLeader, int moverState, int time ) {
+static void MatchTeam( gentity_t *teamLeader, int moverState, int time ) {
 	gentity_t *slave;
 
 	for ( slave = teamLeader; slave; slave = slave->teamchain ) {
@@ -851,7 +851,7 @@ All of the parts of a door have been spawned, so create
 a trigger that encloses all of them
 ======================
 */
-void Think_SpawnNewDoorTrigger( gentity_t *ent ) {
+static void Think_SpawnNewDoorTrigger( gentity_t *ent ) {
 	gentity_t *other;
 	vec3_t mins, maxs;
 	int i, best;

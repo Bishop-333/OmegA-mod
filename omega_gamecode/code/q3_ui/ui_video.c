@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //
 #include "ui_local.h"
 
-void GraphicsOptions_MenuInit( void );
+static void GraphicsOptions_MenuInit( void );
 
 /*
 =======================================================================
@@ -878,7 +878,7 @@ static void GraphicsOptions_SetMenuItems( void ) {
 GraphicsOptions_MenuInit
 ================
 */
-void GraphicsOptions_MenuInit( void ) {
+static void GraphicsOptions_MenuInit( void ) {
 	char renderer[MAX_STRING_CHARS];
 
 	static const char *renderer_names[] =

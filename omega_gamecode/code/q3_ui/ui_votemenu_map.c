@@ -51,7 +51,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define MAX_MAPCOLS 2
 #define MAX_MAPSPERPAGE ( MAX_MAPROWS * MAX_MAPCOLS )
 
-void UI_VoteMapMenu_Update( void );
+static void UI_VoteMapMenu_Update( void );
 
 typedef struct {
 	menuframework_s menu;
@@ -357,7 +357,7 @@ static int CountMappageMaps( void ) {
 UI_VoteMapMenu_Update
 ===============
 */
-void UI_VoteMapMenu_Update( void ) {
+static void UI_VoteMapMenu_Update( void ) {
 	int i;
 	int top;
 	char mapname[MAX_MAPNAME_LENGTH];

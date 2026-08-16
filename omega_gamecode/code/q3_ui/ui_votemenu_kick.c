@@ -75,7 +75,7 @@ typedef struct {
 
 static votemenu_kick_t s_votemenu_kick;
 
-void UI_VoteKickMenuInternal( void );
+static void UI_VoteKickMenuInternal( void );
 
 static void populatePlayerList( void ) {
 	int i;
@@ -210,7 +210,7 @@ UI_VoteKickMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteKickMenuInternal( void ) {
+static void UI_VoteKickMenuInternal( void ) {
 	int y;
 
 	s_votemenu_kick.menu.wrapAround = qtrue;

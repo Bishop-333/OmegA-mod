@@ -71,7 +71,7 @@ typedef struct
 
 static votemenu_t s_votemenu_fraglmit;
 
-void UI_VoteFraglimitMenuInternal( void );
+static void UI_VoteFraglimitMenuInternal( void );
 
 /*
 =================
@@ -192,7 +192,7 @@ UI_VoteFraglimitMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteFraglimitMenuInternal( void ) {
+static void UI_VoteFraglimitMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Fraglimit_Cache();

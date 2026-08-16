@@ -74,7 +74,7 @@ static challenges_t challenges;
 static int mainSelection;
 
 //This should only be accessed locally
-void UI_ChallengesLocal( void );
+static void UI_ChallengesLocal( void );
 
 /*
 =================
@@ -392,7 +392,7 @@ UI_ChallengesLocal
  *This is only used locally. Remembers selection
 ===============
 */
-void UI_ChallengesLocal( void ) {
+static void UI_ChallengesLocal( void ) {
 	UI_Challenges_Init();
 	UI_PushMenu( &challenges.menu );
 	Menu_SetCursorToItem( &challenges.menu, &challenges.back );

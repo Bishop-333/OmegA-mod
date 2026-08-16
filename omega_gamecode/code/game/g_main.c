@@ -60,7 +60,7 @@ static int gameCvarTableSize = sizeof( gameCvarTable ) / sizeof( gameCvarTable[0
 void G_InitGame( int levelTime, int randomSeed, int restart );
 void G_RunFrame( int levelTime );
 void G_ShutdownGame( int restart );
-void CheckExitRules( void );
+static void CheckExitRules( void );
 
 /*
 ================
@@ -150,7 +150,7 @@ All but the first will have the FL_TEAMSLAVE flag set and teammaster field set
 All but the last will have the teamchain field set to the next one
 ================
 */
-void G_FindTeams( void ) {
+static void G_FindTeams( void ) {
 	gentity_t *e, *e2;
 	int i, j;
 	int c, c2;
@@ -686,7 +686,7 @@ static void AdjustTournamentScores( void ) {
 SortRanks
 =============
 */
-int QDECL SortRanks( const void *a, const void *b ) {
+static int QDECL SortRanks( const void *a, const void *b ) {
 	gclient_t *ca, *cb;
 
 	ca = &level.clients[*(int *)a];
@@ -1377,7 +1377,7 @@ and the time everyone is moved to the intermission spot, so you
 can see the last frag.
 =================
 */
-void CheckExitRules( void ) {
+static void CheckExitRules( void ) {
 	int i;
 	gclient_t *cl;
 	// if at the intermission, wait for all non-bots to

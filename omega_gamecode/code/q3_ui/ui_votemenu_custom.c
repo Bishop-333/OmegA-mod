@@ -62,7 +62,7 @@ typedef struct
 
 static votemenu_t s_votemenu_custom;
 
-void UI_VoteCustomMenuInternal( void );
+static void UI_VoteCustomMenuInternal( void );
 
 /*
 =================
@@ -147,7 +147,7 @@ UI_VoteCustomMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteCustomMenuInternal( void ) {
+static void UI_VoteCustomMenuInternal( void ) {
 	int y, i;
 	char custominfo[MAX_INFO_STRING], *token, *pointer;
 

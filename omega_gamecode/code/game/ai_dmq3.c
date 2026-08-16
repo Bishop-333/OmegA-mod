@@ -5280,7 +5280,7 @@ static void BotSetEntityNumForGoal( bot_goal_t *goal, char *classname ) {
 BotSetEntityNumForGoalWithActivator
 ==================
 */
-void BotSetEntityNumForGoalWithActivator( bot_goal_t *goal, char *classname ) {
+static void BotSetEntityNumForGoalWithActivator( bot_goal_t *goal, char *classname ) {
 	gentity_t *ent;
 	int i;
 	vec3_t dir;

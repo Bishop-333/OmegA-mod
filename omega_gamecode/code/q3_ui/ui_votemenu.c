@@ -89,7 +89,7 @@ typedef struct
 
 static votemenu_t s_votemenu;
 
-void UI_VoteMenuMenuInternal( void );
+static void UI_VoteMenuMenuInternal( void );
 
 /*
 =================
@@ -226,7 +226,7 @@ UI_VoteMenuMenuInternal
  *Used then forcing a redraw
 =================
 */
-void UI_VoteMenuMenuInternal( void ) {
+static void UI_VoteMenuMenuInternal( void ) {
 	int y;
 
 	VoteMenu_Cache();
