@@ -1101,7 +1101,7 @@ textures/cosmo_sfx/dm17_jpad
         qer_editorimage textures/cosmo_sfx/e8jumpspawn02red.tga
         surfaceparm nomarks
         surfaceparm metalsteps        q3map_surfacelight 15000
-//        q3map_lightimage textures/sfx/jc2.jpg
+//        q3map_lightimage textures/sfx/jc2.jpg
 	{		clampmap textures/sfx/jc2.jpg		tcMod stretch sin 1.2 .8 0 1.5
 		rgbGen wave square .5 .5 .25 1.5
 	}    {
