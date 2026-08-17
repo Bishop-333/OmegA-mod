@@ -96,6 +96,7 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define UIAS_GLOBAL4 6
 #define UIAS_GLOBAL5 7
 #define UIAS_FAVORITES 8
+#define UIAS_NUM_SOURCES 9
 
 #define SORT_HOST 0
 #define SORT_MAP 1
@@ -103,6 +104,7 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define SORT_GAME 3
 #define SORT_PING 4
 #define SORT_HUMANS 5
+#define SORT_NUM_SORTS 6
 
 #define GAMES_ALL 0
 #define GAMES_FFA 1
@@ -118,6 +120,7 @@ MULTIPLAYER MENU (SERVER BROWSER)
 #define GAMES_DOUBLE_D 11
 #define GAMES_DOM 12
 #define GAMES_POS 13
+#define GAMES_NUM_GAMES 14
 
 static const char *master_items[] = {
     "Local+Internet",
@@ -1543,6 +1546,7 @@ static void ArenaServers_MenuInit( void ) {
 	int i;
 	int y;
 	static char statusbuffer[MAX_STATUSLENGTH];
+	static char statusbarbuffer[MAX_STATUSLENGTH];
 
 	// zero set all our globals
 	memset( &g_arenaservers, 0, sizeof( arenaservers_t ) );
@@ -1684,7 +1688,7 @@ static void ArenaServers_MenuInit( void ) {
 	g_arenaservers.statusbar.generic.type = MTYPE_TEXT;
 	g_arenaservers.statusbar.generic.x = 320;
 	g_arenaservers.statusbar.generic.y = y + 10;
-	g_arenaservers.statusbar.string = "";
+	g_arenaservers.statusbar.string = statusbarbuffer;
 	g_arenaservers.statusbar.style = UI_CENTER | UI_SMALLFONT;
 	g_arenaservers.statusbar.color = text_color_normal;
 
@@ -1790,15 +1794,15 @@ static void ArenaServers_MenuInit( void ) {
 
 	ArenaServers_LoadFavorites();
 
-	g_servertype = Com_Clamp( UIAS_ALL_LOCAL, UIAS_FAVORITES, ui_browserMaster.integer );
+	g_servertype = Com_Clamp( 0, UIAS_NUM_SOURCES - 1, ui_browserMaster.integer );
 	if ( g_servertype == UIAS_ALL_GLOBAL )
 		g_servertype = UIAS_ALL_LOCAL;
 	g_arenaservers.master.curvalue = g_servertype;
 
-	g_gametype = Com_Clamp( 0, 4, ui_browserGameType.integer );
+	g_gametype = Com_Clamp( 0, GAMES_NUM_GAMES - 1, ui_browserGameType.integer );
 	g_arenaservers.gametype.curvalue = g_gametype;
 
-	g_sortkey = Com_Clamp( 0, 5, ui_browserSortKey.integer );
+	g_sortkey = Com_Clamp( 0, SORT_NUM_SORTS - 1, ui_browserSortKey.integer );
 	g_arenaservers.sortkey.curvalue = g_sortkey;
 
 	g_emptyservers = Com_Clamp( 0, 1, ui_browserShowEmpty.integer );
