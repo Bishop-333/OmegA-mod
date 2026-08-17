@@ -2307,10 +2307,12 @@ CG_DrawWeaponBar8
 void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 	int y = 200 + count * 12;
 	int x = 0;
+	int offsetX;
 	int i;
 	int ammoSaved;
 	int ammoMax;
 	int barWidth;
+	int barMax;
 	int w;
 	char *s;
 	int selectTime;
@@ -2349,25 +2351,31 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 		ammoSaved = CG_GetWeaponAmmo( i );
 		ammoMax = CG_GetWeaponMaxAmmo( i );
 
-		CG_FillRect( x, y + 2, 50, 20, black );
+		if ( i == cg.weaponSelect ) {
+			barMax = 55;
+		} else {
+			barMax = 50;
+		}
+
+		CG_FillRect( x, y + 2, barMax, 20, black );
 
 		if ( i == cg.weaponSelect ) {
 			baseColor = CG_GetWeaponColor( i );
 			if ( !ammoSaved ) {
 				barWidth = 0;
 			} else if ( ammoSaved == -1 ) {
-				barWidth = 50;
+				barWidth = barMax;
 			} else {
-				barWidth = ( ammoSaved * 50 ) / ammoMax;
+				barWidth = ( ammoSaved * barMax ) / ammoMax;
 			}
 
-			if ( barWidth > 50 ) {
-				barWidth = 50;
+			if ( barWidth > barMax ) {
+				barWidth = barMax;
 			}
 
 			VectorCopy( baseColor, solidWeaponColor );
 			solidWeaponColor[3] = 0.75f * alphaScale;
-			CG_DrawRect( x, y + 1, 51, 22, 1, solidWeaponColor );
+			CG_DrawRect( x, y + 1, barMax + 1, 22, 1, solidWeaponColor );
 
 			if ( barWidth > 0 ) {
 				VectorCopy( baseColor, weaponColor );
@@ -2380,24 +2388,26 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 			}
 		}
 
+		offsetX = x + ( barMax - 50 ) / 2;
+
 		CG_RegisterWeapon( i );
 		// draw weapon icon
 		if ( i == cg.weaponSelect ) {
-			CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIconWhite );
+			CG_DrawPic( offsetX + 2, y + 4, 16, 16, cg_weapons[i].weaponIconWhite );
 		} else {
-			CG_DrawPic( x + 2, y + 4, 16, 16, cg_weapons[i].weaponIcon );
+			CG_DrawPic( offsetX + 2, y + 4, 16, 16, cg_weapons[i].weaponIcon );
 		}
 
 		// no ammo cross on top
 		if ( !ammoSaved ) {
-			CG_DrawPic( x + 2, y + 4, 16, 16, cgs.media.noammoShader );
+			CG_DrawPic( offsetX + 2, y + 4, 16, 16, cgs.media.noammoShader );
 		}
 
 		/** Draw Weapon Ammo **/
 		if ( ammoSaved != -1 ) {
 			s = va( "%i", ammoSaved );
 			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-			CG_DrawSmallStringColor( x - w / 2 + 32, y + 4, s, color );
+			CG_DrawSmallStringColor( offsetX - w / 2 + 32, y + 4, s, color );
 		}
 
 		y -= 24;
