@@ -2407,7 +2407,7 @@ void CG_DrawWeaponBar8( int count, int bits, float *color ) {
 		if ( ammoSaved != -1 ) {
 			s = va( "%i", ammoSaved );
 			w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-			CG_DrawSmallStringColor( offsetX - w / 2 + 32, y + 4, s, color );
+			CG_DrawSmallStringColor( offsetX - w / 2 + 34, y + 4, s, color );
 		}
 
 		y -= 24;
