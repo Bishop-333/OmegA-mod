@@ -2851,6 +2851,7 @@ static void CG_ScanForCrosshairEntity( void ) {
 	// update the fade timer
 	cg.crosshairClientNum = clientNum;
 	cg.crosshairClientTime = cg.time;
+	cg.crosshairClientTimes[clientNum] = cg.time;
 	cg.crosshairEntityNum = trace.entityNum;
 }
 
@@ -2921,6 +2922,7 @@ void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t 
 	int enemy;
 	float scale;
 	float offset;
+	float *fadeColor;
 	vec4_t hcolor;
 	vec3_t origin;
 
@@ -2941,6 +2943,16 @@ void CG_Draw3DCrosshairNames( centity_t *cent, refEntity_t *torso, clientInfo_t 
 	}
 
 	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0f;
+
+	// draw the name of the player being looked at
+	if ( enemy && cg_draw3DCrosshairNames.integer != 2 ) {
+		fadeColor = CG_FadeColor( cg.crosshairClientTimes[cent->currentState.clientNum], 750 );
+		if ( !fadeColor ) {
+			trap_R_SetColor( NULL );
+			return;
+		}
+		hcolor[3] = fadeColor[3];
+	}
 
 	if ( cent->currentState.powerups & ( 1 << PW_JUGGERNAUT ) ) {
 		scale = cgs.juggernautScale;
