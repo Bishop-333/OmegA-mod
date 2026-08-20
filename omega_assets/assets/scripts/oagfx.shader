@@ -2,7 +2,7 @@ lagometer
 {
 	nopicmip
 	{
-		map gfx/2d/lag.tga
+		map gfx/2d/lag
 	}
 }
 
@@ -10,7 +10,7 @@ gfx/2d/lag
 {
 	nopicmip
 	{
-		map gfx/2d/lag.tga
+		map gfx/2d/lag
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		
 	}
@@ -19,7 +19,7 @@ gfx/2d/lag
 disconnected
 {
 	{
-		map gfx/2d/net.tga
+		map gfx/2d/net
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA 
 	}
 }
@@ -28,7 +28,7 @@ levelShotDetail
 {
 	nopicmip
 	{
-		map textures/sfx/detail.tga
+		map textures/sfx/detail
 		blendFunc GL_DST_COLOR GL_SRC_COLOR
 		rgbgen identity
 	}

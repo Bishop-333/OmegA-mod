@@ -6,18 +6,18 @@ textures/liquids/islewater
 	cull disable
 	fogparms ( 0.345098 0.513726 0.788235 ) 1024
 	{
-		map textures/liquids/pool2.tga
+		map textures/liquids/pool2
 		blendfunc filter
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map textures/liquids/pool3d_4b2.tga
+		map textures/liquids/pool3d_4b2
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
 	}
 	{
-		map textures/liquids/pool3d_4b2.tga
+		map textures/liquids/pool3d_4b2
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcGen environment 
@@ -33,7 +33,7 @@ textures/liquids/islewater
 
 textures/ice/coldwater
 {
-	qer_editorimage textures/ice/coldwater.tga
+	qer_editorimage textures/ice/coldwater
 	surfaceparm nonsolid
 	surfaceparm trans
 	surfaceparm water
@@ -41,17 +41,17 @@ textures/ice/coldwater
 	qer_trans 0.5
 	q3map_globaltexture
 	{
-		map textures/ice/coldwater.tga
+		map textures/ice/coldwater
 		blendfunc filter
 		tcMod scroll 0.01 0.01
 	}
 	{
-		map textures/effects/tinfx2.tga
+		map textures/effects/tinfx2
 		blendfunc add
 		tcGen environment 
 	}
 	{
-		map textures/ice/coldwater.tga
+		map textures/ice/coldwater
 		blendfunc add
 		tcMod scroll 0.04 0.01
 	}
@@ -64,13 +64,13 @@ textures/liquids/vorwater
 	surfaceparm water
 	cull disable
 	{
-		map textures/liquids/vorwater.tga
+		map textures/liquids/vorwater
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.009 -0.005
 	}
 	{
-		map textures/liquids/vorwater.tga
+		map textures/liquids/vorwater
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.004 -0.007
@@ -84,7 +84,7 @@ textures/liquids/vorwater
 
 textures/savdm6ish/#teleport
 {
-	q3map_lightimage textures/liquids/pool3d_3.tga
+	q3map_lightimage textures/liquids/pool3d_3
 	surfaceparm nomarks
 	surfaceparm trans
 	surfaceparm water
@@ -92,19 +92,19 @@ textures/savdm6ish/#teleport
 	q3map_surfacelight 900
 	q3map_flare flareShader-portal
 	{
-		map textures/liquids/pool3d_5e.tga
+		map textures/liquids/pool3d_5e
 		rgbGen const ( 0.478431 0.294118 0.172549 )
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map textures/liquids/pool3d_3e.tga
+		map textures/liquids/pool3d_3e
 		blendfunc add
 		rgbGen const ( 0.517647 0.305882 0.2 )
 		tcMod rotate 8
 		tcMod turb 0 1 0 0.04
 	}
 	{
-		map textures/liquids/pool3d_5.tga
+		map textures/liquids/pool3d_5
 		blendfunc add
 		rgbGen const ( 0.584314 0.376471 0.25098 )
 		tcMod scroll 0.07 0.01
@@ -113,7 +113,7 @@ textures/savdm6ish/#teleport
 
 textures/liquids/tele
 {
-	q3map_lightimage textures/liquids/pool3d_3.tga
+	q3map_lightimage textures/liquids/pool3d_3
 	surfaceparm nomarks
 	surfaceparm trans
 	surfaceparm water
@@ -121,13 +121,13 @@ textures/liquids/tele
 	q3map_surfacelight 900
 	q3map_flare flareShader-portal
 	{
-		map textures/liquids/pool3d_5e.tga
+		map textures/liquids/pool3d_5e
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.05 0.05
 		tcMod rotate 545
 	}
 	{
-		map textures/liquids/pool3d_3e.tga
+		map textures/liquids/pool3d_3e
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
@@ -135,7 +135,7 @@ textures/liquids/tele
 		tcMod turb 0 1 0 0.04
 	}
 	{
-		map textures/liquids/pool3d_3e.tga
+		map textures/liquids/pool3d_3e
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.07 0.01
@@ -152,19 +152,19 @@ textures/liquids/refwater
 	cull disable
 	portal
 	{
-		map textures/liquids/vorwater.tga
+		map textures/liquids/vorwater
 		blendfunc filter
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map textures/liquids/pool3d_3.tga
+		map textures/liquids/pool3d_3
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
 	}
 	{
-		map textures/liquids/pool3d_3.tga
+		map textures/liquids/pool3d_3
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.07 0.01
@@ -218,7 +218,7 @@ textures/liquids/justwater
 		tcMod scroll 0.09 0.06
 	}
 	{
-		map textures/liquids/pool3d_5.tga
+		map textures/liquids/pool3d_5
 		blendfunc gl_dst_color gl_one
 		rgbGen const ( 1 1 1 )
 		tcMod scroll -0.04 -0.08
@@ -251,18 +251,18 @@ textures/liquids/softwater
 	surfaceparm water
 	cull disable
 	{
-		map textures/liquids/pool2.tga
+		map textures/liquids/pool2
 		blendfunc filter
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map textures/liquids/pool2.tga
+		map textures/liquids/pool2
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
 	}
 	{
-		map textures/liquids/pool2.tga
+		map textures/liquids/pool2
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.07 0.01
@@ -499,23 +499,23 @@ textures/liquids/hydrowater
 	deformVertexes wave 256 sin 0 7 0 0.4
 	fogparms ( 0.215686 0.278431 0.333333 ) 1024
 	{
-		map textures/liquids/pool2.tga
+		map textures/liquids/pool2
 		blendfunc filter
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map textures/liquids/pool3d_4b2.tga
+		map textures/liquids/pool3d_4b2
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
-      //GLSL map textures/liquids/pool2.tga
-      //GLSL map2 textures/liquids/pool2_normal.tga
+      //GLSL map textures/liquids/pool2
+      //GLSL map2 textures/liquids/pool2_normal
       //GLSL program water
       //GLSL vertexProgram glsl/water_vp.glsl
       //GLSL fragmentProgram glsl/water_fp.glsl
 	}
 	{
-		map textures/liquids/pool3d_4b2.tga
+		map textures/liquids/pool3d_4b2
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcGen environment 
@@ -656,7 +656,7 @@ textures/liquids2/clear_ripple1_q3dm1light
 
 textures/liquids/acid
 {
-	q3map_lightimage textures/liquids/slime7.tga
+	q3map_lightimage textures/liquids/slime7
 	surfaceparm nomarks
 	surfaceparm slime
 	surfaceparm trans
@@ -666,18 +666,18 @@ textures/liquids/acid
 	tessSize 128
 	q3map_surfacelight 900
 	{
-		map textures/effects/tinfx2.tga
+		map textures/effects/tinfx2
 		blendfunc add
 		tcGen environment 
 	}
 	{
-		map textures/liquids/slime7c.tga
+		map textures/liquids/slime7c
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
 	}
 	{
-		map textures/liquids/slime7.tga
+		map textures/liquids/slime7
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.07 0.01
@@ -686,7 +686,7 @@ textures/liquids/acid
 
 textures/liquids/oldacid
 {
-	q3map_lightimage textures/liquids/slime7.tga
+	q3map_lightimage textures/liquids/slime7
 	surfaceparm nomarks
 	surfaceparm slime
 	surfaceparm trans
@@ -696,24 +696,24 @@ textures/liquids/oldacid
 	deformVertexes wave 64 sin 0 7 0 0.6 
 	q3map_surfacelight 333
 	{
-		map textures/liquids/slime7.tga
+		map textures/liquids/slime7
 		blendfunc filter
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.05 0.05
 	}
 	{
-		map textures/effects/tinfx2.tga
+		map textures/effects/tinfx2
 		blendfunc add
 		tcGen environment 
 	}
 	{
-		map textures/liquids/slime7c.tga
+		map textures/liquids/slime7c
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll -0.03 -0.06
 	}
 	{
-		map textures/liquids/slime7.tga
+		map textures/liquids/slime7
 		blendfunc add
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.07 0.01

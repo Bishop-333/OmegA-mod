@@ -4,26 +4,26 @@ vulcanFlash
 	nopicmip
 	deformVertexes bulge 3 3 76
 	{
-		clampmap models/weapons/vulcan/muzzy.tga
+		clampmap models/weapons/vulcan/muzzy
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 30 
 		tcMod rotate 1554
 	}
 	{
-		clampmap models/weapons/vulcan/muzzy.tga
+		clampmap models/weapons/vulcan/muzzy
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 30 
 		tcMod rotate -2640
 	}
 	{
-		clampmap models/weapons/vulcan/muzzy.tga
+		clampmap models/weapons/vulcan/muzzy
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 30 
 		tcMod rotate 7402
 		tcMod stretch sin 0 1 0 1 
 	}
 	{
-		clampmap models/weapons/vulcan/muzzy.tga
+		clampmap models/weapons/vulcan/muzzy
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 30 
 		tcMod rotate -6403
@@ -34,17 +34,17 @@ vulcanFlash
 models/weapons/vulcan/skin
 {
 	{
-		map models/weapons/vulcan/skin.tga
+		map models/weapons/vulcan/skin
 		rgbGen lightingDiffuse
 	}
 	{
-		map gfx/fx/detail/d_met.tga
+		map gfx/fx/detail/d_met
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 8 8
 		detail
 	}
 	{
-		map gfx/fx/spec/spots.tga
+		map gfx/fx/spec/spots
 		blendfunc gl_dst_color gl_dst_alpha
 		rgbGen lightingDiffuse
 		tcGen environment 

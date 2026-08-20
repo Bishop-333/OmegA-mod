@@ -1,11 +1,11 @@
 textures/base_trim/wires01
 {
-	qer_editorimage textures/base_trim/wires01.tga
+	qer_editorimage textures/base_trim/wires01
 	cull none
 	surfaceparm alphashadow
 	surfaceparm trans
 	{
-		map textures/base_trim/wires01.tga
+		map textures/base_trim/wires01
 		alphafunc GE128
 		depthwrite
 	}
@@ -19,12 +19,12 @@ textures/base_trim/wires01
 
 textures/base_trim/wires01_ass
 {
-	qer_editorimage textures/base_trim/wires01_ass.tga
+	qer_editorimage textures/base_trim/wires01_ass
 	cull none
 	surfaceparm alphashadow
 	surfaceparm trans
 	{
-		map textures/base_trim/wires01_ass.tga
+		map textures/base_trim/wires01_ass
 		alphafunc GE128
 		depthwrite
 	}
@@ -38,12 +38,12 @@ textures/base_trim/wires01_ass
 
 textures/base_trim/wires02
 {
-	qer_editorimage textures/base_trim/wires02.tga
+	qer_editorimage textures/base_trim/wires02
 	cull none
 	surfaceparm alphashadow
 	surfaceparm trans
 	{
-		map textures/base_trim/wires02.tga
+		map textures/base_trim/wires02
 		alphafunc GE128
 		depthwrite
 	}
@@ -79,18 +79,18 @@ textures/base_floor/tilefloor7_ow
 
 textures/proto2/cheapfloor
 {
-	qer_editorimage textures/proto2/marble02b_floor.tga
+	qer_editorimage textures/proto2/marble02b_floor
 	{
-		map textures/proto2/marble02b_floor.tga
+		map textures/proto2/marble02b_floor
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen vertex
 	}
 	{
-		map textures/proto2/marble02b_floor.tga
+		map textures/proto2/marble02b_floor
 		blendfunc add
 		rgbgen identity
 	}
@@ -103,15 +103,15 @@ textures/proto2/cheapfloor
 
 textures/proto2/mirrorfloor
 {
-	qer_editorimage textures/proto2/marble02b_floor.tga
+	qer_editorimage textures/proto2/marble02b_floor
 	portal
 	{
-		map textures/common/invisible.tga
+		map textures/common/invisible
 		blendfunc gl_one gl_one_minus_src_alpha
 		depthwrite
 	}
 	{
-		map textures/proto2/marble02b_floor.tga
+		map textures/proto2/marble02b_floor
 		blendfunc add
 		rgbgen identity
 	}
@@ -124,19 +124,19 @@ textures/proto2/mirrorfloor
 
 textures/proto2/marble02b_s
 {
-	qer_editorimage textures/proto2/marble02b_s.tga
+	qer_editorimage textures/proto2/marble02b_s
 	surfaceparm metalsteps
 	{
-		map textures/proto2/marble02b_s.tga
+		map textures/proto2/marble02b_s
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen vertex
 	}
 	{
-		map textures/proto2/marble02b_s.tga
+		map textures/proto2/marble02b_s
 		blendfunc add
 		rgbgen identity
 	}
@@ -149,14 +149,14 @@ textures/proto2/marble02b_s
 
 textures/proto2/marble02b_s_green
 {
-	qer_editorimage textures/proto2/marble02b_s.tga
+	qer_editorimage textures/proto2/marble02b_s
 	surfaceparm metalsteps
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/proto2/marble02b_s.tga
+		map textures/proto2/marble02b_s
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -165,16 +165,16 @@ textures/proto2/marble02b_s_green
 
 textures/gothic_button/timbutton
 {
-	q3map_surfacelight textures/gothic_button/timbutton.tga
+	q3map_surfacelight textures/gothic_button/timbutton
 	q3map_lightimage textures/gothic_button/timbutton2.jpg
 	q3map_surfacelight 20
 	
 	{
-		map textures/gothic_button/timbutton.tga
+		map textures/gothic_button/timbutton
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen vertex
 	}
@@ -184,7 +184,7 @@ textures/gothic_button/timbutton
 		rgbGen wave sin 1 1 0 0.5
 	}
 	{
-		map textures/gothic_button/timbutton.tga
+		map textures/gothic_button/timbutton
 		blendfunc blend
 		rgbgen identity
 	}
@@ -197,13 +197,13 @@ textures/gothic_button/timbutton
 
 textures/proto2/steam01
 {
-	qer_editorimage textures/proto2/steam01.tga
+	qer_editorimage textures/proto2/steam01
 	cull none
 	surfaceparm trans
 	deformvertexes autosprite2
 	deformvertexes wave 30 sin 0.1 2 .5 .5
 	{
-		map textures/proto2/steam01.tga
+		map textures/proto2/steam01
 		tcmod scroll 0 0.4
 		blendfunc blend
 		rgbgen identity
@@ -212,18 +212,18 @@ textures/proto2/steam01
 
 textures/gothic_trim/zinc_shiny
 {
-	qer_editorimage textures/gothic_trim/zinc_shiny.tga
+	qer_editorimage textures/gothic_trim/zinc_shiny
 	{	
-		map textures/gothic_trim/zinc_shiny.tga
+		map textures/gothic_trim/zinc_shiny
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen identity
 	}
 	{
-		map textures/gothic_trim/zinc_shiny.tga
+		map textures/gothic_trim/zinc_shiny
 		blendfunc blend
 		rgbgen identity
 	}
@@ -236,13 +236,13 @@ textures/gothic_trim/zinc_shiny
 
 textures/base_floor/skylight_spec
 {
-	qer_editorimage textures/base_floor/skylight_spec.tga
+	qer_editorimage textures/base_floor/skylight_spec
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/base_floor/skylight_spec.tga
+		map textures/base_floor/skylight_spec
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -251,13 +251,13 @@ textures/base_floor/skylight_spec
 
 textures/gothic_trim/metalsupport4h_shiny
 {
-	qer_editorimage textures/gothic_trim/metalsupport4h_shiny.tga
+	qer_editorimage textures/gothic_trim/metalsupport4h_shiny
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/gothic_trim/metalsupport4h_shiny.tga
+		map textures/gothic_trim/metalsupport4h_shiny
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -266,19 +266,19 @@ textures/gothic_trim/metalsupport4h_shiny
 
 textures/gothic_trim/metalsupport4h_trans
 {
-	qer_editorimage textures/gothic_trim/metalsupport4h_shiny.tga
+	qer_editorimage textures/gothic_trim/metalsupport4h_shiny
 	surfaceparm nonsolid
 	{
-		map textures/gothic_trim/metalsupport4h_shiny.tga
+		map textures/gothic_trim/metalsupport4h_shiny
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen identity
 	}
 	{
-		map textures/gothic_trim/metalsupport4h_shiny.tga
+		map textures/gothic_trim/metalsupport4h_shiny
 		blendfunc blend
 		rgbgen identity
 	}
@@ -291,13 +291,13 @@ textures/gothic_trim/metalsupport4h_trans
 
 textures/base_wall/bluemetal2_shiny
 {
-	qer_editorimage textures/base_wall/bluemetal2_shiny.tga
+	qer_editorimage textures/base_wall/bluemetal2_shiny
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/bluemetal2_shiny.tga
+		map textures/base_wall/bluemetal2_shiny
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -306,13 +306,13 @@ textures/base_wall/bluemetal2_shiny
 
 textures/base_wall/bluemetal1b_shiny
 {
-	qer_editorimage textures/base_wall/bluemetal1b_shiny.tga
+	qer_editorimage textures/base_wall/bluemetal1b_shiny
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/bluemetal1b_shiny.tga
+		map textures/base_wall/bluemetal1b_shiny
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -321,19 +321,19 @@ textures/base_wall/bluemetal1b_shiny
 
 textures/base_wall/bluemetal2_noisy
 {
-	qer_editorimage textures/base_wall/bluemetal2_shiny.tga
+	qer_editorimage textures/base_wall/bluemetal2_shiny
 	surfaceparm metalsteps
 	{
-		map textures/base_wall/bluemetal2_shiny.tga
+		map textures/base_wall/bluemetal2_shiny
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/bluemetal2_shiny.tga
+		map textures/base_wall/bluemetal2_shiny
 		blendfunc blend
 		rgbgen identity
 	}
@@ -346,18 +346,18 @@ textures/base_wall/bluemetal2_noisy
 
 textures/base_wall/bluemetal2_shiny_trans
 {
-	qer_editorimage textures/base_wall/bluemetal2_shiny.tga
+	qer_editorimage textures/base_wall/bluemetal2_shiny
 	{
-		map textures/base_wall/bluemetal2_shiny.tga
+		map textures/base_wall/bluemetal2_shiny
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/bluemetal2_shiny.tga
+		map textures/base_wall/bluemetal2_shiny
 		blendfunc blend
 		rgbgen identity
 	}
@@ -373,7 +373,7 @@ textures/gothic_trim/gothgrate2
 	surfaceparm metalsteps
 	cull none
 	{
-		map textures/gothic_trim/gothgrate2.tga
+		map textures/gothic_trim/gothgrate2
 		blendfunc blend
 		rgbgen identity
 		alphafunc GE128
@@ -389,13 +389,13 @@ textures/gothic_trim/gothgrate2
 
 textures/base_wall/metalfloor_wall_14_specular
 {
-	qer_editorimage textures/base_wall/metalfloor_wall_14_specular.tga
+	qer_editorimage textures/base_wall/metalfloor_wall_14_specular
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/metalfloor_wall_14_specular.tga
+		map textures/base_wall/metalfloor_wall_14_specular
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -404,14 +404,14 @@ textures/base_wall/metalfloor_wall_14_specular
 
 textures/clown/metalfloor_wall_14sr
 {
-	qer_editorimage textures/clown/metalfloor_wall_14sr.tga
+	qer_editorimage textures/clown/metalfloor_wall_14sr
 
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/clown/metalfloor_wall_14sr.tga
+		map textures/clown/metalfloor_wall_14sr
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -420,9 +420,9 @@ textures/clown/metalfloor_wall_14sr
 
 textures/base_wall/metalfloor_wall_15ow
 {
-	qer_editorimage textures/base_wall/metalfloor_wall_15ow.tga
+	qer_editorimage textures/base_wall/metalfloor_wall_15ow
 	{
-		map textures/base_wall/metalfloor_wall_15ow.tga
+		map textures/base_wall/metalfloor_wall_15ow
 		rgbgen identity
 	}
 	{
@@ -440,7 +440,7 @@ textures/base_wall/metalfloor_wall_15ow
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/metalfloor_wall_15ow.tga
+		map textures/base_wall/metalfloor_wall_15ow
 		blendfunc blend
 		rgbgen identity
 	}
@@ -458,7 +458,7 @@ textures/base_wall/metalfloor_wall_10
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen vertex
 	}
@@ -468,7 +468,7 @@ textures/base_wall/metalfloor_wall_10
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/metalfloor_wall_10_glow.tga
+		map textures/base_wall/metalfloor_wall_10_glow
 		blendfunc blend
 		rgbGen wave sin 0 1 0 1
 	}
@@ -487,7 +487,7 @@ textures/clown/cheapfloor2
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen vertex
 	}
@@ -505,13 +505,13 @@ textures/clown/cheapfloor2
 
 textures/proto2/c_zinc_shiny
 {
-	qer_editorimage textures/gothic_trim/zinc_shiny.tga
+	qer_editorimage textures/gothic_trim/zinc_shiny
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/gothic_trim/zinc_shiny.tga
+		map textures/gothic_trim/zinc_shiny
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -544,7 +544,7 @@ textures/sfx2/redgoal2
 	surfaceparm trans
 	cull none
 	{
-		map textures/sfx2/redgoal2.tga
+		map textures/sfx2/redgoal2
 		tcgen environment
 		blendfunc add
 		tcmod turb .1 .3 .5 .4
@@ -558,7 +558,7 @@ textures/sfx2/bluegoal2
 	surfaceparm trans
 	cull none
 	{
-		map textures/sfx2/bluegoal2.tga
+		map textures/sfx2/bluegoal2
 		tcgen environment
 		blendfunc add
 		tcmod turb .1 .3 .5 .4
@@ -568,7 +568,7 @@ textures/sfx2/bluegoal2
 
 textures/base_wall2/respawn_effect1
 {
-	qer_editorimage textures/base_wall2/redjet_1.tga
+	qer_editorimage textures/base_wall2/redjet_1
 	surfaceparm trans
 	surfaceparm nonsolid
 	surfaceparm noimpact
@@ -576,21 +576,21 @@ textures/base_wall2/respawn_effect1
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/base_wall2/redjet_1.tga
+		map textures/base_wall2/redjet_1
 		blendfunc add
 		tcmod scroll .4 0
 		tcmod scale 1 -1
 		rgbGen wave sin 0 1 0 .5
 	}
 	{
-		map textures/base_wall2/redjet_2.tga
+		map textures/base_wall2/redjet_2
 		blendfunc add
 		tcmod scroll -.4 0
 		tcmod scale 1 -1
 		rgbGen wave sin 1 0 0 1.5
 	}
 	{
-		map textures/base_wall2/redjet_3.tga
+		map textures/base_wall2/redjet_3
 		blendfunc add
 		tcmod scale 1 -1
 	}
@@ -598,7 +598,7 @@ textures/base_wall2/respawn_effect1
 
 textures/base_wall2/respawn_effect1_blue
 {
-	qer_editorimage textures/base_wall2/bluejet_1.tga
+	qer_editorimage textures/base_wall2/bluejet_1
 	surfaceparm trans
 	surfaceparm nonsolid
 	surfaceparm noimpact
@@ -606,21 +606,21 @@ textures/base_wall2/respawn_effect1_blue
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/base_wall2/bluejet_1.tga
+		map textures/base_wall2/bluejet_1
 		blendfunc add
 		tcmod scroll .4 0
 		tcmod scale 1 -1
 		rgbGen wave sin 0 1 0 .5
 	}
 	{
-		map textures/base_wall2/bluejet_2.tga
+		map textures/base_wall2/bluejet_2
 		blendfunc add
 		tcmod scroll -.4 0
 		tcmod scale 1 -1
 		rgbGen wave sin 1 0 0 1.5
 	}
 	{
-		map textures/base_wall2/bluejet_3.tga
+		map textures/base_wall2/bluejet_3
 		blendfunc add
 		tcmod scale 1 -1
 	}
@@ -628,7 +628,7 @@ textures/base_wall2/respawn_effect1_blue
 
 textures/base_wall2/respawn_effect1_ntrl
 {
-	qer_editorimage textures/base_wall2/ntrljet_1.tga
+	qer_editorimage textures/base_wall2/ntrljet_1
 	surfaceparm trans
 	surfaceparm nonsolid
 	surfaceparm noimpact
@@ -636,21 +636,21 @@ textures/base_wall2/respawn_effect1_ntrl
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/base_wall2/ntrljet_1.tga
+		map textures/base_wall2/ntrljet_1
 		blendfunc add
 		tcmod scroll .4 0
 		tcmod scale 1 -1
 		rgbGen wave sin 0 1 0 .5
 	}
 	{
-		map textures/base_wall2/ntrljet_2.tga
+		map textures/base_wall2/ntrljet_2
 		blendfunc add
 		tcmod scroll -.4 0
 		tcmod scale 1 -1
 		rgbGen wave sin 1 0 0 1.5
 	}
 	{
-		map textures/base_wall2/ntrljet_3.tga
+		map textures/base_wall2/ntrljet_3
 		blendfunc add
 		tcmod scale 1 -1
 		
@@ -663,7 +663,7 @@ textures/base_floor/proto_rustygrate2
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/proto_rustygrate2.tga
+		map textures/base_floor/proto_rustygrate2
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GE128
@@ -683,7 +683,7 @@ textures/base_floor/rusty_pentagrate
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/rusty_pentagrate.tga
+		map textures/base_floor/rusty_pentagrate
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GE128
@@ -703,7 +703,7 @@ textures/base_floor/pjgrate1
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/pjgrate1.tga
+		map textures/base_floor/pjgrate1
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GE128
@@ -723,7 +723,7 @@ textures/base_floor/pjgrate2
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/pjgrate2.tga
+		map textures/base_floor/pjgrate2
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GE128
@@ -741,22 +741,22 @@ textures/base_floor/clangspot2
 {
 	surfaceparm metalsteps
 	{
-		map textures/base_floor/clangspot2.tga
+		map textures/base_floor/clangspot2
 		rgbgen identity
 	}
 	{
-		map textures/liquids/proto_gruel3.tga
+		map textures/liquids/proto_gruel3
 		blendfunc gl_one gl_zero
 		tcmod scroll .01 .01
 		tcmod turb 0 0.01 0 .1
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		blendfunc add
 		tcgen environment
 	}
 	{
-		map textures/base_floor/clangspot2.tga
+		map textures/base_floor/clangspot2
 		blendfunc blend
 		rgbgen identity
 	}
@@ -771,13 +771,13 @@ textures/proto2/tin_panel
 {
 	surfaceparm metalsteps
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		blendfunc filter
 		tcgen environment
 		rgbgen identity
 	}
 	{
-		map textures/proto2/tin_panel.tga
+		map textures/proto2/tin_panel
 		blendfunc blend
 		rgbgen identity
 	}
@@ -796,7 +796,7 @@ textures/proto2/concrete_blue
 		rgbgen identity
 	}
 	{
-		map textures/proto2/concrete_blue.tga
+		map textures/proto2/concrete_blue
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -816,7 +816,7 @@ textures/proto2/concrete_red
 		rgbgen identity
 	}
 	{
-		map textures/proto2/concrete_red.tga
+		map textures/proto2/concrete_red
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -826,10 +826,10 @@ textures/proto2/concrete_red
 
 textures/proto2/concrete_bluenfx
 {
-	qer_editorimage textures/proto2/concrete_blue.tga
+	qer_editorimage textures/proto2/concrete_blue
 	surfaceparm metalsteps
 	{
-		map textures/proto2/concrete_blue.tga
+		map textures/proto2/concrete_blue
 		rgbgen identity
 	}
 	{
@@ -840,10 +840,10 @@ textures/proto2/concrete_bluenfx
 
 textures/proto2/concrete_rednfx
 {
-	qer_editorimage textures/proto2/concrete_red.tga
+	qer_editorimage textures/proto2/concrete_red
 	surfaceparm metalsteps
 	{
-		map textures/proto2/concrete_red.tga
+		map textures/proto2/concrete_red
 		rgbgen identity
 	}
 	{
@@ -855,13 +855,13 @@ textures/proto2/concrete_rednfx
 textures/proto2/concrete01wetwall
 {
 	{
-		map textures/liquids/proto_gruel3.tga
+		map textures/liquids/proto_gruel3
 		tcmod scale 5 5
 		tcmod scroll 0 -0.2
 		rgbgen identity
 	}
 	{
-		map textures/proto2/concrete01wetwall.tga
+		map textures/proto2/concrete01wetwall
 		blendfunc blend
 		rgbgen identity
 	}
@@ -874,14 +874,14 @@ textures/proto2/concrete01wetwall
 
 textures/base_wall/patch10beatup_spec
 {
-	qer_editorimage textures/base_wall/patch10_beatup4_alpha.tga
+	qer_editorimage textures/base_wall/patch10_beatup4_alpha
 	surfaceparm metalsteps
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/patch10_beatup4_alpha.tga
+		map textures/base_wall/patch10_beatup4_alpha
 		blendfunc gl_dst_color gl_src_alpha
 		rgbgen identitylighting
 		alphagen lightingspecular
@@ -918,18 +918,18 @@ textures/base_wall/patch10shiny_trans
 
 textures/base_wall2/space_concrete
 {
-	qer_editorimage textures/base_wall2/space_panel_alt.tga
+	qer_editorimage textures/base_wall2/space_panel_alt
 	{
-		map textures/base_wall/concrete1.tga
+		map textures/base_wall/concrete1
 		rgbgen identity
 	}
 	{
-		map textures/base_wall2/space_panel_alt.tga
+		map textures/base_wall2/space_panel_alt
 		blendfunc filter
 		tcmod scale .1 .1
 	}
 	{
-		map textures/base_wall2/space_panel_alt2.tga
+		map textures/base_wall2/space_panel_alt2
 		blendfunc filter
 		tcmod scale .03 .03
 	}
@@ -947,7 +947,7 @@ textures/base_wall2/scuffs1
 	surfaceparm nolightmap
 	polygonoffset
 	{
-		map textures/base_wall2/scuffs1.tga
+		map textures/base_wall2/scuffs1
 		blendfunc filter
 		rgbgen identity
 	}
@@ -955,7 +955,7 @@ textures/base_wall2/scuffs1
 
 textures/proto2/blue_zot
 {
-	qer_editorimage textures/proto2/blue_zot.tga
+	qer_editorimage textures/proto2/blue_zot
 	deformvertexes autosprite2
 	deformvertexes move 0.23 0.2 0.3 sin 0 5 0 1
 	deformvertexes move 0.3 0 0.3 sin 0 5 0 10
@@ -965,7 +965,7 @@ textures/proto2/blue_zot
 	surfaceparm nolightmap
 	cull none
 	{
-		map textures/proto2/blue_zot.tga
+		map textures/proto2/blue_zot
 		blendfunc add
 		rgbgen identity
 	}
@@ -973,7 +973,7 @@ textures/proto2/blue_zot
 
 textures/proto2/red_zot
 {
-	qer_editorimage textures/proto2/red_zot.tga
+	qer_editorimage textures/proto2/red_zot
 	deformvertexes autosprite2
 	deformvertexes move 0.23 0.2 0.3 sin 0 5 0 1
 	deformvertexes move 0.3 0 0.3 sin 0 5 0 10
@@ -983,7 +983,7 @@ textures/proto2/red_zot
 	surfaceparm nolightmap
 	cull none
 	{
-		map textures/proto2/red_zot.tga
+		map textures/proto2/red_zot
 		blendfunc add
 		rgbgen identity
 	}
@@ -991,8 +991,8 @@ textures/proto2/red_zot
 
 textures/proto2/blue_zot2
 {
-	qer_editorimage textures/proto2/blue_zot2.tga
-	q3map_lightimage textures/proto2/blue_zot2.tga
+	qer_editorimage textures/proto2/blue_zot2
+	q3map_lightimage textures/proto2/blue_zot2
 	q3map_surfacelight 100
 	deformvertexes autosprite2
 	deformvertexes move 0.23 0.2 0.3 sin 0 5 0 1
@@ -1003,7 +1003,7 @@ textures/proto2/blue_zot2
 	surfaceparm nolightmap
 	cull none
 	{
-		map textures/proto2/blue_zot2.tga
+		map textures/proto2/blue_zot2
 		blendfunc add
 		rgbgen identity
 	}
@@ -1011,8 +1011,8 @@ textures/proto2/blue_zot2
 
 textures/proto2/red_zot2
 {
-	qer_editorimage textures/proto2/red_zot2.tga
-	q3map_lightimage textures/proto2/red_zot2.tga
+	qer_editorimage textures/proto2/red_zot2
+	q3map_lightimage textures/proto2/red_zot2
 	q3map_surfacelight 100
 	deformvertexes autosprite2
 	deformvertexes move 0.23 0.2 0.3 sin 0 5 0 1
@@ -1023,7 +1023,7 @@ textures/proto2/red_zot2
 	surfaceparm nolightmap
 	cull none
 	{
-		map textures/proto2/red_zot2.tga
+		map textures/proto2/red_zot2
 		blendfunc add
 		rgbgen identity
 	}
@@ -1038,7 +1038,7 @@ textures/proto2/blueflare
 	surfaceparm nolightmap
 	cull none
 	{
-		clampmap textures/proto2/blueflare.tga
+		clampmap textures/proto2/blueflare
 		tcmod rotate 25
 		blendfunc add
 		rgbgen identity
@@ -1054,7 +1054,7 @@ textures/proto2/blueflare2
 	surfaceparm nolightmap
 	cull none
 	{
-		map textures/proto2/blueflare2.tga
+		map textures/proto2/blueflare2
 		blendfunc add
 		rgbgen identity
 	}
@@ -1069,7 +1069,7 @@ textures/proto2/redflare
 	surfaceparm nolightmap
 	cull none
 	{
-		clampmap textures/proto2/redflare.tga
+		clampmap textures/proto2/redflare
 		tcmod rotate 25
 		blendfunc add
 		rgbgen identity
@@ -1085,7 +1085,7 @@ textures/proto2/redflare2
 	surfaceparm nolightmap
 	cull none
 	{
-		map textures/proto2/redflare2.tga
+		map textures/proto2/redflare2
 		blendfunc add
 		rgbgen identity
 	}
@@ -1099,7 +1099,7 @@ textures/ctf2/blueteam01
 	polygonoffset
 	cull none
 	{
-		map textures/ctf2/blueteam01.tga
+		map textures/ctf2/blueteam01
 		alphafunc GE128
 		blendFunc GL_DST_COLOR GL_ONE
 		rgbgen wave sin .9 1 0 .1
@@ -1114,7 +1114,7 @@ textures/ctf2/redteam01
 	polygonoffset
 	cull none
 	{
-		map textures/ctf2/redteam01.tga
+		map textures/ctf2/redteam01
 		alphafunc GE128
 		blendFunc GL_DST_COLOR GL_ONE
 		rgbgen wave sin .9 1 0 .1
@@ -1123,14 +1123,14 @@ textures/ctf2/redteam01
 //remap shader thingies
 textures/ctf2/blueteam02
 {
-	qer_editorimage textures/ctf2/blueteam01.tga
+	qer_editorimage textures/ctf2/blueteam01
 	surfaceparm trans
 	surfaceparm nomarks
 	surfaceparm nolightmap
 	polygonoffset
 	cull none
 	{
-		map textures/ctf2/blueteam01.tga
+		map textures/ctf2/blueteam01
 		alphafunc GE128
 		blendFunc GL_DST_COLOR GL_ONE
 		rgbgen wave sin .9 1 0 .1
@@ -1139,14 +1139,14 @@ textures/ctf2/blueteam02
 
 textures/ctf2/redteam02
 {
-	qer_editorimage textures/ctf2/redteam01.tga
+	qer_editorimage textures/ctf2/redteam01
 	surfaceparm trans
 	surfaceparm nomarks
 	surfaceparm nolightmap
 	polygonoffset
 	cull none
 	{
-		map textures/ctf2/redteam01.tga
+		map textures/ctf2/redteam01
 		alphafunc GE128
 		blendFunc GL_DST_COLOR GL_ONE
 		rgbgen wave sin .9 1 0 .1
@@ -1185,14 +1185,14 @@ textures/ctf2/red_banner02
 
 textures/ctf/test2_trans
 {
-	qer_editorimage textures/ctf/test2.tga
+	qer_editorimage textures/ctf/test2
 	surfaceparm nonsolid
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/ctf/test2.tga
+		map textures/ctf/test2
 		rgbgen identity
 		blendfunc filter
 	}
@@ -1200,14 +1200,14 @@ textures/ctf/test2_trans
 
 textures/ctf/test2_r_trans
 {
-	qer_editorimage textures/ctf/test2_r.tga
+	qer_editorimage textures/ctf/test2_r
 	surfaceparm nonsolid
 	{
 		map $lightmap
 		rgbgen identity
 	}
 	{
-		map textures/ctf/test2_r.tga
+		map textures/ctf/test2_r
 		rgbgen identity
 		blendfunc filter
 	}

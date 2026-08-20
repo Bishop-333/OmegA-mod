@@ -2,7 +2,7 @@ flareShader
 {
 	cull none
 	{
-		clampmap gfx/fx/flares/blur.tga
+		clampmap gfx/fx/flares/blur
 		blendfunc add
 		rgbGen Vertex
 	}

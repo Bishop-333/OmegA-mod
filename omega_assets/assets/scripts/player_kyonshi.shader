@@ -2,7 +2,7 @@ models/players/kyonshi/hair
 {
 	cull disable
 	{
-		map models/players/kyonshi/hair.tga
+		map models/players/kyonshi/hair
 		rgbGen lightingDiffuse
 		alphaFunc GE128
 	}
@@ -11,17 +11,17 @@ models/players/kyonshi/hair
 models/players/kyonshi/torso
 {
 	{
-		map models/players/kyonshi/torso.tga
+		map models/players/kyonshi/torso
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/envmapgold.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/torso.tga
+		map models/players/kyonshi/torso
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -30,17 +30,17 @@ models/players/kyonshi/torso
 models/players/kyonshi/lower
 {
 	{
-		map models/players/kyonshi/lower.tga
+		map models/players/kyonshi/lower
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/envmapgold.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/lower.tga
+		map models/players/kyonshi/lower
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -49,11 +49,11 @@ models/players/kyonshi/lower
 models/players/kyonshi/eyes
 {
 	{
-		map models/players/kyonshi/eyes.tga
+		map models/players/kyonshi/eyes
 		rgbGen lightingDiffuse
 	}
 	{
-		clampmap textures/effects/skinspecmulttin.tga
+		clampmap textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
@@ -62,11 +62,11 @@ models/players/kyonshi/eyes
 models/players/kyonshi/eyeserr
 {
 	{
-		map models/players/kyonshi/eyes.tga
+		map models/players/kyonshi/eyes
 		rgbGen lightingDiffuse
 	}
 	{
-		clampmap textures/effects/eyespec.tga
+		clampmap textures/effects/eyespec
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
@@ -76,16 +76,16 @@ models/players/kyonshi/eyeserr
 models/players/kyonshi/skin
 {
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/skinspecmult.tga
+		map textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -94,7 +94,7 @@ models/players/kyonshi/skin
 models/players/kyonshi/skinde
 {
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		rgbGen lightingDiffuse
 	}
 	{
@@ -104,7 +104,7 @@ models/players/kyonshi/skinde
 		alphaGen lightingSpecular
 	}
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -117,7 +117,7 @@ models/players/kyonshi/skincrap
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		blendfunc gl_dst_color gl_one_minus_src_alpha
 		rgbGen identity
 		alphaGen lightingSpecular
@@ -131,7 +131,7 @@ models/players/kyonshi/hairred
 {
 	cull disable
 	{
-		map models/players/kyonshi/hairred.tga
+		map models/players/kyonshi/hairred
 		rgbGen lightingDiffuse
 		alphaFunc GE128
 	}
@@ -141,7 +141,7 @@ models/players/kyonshi/sleevered
 {
 	cull disable
 	{
-		map models/players/kyonshi/torsored.tga
+		map models/players/kyonshi/torsored
 		blendfunc blend
 		rgbGen lightingDiffuse
 		alphaGen wave sin 0.8 0 0 0 
@@ -152,7 +152,7 @@ models/players/kyonshi/sleeve
 {
 	cull disable
 	{
-		map models/players/kyonshi/torso.tga
+		map models/players/kyonshi/torso
 		blendfunc blend
 		rgbGen lightingDiffuse
 		alphaGen wave sin 0.8 0 0 0 
@@ -163,7 +163,7 @@ models/players/kyonshi/sleeveblue
 {
 	cull disable
 	{
-		map models/players/kyonshi/torsoblue.tga
+		map models/players/kyonshi/torsoblue
 		blendfunc blend
 		rgbGen lightingDiffuse
 		alphaGen wave sin 0.8 0 0 0 
@@ -174,7 +174,7 @@ models/players/kyonshi/dress
 {
 	cull disable
 	{
-		map models/players/kyonshi/lower.tga
+		map models/players/kyonshi/lower
 		blendfunc blend
 		rgbGen lightingDiffuse
 		alphaGen wave sin 0.8 0 0 0 
@@ -185,7 +185,7 @@ models/players/kyonshi/dressblue
 {
 	cull disable
 	{
-		map models/players/kyonshi/lowerblue.tga
+		map models/players/kyonshi/lowerblue
 		blendfunc blend
 		rgbGen lightingDiffuse
 		alphaGen wave sin 0.8 0 0 0 
@@ -196,7 +196,7 @@ models/players/kyonshi/dressred
 {
 	cull disable
 	{
-		map models/players/kyonshi/lowerred.tga
+		map models/players/kyonshi/lowerred
 		blendfunc blend
 		rgbGen lightingDiffuse
 		alphaGen wave sin 0.8 0 0 0 
@@ -206,17 +206,17 @@ models/players/kyonshi/dressred
 models/players/kyonshi/torsored
 {
 	{
-		map models/players/kyonshi/torsored.tga
+		map models/players/kyonshi/torsored
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/envmapgold.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/torsored.tga
+		map models/players/kyonshi/torsored
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -225,17 +225,17 @@ models/players/kyonshi/torsored
 models/players/kyonshi/lowerred
 {
 	{
-		map models/players/kyonshi/lowerred.tga
+		map models/players/kyonshi/lowerred
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/envmapgold.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/lowerred.tga
+		map models/players/kyonshi/lowerred
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -244,21 +244,21 @@ models/players/kyonshi/lowerred
 models/players/kyonshi/eyesred
 {
 	{
-		map models/players/kyonshi/eyesred.tga
+		map models/players/kyonshi/eyesred
 		rgbGen lightingDiffuse
 	}
 	{
-		clampmap textures/effects/skinspecmult.tga
+		clampmap textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		clampmap textures/effects/skinspecmult.tga
+		clampmap textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		clampmap textures/effects/skinspecmulttin.tga
+		clampmap textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
@@ -267,26 +267,26 @@ models/players/kyonshi/eyesred
 models/players/kyonshi/skinred
 {
 	{
-		map models/players/kyonshi/skinred.tga
+		map models/players/kyonshi/skinred
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/skinspecmult2.tga
+		map textures/effects/skinspecmult2
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmult.tga
+		map textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmulttin.tga
+		map textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/skinred.tga
+		map models/players/kyonshi/skinred
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -299,7 +299,7 @@ models/players/kyonshi/hairblue
 {
 	cull disable
 	{
-		map models/players/kyonshi/hairblue.tga
+		map models/players/kyonshi/hairblue
 		rgbGen lightingDiffuse
 		alphaFunc GE128
 	}
@@ -308,17 +308,17 @@ models/players/kyonshi/hairblue
 models/players/kyonshi/torsoblue
 {
 	{
-		map models/players/kyonshi/torsoblue.tga
+		map models/players/kyonshi/torsoblue
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/tinfx2d.tga
+		map textures/effects/tinfx2d
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/torsoblue.tga
+		map models/players/kyonshi/torsoblue
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -327,17 +327,17 @@ models/players/kyonshi/torsoblue
 models/players/kyonshi/lowerblue
 {
 	{
-		map models/players/kyonshi/lowerblue.tga
+		map models/players/kyonshi/lowerblue
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/tinfx2d.tga
+		map textures/effects/tinfx2d
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/lowerblue.tga
+		map models/players/kyonshi/lowerblue
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -346,21 +346,21 @@ models/players/kyonshi/lowerblue
 models/players/kyonshi/eyesblue
 {
 	{
-		map models/players/kyonshi/eyesblue.tga
+		map models/players/kyonshi/eyesblue
 		rgbGen lightingDiffuse
 	}
 	{
-		clampmap textures/effects/skinspecmult.tga
+		clampmap textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		clampmap textures/effects/skinspecmult.tga
+		clampmap textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		clampmap textures/effects/skinspecmulttin.tga
+		clampmap textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
@@ -369,26 +369,26 @@ models/players/kyonshi/eyesblue
 models/players/kyonshi/skinblue
 {
 	{
-		map models/players/kyonshi/skinblue.tga
+		map models/players/kyonshi/skinblue
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/skinspecmult2.tga
+		map textures/effects/skinspecmult2
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmult.tga
+		map textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmulttin.tga
+		map textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/skinblue.tga
+		map models/players/kyonshi/skinblue
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -400,22 +400,22 @@ models/players/kyonshi/skinblue
 models/players/kyonshi/pm_torso
 {
 	{
-		map models/players/kyonshi/torso.tga
+		map models/players/kyonshi/torso
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/envmapgold.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/torso.tga
+		map models/players/kyonshi/torso
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/kyonshi/pm_torso.tga
+		map models/players/kyonshi/pm_torso
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity
@@ -425,22 +425,22 @@ models/players/kyonshi/pm_torso
 models/players/kyonshi/pm_lower
 {
 	{
-		map models/players/kyonshi/lower.tga
+		map models/players/kyonshi/lower
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/envmapgold.tga
+		map textures/effects/envmapgold
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/lower.tga
+		map models/players/kyonshi/lower
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/kyonshi/pm_lower.tga
+		map models/players/kyonshi/pm_lower
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity
@@ -450,17 +450,17 @@ models/players/kyonshi/pm_lower
 models/players/kyonshi/pm_eyes
 {
 	{
-		map models/players/kyonshi/eyes.tga
+		map models/players/kyonshi/eyes
 		blendFunc gl_one gl_zero
 		rgbGen lightingDiffuse
 	}
 	{
-		clampmap textures/effects/skinspecmulttin.tga
+		clampmap textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/pm_eyes.tga
+		map models/players/kyonshi/pm_eyes
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity
@@ -470,21 +470,21 @@ models/players/kyonshi/pm_eyes
 models/players/kyonshi/pm_skin
 {
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/effects/skinspecmult.tga
+		map textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/skin.tga
+		map models/players/kyonshi/skin
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/kyonshi/pm_skin.tga
+		map models/players/kyonshi/pm_skin
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity
@@ -496,26 +496,26 @@ models/players/kyonshi/pm_skin
 models/players/kyonshi/skinbeh
 {
 	{
-		map models/players/kyonshi/skinblue.tga
+		map models/players/kyonshi/skinblue
 		rgbGen const ( 0.607843 0.788235 0.882353 )
 	}
 	{
-		map textures/effects/skinspecmult2.tga
+		map textures/effects/skinspecmult2
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmult.tga
+		map textures/effects/skinspecmult
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map textures/effects/skinspecmulttin.tga
+		map textures/effects/skinspecmulttin
 		blendfunc gl_dst_color gl_src_color
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/skinred.tga
+		map models/players/kyonshi/skinred
 		blendfunc blend
 		rgbGen const ( 0.411765 0.45098 0.796079 )
 	}
@@ -529,12 +529,12 @@ models/players/kyonshi/skinbeh
 models/players/kyonshi/torsobeh
 {
 	{
-		map textures/oafx/suitshell.tga
+		map textures/oafx/suitshell
 		rgbGen identity
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/torso.tga
+		map models/players/kyonshi/torso
 		blendfunc blend
 		rgbGen const ( 0.705882 0.0862745 0.972549 )
 	}
@@ -548,12 +548,12 @@ models/players/kyonshi/torsobeh
 models/players/kyonshi/lowerbeh
 {
 	{
-		map textures/oafx/suitshell.tga
+		map textures/oafx/suitshell
 		rgbGen identity
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/lower.tga
+		map models/players/kyonshi/lower
 		blendfunc blend
 		rgbGen const ( 0.643137 0.0862745 0.972549 )
 	}
@@ -568,7 +568,7 @@ models/players/kyonshi/cuffbeh
 {
 	cull disable
 	{
-		map textures/oafx/suitshell.tga
+		map textures/oafx/suitshell
 		rgbGen lightingDiffuse
 		tcGen environment 
 	}
@@ -577,20 +577,20 @@ models/players/kyonshi/cuffbeh
 models/players/kyonshi/eyesbeh
 {
 	{
-		map models/players/kyonshi/eyes.tga
+		map models/players/kyonshi/eyes
 		rgbGen lightingDiffuse
 	}
 	{
-		clampmap textures/effects/skinspec.tga
+		clampmap textures/effects/skinspec
 		blendfunc add
 		tcGen environment 
 	}
 	{
-		map models/players/kyonshi/eyes.tga
+		map models/players/kyonshi/eyes
 		blendfunc filter
 	}
 	{
-		map models/players/kyonshi/eyes.tga
+		map models/players/kyonshi/eyes
 		blendfunc add
 		rgbGen lightingDiffuse
 	}
@@ -600,7 +600,7 @@ models/players/kyonshi/hairbeh
 {
 	cull disable
 	{
-		map models/players/kyonshi/hair.tga
+		map models/players/kyonshi/hair
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}

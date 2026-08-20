@@ -9,7 +9,7 @@ lagometer
 {
 	nopicmip
 	{
-		map gfx/2d/lag.tga
+		map gfx/2d/lag
 	}
 }
 
@@ -17,7 +17,7 @@ disconnected
 {
 	nopicmip
 	{
-		map gfx/2d/net.tga
+		map gfx/2d/net
 	}
 }
 
@@ -34,7 +34,7 @@ levelShotDetail
 {
 	nopicmip
 	{
-		map textures/sfx/detail.tga
+		map textures/sfx/detail
         	blendFunc GL_DST_COLOR GL_SRC_COLOR
 		rgbgen identity
 	}
@@ -129,7 +129,7 @@ medal_impressive
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_impressive.tga
+		clampmap menu/medals/medal_impressive
 		blendFunc blend
 	}
 }
@@ -138,7 +138,7 @@ medal_frags
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_frags.tga
+		clampmap menu/medals/medal_frags
 		blendFunc blend
 	}
 }
@@ -147,7 +147,7 @@ medal_excellent
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_excellent.tga
+		clampmap menu/medals/medal_excellent
 		blendFunc blend
 	}
 }
@@ -156,7 +156,7 @@ medal_gauntlet
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_gauntlet.tga
+		clampmap menu/medals/medal_gauntlet
 		blendFunc blend
 	}
 }
@@ -165,7 +165,7 @@ medal_assist
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_assist.tga
+		clampmap menu/medals/medal_assist
 		blendFunc blend
 	}
 }
@@ -174,7 +174,7 @@ medal_defend
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_defend.tga
+		clampmap menu/medals/medal_defend
 		blendFunc blend
 	}
 }
@@ -183,7 +183,7 @@ medal_capture
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_capture.tga
+		clampmap menu/medals/medal_capture
 		blendFunc blend
 	}
 }
@@ -192,7 +192,7 @@ medal_headshot
 {
 	nopicmip
 	{
-		clampmap menu/medals/medal_headshot.tga
+		clampmap menu/medals/medal_headshot
 		blendFunc blend
 	}
 }
@@ -552,7 +552,7 @@ gfx/2d/menuinfo
 {
 	nopicmip
 	{
-		map gfx/2d/menuinfo.tga
+		map gfx/2d/menuinfo
 	}
 }
 
@@ -560,7 +560,7 @@ gfx/2d/menuinfo2
 {
 	nopicmip
 	{
-		map gfx/2d/menuinfo2.tga
+		map gfx/2d/menuinfo2
 	}
 }
 
@@ -569,7 +569,7 @@ gfx/2d/quit
 	nopicmip
 	nomipmaps
 	{
-		map gfx/2d/quit.tga
+		map gfx/2d/quit
 	}
 }
 
@@ -578,7 +578,7 @@ gfx/2d/cursor
     nopicmip
 	nomipmaps
     {
-        map gfx/2d/cursor.tga
+        map gfx/2d/cursor
     }
 }
 
@@ -593,7 +593,7 @@ sprites/balloon3
 sprites/happy
 {
 	{
-		map sprites/happy.tga
+		map sprites/happy
 		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -601,7 +601,7 @@ sprites/happy
 sprites/sad
 {
 	{
-		map sprites/sad.tga
+		map sprites/sad
 		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -609,7 +609,7 @@ sprites/sad
 sprites/angry
 {
 	{
-		map sprites/angry.tga
+		map sprites/angry
 		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -617,7 +617,7 @@ sprites/angry
 sprites/moon
 {
 	{
-		map sprites/moon.tga
+		map sprites/moon
 		blendfunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -626,8 +626,8 @@ viewBloodBlend
 {
 	sort	nearest
 	{
-		//map models/weaphits/blood201.tga
-                map gfx/damage/blood_screen.tga
+		//map models/weaphits/blood201
+                map gfx/damage/blood_screen
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen identityLighting
 		alphaGen vertex
@@ -640,7 +640,7 @@ waterBubble
 	cull none
 	entityMergable		
 	{
-		map sprites/bubble.tga
+		map sprites/bubble
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen		vertex
 		alphaGen	vertex
@@ -652,7 +652,7 @@ Grareflaader
 {
 	cull none
 	{
-		map gfx/misc/flare.tga
+		map gfx/misc/flare
 		blendFunc GL_ONE GL_ONE
 		rgbGen vertex
 	}
@@ -661,7 +661,7 @@ boens
 {
 	cull none
 	{
-		map gfx/misc/sun.tga
+		map gfx/misc/sun
 		blendFunc GL_ONE GL_ONE
 		rgbGen vertex
 	}
@@ -670,7 +670,7 @@ gfx/misc/tracer
 {
 	cull none
 	{
-		map	gfx/misc/tracer2.tga
+		map	gfx/misc/tracer2
 		blendFunc GL_ONE GL_ONE
 	}
 }
@@ -680,7 +680,7 @@ bloodMark
 	nopicmip			
 	polygonOffset
 	{
-		clampmap gfx/damage/blood_stain.tga
+		clampmap gfx/damage/blood_stain
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen identityLighting
 		alphaGen vertex
@@ -693,8 +693,8 @@ bloodTrail
 	nopicmip			
 	entityMergable		
 	{
-		//clampmap gfx/misc/blood.tga
-                clampmap gfx/damage/blood_spurt.tga
+		//clampmap gfx/misc/blood
+                clampmap gfx/damage/blood_spurt
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen		vertex
 		alphaGen	vertex
@@ -707,7 +707,7 @@ snowTrail
 	nopicmip			
 	entityMergable		
 	{
-                clampmap gfx/damage/snow_spurt.tga
+                clampmap gfx/damage/snow_spurt
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen		vertex
 		alphaGen	vertex
@@ -719,7 +719,7 @@ scoreboardName
 	nopicmip
 	nomipmaps
 	{
-		clampmap menu/tab/name.tga
+		clampmap menu/tab/name
 		blendfunc blend
 	}
 }
@@ -729,7 +729,7 @@ scoreboardScore
 	nopicmip
 	nomipmaps
 	{
-		clampmap menu/tab/score.tga
+		clampmap menu/tab/score
 		blendfunc blend
 	}
 }
@@ -739,7 +739,7 @@ scoreboardTime
 	nopicmip
 	nomipmaps
 	{
-		clampmap menu/tab/time.tga
+		clampmap menu/tab/time
 		blendfunc blend
 	}
 }
@@ -749,7 +749,7 @@ scoreboardPing
 	nopicmip
 	nomipmaps
 	{
-		clampmap menu/tab/ping.tga
+		clampmap menu/tab/ping
 		blendfunc blend
 	}
 }
@@ -909,7 +909,7 @@ gfx/2d/select
 {
 	nopicmip
 	{
-		map gfx/2d/select.tga
+		map gfx/2d/select
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 		rgbGen identity
 		rgbgen vertex
@@ -921,7 +921,7 @@ gfx/2d/assault1d
 {
 	nopicmip
 	{
-		map gfx/2d/assault1d.tga
+		map gfx/2d/assault1d
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -929,7 +929,7 @@ gfx/2d/armor1h
 {
 	nopicmip
 	{
-		map gfx/2d/armor1h.tga
+		map gfx/2d/armor1h
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -937,7 +937,7 @@ gfx/2d/health
 {
 	nopicmip
 	{
-		map gfx/2d/health.tga
+		map gfx/2d/health
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }
@@ -945,7 +945,7 @@ gfx/2d/blank
 {
 	nopicmip
 	{
-		map gfx/2d/blank.tga
+		map gfx/2d/blank
 		blendFunc GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA
 	}
 }

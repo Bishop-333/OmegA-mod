@@ -3,13 +3,13 @@ f_bfg3
 	nopicmip
 	deformVertexes autosprite
 	{
-		clampmap models/weapons2/bfg/f_bfg3.tga
+		clampmap models/weapons2/bfg/f_bfg3
 		blendfunc add
 		rgbGen const ( 0.376471 0.576471 0.403922 )
 		tcMod rotate 8288
 	}
 	{
-		clampmap models/weapons2/bfg/f_bfg3.tga
+		clampmap models/weapons2/bfg/f_bfg3
 		blendfunc add
 		rgbGen const ( 0.478431 0.603922 0.447059 )
 		tcMod rotate -2288
@@ -22,13 +22,13 @@ f_bfg1
 	nopicmip
 	deformVertexes autosprite
 	{
-		clampmap models/weapons2/bfg/f_bfg3.tga
+		clampmap models/weapons2/bfg/f_bfg3
 		blendfunc add
 		rgbGen const ( 0.376471 0.576471 0.403922 )
 		tcMod rotate 8288
 	}
 	{
-		clampmap models/weapons2/bfg/f_bfg3.tga
+		clampmap models/weapons2/bfg/f_bfg3
 		blendfunc add
 		rgbGen const ( 0.478431 0.603922 0.447059 )
 		tcMod rotate -2288
@@ -40,17 +40,17 @@ models/weapons2/bfg/bfgbody
 {
 	cull disable
 	{
-		map models/weapons2/bfg/bfgbody.tga
+		map models/weapons2/bfg/bfgbody
 		rgbGen lightingDiffuse
 	}
 	{
-		map gfx/fx/detail/d_met.tga
+		map gfx/fx/detail/d_met
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 8 8
 		detail
 	}
 	{
-		map models/weapons2/bfg/bfgbody.tga
+		map models/weapons2/bfg/bfgbody
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		alphaGen lightingSpecular
@@ -62,21 +62,21 @@ models/weapons2/bfg/bfgtube
 {
 	cull disable
 	{
-		map models/weapons2/bfg/bfgtube.tga
+		map models/weapons2/bfg/bfgtube
 		blendfunc blend
 		rgbGen lightingDiffuse
 		tcMod scroll -0.04 0
 		alphaGen wave inversesawtooth 0.5 0 0 1 
 	}
 	{
-		map models/weapons2/bfg/bubbles.tga
+		map models/weapons2/bfg/bubbles
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		tcMod scale 1.8 1
 		tcMod scroll -2 0
 	}
 	{
-		map gfx/fx/spec/robawt.tga
+		map gfx/fx/spec/robawt
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
@@ -88,13 +88,13 @@ f_bfg2
 	cull disable
 	nopicmip
 	{
-		clampmap models/weapons2/bfg/f_bfg2.tga
+		clampmap models/weapons2/bfg/f_bfg2
 		blendfunc add
 		rgbGen const ( 0.694118 0.694118 0.694118 )
 		tcMod rotate 2122
 	}
 	{
-		clampmap models/weapons2/bfg/f_bfg2.tga
+		clampmap models/weapons2/bfg/f_bfg2
 		blendfunc add
 		rgbGen const ( 0.286275 0.54902 0.25098 )
 		tcMod rotate -3201
@@ -107,19 +107,19 @@ BFGNexus
 	nopicmip
 	deformVertexes autosprite
 	{
-		clampmap models/weaphits/bfg.tga
+		clampmap models/weaphits/bfg
 		blendfunc add
 		tcMod rotate 999
 	}
 	{
-		clampmap models/weaphits/bfg3.tga
+		clampmap models/weaphits/bfg3
 		blendfunc add
 		rgbGen const ( 0.188235 0.247059 0.180392 )
 		tcMod rotate 700
 		tcMod stretch sin 1.3 0.3 0 4 
 	}
 	{
-		clampmap models/weaphits/bfg2.tga
+		clampmap models/weaphits/bfg2
 		blendfunc add
 		rgbGen const ( 0.254902 0.352941 0.227451 )
 		tcMod rotate 244
@@ -132,13 +132,13 @@ BFGTrail
 	cull disable
 	nopicmip
 	{
-		clampmap models/weaphits/bfg2.tga
+		clampmap models/weaphits/bfg2
 		blendfunc add
 		rgbGen const ( 0.694118 0.694118 0.694118 )
 		tcMod rotate 1522
 	}
 	{
-		clampmap models/weaphits/bfg2.tga
+		clampmap models/weaphits/bfg2
 		blendfunc add
 		rgbGen const ( 0.286275 0.54902 0.25098 )
 		tcMod rotate -1222

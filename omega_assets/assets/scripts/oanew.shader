@@ -2,7 +2,7 @@ lowShotgunFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/shotgun/shotgun_flash.tga
+		map models/weapons2/shotgun/shotgun_flash
 		blendfunc add
 	}
 }
@@ -11,7 +11,7 @@ lowMachgunFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/machinegun/f_machinegun.tga
+		map models/weapons2/machinegun/f_machinegun
 		blendfunc add
 	}
 }
@@ -20,7 +20,7 @@ lowPlasmaaFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/plasma/f_plasma.tga
+		map models/weapons2/plasma/f_plasma
 		blendfunc add
 	}
 }
@@ -29,7 +29,7 @@ lowRocketlFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/rocketl/f_rocketl.tga
+		map models/weapons2/rocketl/f_rocketl
 		blendfunc add
 	}
 }
@@ -38,7 +38,7 @@ lowGrenadeFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/grenadel/f_grenadel.tga
+		map models/weapons2/grenadel/f_grenadel
 		blendfunc add
 	}
 }
@@ -47,7 +47,7 @@ lowRailgunFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/railgun/f_railgun2.tga
+		map models/weapons2/railgun/f_railgun2
 		blendfunc add
 		rgbGen entity
 	}
@@ -57,10 +57,10 @@ lapscrn
 {
 	tessSize 64
 	{
-		map models/mapobjects/laptop/lapscrn.tga
+		map models/mapobjects/laptop/lapscrn
 	}
 	{
-		map models/mapobjects/laptop/invert.tga
+		map models/mapobjects/laptop/invert
 		blendfunc gl_one_minus_dst_color gl_one_minus_src_color
 		tcGen environment 
 	}
@@ -70,7 +70,7 @@ lowLightnnFlash
 {
 	deformVertexes autosprite
 	{
-		map models/weapons2/lightning/f_lightning.tga
+		map models/weapons2/lightning/f_lightning
 		blendfunc add
 		tcMod rotate 675756
 	}
@@ -80,12 +80,12 @@ LightnnFlash
 {
 	cull disable
 	{
-		animmap 20 models/weapons2/lightning/muzzle1.tga models/weapons2/lightning/muzzle2.tga models/weapons2/lightning/muzzle3.tga 
+		animmap 20 models/weapons2/lightning/muzzle1 models/weapons2/lightning/muzzle2 models/weapons2/lightning/muzzle3 
 		blendfunc gl_one gl_src_alpha
 		rgbGen wave inversesawtooth 0 1 0 20 
 	}
 	{
-		animmap 20 models/weapons2/lightning/muzzle2.tga models/weapons2/lightning/muzzle3.tga models/weapons2/lightning/muzzle1.tga 
+		animmap 20 models/weapons2/lightning/muzzle2 models/weapons2/lightning/muzzle3 models/weapons2/lightning/muzzle1 
 		blendfunc gl_one gl_src_alpha
 		rgbGen wave sawtooth 0 1 0 20 
 	}
@@ -94,15 +94,15 @@ LightnnFlash
 // sawtooth stretch 0 values result in ugly clamping
 textures/effects/jumpcirc
 {
-	q3map_lightimage textures/effects/jumpcirc.tga
+	q3map_lightimage textures/effects/jumpcirc
 	q3map_surfacelight 466
 	{
-		clampmap textures/effects/jumpcirc.tga
+		clampmap textures/effects/jumpcirc
 		tcMod stretch sawtooth 0.5 1 0 1 
 		tcMod rotate 75
 	}
 	{
-		clampmap textures/effects/jumpcirc.tga
+		clampmap textures/effects/jumpcirc
 		blendfunc add
 		tcMod stretch sawtooth 0.5 1 0 1 
 		tcMod rotate -120
@@ -113,15 +113,15 @@ textures/effects/jumpcirc
 // sawtooth stretch 0 values result in ugly clamping
 textures/effects/jumpcircblue
 {
-	q3map_lightimage textures/effects/jumpcircblue.tga
+	q3map_lightimage textures/effects/jumpcircblue
 	q3map_surfacelight 466
 	{
-		clampmap textures/effects/jumpcircblue.tga
+		clampmap textures/effects/jumpcircblue
 		tcMod stretch sawtooth 0.5 1 0 1 
 		tcMod rotate 75
 	}
 	{
-		clampmap textures/effects/jumpcircblue.tga
+		clampmap textures/effects/jumpcircblue
 		blendfunc add
 		tcMod stretch sawtooth 0.5 1 0 1 
 		tcMod rotate -120
@@ -132,15 +132,15 @@ textures/effects/jumpcircblue
 // sawtooth stretch 0 values result in ugly clamping
 textures/effects/jumpcircred
 {
-	q3map_lightimage textures/effects/jumpcircred.tga
+	q3map_lightimage textures/effects/jumpcircred
 	q3map_surfacelight 466
 	{
-		clampmap textures/effects/jumpcircred.tga
+		clampmap textures/effects/jumpcircred
 		tcMod stretch sawtooth 0.5 1 0 1 
 		tcMod rotate 75
 	}
 	{
-		clampmap textures/effects/jumpcircred.tga
+		clampmap textures/effects/jumpcircred
 		blendfunc add
 		tcMod stretch sawtooth 0.5 1 0 1 
 		tcMod rotate -120
@@ -151,7 +151,7 @@ textures/ctf_unified/floor_decal_blue
 {
 	cull disable
 	{
-		map textures/symbols/blueteam.tga
+		map textures/symbols/blueteam
 		blendfunc add
 	}
 }
@@ -177,7 +177,7 @@ textures/ctf_unified/monologo_flash_red
 {
 	cull disable
 	{
-		map textures/symbols/redteam.tga
+		map textures/symbols/redteam
 	}
 }
 
@@ -186,13 +186,13 @@ textures/base_wall/glass01
 	surfaceparm trans
 	cull disable
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		blendfunc add
 		rgbGen identity
 		tcGen environment 
 	}
 	{
-		map textures/detail/d_met2.tga
+		map textures/detail/d_met2
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 4 4
 		detail
@@ -212,7 +212,7 @@ redArmor
 		rgbGen lightingDiffuse
 	}
 	{
-		map textures/sfx/specular.tga
+		map textures/sfx/specular
 		blendfunc add
 		rgbGen lightingDiffuse
 		tcGen environment 
@@ -227,11 +227,11 @@ redArmor
 yellowArmor
 {
 	{
-		map models/powerups/armor/yellowarmor.tga
+		map models/powerups/armor/yellowarmor
 		rgbGen lightingDiffuse
 	}
 	{
-		map gfx/fx/spec/spots.tga
+		map gfx/fx/spec/spots
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		tcGen environment 
@@ -243,17 +243,17 @@ textures/base_floor/metfloor1
 {
 	surfaceparm metalsteps
 	{
-		map textures/base_floor/metfloor1.tga
+		map textures/base_floor/metfloor1
 		rgbGen const ( 1 1 1 )
 	}
 	{
-		clampmap textures/base_wall/chrome_env2.tga
+		clampmap textures/base_wall/chrome_env2
 		blendfunc add
 		rgbGen const ( 0.188235 0.188235 0.188235 )
 		tcGen environment 
 	}
 	{
-		map textures/base_floor/metfloor1.tga
+		map textures/base_floor/metfloor1
 		blendfunc filter
 		rgbGen const ( 0.737255 0.737255 0.737255 )
 	}
@@ -267,7 +267,7 @@ textures/base_floor/metfloor1
 textures/base_trim/tinfx
 {
 	{
-		map textures/base_trim/tinfx.tga
+		map textures/base_trim/tinfx
 		tcGen environment 
 	}
 	{
@@ -282,7 +282,7 @@ console
 	nopicmip
 	nomipmaps
         {
-		map textures/omega/comp3textd.tga
+		map textures/omega/comp3textd
 		blendFunc blend
 		tcMod scroll 7.1  0.2
 		tcmod scale .8 1
@@ -298,7 +298,7 @@ grassobj
 {
 	cull disable
 	{
-		map models/mapobjects/out/grass.tga
+		map models/mapobjects/out/grass
 		rgbGen lightingDiffuse
 		alphaFunc GE128
 	}
@@ -307,11 +307,11 @@ grassobj
 ameatygib
 {
 	{
-		map models/gibs/genericgibmeat.tga
+		map models/gibs/genericgibmeat
 		rgbGen lightingDiffuse
 	}
 	{
-		map gfx/fx/detail/d_sand.tga
+		map gfx/fx/detail/d_sand
 		blendfunc gl_dst_color gl_src_color
 		rgbGen lightingDiffuse
 		tcMod scale 8 8
@@ -319,7 +319,7 @@ ameatygib
 		detail
 	}
 	{
-		map models/gibs/gibmeatspec.tga
+		map models/gibs/gibmeatspec
 		blendfunc gl_src_alpha gl_one
 		rgbGen lightingDiffuse
 		alphaGen lightingSpecular
@@ -330,30 +330,30 @@ ameatygib
 oalogo
 {
 	{
-		map textures/oa/water.tga
+		map textures/oa/water
 		tcMod scroll 0.01 0.01
 	}
 	{
-		map textures/oa/water.tga
+		map textures/oa/water
 		blendfunc add
 		tcMod scroll 0.04 0.01
 	}
 	{
-		map textures/oa/water.tga
+		map textures/oa/water
 		blendfunc add
 		tcMod scroll -0.01 -0.02
 	}
 	{
-		map textures/oa/flamelet.tga
+		map textures/oa/flamelet
 		tcMod scroll -0.2 0.4
 	}
 	{
-		map textures/oa/flamelet.tga
+		map textures/oa/flamelet
 		blendfunc add
 		tcMod scroll 0.2 0.7
 	}
 	{
-		map textures/oa/flamelet.tga
+		map textures/oa/flamelet
 		blendfunc add
 		tcMod scroll 0 0.6
 	}
@@ -375,7 +375,7 @@ menubacknologo_blueish
 		tcMod scale -1.1 0.8
 	}
 	{
-		map gfx/fx/detail/d_ice.tga
+		map gfx/fx/detail/d_ice
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 2 2
 	}
@@ -403,12 +403,12 @@ menuback_blueish
 		tcMod scale -1.1 0.8
 	}
 	{
-		map gfx/fx/detail/d_ice.tga
+		map gfx/fx/detail/d_ice
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 2 2
 	}
 	{
-		map textures/sfx/logo256.tga
+		map textures/sfx/logo256
 		blendfunc filter
 		tcMod scale 0 1
 	}
@@ -418,19 +418,19 @@ menuback_blueish
 menuback
 {
 	{
-		map gfx/fx/detail/d_sand.tga
+		map gfx/fx/detail/d_sand
 		rgbGen const ( 0.501961 0.501961 0.501961 )
 		tcMod scroll 0.1 0.1
 	}
 	{
-		map gfx/fx/detail/d_sand.tga
+		map gfx/fx/detail/d_sand
 		blendfunc gl_dst_color gl_src_color
 		rgbGen const ( 0.141176 0.141176 0.141176 )
 		tcMod scroll -0.04 0.1
 		tcMod scale -1.1 0.8
 	}
 	{
-		map gfx/fx/detail/d_ice.tga
+		map gfx/fx/detail/d_ice
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 2 2
 	}
@@ -449,38 +449,38 @@ boomzor
 {
 	deformVertexes autosprite
 	{
-		animmap 8 models/weaphits/rlboom/rlboom_1.tga models/weaphits/rlboom/rlboom_2.tga models/weaphits/rlboom/rlboom_3.tga models/weaphits/rlboom/rlboom_4.tga models/weaphits/rlboom/rlboom_5.tga models/weaphits/rlboom/rlboom_6.tga models/weaphits/rlboom/rlboom_7.tga models/weaphits/rlboom/rlboom_8.tga 
+		animmap 8 models/weaphits/rlboom/rlboom_1 models/weaphits/rlboom/rlboom_2 models/weaphits/rlboom/rlboom_3 models/weaphits/rlboom/rlboom_4 models/weaphits/rlboom/rlboom_5 models/weaphits/rlboom/rlboom_6 models/weaphits/rlboom/rlboom_7 models/weaphits/rlboom/rlboom_8 
 		blendfunc gl_one gl_src_alpha
 		rgbGen wave inversesawtooth 0 1 0 8 
 	}
 	{
-		animmap 8 models/weaphits/rlboom/rlboom_2.tga models/weaphits/rlboom/rlboom_3.tga models/weaphits/rlboom/rlboom_4.tga models/weaphits/rlboom/rlboom_5.tga models/weaphits/rlboom/rlboom_6.tga models/weaphits/rlboom/rlboom_7.tga models/weaphits/rlboom/rlboom_8.tga models/weaphits/rlboom/rlboom_8.tga 
+		animmap 8 models/weaphits/rlboom/rlboom_2 models/weaphits/rlboom/rlboom_3 models/weaphits/rlboom/rlboom_4 models/weaphits/rlboom/rlboom_5 models/weaphits/rlboom/rlboom_6 models/weaphits/rlboom/rlboom_7 models/weaphits/rlboom/rlboom_8 models/weaphits/rlboom/rlboom_8 
 		blendfunc gl_one gl_src_alpha
 		rgbGen wave sawtooth 0 1 0 8 
 	}
 	{
-		clampmap textures/oa/fiar.tga
+		clampmap textures/oa/fiar
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 1 
 		tcMod rotate 77
 		tcMod stretch sin 0.3 0.4 0 0.4 
 	}
 	{
-		clampmap textures/oa/fiar2.tga
+		clampmap textures/oa/fiar2
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 1 
 		tcMod rotate 33
 		tcMod stretch sin 0.8 -0.4 0 0.1 
 	}
 	{
-		clampmap textures/oa/fiar.tga
+		clampmap textures/oa/fiar
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 1 
 		tcMod rotate -17
 		tcMod stretch sawtooth 0 1.2 0 0.5 
 	}
 	{
-		clampmap textures/oa/fiar2.tga
+		clampmap textures/oa/fiar2
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 1 
 		tcMod rotate -77
@@ -510,7 +510,7 @@ smokePuffRagePro
 	nopicmip
 	cull disable
 	{
-		map gfx/misc/smokepuffragepro.tga
+		map gfx/misc/smokepuffragepro
 		blendfunc blend
 		alphaGen Vertex
 	}
@@ -520,7 +520,7 @@ hasteSmokePuff
 {
 	cull disable
 	{
-		map gfx/misc/hastesmoke.tga
+		map gfx/misc/hastesmoke
 		blendfunc blend
 		tcMod rotate 64
 		alphaGen Vertex
@@ -543,12 +543,12 @@ sprites/plasma1
 {
 	nopicmip
 	{
-		clampmap sprites/plasmaa.tga
+		clampmap sprites/plasmaa
 		blendfunc gl_src_alpha gl_one
 		tcMod rotate -145
 	}
 	{
-		clampmap sprites/plasmaa.tga
+		clampmap sprites/plasmaa
 		blendfunc gl_src_alpha gl_one
 		tcMod rotate 177
 	}
@@ -560,17 +560,17 @@ bfgshot
 	cull disable
 	deformVertexes autosprite
 	{
-		clampmap textures/oafx/bfgfx.tga
+		clampmap textures/oafx/bfgfx
 		blendfunc add
 		tcMod rotate -700
 	}
 	{
-		clampmap textures/oafx/bfgfx2.tga
+		clampmap textures/oafx/bfgfx2
 		blendfunc add
 		tcMod rotate 54
 	}
 	{
-		clampmap textures/oafx/bfgfx2.tga
+		clampmap textures/oafx/bfgfx2
 		blendfunc add
 		tcMod rotate -14
 	}
@@ -581,7 +581,7 @@ bfgsho
 	cull disable
 	deformVertexes autosprite
 	{
-		clampmap textures/oafx/bfgfx3.tga
+		clampmap textures/oafx/bfgfx3
 		blendfunc add
 		tcMod rotate 64
 	}
@@ -591,7 +591,7 @@ bfgsho
 explode11
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0000.tga
+		map textures/sfx/130boom/dpexplosion4_0000
 		blendfunc add
 	}
 }
@@ -599,7 +599,7 @@ explode11
 explode12
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0001.tga
+		map textures/sfx/130boom/dpexplosion4_0001
 		blendfunc add
 	}
 }
@@ -607,7 +607,7 @@ explode12
 explode13
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0002.tga
+		map textures/sfx/130boom/dpexplosion4_0002
 		blendfunc add
 	}
 }
@@ -615,7 +615,7 @@ explode13
 explode14
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0003.tga
+		map textures/sfx/130boom/dpexplosion4_0003
 		blendfunc add
 	}
 }
@@ -623,7 +623,7 @@ explode14
 explode15
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0004.tga
+		map textures/sfx/130boom/dpexplosion4_0004
 		blendfunc add
 	}
 }
@@ -631,7 +631,7 @@ explode15
 explode16
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0005.tga
+		map textures/sfx/130boom/dpexplosion4_0005
 		blendfunc add
 	}
 }
@@ -639,7 +639,7 @@ explode16
 explode17
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0006.tga
+		map textures/sfx/130boom/dpexplosion4_0006
 		blendfunc add
 	}
 }
@@ -647,7 +647,7 @@ explode17
 explode18
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0007.tga
+		map textures/sfx/130boom/dpexplosion4_0007
 		blendfunc add
 	}
 }
@@ -655,7 +655,7 @@ explode18
 explode19
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0008.tga
+		map textures/sfx/130boom/dpexplosion4_0008
 		blendfunc add
 	}
 }
@@ -663,7 +663,7 @@ explode19
 explode110
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0009.tga
+		map textures/sfx/130boom/dpexplosion4_0009
 		blendfunc add
 	}
 }
@@ -671,7 +671,7 @@ explode110
 explode111
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0010.tga
+		map textures/sfx/130boom/dpexplosion4_0010
 		blendfunc add
 	}
 }
@@ -679,7 +679,7 @@ explode111
 explode112
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0011.tga
+		map textures/sfx/130boom/dpexplosion4_0011
 		blendfunc add
 	}
 }
@@ -687,7 +687,7 @@ explode112
 explode113
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0012.tga
+		map textures/sfx/130boom/dpexplosion4_0012
 		blendfunc add
 	}
 }
@@ -695,7 +695,7 @@ explode113
 explode114
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0013.tga
+		map textures/sfx/130boom/dpexplosion4_0013
 		blendfunc add
 	}
 }
@@ -703,7 +703,7 @@ explode114
 explode115
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0014.tga
+		map textures/sfx/130boom/dpexplosion4_0014
 		blendfunc add
 	}
 }
@@ -711,7 +711,7 @@ explode115
 explode116
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0015.tga
+		map textures/sfx/130boom/dpexplosion4_0015
 		blendfunc add
 	}
 }
@@ -719,7 +719,7 @@ explode116
 explode117
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0016.tga
+		map textures/sfx/130boom/dpexplosion4_0016
 		blendfunc add
 	}
 }
@@ -727,7 +727,7 @@ explode117
 explode118
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0017.tga
+		map textures/sfx/130boom/dpexplosion4_0017
 		blendfunc add
 	}
 }
@@ -735,7 +735,7 @@ explode118
 explode119
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0018.tga
+		map textures/sfx/130boom/dpexplosion4_0018
 		blendfunc add
 	}
 }
@@ -743,7 +743,7 @@ explode119
 explode120
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0019.tga
+		map textures/sfx/130boom/dpexplosion4_0019
 		blendfunc add
 	}
 }
@@ -751,7 +751,7 @@ explode120
 explode121
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0020.tga
+		map textures/sfx/130boom/dpexplosion4_0020
 		blendfunc add
 	}
 }
@@ -759,7 +759,7 @@ explode121
 explode122
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0021.tga
+		map textures/sfx/130boom/dpexplosion4_0021
 		blendfunc add
 	}
 }
@@ -767,7 +767,7 @@ explode122
 explode123
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0022.tga
+		map textures/sfx/130boom/dpexplosion4_0022
 		blendfunc add
 	}
 }
@@ -775,7 +775,7 @@ explode123
 explode124
 {
 	{
-		map textures/sfx/130boom/dpexplosion4_0023.tga
+		map textures/sfx/130boom/dpexplosion4_0023
 		blendfunc add
 	}
 }
@@ -785,13 +785,13 @@ lightningBoltnew
 	cull none
 	nopicmip
 	{
-		map textures/oafx/lightningscroll.tga
+		map textures/oafx/lightningscroll
 		blendfunc add
 		tcMod scale 0.5 1
 		tcMod scroll -1.6 0
 	}
 	{
-		map textures/oafx/lightningscroll.tga
+		map textures/oafx/lightningscroll
 		blendfunc add
 		tcMod scale -0.5 -1
 		tcMod scroll -4.2 0
@@ -803,7 +803,7 @@ lightningBoltThin
 	cull none
 	nopicmip
 	{
-		map textures/oafx/lightningthin.tga
+		map textures/oafx/lightningthin
 		blendfunc add
 	}
 }

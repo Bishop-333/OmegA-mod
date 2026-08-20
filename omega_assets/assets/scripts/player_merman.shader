@@ -5,7 +5,7 @@ models/players/merman/fins
 {
 	cull disable
 	{
-		map /models/players/merman/fins.tga
+		map /models/players/merman/fins
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -13,7 +13,7 @@ models/players/merman/fins
 models/players/merman/skin
 {
 	{
-		map /models/players/merman/skin.tga
+		map /models/players/merman/skin
 		rgbGen lightingDiffuse
 		
 	}
@@ -22,7 +22,7 @@ models/players/merman/brac
 {
 	cull disable
 	{
-		map /models/players/merman/brac.tga
+		map /models/players/merman/brac
 		rgbGen lightingDiffuse
 	}
 	// {
@@ -32,7 +32,7 @@ models/players/merman/brac
 		// tcGen environment 
 	// }
 	// {
-		// map /models/players/merman/brac.tga
+		// map /models/players/merman/brac
 		// blendfunc blend
 		// rgbGen lightingDiffuse
 	// }
@@ -44,7 +44,7 @@ models/players/merman/finsred
 {
 	cull disable
 	{
-		map models/players/merman/finsred.tga
+		map models/players/merman/finsred
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -52,7 +52,7 @@ models/players/merman/finsred
 models/players/merman/skinred
 {
 	{
-		map models/players/merman/skinred.tga
+		map models/players/merman/skinred
 		rgbGen lightingDiffuse
 	}
 }
@@ -60,11 +60,11 @@ models/players/merman/bracred
 {
 	cull disable
 	{
-		map models/players/merman/bracred.tga
+		map models/players/merman/bracred
 		rgbGen lightingDiffuse
 	}
 	// {
-		// map textures/effects/specular.tga
+		// map textures/effects/specular
 		// blendfunc add
 		// rgbGen lightingDiffuse
 		// tcGen environment 
@@ -77,7 +77,7 @@ models/players/merman/finsblue
 {
 	cull disable
 	{
-		map models/players/merman/finsblue.tga
+		map models/players/merman/finsblue
 		blendfunc blend
 		rgbGen lightingDiffuse
 	}
@@ -85,7 +85,7 @@ models/players/merman/finsblue
 models/players/merman/skinblue
 {
 	{
-		map models/players/merman/skinblue.tga
+		map models/players/merman/skinblue
 		rgbGen lightingDiffuse
 		
 	}
@@ -94,11 +94,11 @@ models/players/merman/bracblue
 {
 	cull disable
 	{
-		map models/players/merman/bracblue.tga
+		map models/players/merman/bracblue
 		rgbGen lightingDiffuse
 	}
 	// {
-		// map textures/effects/specular.tga
+		// map textures/effects/specular
 		// blendfunc add
 		// rgbGen lightingDiffuse
 		// tcGen environment 
@@ -111,7 +111,7 @@ models/players/merman/pm_fins
 {
 	cull disable
 	{
-		map /models/players/merman/pm_fins.tga
+		map /models/players/merman/pm_fins
 		blendfunc blend
 		rgbGen entity
 	}
@@ -119,12 +119,12 @@ models/players/merman/pm_fins
 models/players/merman/pm_skin
 {
 	{
-		map /models/players/merman/skin.tga
+		map /models/players/merman/skin
 		rgbGen lightingDiffuse
 		
 	}
 	{
-		map /models/players/merman/pm_skin.tga
+		map /models/players/merman/pm_skin
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity	
@@ -134,7 +134,7 @@ models/players/merman/pm_brac
 {
 	cull disable
 	{
-		map /models/players/merman/pm_brac.tga
+		map /models/players/merman/pm_brac
 		rgbGen entity
 	}
 }

@@ -3,12 +3,12 @@ powerups/invisibility
 	cull disable
 	deformVertexes wave 64 sin 0 1 0 1 
 	{
-		map textures/oafx/inviso.tga
+		map textures/oafx/inviso
 		blendfunc gl_dst_color gl_src_color
 		tcMod rotate 53
 	}
 	{
-		map textures/oafx/inviso.tga
+		map textures/oafx/inviso
 		blendfunc gl_dst_color gl_src_color
 		tcMod rotate -86
 	}
@@ -101,7 +101,7 @@ megacrossEnv
 powerups/quadi
 {
 	{
-		map textures/oafx/quadmultshell.tga
+		map textures/oafx/quadmultshell
 		blendfunc gl_dst_color gl_src_color
 		tcMod rotate 53
 	}
@@ -112,7 +112,7 @@ powerups/quad
 {
 	deformVertexes wave 100 sin 0.25 0 0 0 
 	{
-		map textures/oafx/quadshell.tga
+		map textures/oafx/quadshell
 		blendfunc add
 		tcMod rotate 75
 		tcGen environment 
@@ -133,7 +133,7 @@ powerups/quade
 		tcGen environment
 	}
 	{
-		map gfx/fx/spec/spots.tga
+		map gfx/fx/spec/spots
 		blendfunc gl_src_alpha gl_one
 		//rgbGen const ( 0.266667 0.423529 0.658824 ) // #446ba8
 		rgbGen const ( 0.30196 0.76470 1.0 ) // #4dc3ff
@@ -156,7 +156,7 @@ powerups/quadWeapong
 		tcGen environment 
 	}
 	{
-		map gfx/fx/spec/spots.tga
+		map gfx/fx/spec/spots
 		blendfunc gl_src_alpha gl_one
 		//rgbGen const ( 0.266667 0.423529 0.658824 ) // #446ba8
 		rgbGen const ( 0.30196 0.76470 1.0 ) // #4dc3ff
@@ -172,7 +172,7 @@ powerups/quadWeapon
 {
 	deformVertexes wave 100 sin 0.75 0 0 0 
 	{
-		map textures/oafx/quadshell.tga
+		map textures/oafx/quadshell
 		blendfunc add
 		tcMod rotate 75
 		tcGen environment 
@@ -188,7 +188,7 @@ powerups/battleSuit
 		tcMod turb 0 0.12 0 0.27
 	}
 	{
-		map gfx/fx/spec/skin.tga
+		map gfx/fx/spec/skin
 		blendfunc gl_src_alpha gl_one
 		//rgbGen const ( 0.74902 0.403922 0.176471 ) // #bf672d
 		rgbGen const ( 1.0 0.65490 0.25882 ) // #ffa742
@@ -208,7 +208,7 @@ powerups/battleWeapon
 		tcMod turb 0 0.12 0 0.27
 	}
 	{
-		map gfx/fx/spec/skin.tga
+		map gfx/fx/spec/skin
 		blendfunc gl_src_alpha gl_one
 		//rgbGen const ( 0.74902 0.403922 0.176471 ) // #bf672d
 		rgbGen const ( 1.0 0.65490 0.25882 ) // #ffa742
@@ -223,14 +223,14 @@ powerups/regen
 {
 	deformVertexes wave 100 sin 1 0 0 0 
 	{
-		map textures/oafx/regenshell.tga
+		map textures/oafx/regenshell
 		blendfunc gl_src_alpha gl_one
 		tcMod rotate 75
 		tcGen environment
 		alphaGen wave sin 0.5 0 0 0
 	}
 	{
-		map gfx/fx/spec/skin.tga
+		map gfx/fx/spec/skin
 		blendfunc gl_src_alpha gl_one
 		rgbGen const ( 1 0.50196 0.50196 ) // #ff8080
 		tcMod scroll 0.5 0.5
@@ -267,7 +267,7 @@ spawnPoint
 {
 	cull disable
 	{
-		map gfx/damage/shadow.tga
+		map gfx/damage/shadow
 		rgbGen entity
 		blendfunc blend
 		tcMod rotate 86

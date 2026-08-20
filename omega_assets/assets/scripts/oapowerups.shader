@@ -2,7 +2,7 @@ invisItem
 {
 	cull disable
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		blendfunc add
 		rgbGen wave sin 0.3 0.4 0 0.5 
 		tcGen environment 
@@ -12,12 +12,12 @@ invisItem
 quadDamage
 {
 	{
-		map textures/oafx/quadshell.tga
+		map textures/oafx/quadshell
 		tcMod scroll 0.5 0.5
 		tcGen environment 
 	}
 	{
-		map textures/sfx/specular.tga
+		map textures/sfx/specular
 		blendfunc add
 		tcGen environment 
 	}
@@ -27,14 +27,14 @@ teleportEffect
 {
 	deformVertexes autosprite
 	{
-		clampmap models/powerups/instant/quadlite.tga
+		clampmap models/powerups/instant/quadlite
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 2 
 		tcMod rotate 85
 		tcMod stretch sawtooth 0 1.5 0 2 
 	}
 	{
-		clampmap models/powerups/instant/quadlite2.tga
+		clampmap models/powerups/instant/quadlite2
 		blendfunc add
 		rgbGen wave inversesawtooth 0 1 0 2 
 		tcMod rotate -73
@@ -46,13 +46,13 @@ quadAura
 {
 	deformVertexes autosprite
 	{
-		clampmap models/powerups/instant/quadlite.tga
+		clampmap models/powerups/instant/quadlite
 		blendfunc add
 		tcMod rotate 6
 		tcMod stretch sin 1 0.1 0 1 
 	}
 	{
-		clampmap models/powerups/instant/quadlite2.tga
+		clampmap models/powerups/instant/quadlite2
 		blendfunc add
 		tcMod rotate -8
 		tcMod stretch sin 1 -0.1 0 1 
@@ -206,7 +206,7 @@ models/gibs/heart
 {
 	deformvertexes wave 20 sin 1.4 .3 0 1.2
 	{
-		map models/gibs/heart.tga
+		map models/gibs/heart
 		rgbGen lightingDiffuse
 	}
 }
@@ -214,7 +214,7 @@ models/gibs/heart
 models/gibs/veins
 {
 	{
-		map models/gibs/veins.tga
+		map models/gibs/veins
 		alphafunc GE128
 		depthwrite
 		rgbGen lightingDiffuse
@@ -225,7 +225,7 @@ models/gibs/veins
 models/gibs/splurt
 {
 	{
-		map models/gibs/splurt.tga
+		map models/gibs/splurt
 		alphafunc GE128
 		depthwrite
 		tcmod scroll 0 3
@@ -236,7 +236,7 @@ models/gibs/splurt
 models/gibs/f_veins
 {
 	{
-		map models/gibs/f_veins.tga
+		map models/gibs/f_veins
 		alphafunc GE128
 		depthwrite
 		rgbGen lightingDiffuse

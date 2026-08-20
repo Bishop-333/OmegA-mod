@@ -7,12 +7,12 @@ logoTitle
 		tcGen environment 
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		rgbGen const ( 0.5 0.75 1 )
 		tcGen environment 
 	}
 	{
-		map textures/omega/electric.tga
+		map textures/omega/electric
 		blendfunc add
 		tcMod scroll -0.03 0
 	}
@@ -27,7 +27,7 @@ logoEmblem
 		tcGen environment 
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		rgbGen const ( 0.5 0.75 1 )
 		tcGen environment 
 	}
@@ -37,11 +37,11 @@ menu/art/cut_frame
 {
 	nopicmip
 	{
-		map menu/art/cutred.tga
+		map menu/art/cutred
 		blendfunc filter
 	}
 	{
-		map menu/art/cut_frame.tga
+		map menu/art/cut_frame
 		blendfunc blend
 	}
 }
@@ -50,11 +50,11 @@ menu/art/addbotframe
 {
 	nopicmip
 	{
-		map menu/art/addbotred.tga
+		map menu/art/addbotred
 		blendfunc filter
 	}
 	{
-		map menu/art/addbotframe.tga
+		map menu/art/addbotframe
 		blendfunc blend
 	}
 }

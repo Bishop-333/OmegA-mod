@@ -6,7 +6,7 @@ models/players/skelebot/skin1
 {
 //	cull disable
 	{
-		map models/players/skelebot/skin1.tga
+		map models/players/skelebot/skin1
 		rgbGen lightingDiffuse
 	}
 	{
@@ -22,7 +22,7 @@ models/players/skelebot/skin2
 {
 //	cull disable
 	{
-		map models/players/skelebot/skin2.tga
+		map models/players/skelebot/skin2
 		rgbGen lightingDiffuse
 	}
 	{
@@ -33,7 +33,7 @@ models/players/skelebot/skin2
 		rgbGen lightingDiffuse
 	}
 }
-//		map textures/effects/eyespec.tga
+//		map textures/effects/eyespec
 
 //*******************************
 //BLUE_SKIN:
@@ -42,7 +42,7 @@ models/players/skelebot/skin2
 models/players/skelebot/skin1blue
 {
 	{
-		map models/players/skelebot/skin1blue.tga
+		map models/players/skelebot/skin1blue
 		rgbGen lightingDiffuse
 	}
 	{
@@ -56,7 +56,7 @@ models/players/skelebot/skin1blue
 models/players/skelebot/skin2blue
 {
 	{
-		map models/players/skelebot/skin2blue.tga
+		map models/players/skelebot/skin2blue
 		rgbGen lightingDiffuse
 	}
 	{
@@ -74,7 +74,7 @@ models/players/skelebot/skin2blue
 models/players/skelebot/skin1red
 {
 	{
-		map models/players/skelebot/skin1red.tga
+		map models/players/skelebot/skin1red
 		rgbGen lightingDiffuse
 	}
 	{
@@ -88,7 +88,7 @@ models/players/skelebot/skin1red
 models/players/skelebot/skin2red
 {
 	{
-		map models/players/skelebot/skin2red.tga
+		map models/players/skelebot/skin2red
 		rgbGen lightingDiffuse
 	}
 	{
@@ -106,7 +106,7 @@ models/players/skelebot/skin2red
 models/players/skelebot/skin1metal
 {
 	{
-		map models/players/skelebot/skin1metal.tga
+		map models/players/skelebot/skin1metal
 		rgbGen lightingDiffuse
 	}
 	{
@@ -120,7 +120,7 @@ models/players/skelebot/skin1metal
 models/players/skelebot/skin2metal
 {
 	{
-		map models/players/skelebot/skin2metal.tga
+		map models/players/skelebot/skin2metal
 		rgbGen lightingDiffuse
 	}
 	{
@@ -138,7 +138,7 @@ models/players/skelebot/skin2metal
 models/players/skelebot/pm_skin1
 {
 	{
-		map models/players/skelebot/skin1.tga
+		map models/players/skelebot/skin1
 		rgbGen lightingDiffuse
 	}
 	{
@@ -148,7 +148,7 @@ models/players/skelebot/pm_skin1
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/skelebot/pm_skin1.tga
+		map models/players/skelebot/pm_skin1
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity
@@ -158,7 +158,7 @@ models/players/skelebot/pm_skin1
 models/players/skelebot/pm_skin2
 {
 	{
-		map models/players/skelebot/skin2.tga
+		map models/players/skelebot/skin2
 		rgbGen lightingDiffuse
 	}
 	{
@@ -168,7 +168,7 @@ models/players/skelebot/pm_skin2
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/players/skelebot/pm_skin2.tga
+		map models/players/skelebot/pm_skin2
 		blendFunc gl_one gl_zero
 		alphaFunc GE128
 		rgbGen entity

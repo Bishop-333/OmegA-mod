@@ -4,11 +4,11 @@
 models/powerups/ammo/machammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 1 1 0 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -18,7 +18,7 @@ models/powerups/ammo/machammo
 models/powerups/ammo/machammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -32,11 +32,11 @@ models/powerups/ammo/machammo2
 models/powerups/ammo/shotammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 1 0.5 0 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -46,7 +46,7 @@ models/powerups/ammo/shotammo
 models/powerups/ammo/shotammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -60,11 +60,11 @@ models/powerups/ammo/shotammo2
 models/powerups/ammo/grenammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 0 0.56 0 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -74,7 +74,7 @@ models/powerups/ammo/grenammo
 models/powerups/ammo/grenammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -88,11 +88,11 @@ models/powerups/ammo/grenammo2
 models/powerups/ammo/lighammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 1 1 0.69 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -102,7 +102,7 @@ models/powerups/ammo/lighammo
 models/powerups/ammo/lighammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -116,11 +116,11 @@ models/powerups/ammo/lighammo2
 models/powerups/ammo/plasammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 0.8 0 1 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -130,7 +130,7 @@ models/powerups/ammo/plasammo
 models/powerups/ammo/plasammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -144,11 +144,11 @@ models/powerups/ammo/plasammo2
 models/powerups/ammo/rockammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 1 0 0 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -158,7 +158,7 @@ models/powerups/ammo/rockammo
 models/powerups/ammo/rockammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -172,11 +172,11 @@ models/powerups/ammo/rockammo2
 models/powerups/ammo/railammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 0 1 0 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -186,7 +186,7 @@ models/powerups/ammo/railammo
 models/powerups/ammo/railammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{
@@ -200,11 +200,11 @@ models/powerups/ammo/railammo2
 models/powerups/ammo/bfgammo
 {
 	{
-		map models/powerups/ammo/ammobox.tga
+		map models/powerups/ammo/ammobox
 		rgbGen lightingDiffuse
 	}
 	{
-		map models/powerups/ammo/ammolights.tga
+		map models/powerups/ammo/ammolights
 		blendfunc blend
 		rgbGen const ( 0 0.4 1 )
 		alphaGen wave sawtooth 0 1 0 1 
@@ -214,7 +214,7 @@ models/powerups/ammo/bfgammo
 models/powerups/ammo/bfgammo2
 {
 	{
-		map textures/base_wall/metalfloor_wall_14.tga
+		map textures/base_wall/metalfloor_wall_14
 		rgbGen const ( 0.25 0.25 0.25 )
 	}
 	{

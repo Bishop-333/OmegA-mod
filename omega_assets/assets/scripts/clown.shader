@@ -40,7 +40,7 @@ textures/clown/red_banner
 
 textures/clown/bleeding-wall
 {
-	qer_editorimage textures/clown/bleeding-wall.tga
+	qer_editorimage textures/clown/bleeding-wall
 	surfaceparm nomarks
 	surfaceparm trans
 	cull none
@@ -54,7 +54,7 @@ textures/clown/bleeding-wall
 		blendFunc GL_ONE GL_ZERO
 	}
 	{
-		map textures/clown/fleshy_t.tga
+		map textures/clown/fleshy_t
 		blendFunc gl_dst_color gl_zero
 		rgbGen identity
 		alphaFunc GT0
@@ -66,7 +66,7 @@ textures/clown/bleeding-wall
 
 textures/clown/portal
 {
-	qer_editorimage textures/clown/portal.tga
+	qer_editorimage textures/clown/portal
 	q3map_surfacelight 1000
 	surfaceparm nomarks
 	surfaceparm trans
@@ -82,7 +82,7 @@ textures/clown/portal
 		blendFunc GL_ONE GL_ZERO
 	}
 	{
-		map textures/clown/fleshy_t.tga
+		map textures/clown/fleshy_t
 		blendFunc GL_ONE GL_ZERO
 		rgbGen identity
 		alphaGen lightingSpecular
@@ -91,7 +91,7 @@ textures/clown/portal
 		
 	}
 	{
-		map textures/clown/fleshy_t.tga
+		map textures/clown/fleshy_t
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -104,7 +104,7 @@ textures/clown/portal
 
 textures/clown/f_light2
 {
-	qer_editorimage textures/clown/f_light2.tga
+	qer_editorimage textures/clown/f_light2
 	surfaceparm nomarks
 	q3map_surfacelight 5000
 	
@@ -114,12 +114,12 @@ textures/clown/f_light2
 		rgbGen identity
 	}
 	{
-		map textures/clown/f_light2.tga
+		map textures/clown/f_light2
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 	}
 	{
-		map textures/clown/f_light2.tga
+		map textures/clown/f_light2
 		blendfunc GL_ONE GL_ONE
 	}
 }
@@ -133,7 +133,7 @@ textures/clown/red_1
 //	cull none
 	polygonoffset	
 	{
-		map textures/clown/red_1.tga
+		map textures/clown/red_1
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -156,7 +156,7 @@ textures/clown/red_2
 	//cull none
 	polygonoffset	
 	{
-		map textures/clown/red_2.tga
+		map textures/clown/red_2
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -179,7 +179,7 @@ textures/clown/red_3
 //	cull none
 	polygonoffset	
 	{
-		map textures/clown/red_3.tga
+		map textures/clown/red_3
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -202,7 +202,7 @@ textures/clown/blue_1
 //	cull none
 	polygonoffset	
 	{
-		map textures/clown/blue_1.tga
+		map textures/clown/blue_1
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -225,7 +225,7 @@ textures/clown/blue_2
 //	cull none
 	polygonoffset	
 	{
-		map textures/clown/blue_2.tga
+		map textures/clown/blue_2
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -248,7 +248,7 @@ textures/clown/blue_3
 //	cull none
 	polygonoffset
 	{
-		map textures/clown/blue_3.tga
+		map textures/clown/blue_3
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -269,7 +269,7 @@ textures/clown/glass
 {
 		
 	{
-		map textures/clown/glass.tga
+		map textures/clown/glass
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -285,7 +285,7 @@ textures/clown/glass
 
 textures/clown/portal_1r
 {
-	qer_editorimage textures/clown/portal_1r.tga
+	qer_editorimage textures/clown/portal_1r
 	surfaceparm noimpact
 	surfaceparm nomarks
 	surfaceparm trans
@@ -299,22 +299,22 @@ textures/clown/portal_1r
 		rgbGen identity
 	}
 	{
-		map textures/clown/portal_1r.tga
+		map textures/clown/portal_1r
 		blendfunc gl_one gl_one
 		rgbGen wave inversesawtooth .3 .01 0 .2
 	}
 	{
-		clampmap textures/clown/portal_2r.tga
+		clampmap textures/clown/portal_2r
 		blendFunc GL_ONE GL_ONE
 		tcMod stretch sin 1.2 .3 0 1.2
 	}
 	{
-		clampmap textures/clown/portal_4r.tga
+		clampmap textures/clown/portal_4r
 		blendFunc GL_ONE GL_ONE
 		tcMod stretch sin 1.2 .2 0.5 1.2
 	}
 	{
-		clampmap textures/clown/portal_3r.tga
+		clampmap textures/clown/portal_3r
 		blendfunc GL_ONE GL_ONE
 		tcmod rotate 10
 	}
@@ -326,14 +326,14 @@ textures/clown/dark_sky
 	surfaceparm noimpact
 	surfaceparm nolightmap
 	surfaceparm sky
-	q3map_lightimage textures/clown/dark_sky.tga
+	q3map_lightimage textures/clown/dark_sky
 	q3map_sun	.5 .1 .1  50  65  35
 	q3map_surfacelight  100
 	
 
 	skyparms - 1024 -
 	{
-	map textures/clown/dark_sky.tga
+	map textures/clown/dark_sky
 	tcMod scroll 0.02 0.05
 	tcMod scale 2 1
 	}
@@ -355,7 +355,7 @@ textures/clown/r_edge
 		depthFunc equal
 	}
 	{
-		map textures/clown/r_edge.tga
+		map textures/clown/r_edge
 		blendFunc GL_ONE GL_ONE
 		tcMod turb 3 .3 3 .3
 	}
@@ -374,7 +374,7 @@ textures/clown/b_edge
 		depthFunc equal
 	}
 	{
-		map textures/clown/b_edge.tga
+		map textures/clown/b_edge
 		blendFunc GL_ONE GL_ONE
 		tcMod turb 3 .3 3 .3
 	}
@@ -407,7 +407,7 @@ textures/clown/grate_1
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/clown/grate_1.tga
+		map textures/clown/grate_1
 		blendFunc GL_ONE GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -427,7 +427,7 @@ textures/clown/grate_2
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/clown/grate_2.tga
+		map textures/clown/grate_2
 		blendFunc GL_ONE GL_ZERO	
 		rgbGen identity
 		alphaFunc GT0
@@ -610,7 +610,7 @@ textures/clown/burn_ow
 	cull none	
 	
 	{
-		map textures/clown/burn_ow.tga
+		map textures/clown/burn_ow
 		blendFunc GL_DST_COLOR GL_ZERO
 		rgbGen identity
 		alphaFunc GT0
@@ -710,17 +710,17 @@ textures/gothic_block/wetwall
 {
 	
         {
-	        map textures/gothic_block/wetwall.tga
+	        map textures/gothic_block/wetwall
 	        rgbGen identity
 	}
         {
-		map textures/gothic_block/wetwall_fx.tga
+		map textures/gothic_block/wetwall_fx
                 tcmod scroll 0 -.1
 		tcmod scale .9 .1
                 blendFunc add
 	}
 	{
-	        map textures/gothic_block/wetwall.tga
+	        map textures/gothic_block/wetwall
 		blendFunc blend
 		rgbGen identity
 	}
@@ -733,8 +733,8 @@ textures/gothic_block/wetwall
 
 textures/ctf/blue_telep2
 {
-	qer_editorimage textures/effects/jumpcircblue.tga
-	q3map_lightimage textures/effects/jumpcircblue.tga
+	qer_editorimage textures/effects/jumpcircblue
+	q3map_lightimage textures/effects/jumpcircblue
 	surfaceparm nonsolid
 	surfaceparm noimpact
 	surfaceparm nolightmap
@@ -743,18 +743,18 @@ textures/ctf/blue_telep2
 	cull disable
 	q3map_surfacelight 455
 	{
-		clampmap textures/effects/jumpcircblue.tga
+		clampmap textures/effects/jumpcircblue
 		blendfunc add
 		tcMod rotate 46
 	}
 	{
-		clampmap textures/sfx/jcb2.tga
+		clampmap textures/sfx/jcb2
 		blendfunc add
 		tcMod rotate -80
 		tcMod stretch sin 0.9 -0.3 0 0.5 
 	}
 	{
-		clampmap textures/sfx/jcb2.tga
+		clampmap textures/sfx/jcb2
 		blendfunc add
 		tcMod rotate -80
 		tcMod stretch sin 0.5 0.3 0 0.5 
@@ -763,8 +763,8 @@ textures/ctf/blue_telep2
 
 textures/ctf/red_telep2
 {
-	qer_editorimage textures/effects/jumpcircred.tga
-	q3map_lightimage textures/effects/jumpcircred.tga
+	qer_editorimage textures/effects/jumpcircred
+	q3map_lightimage textures/effects/jumpcircred
 	surfaceparm nonsolid
 	surfaceparm noimpact
 	surfaceparm nolightmap
@@ -773,18 +773,18 @@ textures/ctf/red_telep2
 	cull disable
 	q3map_surfacelight 455
 	{
-		clampmap textures/effects/jumpcircred.tga
+		clampmap textures/effects/jumpcircred
 		blendfunc add
 		tcMod rotate 46
 	}
 	{
-		clampmap textures/sfx/jcr2.tga
+		clampmap textures/sfx/jcr2
 		blendfunc add
 		tcMod rotate -80
 		tcMod stretch sin 0.9 -0.3 0 0.5 
 	}
 	{
-		clampmap textures/sfx/jcr2.tga
+		clampmap textures/sfx/jcr2
 		blendfunc add
 		tcMod rotate -80
 		tcMod stretch sin 0.5 0.3 0 0.5 
@@ -793,7 +793,7 @@ textures/ctf/red_telep2
 
 textures/gothic_block/blocks18b_ow
 {
-	qer_editorimage textures/gothic_block/blocks18b_ow.tga
+	qer_editorimage textures/gothic_block/blocks18b_ow
 	surfaceparm nomarks
 	
 	{
@@ -803,7 +803,7 @@ textures/gothic_block/blocks18b_ow
 		blendfunc add
 	}
 	{
-		map textures/gothic_block/blocks18b_ow.tga
+		map textures/gothic_block/blocks18b_ow
 		blendfunc blend
 		rgbgen identity
 	}
@@ -820,7 +820,7 @@ textures/base_floor/proto_rustygrate
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/proto_rustygrate.tga
+		map textures/base_floor/proto_rustygrate
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GT0
@@ -840,7 +840,7 @@ textures/base_floor/proto_grate
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/proto_grate.tga
+		map textures/base_floor/proto_grate
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GT0
@@ -860,7 +860,7 @@ textures/base_floor/proto_grate4
 	surfaceparm nodamage
 	cull none
 	{
-		map textures/base_floor/proto_grate4.tga
+		map textures/base_floor/proto_grate4
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		depthWrite
@@ -878,12 +878,12 @@ textures/base_floor/cybergrate2
 	surfaceparm metalsteps
 	cull none
 	{
-		map textures/sfx/portal_sfx_ring_electric.tga
+		map textures/sfx/portal_sfx_ring_electric
 		tcmod scroll 1 -1
 		blendfunc add
 	}
 	{
-		map textures/base_floor/cybergrate2.tga
+		map textures/base_floor/cybergrate2
 		blendFunc blend	
 		rgbGen identity
 		
@@ -900,12 +900,12 @@ textures/base_floor/cybergrate3
 	surfaceparm metalsteps
 	cull none
 	{
-		map textures/sfx/portal_sfx_ring_electric.tga
+		map textures/sfx/portal_sfx_ring_electric
 		tcmod scroll 1 -1
 		blendfunc add
 	}
 	{
-		map textures/base_floor/cybergrate3.tga
+		map textures/base_floor/cybergrate3
 		blendFunc blend	
 		rgbGen identity
 		
@@ -968,10 +968,10 @@ textures/base_trim/pewter_shiney
 
 textures/base_trim/tin
 {
-	qer_editorimage textures/base_trim/tin.tga
+	qer_editorimage textures/base_trim/tin
 	{
 		//mapped first so it looks good while vertex lit
-		map textures/base_trim/tin.tga
+		map textures/base_trim/tin
 		rgbGen Identity
 	}
 	{
@@ -980,7 +980,7 @@ textures/base_trim/tin
 		rgbGen vertex
 	}
 	{
-		map textures/base_trim/tin.tga
+		map textures/base_trim/tin
 		blendfunc add
 	}
 	{
@@ -1022,7 +1022,7 @@ textures/base_wall/comp3b_dark
 
 
 	{
-		map textures/base_wall/comp3textb.tga
+		map textures/base_wall/comp3textb
 	        rgbGen identity
 		tcmod scroll -3 3
 	}
@@ -1046,7 +1046,7 @@ textures/base_wall/comp3b_dark
 		blendfunc gl_dst_color gl_one
 	}
 	{
-		map textures/base_wall/comp3b.tga
+		map textures/base_wall/comp3b
         	blendFunc blend 
 		rgbGen identity
 		
@@ -1061,12 +1061,12 @@ textures/base_wall/comp3b_dark
 
 textures/base_wall/comp3b
 {
-	qer_editorimage textures/base_wall/comp3b.tga
+	qer_editorimage textures/base_wall/comp3b
 	q3map_lightimage textures/base_wall/comp3env.jpg
         q3map_surfacelight 900
 
 	{
-		map textures/base_wall/comp3b.tga
+		map textures/base_wall/comp3b
 		rgbGen identity
 		
 	}
@@ -1087,7 +1087,7 @@ textures/base_wall/comp3b
 		blendfunc gl_dst_color gl_one
 	}
 	{
-		map textures/base_wall/comp3b.tga
+		map textures/base_wall/comp3b
         	blendFunc blend
 		rgbGen identity
 		
@@ -1106,7 +1106,7 @@ textures/base_support/x_support
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/base_support/x_support.tga
+		map textures/base_support/x_support
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GT0
@@ -1126,7 +1126,7 @@ textures/base_support/x_support2
 	surfaceparm nomarks
 	cull none
 	{
-		map textures/base_support/x_support2.tga
+		map textures/base_support/x_support2
 		blendFunc gl_one gl_zero	
 		rgbGen identity
 		alphaFunc GT0
@@ -1142,10 +1142,10 @@ textures/base_support/x_support2
 
 textures/base_wall/bluemetal1b_chrome
 {
-	qer_editorimage textures/base_wall/bluemetal1b_shiny.tga
+	qer_editorimage textures/base_wall/bluemetal1b_shiny
 	{
 		//mapped first so it looks good while vertex lit
-		map textures/base_wall/bluemetal1b_shiny.tga
+		map textures/base_wall/bluemetal1b_shiny
 		rgbGen Identity
 	}
 	{
@@ -1154,7 +1154,7 @@ textures/base_wall/bluemetal1b_chrome
 		rgbGen oneminusvertex
 	}
 	{
-		map textures/base_wall/bluemetal1b_shiny.tga
+		map textures/base_wall/bluemetal1b_shiny
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1167,23 +1167,23 @@ textures/base_wall/bluemetal1b_chrome
 
 textures/base_wall/bluemetalsupport2fline
 {
-	qer_editorimage textures/base_wall/bluemetalsupport2fline.tga
-	q3map_lightimage textures/clown/bms2fglow.tga
+	qer_editorimage textures/base_wall/bluemetalsupport2fline
+	q3map_lightimage textures/clown/bms2fglow
 	surfaceparm nomarks
 	surfaceparm metalsteps
 	q3map_surfacelight 400
 	{
 		//mapped first so it looks good while vertex lit
-		map textures/base_wall/bluemetalsupport2fline.tga
+		map textures/base_wall/bluemetalsupport2fline
 		rgbGen Identity
 	}
 	{
-		map textures/base_wall/bms2fglow.tga
+		map textures/base_wall/bms2fglow
 		rgbGen wave sin .4 .3 .5 1.5
 		blendfunc filter
 	}
 	{
-		map textures/base_wall/bluemetalsupport2fline.tga
+		map textures/base_wall/bluemetalsupport2fline
 		blendfunc add
 		alphaGen lightingSpecular
 	}
@@ -1203,25 +1203,25 @@ textures/base_wall/bluemetalsupport2fline
 
 textures/tim/redmetalsupport2fline
 {
-	qer_editorimage textures/tim/redmetalsupport2fline.tga
-	q3map_lightimage textures/clown/bms2fl_rglow.tga
+	qer_editorimage textures/tim/redmetalsupport2fline
+	q3map_lightimage textures/clown/bms2fl_rglow
 	surfaceparm nomarks
 	surfaceparm metalsteps
 	q3map_surfacelight 400
 	{
 		//mapped first so it looks good while vertex lit
-		map textures/tim/redmetalsupport2fline.tga
+		map textures/tim/redmetalsupport2fline
 		rgbGen Identity
 	}
 	
 	{
-		map textures/clown/bms2fl_rglow.tga
+		map textures/clown/bms2fl_rglow
 		tcmod scroll 1 0
 		rgbGen wave sin .4 .3 .5 2
 		blendfunc gl_dst_color gl_zero 
 	}
 	{
-		map textures/tim/redmetalsupport2fline.tga
+		map textures/tim/redmetalsupport2fline
 		blendfunc add
 		
 	}
@@ -1241,12 +1241,12 @@ textures/tim/redmetalsupport2fline
 
 textures/base_wall/bluemetalsupport2ftv
 {
-	qer_editorimage textures/base_wall/bluemetalsupport2ftv.tga
-	q3map_lightimage textures/base_wall/bms2ftv_glow.tga
+	qer_editorimage textures/base_wall/bluemetalsupport2ftv
+	q3map_lightimage textures/base_wall/bms2ftv_glow
 	q3map_surfacelight 10
 	
 	{
-		map textures/base_wall/bluemetalsupport2ftv.tga
+		map textures/base_wall/bluemetalsupport2ftv
 		rgbGen identity
 		
 	}
@@ -1257,12 +1257,12 @@ textures/base_wall/bluemetalsupport2ftv
 		tcmod scale .5 .5
 	}
 	{
-		map textures/base_wall/bms2ftv_glow.tga
+		map textures/base_wall/bms2ftv_glow
 		rgbGen wave sin .4 .3 0 1.1
 		blendfunc add
 	}
 	{
-		map textures/base_wall/bluemetalsupport2ftv.tga
+		map textures/base_wall/bluemetalsupport2ftv
 		blendFunc add
 		rgbGen identity
 		
@@ -1276,10 +1276,10 @@ textures/base_wall/bluemetalsupport2ftv
 
 textures/base_wall/bluemetalsupport2e
 {
-	qer_editorimage textures/base_wall/bluemetalsupport2e.tga
+	qer_editorimage textures/base_wall/bluemetalsupport2e
 		
 	{
-		map textures/base_wall/bluemetalsupport2e.tga
+		map textures/base_wall/bluemetalsupport2e
 		rgbGen identity
 		
 	}
@@ -1290,7 +1290,7 @@ textures/base_wall/bluemetalsupport2e
 		tcmod scale .5 .5
 	}
 	{
-		map textures/base_wall/bluemetalsupport2e.tga
+		map textures/base_wall/bluemetalsupport2e
 		blendFunc add
 		rgbGen identity
 		
@@ -1304,10 +1304,10 @@ textures/base_wall/bluemetalsupport2e
 
 textures/base_wall/bluemetalsupport2e2
 {
-	qer_editorimage textures/base_wall/bluemetalsupport2e2.tga
+	qer_editorimage textures/base_wall/bluemetalsupport2e2
 		
 	{
-		map textures/base_wall/bluemetalsupport2e2.tga
+		map textures/base_wall/bluemetalsupport2e2
 		rgbGen identity
 		
 	}
@@ -1318,7 +1318,7 @@ textures/base_wall/bluemetalsupport2e2
 		tcmod scale .5 .5
 	}
 	{
-		map textures/base_wall/bluemetalsupport2e2.tga
+		map textures/base_wall/bluemetalsupport2e2
 		blendFunc add
 		rgbGen identity
 		
@@ -1388,11 +1388,11 @@ textures/base_wall/bluemetalsupport2c
 
 textures/base_floor/clangdark_spot
 {
-	qer_editorimage textures/base_floor/clangdark_spot.tga
+	qer_editorimage textures/base_floor/clangdark_spot
 	surfaceparm metalsteps
 	
 	{
-		map textures/base_floor/clangdark_spot.tga
+		map textures/base_floor/clangdark_spot
 		rgbGen identity
 	}
 	{
@@ -1403,7 +1403,7 @@ textures/base_floor/clangdark_spot
 		alphagen lightingspecular
 	}
 	{
-		map textures/base_floor/clangdark_spot.tga
+		map textures/base_floor/clangdark_spot
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1416,11 +1416,11 @@ textures/base_floor/clangdark_spot
 
 textures/base_floor/diamond2cspot
 {
-	qer_editorimage textures/base_floor/diamond2cspot.tga
+	qer_editorimage textures/base_floor/diamond2cspot
 	surfaceparm metalsteps
 	
 	{
-		map textures/base_floor/diamond2cspot.tga
+		map textures/base_floor/diamond2cspot
 		rgbGen identity
 	}
 	{
@@ -1431,7 +1431,7 @@ textures/base_floor/diamond2cspot
 		alphagen lightingspecular
 	}
 	{
-		map textures/base_floor/diamond2cspot.tga
+		map textures/base_floor/diamond2cspot
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1444,11 +1444,11 @@ textures/base_floor/diamond2cspot
 
 textures/gothic_floor/q1metal7_99spot
 {
-	qer_editorimage textures/gothic_floor/q1metal7_99spot.tga
+	qer_editorimage textures/gothic_floor/q1metal7_99spot
 	surfaceparm metalsteps
 	
 	{
-		map textures/gothic_floor/q1metal7_99spot.tga
+		map textures/gothic_floor/q1metal7_99spot
 		rgbGen identity
 	}
 	{
@@ -1459,7 +1459,7 @@ textures/gothic_floor/q1metal7_99spot
 		alphagen lightingspecular
 	}
 	{
-		map textures/gothic_floor/q1metal7_99spot.tga
+		map textures/gothic_floor/q1metal7_99spot
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1505,18 +1505,18 @@ textures/base_wall/comp3
         q3map_surfacelight 100
 
 	{
-		map textures/base_wall/comp3b.tga
+		map textures/base_wall/comp3b
 		rgbGen identity
 		
 	}
 	{
-		map textures/clown/text3.tga
+		map textures/clown/text3
 	        rgbGen identity
 		tcmod scroll 0 0.5
 	}
 
 	{
-		map textures/clown/text4.tga
+		map textures/clown/text4
 		blendfunc add
 	        rgbGen identity 
 		tcMod scroll 0 0.5 
@@ -1534,7 +1534,7 @@ textures/base_wall/comp3
 		blendfunc gl_dst_color gl_one
 	}
 	{
-		map textures/base_wall/comp3b.tga
+		map textures/base_wall/comp3b
         	blendFunc blend
 		rgbGen identity
 		
@@ -1549,7 +1549,7 @@ textures/base_wall/comp3
 
 textures/base_wall/concrete_ow
 {
-	qer_editorimage textures/base_wall/concrete_ow.tga
+	qer_editorimage textures/base_wall/concrete_ow
 
 	{
 		map textures/sfx/proto_zzztblu3.jpg
@@ -1559,7 +1559,7 @@ textures/base_wall/concrete_ow
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/concrete_ow.tga
+		map textures/base_wall/concrete_ow
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1569,7 +1569,7 @@ textures/base_wall/concrete_ow
 		rgbgen identity
 	}
 	{
-		map gfx/fx/detail/d_conc.tga
+		map gfx/fx/detail/d_conc
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 8 8
 		depthfunc equal
@@ -1578,7 +1578,7 @@ textures/base_wall/concrete_ow
 
 textures/tim/rconcrete_ow
 {
-	qer_editorimage textures/tim/rconcrete_ow.tga
+	qer_editorimage textures/tim/rconcrete_ow
 
 	{
 		map textures/sfx/fireswirl2.jpg
@@ -1588,7 +1588,7 @@ textures/tim/rconcrete_ow
 		rgbgen identity
 	}
 	{
-		map textures/tim/rconcrete_ow.tga
+		map textures/tim/rconcrete_ow
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1598,7 +1598,7 @@ textures/tim/rconcrete_ow
 		rgbgen identity
 	}
 	{
-		map gfx/fx/detail/d_conc.tga
+		map gfx/fx/detail/d_conc
 		blendfunc gl_dst_color gl_src_color
 		tcMod scale 8 8
 		depthfunc equal
@@ -1607,9 +1607,9 @@ textures/tim/rconcrete_ow
 
 textures/gothic_block/blocks17bloody
 {
-	qer_editorimage textures/gothic_block/blocks17bloody.tga
+	qer_editorimage textures/gothic_block/blocks17bloody
 	{
-		map textures/gothic_block/blocks17bloody.tga
+		map textures/gothic_block/blocks17bloody
 	}
 	{
 		map textures/liquids/proto_gruel3.jpg
@@ -1618,7 +1618,7 @@ textures/gothic_block/blocks17bloody
 		alphagen lightingspecular
 	}
 	{
-		map textures/gothic_block/blocks17bloody.tga
+		map textures/gothic_block/blocks17bloody
 		blendFunc blend
 		rgbGen identity
 	}
@@ -1631,9 +1631,9 @@ textures/gothic_block/blocks17bloody
 
 textures/gothic_block/largerblock3blood
 {
-	qer_editorimage textures/gothic_block/largerblock3blood.tga
+	qer_editorimage textures/gothic_block/largerblock3blood
 	{
-		map textures/gothic_block/largerblock3blood.tga
+		map textures/gothic_block/largerblock3blood
 	}
 	{
 		map textures/liquids/proto_gruel3.jpg
@@ -1642,7 +1642,7 @@ textures/gothic_block/largerblock3blood
 		alphagen lightingspecular
 	}
 	{
-		map textures/gothic_block/largerblock3blood.tga
+		map textures/gothic_block/largerblock3blood
 		blendFunc blend
 		rgbGen identity
 	}
@@ -1655,9 +1655,9 @@ textures/gothic_block/largerblock3blood
 
 textures/gothic_floor/metalbridge06brokeb
 {
-	qer_editorimage textures/gothic_floor/metalbridge06brokeb.tga
+	qer_editorimage textures/gothic_floor/metalbridge06brokeb
 	{
-		map textures/gothic_floor/metalbridge06brokeb.tga
+		map textures/gothic_floor/metalbridge06brokeb
 		rgbgen identity
 	}
 	{
@@ -1668,7 +1668,7 @@ textures/gothic_floor/metalbridge06brokeb
 		rgbgen identity
 	}
 	{
-		map textures/gothic_floor/metalbridge06brokeb.tga
+		map textures/gothic_floor/metalbridge06brokeb
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1681,20 +1681,20 @@ textures/gothic_floor/metalbridge06brokeb
 
 textures/base_wall/chrome_metal
 {
-	qer_editorimage textures/base_wall/chrome_metal.tga
+	qer_editorimage textures/base_wall/chrome_metal
 	{
-		map textures/base_wall/chrome_metal.tga
+		map textures/base_wall/chrome_metal
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/chrome_env.tga
+		map textures/base_wall/chrome_env
 		tcGen environment
 		tcmod scale .5 .5 
 		rgbgen vertex
 		
 	}
 	{
-		map textures/base_wall/chrome_metal.tga
+		map textures/base_wall/chrome_metal
 		blendFunc add
 		tcmod scale 0.07 0.06
 		rgbGen identity
@@ -1708,9 +1708,9 @@ textures/base_wall/chrome_metal
 
 textures/gothic_floor/largerblock3b_ow
 {
-	qer_editorimage textures/gothic_floor/largerblock3b_ow.tga
+	qer_editorimage textures/gothic_floor/largerblock3b_ow
 	{
-		map textures/gothic_floor/largerblock3b_ow.tga
+		map textures/gothic_floor/largerblock3b_ow
 		rgbgen identity
 	}
 	{
@@ -1721,7 +1721,7 @@ textures/gothic_floor/largerblock3b_ow
 		rgbgen identity
 	}
 	{
-		map textures/gothic_floor/largerblock3b_ow.tga
+		map textures/gothic_floor/largerblock3b_ow
 		blendfunc blend
 		rgbgen identity
 	}
@@ -1734,11 +1734,11 @@ textures/gothic_floor/largerblock3b_ow
 
 textures/base_trim/proto_fence
 {
-	qer_editorimage textures/base_trim/proto_fence.tga
+	qer_editorimage textures/base_trim/proto_fence
 	surfaceparm trans
 	cull none
 	{
-		map textures/base_trim/proto_fence.tga
+		map textures/base_trim/proto_fence
 		alphafunc GE128
 		depthwrite
 		tcmod scale 2 2
@@ -1797,12 +1797,12 @@ textures/skin/chapthroatooz
 
 textures/clown/fence
 {
-	qer_editorimage textures/clown/fence.tga
+	qer_editorimage textures/clown/fence
 	surfaceparm nonsolid
 	surfaceparm trans
 	cull none
 	{
-		map textures/clown/fence.tga
+		map textures/clown/fence
 		alphafunc GE128
 		depthwrite
 		rgbgen identity
@@ -1817,7 +1817,7 @@ textures/clown/fence
 
 textures/clown/fence_shadow
 {
-	qer_editorimage textures/clown/fence_shadow.tga
+	qer_editorimage textures/clown/fence_shadow
 	polygonoffset
 	surfaceparm nolightmap
 	surfaceparm nonsolid
@@ -1825,7 +1825,7 @@ textures/clown/fence_shadow
 	surfaceparm trans
 	cull none
 	{
-		map textures/clown/fence_shadow.tga
+		map textures/clown/fence_shadow
 		alphafunc GE128
 		depthwrite
 		rgbgen identity
@@ -1840,20 +1840,20 @@ textures/clown/fence_shadow
 
 textures/gothic_trim/metlsupport4i_shiney
 {
-	qer_editorimage textures/gothic_trim/metalsupport4i.tga
+	qer_editorimage textures/gothic_trim/metalsupport4i
 	{
-		map textures/gothic_trim/metalsupport4i.tga
+		map textures/gothic_trim/metalsupport4i
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/chrome_env.tga
+		map textures/base_wall/chrome_env
 		tcGen environment
 		tcmod scale .5 .5 
 		rgbgen vertex
 		
 	}
 	{
-		map textures/gothic_trim/metalsupport4i.tga
+		map textures/gothic_trim/metalsupport4i
 		blendFunc add
 		rgbGen identity
 	}
@@ -1896,7 +1896,7 @@ textures/base_wall/metalfloor_wall_14
 		rgbgen identity
 	}
 	{
-		map textures/effects/tinfx.tga
+		map textures/effects/tinfx
 		tcgen environment
 		rgbgen vertex
 	}
@@ -1906,7 +1906,7 @@ textures/base_wall/metalfloor_wall_14
 		rgbgen identity
 	}
 	{
-		map textures/base_wall/metalfloor_wall_14_glow.tga
+		map textures/base_wall/metalfloor_wall_14_glow
 		blendfunc blend
 		rgbGen wave sin 0 1 0 1
 	}
