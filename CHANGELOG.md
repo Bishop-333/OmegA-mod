@@ -196,3 +196,11 @@
 - flag drop sound from ratmod
 - FREEZETAG!
 - lots of bug and warning fixes
+
+## 3.4.1
+- lots of code cleanup and optimizations
+- add cgame cvars descriptions
+- new server browser style
+- new weaponbar 8 style
+- add `cg_railTrailRadius` (trap_R_AddLinearLightToScene)
+- better menu slidebar
