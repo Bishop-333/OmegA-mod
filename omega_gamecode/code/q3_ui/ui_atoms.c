@@ -1284,8 +1284,8 @@ void UI_DrawTextBox( int x, int y, int width, int lines ) {
 qboolean UI_CursorInRect( int x, int y, int width, int height ) {
 	if ( uis.cursorx < x ||
 	     uis.cursory < y ||
-	     uis.cursorx > x + width ||
-	     uis.cursory > y + height )
+	     uis.cursorx >= x + width ||
+	     uis.cursory >= y + height )
 		return qfalse;
 
 	return qtrue;

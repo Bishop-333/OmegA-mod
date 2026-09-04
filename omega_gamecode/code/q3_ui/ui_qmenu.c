@@ -55,6 +55,9 @@ vec4_t text_color_disabled = { 0.35f, 0.24f, 0.29f, 1.00f };  // light gray
 vec4_t text_color_normal = { 0.30f, 0.45f, 0.58f, 1.00f };    // light orange
 vec4_t text_color_highlight = { 0.76f, 0.89f, 0.93f, 1.00f }; // bright yellow
 vec4_t listbar_color = { 0.13f, 0.26f, 0.38f, 0.30f };        // transluscent blue
+vec4_t listbar_color_highlight = { 0.26f, 0.52f, 0.76f, 0.30f };
+vec4_t listbar_color_border = { 0.26f, 0.52f, 0.76f, 1.00f };
+vec4_t listbar_color_hover = { 1.00f, 1.00f, 1.00f, 0.10f };
 vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f };    // bright white
 
 // action widget
@@ -1134,8 +1137,8 @@ void ScrollList_Draw( menulist_s *l ) {
 			}
 
 			if ( i == l->curvalue ) {
-				UI_FillRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT, listbar_color );
-				UI_FillRect( u - 1, y, 1, SMALLCHAR_HEIGHT, colorCyan );
+				UI_FillRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT, listbar_color_highlight );
+				UI_DrawRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT, listbar_color_border );
 				color = text_color_highlight;
 
 				if ( hasfocus )
@@ -1143,6 +1146,9 @@ void ScrollList_Draw( menulist_s *l ) {
 				else
 					style = UI_LEFT | UI_SMALLFONT;
 			} else {
+				if ( UI_CursorInRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT ) ) {
+					UI_FillRect( u, y, l->width * SMALLCHAR_WIDTH + 4, SMALLCHAR_HEIGHT, listbar_color_hover );
+				}
 				color = text_color_normal;
 				style = UI_LEFT | UI_SMALLFONT;
 			}

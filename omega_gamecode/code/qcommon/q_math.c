@@ -41,12 +41,13 @@ vec3_t	axisDefault[3] =
 
 
 vec4_t	colorBlack      = {0.0f,  0.0f,  0.0f,  1.0f};
-vec4_t	colorCornellRed = {1.0f,  0.25f,  0.25f,  1.0f};
+vec4_t	colorTtBlack    = {0.0f,  0.0f,  0.0f,  0.5f};
+vec4_t	colorCornellRed = {1.0f,  0.25f, 0.25f, 1.0f};
 vec4_t	colorTtRed      = {1.0f,  0.0f,  0.0f,  0.5f};
 vec4_t	colorRed        = {1.0f,  0.0f,  0.0f,  1.0f};
 vec4_t	colorTtGreen    = {0.0f,  1.0f,  0.0f,  0.5f};
 vec4_t	colorGreen      = {0.0f,  1.0f,  0.0f,  1.0f};
-vec4_t	colorRoyalBlue  = {0.25f,  0.25f,  1.0f,  1.0f};
+vec4_t	colorRoyalBlue  = {0.25f, 0.25f, 1.0f,  1.0f};
 vec4_t	colorBlue       = {0.0f,  0.0f,  1.0f,  1.0f};
 vec4_t	colorYellow     = {1.0f,  1.0f,  0.0f,  1.0f};
 vec4_t	colorMagenta    = {1.0f,  0.0f,  1.0f,  1.0f};
