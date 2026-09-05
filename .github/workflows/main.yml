@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-26.04
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Build it
         run: make -j$(nproc)
       - name: Create archive
