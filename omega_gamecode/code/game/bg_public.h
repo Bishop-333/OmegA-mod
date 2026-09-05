@@ -142,8 +142,8 @@ typedef enum {
 } gametype_t;
 
 typedef enum { GENDER_MALE,
-	           GENDER_FEMALE,
-	           GENDER_NEUTER } gender_t;
+               GENDER_FEMALE,
+               GENDER_NEUTER } gender_t;
 
 /*
 ===================================================================================

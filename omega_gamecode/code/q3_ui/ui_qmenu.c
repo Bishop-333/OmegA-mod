@@ -58,7 +58,7 @@ vec4_t listbar_color = { 0.13f, 0.26f, 0.38f, 0.30f };        // transluscent bl
 vec4_t listbar_color_highlight = { 0.26f, 0.52f, 0.76f, 0.30f };
 vec4_t listbar_color_border = { 0.26f, 0.52f, 0.76f, 1.00f };
 vec4_t listbar_color_hover = { 1.00f, 1.00f, 1.00f, 0.10f };
-vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f };    // bright white
+vec4_t text_color_status = { 1.00f, 1.00f, 1.00f, 1.00f }; // bright white
 
 // action widget
 static void Action_Init( menuaction_s *a );

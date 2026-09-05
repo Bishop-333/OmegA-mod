@@ -49,135 +49,135 @@ static char g_bfb[32000];
 g_admin_cmd_t g_admin_cmds[] =
     {
         { "adjustban", G_admin_adjustban, "b",
-          "change the duration or reason of a ban.  duration is specified as "
-          "numbers followed by units 'w' (weeks), 'd' (days), 'h' (hours) or "
-          "'m' (minutes), or seconds if no units are specified.  if the duration is"
-          " preceded by a + or -, the ban duration will be extended or shortened by"
-          " the specified amount",
-          "[^3ban#^7] (^5duration^7) (^5reason^7)" },
+		  "change the duration or reason of a ban.  duration is specified as "
+		  "numbers followed by units 'w' (weeks), 'd' (days), 'h' (hours) or "
+		  "'m' (minutes), or seconds if no units are specified.  if the duration is"
+		  " preceded by a + or -, the ban duration will be extended or shortened by"
+		  " the specified amount",
+		  "[^3ban#^7] (^5duration^7) (^5reason^7)" },
 
         { "admintest", G_admin_admintest, "a",
-          "display your current admin level",
-          "" },
+		  "display your current admin level",
+		  "" },
 
         { "allready", G_admin_allready, "y",
-          "makes everyone ready in intermission",
-          "" },
+		  "makes everyone ready in intermission",
+		  "" },
 
         { "ban", G_admin_ban, "b",
-          "ban a player by IP and GUID with an optional expiration time and reason."
-          " duration is specified as numbers followed by units 'w' (weeks), 'd' "
-          "(days), 'h' (hours) or 'm' (minutes), or seconds if no units are "
-          "specified",
-          "[^3name|slot#|IP^7] (^5duration^7) (^5reason^7)" },
+		  "ban a player by IP and GUID with an optional expiration time and reason."
+		  " duration is specified as numbers followed by units 'w' (weeks), 'd' "
+		  "(days), 'h' (hours) or 'm' (minutes), or seconds if no units are "
+		  "specified",
+		  "[^3name|slot#|IP^7] (^5duration^7) (^5reason^7)" },
 
         { "cancelvote", G_admin_cancelvote, "c",
-          "cancel a vote taking place",
-          "" },
+		  "cancel a vote taking place",
+		  "" },
         //KK-OAX
         { "disorient", G_admin_disorient, "d",
-          "disorient a player by flipping player's view and controls",
-          "[^3name|slot#^7] (^hreason^7)" },
+		  "disorient a player by flipping player's view and controls",
+		  "[^3name|slot#^7] (^hreason^7)" },
 
         { "help", G_admin_help, "h",
-          "display commands available to you or help on a specific command",
-          "(^5command^7)" },
+		  "display commands available to you or help on a specific command",
+		  "(^5command^7)" },
 
         { "kick", G_admin_kick, "k",
-          "kick a player with an optional reason",
-          "[^3name|slot#^7] (^5reason^7)" },
+		  "kick a player with an optional reason",
+		  "[^3name|slot#^7] (^5reason^7)" },
 
         { "listadmins", G_admin_listadmins, "D",
-          "display a list of all server admins and their levels",
-          "(^5name|start admin#^7)" },
+		  "display a list of all server admins and their levels",
+		  "(^5name|start admin#^7)" },
 
         { "listplayers", G_admin_listplayers, "i",
-          "display a list of players, their client numbers and their levels",
-          "" },
+		  "display a list of players, their client numbers and their levels",
+		  "" },
 
         { "lock", G_admin_lock, "K",
-          "lock a team to prevent anyone from joining it",
-          "[^3a|h^7]" },
+		  "lock a team to prevent anyone from joining it",
+		  "[^3a|h^7]" },
         //KK-OAX
         { "map", G_admin_map, "M",
-          "load a map",
-          "[^3mapname^7]" },
+		  "load a map",
+		  "[^3mapname^7]" },
 
         { "mute", G_admin_mute, "m",
-          "mute a player",
-          "[^3name|slot#^7]" },
+		  "mute a player",
+		  "[^3name|slot#^7]" },
 
         { "namelog", G_admin_namelog, "e",
-          "display a list of names used by recently connected players",
-          "(^5name^7)" },
+		  "display a list of names used by recently connected players",
+		  "(^5name^7)" },
 
         { "nextmap", G_admin_nextmap, "n",
-          "go to the next map in the cycle",
-          "" },
+		  "go to the next map in the cycle",
+		  "" },
         //KK-OAX
         { "orient", G_admin_orient, "d",
-          "orient a player after a !disorient", "[^3name|slot#^7]" },
+		  "orient a player after a !disorient", "[^3name|slot#^7]" },
 
         { "passvote", G_admin_passvote, "V",
-          "pass a vote currently taking place",
-          "" },
+		  "pass a vote currently taking place",
+		  "" },
 
         { "putteam", G_admin_putteam, "p",
-          "move a player to a specified team",
-          "[^3name|slot#^7] [^3h|a|s^7]" },
+		  "move a player to a specified team",
+		  "[^3name|slot#^7] [^3h|a|s^7]" },
 
         { "readconfig", G_admin_readconfig, "G",
-          "reloads the admin config file and refreshes permission flags",
-          "" },
+		  "reloads the admin config file and refreshes permission flags",
+		  "" },
 
         { "rename", G_admin_rename, "N",
-          "rename a player",
-          "[^3name|slot#^7] [^3new name^7]" },
+		  "rename a player",
+		  "[^3name|slot#^7] [^3new name^7]" },
 
         { "restart", G_admin_restart, "r",
-          "restart the current map (optionally using named layout)",
-          "" },
+		  "restart the current map (optionally using named layout)",
+		  "" },
 
         { "setlevel", G_admin_setlevel, "s",
-          "sets the admin level of a player",
-          "[^3name|slot#|admin#^7] [^3level^7]" },
+		  "sets the admin level of a player",
+		  "[^3name|slot#|admin#^7] [^3level^7]" },
 
         { "showbans", G_admin_showbans, "B",
-          "display a (partial) list of active bans",
-          "(^5start at ban#^7) (^5name|IP^7)" },
+		  "display a (partial) list of active bans",
+		  "(^5start at ban#^7) (^5name|IP^7)" },
         //KK-OAX
         { "shuffle", G_admin_shuffle, "f",
-          "Shuffles the teams"
-          "" },
+		  "Shuffles the teams"
+		  "" },
 
         { "slap", G_admin_slap, "S",
-          "Reduces the health of the selected player by the damage specified",
-          "[^3name|slot#] [damage] [reason]" },
+		  "Reduces the health of the selected player by the damage specified",
+		  "[^3name|slot#] [damage] [reason]" },
 
         { "spec999", G_admin_spec999, "P",
-          "move 999 pingers to the spectator team",
-          "" },
+		  "move 999 pingers to the spectator team",
+		  "" },
 
         { "time", G_admin_time, "C",
-          "show the current local server time",
-          "" },
+		  "show the current local server time",
+		  "" },
 
         { "unban", G_admin_unban, "b",
-          "unbans a player specified by the slot as seen in showbans",
-          "[^3ban#^7]" },
+		  "unbans a player specified by the slot as seen in showbans",
+		  "[^3ban#^7]" },
 
         { "unlock", G_admin_unlock, "K",
-          "unlock a locked team",
-          "[^3a|h^7]" },
+		  "unlock a locked team",
+		  "[^3a|h^7]" },
 
         { "unmute", G_admin_mute, "m",
-          "unmute a muted player",
-          "[^3name|slot#^7]" },
+		  "unmute a muted player",
+		  "[^3name|slot#^7]" },
 
         //KK-OAX
         { "warn", G_admin_warn, "w",
-          "warn a player",
-          "[^3name|slot#^7] [reason]" }
+		  "warn a player",
+		  "[^3name|slot#^7] [reason]" }
 
 };
 

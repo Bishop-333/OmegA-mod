@@ -63,7 +63,7 @@ typedef char *va_list;
 #define isprint( c ) ( ( c ) >= ' ' && ( c ) <= '~' )
 #define ispunct( c ) ( ( ( c ) > ' ' && ( c ) <= '~' ) && !isalnum( c ) )
 #define isspace( c ) ( ( c ) == ' ' || ( c ) == '\f' || ( c ) == '\n' || ( c ) == '\r' || \
-	                   ( c ) == '\t' || ( c ) == '\v' )
+                       ( c ) == '\t' || ( c ) == '\v' )
 #define isupper( c ) ( ( c ) >= 'A' && ( c ) <= 'Z' )
 #define isxdigit( c ) ( isxupper( c ) || isxlower( c ) )
 #define isxlower( c ) ( isdigit( c ) || ( c >= 'a' && c <= 'f' ) )

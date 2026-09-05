@@ -64,8 +64,8 @@ static void swapfunc( char *, char *, int, int );
 	}
 
 #define SWAPINIT( a, es ) swaptype = ( (char *)a - (char *)0 ) % sizeof( long ) || \
-	                                         es % sizeof( long )                   \
-	                                     ? 2                                       \
+                                             es % sizeof( long )                   \
+                                         ? 2                                       \
 	                                 : es == sizeof( long ) ? 0                    \
 	                                                        : 1;
 
