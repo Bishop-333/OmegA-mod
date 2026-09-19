@@ -155,9 +155,6 @@ G_CVAR( g_awardpushing, "g_awardpushing", "1", CVAR_ARCHIVE | CVAR_NORESTART, 0,
 //g_persistantpowerups
 G_CVAR( g_runes, "g_runes", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse, qfalse )
 
-//nexuiz style rocket arena
-G_CVAR( g_rockets, "g_rockets", "0", CVAR_SERVERINFO | CVAR_LATCH | CVAR_NORESTART, 0, qfalse, qfalse )
-
 //Instantgib and Vampire thingies
 G_CVAR( g_instantgib, "g_instantgib", "0", CVAR_SERVERINFO | CVAR_LATCH, 0, qfalse, qfalse )
 G_CVAR( g_vampire, "g_vampire", "0.0", CVAR_NORESTART, 0, qtrue, qfalse )

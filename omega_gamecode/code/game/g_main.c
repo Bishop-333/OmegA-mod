@@ -289,7 +289,7 @@ static void G_UpdateCvars( void ) {
 					VoteParseCustomVotes();
 
 				//Here comes the cvars that must trigger a map_restart
-				if ( cv->vmCvar == &g_instantgib || cv->vmCvar == &g_rockets || cv->vmCvar == &g_weaponArena || cv->vmCvar == &g_elimination_allgametypes || cv->vmCvar == &g_noInvisWalls ) {
+				if ( cv->vmCvar == &g_instantgib || cv->vmCvar == &g_weaponArena || cv->vmCvar == &g_elimination_allgametypes || cv->vmCvar == &g_noInvisWalls ) {
 					trap_Cvar_Set( "sv_dorestart", "1" );
 				}
 
@@ -359,7 +359,6 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	//disable unwanted cvars
 	if ( g_gametype.integer == GT_SINGLE_PLAYER ) {
 		g_instantgib.integer = 0;
-		g_rockets.integer = 0;
 		g_weaponArena.integer = 0;
 		g_vampire.value = 0.0f;
 	}

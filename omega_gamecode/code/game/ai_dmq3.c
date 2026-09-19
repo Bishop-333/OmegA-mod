@@ -1607,8 +1607,6 @@ void BotChooseWeapon( bot_state_t *bs ) {
 	} else {
 		if ( g_instantgib.integer || g_weaponArena.integer == 7 )
 			newweaponnum = WP_RAILGUN;
-		else if ( g_rockets.integer || g_weaponArena.integer == 5 )
-			newweaponnum = WP_ROCKET_LAUNCHER;
 		else if ( g_weaponArena.integer == 1 )
 			newweaponnum = WP_GAUNTLET;
 		else if ( g_weaponArena.integer == 2 )
@@ -1617,6 +1615,8 @@ void BotChooseWeapon( bot_state_t *bs ) {
 			newweaponnum = WP_SHOTGUN;
 		else if ( g_weaponArena.integer == 4 )
 			newweaponnum = WP_GRENADE_LAUNCHER;
+		else if ( g_weaponArena.integer == 5 )
+			newweaponnum = WP_ROCKET_LAUNCHER;
 		else if ( g_weaponArena.integer == 6 )
 			newweaponnum = WP_LIGHTNING;
 		else if ( g_weaponArena.integer == 8 )

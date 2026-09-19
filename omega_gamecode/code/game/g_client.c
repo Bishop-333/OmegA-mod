@@ -1943,7 +1943,7 @@ void ClientSpawn( gentity_t *ent ) {
 		client->ps.ammo[WP_GRENADE_LAUNCHER] = 999;
 	}
 
-	if ( g_weaponArena.integer == 5 || g_rockets.integer ) {
+	if ( g_weaponArena.integer == 5 ) {
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_ROCKET_LAUNCHER );
 		client->ps.ammo[WP_ROCKET_LAUNCHER] = 999;
 	}

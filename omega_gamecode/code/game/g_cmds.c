@@ -1234,7 +1234,7 @@ static void Cmd_Drop_f( gentity_t *ent ) {
 		}
 	}
 	
-	if ( !item && g_itemDrop.integer & ITEMDROP_WEAPON && !( g_instantgib.integer || g_rockets.integer || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer || g_weaponArena.integer ) ) {
+	if ( !item && g_itemDrop.integer & ITEMDROP_WEAPON && !( g_instantgib.integer || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer || g_weaponArena.integer ) ) {
 		item = DropWeapon( ent );
 	}
 
