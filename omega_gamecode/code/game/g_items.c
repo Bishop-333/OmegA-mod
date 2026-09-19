@@ -711,13 +711,15 @@ gentity_t *Drop_Item( gentity_t *ent, gitem_t *item, float angle ) {
 
 /*
 ================
-Drop_Flag
+Drop_ItemNonRamdom
+
+Spawns an item and tosses it forward
 ================
 */
-gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle ) {
-	gentity_t *item_ent;
+gentity_t *Drop_ItemNonRandom( gentity_t *ent, gitem_t *item, float angle ) {
 	vec3_t forward, right, up;
 	vec3_t muzzle;
+	gentity_t *item_ent;
 
 	if ( !ent->client ) {
 		return NULL;
@@ -729,7 +731,7 @@ gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle ) {
 
 	forward[2] += 0.2f;
 	VectorNormalizeFast( forward );
-	VectorScale( forward, 350, forward );
+	VectorScale( forward, 450, forward );
 
 	item_ent = LaunchItem( item, muzzle, forward );
 

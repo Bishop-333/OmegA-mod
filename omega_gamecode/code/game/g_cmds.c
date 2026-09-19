@@ -1141,7 +1141,7 @@ void Cmd_FollowCycle_f( gentity_t *ent ) {
 static gentity_t *DropFlag( gentity_t *ent ) {
 	int item = 0;
 
-	if ( !g_dropFlag.integer ) {
+	if ( !g_itemDrop.integer ) {
 		return NULL;
 	}
 
@@ -1161,7 +1161,50 @@ static gentity_t *DropFlag( gentity_t *ent ) {
 
 	ent->client->ps.powerups[item] = 0;
 
-	return Drop_Flag( ent, BG_FindItemForPowerup( item ), 0 );
+	return Drop_ItemNonRandom( ent, BG_FindItemForPowerup( item ), 0 );
+}
+
+gentity_t *DropWeapon( gentity_t *ent ) {
+	int weapon;
+	int ammo;
+	gentity_t *item;
+
+	if ( !g_itemDrop.integer ) {
+		return NULL;
+	}
+
+	if ( ent->client->ps.pm_type == PM_DEAD ) {
+		return NULL;
+	}
+
+	weapon = ent->s.weapon;
+
+	if ( weapon <= WP_GAUNTLET || weapon >= WP_NUM_WEAPONS ) {
+		return NULL;
+	}
+
+	ammo = ent->client->ps.ammo[weapon];
+
+	if ( !( ent->client->ps.stats[STAT_WEAPONS] & ( 1 << weapon ) ) ) {
+		// doesn't have the weapon
+		return NULL;
+	}
+
+	if ( ammo == 0 ) {
+		// make sure that whoever picks this up doesn't get the default
+		// ammo for this weapon
+		ammo = -1;
+	}
+
+	ent->client->ps.ammo[weapon] = 0;
+	ent->client->ps.stats[STAT_WEAPONS] &= ~( 1 << weapon );
+
+	item = Drop_ItemNonRandom( ent, BG_FindItemForWeapon( weapon ), 0 );
+	item->count = ammo;
+	BG_AddPredictableEventToPlayerstate( EV_NOAMMO, 0, &ent->client->ps );
+	ent->client->ps.weaponstate = WEAPON_DROPPING;
+	ent->client->ps.weaponTime = g_fastSwitch.integer ? 100 : 200;
+	return item;
 }
 
 #define DROP_PICKUPDELAY 500
@@ -1174,7 +1217,11 @@ Cmd_Drop_f
 static void Cmd_Drop_f( gentity_t *ent ) {
 	gentity_t *item = NULL;
 
-	if ( g_dropFlag.integer ) {
+	if ( ent->client->sess.sessionTeam == TEAM_SPECTATOR || ent->client->isEliminated ) {
+		return;
+	}
+
+	if ( g_itemDrop.integer & ITEMDROP_FLAG ) {
 		if ( ent->client->ps.powerups[PW_REDFLAG] ) {
 			trap_SendServerCommand( ent - g_entities, "print \"Red flag has been dropped\n\"" );
 			item = DropFlag( ent );
@@ -1185,6 +1232,10 @@ static void Cmd_Drop_f( gentity_t *ent ) {
 			trap_SendServerCommand( ent - g_entities, "print \"Flag has been dropped\n\"" );
 			item = DropFlag( ent );
 		}
+	}
+	
+	if ( !item && g_itemDrop.integer & ITEMDROP_WEAPON && !( g_instantgib.integer || g_rockets.integer || g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer || g_weaponArena.integer ) ) {
+		item = DropWeapon( ent );
 	}
 
 	if ( item != NULL ) {
@@ -2178,7 +2229,7 @@ commands_t cmds[] =
         { "gc", 0, Cmd_GameCommand_f },
 
         //OmegA
-        { "drop", 0, Cmd_Drop_f },
+        { "drop", CMD_LIVING, Cmd_Drop_f },
         { "ready", 0, Cmd_Ready_f },
         { "happy", 0, Cmd_DrawHappy_f },
         { "sad", 0, Cmd_DrawSad_f },

@@ -23,8 +23,8 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | :--- | :--- |
 | `cg_brightPlayers` | Enables bright player skins for better visibility. |
 | `cg_damagePlums` | Displays floating numbers indicating the damage dealt when hitting an enemy. |
-| `g_dropFlag` | Allows the flag carrier to drop it manually (requires binding a key). |
 | `g_easierPickup` | Increases the item pickup hitbox height. |
+| `g_itemDrop` | Allows players to manually drop their current weapon or the flag if they are carrying one. |
 | `g_startWhenReady` | Waits for all players to type `/ready` to start the match (requires `g_doWarmup`). |
 
 ### HUD

@@ -68,6 +68,9 @@ typedef enum {
 	FROZEN_DIED,             // died without producing a remnant
 } frozen_t;
 
+#define ITEMDROP_FLAG 1
+#define ITEMDROP_WEAPON 2
+
 // movers are things like doors, plats, buttons, etc
 typedef enum {
 	MOVER_POS1,
@@ -171,8 +174,8 @@ struct gentity_s {
 
 	int count;
 
-	int dropClientNum;
 	int dropPickupTime;
+	int dropClientNum;
 
 	gentity_t *chain;
 	gentity_t *enemy;
@@ -663,7 +666,7 @@ void RespawnItem( gentity_t *ent );
 
 void PrecacheItem( gitem_t *it );
 gentity_t *Drop_Item( gentity_t *ent, gitem_t *item, float angle );
-gentity_t *Drop_Flag( gentity_t *ent, gitem_t *item, float angle );
+gentity_t *Drop_ItemNonRandom( gentity_t *ent, gitem_t *item, float angle );
 gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity );
 void G_SpawnItem( gentity_t *ent, gitem_t *item );
 void FinishSpawningItem( gentity_t *ent );

@@ -115,7 +115,7 @@ typedef struct
 #define ID_CHAT4 37
 
 // omega
-#define ID_DROPFLAG 38
+#define ID_DROPITEM 38
 #define ID_HAPPY 39
 #define ID_SAD 40
 #define ID_ANGRY 41
@@ -305,7 +305,7 @@ static bind_t g_bindings[] =
         { "messagemode2", "chat - team", ID_CHAT2, ANIM_CHAT, -1, -1, -1, -1 },
         { "messagemode3", "chat - target", ID_CHAT3, ANIM_CHAT, -1, -1, -1, -1 },
         { "messagemode4", "chat - attacker", ID_CHAT4, ANIM_CHAT, -1, -1, -1, -1 },
-        { "drop", "drop flag", ID_DROPFLAG, ANIM_IDLE, -1, -1, -1, -1 },
+        { "drop", "drop item", ID_DROPITEM, ANIM_IDLE, 'q', -1, -1, -1 },
         { "happy", "emote - happy", ID_HAPPY, ANIM_HAPPY, -1, -1, -1, -1 },
         { "sad", "emote - sad", ID_SAD, ANIM_SAD, -1, -1, -1, -1 },
         { "angry", "emote - angry", ID_ANGRY, ANIM_ANGRY, -1, -1, -1, -1 },
@@ -1484,7 +1484,7 @@ static void Controls_MenuInit( void ) {
 	s_controls.dropflag.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_GRAYED | QMF_HIDDEN;
 	s_controls.dropflag.generic.callback = Controls_ActionEvent;
 	s_controls.dropflag.generic.ownerdraw = Controls_DrawKeyBinding;
-	s_controls.dropflag.generic.id = ID_DROPFLAG;
+	s_controls.dropflag.generic.id = ID_DROPITEM;
 
 	s_controls.happy.generic.type = MTYPE_ACTION;
 	s_controls.happy.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_GRAYED | QMF_HIDDEN;
