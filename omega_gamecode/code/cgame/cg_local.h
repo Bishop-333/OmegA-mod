@@ -661,6 +661,9 @@ typedef struct {
 	vec3_t kick_angles; // weapon kicks
 	vec3_t kick_origin;
 
+	vec3_t sway_angles;
+	vec3_t lastViewAngles;
+
 	// temp working variables for player view
 	float bobfracsin;
 	int bobcycle;

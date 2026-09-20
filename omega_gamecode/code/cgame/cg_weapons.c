@@ -1096,9 +1096,27 @@ static void CG_CalculateWeaponPosition( vec3_t origin, vec3_t angles ) {
 	float scale;
 	int delta;
 	float fracsin;
+	float decay;
+	vec3_t viewDelta;
 
 	VectorCopy( cg.refdef.vieworg, origin );
 	VectorCopy( cg.refdefViewAngles, angles );
+
+	if ( cg_swaygun.value ) {
+		decay = Com_Clamp( 0, 1, cg.frametime * 0.01f );
+
+		AnglesSubtract( cg.refdefViewAngles, cg.lastViewAngles, viewDelta );
+
+		cg.sway_angles[PITCH] -= viewDelta[PITCH] * cg_swaygun.value * 0.1f;
+		cg.sway_angles[YAW] -= viewDelta[YAW] * cg_swaygun.value * 0.1f;
+
+		cg.sway_angles[PITCH] *= ( 1.0f - decay );
+		cg.sway_angles[YAW] *= ( 1.0f - decay );
+
+		angles[PITCH] += cg.sway_angles[PITCH];
+		angles[YAW] += cg.sway_angles[YAW];
+	}
+	VectorCopy( cg.refdefViewAngles, cg.lastViewAngles );
 
 	if ( !cg_bobgun.integer ) {
 		return;
