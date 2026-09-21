@@ -1122,17 +1122,26 @@ static void CG_CalculateWeaponPosition( vec3_t origin, vec3_t angles ) {
 		return;
 	}
 
-	// on odd legs, invert some angles
-	if ( cg.bobcycle & 1 ) {
-		scale = -cg.xyspeed;
+	if ( cg.predictedPlayerState.speed ) {
+		scale = cg.xyspeed > cg.predictedPlayerState.speed ? 1.0f : cg.xyspeed / cg.predictedPlayerState.speed;
 	} else {
-		scale = cg.xyspeed;
+		scale = cg.xyspeed > 320 ? 1.0f : cg.xyspeed / 320.0f;
 	}
+	fracsin = ( ( cg.predictedPlayerState.bobCycle & 255 ) / 255.0f ) * ( 2.0f * M_PI );
+
+	// gun position from bobbing
+	VectorMA( origin, scale * sin( fracsin ) * 0.5f, cg.refdef.viewaxis[1], origin );
+	VectorMA( origin, scale * sin( 2.0f * fracsin ) * 0.25f, cg.refdef.viewaxis[2], origin );
 
 	// gun angles from bobbing
-	angles[ROLL] += scale * cg.bobfracsin * 0.005;
-	angles[YAW] += scale * cg.bobfracsin * 0.01;
-	angles[PITCH] += cg.xyspeed * cg.bobfracsin * 0.005;
+	angles[ROLL] += scale * sin( fracsin ) * 1.0f;
+	angles[YAW] += scale * sin( fracsin ) * 0.5f;
+	angles[PITCH] += scale * sin( 2.0f * fracsin ) * 0.25f;
+
+	// breathing
+	fracsin = sin( 2.0f * M_PI * cg.time / 5000.0f );
+	angles[PITCH] += ( 1.0f - scale ) * fracsin * 0.3f;
+	VectorMA( origin, ( 1.0f - scale ) * fracsin * 0.15f, cg.refdef.viewaxis[2], origin );
 
 	// drop the weapon when landing
 	delta = cg.time - cg.landTime;
@@ -1142,13 +1151,6 @@ static void CG_CalculateWeaponPosition( vec3_t origin, vec3_t angles ) {
 		origin[2] += cg.landChange * 0.25 *
 		             ( LAND_DEFLECT_TIME + LAND_RETURN_TIME - delta ) / LAND_RETURN_TIME;
 	}
-
-	// idle drift
-	scale = cg.xyspeed + 40;
-	fracsin = sin( ( cg.time % TMOD_1000 ) * 0.001 );
-	angles[ROLL] += scale * fracsin * 0.01;
-	angles[YAW] += scale * fracsin * 0.01;
-	angles[PITCH] += scale * fracsin * 0.01;
 }
 
 /*
