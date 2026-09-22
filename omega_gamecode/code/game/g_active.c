@@ -1378,6 +1378,7 @@ static void ClientThink_real( gentity_t *ent ) {
 	pm.juggernautScale = g_juggernautScale.value;
 	pm.noInvisWalls = g_noInvisWalls.integer;
 	pm.railgunFireRate = g_railgunFireRate.integer;
+	pm.regularFootsteps = g_regularFootsteps.integer;
 	pm.rocketFireRate = g_rocketFireRate.integer;
 	pm.slickGround = g_slickGround.integer;
 	pm.pmove_aircontrol = pmove_aircontrol.integer;

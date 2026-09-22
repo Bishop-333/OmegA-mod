@@ -427,6 +427,7 @@ void CG_ParseSysteminfo( void ) {
 	cgs.guidedRockets = atoi( Info_ValueForKey( info, "g_guidedRockets" ) );
 	cgs.juggernautScale = atof( Info_ValueForKey( info, "g_juggernautScale" ) );
 	cgs.noInvisWalls = atoi( Info_ValueForKey( info, "g_noInvisWalls" ) );
+	cgs.regularFootsteps = atoi( Info_ValueForKey( info, "g_regularFootsteps" ) );
 }
 
 /*

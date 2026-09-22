@@ -655,6 +655,7 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.guidedRockets = cgs.guidedRockets;
 	cg_pmove.juggernautScale = cgs.juggernautScale;
 	cg_pmove.noInvisWalls = cgs.noInvisWalls;
+	cg_pmove.regularFootsteps = cgs.regularFootsteps;
 	cg_pmove.pmove_aircontrol = pmove_aircontrol.integer;
 	cg_pmove.pmove_autohop = pmove_autohop.integer;
 	cg_pmove.pmove_doublejump = pmove_doublejump.integer;

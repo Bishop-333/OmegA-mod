@@ -245,6 +245,7 @@ typedef struct {
 	float juggernautScale;
 	int noInvisWalls;
 	int railgunFireRate;
+	int regularFootsteps;
 	int rocketFireRate;
 	int slickGround;
 	int pmove_aircontrol;
@@ -272,7 +273,8 @@ typedef enum {
 	STAT_MAX_HEALTH,    // health / armor limit, changeable by handicap
 	STAT_SPEC_ZOOM,
 	STAT_TEAM_LOCKED,
-	STAT_FROZENSTATE // used to store frozen/thawing state if g_freeze = 1
+	STAT_BOBCYCLEREM, // used to store fractions of bobCycle for consistent, FPS-independent footsteps
+	STAT_FROZENSTATE  // used to store frozen/thawing state if g_freeze = 1
 } statIndex_t;
 
 // player_state->persistant[] indexes

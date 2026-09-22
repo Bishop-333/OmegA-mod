@@ -1229,6 +1229,7 @@ typedef struct {
 	int guidedRockets;
 	float juggernautScale;
 	int noInvisWalls;
+	int regularFootsteps;
 } cgs_t;
 
 //==============================================================================
