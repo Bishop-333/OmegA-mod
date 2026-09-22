@@ -875,8 +875,10 @@ void CG_PredictPlayerState( void ) {
 		CG_TouchTriggerPrediction();
 
 		// check for predictable events that changed from previous predictions
-		if ( !cg_optimizePrediction.integer || cmdNum == cg.lastPredictedCommand ) {
-			//CG_CheckChangedPredictableEvents( &cg.predictedPlayerState );
+		if ( cg_checkChangedEvents.integer ) {
+			if ( !cg_optimizePrediction.integer || cmdNum == cg.lastPredictedCommand ) {
+				CG_CheckChangedPredictableEvents( &cg.predictedPlayerState );
+			}
 		}
 	}
 
@@ -905,10 +907,11 @@ void CG_PredictPlayerState( void ) {
 	// fire events and other transition triggered things
 	CG_TransitionPlayerState( &cg.predictedPlayerState, &oldPlayerState );
 
-	if ( cg_showmiss.integer ) {
-		if ( cg.eventSequence > cg.predictedPlayerState.eventSequence ) {
+	if ( ( cg_checkChangedEvents.integer || cg_showmiss.integer ) &&
+	     cg.eventSequence > cg.predictedPlayerState.eventSequence ) {
+		if ( cg_showmiss.integer ) {
 			CG_Printf( "WARNING: double event\n" );
-			cg.eventSequence = cg.predictedPlayerState.eventSequence;
 		}
+		cg.eventSequence = cg.predictedPlayerState.eventSequence;
 	}
 }

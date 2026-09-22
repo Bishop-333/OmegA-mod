@@ -120,6 +120,7 @@ CG_CVAR( cg_cmdTimeNudge, "cg_cmdTimeNudge", "0", CVAR_ARCHIVE | CVAR_USERINFO, 
 CG_CVAR( sv_fps, "sv_fps", "40", CVAR_SYSTEMINFO, NULL )
 CG_CVAR( cg_projectileNudge, "cg_projectileNudge", "0", CVAR_ARCHIVE, NULL )
 CG_CVAR( cg_optimizePrediction, "cg_optimizePrediction", "1", CVAR_ARCHIVE, NULL )
+CG_CVAR( cg_checkChangedEvents, "cg_checkChangedEvents", "1", CVAR_ARCHIVE, NULL )
 CG_CVAR( cl_timeNudge, "cl_timeNudge", "0", CVAR_ARCHIVE, NULL )
 //unlagged - client options
 CG_CVAR( cg_trueLightning, "cg_trueLightning", "0.9", CVAR_ARCHIVE, "Sets the visibility positioning of the lightning shaft." )
