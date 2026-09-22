@@ -603,7 +603,7 @@ void CG_PredictPlayerState( void ) {
 	if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
 		cg_pmove.tracemask &= ~CONTENTS_BODY; // spectators can fly through bodies
 	}
-	if ( cg_pmove.noInvisWalls ) {
+	if ( cgs.noInvisWalls ) {
 		cg_pmove.tracemask &= ~CONTENTS_PLAYERCLIP;
 	}
 	cg_pmove.noFootsteps = ( cgs.dmflags & DF_NO_FOOTSTEPS ) > 0;
@@ -652,10 +652,15 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_flags = cgs.dmflags;
 
 	//OmegA
+	cg_pmove.chaos = cgs.chaos;
+	cg_pmove.fastSwitch = cgs.fastSwitch;
 	cg_pmove.guidedRockets = cgs.guidedRockets;
 	cg_pmove.juggernautScale = cgs.juggernautScale;
 	cg_pmove.noInvisWalls = cgs.noInvisWalls;
+	cg_pmove.railgunFireRate = cgs.railgunFireRate;
 	cg_pmove.regularFootsteps = cgs.regularFootsteps;
+	cg_pmove.rocketFireRate = cgs.rocketFireRate;
+	cg_pmove.slickGround = cgs.slickGround;
 	cg_pmove.pmove_aircontrol = pmove_aircontrol.integer;
 	cg_pmove.pmove_autohop = pmove_autohop.integer;
 	cg_pmove.pmove_doublejump = pmove_doublejump.integer;

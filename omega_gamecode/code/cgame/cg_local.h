@@ -1218,18 +1218,24 @@ typedef struct {
 	//KK-OAX For storing whether or not the server has multikills enabled.
 	int altExcellent;
 
-	int chaos;
-	int easierPickup;
+	// serverinfo
 	int freezetag;
 	int prophunt;
 	int spectateOnDeath;
 	int startWhenReady;
 
+	// systeminfo
 	int allowThirdperson;
+	int chaos;
+	int easierPickup;
+	int fastSwitch;
 	int guidedRockets;
 	float juggernautScale;
 	int noInvisWalls;
+	int railgunFireRate;
 	int regularFootsteps;
+	int rocketFireRate;
+	int slickGround;
 } cgs_t;
 
 //==============================================================================

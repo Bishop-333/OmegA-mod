@@ -402,8 +402,6 @@ void CG_ParseServerinfo( void ) {
 	cgs.delagHitscan = atoi( Info_ValueForKey( info, "g_delagHitscan" ) );
 	//unlagged - server options
 
-	cgs.chaos = atoi( Info_ValueForKey( info, "g_chaos" ) );
-	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
 	cgs.freezetag = atoi( Info_ValueForKey( info, "g_freeze" ) );
 	cgs.prophunt = atoi( Info_ValueForKey( info, "g_prophunt" ) );
 	cgs.spectateOnDeath = atoi( Info_ValueForKey( info, "g_spectateOnDeath" ) );
@@ -424,10 +422,16 @@ void CG_ParseSysteminfo( void ) {
 	info = CG_ConfigString( CS_SYSTEMINFO );
 
 	cgs.allowThirdperson = atoi( Info_ValueForKey( info, "g_allowThirdperson" ) );
+	cgs.chaos = atoi( Info_ValueForKey( info, "g_chaos" ) );
+	cgs.easierPickup = atoi( Info_ValueForKey( info, "g_easierPickup" ) );
+	cgs.fastSwitch = atoi( Info_ValueForKey( info, "g_fastSwitch" ) );
 	cgs.guidedRockets = atoi( Info_ValueForKey( info, "g_guidedRockets" ) );
 	cgs.juggernautScale = atof( Info_ValueForKey( info, "g_juggernautScale" ) );
 	cgs.noInvisWalls = atoi( Info_ValueForKey( info, "g_noInvisWalls" ) );
+	cgs.railgunFireRate = atoi( Info_ValueForKey( info, "g_railgunFireRate" ) );
 	cgs.regularFootsteps = atoi( Info_ValueForKey( info, "g_regularFootsteps" ) );
+	cgs.rocketFireRate = atoi( Info_ValueForKey( info, "g_rocketFireRate" ) );
+	cgs.slickGround = atoi( Info_ValueForKey( info, "g_slickGround" ) );
 }
 
 /*
