@@ -67,8 +67,8 @@ cd windows\build\q3_ui
 
 copy  ..\..\..\code\q3_ui\ui_syscalls.asm ..
 
-%cc%  ../../../code/game/bg_lib.c
-%cc%  ../../../code/game/bg_misc.c
+%cc%  ../../../code/bgame/bg_lib.c
+%cc%  ../../../code/bgame/bg_misc.c
 
 %cc%  ../../../code/qcommon/q_math.c
 %cc%  ../../../code/qcommon/q_shared.c

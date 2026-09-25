@@ -40,10 +40,10 @@ rem %cc%  ../../../code/cgame/cg_particles.c
 %cc%  ../../../code/cgame/cg_view.c
 %cc%  ../../../code/cgame/cg_weapons.c
 
-%cc%  ../../../code/game/bg_lib.c
-%cc%  ../../../code/game/bg_misc.c
-%cc%  ../../../code/game/bg_pmove.c
-%cc%  ../../../code/game/bg_slidemove.c
+%cc%  ../../../code/bgame/bg_lib.c
+%cc%  ../../../code/bgame/bg_misc.c
+%cc%  ../../../code/bgame/bg_pmove.c
+%cc%  ../../../code/bgame/bg_slidemove.c
 
 copy  ..\..\..\code\cgame\cg_syscalls.asm ..
 

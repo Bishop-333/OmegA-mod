@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //#include "cg_local.h"
 #include "../qcommon/q_shared.h"
 #include "../renderercommon/tr_types.h"
-#include "../game/bg_public.h"
+#include "../bgame/bg_public.h"
 #include "../game/challenges.h"
 #ifdef PARTofUI
 #include "../q3_ui/ui_local.h"

@@ -23,10 +23,10 @@ cd windows\build\game
 %cc%  ../../../code/game/ai_dmq3.c
 %cc%  ../../../code/game/ai_main.c
 %cc%  ../../../code/game/ai_team.c
-%cc%  ../../../code/game/bg_lib.c
-%cc%  ../../../code/game/bg_misc.c
-%cc%  ../../../code/game/bg_pmove.c
-%cc%  ../../../code/game/bg_slidemove.c
+%cc%  ../../../code/bgame/bg_lib.c
+%cc%  ../../../code/bgame/bg_misc.c
+%cc%  ../../../code/bgame/bg_pmove.c
+%cc%  ../../../code/bgame/bg_slidemove.c
 %cc%  ../../../code/game/g_active.c
 %cc%  ../../../code/game/g_admin.c
 %cc%  ../../../code/game/g_arenas.c
@@ -38,7 +38,7 @@ cd windows\build\game
 %cc%  ../../../code/game/g_elimination.c
 %cc%  ../../../code/game/g_items.c
 %cc%  ../../../code/game/g_main.c
-%cc%  ../../../code/game/bg_alloc.c
+%cc%  ../../../code/bgame/bg_alloc.c
 %cc%  ../../../code/game/g_fileops.c
 %cc%  ../../../code/game/g_killspree.c
 %cc%  ../../../code/game/g_misc.c

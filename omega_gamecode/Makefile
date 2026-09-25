@@ -106,6 +106,7 @@ endif
 BD=$(BUILD_DIR)/debug-$(PLATFORM)-$(ARCH)
 BR=$(BUILD_DIR)/release-$(PLATFORM)-$(ARCH)
 
+BGDIR=$(MOUNT_DIR)/bgame
 QADIR=$(MOUNT_DIR)/game
 CGDIR=$(MOUNT_DIR)/cgame
 Q3UIDIR=$(MOUNT_DIR)/q3_ui
@@ -702,7 +703,7 @@ $(B)/$(MOD)/vm/ui.qvm: $(UIVMOBJ) $(Q3UIDIR)/ui_syscalls.asm $(Q3ASM)
 ## GAME MODULE RULES
 #############################################################################
 
-$(B)/$(MOD)/cgame/bg_%.o: $(QADIR)/bg_%.c
+$(B)/$(MOD)/cgame/bg_%.o: $(BGDIR)/bg_%.c
 	$(DO_CGAME_CC)
 
 $(B)/$(MOD)/cgame/q_%.o: $(QADIR)/q_%.c
@@ -711,19 +712,25 @@ $(B)/$(MOD)/cgame/q_%.o: $(QADIR)/q_%.c
 $(B)/$(MOD)/cgame/%.o: $(CGDIR)/%.c
 	$(DO_CGAME_CC)
 
-$(B)/$(MOD)/cgame/bg_%.asm: $(QADIR)/bg_%.c $(Q3LCC)
+$(B)/$(MOD)/cgame/bg_%.asm: $(BGDIR)/bg_%.c $(Q3LCC)
 	$(DO_CGAME_Q3LCC)
 
 $(B)/$(MOD)/cgame/%.asm: $(CGDIR)/%.c $(Q3LCC)
 	$(DO_CGAME_Q3LCC)
 
+$(B)/$(MOD)/game/bg_%.o: $(BGDIR)/bg_%.c
+	$(DO_GAME_CC)
+
 $(B)/$(MOD)/game/%.o: $(QADIR)/%.c
 	$(DO_GAME_CC)
+
+$(B)/$(MOD)/game/bg_%.asm: $(BGDIR)/bg_%.c $(Q3LCC)
+	$(DO_GAME_Q3LCC)
 
 $(B)/$(MOD)/game/%.asm: $(QADIR)/%.c $(Q3LCC)
 	$(DO_GAME_Q3LCC)
 
-$(B)/$(MOD)/ui/bg_%.o: $(QADIR)/bg_%.c
+$(B)/$(MOD)/ui/bg_%.o: $(BGDIR)/bg_%.c
 	$(DO_UI_CC)
 
 $(B)/$(MOD)/ui/%.o: $(Q3UIDIR)/%.c
@@ -732,7 +739,7 @@ $(B)/$(MOD)/ui/%.o: $(Q3UIDIR)/%.c
 $(B)/$(MOD)/ui/ui_syscalls.o: $(Q3UIDIR)/ui_syscalls.c
 	$(DO_UI_CC)
 
-$(B)/$(MOD)/ui/bg_%.asm: $(QADIR)/bg_%.c $(Q3LCC)
+$(B)/$(MOD)/ui/bg_%.asm: $(BGDIR)/bg_%.c $(Q3LCC)
 	$(DO_UI_Q3LCC)
 
 $(B)/$(MOD)/ui/%.asm: $(Q3UIDIR)/%.c $(Q3LCC)
