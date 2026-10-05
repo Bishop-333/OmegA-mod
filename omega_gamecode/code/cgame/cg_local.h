@@ -669,6 +669,7 @@ typedef struct {
 	int bobcycle;
 	float xyspeed;
 	int nextOrbitTime;
+	float runFov;
 
 	// development tool
 	refEntity_t testModelEntity;

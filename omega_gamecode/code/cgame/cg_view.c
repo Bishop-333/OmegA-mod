@@ -520,6 +520,32 @@ void CG_ZoomUp_f( void ) {
 
 /*
 ====================
+CG_CalcRunFov
+====================
+*/
+static float CG_CalcRunFov( void ) {
+	float target = 0;
+	float delta;
+
+	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
+		return cg.runFov = 0;
+	}
+
+	if ( DotProduct( cg.predictedPlayerState.velocity, cg.refdef.viewaxis[0] ) > ( cg.predictedPlayerState.speed * 0.75f ) ) {
+		target = cg_runFov.value;
+	}
+
+	delta = Com_Clamp( 0, 100, cg.time - cg.oldTime ) / 1000;
+
+	if ( delta > 0 ) {
+		cg.runFov += ( target - cg.runFov ) * ( delta / ( ( target ? 0.25f : 0.1f ) + delta ) );
+	}
+
+	return cg.runFov;
+}
+
+/*
+====================
 CG_CalcFov
 
 Fixed fov at intermissions, otherwise account for fov variable and zooms.
@@ -545,7 +571,7 @@ static int CG_CalcFov( void ) {
 			// dmflag to prevent wide fov for all clients
 			fov_x = 90;
 		} else {
-			fov_x = cg_fov.value;
+			fov_x = cg_fov.value + CG_CalcRunFov();
 			if ( fov_x < 1 ) {
 				fov_x = 1;
 			} else if ( fov_x > 160 ) {
