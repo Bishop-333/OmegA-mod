@@ -729,7 +729,7 @@ typedef struct {
 
 	//Here are the elimination stuff
 	menuradiobutton_s oneway;
-	menuradiobutton_s instantgib;
+	menulist_s instantgib;
 	menulist_s weaponarena;
 	menuradiobutton_s cheats;
 	menulist_s lmsMode;
@@ -785,6 +785,13 @@ static const char *lmsMode_list[] = {
     "Round-OT",
     "Kill+OT",
     "Kill-OT",
+    NULL };
+
+static const char *instantgib_list[] = {
+    "Off",
+    "Railgun",
+    "Railgun+Gauntlet",
+    "One in the Chamber",
     NULL };
 
 /*
@@ -987,7 +994,7 @@ ServerOptions_UpdateMenuItems
 =================
 */
 static void ServerOptions_UpdateMenuItems( void ) {
-	if ( s_serveroptions.instantgib.curvalue == 1 ) {
+	if ( s_serveroptions.instantgib.curvalue >= 1 ) {
 		s_serveroptions.weaponarena.generic.flags |= QMF_GRAYED;
 		trap_Cvar_SetValue( "g_weaponArena", 0 );
 	} else {
@@ -1154,7 +1161,17 @@ ServerOptions_StatusBar_Instantgib
 =================
 */
 static void ServerOptions_StatusBar_Instantgib( void *ptr ) {
-	UI_DrawString( 320, 440, "Only railgun and instant kill", UI_CENTER | UI_SMALLFONT, colorWhite );
+	switch ( s_serveroptions.instantgib.curvalue ) {
+		case 1:
+			UI_DrawString( 320, 440, "Only railgun and instant kill", UI_CENTER | UI_SMALLFONT, colorWhite );
+			break;
+		case 2:
+			UI_DrawString( 320, 440, "Railgun and gauntlet with instant kill", UI_CENTER | UI_SMALLFONT, colorWhite );
+			break;
+		case 3:
+			UI_DrawString( 320, 440, "Only one slug, get a slug for each frag", UI_CENTER | UI_SMALLFONT, colorWhite );
+			break;
+	}
 }
 
 /*
@@ -1417,7 +1434,7 @@ static void ServerOptions_SetMenuItems( void ) {
 
 	Q_strncpyz( s_serveroptions.hostname.field.buffer, UI_Cvar_VariableString( "sv_hostname" ), sizeof( s_serveroptions.hostname.field.buffer ) );
 	s_serveroptions.pure.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "sv_pure" ) );
-	s_serveroptions.instantgib.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "g_instantgib" ) );
+	s_serveroptions.instantgib.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "g_instantgib" ) );
 	s_serveroptions.weaponarena.curvalue = Com_Clamp( 0, 13, trap_Cvar_VariableValue( "g_weaponArena" ) );
 	s_serveroptions.lmsMode.curvalue = Com_Clamp( 0, 3, trap_Cvar_VariableValue( "g_lms_mode" ) );
 	s_serveroptions.freeze.curvalue = Com_Clamp( 0, 1, trap_Cvar_VariableValue( "g_freeze" ) );
@@ -1596,11 +1613,12 @@ static void ServerOptions_MenuInit( qboolean multiplayer ) {
 
 	//Insantgib option
 	y += BIGCHAR_HEIGHT + 2;
-	s_serveroptions.instantgib.generic.type = MTYPE_RADIOBUTTON;
+	s_serveroptions.instantgib.generic.type = MTYPE_SPINCONTROL;
 	s_serveroptions.instantgib.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
 	s_serveroptions.instantgib.generic.x = OPTIONS_X;
 	s_serveroptions.instantgib.generic.y = y;
 	s_serveroptions.instantgib.generic.name = "Instantgib:";
+	s_serveroptions.instantgib.itemnames = instantgib_list;
 	s_serveroptions.instantgib.generic.statusbar = ServerOptions_StatusBar_Instantgib;
 
 	//Weapon Arena option

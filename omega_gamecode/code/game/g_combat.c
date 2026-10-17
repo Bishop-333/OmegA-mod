@@ -601,6 +601,14 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			if ( g_gametype.integer != GT_LMS && g_gametype.integer != GT_POSSESSION )
 				AddScore( attacker, self->r.currentOrigin, 1 );
 
+			if ( g_instantgib.integer == 3 ) {
+				gitem_t *slugs;
+
+				attacker->client->ps.ammo[WP_RAILGUN]++;
+				slugs = BG_FindItem( "Slugs" );
+				G_AddPredictableEvent( attacker, EV_ITEM_PICKUP, slugs - bg_itemlist );
+			}
+
 			if ( meansOfDeath == MOD_GAUNTLET ) {
 
 				// Attack gets a challenge complete:

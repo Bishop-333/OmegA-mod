@@ -1955,7 +1955,11 @@ void ClientSpawn( gentity_t *ent ) {
 
 	if ( g_weaponArena.integer == 7 || g_instantgib.integer ) {
 		client->ps.stats[STAT_WEAPONS] = ( 1 << WP_RAILGUN );
-		client->ps.ammo[WP_RAILGUN] = 999; //Don't display any ammo
+		if ( g_instantgib.integer == 3 ) {
+			client->ps.ammo[WP_RAILGUN] = 1;
+		} else {
+			client->ps.ammo[WP_RAILGUN] = 999; //Don't display any ammo
+		}
 		if ( g_instantgib.integer > 1 ) {
 			client->ps.stats[STAT_WEAPONS] |= ( 1 << WP_GAUNTLET );
 			client->ps.ammo[WP_GAUNTLET] = -1;

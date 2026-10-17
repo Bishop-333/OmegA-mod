@@ -1605,9 +1605,13 @@ void BotChooseWeapon( bot_state_t *bs ) {
 	     bs->cur_ps.weaponstate == WEAPON_DROPPING ) {
 		trap_EA_SelectWeapon( bs->client, bs->weaponnum );
 	} else {
-		if ( g_instantgib.integer || g_weaponArena.integer == 7 )
-			newweaponnum = WP_RAILGUN;
-		else if ( g_weaponArena.integer == 1 )
+		if ( g_instantgib.integer == 3 ) {
+			if ( bs->cur_ps.ammo[WP_RAILGUN] > 0 ) {
+				newweaponnum = WP_RAILGUN;
+			} else {
+				newweaponnum = WP_GAUNTLET;
+			}
+		} else if ( g_weaponArena.integer == 1 )
 			newweaponnum = WP_GAUNTLET;
 		else if ( g_weaponArena.integer == 2 )
 			newweaponnum = WP_MACHINEGUN;
@@ -1619,6 +1623,8 @@ void BotChooseWeapon( bot_state_t *bs ) {
 			newweaponnum = WP_ROCKET_LAUNCHER;
 		else if ( g_weaponArena.integer == 6 )
 			newweaponnum = WP_LIGHTNING;
+		else if ( g_weaponArena.integer == 7 || g_instantgib.integer )
+			newweaponnum = WP_RAILGUN;
 		else if ( g_weaponArena.integer == 8 )
 			newweaponnum = WP_PLASMAGUN;
 		else if ( g_weaponArena.integer == 9 )
