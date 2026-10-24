@@ -54,9 +54,9 @@ const float pm_cpm_airstrafewishspeed = 30.0f;
 const float pm_cpm_aircontrol = 150.0f;
 
 // Warfork Wall-Jump
-const float pm_wjupspeed = 330.0f;
-const float pm_wjbouncefactor = 0.6f;
-const float pm_wjminspeed = 300.0f;
+const float pm_wjupspeed = JUMP_VELOCITY - 20.0f;
+const float pm_wjbouncefactor = 0.3f;
+const float pm_wjminspeed = ( JUMP_VELOCITY - 20.0f ) * 0.75f;
 
 int c_pmove = 0;
 

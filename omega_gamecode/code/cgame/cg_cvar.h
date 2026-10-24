@@ -220,6 +220,6 @@ CG_CVAR( pmove_aircontrol, "pmove_aircontrol", "0", CVAR_SYSTEMINFO, NULL )
 CG_CVAR( pmove_autohop, "pmove_autohop", "0", CVAR_SYSTEMINFO, NULL )
 CG_CVAR( pmove_doublejump, "pmove_doublejump", "0", CVAR_SYSTEMINFO, NULL )
 CG_CVAR( pmove_overbounce, "pmove_overbounce", "0", CVAR_SYSTEMINFO, NULL )
-CG_CVAR( pmove_walljump, "pmove_walljump", "0", CVAR_SYSTEMINFO, NULL )
+CG_CVAR( pmove_walljump, "pmove_walljump", "1", CVAR_SYSTEMINFO, NULL )
 
 #undef CG_CVAR
