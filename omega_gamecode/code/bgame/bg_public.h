@@ -177,10 +177,11 @@ typedef enum {
 #define PMF_DUCKED 1
 #define PMF_JUMP_HELD 2
 #define PMF_DOUBLE_JUMPED 4
-#define PMF_BACKWARDS_JUMP 8   // go into backwards land
-#define PMF_BACKWARDS_RUN 16   // coast down to backwards run
-#define PMF_TIME_LAND 32       // pm_time is time before rejump
-#define PMF_TIME_KNOCKBACK 64  // pm_time is an air-accelerate only time
+#define PMF_BACKWARDS_JUMP 8  // go into backwards land
+#define PMF_BACKWARDS_RUN 16  // coast down to backwards run
+#define PMF_TIME_LAND 32      // pm_time is time before rejump
+#define PMF_TIME_KNOCKBACK 64 // pm_time is an air-accelerate only time
+#define PMF_WALLJUMPED 128
 #define PMF_TIME_WATERJUMP 256 // pm_time is waterjump
 #define PMF_RESPAWNED 512      // clear after attack and jump buttons come up
 #define PMF_USE_ITEM_HELD 1024
@@ -252,6 +253,7 @@ typedef struct {
 	int pmove_autohop;
 	int pmove_doublejump;
 	int pmove_overbounce;
+	int pmove_walljump;
 } pmove_t;
 
 // if a full pmove isn't done on the client, you can just update the angles

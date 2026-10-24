@@ -885,6 +885,20 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out) {
 
 }
 
+vec_t VectorNormalize2D( vec3_t v ) // ByMiK : normalize horizontally (don't affect Z value)
+{
+	float length, ilength;
+	length = v[0]*v[0] + v[1]*v[1];
+	if( length )
+	{
+		length = sqrt( length ); // FIXME
+		ilength = 1.0f/length;
+		v[0] *= ilength;
+		v[1] *= ilength;
+	}
+	return length;
+}
+
 void _VectorMA( const vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc) {
 	vecc[0] = veca[0] + scale*vecb[0];
 	vecc[1] = veca[1] + scale*vecb[1];

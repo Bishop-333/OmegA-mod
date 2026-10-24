@@ -665,6 +665,7 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_autohop = pmove_autohop.integer;
 	cg_pmove.pmove_doublejump = pmove_doublejump.integer;
 	cg_pmove.pmove_overbounce = pmove_overbounce.integer;
+	cg_pmove.pmove_walljump = pmove_walljump.integer;
 
 	//unlagged - optimized prediction
 	// Like the comments described above, a player's state is entirely
