@@ -239,8 +239,8 @@ void CG_AddMarks( void ) {
 		next = mp->nextMark;
 
 		if ( mp->markShader == cgs.media.lbldShader2 || mp->markShader == cgs.media.bloodMarkShader ) {
-			totalTime = MARK_TOTAL_TIME * 3;
-			fadeTime = MARK_FADE_TIME * 3;
+			totalTime = MARK_TOTAL_TIME * 6;
+			fadeTime = MARK_FADE_TIME * 6;
 		} else {
 			totalTime = MARK_TOTAL_TIME;
 			fadeTime = MARK_FADE_TIME;
