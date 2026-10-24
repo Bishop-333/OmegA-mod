@@ -148,7 +148,7 @@ void UI_ForceMenuOff( void ) {
 
 	trap_Key_SetCatcher( trap_Key_GetCatcher() & ~KEYCATCH_UI );
 	trap_Key_ClearStates();
-	trap_Cvar_Set( "cl_paused", "0" );
+	trap_Cvar_SetValue( "cl_paused", 0 );
 }
 
 /*
@@ -851,7 +851,7 @@ void UI_SetActiveMenu( uiMenuCommand_t menu ) {
 			UI_ConfirmMenu( "Bad CD Key", 0, NeedCDKeyAction );
 			return;
 		case UIMENU_INGAME:
-			trap_Cvar_Set( "cl_paused", "1" );
+			trap_Cvar_SetValue( "cl_paused", 1 );
 			UI_InGameMenu();
 			return;
 

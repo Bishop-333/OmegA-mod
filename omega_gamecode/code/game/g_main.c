@@ -1639,7 +1639,7 @@ static void CheckTournament( void ) {
 		// if the warmup time has counted down, restart
 		if ( level.time > level.warmupTime ) {
 			level.warmupTime += 10000;
-			trap_Cvar_Set( "g_restarted", "1" );
+			trap_Cvar_SetValue( "g_restarted", 1 );
 			trap_SendConsoleCommand( EXEC_APPEND, "map_restart 0\n" );
 			level.restarted = qtrue;
 			return;
@@ -1704,7 +1704,7 @@ static void CheckTournament( void ) {
 		// if the warmup time has counted down, restart
 		if ( level.time > level.warmupTime ) {
 			level.warmupTime += 10000;
-			trap_Cvar_Set( "g_restarted", "1" );
+			trap_Cvar_SetValue( "g_restarted", 1 );
 			trap_SendConsoleCommand( EXEC_APPEND, "map_restart 0\n" );
 			level.restarted = qtrue;
 			return;
@@ -1842,9 +1842,9 @@ static void CheckCvars( void ) {
 	if ( g_password.modificationCount != lastMod ) {
 		lastMod = g_password.modificationCount;
 		if ( *g_password.string && Q_stricmp( g_password.string, "none" ) ) {
-			trap_Cvar_Set( "g_needpass", "1" );
+			trap_Cvar_SetValue( "g_needpass", 1 );
 		} else {
-			trap_Cvar_Set( "g_needpass", "0" );
+			trap_Cvar_SetValue( "g_needpass", 0 );
 		}
 	}
 }
@@ -2042,7 +2042,7 @@ void G_RunFrame( int levelTime ) {
 		for ( i = 0; i < MAX_GENTITIES; i++ ) {
 			G_Printf( "%4i: %s\n", i, g_entities[i].classname );
 		}
-		trap_Cvar_Set( "g_listEntity", "0" );
+		trap_Cvar_SetValue( "g_listEntity", 0 );
 	}
 
 	//unlagged - backward reconciliation #4

@@ -376,7 +376,7 @@ void CG_ParseServerinfo( void ) {
 	if ( cgs.gametype == GT_LMS || cgs.gametype == GT_POSSESSION ) {
 		cgs.ffa_gt = 1;
 	}
-	trap_Cvar_Set( "g_gametype", va( "%i", cgs.gametype ) );
+	trap_Cvar_SetValue( "g_gametype", cgs.gametype );
 	cgs.dmflags = atoi( Info_ValueForKey( info, "dmflags" ) );
 	cgs.videoflags = atoi( Info_ValueForKey( info, "videoflags" ) );
 	cgs.elimflags = atoi( Info_ValueForKey( info, "elimflags" ) );
@@ -748,7 +748,7 @@ static void CG_MapRestart( void ) {
 		trap_S_StartLocalSound( cgs.media.countFightSound, CHAN_ANNOUNCER );
 		CG_CenterPrint( "FIGHT!", 120, GIANTCHAR_WIDTH * 2 );
 	}
-	trap_Cvar_Set( "cg_thirdPerson", "0" );
+	trap_Cvar_SetValue( "cg_thirdPerson", 0 );
 }
 
 /*

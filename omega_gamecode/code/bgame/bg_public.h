@@ -744,4 +744,7 @@ qboolean BG_IsElimGametype( gametype_t gametype );
 //OmegA
 extern vmCvar_t autohop;
 
+void trap_Cvar_Set( const char *var_name, const char *value );
+void trap_Cvar_SetValue( const char *var_name, float value );
+
 #endif

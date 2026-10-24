@@ -641,9 +641,9 @@ void CG_PredictPlayerState( void ) {
 	}
 
 	if ( pmove_msec.integer < 8 ) {
-		trap_Cvar_Set( "pmove_msec", "8" );
+		trap_Cvar_SetValue( "pmove_msec", 8 );
 	} else if ( pmove_msec.integer > 33 ) {
-		trap_Cvar_Set( "pmove_msec", "33" );
+		trap_Cvar_SetValue( "pmove_msec", 33 );
 	}
 
 	cg_pmove.pmove_fixed = pmove_fixed.integer;

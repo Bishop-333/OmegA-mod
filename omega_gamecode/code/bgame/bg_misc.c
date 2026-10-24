@@ -1658,3 +1658,22 @@ Returns true if the gametype is an elimination mode.
 qboolean BG_IsElimGametype( gametype_t gametype ) {
 	return BG_IsElimTeamGametype( gametype ) || gametype == GT_LMS;
 }
+
+#ifndef UI
+/*
+================
+trap_Cvar_SetValue
+================
+*/
+void trap_Cvar_SetValue( const char *var_name, float value ) {
+	char val[32];
+
+	if ( value == (int)value ) {
+		Com_sprintf( val, sizeof( val ), "%i", (int)value );
+	} else {
+		Com_sprintf( val, sizeof( val ), "%f", value );
+	}
+	trap_Cvar_Set( var_name, val );
+}
+#endif
+

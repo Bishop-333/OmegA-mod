@@ -686,8 +686,8 @@ static void UI_SPLevelMenu_Init( void ) {
 
 	skill = (int)trap_Cvar_VariableValue( "g_spSkill" );
 	if ( skill < 1 || skill > 5 ) {
-		trap_Cvar_Set( "g_spSkill", "2" );
 		skill = 2;
+		trap_Cvar_SetValue( "g_spSkill", skill );
 	}
 
 	memset( &levelMenuInfo, 0, sizeof( levelMenuInfo ) );
