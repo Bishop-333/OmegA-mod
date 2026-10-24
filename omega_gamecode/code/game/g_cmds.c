@@ -1173,6 +1173,10 @@ gentity_t *DropWeapon( gentity_t *ent ) {
 		return NULL;
 	}
 
+	if ( !G_IsTeamGametype( g_gametype.integer ) ) {
+		return NULL;
+	}
+
 	if ( ent->client->ps.pm_type == PM_DEAD ) {
 		return NULL;
 	}

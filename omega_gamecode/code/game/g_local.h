@@ -873,6 +873,7 @@ void FindIntermissionPoint( void );
 void SetLeader( int team, int client );
 void CheckTeamLeader( int team );
 void G_RunThink( gentity_t *ent );
+qboolean G_IsTeamGametype( int check );
 qboolean G_IsElimTeamGametype( void );
 qboolean G_IsElimGametype( void );
 void AddTournamentQueue( gclient_t *client );

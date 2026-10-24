@@ -304,6 +304,19 @@ static void G_UpdateCvars( void ) {
 
 /*
 =================
+G_IsTeamGametype
+=================
+*/
+qboolean G_IsTeamGametype( int check ) {
+	if ( check != GT_FFA && check != GT_TOURNAMENT && check != GT_SINGLE_PLAYER && check != GT_LMS && check != GT_POSSESSION ) {
+		return qtrue;
+	} else {
+		return qfalse;
+	}
+}
+
+/*
+=================
 G_IsElimTeamGametype
 =================
 */
