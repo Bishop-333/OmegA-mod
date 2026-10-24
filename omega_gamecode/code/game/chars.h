@@ -120,7 +120,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 //the self preservation of the bot (rockets near walls etc.)
 #define CHARACTERISTIC_SELFPRESERVATION 42 //float [0, 1]
 //how likely the bot is to take revenge
-#define CHARACTERISTIC_VENGEFULNESS 43 //float [0, 1]	//use this!!
+#define CHARACTERISTIC_VENGEFULNESS 43 //float [0, 1]
 //tendency to camp
 #define CHARACTERISTIC_CAMPER 44 //float [0, 1]
 //========================================================

@@ -1676,4 +1676,3 @@ void trap_Cvar_SetValue( const char *var_name, float value ) {
 	trap_Cvar_Set( var_name, val );
 }
 #endif
-
