@@ -225,6 +225,8 @@ void CG_AddMarks( void ) {
 	markPoly_t *mp, *next;
 	int t;
 	int fade;
+	int totalTime;
+	int fadeTime;
 
 	if ( !cg_addMarks.integer ) {
 		return;
@@ -236,8 +238,16 @@ void CG_AddMarks( void ) {
 		// still have it
 		next = mp->nextMark;
 
+		if ( mp->markShader == cgs.media.lbldShader2 || mp->markShader == cgs.media.bloodMarkShader ) {
+			totalTime = MARK_TOTAL_TIME * 6;
+			fadeTime = MARK_FADE_TIME * 6;
+		} else {
+			totalTime = MARK_TOTAL_TIME;
+			fadeTime = MARK_FADE_TIME;
+		}
+
 		// see if it is time to completely remove it
-		if ( cg.time > mp->time + MARK_TOTAL_TIME ) {
+		if ( cg.time > mp->time + totalTime ) {
 			CG_FreeMarkPoly( mp );
 			continue;
 		}
@@ -261,9 +271,9 @@ void CG_AddMarks( void ) {
 		}
 
 		// fade all marks out with time
-		t = mp->time + MARK_TOTAL_TIME - cg.time;
-		if ( t < MARK_FADE_TIME ) {
-			fade = 255 * t / MARK_FADE_TIME;
+		t = mp->time + totalTime - cg.time;
+		if ( t < fadeTime ) {
+			fade = 255 * t / fadeTime;
 			if ( mp->alphaFade ) {
 				for ( j = 0; j < mp->poly.numVerts; j++ ) {
 					mp->verts[j].modulate[3] = fade;
