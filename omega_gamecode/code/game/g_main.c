@@ -307,12 +307,8 @@ static void G_UpdateCvars( void ) {
 G_IsTeamGametype
 =================
 */
-qboolean G_IsTeamGametype( int check ) {
-	if ( check != GT_FFA && check != GT_TOURNAMENT && check != GT_SINGLE_PLAYER && check != GT_LMS && check != GT_POSSESSION ) {
-		return qtrue;
-	} else {
-		return qfalse;
-	}
+qboolean G_IsTeamGametype( void ) {
+	return BG_IsTeamGametype( g_gametype.integer );
 }
 
 /*
@@ -460,7 +456,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	G_FindTeams();
 
 	// make sure we have flags for CTF, etc
-	if ( g_gametype.integer == GT_POSSESSION || ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) ) {
+	if ( g_gametype.integer == GT_POSSESSION || G_IsTeamGametype() ) {
 		G_CheckTeamItems();
 	}
 
@@ -816,7 +812,7 @@ void CalculateRanks( void ) {
 	       sizeof( level.sortedClients[0] ), SortRanks );
 
 	// set the rank value for all clients that are connected and not spectators
-	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+	if ( G_IsTeamGametype() ) {
 		// in team games, rank is just the order of the teams, 0=red, 1=blue, 2=tied
 		for ( i = 0; i < level.numConnectedClients; i++ ) {
 			cl = &level.clients[level.sortedClients[i]];
@@ -851,7 +847,7 @@ void CalculateRanks( void ) {
 	}
 
 	// set the CS_SCORES1/2 configstrings, which will be visible to everyone
-	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+	if ( G_IsTeamGametype() ) {
 		trap_SetConfigstring( CS_SCORES1, va( "%i", level.teamScores[TEAM_RED] ) );
 		trap_SetConfigstring( CS_SCORES2, va( "%i", level.teamScores[TEAM_BLUE] ) );
 	} else {
@@ -1237,7 +1233,7 @@ void LogExit( const char *string ) {
 		numSorted = 32;
 	}
 
-	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+	if ( G_IsTeamGametype() ) {
 		G_LogPrintf( "red:%i  blue:%i\n",
 		             level.teamScores[TEAM_RED], level.teamScores[TEAM_BLUE] );
 	}
@@ -1370,7 +1366,7 @@ static qboolean ScoreIsTied( void ) {
 		         level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE] - 1 );
 	}
 
-	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+	if ( G_IsTeamGametype() ) {
 		return level.teamScores[TEAM_RED] == level.teamScores[TEAM_BLUE];
 	}
 

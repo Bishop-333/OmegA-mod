@@ -454,7 +454,7 @@ static void CG_RegisterSounds( void ) {
 	// N_G: Another condition that makes no sense to me, see for
 	// yourself if you really meant this
 	// Sago: Makes perfect sense: Load team game stuff if the gametype is a teamgame and not an exception (like GT_LMS)
-	if ( ( ( cgs.gametype >= GT_TEAM ) && ( cgs.ffa_gt != 1 ) ) ||
+	if ( BG_IsTeamGametype( cgs.gametype ) ||
 	     cg_buildScript.integer ) {
 
 		cgs.media.captureAwardSound = trap_S_RegisterSound( "sound/teamplay/flagcapture_yourteam.wav", qtrue );
@@ -847,7 +847,7 @@ static void CG_RegisterGraphics( void ) {
 
 	cgs.media.dustPuffShader = trap_R_RegisterShader( "hasteSmokePuff" );
 
-	if ( ( ( cgs.gametype >= GT_TEAM ) && ( cgs.ffa_gt != 1 ) ) ||
+	if ( BG_IsTeamGametype( cgs.gametype ) ||
 	     cg_buildScript.integer ) {
 
 		cgs.media.friendThroughWallsShader = trap_R_RegisterShader( "sprites/foe2.tga" );

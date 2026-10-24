@@ -65,7 +65,7 @@ static qboolean CG_IsEnemy( int clientNum ) {
 		return qfalse;
 	}
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		if ( ci->team != myteam ) {
 			return qtrue;
 		}
@@ -405,7 +405,7 @@ static qboolean CG_FindClientModelFile( char *filename, int length, clientInfo_t
 	char *team, *charactersFolder;
 	int i;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		switch ( ci->team ) {
 			case TEAM_BLUE: {
 				team = "blue";
@@ -432,7 +432,7 @@ static qboolean CG_FindClientModelFile( char *filename, int length, clientInfo_t
 			if ( CG_FileExists( filename ) ) {
 				return qtrue;
 			}
-			if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && cg_forceTeamSkins.integer ) {
+			if ( BG_IsTeamGametype( cgs.gametype ) && cg_forceTeamSkins.integer ) {
 				if ( i == 0 && teamName && *teamName ) {
 					//								"models/players/characters/sergei/stroggs/lower_red.skin"
 					Com_sprintf( filename, length, "models/players/%s%s/%s%s_%s.%s", charactersFolder, modelName, teamName, base, team, ext );
@@ -475,7 +475,7 @@ static qboolean CG_FindClientHeadFile( char *filename, int length, clientInfo_t 
 	char *team, *headsFolder;
 	int i;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		switch ( ci->team ) {
 			case TEAM_RED: {
 				team = "red";
@@ -510,7 +510,7 @@ static qboolean CG_FindClientHeadFile( char *filename, int length, clientInfo_t 
 			if ( CG_FileExists( filename ) ) {
 				return qtrue;
 			}
-			if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && cg_forceTeamSkins.integer ) {
+			if ( BG_IsTeamGametype( cgs.gametype ) && cg_forceTeamSkins.integer ) {
 				if ( i == 0 && teamName && *teamName ) {
 					Com_sprintf( filename, length, "models/players/%s%s/%s%s_%s.%s", headsFolder, headModelName, teamName, base, team, ext );
 				} else {
@@ -766,7 +766,7 @@ static void CG_LoadClientInfo( int clientNum, clientInfo_t *ci ) {
 		}
 
 		// fall back to default team name
-		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( BG_IsTeamGametype( cgs.gametype ) ) {
 			// keep skin name
 			if ( ci->team == TEAM_BLUE ) {
 				Q_strncpyz( teamname, DEFAULT_BLUETEAM_NAME, sizeof( teamname ) );
@@ -795,7 +795,7 @@ static void CG_LoadClientInfo( int clientNum, clientInfo_t *ci ) {
 
 	// sounds
 	dir = ci->modelName;
-	fallback = ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ? DEFAULT_TEAM_MODEL : DEFAULT_MODEL;
+	fallback = BG_IsTeamGametype( cgs.gametype ) ? DEFAULT_TEAM_MODEL : DEFAULT_MODEL;
 
 	for ( i = 0; i < MAX_CUSTOM_SOUNDS; i++ ) {
 		s = cg_customSoundNames[i];
@@ -864,7 +864,7 @@ static qboolean CG_ScanForExistingClientInfo( clientInfo_t *ci ) {
 		if ( match->deferred ) {
 			continue;
 		}
-		if ( !Q_stricmp( ci->modelName, match->modelName ) && !Q_stricmp( ci->skinName, match->skinName ) && !Q_stricmp( ci->headModelName, match->headModelName ) && !Q_stricmp( ci->headSkinName, match->headSkinName ) && !Q_stricmp( ci->blueTeam, match->blueTeam ) && !Q_stricmp( ci->redTeam, match->redTeam ) && ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || ci->team == match->team ) ) {
+		if ( !Q_stricmp( ci->modelName, match->modelName ) && !Q_stricmp( ci->skinName, match->skinName ) && !Q_stricmp( ci->headModelName, match->headModelName ) && !Q_stricmp( ci->headSkinName, match->headSkinName ) && !Q_stricmp( ci->blueTeam, match->blueTeam ) && !Q_stricmp( ci->redTeam, match->redTeam ) && ( !BG_IsTeamGametype( cgs.gametype ) || ci->team == match->team ) ) {
 			// this clientinfo is identical, so use it's handles
 
 			ci->deferred = qfalse;
@@ -900,7 +900,7 @@ static void CG_SetDeferredClientInfo( int clientNum, clientInfo_t *ci ) {
 		}
 		if ( Q_stricmp( ci->skinName, match->skinName ) ||
 		     Q_stricmp( ci->modelName, match->modelName ) ||
-		     ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && ci->team != match->team ) ) {
+		     ( BG_IsTeamGametype( cgs.gametype ) && ci->team != match->team ) ) {
 			continue;
 		}
 		// just load the real info cause it uses the same models and skins
@@ -909,7 +909,7 @@ static void CG_SetDeferredClientInfo( int clientNum, clientInfo_t *ci ) {
 	}
 
 	// if we are in teamplay, only grab a model if the skin is correct
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		for ( i = 0; i < cgs.maxclients; i++ ) {
 			match = &cgs.clientinfo[i];
 			if ( !match->infoValid || match->deferred ) {
@@ -1049,7 +1049,7 @@ void CG_NewClientInfo( int clientNum ) {
 		char modelStr[MAX_QPATH];
 		char *skin;
 
-		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( BG_IsTeamGametype( cgs.gametype ) ) {
 			Q_strncpyz( newInfo.modelName, DEFAULT_TEAM_MODEL, sizeof( newInfo.modelName ) );
 			Q_strncpyz( newInfo.skinName, "default", sizeof( newInfo.skinName ) );
 		} else {
@@ -1064,7 +1064,7 @@ void CG_NewClientInfo( int clientNum ) {
 			Q_strncpyz( newInfo.modelName, modelStr, sizeof( newInfo.modelName ) );
 		}
 
-		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( BG_IsTeamGametype( cgs.gametype ) ) {
 			// keep skin name
 			slash = (char *)strchr( v, '/' );
 			if ( slash ) {
@@ -1112,7 +1112,7 @@ void CG_NewClientInfo( int clientNum ) {
 		char modelStr[MAX_QPATH];
 		char *skin;
 
-		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( BG_IsTeamGametype( cgs.gametype ) ) {
 			Q_strncpyz( newInfo.headModelName, DEFAULT_TEAM_MODEL, sizeof( newInfo.headModelName ) );
 			Q_strncpyz( newInfo.headSkinName, "default", sizeof( newInfo.headSkinName ) );
 		} else {
@@ -1127,7 +1127,7 @@ void CG_NewClientInfo( int clientNum ) {
 			Q_strncpyz( newInfo.headModelName, modelStr, sizeof( newInfo.headModelName ) );
 		}
 
-		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( BG_IsTeamGametype( cgs.gametype ) ) {
 			// keep skin name
 			slash = (char *)strchr( v, '/' );
 			if ( slash ) {
@@ -2144,7 +2144,7 @@ static void CG_FriendHudMarker( centity_t *cent ) {
 
 	team = cgs.clientinfo[cent->currentState.clientNum].team;
 
-	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || ( cent->currentState.eFlags & EF_DEAD && !CG_IsFrozenPlayer( cent ) ) || cent->currentState.number == cg.snap->ps.clientNum || cent->currentState.clientNum == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
+	if ( !BG_IsTeamGametype( cgs.gametype ) || !( cg_drawFriend.integer == 2 ) || !cg_drawFriendThroughWalls.integer || cg.snap->ps.persistant[PERS_TEAM] != team || ( cent->currentState.eFlags & EF_DEAD && !CG_IsFrozenPlayer( cent ) ) || cent->currentState.number == cg.snap->ps.clientNum || cent->currentState.clientNum == cg.snap->ps.clientNum || cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) {
 		return;
 	}
 
@@ -2244,7 +2244,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 	if ( ( cent->currentState.eFlags & EF_DEAD ) &&
 	     !CG_IsFrozenPlayer( cent ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
-	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 &&
+	     BG_IsTeamGametype( cgs.gametype ) &&
 	     cg_drawFriendSkulls.integer && cg_drawFriendThroughWalls.integer && cg.time - cent->currentState.time < BODY_SINK_DELAY ) {
 		CG_PlayerFloatSprite( cent, origin, cgs.media.skullShader );
 		return;
@@ -2252,7 +2252,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 
 	if ( ( !( cent->currentState.eFlags & EF_DEAD ) || CG_IsFrozenPlayer( cent ) ) &&
 	     cg.snap->ps.persistant[PERS_TEAM] == team &&
-	     cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	     BG_IsTeamGametype( cgs.gametype ) ) {
 		if ( cg_drawFriend.integer && ( cent->currentState.clientNum != cg.snap->ps.clientNum || ( cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) ) {
 			if ( cg_drawFriendThroughWalls.integer ) {
 				if ( cent->currentState.powerups & ( 1 << PW_REDFLAG ) ) {
@@ -2281,7 +2281,7 @@ static void CG_PlayerSprites( centity_t *cent, const refEntity_t *parent ) {
 
 	if ( ( !( cent->currentState.eFlags & EF_DEAD ) || CG_IsFrozenPlayer( cent ) ) &&
 	     ( ( cg.snap->ps.persistant[PERS_TEAM] != team &&
-	         cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) ||
+	         BG_IsTeamGametype( cgs.gametype ) ) ||
 	       team == TEAM_FREE ) ) {
 		if ( cg_drawEnemy.integer && cent->currentState.clientNum != cg.snap->ps.clientNum && !( cent->currentState.powerups & ( 1 << PW_INVIS ) ) ) {
 			trace_t trace;

@@ -240,7 +240,7 @@ qboolean OnSameTeam( gentity_t *ent1, gentity_t *ent2 ) {
 		return qfalse;
 	}
 
-	if ( g_gametype.integer < GT_TEAM || g_ffa_gt == 1 ) {
+	if ( !G_IsTeamGametype() ) {
 		return qfalse;
 	}
 
@@ -2369,7 +2369,7 @@ void ShuffleTeams( void ) {
 	int i;
 	int assignedClients = 1, nextTeam = TEAM_RED;
 
-	if ( g_gametype.integer < GT_TEAM || g_ffa_gt == 1 )
+	if ( !G_IsTeamGametype() )
 		return; //Can only shuffle team games!
 
 	for ( i = 0; i < level.numConnectedClients; i++ ) {

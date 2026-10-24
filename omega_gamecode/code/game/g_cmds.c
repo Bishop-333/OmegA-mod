@@ -804,7 +804,7 @@ void SetTeam( gentity_t *ent, const char *s ) {
 	} else if ( !Q_stricmp( s, "spectator" ) || !Q_stricmp( s, "s" ) ) {
 		team = TEAM_SPECTATOR;
 		specState = SPECTATOR_FREE;
-	} else if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 ) {
+	} else if ( G_IsTeamGametype() ) {
 		// if running a team game, assign player to one of the teams
 		specState = SPECTATOR_NOT;
 		if ( !Q_stricmp( s, "red" ) || !Q_stricmp( s, "r" ) ) {
@@ -1173,7 +1173,7 @@ gentity_t *DropWeapon( gentity_t *ent ) {
 		return NULL;
 	}
 
-	if ( !G_IsTeamGametype( g_gametype.integer ) ) {
+	if ( !G_IsTeamGametype() ) {
 		return NULL;
 	}
 
@@ -1442,7 +1442,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ) 
 
 	if ( ( ent->r.svFlags & SVF_BOT ) && trap_Cvar_VariableValue( "bot_nochat" ) > 1 ) return;
 
-	if ( ( g_gametype.integer < GT_TEAM || g_ffa_gt == 1 ) && !( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) && mode == SAY_TEAM ) {
+	if ( !G_IsTeamGametype() && !( ent->client->sess.sessionTeam == TEAM_SPECTATOR ) && mode == SAY_TEAM ) {
 		mode = SAY_ALL;
 	}
 
@@ -1468,7 +1468,7 @@ void G_Say( gentity_t *ent, gentity_t *target, int mode, const char *chatText ) 
 			color = COLOR_CYAN;
 			break;
 		case SAY_TELL:
-			if ( target && g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 &&
+			if ( target && G_IsTeamGametype() &&
 			     target->client->sess.sessionTeam == ent->client->sess.sessionTeam &&
 			     Team_GetLocationMsg( ent, location, sizeof( location ) ) )
 				Com_sprintf( name, sizeof( name ), EC "[%s%c%c" EC "] (%s)" EC ": ", ent->client->pers.netname, Q_COLOR_ESCAPE, COLOR_WHITE, location );
@@ -1861,7 +1861,7 @@ static void Cmd_CallVote_f( gentity_t *ent ) {
 		}
 		Com_sprintf( level.voteDisplayString, sizeof( level.voteDisplayString ), "Kick %s?", level.clients[i].pers.netname );
 	} else if ( !Q_stricmp( arg1, "shuffle" ) ) {
-		if ( g_gametype.integer < GT_TEAM || g_ffa_gt == 1 ) { //Not a team game
+		if ( !G_IsTeamGametype() ) { //Not a team game
 			trap_SendServerCommand( ent - g_entities, "print \"Can only be used in team games.\n\"" );
 			return;
 		}

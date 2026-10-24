@@ -1639,6 +1639,17 @@ char *BG_TeamName( team_t team ) {
 
 /*
 ================
+BG_IsTeamGametype
+
+Returns true if the gametype is a team-based game.
+================
+*/
+qboolean BG_IsTeamGametype( gametype_t gametype ) {
+	return gametype >= GT_TEAM && gametype != GT_LMS && gametype != GT_POSSESSION;
+}
+
+/*
+================
 BG_IsElimTeamGametype
 
 Returns true if the gametype is a team elimination mode.

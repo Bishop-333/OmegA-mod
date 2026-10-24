@@ -2210,7 +2210,7 @@ TeamPlayIsOn
 ==================
 */
 int TeamPlayIsOn( void ) {
-	return ( gametype >= GT_TEAM && g_ffa_gt != 1 );
+	return G_IsTeamGametype();
 }
 
 /*
@@ -2820,7 +2820,7 @@ int BotSameTeam( bot_state_t *bs, int entnum ) {
 	if ( entnum < 0 || entnum >= MAX_CLIENTS ) {
 		return qfalse;
 	}
-	if ( gametype >= GT_TEAM && g_ffa_gt != 1 ) {
+	if ( G_IsTeamGametype() ) {
 		/*Sago: I don't know why they decided to check the configstring instead of the real value.
 		For some reason bots sometimes gets a wrong config string when changing gametypes.
 		Now we check the real value: */

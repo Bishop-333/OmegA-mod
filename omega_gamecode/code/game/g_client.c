@@ -1290,7 +1290,7 @@ void ClientUserinfoChanged( int clientNum ) {
 		}
 	}
 
-	if ( g_gametype.integer >= GT_TEAM && g_ffa_gt != 1 && !( ent->r.svFlags & SVF_BOT ) ) {
+	if ( G_IsTeamGametype() && !( ent->r.svFlags & SVF_BOT ) ) {
 		client->pers.teamInfo = qtrue;
 	} else {
 		s = Info_ValueForKey( userinfo, "teamoverlay" );
@@ -1583,7 +1583,7 @@ void ClientBegin( int clientNum ) {
 	countFree = TeamCount( -1, TEAM_FREE );
 	countRed = TeamCount( -1, TEAM_RED );
 	countBlue = TeamCount( -1, TEAM_BLUE );
-	if ( g_gametype.integer < GT_TEAM || g_ffa_gt ) {
+	if ( !G_IsTeamGametype() ) {
 		if ( countFree > level.teamSize )
 			level.teamSize = countFree;
 	} else if ( countRed > countBlue ) {

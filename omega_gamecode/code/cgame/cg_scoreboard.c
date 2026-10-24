@@ -176,8 +176,7 @@ static void CG_DrawOldClientScore( int y, score_t *score, float *color, float fa
 		localClient = qtrue;
 
 		if ( ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) ||
-		     ( ( cgs.gametype >= GT_TEAM ) &&
-		       ( cgs.ffa_gt != 1 ) ) ) {
+		     BG_IsTeamGametype( cgs.gametype ) ) {
 			// Sago: I think this means that it doesn't matter if two players are tied in team game - only team score counts
 			rank = -1;
 		} else {
@@ -406,8 +405,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 		localClient = qtrue;
 
 		if ( ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_SPECTATOR ) ||
-		     ( ( cgs.gametype >= GT_TEAM ) &&
-		       ( cgs.ffa_gt != 1 ) ) ) {
+		     BG_IsTeamGametype( cgs.gametype ) ) {
 			// Sago: I think this means that it doesn't matter if two players are tied in team game - only team score counts
 			rank = -1;
 		} else {
@@ -605,7 +603,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 	}
 
 	// current rank
-	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 ) {
+	if ( !BG_IsTeamGametype( cgs.gametype ) ) {
 		if ( cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR ) {
 			s = va( "%s place with %i",
 			        CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
@@ -655,7 +653,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 
 	localClient = qfalse;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		//
 		// teamplay scoreboard
 		//
@@ -777,7 +775,7 @@ qboolean CG_DrawNewScoreboard( void ) {
 	}
 
 	// current rank
-	if ( cgs.gametype < GT_TEAM || cgs.ffa_gt == 1 ) {
+	if ( !BG_IsTeamGametype( cgs.gametype ) ) {
 		if ( cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR ) {
 			s = va( "%s place with %i",
 			        CG_PlaceString( cg.snap->ps.persistant[PERS_RANK] + 1 ),
@@ -834,7 +832,7 @@ qboolean CG_DrawNewScoreboard( void ) {
 
 	localClient = qfalse;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		//
 		// teamplay scoreboard
 		//
@@ -982,7 +980,7 @@ void CG_DrawOldTourneyScoreboard( void ) {
 	// print the two scores
 
 	y = 160;
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		//
 		// teamplay scoreboard
 		//

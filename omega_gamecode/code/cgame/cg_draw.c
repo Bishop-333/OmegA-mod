@@ -1384,7 +1384,7 @@ static void CG_DrawUpperRight( stereoFrame_t stereoFrame ) {
 
 	y = 0;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && cg_drawTeamOverlay.integer == 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) && cg_drawTeamOverlay.integer == 1 ) {
 		y = CG_DrawTeamOverlay( y, qtrue, qtrue );
 	}
 	if ( cgs.gametype == GT_LMS && cg.showScores ) {
@@ -1459,7 +1459,7 @@ static float CG_DrawScores( float y ) {
 	y1 = y;
 
 	// draw from the right side to left
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) ) {
 		x = 640;
 		color[0] = 0.0f;
 		color[1] = 0.25f;
@@ -1783,7 +1783,7 @@ static void CG_DrawLowerRight( void ) {
 
 	y = 468 - ICON_SIZE;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && cg_drawTeamOverlay.integer == 2 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) && cg_drawTeamOverlay.integer == 2 ) {
 		y = CG_DrawTeamOverlay( y, qtrue, qfalse );
 	}
 
@@ -1868,7 +1868,7 @@ static void CG_DrawLowerLeft( void ) {
 
 	y = 468 - ICON_SIZE;
 
-	if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && cg_drawTeamOverlay.integer == 3 ) {
+	if ( BG_IsTeamGametype( cgs.gametype ) && cg_drawTeamOverlay.integer == 3 ) {
 		y = CG_DrawTeamOverlay( y, qfalse, qfalse );
 	}
 }
@@ -2980,7 +2980,7 @@ static void CG_DrawSpectator( void ) {
 	CG_DrawBigString( 320 - 9 * 8, 440, "SPECTATOR", 1.0F );
 	if ( cgs.gametype == GT_TOURNAMENT ) {
 		CG_DrawMediumString( 320 - 15 * 6, 460, "waiting to play", 1.0F );
-	} else if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 && !cg.scoreBoardShowing ) {
+	} else if ( BG_IsTeamGametype( cgs.gametype ) && !cg.scoreBoardShowing ) {
 		CG_DrawStringExt( 320 - 39 * 4, 460, "press ESC and use the JOIN menu to play", colorWhite, qfalse, qtrue, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
 	}
 }
@@ -3429,7 +3429,7 @@ static void CG_Draw2D( stereoFrame_t stereoFrame ) {
 			CG_DrawReward();
 		}
 
-		if ( cgs.gametype >= GT_TEAM && cgs.ffa_gt != 1 ) {
+		if ( BG_IsTeamGametype( cgs.gametype ) ) {
 			CG_DrawTeamInfo();
 		}
 	}
