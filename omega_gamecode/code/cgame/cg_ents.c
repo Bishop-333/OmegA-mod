@@ -1010,7 +1010,7 @@ static void CG_TeamBase( centity_t *cent ) {
 	int t, h;
 	float c;
 
-	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_1FCTF ) {
+	if ( BG_IsCTFGametype( cgs.gametype ) ) {
 		// show the flag base
 		memset( &model, 0, sizeof( model ) );
 		model.reType = RT_MODEL;

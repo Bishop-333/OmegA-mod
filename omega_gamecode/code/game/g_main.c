@@ -313,6 +313,15 @@ qboolean G_IsTeamGametype( void ) {
 
 /*
 =================
+G_IsCTFGametype
+=================
+*/
+qboolean G_IsCTFGametype( void ) {
+	return BG_IsCTFGametype( g_gametype.integer );
+}
+
+/*
+=================
 G_IsElimTeamGametype
 =================
 */

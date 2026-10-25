@@ -739,6 +739,7 @@ qboolean BG_PlayerTouchesItem( playerState_t *ps, entityState_t *item, int atTim
 //bg_misc.c
 char *BG_TeamName( team_t team );
 qboolean BG_IsTeamGametype( gametype_t gametype );
+qboolean BG_IsCTFGametype( gametype_t gametype );
 qboolean BG_IsElimTeamGametype( gametype_t gametype );
 qboolean BG_IsElimGametype( gametype_t gametype );
 

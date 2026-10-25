@@ -109,7 +109,7 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 
 		// if same team in team game, no sound
 		// cannot use OnSameTeam as it expects to g_entities, not clients
-		if ( g_gametype.integer >= GT_TEAM && g_ffa_gt == 0 && other->client->sess.sessionTeam == client->sess.sessionTeam ) {
+		if ( G_IsTeamGametype() && other->client->sess.sessionTeam == client->sess.sessionTeam ) {
 			continue;
 		}
 
@@ -671,7 +671,7 @@ gentity_t *LaunchItem( gitem_t *item, vec3_t origin, vec3_t velocity ) {
 	VectorCopy( velocity, dropped->s.pos.trDelta );
 
 	dropped->s.eFlags |= EF_BOUNCE_HALF;
-	if ( ( g_gametype.integer == GT_CTF || g_gametype.integer == GT_1FCTF || g_gametype.integer == GT_CTF_ELIMINATION || g_gametype.integer == GT_DOUBLE_D || g_gametype.integer == GT_POSSESSION ) && item->giType == IT_TEAM ) { // Special case for CTF flags
+	if ( ( G_IsCTFGametype() || g_gametype.integer == GT_DOUBLE_D || g_gametype.integer == GT_POSSESSION ) && item->giType == IT_TEAM ) { // Special case for CTF flags
 		dropped->think = Team_DroppedFlagThink;
 		dropped->nextthink = level.time + 30000;
 		Team_CheckDroppedItem( dropped );

@@ -447,17 +447,42 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 	CG_DrawSmallString( SB_SCORE_X - 44, y + 6, string, fade );
 
+	// draw captures
+	if ( BG_IsCTFGametype( cgs.gametype ) && !( score->ping == -1 || ci->team == TEAM_SPECTATOR ) ) {
+		Com_sprintf( string, sizeof( string ),
+		             "%2i", score->captures );
+		CG_DrawSmallString( SB_SCORE_X + 4 * SMALLCHAR_WIDTH, y + 6, string, fade );
+	}
+
 	// draw time
 	if ( score->ping != -1 ) {
+		int timeX;
+
+		if ( BG_IsCTFGametype( cgs.gametype ) ) {
+			timeX = SB_TIME_X + 1;
+		} else {
+			timeX = SB_TIME_X - 54;
+		}
+
 		Com_sprintf( string, sizeof( string ),
 		             "%3i:%02i", score->time / 60, score->time - ( score->time / 60 ) * 60 );
-		CG_DrawStringExt( SB_TIME_X - 54, y + 6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH / 1.25, SMALLCHAR_HEIGHT, 0 );
+		CG_DrawStringExt( timeX, y + 6, string, colorLtGrey, qtrue, qfalse, SMALLCHAR_WIDTH / 1.25, SMALLCHAR_HEIGHT, 0 );
 	}
 
 	// draw name
-	Com_sprintf( string, sizeof( string ),
-	             "%s", ci->name );
-	CG_DrawMediumString( SB_NAME_X - 49, y + 6, string, fade );
+	{
+		int nameX;
+
+		if ( BG_IsCTFGametype( cgs.gametype ) ) {
+			nameX = SB_NAME_X - 3 * SMALLCHAR_WIDTH - 1;
+		} else {
+			nameX = SB_NAME_X - 49;
+		}
+
+		Com_sprintf( string, sizeof( string ),
+		             "%s", ci->name );
+		CG_DrawMediumString( nameX, y + 6, string, fade );
+	}
 
 	// draw accuracy
 	if ( score->ping != -1 ) {
@@ -815,11 +840,18 @@ qboolean CG_DrawNewScoreboard( void ) {
 	color[2] = 1.0;
 	color[3] = 0.5;
 	CG_DrawSmallStringColor( SB_SCORE_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Score", color );
-	CG_DrawSmallStringColor( SB_PING_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Ping", color );
-	CG_DrawSmallStringColor( SB_TIME_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Time", color );
-	CG_DrawSmallStringColor( SB_NAME_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Name", color );
+
+	if ( BG_IsCTFGametype( cgs.gametype ) ) {
+		CG_DrawSmallStringColor( SB_SCORE_X + SMALLCHAR_WIDTH, y + 15, "Captures", color );
+		CG_DrawSmallStringColor( SB_TIME_X + SMALLCHAR_WIDTH, y + 15, "Time", color );
+		CG_DrawSmallStringColor( SB_NAME_X - 3 * SMALLCHAR_WIDTH, y + 15, "Name", color );
+	} else {
+		CG_DrawSmallStringColor( SB_TIME_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Time", color );
+		CG_DrawSmallStringColor( SB_NAME_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Name", color );
+	}
 	CG_DrawSmallStringColor( SB_ACCURACY_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Acc", color );
 	CG_DrawSmallStringColor( SB_RATIO_X - ( SB_RATING_WIDTH / 2 ), y + 15, "K/D", color );
+	CG_DrawSmallStringColor( SB_PING_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Ping", color );
 
 	y = SB_TOP;
 

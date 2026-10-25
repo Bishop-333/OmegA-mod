@@ -1650,6 +1650,17 @@ qboolean BG_IsTeamGametype( gametype_t gametype ) {
 
 /*
 ================
+BG_IsCTFGametype
+
+Returns true if the gametype is a flag-based game.
+================
+*/
+qboolean BG_IsCTFGametype( gametype_t gametype ) {
+	return gametype == GT_CTF || gametype == GT_1FCTF || gametype == GT_CTF_ELIMINATION;
+}
+
+/*
+================
 BG_IsElimTeamGametype
 
 Returns true if the gametype is a team elimination mode.

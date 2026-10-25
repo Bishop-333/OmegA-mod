@@ -874,6 +874,7 @@ void SetLeader( int team, int client );
 void CheckTeamLeader( int team );
 void G_RunThink( gentity_t *ent );
 qboolean G_IsTeamGametype( void );
+qboolean G_IsCTFGametype( void );
 qboolean G_IsElimTeamGametype( void );
 qboolean G_IsElimGametype( void );
 void AddTournamentQueue( gclient_t *client );

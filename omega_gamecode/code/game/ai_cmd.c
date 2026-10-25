@@ -1069,7 +1069,7 @@ static void BotMatch_ReturnFlag( bot_state_t *bs, bot_match_t *match ) {
 	int client;
 
 	//if not in CTF mode
-	if ( gametype != GT_CTF && gametype != GT_CTF_ELIMINATION && gametype != GT_1FCTF )
+	if ( !BG_IsCTFGametype( gametype ) )
 		return;
 	//if not addressed to this bot
 	if ( !BotAddressedToBot( bs, match ) )
@@ -1551,7 +1551,7 @@ static void BotMatch_WhereAreYou( bot_state_t *bs, bot_match_t *match ) {
 		}
 	}
 	if ( bestitem != -1 ) {
-		if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
+		if ( BG_IsCTFGametype( gametype ) ) {
 			redtt = trap_AAS_AreaTravelTimeToGoalArea( bs->areanum, bs->origin, ctf_redflag.areanum, TFL_DEFAULT );
 			bluett = trap_AAS_AreaTravelTimeToGoalArea( bs->areanum, bs->origin, ctf_blueflag.areanum, TFL_DEFAULT );
 			if ( redtt < ( redtt + bluett ) * 0.4 ) {

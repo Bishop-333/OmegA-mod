@@ -496,7 +496,7 @@ static void CG_RegisterSounds( void ) {
 		}
 	}
 
-	if ( cgs.gametype == GT_1FCTF || cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_POSSESSION || cg_buildScript.integer ) {
+	if ( BG_IsCTFGametype( cgs.gametype ) || cgs.gametype == GT_POSSESSION || cg_buildScript.integer ) {
 		cgs.media.youHaveFlagSound = trap_S_RegisterSound( "sound/teamplay/voc_you_flag.wav", qtrue );
 	}
 
@@ -795,7 +795,7 @@ static void CG_RegisterGraphics( void ) {
 		cgs.media.ddPointSkinB[TEAM_NONE] = trap_R_RegisterShaderNoMip( "icons/noammo" );
 	}
 
-	if ( cgs.gametype == GT_CTF || cgs.gametype == GT_CTF_ELIMINATION || cgs.gametype == GT_1FCTF || cgs.gametype == GT_POSSESSION || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
+	if ( BG_IsCTFGametype( cgs.gametype ) || cgs.gametype == GT_POSSESSION || cgs.gametype == GT_HARVESTER || cg_buildScript.integer ) {
 		if ( cg_flagStyle.integer == 2 ) {
 			cgs.media.redFlagModel = trap_R_RegisterModel( "models/flags2/r_flag.md3" );
 			cgs.media.blueFlagModel = trap_R_RegisterModel( "models/flags2/b_flag.md3" );

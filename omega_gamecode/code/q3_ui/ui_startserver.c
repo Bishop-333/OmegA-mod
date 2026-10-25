@@ -806,7 +806,7 @@ static qboolean BotAlreadySelected( const char *checkName ) {
 		if ( s_serveroptions.playerType[n].curvalue != 1 ) {
 			continue;
 		}
-		if ( ( s_serveroptions.gametype >= GT_TEAM ) && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION &&
+		if ( BG_IsTeamGametype( s_serveroptions.gametype ) &&
 		     ( s_serveroptions.playerTeam[n].curvalue != s_serveroptions.playerTeam[s_serveroptions.newBotIndex].curvalue ) ) {
 			continue;
 		}
@@ -973,7 +973,7 @@ static void ServerOptions_Start( void ) {
 		if ( s_serveroptions.playerNameBuffers[n][0] == '-' ) {
 			continue;
 		}
-		if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
+		if ( BG_IsTeamGametype( s_serveroptions.gametype ) ) {
 			Com_sprintf( buf, sizeof( buf ), "addbot %s %i %s\n", s_serveroptions.playerNameBuffers[n], skill,
 			             playerTeam_list[s_serveroptions.playerTeam[n].curvalue] );
 		} else {
@@ -983,7 +983,7 @@ static void ServerOptions_Start( void ) {
 	}
 
 	// set player's team
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
+	if ( BG_IsTeamGametype( s_serveroptions.gametype ) ) {
 		trap_Cvar_Set( "g_localTeamPref", playerTeam_list[s_serveroptions.playerTeam[0].curvalue] );
 	}
 }
@@ -1035,7 +1035,7 @@ static void ServerOptions_InitPlayerItems( void ) {
 	Q_CleanStr( s_serveroptions.playerNameBuffers[0] );
 
 	// init teams
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
+	if ( BG_IsTeamGametype( s_serveroptions.gametype ) ) {
 		for ( n = 0; n < ( PLAYER_SLOTS / 2 ); n++ ) {
 			s_serveroptions.playerTeam[n].curvalue = 0;
 		}
@@ -1242,7 +1242,7 @@ static void ServerOptions_InitBotNames( void ) {
 	char bots[MAX_INFO_STRING];
 
 	//this SHOULD work
-	if ( s_serveroptions.gametype >= GT_TEAM && s_serveroptions.gametype != GT_LMS && s_serveroptions.gametype != GT_POSSESSION ) {
+	if ( BG_IsTeamGametype( s_serveroptions.gametype ) ) {
 		Q_strncpyz( s_serveroptions.playerNameBuffers[1], "gargoyle", 16 );
 		Q_strncpyz( s_serveroptions.playerNameBuffers[2], "kyonshi", 16 );
 		Q_strncpyz( s_serveroptions.playerNameBuffers[3], "grism", 16 );

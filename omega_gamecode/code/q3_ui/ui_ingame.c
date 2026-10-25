@@ -283,7 +283,7 @@ static void InGame_MenuInit( void ) {
 	s_ingame.teamorders.string = "TEAM ORDERS";
 	s_ingame.teamorders.color = color_red;
 	s_ingame.teamorders.style = UI_CENTER | UI_SMALLFONT;
-	if ( !( gametype >= GT_TEAM ) || gametype == GT_LMS || gametype == GT_POSSESSION ) {
+	if ( !BG_IsTeamGametype( gametype ) ) {
 		s_ingame.teamorders.generic.flags |= QMF_GRAYED;
 	} else {
 		trap_GetClientState( &cs );

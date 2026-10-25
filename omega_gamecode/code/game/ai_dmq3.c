@@ -381,7 +381,7 @@ void BotSetTeamStatus( bot_state_t *bs ) {
 			break;
 		case LTG_TEAMACCOMPANY:
 			BotEntityInfo( bs->teammate, &entinfo );
-			if ( ( ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) && EntityCarriesFlag( &entinfo ) ) || ( gametype == GT_HARVESTER && EntityCarriesCubes( &entinfo ) ) ) {
+			if ( ( BG_IsCTFGametype( gametype ) && EntityCarriesFlag( &entinfo ) ) || ( gametype == GT_HARVESTER && EntityCarriesCubes( &entinfo ) ) ) {
 				teamtask = TEAMTASK_ESCORT;
 			} else {
 				teamtask = TEAMTASK_FOLLOW;
@@ -1574,7 +1574,7 @@ int BotSynonymContext( bot_state_t *bs ) {
 
 	context = CONTEXT_NORMAL | CONTEXT_NEARBYITEM | CONTEXT_NAMES;
 	//
-	if ( gametype == GT_CTF || gametype == GT_CTF_ELIMINATION || gametype == GT_1FCTF ) {
+	if ( BG_IsCTFGametype( gametype ) ) {
 		if ( BotTeam( bs ) == TEAM_RED )
 			context |= CONTEXT_CTFREDTEAM;
 		else
@@ -2220,7 +2220,7 @@ BotCanCamp
 */
 qboolean BotCanCamp( bot_state_t *bs ) {
 	// if the bot's team does not lead
-	if ( g_gametype.integer >= GT_TEAM && bs->ownteamscore < bs->enemyteamscore ) return qfalse;
+	if ( G_IsTeamGametype() && bs->ownteamscore < bs->enemyteamscore ) return qfalse;
 	// if the enemy is located way higher than the bot
 	if ( bs->inventory[ENEMY_HEIGHT] > 200 ) return qfalse;
 	// if the bot is very low on health
