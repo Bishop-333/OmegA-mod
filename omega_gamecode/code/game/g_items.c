@@ -461,7 +461,7 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace ) {
 	qboolean predict;
 
 	//instant gib
-	if ( ( g_instantgib.integer || g_weaponArena.integer || ( ( g_gametype.integer == GT_CTF_ELIMINATION || g_elimination_allgametypes.integer ) && !g_elimination_items.integer ) ) && ent->item->giType != IT_TEAM && ent->item->giTag != PW_JUGGERNAUT )
+	if ( ( g_instantgib.integer || g_weaponArena.integer || ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer ) ) && ent->item->giType != IT_TEAM && ent->item->giTag != PW_JUGGERNAUT )
 		return;
 
 	//Cannot touch items before round starts
@@ -475,9 +475,6 @@ void Touch_Item( gentity_t *ent, gentity_t *other, trace_t *trace ) {
 			return;
 		}
 	}
-
-	if ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_LMS ) && !g_elimination_items.integer )
-		return; //nothing to pick up in elimination
 
 	if ( !other->client )
 		return;
@@ -940,7 +937,7 @@ void ClearRegisteredItems( void ) {
 		// players always start with the base weapon
 		RegisterItem( BG_FindItemForWeapon( WP_MACHINEGUN ) );
 		RegisterItem( BG_FindItemForWeapon( WP_GAUNTLET ) );
-		if ( BG_IsElimGametype( g_gametype.integer ) || g_elimination_allgametypes.integer || g_weaponArena.integer == 13 ) {
+		if ( G_IsElimGametype() || g_elimination_allgametypes.integer || g_weaponArena.integer == 13 ) {
 			RegisterItem( BG_FindItemForWeapon( WP_SHOTGUN ) );
 			RegisterItem( BG_FindItemForWeapon( WP_GRENADE_LAUNCHER ) );
 			RegisterItem( BG_FindItemForWeapon( WP_ROCKET_LAUNCHER ) );
@@ -1063,8 +1060,7 @@ void G_SpawnItem( gentity_t *ent, gitem_t *item ) {
 
 	ent->physicsBounce = 0.50; // items are bouncy
 
-	if ( ( ( g_gametype.integer == GT_ELIMINATION || g_gametype.integer == GT_LMS ) && !g_elimination_items.integer ) ||
-	     ( item->giType != IT_TEAM && ( g_instantgib.integer || g_weaponArena.integer || ( ( g_elimination_allgametypes.integer || g_gametype.integer == GT_CTF_ELIMINATION ) && !g_elimination_items.integer ) ) ) ) {
+	if ( item->giType != IT_TEAM && ( g_instantgib.integer || g_weaponArena.integer || ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer ) ) ) {
 		ent->s.eFlags |= EF_NODRAW;     //Invisible in elimination
 		ent->r.svFlags |= SVF_NOCLIENT; //Don't broadcast
 	}

@@ -450,7 +450,7 @@ static void G_CheckMinimumPlayers( void ) {
 				G_RemoveRandomBot( -1 );
 			}
 		}
-	} else if ( g_gametype.integer == GT_FFA || g_gametype.integer == GT_LMS ) {
+	} else if ( !G_IsTeamGametype() ) {
 		if ( minplayers >= g_maxclients.integer ) {
 			minplayers = g_maxclients.integer - 1;
 		}

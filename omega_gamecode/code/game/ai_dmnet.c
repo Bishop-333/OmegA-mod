@@ -1167,7 +1167,7 @@ static int BotFreezetagThawGoal( bot_state_t *bs, bot_goal_t *goal ) {
 	gentity_t *ent;
 	gentity_t *frozen;
 
-	if ( !g_freeze.integer || g_gametype.integer < GT_TEAM || g_ffa_gt == 1 ) {
+	if ( !g_freeze.integer || !G_IsTeamGametype() ) {
 		return qfalse;
 	}
 

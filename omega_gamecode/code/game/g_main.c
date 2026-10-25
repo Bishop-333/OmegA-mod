@@ -1668,7 +1668,7 @@ static void CheckTournament( void ) {
 		int i;
 		qboolean notEnough = qfalse;
 
-		if ( g_gametype.integer > GT_TEAM && !g_ffa_gt ) {
+		if ( G_IsTeamGametype() ) {
 			counts[TEAM_BLUE] = TeamCount( -1, TEAM_BLUE );
 			counts[TEAM_RED] = TeamCount( -1, TEAM_RED );
 
