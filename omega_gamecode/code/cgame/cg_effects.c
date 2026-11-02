@@ -628,6 +628,11 @@ void CG_Bleed( vec3_t origin, int entityNum ) {
 	ex->startTime = cg.time;
 	ex->endTime = ex->startTime + 500;
 
+	if ( intShaderTime )
+		ex->refEntity.u.intShaderTime = ex->startTime;
+	else
+		ex->refEntity.u.shaderTime = ex->startTime / 1000.0f;
+
 	VectorCopy( origin, ex->refEntity.origin );
 	ex->refEntity.reType = RT_SPRITE;
 	ex->refEntity.rotation = rand() % 360;
