@@ -219,7 +219,7 @@ CG_RailTrail
 void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 	vec3_t axis[36], move, move2, vec, temp;
 	float len;
-	int i, j, skip;
+	int i, j, skip, spacing;
 
 	localEntity_t *le;
 	refEntity_t *re;
@@ -276,15 +276,20 @@ void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 		RotatePointAroundVector( axis[i], vec, temp, i * 10 ); //banshee 2.4 was 10
 	}
 
+	spacing = SPACING;
+	if ( len > 768 ) {
+		spacing = len / 256;
+	}
+
 	VectorMA( move, 20, vec, move );
-	VectorScale( vec, SPACING, vec );
+	VectorScale( vec, spacing, vec );
 
 	skip = -1;
 
 	j = 18;
-	for ( i = 0; i < len; i += SPACING ) {
+	for ( i = 0; i < len; i += spacing ) {
 		if ( i != skip ) {
-			skip = i + SPACING;
+			skip = i + spacing;
 			le = CG_AllocLocalEntity();
 			re = &le->refEntity;
 			le->leFlags = LEF_PUFF_DONT_SCALE;
