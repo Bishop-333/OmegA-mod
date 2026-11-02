@@ -216,8 +216,47 @@ static void CG_NailgunEjectBrass( centity_t *cent ) {
 CG_RailTrail
 ==========================
 */
+static const vec2_t railRings[36] = {
+	{ 1.000000f, 0.000000f },
+	{ 0.984808f, 0.173648f },
+	{ 0.939693f, 0.342020f },
+	{ 0.866025f, 0.500000f },
+	{ 0.766044f, 0.642788f },
+	{ 0.642788f, 0.766044f },
+	{ 0.500000f, 0.866025f },
+	{ 0.342020f, 0.939693f },
+	{ 0.173648f, 0.984808f },
+	{ 0.000000f, 1.000000f },
+	{ -0.173648f, 0.984808f },
+	{ -0.342020f, 0.939693f },
+	{ -0.500000f, 0.866025f },
+	{ -0.642788f, 0.766044f },
+	{ -0.766044f, 0.642788f },
+	{ -0.866025f, 0.500000f },
+	{ -0.939693f, 0.342020f },
+	{ -0.984808f, 0.173648f },
+	{ -1.000000f, 0.000000f },
+	{ -0.984808f, -0.173648f },
+	{ -0.939693f, -0.342020f },
+	{ -0.866025f, -0.500000f },
+	{ -0.766044f, -0.642788f },
+	{ -0.642788f, -0.766044f },
+	{ -0.500000f, -0.866025f },
+	{ -0.342020f, -0.939693f },
+	{ -0.173648f, -0.984808f },
+	{ 0.000000f, -1.000000f },
+	{ 0.173648f, -0.984808f },
+	{ 0.342020f, -0.939693f },
+	{ 0.500000f, -0.866025f },
+	{ 0.642788f, -0.766044f },
+	{ 0.766044f, -0.642788f },
+	{ 0.866025f, -0.500000f },
+	{ 0.939693f, -0.342020f },
+	{ 0.984808f, -0.173648f }
+};
+
 void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
-	vec3_t axis[36], move, move2, vec, temp;
+	vec3_t axis[36], move, move2, vec, temp, right;
 	float len;
 	int i, j, skip, spacing;
 
@@ -272,8 +311,10 @@ void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 	VectorSubtract( end, start, vec );
 	len = VectorNormalize( vec );
 	PerpendicularVector( temp, vec );
+	CrossProduct( vec, temp, right );
 	for ( i = 0; i < 36; i++ ) {
-		RotatePointAroundVector( axis[i], vec, temp, i * 10 ); //banshee 2.4 was 10
+		VectorScale( temp, railRings[i][0], axis[i] );
+		VectorMA( axis[i], railRings[i][1], right, axis[i] );
 	}
 
 	spacing = SPACING;
