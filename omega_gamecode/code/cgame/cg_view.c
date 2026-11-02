@@ -526,19 +526,26 @@ CG_CalcRunFov
 static float CG_CalcRunFov( void ) {
 	float target = 0;
 	float delta;
+	float speed;
+	float frac;
+	float rate;
 
-	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) {
+	if ( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 || cg.predictedPlayerState.speed <= 0 ) {
 		return cg.runFov = 0;
 	}
 
-	if ( DotProduct( cg.predictedPlayerState.velocity, cg.refdef.viewaxis[0] ) > ( cg.predictedPlayerState.speed * 0.75f ) ) {
-		target = cg_runFov.value;
+	speed = DotProduct( cg.predictedPlayerState.velocity, cg.refdef.viewaxis[0] );
+	if ( speed > ( cg.predictedPlayerState.speed * 0.75f ) ) {
+		frac = ( speed - ( cg.predictedPlayerState.speed * 0.75f ) ) / ( cg.predictedPlayerState.speed * 0.25f );
+		frac = Com_Clamp( 0.0f, 1.0f, frac );
+		target = cg_runFov.value * frac;
 	}
 
-	delta = Com_Clamp( 0, 100, cg.time - cg.oldTime ) / 1000;
+	delta = Com_Clamp( 0, 100, cg.time - cg.oldTime ) / 1000.0f;
 
 	if ( delta > 0 ) {
-		cg.runFov += ( target - cg.runFov ) * ( delta / ( ( target ? 0.3f : 0.15f ) + delta ) );
+		rate = ( target > cg.runFov ) ? 0.3f : 0.15f;
+		cg.runFov += ( target - cg.runFov ) * ( delta / ( rate + delta ) );
 	}
 
 	return cg.runFov;
