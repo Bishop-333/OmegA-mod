@@ -1222,16 +1222,6 @@ static void ClientThink_real( gentity_t *ent ) {
 	}
 	//unlagged - true ping
 
-	msec = ucmd->serverTime - client->ps.commandTime;
-	// following others may result in bad times, but we still want
-	// to check for follow toggles
-	if ( msec < 1 && client->sess.spectatorState != SPECTATOR_FOLLOW ) {
-		return;
-	}
-	if ( msec > 200 ) {
-		msec = 200;
-	}
-
 	if ( pmove_msec.integer < 8 ) {
 		trap_Cvar_SetValue( "pmove_msec", 8 );
 	} else if ( pmove_msec.integer > 33 ) {
@@ -1240,6 +1230,16 @@ static void ClientThink_real( gentity_t *ent ) {
 
 	if ( pmove_fixed.integer || client->pers.pmoveFixed ) {
 		ucmd->serverTime = ( ( ucmd->serverTime + pmove_msec.integer - 1 ) / pmove_msec.integer ) * pmove_msec.integer;
+	}
+
+	msec = ucmd->serverTime - client->ps.commandTime;
+	// following others may result in bad times, but we still want
+	// to check for follow toggles
+	if ( msec < 1 && client->sess.spectatorState != SPECTATOR_FOLLOW ) {
+		return;
+	}
+	if ( msec > 200 ) {
+		msec = 200;
 	}
 
 	//
