@@ -1517,12 +1517,9 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 	}
 
 	// make sure we aren't looking at cg.predictedPlayerEntity for LG
-	nonPredictedCent = &cg_entities[cent->currentState.clientNum];
-
-	// if the index of the nonPredictedCent is not the same as the clientNum
-	// then this is a fake player (like on the single player podiums), so
-	// go ahead and use the cent
-	if ( ( nonPredictedCent - cg_entities ) != cent->currentState.clientNum ) {
+	if ( cent == &cg.predictedPlayerEntity ) {
+		nonPredictedCent = &cg_entities[cent->currentState.clientNum];
+	} else {
 		nonPredictedCent = cent;
 	}
 
