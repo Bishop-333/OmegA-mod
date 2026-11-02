@@ -882,15 +882,11 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 		self->client->ps.viewangles[ROLL] = 0;
 		VectorCopy( self->client->ps.viewangles, self->s.angles );
 	} else {
-		self->s.angles[0] = 0;
-		self->s.angles[2] = 0;
 		LookAtKiller( self, inflictor, attacker );
-
-		self->r.maxs[2] = DEAD_HEIGHT;
-		VectorCopy( self->s.angles, self->client->ps.viewangles );
+		self->client->ps.viewangles[PITCH] = 0;
+		self->client->ps.viewangles[ROLL] = 0;
+		VectorCopy( self->client->ps.viewangles, self->s.angles );
 	}
-
-	VectorCopy( self->s.angles, self->client->ps.viewangles );
 
 	self->s.loopSound = 0;
 
