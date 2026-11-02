@@ -2828,6 +2828,15 @@ static void CG_ScanForCrosshairEntity( void ) {
 		return;
 	}
 
+	// `CG_Trace` might trace based on a very old entity's position
+	// (`cg_solidEntities` is build from next snap,
+	// but `CG_ClipMoveToEntities` checks `currentState`),
+	// so we hack around it here.
+	// See https://github.com/ioquake/ioq3/issues/732.
+	if ( !cg_entities[trace.entityNum].currentValid ) {
+		return;
+	}
+
 	if ( trace.entityNum >= MAX_CLIENTS ) {
 		clientNum = cg_entities[trace.entityNum].currentState.clientNum;
 		if ( clientNum < 0 || clientNum >= MAX_CLIENTS ) {
