@@ -166,6 +166,24 @@ void CG_ImpactMark( qhandle_t markShader, const vec3_t origin, const vec3_t dir,
 	                                      projection, MAX_MARK_POINTS, markPoints[0],
 	                                      MAX_MARK_FRAGMENTS, markFragments );
 
+	// apply surface lighting to blood marks
+	if ( markShader == cgs.media.lbldShader2 || markShader == cgs.media.bloodMarkShader ) {
+		vec3_t point, ambientLight, directedLight, lightDir;
+		float dot, light;
+
+		VectorCopy( origin, point );
+		trap_R_LightForPoint( point, ambientLight, directedLight, lightDir );
+		dot = DotProduct( dir, lightDir );
+		if ( dot < 0 ) {
+			dot = 0;
+		}
+		light = ( ambientLight[0] + directedLight[0] * dot ) / 255.0f;
+		light = Com_Clamp( 0.25f, 1.0f, light );
+		red *= light;
+		green *= light;
+		blue *= light;
+	}
+
 	colors[0] = red * 255;
 	colors[1] = green * 255;
 	colors[2] = blue * 255;
