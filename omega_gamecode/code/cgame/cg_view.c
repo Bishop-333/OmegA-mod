@@ -538,7 +538,7 @@ static float CG_CalcRunFov( void ) {
 	delta = Com_Clamp( 0, 100, cg.time - cg.oldTime ) / 1000;
 
 	if ( delta > 0 ) {
-		cg.runFov += ( target - cg.runFov ) * ( delta / ( ( target ? 0.25f : 0.1f ) + delta ) );
+		cg.runFov += ( target - cg.runFov ) * ( delta / ( ( target ? 0.3f : 0.15f ) + delta ) );
 	}
 
 	return cg.runFov;
