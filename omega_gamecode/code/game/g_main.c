@@ -61,6 +61,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart );
 void G_RunFrame( int levelTime );
 void G_ShutdownGame( int restart );
 static void CheckExitRules( void );
+static void CheckExitRulesLater( void );
 
 /*
 ================
@@ -71,40 +72,59 @@ This must be the very first function compiled into the .q3vm file
 ================
 */
 intptr_t vmMain( int command, int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, int arg10, int arg11 ) {
+	intptr_t ret;
+
 	switch ( command ) {
 		case GAME_INIT:
 			G_InitGame( arg0, arg1, arg2 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_SHUTDOWN:
 			G_ShutdownGame( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_CLIENT_CONNECT:
-			return (intptr_t)ClientConnect( arg0, arg1, arg2 );
+			ret = (intptr_t)ClientConnect( arg0, arg1, arg2 );
+			break;
 		case GAME_CLIENT_THINK:
 			ClientThink( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_CLIENT_USERINFO_CHANGED:
 			ClientUserinfoChanged( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_CLIENT_DISCONNECT:
 			ClientDisconnect( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_CLIENT_BEGIN:
 			ClientBegin( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_CLIENT_COMMAND:
 			ClientCommand( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_RUN_FRAME:
 			G_RunFrame( arg0 );
-			return 0;
+			ret = 0;
+			break;
 		case GAME_CONSOLE_COMMAND:
-			return ConsoleCommand();
+			ret = ConsoleCommand();
+			break;
 		case BOTAI_START_FRAME:
-			return BotAIStartFrame( arg0 );
+			ret = BotAIStartFrame( arg0 );
+			break;
+		default:
+			ret = -1;
 	}
 
-	return -1;
+	if ( level.needToCheckExitRules ) {
+		CheckExitRules();
+	}
+
+	return ret;
 }
 
 /*
@@ -873,7 +893,7 @@ void CalculateRanks( void ) {
 	}
 
 	// see if it is time to end the level
-	CheckExitRules();
+	CheckExitRulesLater();
 
 	// if we are at the intermission, send the new info to everyone
 	if ( level.intermissiontime ) {
@@ -1397,6 +1417,8 @@ can see the last frag.
 static void CheckExitRules( void ) {
 	int i;
 	gclient_t *cl;
+
+	level.needToCheckExitRules = qfalse;
 	// if at the intermission, wait for all non-bots to
 	// signal ready, then go to next level
 	if ( level.intermissiontime ) {
@@ -1484,6 +1506,10 @@ static void CheckExitRules( void ) {
 			return;
 		}
 	}
+}
+
+static void CheckExitRulesLater( void ) {
+	level.needToCheckExitRules = qtrue;
 }
 
 /*
