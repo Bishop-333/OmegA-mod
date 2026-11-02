@@ -1130,6 +1130,27 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	// the intermission has already been qualified for, so don't
 	// allow any extra scoring
 	if ( level.intermissionQueued ) {
+		// With a special exception for gibbing bodies.
+		// This was introduced in https://github.com/ec-/baseq3a/pull/50.
+		if ( targ->die == body_die ) {
+			// Note that this also affects the situation where the last frag
+			// is done with the shotgun. Because each pellet calls `G_Damage`
+			// separately. That is, if we don't do this,
+			// the shotgun will never gib if it's the last frag.
+			//
+			// Note that this does not check for friendly fire, quad,
+			// battlesuit, handicap, armor, etc.
+			// We could simply continue normal execution of G_Damage
+			// instead of returning, but let's play it safe
+			// and only do what's necessary.
+
+			targ->health = targ->health - damage;
+			if ( targ->health <= 0 ) {
+				// `body_die` doesn't use any of its arguments (except `targ`),
+				// so it's fine if they're `NULL`.
+				targ->die( targ, inflictor, attacker, damage, mod );
+			}
+		}
 		return;
 	}
 	if ( targ->client && mod != MOD_JUICED ) {
