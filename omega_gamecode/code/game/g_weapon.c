@@ -28,12 +28,26 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 static float s_quadFactor;
 static vec3_t forward, right, up;
 static vec3_t muzzle;
+static vec3_t muzzle_origin; // for hitscan weapon trace
 
 #define NUM_NAILSHOTS 15
 #define MAX_SHOTGUN_COUNT 32
 
 static gentity_t *oldTarg[MAX_SHOTGUN_COUNT], *oldAttacker;
 int countTarg;
+
+/*
+===============
+CalcMuzzlePointOrigin
+===============
+*/
+void CalcMuzzlePointOrigin( const gentity_t *ent, vec3_t origin, const vec3_t forward, const vec3_t right, const vec3_t up, vec3_t muzzlePoint ) {
+	VectorCopy( ent->client->ps.origin, origin );
+	origin[2] += ent->client->ps.viewheight;
+	VectorMA( origin, 14.0, forward, muzzlePoint );
+	// snap to integer coordinates for more efficient network bandwidth usage
+	//SnapVector( muzzlePoint );
+}
 
 /*
 ================
@@ -83,11 +97,11 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 	// set aiming directions
 	AngleVectors( ent->client->ps.viewangles, forward, right, up );
 
-	CalcMuzzlePoint( ent, forward, right, up, muzzle );
+	CalcMuzzlePointOrigin( ent, muzzle_origin, forward, right, up, muzzle );
 
-	VectorMA( muzzle, 32, forward, end );
+	VectorMA( muzzle_origin, ( 32.0 + 14.0 ), forward, end );
 
-	trap_Trace( &tr, muzzle, NULL, NULL, end, ent->s.number, MASK_SHOT );
+	trap_Trace( &tr, muzzle_origin, NULL, NULL, end, ent->s.number, MASK_SHOT );
 	if ( tr.surfaceFlags & SURF_NOIMPACT ) {
 		return qfalse;
 	}
@@ -114,7 +128,7 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 		G_AddEvent( ent, EV_POWERUP_QUAD, 0 );
 		s_quadFactor = g_quadfactor.value;
 	} else {
-		s_quadFactor = 1;
+		s_quadFactor = 1.0;
 	}
 	if ( ent->client->persistantPowerup && ent->client->persistantPowerup->item && ent->client->persistantPowerup->item->giTag == PW_DOUBLER ) {
 		s_quadFactor *= 2;
@@ -195,7 +209,7 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 	r = cos( r ) * Q_crandom( &seed ) * spread * 16;
 	//unlagged - attack prediction #2
 
-	VectorMA( muzzle, 8192 * 16, forward, end );
+	VectorMA( muzzle_origin, ( 8192.0 * 16.0 ), forward, end );
 	VectorMA( end, r, right, end );
 	VectorMA( end, u, up, end );
 
@@ -207,7 +221,7 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 		G_DoTimeShiftFor( ent );
 		//unlagged - backward reconciliation #2
 
-		trap_Trace( &tr, muzzle, NULL, NULL, end, passent, MASK_SHOT );
+		trap_Trace( &tr, muzzle_origin, NULL, NULL, end, passent, MASK_SHOT );
 
 		//unlagged - backward reconciliation #2
 		// put them back
@@ -221,7 +235,7 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 		traceEnt = &g_entities[tr.entityNum];
 
 		// snap the endpos to integers, but nudged towards the line
-		SnapVectorTowards( tr.endpos, muzzle );
+		SnapVectorTowards( tr.endpos, muzzle_origin );
 
 		// send bullet impact
 		if ( traceEnt->takedamage && traceEnt->client ) {
@@ -314,7 +328,7 @@ SHOTGUN
 ShotgunPellet
 ======================
 */
-static qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
+static qboolean ShotgunPellet( const vec3_t start, const vec3_t end, gentity_t *ent ) {
 	trace_t tr;
 	int damage, i, passent;
 	gentity_t *traceEnt;
@@ -373,7 +387,7 @@ static qboolean ShotgunPellet( vec3_t start, vec3_t end, gentity_t *ent ) {
 ShotgunPattern
 ======================
 */
-static void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *ent ) {
+static void ShotgunPattern( const vec3_t origin, const vec3_t origin2, int seed, gentity_t *ent ) {
 	int i;
 	float r, u;
 	vec3_t end;
@@ -402,7 +416,7 @@ static void ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, gentity_t *
 	for ( i = 0; i < DEFAULT_SHOTGUN_COUNT; i++ ) {
 		r = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16;
 		u = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16;
-		VectorMA( origin, 8192 * 16, forward, end );
+		VectorMA( origin, ( 8192.0 * 16.0 ), forward, end );
 		VectorMA( end, r, right, end );
 		VectorMA( end, u, up, end );
 		if ( ShotgunPellet( origin, end, ent ) && !hitClient ) {
@@ -434,7 +448,8 @@ static void weapon_supershotgun_fire( gentity_t *ent ) {
 
 	// send shotgun blast
 	tent = G_TempEntity( muzzle, EV_SHOTGUN );
-	VectorScale( forward, 4096, tent->s.origin2 );
+	VectorScale( forward, 4096.0, tent->s.origin2 );
+
 	SnapVector( tent->s.origin2 );
 	//Sago: This sound like a bad idea...
 	//unlagged - attack prediction #2
@@ -442,7 +457,7 @@ static void weapon_supershotgun_fire( gentity_t *ent ) {
 	//unlagged - attack prediction #2
 	tent->s.otherEntityNum = ent->s.number;
 
-	ShotgunPattern( tent->s.pos.trBase, tent->s.origin2, tent->s.eventParm, ent );
+	ShotgunPattern( muzzle_origin, tent->s.origin2, tent->s.eventParm, ent );
 }
 
 /*
@@ -551,8 +566,8 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	if ( g_instantgib.integer )
 		damage = 800;
 
-	VectorMA( muzzle, 8192, forward, end );
-	VectorCopy( muzzle, tracefrom );
+	VectorMA( muzzle_origin, 8192.0, forward, end );
+	VectorCopy( muzzle_origin, tracefrom );
 
 	//unlagged - backward reconciliation #2
 	// backward-reconcile the other clients
@@ -568,7 +583,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 		if ( g_railThroughWalls.integer ) {
 			trap_Trace( &trace, tracefrom, NULL, NULL, end, ent->s.number, MASK_SHOT );
 		} else {
-			trap_Trace( &trace, muzzle, NULL, NULL, end, passent, MASK_SHOT );
+			trap_Trace( &trace, muzzle_origin, NULL, NULL, end, passent, MASK_SHOT );
 		}
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
 			if ( g_railThroughWalls.integer ) {
@@ -641,7 +656,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	// the final trace endpos will be the terminal point of the rail trail
 
 	// snap the endpos to integers to save net bandwidth, but nudged towards the line
-	SnapVectorTowards( trace.endpos, muzzle );
+	SnapVectorTowards( trace.endpos, muzzle_origin );
 
 	// send railgun beam effect
 	tent = G_TempEntity( trace.endpos, EV_RAILTRAIL );
@@ -653,6 +668,8 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	// move origin a bit to come closer to the drawn gun muzzle
 	VectorMA( tent->s.origin2, 4, right, tent->s.origin2 );
 	VectorMA( tent->s.origin2, -1, up, tent->s.origin2 );
+
+	SnapVector( tent->s.origin2 );
 
 	// no explosion at end if SURF_NOIMPACT, but still make the trail
 	if ( trace.surfaceFlags & SURF_NOIMPACT ) {
@@ -777,7 +794,7 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 
 	passent = ent->s.number;
 	for ( i = 0; i < 10; i++ ) {
-		VectorMA( muzzle, LIGHTNING_RANGE, forward, end );
+		VectorMA( muzzle_origin, LIGHTNING_RANGE, forward, end );
 
 		//Sago: I'm not sure this should receive backward reconciliation. It is not a real instant hit weapon, it can normally be dogded
 		//unlagged - backward reconciliation #2
@@ -785,7 +802,7 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 		G_DoTimeShiftFor( ent );
 		//unlagged - backward reconciliation #2
 
-		trap_Trace( &tr, muzzle, NULL, NULL, end, passent, MASK_SHOT );
+		trap_Trace( &tr, muzzle_origin, NULL, NULL, end, passent, MASK_SHOT );
 
 		//unlagged - backward reconciliation #2
 		// put them back
@@ -952,21 +969,6 @@ void CalcMuzzlePoint( gentity_t *ent, vec3_t forward, vec3_t right, vec3_t up, v
 
 /*
 ===============
-CalcMuzzlePointOrigin
-
-set muzzle location relative to pivoting eye
-===============
-*/
-static void CalcMuzzlePointOrigin( gentity_t *ent, vec3_t origin, vec3_t forward, vec3_t right, vec3_t up, vec3_t muzzlePoint ) {
-	VectorCopy( ent->s.pos.trBase, muzzlePoint );
-	muzzlePoint[2] += ent->client->ps.viewheight;
-	VectorMA( muzzlePoint, 14, forward, muzzlePoint );
-	// snap to integer coordinates for more efficient network bandwidth usage
-	SnapVector( muzzlePoint );
-}
-
-/*
-===============
 FireWeapon
 ===============
 */
@@ -980,7 +982,7 @@ void FireWeapon( gentity_t *ent ) {
 	if ( ent->client->ps.powerups[PW_QUAD] ) {
 		s_quadFactor = g_quadfactor.value;
 	} else {
-		s_quadFactor = 1;
+		s_quadFactor = 1.0;
 	}
 	if ( ent->client->persistantPowerup && ent->client->persistantPowerup->item && ent->client->persistantPowerup->item->giTag == PW_DOUBLER ) {
 		s_quadFactor *= 2;
@@ -1003,7 +1005,7 @@ void FireWeapon( gentity_t *ent ) {
 	// set aiming directions
 	AngleVectors( ent->client->ps.viewangles, forward, right, up );
 
-	CalcMuzzlePointOrigin( ent, ent->client->oldOrigin, forward, right, up, muzzle );
+	CalcMuzzlePointOrigin( ent, muzzle_origin, forward, right, up, muzzle );
 
 	// fire the specific weapon
 	switch ( ent->s.weapon ) {

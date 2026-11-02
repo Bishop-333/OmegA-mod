@@ -761,6 +761,7 @@ gentity_t *fire_plasma( gentity_t *self, vec3_t start, vec3_t dir ) {
 	//unlagged - plasma
 
 	VectorCopy( start, bolt->s.pos.trBase );
+	SnapVector( bolt->s.pos.trBase ); // save net bandwidth
 	VectorScale( dir, 2000, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta ); // save net bandwidth
 
@@ -858,6 +859,7 @@ gentity_t *fire_bfg( gentity_t *self, vec3_t start, vec3_t dir ) {
 	//unlagged - bfg
 
 	VectorCopy( start, bolt->s.pos.trBase );
+	SnapVector( bolt->s.pos.trBase ); // save net bandwidth
 	VectorScale( dir, 2000, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta ); // save net bandwidth
 	VectorCopy( start, bolt->r.currentOrigin );
@@ -954,6 +956,7 @@ gentity_t *fire_rocket( gentity_t *self, vec3_t start, vec3_t dir ) {
 	//unlagged - rocket
 
 	VectorCopy( start, bolt->s.pos.trBase );
+	SnapVector( bolt->s.pos.trBase ); // save net bandwidth
 	VectorScale( dir, g_rocketSpeed.integer, bolt->s.pos.trDelta );
 	SnapVector( bolt->s.pos.trDelta ); // save net bandwidth
 	VectorCopy( start, bolt->r.currentOrigin );
@@ -1006,6 +1009,7 @@ gentity_t *fire_grapple( gentity_t *self, vec3_t start, vec3_t dir ) {
 	hook->s.pos.trType = TR_LINEAR;
 	hook->s.otherEntityNum = self->s.number; // use to match beam in client
 	VectorCopy( start, hook->s.pos.trBase );
+	SnapVector( hook->s.pos.trBase ); // save net bandwidth
 	VectorScale( dir, 800, hook->s.pos.trDelta );
 	SnapVector( hook->s.pos.trDelta ); // save net bandwidth
 	VectorCopy( start, hook->r.currentOrigin );
