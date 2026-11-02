@@ -276,7 +276,7 @@ static void LookAtKiller( gentity_t *self, gentity_t *inflictor, gentity_t *atta
 	} else if ( inflictor && inflictor != self ) {
 		VectorSubtract( inflictor->s.pos.trBase, self->s.pos.trBase, dir );
 	} else {
-		self->client->ps.stats[STAT_DEAD_YAW] = self->s.angles[YAW];
+		self->client->ps.stats[STAT_DEAD_YAW] = self->client->ps.viewangles[YAW];
 		return;
 	}
 
