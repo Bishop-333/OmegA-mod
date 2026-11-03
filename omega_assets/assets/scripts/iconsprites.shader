@@ -862,8 +862,14 @@ gfx/2d/crosshairk
 	}
 }
 
-
-
+models/powerups/medkit_use
+{
+	{
+		map models/powerups/medkit_use.tga
+		blendfunc blend
+		alphaGen entity
+	}
+}
 
 gfx/2d/bigchars
 {

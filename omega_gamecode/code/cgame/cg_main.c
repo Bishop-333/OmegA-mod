@@ -900,7 +900,7 @@ static void CG_RegisterGraphics( void ) {
 	cgs.media.ammoRegenPowerupModel = trap_R_RegisterModel( "models/powerups/ammo_player.md3" );
 	cgs.media.invulnerabilityImpactModel = trap_R_RegisterModel( "models/powerups/shield/impact.md3" );
 	cgs.media.invulnerabilityJuicedModel = trap_R_RegisterModel( "models/powerups/shield/juicer.md3" );
-	cgs.media.medkitUsageModel = trap_R_RegisterModel( "models/powerups/regen.md3" );
+	cgs.media.medkitUsageModel = trap_R_RegisterModel( "models/powerups/medkit_use.md3" );
 
 	cgs.media.invulnerabilityPowerupModel = trap_R_RegisterModel( "models/powerups/shield/shield.md3" );
 	cgs.media.medalImpressive = trap_R_RegisterShaderNoMip( "medal_impressive" );

@@ -2823,6 +2823,7 @@ void CG_Player( centity_t *cent ) {
 		powerup.frame = 0;
 		powerup.oldframe = 0;
 		powerup.customSkin = 0;
+		powerup.customShader = 0;
 		trap_R_AddRefEntityToScene( &powerup );
 	}
 	if ( cent->currentState.powerups & ( 1 << PW_SCOUT ) ) {
@@ -2831,6 +2832,7 @@ void CG_Player( centity_t *cent ) {
 		powerup.frame = 0;
 		powerup.oldframe = 0;
 		powerup.customSkin = 0;
+		powerup.customShader = 0;
 		trap_R_AddRefEntityToScene( &powerup );
 	}
 	if ( cent->currentState.powerups & ( 1 << PW_DOUBLER ) ) {
@@ -2839,6 +2841,7 @@ void CG_Player( centity_t *cent ) {
 		powerup.frame = 0;
 		powerup.oldframe = 0;
 		powerup.customSkin = 0;
+		powerup.customShader = 0;
 		trap_R_AddRefEntityToScene( &powerup );
 	}
 	if ( cent->currentState.powerups & ( 1 << PW_AMMOREGEN ) ) {
@@ -2847,6 +2850,7 @@ void CG_Player( centity_t *cent ) {
 		powerup.frame = 0;
 		powerup.oldframe = 0;
 		powerup.customSkin = 0;
+		powerup.customShader = 0;
 		trap_R_AddRefEntityToScene( &powerup );
 	}
 	if ( cent->currentState.powerups & ( 1 << PW_INVULNERABILITY ) ) {
@@ -2882,18 +2886,20 @@ void CG_Player( centity_t *cent ) {
 	}
 
 	t = cg.time - ci->medkitUsageTime;
-	if ( ci->medkitUsageTime && t < 500 ) {
+	if ( cent->currentState.number < MAX_CLIENTS // don't show the medkit animation for dead bodies
+			&& ci->medkitUsageTime && t < 500 ) {
 		memcpy( &powerup, &torso, sizeof( torso ) );
 		powerup.hModel = cgs.media.medkitUsageModel;
+		powerup.frame = 0;
+		powerup.oldframe = 0;
 		powerup.customSkin = 0;
-		// always draw
-		powerup.renderfx &= ~RF_THIRD_PERSON;
+		powerup.customShader = 0;
 		VectorClear( angles );
 		AnglesToAxis( angles, powerup.axis );
 		VectorCopy( cent->lerpOrigin, powerup.origin );
 		powerup.origin[2] += -24 + (float)t * 80 / 500;
 		if ( t > 400 ) {
-			c = (float)( t - 1000 ) * 0xff / 100;
+			c = (float)( t - 400 ) * 0xff / 100.0;
 			powerup.shaderRGBA[0] = 0xff - c;
 			powerup.shaderRGBA[1] = 0xff - c;
 			powerup.shaderRGBA[2] = 0xff - c;
