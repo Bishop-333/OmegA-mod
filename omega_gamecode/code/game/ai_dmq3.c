@@ -1645,6 +1645,38 @@ void BotChooseWeapon( bot_state_t *bs ) {
 
 /*
 ==================
+BotWantsToWalk
+==================
+*/
+static qboolean BotWantsToWalk( bot_state_t *bs ) {
+	if ( bs->walker <= 0.5f ) {
+		return qfalse;
+	}
+	// never walk if carrying a flag
+	if ( BotCTFCarryingFlag( bs ) ) {
+		return qfalse;
+	}
+	if ( Bot1FCTFCarryingFlag( bs ) ) {
+		return qfalse;
+	}
+	// never walk if carrying cubes
+	if ( BotHarvesterCarryingCubes( bs ) ) {
+		return qfalse;
+	}
+	// never walk with the scout powerup
+	if ( bs->inventory[INVENTORY_SCOUT] ) {
+		return qfalse;
+	}
+	// never walk with the haste powerup
+	if ( bs->inventory[INVENTORY_HASTE] ) {
+		return qfalse;
+	}
+
+	return qtrue;
+}
+
+/*
+==================
 BotSetupForMovement
 ==================
 */
@@ -1675,7 +1707,9 @@ void BotSetupForMovement( bot_state_t *bs ) {
 	else
 		initmove.presencetype = PRESENCE_NORMAL;
 	//
-	if ( bs->walker > 0.5 ) initmove.or_moveflags |= MFL_WALK;
+	if ( BotWantsToWalk( bs ) ) {
+		initmove.or_moveflags |= MFL_WALK;
+	}
 	//
 	VectorCopy( bs->viewangles, initmove.viewangles );
 	//
