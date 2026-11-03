@@ -417,7 +417,7 @@ static int IsUnacceptableError( playerState_t *ps, playerState_t *pps ) {
 	}
 
 	VectorSubtract( pps->origin, ps->origin, delta );
-	if ( VectorLengthSquared( delta ) > 0.1f * 0.1f ) {
+	if ( VectorLengthSquared( delta ) > Square( 0.1f ) ) {
 		if ( cg_showmiss.integer ) {
 			CG_Printf( "delta: %.2f", VectorLength( delta ) );
 		}
@@ -425,7 +425,7 @@ static int IsUnacceptableError( playerState_t *ps, playerState_t *pps ) {
 	}
 
 	VectorSubtract( pps->velocity, ps->velocity, delta );
-	if ( VectorLengthSquared( delta ) > 0.1f * 0.1f ) {
+	if ( VectorLengthSquared( delta ) > Square( 0.1f ) ) {
 		if ( cg_showmiss.integer ) {
 			CG_Printf( "delta: %.2f", VectorLength( delta ) );
 		}
@@ -451,7 +451,7 @@ static int IsUnacceptableError( playerState_t *ps, playerState_t *pps ) {
 	}
 
 	VectorSubtract( pps->grapplePoint, ps->grapplePoint, delta );
-	if ( VectorLengthSquared( delta ) > 0.1f * 0.1f ) {
+	if ( VectorLengthSquared( delta ) > Square( 0.1f ) ) {
 		return 6;
 	}
 
@@ -798,9 +798,9 @@ void CG_PredictPlayerState( void ) {
 					}
 				}
 				VectorSubtract( oldPlayerState.origin, adjusted, delta );
-				len = VectorLength( delta );
-				if ( len > 0.1 ) {
+				if ( VectorLengthSquared( delta ) > Square( 0.1f ) ) {
 					if ( cg_showmiss.integer ) {
+						len = VectorLength( delta );
 						CG_Printf( "Prediction miss: %f\n", len );
 					}
 					if ( cg_errorDecay.integer ) {

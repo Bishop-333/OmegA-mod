@@ -851,9 +851,7 @@ vec_t VectorNormalize( vec3_t v ) {
 	length = v[0]*v[0] + v[1]*v[1] + v[2]*v[2];
 
 	if ( length ) {
-		/* writing it this way allows gcc to recognize that rsqrt can be used */
-		ilength = 1/(float)sqrt (length);
-		/* sqrt(length) = length * (1 / sqrt(length)) */
+		ilength = Q_rsqrt( length );
 		length *= ilength;
 		v[0] *= ilength;
 		v[1] *= ilength;
@@ -870,9 +868,7 @@ vec_t VectorNormalize2( const vec3_t v, vec3_t out) {
 
 	if (length)
 	{
-		/* writing it this way allows gcc to recognize that rsqrt can be used */
-		ilength = 1/(float)sqrt (length);
-		/* sqrt(length) = length * (1 / sqrt(length)) */
+		ilength = Q_rsqrt( length );
 		length *= ilength;
 		out[0] = v[0]*ilength;
 		out[1] = v[1]*ilength;
@@ -891,8 +887,8 @@ vec_t VectorNormalize2D( vec3_t v ) // ByMiK : normalize horizontally (don't aff
 	length = v[0]*v[0] + v[1]*v[1];
 	if( length )
 	{
-		length = sqrt( length ); // FIXME
-		ilength = 1.0f/length;
+		ilength = Q_rsqrt( length );
+		length *= ilength;
 		v[0] *= ilength;
 		v[1] *= ilength;
 	}

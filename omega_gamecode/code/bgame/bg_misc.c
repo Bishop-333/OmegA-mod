@@ -1335,7 +1335,7 @@ void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result ) 
 		case TR_GRAVITY:
 			deltaTime = ( atTime - tr->trTime ) * 0.001; // milliseconds to seconds
 			VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
-			result[2] -= 0.5 * DEFAULT_GRAVITY * deltaTime * deltaTime; // FIXME: local gravity...
+			result[2] -= 0.5 * DEFAULT_GRAVITY * Square( deltaTime ); // FIXME: local gravity...
 			break;
 		default:
 			Com_Error( ERR_DROP, "BG_EvaluateTrajectory: unknown trType: %i", tr->trTime );

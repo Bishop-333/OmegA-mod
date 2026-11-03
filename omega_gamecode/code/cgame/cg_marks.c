@@ -142,7 +142,8 @@ void CG_ImpactMark( qhandle_t markShader, const vec3_t origin, const vec3_t dir,
 	}
 
 	// create the texture axis
-	VectorNormalize2( dir, axis[0] );
+	VectorCopy( dir, axis[0] );
+	VectorNormalizeFast( axis[0] );
 	PerpendicularVector( axis[1], axis[0] );
 	if ( cg_leiEnhancement.integer ) // LEILEI HACK HACK HACK - don't spin atlas variated particles (for consistent lighting on the texture)
 		orientation = 90;
@@ -681,7 +682,7 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 
 			if ( p->color == EMISIVEFADE ) {
 				float fval;
-				fval = ( invratio * invratio );
+				fval = Square( invratio );
 				if ( fval < 0 )
 					fval = 0;
 				VectorSet( color, fval, fval, fval );
@@ -1080,7 +1081,7 @@ void CG_AddParticles( void ) {
 		if ( alpha > 1.0 )
 			alpha = 1;
 
-		time2 = time * time;
+		time2 = Square( time );
 
 		org[0] = p->org[0] + p->vel[0] * time + p->accel[0] * time2;
 		org[1] = p->org[1] + p->vel[1] * time + p->accel[1] * time2;

@@ -350,7 +350,7 @@ static qboolean ShotgunPellet( const vec3_t start, const vec3_t end, gentity_t *
 		}
 
 		if ( traceEnt->takedamage ) {
-			if ( oldTarg[countTarg - 1] != traceEnt ) {
+			if ( ( countTarg == 0 || oldTarg[countTarg - 1] != traceEnt ) && countTarg < MAX_SHOTGUN_COUNT ) {
 				oldTarg[countTarg] = traceEnt;
 				oldTarg[countTarg]->sumShotgunDamage = 0;
 				countTarg++;
@@ -401,7 +401,8 @@ static void ShotgunPattern( const vec3_t origin, const vec3_t origin2, int seed,
 
 	// derive the right and up vectors from the forward vector, because
 	// the client won't have any other information
-	VectorNormalize2( origin2, forward );
+	VectorCopy( origin2, forward );
+	VectorNormalizeFast( forward );
 	PerpendicularVector( right, forward );
 	CrossProduct( forward, right, up );
 

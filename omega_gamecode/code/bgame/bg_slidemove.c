@@ -85,7 +85,12 @@ qboolean PM_SlideMove( qboolean gravity ) {
 	}
 
 	// never turn against original velocity
-	VectorNormalize2( pm->ps->velocity, planes[numplanes] );
+	if ( VectorLengthSquared( pm->ps->velocity ) == 0 ) {
+		VectorClear( planes[numplanes] );
+	} else {
+		VectorCopy( pm->ps->velocity, planes[numplanes] );
+		VectorNormalizeFast( planes[numplanes] );
+	}
 	numplanes++;
 
 	for ( bumpcount = 0; bumpcount < numbumps; bumpcount++ ) {

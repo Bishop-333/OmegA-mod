@@ -2819,6 +2819,9 @@ bot_moveresult_t BotAttackMove( bot_state_t *bs, int tfl ) {
 		hordir[0] = forward[0];
 		hordir[1] = forward[1];
 		hordir[2] = 0;
+		if ( VectorLengthSquared( hordir ) < Square( 0.1f ) ) {
+			continue;
+		}
 		VectorNormalizeFast( hordir );
 		//get the sideward vector
 		CrossProduct( hordir, up, sideward );
@@ -3510,10 +3513,10 @@ void BotAimAtEnemy( bot_state_t *bs ) {
 		if ( wi.speed ) {
 			//
 			VectorSubtract( bestorigin, bs->origin, dir );
-			dist = VectorLength( dir );
+			dist = VectorLengthSquared( dir );
 			VectorSubtract( entinfo.origin, bs->enemyorigin, dir );
 			//if the enemy is NOT pretty far away and strafing just small steps left and right
-			if ( !( dist > 100 && VectorLengthSquared( dir ) < Square( 32 ) ) ) {
+			if ( !( dist > Square( 100 ) && VectorLengthSquared( dir ) < Square( 32 ) ) ) {
 				//if skilled enough do exact prediction
 				if ( aim_skill > 0.8 &&
 				     //if the weapon is ready to fire
@@ -4568,7 +4571,7 @@ void BotCheckBlockedTeammates( bot_state_t *bs ) {
 		// calculate the direction towards the teammate
 		v1[2] = 0;
 		VectorSubtract( entinfo.origin, bs->origin, v1 );
-		VectorNormalize( v1 );
+		VectorNormalizeFast( v1 );
 		// now check if the teammate is blocked, increase the distance accordingly
 		trap_AAS_PresenceTypeBoundingBox( PRESENCE_NORMAL, mins, maxs );
 		VectorMA( bs->origin, mindist, v1, end );
@@ -4672,9 +4675,11 @@ void BotAIBlocked( bot_state_t *bs, bot_moveresult_t *moveresult, int activate )
 	hordir[1] = moveresult->movedir[1];
 	hordir[2] = 0;
 	// if no direction just take a random direction
-	if ( VectorNormalize( hordir ) < 0.1 ) {
+	if ( VectorLengthSquared( hordir ) < Square( 0.1f ) ) {
 		VectorSet( angles, 0, 360 * random(), 0 );
 		AngleVectors( angles, hordir, NULL, NULL );
+	} else {
+		VectorNormalizeFast( hordir );
 	}
 	//
 	movetype = MOVE_WALK;

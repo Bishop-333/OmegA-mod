@@ -92,7 +92,6 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 	// give any nearby players a "denied" anti-reward
 	for ( i = 0; i < level.maxclients; i++ ) {
 		vec3_t delta;
-		float len;
 		vec3_t forward;
 		trace_t tr;
 
@@ -115,10 +114,10 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 
 		// if too far away, no sound
 		VectorSubtract( ent->s.pos.trBase, client->ps.origin, delta );
-		len = VectorNormalize( delta );
-		if ( len > 192 ) {
+		if ( VectorLengthSquared( delta ) > Square( 192 ) ) {
 			continue;
 		}
+		VectorNormalizeFast( delta );
 
 		// if not facing, no sound
 		AngleVectors( client->ps.viewangles, forward, NULL, NULL );

@@ -465,7 +465,7 @@ void Team_FragBonuses( gentity_t *targ, gentity_t *inflictor, gentity_t *attacke
 	// did the attacker frag a head carrier? other->client->ps.generic1
 	if ( tokens ) {
 		attacker->client->pers.teamState.lastfraggedcarrier = level.time;
-		AddScore( attacker, targ->r.currentOrigin, CTF_FRAG_CARRIER_BONUS * tokens * tokens );
+		AddScore( attacker, targ->r.currentOrigin, CTF_FRAG_CARRIER_BONUS * Square( tokens ) );
 		attacker->client->pers.teamState.fragcarrier++;
 		PrintMsg( NULL, "%s" S_COLOR_WHITE " fragged %s's skull carrier!\n",
 		          attacker->client->pers.netname, TeamName( team ) );
@@ -1521,12 +1521,12 @@ gentity_t *Team_GetLocation( gentity_t *ent ) {
 	vec3_t origin;
 
 	best = NULL;
-	bestlen = 3 * 8192.0 * 8192.0;
+	bestlen = 3 * Square( 8192.0f );
 
 	VectorCopy( ent->r.currentOrigin, origin );
 
 	for ( eloc = level.locationHead; eloc; eloc = eloc->nextTrain ) {
-		len = ( origin[0] - eloc->r.currentOrigin[0] ) * ( origin[0] - eloc->r.currentOrigin[0] ) + ( origin[1] - eloc->r.currentOrigin[1] ) * ( origin[1] - eloc->r.currentOrigin[1] ) + ( origin[2] - eloc->r.currentOrigin[2] ) * ( origin[2] - eloc->r.currentOrigin[2] );
+		len = DistanceSquared( origin, eloc->r.currentOrigin );
 
 		if ( len > bestlen ) {
 			continue;

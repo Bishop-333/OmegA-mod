@@ -1426,12 +1426,12 @@ static void BotClearPath( bot_state_t *bs, bot_moveresult_t *moveresult ) {
 	// if blocked by an avoid spot and the view angles and weapon are used for movement
 	if ( bs->blockedbyavoidspot_time > FloatTime() &&
 	     !( moveresult->flags & ( MOVERESULT_MOVEMENTVIEW | MOVERESULT_MOVEMENTWEAPON ) ) ) {
-		bestdist = 300;
+		bestdist = Square( 300 );
 		bestmine = -1;
 		for ( i = 0; i < bs->numproxmines; i++ ) {
 			BotAI_GetEntityState( bs->proxmines[i], &state );
 			VectorSubtract( state.pos.trBase, bs->origin, dir );
-			dist = VectorLength( dir );
+			dist = VectorLengthSquared( dir );
 			if ( dist < bestdist ) {
 				bestdist = dist;
 				bestmine = i;

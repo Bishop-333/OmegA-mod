@@ -630,8 +630,12 @@ static void CG_Missile( centity_t *cent ) {
 	}
 
 	// convert direction of travel into axis
-	if ( VectorNormalize2( s1->pos.trDelta, ent.axis[0] ) == 0 ) {
+	if ( VectorLengthSquared( s1->pos.trDelta ) == 0 ) {
+		VectorClear( ent.axis[0] );
 		ent.axis[0][2] = 1;
+	} else {
+		VectorCopy( s1->pos.trDelta, ent.axis[0] );
+		VectorNormalizeFast( ent.axis[0] );
 	}
 
 	// spin as it moves
@@ -689,8 +693,12 @@ static void CG_Grapple( centity_t *cent ) {
 	ent.renderfx = weapon->missileRenderfx | RF_NOSHADOW;
 
 	// convert direction of travel into axis
-	if ( VectorNormalize2( s1->pos.trDelta, ent.axis[0] ) == 0 ) {
+	if ( VectorLengthSquared( s1->pos.trDelta ) == 0 ) {
+		VectorClear( ent.axis[0] );
 		ent.axis[0][2] = 1;
+	} else {
+		VectorCopy( s1->pos.trDelta, ent.axis[0] );
+		VectorNormalizeFast( ent.axis[0] );
 	}
 
 	trap_R_AddRefEntityToScene( &ent );

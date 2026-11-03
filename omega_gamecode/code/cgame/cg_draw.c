@@ -339,7 +339,7 @@ static void CG_DrawStatusBarHead( float x ) {
 	}
 
 	frac = ( cg.time - cg.headStartTime ) / (float)( cg.headEndTime - cg.headStartTime );
-	frac = frac * frac * ( 3 - 2 * frac );
+	frac = Square( frac ) * ( 3 - 2 * frac );
 	angles[YAW] = cg.headStartYaw + ( cg.headEndYaw - cg.headStartYaw ) * frac;
 	angles[PITCH] = cg.headStartPitch + ( cg.headEndPitch - cg.headStartPitch ) * frac;
 
@@ -1268,7 +1268,7 @@ static void CG_DrawFragMsgIcons( fragInfo_t fi, int i ) {
 	if ( timeDelta >= 0 && timeDelta < 250 ) {
 		alpha = (float)timeDelta / 250.0f;
 		decay = 1.0f - ( timeDelta / 250.0f );
-		scale = 1.0f + ( 3.0f * ( decay * decay ) );
+		scale = 1.0f + ( 3.0f * Square( decay ) );
 	} else if ( timeDelta > ( FRAGMSG_FADETIME - 250 ) ) {
 		alpha = ( (float)( FRAGMSG_FADETIME - timeDelta ) ) / 250.0f;
 		scale = ( (float)( FRAGMSG_FADETIME - timeDelta ) ) / 250.0f;

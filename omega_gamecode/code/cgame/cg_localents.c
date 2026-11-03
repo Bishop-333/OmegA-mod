@@ -1203,12 +1203,12 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 
 	if ( cg_damagePlums.integer == 2 ) {
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
-		origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
+		origin[2] -= 0.5 * 12 * Square( deltaTime );
 	} else {
 		VectorNormalizeFast( dir );
 		VectorMA( cg.refdef.vieworg, -8, dir, origin );
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
-		origin[2] -= 0.5 * 12 * deltaTime * deltaTime;
+		origin[2] -= 0.5 * 12 * Square( deltaTime );
 	}
 
 	negative = qfalse;

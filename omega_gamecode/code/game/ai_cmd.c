@@ -1472,7 +1472,7 @@ static float BotNearestVisibleItem( bot_state_t *bs, char *itemname, bot_goal_t 
 	vec3_t dir;
 	bsp_trace_t trace;
 
-	bestdist = 999999;
+	bestdist = Square( 999999.0f );
 	i = -1;
 	do {
 		i = trap_BotGetLevelItemGoal( i, itemname, &tmpgoal );
@@ -1480,7 +1480,7 @@ static float BotNearestVisibleItem( bot_state_t *bs, char *itemname, bot_goal_t 
 		if ( Q_stricmp( itemname, name ) != 0 )
 			continue;
 		VectorSubtract( tmpgoal.origin, bs->origin, dir );
-		dist = VectorLength( dir );
+		dist = VectorLengthSquared( dir );
 		if ( dist < bestdist ) {
 			//trace from start to end
 			BotAI_Trace( &trace, bs->eye, NULL, NULL, tmpgoal.origin, bs->client, CONTENTS_SOLID | CONTENTS_PLAYERCLIP );
@@ -1542,7 +1542,7 @@ static void BotMatch_WhereAreYou( bot_state_t *bs, bot_match_t *match ) {
 		return;
 
 	bestitem = -1;
-	bestdist = 999999;
+	bestdist = Square( 999999.0f );
 	for ( i = 0; nearbyitems[i]; i++ ) {
 		dist = BotNearestVisibleItem( bs, nearbyitems[i], &goal );
 		if ( dist < bestdist ) {

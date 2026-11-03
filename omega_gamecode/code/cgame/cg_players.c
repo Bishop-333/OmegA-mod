@@ -1504,7 +1504,6 @@ static void CG_PlayerAngles( centity_t *cent, vec3_t legs[3], vec3_t torso[3], v
 	float dest;
 	static int movementOffsets[8] = { 0, 22, 45, -22, 0, 22, -45, -22 };
 	vec3_t velocity;
-	float speed;
 	int dir, clientNum;
 	clientInfo_t *ci;
 
@@ -1572,18 +1571,15 @@ static void CG_PlayerAngles( centity_t *cent, vec3_t legs[3], vec3_t torso[3], v
 
 	// lean towards the direction of travel
 	VectorCopy( cent->currentState.pos.trDelta, velocity );
-	speed = VectorNormalize( velocity );
-	if ( speed ) {
+	if ( VectorLengthSquared( velocity ) > 0 ) {
 		vec3_t axis[3];
 		float side;
 
-		speed *= 0.05f;
-
 		AnglesToAxis( legsAngles, axis );
-		side = speed * DotProduct( velocity, axis[1] );
+		side = 0.05f * DotProduct( velocity, axis[1] );
 		legsAngles[ROLL] -= side;
 
-		side = speed * DotProduct( velocity, axis[0] );
+		side = 0.05f * DotProduct( velocity, axis[0] );
 		legsAngles[PITCH] += side;
 	}
 
@@ -1894,7 +1890,8 @@ static void CG_PlayerTokens( centity_t *cent, int renderfx ) {
 	VectorCopy( cent->lerpOrigin, origin );
 	for ( i = 0; i < trail->numpositions; i++ ) {
 		VectorSubtract( trail->positions[i], origin, dir );
-		if ( VectorNormalize( dir ) > 30 ) {
+		if ( VectorLengthSquared( dir ) > Square( 30 ) ) {
+			VectorNormalizeFast( dir );
 			VectorMA( origin, 30, dir, trail->positions[i] );
 		}
 		VectorCopy( trail->positions[i], origin );

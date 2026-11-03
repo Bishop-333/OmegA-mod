@@ -3201,7 +3201,8 @@ void CG_ShotgunPattern( vec3_t origin, vec3_t origin2, int seed, int otherEntNum
 
 	// derive the right and up vectors from the forward vector, because
 	// the client won't have any other information
-	VectorNormalize2( origin2, forward );
+	VectorCopy( origin2, forward );
+	VectorNormalizeFast( forward );
 	PerpendicularVector( right, forward );
 	CrossProduct( forward, right, up );
 
@@ -3280,12 +3281,10 @@ static void CG_Tracer( vec3_t source, vec3_t dest ) {
 
 	// tracer
 	VectorSubtract( dest, source, forward );
-	len = VectorNormalize( forward );
-
-	// start at least a little ways from the muzzle
-	if ( len < 100 ) {
+	if ( VectorLengthSquared( forward ) < Square( 100 ) ) {
 		return;
 	}
+	len = VectorNormalize( forward );
 	begin = 50 + random() * ( len - 60 );
 	end = begin + cg_tracerLength.value;
 	if ( end > len ) {

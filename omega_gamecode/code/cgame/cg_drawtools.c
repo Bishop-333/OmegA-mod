@@ -389,6 +389,10 @@ void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, 
 	worldPos[2] = z;
 	VectorSubtract( worldPos, cg.refdef.vieworg, dir );
 
+	if ( VectorLengthSquared( dir ) > Square( 1100 ) ) {
+		return;
+	}
+
 	if ( useTrace ) {
 		CG_Trace( &trace, cg.refdef.vieworg, vec3_origin, vec3_origin, worldPos, cg.snap->ps.clientNum, CONTENTS_SOLID );
 		if ( trace.fraction < 1.0f ) {
@@ -412,14 +416,12 @@ void CG_Draw3DString( float x, float y, float z, const char *str, vec4_t color, 
 	finalX -= ( CG_DrawStrlen( str ) * w ) * 0.5f;
 	finalY -= h * 0.5f;
 
-	dist = VectorLength( dir );
 	Vector4Copy( color, fadeColor );
 
 	alpha = 1.0f;
 
-	if ( dist > 1100 ) {
-		alpha = 0.0f;
-	} else if ( dist > 1000 ) {
+	if ( VectorLengthSquared( dir ) > Square( 1000 ) ) {
+		dist = VectorLength( dir );
 		alpha = ( 1100 - dist ) / ( 1100 - 1000 );
 	}
 

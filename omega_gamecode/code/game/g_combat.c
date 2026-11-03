@@ -1011,12 +1011,9 @@ static int RaySphereIntersections( vec3_t origin, float radius, vec3_t point, ve
 	// normalize dir so a = 1
 	VectorNormalizeFast( dir );
 	b = 2 * ( dir[0] * ( point[0] - origin[0] ) + dir[1] * ( point[1] - origin[1] ) + dir[2] * ( point[2] - origin[2] ) );
-	c = ( point[0] - origin[0] ) * ( point[0] - origin[0] ) +
-	    ( point[1] - origin[1] ) * ( point[1] - origin[1] ) +
-	    ( point[2] - origin[2] ) * ( point[2] - origin[2] ) -
-	    radius * radius;
+	c = DistanceSquared( point, origin ) - Square( radius );
 
-	d = b * b - 4 * c;
+	d = Square( b ) - 4 * c;
 	if ( d > 0 ) {
 		t = ( -b + sqrt( d ) ) / 2;
 		VectorMA( point, t, dir, intersections[0] );
@@ -1488,8 +1485,17 @@ qboolean CanDamage( gentity_t *targ, vec3_t origin ) {
 	vec3_t dest;
 	trace_t tr;
 	vec3_t midpoint;
-	vec3_t offsetmins = { -15, -15, -15 };
-	vec3_t offsetmaxs = { 15, 15, 15 };
+	int i;
+	static const vec3_t offsets[8] = {
+		{  15,  15,  15 },
+		{  15, -15,  15 },
+		{ -15,  15,  15 },
+		{ -15, -15,  15 },
+		{  15,  15, -15 },
+		{  15, -15, -15 },
+		{ -15,  15, -15 },
+		{ -15, -15, -15 }
+	};
 
 	// use the midpoint of the bounds instead of the origin, because
 	// bmodels may have their origin is 0,0,0
@@ -1504,77 +1510,13 @@ qboolean CanDamage( gentity_t *targ, vec3_t origin ) {
 
 	// this should probably check in the plane of projection,
 	// rather than in world coordinate
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmaxs[0];
-	dest[1] += offsetmaxs[1];
-	dest[2] += offsetmaxs[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
+	for ( i = 0; i < 8; i++ ) {
+		VectorAdd( midpoint, offsets[i], dest );
+		trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
 
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmaxs[0];
-	dest[1] += offsetmins[1];
-	dest[2] += offsetmaxs[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmins[0];
-	dest[1] += offsetmaxs[1];
-	dest[2] += offsetmaxs[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmins[0];
-	dest[1] += offsetmins[1];
-	dest[2] += offsetmaxs[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmaxs[0];
-	dest[1] += offsetmaxs[1];
-	dest[2] += offsetmins[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmaxs[0];
-	dest[1] += offsetmins[1];
-	dest[2] += offsetmins[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmins[0];
-	dest[1] += offsetmaxs[1];
-	dest[2] += offsetmins[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
-
-	VectorCopy( midpoint, dest );
-	dest[0] += offsetmins[0];
-	dest[1] += offsetmins[1];
-	dest[2] += offsetmins[2];
-	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
-
-	if ( tr.fraction == 1.0 )
-		return qtrue;
+		if ( tr.fraction == 1.0 || tr.entityNum == targ->s.number )
+			return qtrue;
+	}
 
 	return qfalse;
 }
@@ -1626,11 +1568,12 @@ qboolean G_RadiusDamage( gentity_t *self, vec3_t origin, gentity_t *attacker, fl
 			}
 		}
 
-		dist = VectorLength( v );
-		if ( dist >= radius ) {
+		dist = VectorLengthSquared( v );
+		if ( dist >= Square( radius ) ) {
 			continue;
 		}
 
+		dist = sqrt( dist );
 		points = damage * ( 1.0 - dist / radius );
 
 		if ( CanDamage( ent, origin ) ) {
@@ -1672,8 +1615,8 @@ qboolean G_RailJump( vec3_t origin, gentity_t *attacker ) {
 		}
 	}
 
-	dist = VectorLength( v );
-	if ( dist >= radius ) {
+	dist = VectorLengthSquared( v );
+	if ( dist >= Square( radius ) ) {
 		return qfalse;
 	}
 
@@ -1681,6 +1624,7 @@ qboolean G_RailJump( vec3_t origin, gentity_t *attacker ) {
 		damage *= 4.0f;
 	}
 
+	dist = sqrt( dist );
 	points = damage * ( 1.0 - dist / radius );
 
 	if ( CanDamage( attacker, origin ) ) {

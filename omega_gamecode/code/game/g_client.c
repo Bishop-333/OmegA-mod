@@ -120,14 +120,14 @@ static gentity_t *SelectNearestDeathmatchSpawnPoint( vec3_t from ) {
 	float dist, nearestDist;
 	gentity_t *nearestSpot;
 
-	nearestDist = 999999;
+	nearestDist = Square( 999999.0f );
 	nearestSpot = NULL;
 	spot = NULL;
 
 	while ( ( spot = G_Find( spot, FOFS( classname ), "info_player_deathmatch" ) ) != NULL ) {
 
 		VectorSubtract( spot->s.origin, from, delta );
-		dist = VectorLength( delta );
+		dist = VectorLengthSquared( delta );
 		if ( dist < nearestDist ) {
 			nearestDist = dist;
 			nearestSpot = spot;
