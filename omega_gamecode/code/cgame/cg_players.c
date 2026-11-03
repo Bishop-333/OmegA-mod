@@ -2887,7 +2887,7 @@ void CG_Player( centity_t *cent ) {
 
 	t = cg.time - ci->medkitUsageTime;
 	if ( cent->currentState.number < MAX_CLIENTS // don't show the medkit animation for dead bodies
-			&& ci->medkitUsageTime && t < 500 ) {
+	     && ci->medkitUsageTime && t < 500 ) {
 		memcpy( &powerup, &torso, sizeof( torso ) );
 		powerup.hModel = cgs.media.medkitUsageModel;
 		powerup.frame = 0;
