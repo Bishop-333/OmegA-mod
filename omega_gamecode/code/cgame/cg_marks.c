@@ -142,8 +142,12 @@ void CG_ImpactMark( qhandle_t markShader, const vec3_t origin, const vec3_t dir,
 	}
 
 	// create the texture axis
-	VectorCopy( dir, axis[0] );
-	VectorNormalizeFast( axis[0] );
+	if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+		VectorSet( axis[0], 0, 0, 1 );
+	} else {
+		VectorCopy( dir, axis[0] );
+		VectorNormalizeFast( axis[0] );
+	}
 	PerpendicularVector( axis[1], axis[0] );
 	if ( cg_leiEnhancement.integer ) // LEILEI HACK HACK HACK - don't spin atlas variated particles (for consistent lighting on the texture)
 		orientation = 90;

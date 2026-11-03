@@ -117,12 +117,14 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 		if ( VectorLengthSquared( delta ) > Square( 192 ) ) {
 			continue;
 		}
-		VectorNormalizeFast( delta );
+		if ( VectorLengthSquared( delta ) >= Square( 0.1f ) ) {
+			VectorNormalizeFast( delta );
 
-		// if not facing, no sound
-		AngleVectors( client->ps.viewangles, forward, NULL, NULL );
-		if ( DotProduct( delta, forward ) < 0.4 ) {
-			continue;
+			// if not facing, no sound
+			AngleVectors( client->ps.viewangles, forward, NULL, NULL );
+			if ( DotProduct( delta, forward ) < 0.4 ) {
+				continue;
+			}
 		}
 
 		// if not line of sight, no sound

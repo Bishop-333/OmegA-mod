@@ -558,6 +558,9 @@ static qboolean PM_CheckWaterJump( void ) {
 	flatforward[0] = pml.forward[0];
 	flatforward[1] = pml.forward[1];
 	flatforward[2] = 0;
+	if ( VectorLengthSquared( flatforward ) < Square( 0.1f ) ) {
+		return qfalse;
+	}
 	VectorNormalizeFast( flatforward );
 
 	VectorMA( pm->ps->origin, 30, flatforward, spot );
@@ -661,7 +664,9 @@ static void PM_WaterMove( void ) {
 		                 pm->ps->velocity, OVERCLIP );
 
 		// don't decrease velocity when going up or down a slope
-		if ( pm->pmove_overbounce || VectorLengthSquared( pm->ps->velocity ) > 1 ) {
+		if ( pm->pmove_overbounce ) {
+			VectorScale( pm->ps->velocity, vel, pm->ps->velocity );
+		} else if ( VectorLengthSquared( pm->ps->velocity ) > 1 ) {
 			VectorNormalizeFast( pm->ps->velocity );
 			VectorScale( pm->ps->velocity, vel, pm->ps->velocity );
 		}
@@ -805,8 +810,16 @@ static void PM_AirMove( void ) {
 	// project moves down to flat plane
 	pml.forward[2] = 0;
 	pml.right[2] = 0;
-	VectorNormalizeFast( pml.forward );
-	VectorNormalizeFast( pml.right );
+	if ( VectorLengthSquared( pml.forward ) < Square( 0.1f ) ) {
+		VectorClear( pml.forward );
+	} else {
+		VectorNormalizeFast( pml.forward );
+	}
+	if ( VectorLengthSquared( pml.right ) < Square( 0.1f ) ) {
+		VectorClear( pml.right );
+	} else {
+		VectorNormalizeFast( pml.right );
+	}
 
 	for ( i = 0; i < 2; i++ ) {
 		wishvel[i] = pml.forward[i] * fmove + pml.right[i] * smove;
@@ -822,9 +835,11 @@ static void PM_AirMove( void ) {
 		curdir[0] = pm->ps->velocity[0];
 		curdir[1] = pm->ps->velocity[1];
 		curdir[2] = 0;
-		VectorNormalizeFast( curdir );
-		dot = -DotProduct( curdir, wishdir );
-		accel = accel + ( pm_cpm_airstopaccelerate - accel ) * ( dot > 0 ? dot : 0 );
+		if ( VectorLengthSquared( curdir ) >= Square( 0.1f ) ) {
+			VectorNormalizeFast( curdir );
+			dot = -DotProduct( curdir, wishdir );
+			accel = accel + ( pm_cpm_airstopaccelerate - accel ) * ( dot > 0 ? dot : 0 );
+		}
 
 		if ( fmove == 0 && smove != 0 ) {
 			wishspeed = pm_cpm_airstrafewishspeed;
@@ -862,8 +877,7 @@ static void PM_GrappleMove( void ) {
 	VectorScale( pml.forward, -16, v );
 	VectorAdd( pm->ps->grapplePoint, v, v );
 	VectorSubtract( v, pm->ps->origin, vel );
-	vlen = VectorLength( vel );
-	VectorNormalizeFast( vel );
+	vlen = VectorNormalize( vel );
 
 	if ( vlen <= 100 )
 		VectorScale( vel, 10 * vlen, vel );
@@ -933,8 +947,16 @@ static void PM_WalkMove( void ) {
 	PM_ClipVelocity( pml.forward, pml.groundTrace.plane.normal, pml.forward, OVERCLIP );
 	PM_ClipVelocity( pml.right, pml.groundTrace.plane.normal, pml.right, OVERCLIP );
 	//
-	VectorNormalizeFast( pml.forward );
-	VectorNormalizeFast( pml.right );
+	if ( VectorLengthSquared( pml.forward ) < Square( 0.1f ) ) {
+		VectorClear( pml.forward );
+	} else {
+		VectorNormalizeFast( pml.forward );
+	}
+	if ( VectorLengthSquared( pml.right ) < Square( 0.1f ) ) {
+		VectorClear( pml.right );
+	} else {
+		VectorNormalizeFast( pml.right );
+	}
 
 	for ( i = 0; i < 3; i++ ) {
 		wishvel[i] = pml.forward[i] * fmove + pml.right[i] * smove;
@@ -983,7 +1005,9 @@ static void PM_WalkMove( void ) {
 	                 pm->ps->velocity, OVERCLIP );
 
 	// don't decrease velocity when going up or down a slope
-	if ( pm->pmove_overbounce || VectorLengthSquared( pm->ps->velocity ) > 1 ) {
+	if ( pm->pmove_overbounce ) {
+		VectorScale( pm->ps->velocity, vel, pm->ps->velocity );
+	} else if ( VectorLengthSquared( pm->ps->velocity ) > 1 ) {
 		VectorNormalizeFast( pm->ps->velocity );
 		VectorScale( pm->ps->velocity, vel, pm->ps->velocity );
 	}
@@ -1013,9 +1037,8 @@ static void PM_DeadMove( void ) {
 	if ( VectorLengthSquared( pm->ps->velocity ) <= Square( 20 ) ) {
 		VectorClear( pm->ps->velocity );
 	} else {
-		forward = VectorLength( pm->ps->velocity ) - 20;
-		VectorNormalizeFast( pm->ps->velocity );
-		VectorScale( pm->ps->velocity, forward, pm->ps->velocity );
+		forward = VectorLength( pm->ps->velocity );
+		VectorScale( pm->ps->velocity, ( forward - 20 ) / forward, pm->ps->velocity );
 	}
 }
 

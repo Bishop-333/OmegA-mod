@@ -85,7 +85,7 @@ qboolean PM_SlideMove( qboolean gravity ) {
 	}
 
 	// never turn against original velocity
-	if ( VectorLengthSquared( pm->ps->velocity ) == 0 ) {
+	if ( VectorLengthSquared( pm->ps->velocity ) < Square( 0.1f ) ) {
 		VectorClear( planes[numplanes] );
 	} else {
 		VectorCopy( pm->ps->velocity, planes[numplanes] );

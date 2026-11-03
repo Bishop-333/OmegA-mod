@@ -1114,7 +1114,11 @@ static void CG_AddScorePlum( localEntity_t *le ) {
 
 	VectorSubtract( cg.refdef.vieworg, origin, dir );
 	CrossProduct( dir, up, vec );
-	VectorNormalizeFast( vec );
+	if ( VectorLengthSquared( vec ) < Square( 0.1f ) ) {
+		VectorCopy( cg.refdef.viewaxis[1], vec );
+	} else {
+		VectorNormalizeFast( vec );
+	}
 
 	VectorMA( origin, -10 + 20 * sin( c * 2 * M_PI ), vec, origin );
 
@@ -1199,13 +1203,21 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 
 	VectorSubtract( cg.refdef.vieworg, origin, dir );
 	CrossProduct( dir, up, vec );
-	VectorNormalizeFast( vec );
+	if ( VectorLengthSquared( vec ) < Square( 0.1f ) ) {
+		VectorCopy( cg.refdef.viewaxis[1], vec );
+	} else {
+		VectorNormalizeFast( vec );
+	}
 
 	if ( cg_damagePlums.integer == 2 ) {
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
 		origin[2] -= 0.5 * 12 * Square( deltaTime );
 	} else {
-		VectorNormalizeFast( dir );
+		if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+			VectorCopy( cg.refdef.viewaxis[0], dir );
+		} else {
+			VectorNormalizeFast( dir );
+		}
 		VectorMA( cg.refdef.vieworg, -8, dir, origin );
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
 		origin[2] -= 0.5 * 12 * Square( deltaTime );

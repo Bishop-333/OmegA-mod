@@ -630,7 +630,7 @@ static void CG_Missile( centity_t *cent ) {
 	}
 
 	// convert direction of travel into axis
-	if ( VectorLengthSquared( s1->pos.trDelta ) == 0 ) {
+	if ( VectorLengthSquared( s1->pos.trDelta ) < Square( 0.1f ) ) {
 		VectorClear( ent.axis[0] );
 		ent.axis[0][2] = 1;
 	} else {
@@ -693,7 +693,7 @@ static void CG_Grapple( centity_t *cent ) {
 	ent.renderfx = weapon->missileRenderfx | RF_NOSHADOW;
 
 	// convert direction of travel into axis
-	if ( VectorLengthSquared( s1->pos.trDelta ) == 0 ) {
+	if ( VectorLengthSquared( s1->pos.trDelta ) < Square( 0.1f ) ) {
 		VectorClear( ent.axis[0] );
 		ent.axis[0][2] = 1;
 	} else {

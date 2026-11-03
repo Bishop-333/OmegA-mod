@@ -252,7 +252,11 @@ static void target_laser_think( gentity_t *self ) {
 		VectorMA( self->enemy->s.origin, 0.5, self->enemy->r.mins, point );
 		VectorMA( point, 0.5, self->enemy->r.maxs, point );
 		VectorSubtract( point, self->s.origin, self->movedir );
-		VectorNormalizeFast( self->movedir );
+		if ( VectorLengthSquared( self->movedir ) < Square( 0.1f ) ) {
+			VectorSet( self->movedir, 1, 0, 0 );
+		} else {
+			VectorNormalizeFast( self->movedir );
+		}
 	}
 
 	// fire forward and see what we hit

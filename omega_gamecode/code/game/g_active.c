@@ -256,6 +256,10 @@ static void G_FrozenPlayerKnockback( gentity_t *frozenRemnant, int damage, vec3_
 	float mass;
 	vec3_t kvel;
 
+	if ( !dir || VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+		return;
+	}
+
 	if ( knockback > 200 ) {
 		knockback = 200;
 	}

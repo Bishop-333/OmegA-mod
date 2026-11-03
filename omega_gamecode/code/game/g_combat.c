@@ -1214,7 +1214,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		}
 	}
 
-	if ( !dir ) {
+	if ( !dir || VectorLengthSquared( dir ) < Square( 0.1f ) ) {
 		dflags |= DAMAGE_NO_KNOCKBACK;
 	} else {
 		VectorNormalizeFast( dir );

@@ -1909,7 +1909,11 @@ static void CG_PlayerTokens( centity_t *cent, int renderfx ) {
 	for ( i = 0; i < trail->numpositions; i++ ) {
 		VectorSubtract( origin, trail->positions[i], ent.axis[0] );
 		ent.axis[0][2] = 0;
-		VectorNormalizeFast( ent.axis[0] );
+		if ( VectorLengthSquared( ent.axis[0] ) < Square( 0.1f ) ) {
+			VectorSet( ent.axis[0], 1, 0, 0 );
+		} else {
+			VectorNormalizeFast( ent.axis[0] );
+		}
 		VectorSet( ent.axis[2], 0, 0, 1 );
 		CrossProduct( ent.axis[0], ent.axis[2], ent.axis[1] );
 

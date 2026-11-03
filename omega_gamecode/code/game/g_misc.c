@@ -181,7 +181,11 @@ static void locateCamera( gentity_t *ent ) {
 	target = G_PickTarget( owner->target );
 	if ( target ) {
 		VectorSubtract( target->s.origin, owner->s.origin, dir );
-		VectorNormalizeFast( dir );
+		if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+			G_SetMovedir( owner->s.angles, dir );
+		} else {
+			VectorNormalizeFast( dir );
+		}
 	} else {
 		G_SetMovedir( owner->s.angles, dir );
 	}
@@ -241,7 +245,11 @@ static void Use_Shooter( gentity_t *ent, gentity_t *other, gentity_t *activator 
 	// see if we have a target
 	if ( ent->enemy ) {
 		VectorSubtract( ent->enemy->r.currentOrigin, ent->s.origin, dir );
-		VectorNormalizeFast( dir );
+		if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+			VectorCopy( ent->movedir, dir );
+		} else {
+			VectorNormalizeFast( dir );
+		}
 	} else {
 		VectorCopy( ent->movedir, dir );
 	}

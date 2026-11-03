@@ -4569,8 +4569,11 @@ void BotCheckBlockedTeammates( bot_state_t *bs ) {
 			bs->formation_dist *= 2;
 		}
 		// calculate the direction towards the teammate
-		v1[2] = 0;
 		VectorSubtract( entinfo.origin, bs->origin, v1 );
+		v1[2] = 0;
+		if ( VectorLengthSquared( v1 ) < Square( 0.1f ) ) {
+			continue;
+		}
 		VectorNormalizeFast( v1 );
 		// now check if the teammate is blocked, increase the distance accordingly
 		trap_AAS_PresenceTypeBoundingBox( PRESENCE_NORMAL, mins, maxs );

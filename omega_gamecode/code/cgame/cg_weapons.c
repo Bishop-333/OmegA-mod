@@ -1291,7 +1291,11 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 		vec3_t dir;
 
 		VectorSubtract( beam.oldorigin, beam.origin, dir );
-		VectorNormalizeFast( dir );
+		if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+			VectorCopy( forward, dir );
+		} else {
+			VectorNormalizeFast( dir );
+		}
 
 		memset( &beam, 0, sizeof( beam ) );
 		beam.hModel = cgs.media.lightningExplosionModel;
@@ -3298,6 +3302,9 @@ static void CG_Tracer( vec3_t source, vec3_t dest ) {
 
 	VectorScale( cg.refdef.viewaxis[1], line[1], right );
 	VectorMA( right, -line[0], cg.refdef.viewaxis[2], right );
+	if ( VectorLengthSquared( right ) < Square( 0.1f ) ) {
+		return;
+	}
 	VectorNormalizeFast( right );
 
 	VectorMA( finish, cg_tracerWidth.value, right, verts[0].xyz );

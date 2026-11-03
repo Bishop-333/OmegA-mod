@@ -1172,7 +1172,11 @@ static void KamikazeShockWave( vec3_t origin, gentity_t *attacker, float damage,
 		G_Damage( ent, NULL, attacker, dir, origin, damage, DAMAGE_RADIUS | DAMAGE_NO_TEAM_PROTECTION, MOD_KAMIKAZE );
 		//
 		dir[2] = 0;
-		VectorNormalizeFast( dir );
+		if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
+			VectorSet( dir, 1, 0, 0 );
+		} else {
+			VectorNormalizeFast( dir );
+		}
 		if ( ent->client ) {
 			ent->client->ps.velocity[0] = dir[0] * push;
 			ent->client->ps.velocity[1] = dir[1] * push;
