@@ -156,7 +156,7 @@ static gentity_t *SelectRandomDeathmatchSpawnPoint( int filter_flags ) {
 	spot = NULL;
 	last_valid_spot = NULL;
 
-	while ( ( spot = G_Find( spot, FOFS( classname ), "info_player_deathmatch" ) ) != NULL ) {
+	while ( ( spot = G_Find( spot, FOFS( classname ), "info_player_deathmatch" ) ) != NULL && count < MAX_SPAWN_POINTS ) {
 		if ( spot->flags & filter_flags ) {
 			continue;
 		}
@@ -225,20 +225,27 @@ use normal spawn selection.
 */
 static gentity_t *SelectInitialSpawnPoint( vec3_t origin, vec3_t angles, int filter_flags ) {
 	gentity_t *spot;
+	int count;
+	gentity_t *spots[MAX_SPAWN_POINTS];
 
+	count = 0;
 	spot = NULL;
-	while ( ( spot = G_Find( spot, FOFS( classname ), "info_player_deathmatch" ) ) != NULL ) {
+
+	while ( ( spot = G_Find( spot, FOFS( classname ), "info_player_deathmatch" ) ) != NULL && count < MAX_SPAWN_POINTS ) {
 		if ( spot->flags & filter_flags ) {
 			continue;
 		}
-		if ( spot->spawnflags & 1 ) {
-			break;
+		if ( !( spot->spawnflags & 1 ) || SpotWouldTelefrag( spot ) ) {
+			continue;
 		}
+		spots[count++] = spot;
 	}
 
-	if ( !spot || SpotWouldTelefrag( spot ) ) {
-		return SelectSpawnPoint( vec3_origin, origin, angles, filter_flags );
+	if ( count == 0 ) {
+		return NULL;
 	}
+
+	spot = spots[rand() % count];
 
 	VectorCopy( spot->s.origin, origin );
 	origin[2] += 9;
@@ -1661,7 +1668,7 @@ void ClientSpawn( gentity_t *ent ) {
 	clientPersistant_t saved;
 	clientSession_t savedSess;
 	int persistant[MAX_PERSISTANT];
-	gentity_t *spawnPoint;
+	gentity_t *spawnPoint = NULL;
 	int flags;
 	int savedPing;
 	int accuracy_hits, accuracy_shots, vote;
@@ -1756,10 +1763,11 @@ void ClientSpawn( gentity_t *ent ) {
 			filters = FL_NO_HUMANS;
 		}
 		// the first spawn should be at a good looking spot
-		if ( !client->pers.initialSpawn && client->pers.localClient ) {
+		if ( !client->pers.initialSpawn ) {
 			client->pers.initialSpawn = qtrue;
 			spawnPoint = SelectInitialSpawnPoint( spawn_origin, spawn_angles, filters );
-		} else {
+		}
+		if ( !spawnPoint ) {
 			// don't spawn near existing origin if possible
 			spawnPoint = SelectSpawnPoint(
 			    client->ps.origin,
