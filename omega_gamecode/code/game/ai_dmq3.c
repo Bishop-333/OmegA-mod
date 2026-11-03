@@ -3396,6 +3396,10 @@ void BotAimAtEnemy( bot_state_t *bs ) {
 		if ( bs->teleport_time > FloatTime() - reactiontime ) return;
 	}
 
+	if ( bs->weaponnum <= 0 ) {
+		return;
+	}
+
 	//get the weapon information
 	trap_BotGetWeaponInfo( bs->ws, bs->weaponnum, &wi );
 	//get the weapon specific aim accuracy and or aim skill
@@ -3695,6 +3699,10 @@ void BotCheckAttack( bot_state_t *bs ) {
 	BotAI_Trace( &bsptrace, bs->eye, NULL, NULL, bs->aimtarget, bs->client, CONTENTS_SOLID | CONTENTS_PLAYERCLIP );
 	if ( bsptrace.fraction < 1 && bsptrace.ent != attackentity )
 		return;
+
+	if ( bs->weaponnum <= 0 ) {
+		return;
+	}
 
 	//get the weapon info
 	trap_BotGetWeaponInfo( bs->ws, bs->weaponnum, &wi );
