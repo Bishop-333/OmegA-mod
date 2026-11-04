@@ -732,7 +732,10 @@ GRAPPLING HOOK
 Weapon_GrapplingHook_Fire
 ======================
 */
-static void Weapon_GrapplingHook_Fire( gentity_t *ent ) {
+void Weapon_GrapplingHook_Fire( gentity_t *ent ) {
+	AngleVectors( ent->client->ps.viewangles, forward, right, up );
+	CalcMuzzlePoint( ent, forward, right, up, muzzle );
+
 	if ( !ent->client->fireHeld && !ent->client->hook )
 		fire_grapple( ent, muzzle, forward );
 

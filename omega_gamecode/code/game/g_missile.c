@@ -655,9 +655,10 @@ void G_RunMissile( gentity_t *ent ) {
 		if ( tr.surfaceFlags & SURF_NOIMPACT ) {
 			// If grapple, reset owner
 			if ( ent->parent && ent->parent->client && ent->parent->client->hook == ent ) {
-				ent->parent->client->hook = NULL;
+				Weapon_HookFree( ent );
+			} else {
+				G_FreeEntity( ent );
 			}
-			G_FreeEntity( ent );
 			return;
 		}
 		G_MissileImpact( ent, &tr );

@@ -1487,15 +1487,14 @@ qboolean CanDamage( gentity_t *targ, vec3_t origin ) {
 	vec3_t midpoint;
 	int i;
 	static const vec3_t offsets[8] = {
-		{  15,  15,  15 },
-		{  15, -15,  15 },
-		{ -15,  15,  15 },
-		{ -15, -15,  15 },
-		{  15,  15, -15 },
-		{  15, -15, -15 },
-		{ -15,  15, -15 },
-		{ -15, -15, -15 }
-	};
+	    { 15, 15, 15 },
+	    { 15, -15, 15 },
+	    { -15, 15, 15 },
+	    { -15, -15, 15 },
+	    { 15, 15, -15 },
+	    { 15, -15, -15 },
+	    { -15, 15, -15 },
+	    { -15, -15, -15 } };
 
 	// use the midpoint of the bounds instead of the origin, because
 	// bmodels may have their origin is 0,0,0

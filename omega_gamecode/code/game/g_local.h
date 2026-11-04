@@ -401,6 +401,7 @@ struct gclient_s {
 
 	qboolean fireHeld; // used for hook
 	gentity_t *hook;   // grapple hook if out
+	qboolean hookhasbeenfired;
 
 	int switchTeamTime; // time the player switched teams
 
@@ -785,6 +786,7 @@ void CalcMuzzlePoint( gentity_t *ent, vec3_t forward, vec3_t right, vec3_t up, v
 void SnapVectorTowards( vec3_t v, vec3_t to );
 //unlagged - attack prediction #3
 qboolean CheckGauntletAttack( gentity_t *ent );
+void Weapon_GrapplingHook_Fire( gentity_t *ent );
 void Weapon_HookFree( gentity_t *ent );
 void Weapon_HookThink( gentity_t *ent );
 

@@ -1306,7 +1306,7 @@ static void ClientThink_real( gentity_t *ent ) {
 	}
 
 	// Let go of the hook if we aren't firing
-	if ( client->ps.weapon == WP_GRAPPLING_HOOK &&
+	if ( !client->hookhasbeenfired && client->ps.weapon == WP_GRAPPLING_HOOK &&
 	     client->hook && !( ucmd->buttons & BUTTON_ATTACK ) ) {
 		Weapon_HookFree( client->hook );
 	}
@@ -1404,8 +1404,24 @@ static void ClientThink_real( gentity_t *ent ) {
 	//unlagged - smooth clients #2
 	SendPendingPredictableEvents( &ent->client->ps );
 
-	if ( !( ent->client->ps.eFlags & EF_FIRING ) ) {
+	if ( !client->hookhasbeenfired && !( ent->client->ps.eFlags & EF_FIRING ) ) {
 		client->fireHeld = qfalse; // for grapple
+	}
+
+	if ( g_grapple.integer && g_offhandgrapple.integer &&
+	     ( pm.cmd.buttons & BUTTON_GRAPPLE ) &&
+	     ent->client->ps.pm_type == PM_NORMAL &&
+	     !ent->client->hookhasbeenfired ) {
+		Weapon_GrapplingHook_Fire( ent );
+		ent->client->hookhasbeenfired = qtrue;
+	}
+	if ( !( pm.cmd.buttons & BUTTON_GRAPPLE ) &&
+	     ent->client->hookhasbeenfired ) {
+		ent->client->fireHeld = qfalse;
+		ent->client->hookhasbeenfired = qfalse;
+	}
+	if ( client->hook && client->fireHeld == qfalse ) {
+		Weapon_HookFree( client->hook );
 	}
 
 	// use the snapped origin for linking so it matches client predicted versions

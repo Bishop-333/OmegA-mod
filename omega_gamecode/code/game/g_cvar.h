@@ -197,6 +197,7 @@ G_CVAR( g_minNameChangePeriod, "g_minNameChangePeriod", "10", 0, 0, qfalse, qfal
 G_CVAR( g_maxNameChanges, "g_maxNameChanges", "50", 0, 0, qfalse, qfalse )
 
 G_CVAR( g_grapple, "g_grapple", "0", CVAR_LATCH | CVAR_ARCHIVE, 0, qfalse, qfalse )
+G_CVAR( g_offhandgrapple, "g_offhandgrapple", "1", CVAR_ARCHIVE, 0, qtrue, qfalse )
 G_CVAR( g_harvesterFromBodies, "g_harvesterFromBodies", "0", CVAR_ARCHIVE, 0, qfalse, qfalse )
 
 G_CVAR( g_developer, "developer", "0", CVAR_CHEAT, 0, qtrue, qfalse )
