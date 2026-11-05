@@ -1392,6 +1392,24 @@ static void Cmd_DrawMoon_f( gentity_t *ent ) {
 
 /*
 ==================
+Cmd_Laser_f
+==================
+*/
+static void Cmd_Laser_f( gentity_t *ent ) {
+	Laser_Gen( ent, 1 );
+}
+
+/*
+==================
+Cmd_Flashlight_f
+==================
+*/
+static void Cmd_Flashlight_f( gentity_t *ent ) {
+	Laser_Gen( ent, 2 );
+}
+
+/*
+==================
 G_SayTo
 ==================
 */
@@ -2215,6 +2233,8 @@ commands_t cmds[] =
         { "levelshot", CMD_CHEAT, Cmd_LevelShot_f },
         { "setviewpos", CMD_CHEAT, Cmd_SetViewpos_f },
         { "noclip", CMD_CHEAT, Cmd_Noclip_f },
+        { "laser", CMD_CHEAT | CMD_LIVING, Cmd_Laser_f },
+        { "flashlight", CMD_CHEAT | CMD_LIVING, Cmd_Flashlight_f },
 
         { "kill", CMD_TEAM | CMD_LIVING, Cmd_Kill_f },
         { "where", 0, Cmd_Where_f },

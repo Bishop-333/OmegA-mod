@@ -1424,6 +1424,15 @@ static void ClientThink_real( gentity_t *ent ) {
 		Weapon_HookFree( client->hook );
 	}
 
+	if ( client->ps.weapon == WP_SHOTGUN ) {
+		if ( !client->lasersight ) {
+			Laser_Gen( ent, 1 );
+		}
+	} else if ( client->lasersight ) {
+		G_FreeEntity( client->lasersight );
+		client->lasersight = NULL;
+	}
+
 	// use the snapped origin for linking so it matches client predicted versions
 	VectorCopy( ent->s.pos.trBase, ent->r.currentOrigin );
 

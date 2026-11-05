@@ -401,6 +401,7 @@ struct gclient_s {
 
 	qboolean fireHeld; // used for hook
 	gentity_t *hook;   // grapple hook if out
+	gentity_t *lasersight; // lasersight OR flashlight if in use
 	qboolean hookhasbeenfired;
 
 	int switchTeamTime; // time the player switched teams
@@ -789,6 +790,8 @@ qboolean CheckGauntletAttack( gentity_t *ent );
 void Weapon_GrapplingHook_Fire( gentity_t *ent );
 void Weapon_HookFree( gentity_t *ent );
 void Weapon_HookThink( gentity_t *ent );
+void Laser_Gen( gentity_t *ent, int type );
+void Laser_Think( gentity_t *self );
 
 //unlagged - g_unlagged.c
 void G_ResetHistory( gentity_t *ent );

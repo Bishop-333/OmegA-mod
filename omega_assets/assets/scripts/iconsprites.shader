@@ -622,6 +622,15 @@ sprites/moon
 	}
 }
 
+sprites/laser
+{
+	cull none
+	{
+		clampmap sprites/laser.jpg
+		blendfunc GL_ONE GL_ONE
+	}
+}
+
 models/powerups/medkit_use
 {
 	{

@@ -733,6 +733,7 @@ static void CG_RegisterGraphics( void ) {
 
 	cgs.media.tracerShader = trap_R_RegisterShader( "gfx/misc/tracer" );
 	cgs.media.selectShader = trap_R_RegisterShader( "gfx/2d/select" );
+	cgs.media.laserShader = trap_R_RegisterShader( "sprites/laser" );
 
 	cgs.media.bfgShader = trap_R_RegisterShader( "icons/iconw_bfg" );
 	cgs.media.chaingunShader = trap_R_RegisterShader( "icons/iconw_chaingun" );

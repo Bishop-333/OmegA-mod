@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "cg_local.h"
 
+static void CG_LaserSight( centity_t *cent );
+
 /*
 ======================
 CG_PositionEntityOnTag
@@ -1200,6 +1202,9 @@ static void CG_AddCEntity( centity_t *cent ) {
 		case ET_TEAM:
 			CG_TeamBase( cent );
 			break;
+		case ET_LASER:
+			CG_LaserSight( cent );
+			break;
 	}
 }
 
@@ -1272,5 +1277,31 @@ void CG_AddPacketEntities( void ) {
 			//unlagged - early transitioning
 			CG_AddCEntity( cent );
 		} //Also unlagged
+	}
+}
+
+/*
+==================
+CG_LaserSight
+
+Creates the laser
+==================
+*/
+static void CG_LaserSight( centity_t *cent ) {
+	refEntity_t ent;
+
+	// create the render entity
+	memset( &ent, 0, sizeof( ent ) );
+	VectorCopy( cent->lerpOrigin, ent.origin );
+	VectorCopy( cent->lerpOrigin, ent.oldorigin );
+
+	if ( cent->currentState.eventParm == 1 ) {
+		ent.reType = RT_SPRITE;
+		ent.radius = 2;
+		ent.rotation = 0;
+		ent.customShader = cgs.media.laserShader;
+		trap_R_AddRefEntityToScene( &ent );
+	} else {
+		trap_R_AddLightToScene( ent.origin, 200, 1, 1, 1 );
 	}
 }

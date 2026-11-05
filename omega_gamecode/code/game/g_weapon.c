@@ -1301,3 +1301,88 @@ void G_StartKamikaze( gentity_t *ent ) {
 	te->r.svFlags |= SVF_BROADCAST;
 	te->s.eventParm = GTS_KAMIKAZE;
 }
+
+/*
+===============
+Laser_Gen
+===============
+*/
+void Laser_Gen( gentity_t *ent, int type ) {
+	gentity_t *las;
+	int oldtype;
+
+	//Get rid of you?
+	if ( ent->client->lasersight ) {
+		oldtype = ent->client->lasersight->s.eventParm;
+		G_FreeEntity( ent->client->lasersight );
+		ent->client->lasersight = NULL;
+		if ( oldtype == type )
+			return;
+	}
+
+	las = G_Spawn();
+
+	las->nextthink = level.time + 10;
+	las->think = Laser_Think;
+	las->r.ownerNum = ent->s.number;
+	las->parent = ent;
+	las->s.eType = ET_LASER;
+	las->s.pos.trType = TR_INTERPOLATE;
+
+	//Lets tell it if flashlight or laser
+	if ( type == 2 ) {
+		las->s.eventParm = 2; //tells CG that it is a flashlight
+		las->classname = "flashlight";
+	} else {
+		las->s.eventParm = 1; //tells CG that it is a laser sight
+		las->classname = "lasersight";
+	}
+
+	ent->client->lasersight = las;
+}
+
+/*
+===============
+Laser_Think
+===============
+*/
+void Laser_Think( gentity_t *self ) {
+	vec3_t end, start, forward, right, up;
+	trace_t tr;
+
+	//If Player Dies, You Die -> now thanks to Camouflage!
+	if ( self->parent->client->ps.pm_type == PM_DEAD ) {
+		G_FreeEntity( self );
+		return;
+	}
+
+	//Set Aiming Directions
+	AngleVectors( self->parent->client->ps.viewangles, forward, right, up );
+	VectorCopy( self->parent->client->ps.origin, start );
+	start[2] += self->parent->client->ps.viewheight;
+	VectorMA( start, 8192, forward, end );
+
+	//Trace Position
+	trap_Trace( &tr, start, NULL, NULL, end, self->parent->s.number, MASK_SHOT );
+
+	//Did you not hit anything?
+	if ( tr.surfaceFlags & SURF_NOIMPACT || tr.surfaceFlags & SURF_SKY ) {
+		self->nextthink = level.time + 10;
+		trap_UnlinkEntity( self );
+		return;
+	}
+
+	//Move you forward to keep you visible
+	if ( tr.fraction != 1 )	VectorMA( tr.endpos, -4, forward, tr.endpos );
+
+	//Set Your position
+	VectorCopy( tr.endpos, self->r.currentOrigin );
+	VectorCopy( tr.endpos, self->s.pos.trBase );
+
+	vectoangles( tr.plane.normal, self->s.angles );
+
+	trap_LinkEntity( self );
+
+	//Prep next move
+	self->nextthink = level.time + 10;
+}
