@@ -471,9 +471,6 @@ static qboolean PM_CheckWallJump( void ) {
 		pm->ps->pm_flags &= ~PMF_WALLJUMPED;
 	}
 
-	if ( pm->ps->pm_flags & PMF_WALLJUMPED && pm->ps->velocity[2] < 0.0 )
-		pm->ps->pm_flags &= ~PMF_WALLJUMPED;
-
 	if ( pm->ps->pm_type != PM_NORMAL )
 		return qfalse;
 
@@ -530,8 +527,7 @@ static qboolean PM_CheckWallJump( void ) {
 				return qtrue;
 			}
 		}
-	} else
-		pm->ps->pm_flags &= ~PMF_WALLJUMPED;
+	}
 
 	return qfalse;
 }
