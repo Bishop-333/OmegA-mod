@@ -1429,7 +1429,7 @@ static void ClientThink_real( gentity_t *ent ) {
 		if ( !client->lasersight ) {
 			Laser_Gen( ent, 1 );
 		}
-	} else if ( client->lasersight ) {
+	} else if ( client->lasersight && !g_cheats.integer ) {
 		G_FreeEntity( client->lasersight );
 		client->lasersight = NULL;
 	}
