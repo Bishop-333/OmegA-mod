@@ -825,12 +825,6 @@ static void PM_AirMove( void ) {
 	vec3_t curdir;
 	float dot;
 
-	if ( pm->pmove_walljump ) {
-		if ( PM_CheckWallJump() ) {
-			return;
-		}
-	}
-
 	if ( pm->pmove_doublejump ) {
 		if ( !( pm->ps->pm_flags & PMF_DOUBLE_JUMPED ) ) {
 			if ( PM_CheckJump() ) {
@@ -846,6 +840,12 @@ static void PM_AirMove( void ) {
 			if ( PM_JetpackMove() ) {
 				return;
 			}
+		}
+	}
+
+	if ( pm->pmove_walljump && !pm->pmove_jetpack ) {
+		if ( PM_CheckWallJump() ) {
+			return;
 		}
 	}
 
