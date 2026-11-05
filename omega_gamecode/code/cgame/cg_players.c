@@ -2963,6 +2963,10 @@ void CG_Player( centity_t *cent ) {
 	// jetpack sound
 	if ( cent->currentState.eFlags & EF_JETPACK ) {
 		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.jetpackSound );
+		if ( cg.time > cent->dustTrailTime ) {
+			cent->dustTrailTime = cg.time + 25;
+			CG_SmokePuff( cent->lerpOrigin, vec3_origin, 6, 1, 1, 1, 0.165f, 2000, cg.time, 0, LEF_PUFF_DONT_SCALE, cgs.media.smokePuffShader );
+		}
 	}
 }
 
