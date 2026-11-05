@@ -3076,7 +3076,7 @@ static qboolean CG_DrawThawing( void ) {
 	thawFrac = (float)( frozenState >> 2 ) / 0xff;
 	s = va( "Thawing: %i%%", (int)( thawFrac * 100 ) );
 	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorYellow );
+	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorWhite );
 
 	color[3] = 1.0;
 	if ( frozenState & FROZENSTATE_THAWING ) {
@@ -3128,7 +3128,7 @@ static void CG_DrawJetpackFuel( void ) {
 		s = va( "Jetpack: %i%%", (int)( fuelFrac * 100 ) );
 	}
 	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
-	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorYellow );
+	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorWhite );
 
 	color[3] = 1.0f;
 	if ( !fuel ) {
