@@ -664,6 +664,7 @@ void CG_PredictPlayerState( void ) {
 	cg_pmove.pmove_aircontrol = pmove_aircontrol.integer;
 	cg_pmove.pmove_autohop = pmove_autohop.integer;
 	cg_pmove.pmove_doublejump = pmove_doublejump.integer;
+	cg_pmove.pmove_jetpack = pmove_jetpack.integer;
 	cg_pmove.pmove_overbounce = pmove_overbounce.integer;
 	cg_pmove.pmove_walljump = pmove_walljump.integer;
 

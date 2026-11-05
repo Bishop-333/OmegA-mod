@@ -40,6 +40,7 @@ float pm_accelerate = 10.0f;
 float pm_airaccelerate = 1.0f;
 float pm_wateraccelerate = 4.0f;
 float pm_flyaccelerate = 8.0f;
+float pm_jetpackaccelerate = 5.0f;
 
 float pm_friction = 6.0f;
 float pm_waterfriction = 1.0f;
@@ -728,6 +729,53 @@ static void PM_FlyMove( void ) {
 
 /*
 ===================
+PM_JetpackMove
+
+Use the jetpack.
+===================
+*/
+static qboolean PM_JetpackMove( void ) {
+	int i;
+	vec3_t wishvel;
+	float wishspeed;
+	vec3_t wishdir;
+	float scale;
+
+	if ( pm->ps->stats[STAT_JETPACK_FUEL] <= 0 ) {
+		return qfalse;
+	}
+
+	pm->ps->stats[STAT_JETPACK_FUEL] -= pml.msec;
+	if ( pm->ps->stats[STAT_JETPACK_FUEL] < 0 ) {
+		pm->ps->stats[STAT_JETPACK_FUEL] = 0;
+	}
+
+	pm->ps->eFlags |= EF_JETPACK;
+
+	// normal slowdown
+	PM_Friction();
+
+	scale = PM_CmdScale( &pm->cmd );
+	//
+	// user intentions
+	//
+	for ( i = 0; i < 2; i++ ) {
+		wishvel[i] = scale * pml.forward[i] * pm->cmd.forwardmove + scale * pml.right[i] * pm->cmd.rightmove;
+	}
+	wishvel[2] = 255;
+
+	VectorCopy( wishvel, wishdir );
+	wishspeed = VectorNormalize( wishdir );
+
+	PM_Accelerate( wishdir, wishspeed, pm_jetpackaccelerate );
+
+	PM_StepSlideMove( qtrue );
+
+	return qtrue;
+}
+
+/*
+===================
 PM_CPM_Aircontrol
 ===================
 */
@@ -787,6 +835,14 @@ static void PM_AirMove( void ) {
 			if ( PM_CheckJump() ) {
 				pm->ps->velocity[2] = JUMP_VELOCITY * 1.25;
 				pm->ps->pm_flags |= PMF_DOUBLE_JUMPED;
+				return;
+			}
+		}
+	}
+
+	if ( pm->pmove_jetpack ) {
+		if ( pm->cmd.upmove >= 10 && !( pm->ps->pm_flags & PMF_JUMP_HELD ) ) {
+			if ( PM_JetpackMove() ) {
 				return;
 			}
 		}
@@ -923,6 +979,13 @@ static void PM_WalkMove( void ) {
 
 	pm->ps->pm_flags &= ~PMF_DOUBLE_JUMPED;
 	pm->ps->pm_flags &= ~PMF_WALLJUMPED;
+
+	if ( pm->pmove_jetpack ) {
+		pm->ps->stats[STAT_JETPACK_FUEL] += pml.msec;
+		if ( pm->ps->stats[STAT_JETPACK_FUEL] > JETPACK_FUEL_TIME ) {
+			pm->ps->stats[STAT_JETPACK_FUEL] = JETPACK_FUEL_TIME;
+		}
+	}
 
 	PM_Friction();
 
@@ -2025,6 +2088,8 @@ static void PmoveSingle( pmove_t *pmove ) {
 	} else {
 		pm->ps->eFlags &= ~EF_FIRING;
 	}
+
+	pm->ps->eFlags &= ~EF_JETPACK;
 
 	// clear the respawned flag if attack and use are cleared
 	if ( pm->ps->stats[STAT_HEALTH] > 0 &&

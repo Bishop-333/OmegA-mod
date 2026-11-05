@@ -44,14 +44,15 @@ GAME OPTIONS MENU
 #define ID_DOUBLE_JUMP 131
 #define ID_GUIDED_ROCKETS 132
 #define ID_HEADSHOT_ONLY 133
-#define ID_LEAVE_CORPSE 134
-#define ID_NO_INVIS_WALLS 135
-#define ID_OVERBOUNCE 136
-#define ID_PLASMA_BOUNCE 137
-#define ID_PROPHUNT 138
-#define ID_RAIL_THROUGH_WALLS 139
-#define ID_SLICK_GROUND 140
-#define ID_SPECTATE_ON_DEATH 141
+#define ID_JETPACK 134
+#define ID_LEAVE_CORPSE 135
+#define ID_NO_INVIS_WALLS 136
+#define ID_OVERBOUNCE 137
+#define ID_PLASMA_BOUNCE 138
+#define ID_PROPHUNT 139
+#define ID_RAIL_THROUGH_WALLS 140
+#define ID_SLICK_GROUND 141
+#define ID_SPECTATE_ON_DEATH 142
 
 typedef struct {
 	menuframework_s menu;
@@ -66,6 +67,7 @@ typedef struct {
 	menuradiobutton_s doubleJump;
 	menuradiobutton_s guidedRockets;
 	menuradiobutton_s headshotOnly;
+	menuradiobutton_s jetpack;
 	menuradiobutton_s leaveCorpse;
 	menuradiobutton_s noInvisWalls;
 	menuradiobutton_s overbounce;
@@ -137,6 +139,14 @@ static void MutatorsOptions_Event( void *ptr, int notification ) {
 				trap_Cvar_SetValue( "g_headshotOnly", 1 );
 			} else {
 				trap_Cvar_SetValue( "g_headshotOnly", 0 );
+			}
+			break;
+
+		case ID_JETPACK:
+			if ( mutatorsOptions_s.jetpack.curvalue ) {
+				trap_Cvar_SetValue( "pmove_jetpack", 1 );
+			} else {
+				trap_Cvar_SetValue( "pmove_jetpack", 0 );
 			}
 			break;
 
@@ -248,7 +258,7 @@ static void MutatorsOptions_MenuInit( void ) {
 	mutatorsOptions_s.framer.width = 256;
 	mutatorsOptions_s.framer.height = 334;
 
-	y = 240 - 6.5 * ( BIGCHAR_HEIGHT + 2 );
+	y = 240 - 7 * ( BIGCHAR_HEIGHT + 2 );
 	mutatorsOptions_s.aircontrol.generic.type = MTYPE_RADIOBUTTON;
 	mutatorsOptions_s.aircontrol.generic.name = "Air Control:";
 	mutatorsOptions_s.aircontrol.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -301,6 +311,15 @@ static void MutatorsOptions_MenuInit( void ) {
 	mutatorsOptions_s.headshotOnly.generic.id = ID_HEADSHOT_ONLY;
 	mutatorsOptions_s.headshotOnly.generic.x = MUTATORS_X_POS;
 	mutatorsOptions_s.headshotOnly.generic.y = y;
+
+	y += BIGCHAR_HEIGHT + 2;
+	mutatorsOptions_s.jetpack.generic.type = MTYPE_RADIOBUTTON;
+	mutatorsOptions_s.jetpack.generic.name = "Jetpack:";
+	mutatorsOptions_s.jetpack.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	mutatorsOptions_s.jetpack.generic.callback = MutatorsOptions_Event;
+	mutatorsOptions_s.jetpack.generic.id = ID_JETPACK;
+	mutatorsOptions_s.jetpack.generic.x = MUTATORS_X_POS;
+	mutatorsOptions_s.jetpack.generic.y = y;
 
 	y += BIGCHAR_HEIGHT + 2;
 	mutatorsOptions_s.leaveCorpse.generic.type = MTYPE_RADIOBUTTON;
@@ -396,6 +415,7 @@ static void MutatorsOptions_MenuInit( void ) {
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.doubleJump );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.guidedRockets );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.headshotOnly );
+	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.jetpack );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.leaveCorpse );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.noInvisWalls );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.overbounce );
@@ -413,6 +433,7 @@ static void MutatorsOptions_MenuInit( void ) {
 	mutatorsOptions_s.doubleJump.curvalue = trap_Cvar_VariableValue( "pmove_doublejump" );
 	mutatorsOptions_s.guidedRockets.curvalue = trap_Cvar_VariableValue( "g_guidedRockets" );
 	mutatorsOptions_s.headshotOnly.curvalue = trap_Cvar_VariableValue( "g_headshotOnly" );
+	mutatorsOptions_s.jetpack.curvalue = trap_Cvar_VariableValue( "pmove_jetpack" );
 	mutatorsOptions_s.leaveCorpse.curvalue = trap_Cvar_VariableValue( "g_leaveCorpse" );
 	mutatorsOptions_s.noInvisWalls.curvalue = trap_Cvar_VariableValue( "g_noInvisWalls" );
 	mutatorsOptions_s.overbounce.curvalue = trap_Cvar_VariableValue( "pmove_overbounce" );

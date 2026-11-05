@@ -1388,6 +1388,7 @@ static void ClientThink_real( gentity_t *ent ) {
 	pm.pmove_aircontrol = pmove_aircontrol.integer;
 	pm.pmove_autohop = pmove_autohop.integer;
 	pm.pmove_doublejump = pmove_doublejump.integer;
+	pm.pmove_jetpack = pmove_jetpack.integer;
 	pm.pmove_overbounce = pmove_overbounce.integer;
 	pm.pmove_walljump = pmove_walljump.integer;
 

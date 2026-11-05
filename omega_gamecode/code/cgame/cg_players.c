@@ -2959,6 +2959,11 @@ void CG_Player( centity_t *cent ) {
 
 	// add powerups floating behind the player
 	CG_PlayerPowerups( cent, &torso );
+
+	// jetpack sound
+	if ( cent->currentState.eFlags & EF_JETPACK ) {
+		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.jetpackSound );
+	}
 }
 
 //=====================================================================

@@ -1840,6 +1840,7 @@ void ClientSpawn( gentity_t *ent ) {
 	}
 	// clear entity values
 	client->ps.stats[STAT_MAX_HEALTH] = client->pers.maxHealth;
+	client->ps.stats[STAT_JETPACK_FUEL] = JETPACK_FUEL_TIME;
 	client->ps.eFlags = flags;
 
 	ent->s.groundEntityNum = ENTITYNUM_NONE;

@@ -71,6 +71,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BODY_SINK_DELAY 5000
 #define BODY_SINK_TIME 1500
 
+#define JETPACK_FUEL_TIME 3000
+
 //
 // config strings are a general means of communicating variable length strings
 // from the server to all connected clients.
@@ -252,6 +254,7 @@ typedef struct {
 	int pmove_aircontrol;
 	int pmove_autohop;
 	int pmove_doublejump;
+	int pmove_jetpack;
 	int pmove_overbounce;
 	int pmove_walljump;
 } pmove_t;
@@ -276,7 +279,8 @@ typedef enum {
 	STAT_SPEC_ZOOM,
 	STAT_TEAM_LOCKED,
 	STAT_BOBCYCLEREM, // used to store fractions of bobCycle for consistent, FPS-independent footsteps
-	STAT_FROZENSTATE  // used to store frozen/thawing state if g_freeze = 1
+	STAT_FROZENSTATE, // used to store frozen/thawing state if g_freeze = 1
+	STAT_JETPACK_FUEL
 } statIndex_t;
 
 // player_state->persistant[] indexes
@@ -328,6 +332,7 @@ typedef enum {
 #define EF_AWARD_HEADSHOT 0x00040000   // draw a headshot sprite
 #define EF_TEAMVOTED 0x00080000        // already cast a team vote
 #define EF_FROZEN 0x00100000
+#define EF_JETPACK 0x00200000
 
 // entityState_t->generic1
 #define GEN_SMILEY_HAPPY 0x00000010 // draw a happy smiley sprite

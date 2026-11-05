@@ -3093,10 +3093,65 @@ static qboolean CG_DrawThawing( void ) {
 	width = 180;
 	x = 320 - width / 2;
 	y = 335;
+	CG_FillRect( x, y, width, height, colorTtBlack );
 	CG_FillRect( x, y, thawFrac * width, height, color );
 	CG_DrawRect( x, y, width, height, 1, color );
 
 	return qtrue;
+}
+
+/*
+=================
+CG_DrawJetpackFuel
+=================
+*/
+static void CG_DrawJetpackFuel( void ) {
+	char *s;
+	int w;
+	float fuelFrac;
+	int fuel = cg.predictedPlayerState.stats[STAT_JETPACK_FUEL];
+	float color[4];
+	float width, height, x, y;
+
+	if ( !pmove_jetpack.integer ) {
+		return;
+	}
+
+	if ( fuel >= JETPACK_FUEL_TIME ) {
+		return;
+	}
+
+	fuelFrac = (float)fuel / (float)JETPACK_FUEL_TIME;
+	if ( !fuel ) {
+		s = "Jetpack: EMPTY";
+	} else {
+		s = va( "Jetpack: %i%%", (int)( fuelFrac * 100 ) );
+	}
+	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
+	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorYellow );
+
+	color[3] = 1.0f;
+	if ( !fuel ) {
+		color[0] = 1.0;
+		color[1] = 0.0;
+		color[2] = 0.0;
+	} else if ( cg.predictedPlayerState.groundEntityNum != ENTITYNUM_NONE ) {
+		color[0] = 0.0;
+		color[1] = 1.0;
+		color[2] = 0.0;
+	} else {
+		color[0] = 1.0;
+		color[1] = 1.0;
+		color[2] = 0.0;
+	}
+
+	height = 10;
+	width = 180;
+	x = 320 - width / 2;
+	y = 335;
+	CG_FillRect( x, y, width, height, colorTtBlack );
+	CG_FillRect( x, y, fuelFrac * width, height, color );
+	CG_DrawRect( x, y, width, height, 1, color );
 }
 
 /*
@@ -3423,6 +3478,8 @@ static void CG_Draw2D( stereoFrame_t stereoFrame ) {
 			CG_DrawStatusBar();
 
 			CG_DrawThawing();
+
+			CG_DrawJetpackFuel();
 
 			CG_DrawAmmoWarning();
 
