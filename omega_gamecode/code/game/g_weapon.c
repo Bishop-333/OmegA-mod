@@ -1373,7 +1373,7 @@ void Laser_Think( gentity_t *self ) {
 	}
 
 	//Move you forward to keep you visible
-	if ( tr.fraction != 1 )	VectorMA( tr.endpos, -4, forward, tr.endpos );
+	if ( tr.fraction != 1 ) VectorMA( tr.endpos, -4, forward, tr.endpos );
 
 	//Set Your position
 	VectorCopy( tr.endpos, self->r.currentOrigin );

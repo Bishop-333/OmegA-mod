@@ -399,8 +399,8 @@ struct gclient_s {
 
 	int deathTime;
 
-	qboolean fireHeld; // used for hook
-	gentity_t *hook;   // grapple hook if out
+	qboolean fireHeld;     // used for hook
+	gentity_t *hook;       // grapple hook if out
 	gentity_t *lasersight; // lasersight OR flashlight if in use
 	qboolean hookhasbeenfired;
 
