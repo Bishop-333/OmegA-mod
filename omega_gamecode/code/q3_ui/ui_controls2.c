@@ -77,60 +77,59 @@ typedef struct
 // bindable actions
 #define ID_SHOWSCORES 0
 #define ID_USEITEM 1
-#define ID_SPEED 2
-#define ID_FORWARD 3
-#define ID_BACKPEDAL 4
-#define ID_MOVELEFT 5
-#define ID_MOVERIGHT 6
-#define ID_MOVEUP 7
-#define ID_MOVEDOWN 8
-#define ID_LEFT 9
-#define ID_RIGHT 10
-#define ID_STRAFE 11
-#define ID_LOOKUP 12
-#define ID_LOOKDOWN 13
-#define ID_MOUSELOOK 14
-#define ID_CENTERVIEW 15
-#define ID_ZOOMVIEW 16
-#define ID_WEAPON1 17
-#define ID_WEAPON2 18
-#define ID_WEAPON3 19
-#define ID_WEAPON4 20
-#define ID_WEAPON5 21
-#define ID_WEAPON6 22
-#define ID_WEAPON7 23
-#define ID_WEAPON8 24
-#define ID_WEAPON9 25
-#define ID_WEAPON10 26
-#define ID_WEAPON11 27 //Nailgun
-#define ID_WEAPON12 28 //ProxMines
-#define ID_WEAPON13 29 //Chaingun
-#define ID_ATTACK 30
-#define ID_WEAPPREV 31
-#define ID_WEAPNEXT 32
-#define ID_GESTURE 33
-#define ID_CHAT 34
-#define ID_CHAT2 35
-#define ID_CHAT3 36
-#define ID_CHAT4 37
-
-// omega
-#define ID_DROPITEM 38
-#define ID_HAPPY 39
-#define ID_SAD 40
-#define ID_ANGRY 41
-#define ID_MOON 42
+#define ID_DROPITEM 2
+#define ID_SPEED 3
+#define ID_FORWARD 4
+#define ID_BACKPEDAL 5
+#define ID_MOVELEFT 6
+#define ID_MOVERIGHT 7
+#define ID_MOVEUP 8
+#define ID_MOVEDOWN 9
+#define ID_LEFT 10
+#define ID_RIGHT 11
+#define ID_STRAFE 12
+#define ID_OFFHAND_GRAPPLE 13
+#define ID_LOOKUP 14
+#define ID_LOOKDOWN 15
+#define ID_MOUSELOOK 16
+#define ID_CENTERVIEW 17
+#define ID_ZOOMVIEW 18
+#define ID_WEAPON1 19
+#define ID_WEAPON2 20
+#define ID_WEAPON3 21
+#define ID_WEAPON4 22
+#define ID_WEAPON5 23
+#define ID_WEAPON6 24
+#define ID_WEAPON7 25
+#define ID_WEAPON8 26
+#define ID_WEAPON9 27
+#define ID_WEAPON10 28
+#define ID_WEAPON11 29 //Nailgun
+#define ID_WEAPON12 30 //ProxMines
+#define ID_WEAPON13 31 //Chaingun
+#define ID_ATTACK 32
+#define ID_WEAPPREV 33
+#define ID_WEAPNEXT 34
+#define ID_GESTURE 35
+#define ID_HAPPY 36
+#define ID_SAD 37
+#define ID_ANGRY 38
+#define ID_MOON 39
+#define ID_CHAT 40
+#define ID_CHAT2 41
+#define ID_CHAT3 42
+#define ID_CHAT4 43
 
 // all others
-#define ID_FREELOOK 39
-#define ID_INVERTMOUSE 40
-#define ID_ALWAYSRUN 41
-#define ID_AUTOSWITCH 42
-#define ID_MOUSESPEED 43
-#define ID_JOYENABLE 44
-#define ID_JOYTHRESHOLD 45
-#define ID_SMOOTHMOUSE 46
-#define ID_FOV 47
+#define ID_FREELOOK 44
+#define ID_INVERTMOUSE 45
+#define ID_ALWAYSRUN 46
+#define ID_AUTOSWITCH 47
+#define ID_MOUSESPEED 48
+#define ID_JOYENABLE 49
+#define ID_JOYTHRESHOLD 50
+#define ID_SMOOTHMOUSE 51
+#define ID_FOV 52
 
 #define ANIM_IDLE 0
 #define ANIM_RUN 1
@@ -191,6 +190,7 @@ typedef struct
 	menuaction_s turnleft;
 	menuaction_s turnright;
 	menuaction_s sidestep;
+	menuaction_s offhandgrapple;
 	menuaction_s run;
 	menuaction_s machinegun;
 	menuaction_s chainsaw;
@@ -269,6 +269,7 @@ static bind_t g_bindings[] =
     {
         { "+scores", "show scores", ID_SHOWSCORES, ANIM_IDLE, K_TAB, -1, -1, -1 },
         { "+button2", "use item", ID_USEITEM, ANIM_IDLE, K_ENTER, -1, -1, -1 },
+        { "drop", "drop item", ID_DROPITEM, ANIM_IDLE, 'g', -1, -1, -1 },
         { "+speed", "run / walk", ID_SPEED, ANIM_RUN, K_SHIFT, -1, -1, -1 },
         { "+forward", "walk forward", ID_FORWARD, ANIM_WALK, K_UPARROW, -1, -1, -1 },
         { "+back", "backpedal", ID_BACKPEDAL, ANIM_BACK, K_DOWNARROW, -1, -1, -1 },
@@ -279,6 +280,7 @@ static bind_t g_bindings[] =
         { "+left", "turn left", ID_LEFT, ANIM_TURNLEFT, K_LEFTARROW, -1, -1, -1 },
         { "+right", "turn right", ID_RIGHT, ANIM_TURNRIGHT, K_RIGHTARROW, -1, -1, -1 },
         { "+strafe", "sidestep / turn", ID_STRAFE, ANIM_IDLE, K_ALT, -1, -1, -1 },
+        { "+button12", "offhand grapple", ID_OFFHAND_GRAPPLE, ANIM_WEAPON10, 'e', -1, -1, -1 },
         { "+lookup", "look up", ID_LOOKUP, ANIM_LOOKUP, K_PGDN, -1, -1, -1 },
         { "+lookdown", "look down", ID_LOOKDOWN, ANIM_LOOKDOWN, K_DEL, -1, -1, -1 },
         { "+mlook", "mouse look", ID_MOUSELOOK, ANIM_IDLE, '/', -1, -1, -1 },
@@ -300,16 +302,15 @@ static bind_t g_bindings[] =
         { "+attack", "attack", ID_ATTACK, ANIM_ATTACK, K_CTRL, -1, -1, -1 },
         { "weapprev", "prev weapon", ID_WEAPPREV, ANIM_IDLE, '[', -1, -1, -1 },
         { "weapnext", "next weapon", ID_WEAPNEXT, ANIM_IDLE, ']', -1, -1, -1 },
-        { "+button3", "gesture", ID_GESTURE, ANIM_GESTURE, 'g', -1, -1, -1 },
-        { "messagemode", "chat", ID_CHAT, ANIM_CHAT, 't', -1, -1, -1 },
-        { "messagemode2", "chat - team", ID_CHAT2, ANIM_CHAT, 'y', -1, -1, -1 },
-        { "messagemode3", "chat - target", ID_CHAT3, ANIM_CHAT, -1, -1, -1, -1 },
-        { "messagemode4", "chat - attacker", ID_CHAT4, ANIM_CHAT, -1, -1, -1, -1 },
-        { "drop", "drop item", ID_DROPITEM, ANIM_IDLE, 'q', -1, -1, -1 },
+        { "+button3", "gesture", ID_GESTURE, ANIM_GESTURE, 'f', -1, -1, -1 },
         { "happy", "emote - happy", ID_HAPPY, ANIM_HAPPY, -1, -1, -1, -1 },
         { "sad", "emote - sad", ID_SAD, ANIM_SAD, -1, -1, -1, -1 },
         { "angry", "emote - angry", ID_ANGRY, ANIM_ANGRY, -1, -1, -1, -1 },
         { "moon", "emote - moon", ID_MOON, ANIM_MOON, -1, -1, -1, -1 },
+        { "messagemode", "chat", ID_CHAT, ANIM_CHAT, 't', -1, -1, -1 },
+        { "messagemode2", "chat - team", ID_CHAT2, ANIM_CHAT, 'y', -1, -1, -1 },
+        { "messagemode3", "chat - target", ID_CHAT3, ANIM_CHAT, -1, -1, -1, -1 },
+        { "messagemode4", "chat - attacker", ID_CHAT4, ANIM_CHAT, -1, -1, -1, -1 },
         { (char *)NULL, (char *)NULL, 0, 0, -1, -1, -1, -1 },
 };
 
@@ -339,6 +340,7 @@ static menucommon_s *g_movement_controls[] =
         (menucommon_s *)&s_controls.turnleft,
         (menucommon_s *)&s_controls.turnright,
         (menucommon_s *)&s_controls.sidestep,
+        (menucommon_s *)&s_controls.offhandgrapple,
         NULL };
 
 static menucommon_s *g_weapons_controls[] = {
@@ -1334,6 +1336,12 @@ static void Controls_MenuInit( void ) {
 	s_controls.sidestep.generic.ownerdraw = Controls_DrawKeyBinding;
 	s_controls.sidestep.generic.id = ID_STRAFE;
 
+	s_controls.offhandgrapple.generic.type = MTYPE_ACTION;
+	s_controls.offhandgrapple.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_GRAYED | QMF_HIDDEN;
+	s_controls.offhandgrapple.generic.callback = Controls_ActionEvent;
+	s_controls.offhandgrapple.generic.ownerdraw = Controls_DrawKeyBinding;
+	s_controls.offhandgrapple.generic.id = ID_OFFHAND_GRAPPLE;
+
 	s_controls.run.generic.type = MTYPE_ACTION;
 	s_controls.run.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS | QMF_GRAYED | QMF_HIDDEN;
 	s_controls.run.generic.callback = Controls_ActionEvent;
@@ -1660,6 +1668,7 @@ static void Controls_MenuInit( void ) {
 	Menu_AddItem( &s_controls.menu, &s_controls.turnleft );
 	Menu_AddItem( &s_controls.menu, &s_controls.turnright );
 	Menu_AddItem( &s_controls.menu, &s_controls.sidestep );
+	Menu_AddItem( &s_controls.menu, &s_controls.offhandgrapple );
 
 	Menu_AddItem( &s_controls.menu, &s_controls.attack );
 	Menu_AddItem( &s_controls.menu, &s_controls.nextweapon );
