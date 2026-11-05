@@ -71,7 +71,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define BODY_SINK_DELAY 5000
 #define BODY_SINK_TIME 1500
 
-#define JETPACK_FUEL_TIME 3000
+#define JETPACK_FUEL_TIME 2000
 
 //
 // config strings are a general means of communicating variable length strings
