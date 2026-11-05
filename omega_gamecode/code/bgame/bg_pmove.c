@@ -742,6 +742,7 @@ static qboolean PM_JetpackMove( void ) {
 	float scale;
 
 	if ( pm->ps->stats[STAT_JETPACK_FUEL] <= 0 ) {
+		pm->ps->pm_flags |= PMF_JUMP_HELD;
 		return qfalse;
 	}
 
