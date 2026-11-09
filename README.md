@@ -17,6 +17,7 @@ It integrates improvements from different projects like [Ratmod](https://github.
 | `pmove_aircontrol` | Enables CPMA-style air control. |
 | `pmove_autohop` | Enables holding jump to hop continuously. |
 | `pmove_doublejump` | Enables double jump. |
+| `pmove_walljump` | Enables wall jumping. |
 
 ### Competitive
 | Cvar | Description |
