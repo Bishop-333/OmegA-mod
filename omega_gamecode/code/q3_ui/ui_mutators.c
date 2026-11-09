@@ -53,6 +53,7 @@ GAME OPTIONS MENU
 #define ID_RAIL_THROUGH_WALLS 140
 #define ID_SLICK_GROUND 141
 #define ID_SPECTATE_ON_DEATH 142
+#define ID_WALLJUMP 143
 
 typedef struct {
 	menuframework_s menu;
@@ -76,6 +77,7 @@ typedef struct {
 	menuradiobutton_s railThroughWalls;
 	menuradiobutton_s slickGround;
 	menuradiobutton_s spectateOnDeath;
+	menuradiobutton_s walljump;
 
 	menubitmap_s back;
 } mutatorsOptions_t;
@@ -214,6 +216,14 @@ static void MutatorsOptions_Event( void *ptr, int notification ) {
 			}
 			break;
 
+		case ID_WALLJUMP:
+			if ( mutatorsOptions_s.walljump.curvalue ) {
+				trap_Cvar_SetValue( "pmove_walljump", 1 );
+			} else {
+				trap_Cvar_SetValue( "pmove_walljump", 0 );
+			}
+			break;
+
 		case ID_BACK:
 			UI_PopMenu();
 			break;
@@ -258,7 +268,7 @@ static void MutatorsOptions_MenuInit( void ) {
 	mutatorsOptions_s.framer.width = 256;
 	mutatorsOptions_s.framer.height = 334;
 
-	y = 240 - 7 * ( BIGCHAR_HEIGHT + 2 );
+	y = 240 - 7.5 * ( BIGCHAR_HEIGHT + 2 );
 	mutatorsOptions_s.aircontrol.generic.type = MTYPE_RADIOBUTTON;
 	mutatorsOptions_s.aircontrol.generic.name = "Air Control:";
 	mutatorsOptions_s.aircontrol.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
@@ -394,6 +404,15 @@ static void MutatorsOptions_MenuInit( void ) {
 	mutatorsOptions_s.spectateOnDeath.generic.y = y;
 
 	y += BIGCHAR_HEIGHT + 2;
+	mutatorsOptions_s.walljump.generic.type = MTYPE_RADIOBUTTON;
+	mutatorsOptions_s.walljump.generic.name = "Wall Jump:";
+	mutatorsOptions_s.walljump.generic.flags = QMF_PULSEIFFOCUS | QMF_SMALLFONT;
+	mutatorsOptions_s.walljump.generic.callback = MutatorsOptions_Event;
+	mutatorsOptions_s.walljump.generic.id = ID_WALLJUMP;
+	mutatorsOptions_s.walljump.generic.x = MUTATORS_X_POS;
+	mutatorsOptions_s.walljump.generic.y = y;
+
+	y += BIGCHAR_HEIGHT + 2;
 	mutatorsOptions_s.back.generic.type = MTYPE_BITMAP;
 	mutatorsOptions_s.back.generic.name = ART_BACK0;
 	mutatorsOptions_s.back.generic.flags = QMF_LEFT_JUSTIFY | QMF_PULSEIFFOCUS;
@@ -424,6 +443,7 @@ static void MutatorsOptions_MenuInit( void ) {
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.railThroughWalls );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.slickGround );
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.spectateOnDeath );
+	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.walljump );
 
 	Menu_AddItem( &mutatorsOptions_s.menu, &mutatorsOptions_s.back );
 
@@ -442,6 +462,7 @@ static void MutatorsOptions_MenuInit( void ) {
 	mutatorsOptions_s.railThroughWalls.curvalue = trap_Cvar_VariableValue( "g_railThroughWalls" );
 	mutatorsOptions_s.slickGround.curvalue = trap_Cvar_VariableValue( "g_slickGround" );
 	mutatorsOptions_s.spectateOnDeath.curvalue = trap_Cvar_VariableValue( "g_spectateOnDeath" );
+	mutatorsOptions_s.walljump.curvalue = trap_Cvar_VariableValue( "pmove_walljump" );
 }
 
 /*
