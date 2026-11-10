@@ -78,6 +78,7 @@ UI_CVAR( ui_brassTime, "cg_brassTime", "2500", CVAR_ARCHIVE )
 UI_CVAR( ui_drawCrosshair, "cg_drawCrosshair", "1", CVAR_ARCHIVE )
 UI_CVAR( ui_drawCrosshairNames, "cg_drawCrosshairNames", "1", CVAR_ARCHIVE )
 UI_CVAR( ui_marks, "cg_marks", "1", CVAR_ARCHIVE )
+UI_CVAR( ui_fov, "cg_fov", "110", CVAR_ARCHIVE )
 
 UI_CVAR( ui_server1, "server1", "", CVAR_ARCHIVE )
 UI_CVAR( ui_server2, "server2", "", CVAR_ARCHIVE )

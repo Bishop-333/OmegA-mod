@@ -128,8 +128,10 @@ typedef struct
 #define ID_MOUSESPEED 48
 #define ID_JOYENABLE 49
 #define ID_JOYTHRESHOLD 50
-#define ID_SMOOTHMOUSE 51
-#define ID_FOV 52
+#define ID_RUMBLE 51
+#define ID_RUMBLEFORCE 52
+#define ID_SMOOTHMOUSE 53
+#define ID_FOV 54
 
 #define ANIM_IDLE 0
 #define ANIM_RUN 1
@@ -238,6 +240,8 @@ typedef struct
 	menuaction_s chat4;
 	menuradiobutton_s joyenable;
 	menuslider_s joythreshold;
+	menuradiobutton_s rumbleenable;
+	menuslider_s rumbleforce;
 	int section;
 	qboolean waitingforkey;
 	char playerModel[64];
@@ -323,6 +327,8 @@ static configcvar_t g_configcvars[] =
         { "cg_fov", 0, 0 },
         { "in_joystick", 0, 0 },
         { "joy_threshold", 0, 0 },
+        { "in_rumble", 0, 0 },
+        { "in_rumbleForce", 0, 0 },
         { "m_filter", 0, 0 },
         { "cl_freelook", 0, 0 },
         { NULL, 0, 0 } };
@@ -364,7 +370,7 @@ static menucommon_s *g_weapons_controls[] = {
     NULL,
 };
 
-static menucommon_s *g_looking_controls[] = {
+static menucommon_s *g_looking_controls[15] = {
     (menucommon_s *)&s_controls.sensitivity,
     (menucommon_s *)&s_controls.smoothmouse,
     (menucommon_s *)&s_controls.invertmouse,
@@ -868,6 +874,10 @@ static void Controls_GetConfig( void ) {
 	s_controls.fov.curvalue = UI_ClampCvar( 90, 130, Controls_GetCvarValue( "cg_fov" ) );
 	s_controls.joyenable.curvalue = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "in_joystick" ) );
 	s_controls.joythreshold.curvalue = UI_ClampCvar( 0.05f, 0.75f, Controls_GetCvarValue( "joy_threshold" ) ) * 100.0f;
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		s_controls.rumbleenable.curvalue = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "in_rumble" ) );
+		s_controls.rumbleforce.curvalue = UI_ClampCvar( 0.0f, 1.0f, Controls_GetCvarValue( "in_rumbleForce" ) ) * 10.0f;
+	}
 	s_controls.freelook.curvalue = UI_ClampCvar( 0, 1, Controls_GetCvarValue( "cl_freelook" ) );
 }
 
@@ -907,6 +917,10 @@ static void Controls_SetConfig( void ) {
 	trap_Cvar_SetValue( "cg_fov", s_controls.fov.curvalue );
 	trap_Cvar_SetValue( "in_joystick", s_controls.joyenable.curvalue );
 	trap_Cvar_SetValue( "joy_threshold", s_controls.joythreshold.curvalue / 100.0f );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		trap_Cvar_SetValue( "in_rumble", s_controls.rumbleenable.curvalue );
+		trap_Cvar_SetValue( "in_rumbleForce", s_controls.rumbleforce.curvalue / 10.0f );
+	}
 	trap_Cvar_SetValue( "cl_freelook", s_controls.freelook.curvalue );
 	trap_Cmd_ExecuteText( EXEC_APPEND, "in_restart\n" );
 }
@@ -939,6 +953,10 @@ static void Controls_SetDefaults( void ) {
 	s_controls.fov.curvalue = Controls_GetCvarDefault( "cg_fov" );
 	s_controls.joyenable.curvalue = Controls_GetCvarDefault( "in_joystick" );
 	s_controls.joythreshold.curvalue = Controls_GetCvarDefault( "joy_threshold" ) * 100.0f;
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		s_controls.rumbleenable.curvalue = Controls_GetCvarDefault( "in_rumble" );
+		s_controls.rumbleforce.curvalue = Controls_GetCvarDefault( "in_rumbleForce" ) * 10.0f;
+	}
 	s_controls.freelook.curvalue = Controls_GetCvarDefault( "cl_freelook" );
 }
 
@@ -1074,6 +1092,29 @@ static void Controls_ResetDefaults_Draw( void ) {
 
 /*
 =================
+Controls_UpdateMenuItems
+=================
+*/
+static void Controls_UpdateMenuItems( void ) {
+	if ( s_controls.section == C_LOOKING ) {
+		if ( !s_controls.joyenable.curvalue ) {
+			s_controls.joythreshold.generic.flags |= QMF_GRAYED;
+		} else {
+			s_controls.joythreshold.generic.flags &= ~QMF_GRAYED;
+		}
+
+		if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+			if ( !s_controls.rumbleenable.curvalue ) {
+				s_controls.rumbleforce.generic.flags |= QMF_GRAYED;
+			} else {
+				s_controls.rumbleforce.generic.flags &= ~QMF_GRAYED;
+			}
+		}
+	}
+}
+
+/*
+=================
 Controls_MenuEvent
 =================
 */
@@ -1143,6 +1184,8 @@ static void Controls_MenuEvent( void *ptr, int event ) {
 		case ID_AUTOSWITCH:
 		case ID_JOYENABLE:
 		case ID_JOYTHRESHOLD:
+		case ID_RUMBLE:
+		case ID_RUMBLEFORCE:
 			if ( event == QM_ACTIVATED ) {
 				s_controls.changesmade = qtrue;
 			}
@@ -1164,6 +1207,17 @@ static void Controls_ActionEvent( void *ptr, int event ) {
 		s_controls.waitingforkey = 1;
 		Controls_Update();
 	}
+}
+
+/*
+=================
+Controls_MenuDraw
+=================
+*/
+static void Controls_MenuDraw( void ) {
+	Controls_UpdateMenuItems();
+
+	Menu_Draw( &s_controls.menu );
 }
 
 /*
@@ -1228,6 +1282,7 @@ static void Controls_MenuInit( void ) {
 
 	Controls_Cache();
 
+	s_controls.menu.draw = Controls_MenuDraw;
 	s_controls.menu.key = Controls_MenuKey;
 	s_controls.menu.wrapAround = qtrue;
 	s_controls.menu.fullscreen = qtrue;
@@ -1625,6 +1680,29 @@ static void Controls_MenuInit( void ) {
 	s_controls.joythreshold.maxvalue = 75.0f;
 	s_controls.joythreshold.generic.statusbar = Controls_StatusBar;
 
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		s_controls.rumbleenable.generic.type = MTYPE_RADIOBUTTON;
+		s_controls.rumbleenable.generic.flags = QMF_SMALLFONT;
+		s_controls.rumbleenable.generic.x = SCREEN_WIDTH / 2;
+		s_controls.rumbleenable.generic.name = "rumble";
+		s_controls.rumbleenable.generic.id = ID_RUMBLE;
+		s_controls.rumbleenable.generic.callback = Controls_MenuEvent;
+		s_controls.rumbleenable.generic.statusbar = Controls_StatusBar;
+
+		s_controls.rumbleforce.generic.type = MTYPE_SLIDER;
+		s_controls.rumbleforce.generic.x = SCREEN_WIDTH / 2;
+		s_controls.rumbleforce.generic.flags = QMF_SMALLFONT | QMF_SLIDER_PERCENTAGE;
+		s_controls.rumbleforce.generic.name = "rumble force";
+		s_controls.rumbleforce.generic.id = ID_RUMBLEFORCE;
+		s_controls.rumbleforce.generic.callback = Controls_MenuEvent;
+		s_controls.rumbleforce.minvalue = 0.0f;
+		s_controls.rumbleforce.maxvalue = 10.0f;
+		s_controls.rumbleforce.generic.statusbar = Controls_StatusBar;
+
+		g_looking_controls[12] = (menucommon_s *)&s_controls.rumbleenable;
+		g_looking_controls[13] = (menucommon_s *)&s_controls.rumbleforce;
+	}
+
 	s_controls.name.generic.type = MTYPE_PTEXT;
 	s_controls.name.generic.flags = QMF_CENTER_JUSTIFY | QMF_INACTIVE;
 	s_controls.name.generic.x = 320;
@@ -1656,6 +1734,10 @@ static void Controls_MenuInit( void ) {
 	Menu_AddItem( &s_controls.menu, &s_controls.zoomview );
 	Menu_AddItem( &s_controls.menu, &s_controls.joyenable );
 	Menu_AddItem( &s_controls.menu, &s_controls.joythreshold );
+	if ( trap_Cvar_VariableValue( "cl_omegaEngine" ) == 1 ) {
+		Menu_AddItem( &s_controls.menu, &s_controls.rumbleenable );
+		Menu_AddItem( &s_controls.menu, &s_controls.rumbleforce );
+	}
 
 	Menu_AddItem( &s_controls.menu, &s_controls.alwaysrun );
 	Menu_AddItem( &s_controls.menu, &s_controls.run );
