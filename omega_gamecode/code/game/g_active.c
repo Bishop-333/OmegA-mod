@@ -68,8 +68,8 @@ static void P_DamageFeedback( gentity_t *player ) {
 		client->damage_fromWorld = qfalse;
 	} else {
 		vectoangles( client->damage_from, angles );
-		client->ps.damagePitch = angles[PITCH] / 360.0 * 256;
-		client->ps.damageYaw = angles[YAW] / 360.0 * 256;
+		client->ps.damagePitch = angles[PITCH] / 360.0f * 256;
+		client->ps.damageYaw = angles[YAW] / 360.0f * 256;
 	}
 
 	// play an appropriate pain sound
@@ -294,7 +294,7 @@ void G_FrozenPlayerDamage( gentity_t *targPlayer, gentity_t *targ, gentity_t *at
 G_ClientAcceleratedThaw
 =============
 */
-#define FREEZETAG_THAWRATE( thawTime ) ( (float)( 1000.0 / (float)thawTime / (float)sv_fps.integer ) / 1000.0 )
+#define FREEZETAG_THAWRATE( thawTime ) ( (float)( 1000.0f / (float)thawTime / (float)sv_fps.integer ) / 1000.0f )
 #define FREEZETAG_THAWRADIUS 125
 static void G_ClientAcceleratedThaw( gentity_t *player ) {
 	gclient_t *client = player->client;
@@ -353,7 +353,7 @@ static void G_ClientAcceleratedThaw( gentity_t *player ) {
 	}
 	if ( friend == -1 ) {
 		client->freezetag_thawedBy = -1;
-		client->freezetag_thawed = 0.0;
+		client->freezetag_thawed = 0.0f;
 		frozenRemnant->s.loopSound = 0;
 		return;
 	}
@@ -364,8 +364,8 @@ static void G_ClientAcceleratedThaw( gentity_t *player ) {
 		client->lastSpecatorSwitchTime = level.time;
 	}
 	client->freezetag_thawed += FREEZETAG_THAWRATE( g_thawTime.integer );
-	if ( client->freezetag_thawed > 1.0 ) {
-		client->freezetag_thawed = 1.0;
+	if ( client->freezetag_thawed > 1.0f ) {
+		client->freezetag_thawed = 1.0f;
 	}
 }
 
@@ -410,8 +410,8 @@ G_ClientThawNow
 */
 void G_ClientThawNow( gentity_t *ent, int thawedBy ) {
 	ent->client->freezetag_thawedBy = thawedBy;
-	ent->client->freezetag_thawed = 1.0;
-	ent->client->freezetag_autoThawed = 1.0;
+	ent->client->freezetag_thawed = 1.0f;
+	ent->client->freezetag_autoThawed = 1.0f;
 	G_ClientSetFrozenState( ent );
 	if ( G_IsElimTeamGametype() ) {
 		EliminationRespawnClient( ent );
@@ -461,7 +461,7 @@ G_ClientThaw
 static void G_ClientThaw( gentity_t *ent ) {
 	gclient_t *client = ent->client;
 
-	if ( !g_freeze.integer || client->sess.sessionTeam == TEAM_SPECTATOR || !client->frozen || ( client->freezetag_thawed >= 1.0 || client->freezetag_autoThawed >= 1.0 ) ) {
+	if ( !g_freeze.integer || client->sess.sessionTeam == TEAM_SPECTATOR || !client->frozen || ( client->freezetag_thawed >= 1.0f || client->freezetag_autoThawed >= 1.0f ) ) {
 		return;
 	}
 
@@ -482,14 +482,14 @@ static void G_ClientThaw( gentity_t *ent ) {
 		}
 	}
 
-	if ( client->freezetag_autoThawed >= 1.0 ) {
-		client->freezetag_autoThawed = 1.0;
+	if ( client->freezetag_autoThawed >= 1.0f ) {
+		client->freezetag_autoThawed = 1.0f;
 	}
 	G_ClientSetFrozenState( ent );
 
-	if ( client->freezetag_thawed >= 1.0 ) {
+	if ( client->freezetag_thawed >= 1.0f ) {
 		G_ClientThawNow( ent, ent->client->freezetag_thawedBy );
-	} else if ( client->freezetag_autoThawed >= 1.0 ) {
+	} else if ( client->freezetag_autoThawed >= 1.0f ) {
 		G_ClientThawNow( ent, -1 );
 	}
 }

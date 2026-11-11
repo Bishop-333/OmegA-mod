@@ -73,7 +73,7 @@ void TeleportPlayer( gentity_t *player, vec3_t origin, vec3_t angles ) {
 	gentity_t *tent;
 	qboolean noAngles;
 
-	noAngles = ( angles[0] > 999999.0 );
+	noAngles = ( angles[0] > 999999.0f );
 	// use temp events at source and destination to prevent the effect
 	// from getting dropped by a second player event
 	if ( player->client->sess.sessionTeam != TEAM_SPECTATOR && player->client->ps.pm_type != PM_SPECTATOR ) {
@@ -226,7 +226,7 @@ void SP_misc_portal_camera( gentity_t *ent ) {
 
 	G_SpawnFloat( "roll", "0", &roll );
 
-	ent->s.clientNum = roll / 360.0 * 256;
+	ent->s.clientNum = roll / 360.0f * 256;
 }
 
 /*
@@ -296,7 +296,7 @@ static void InitShooter( gentity_t *ent, int weapon ) {
 	G_SetMovedir( ent->s.angles, ent->movedir );
 
 	if ( !ent->random ) {
-		ent->random = 1.0;
+		ent->random = 1.0f;
 	}
 	ent->random = sin( M_PI * ent->random / 180 );
 	// target might be a moving object, so we can't set movedir for it

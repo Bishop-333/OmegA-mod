@@ -289,7 +289,7 @@ BotRandomWeaponName
 static char *BotRandomWeaponName( void ) {
 	int rnd;
 
-	rnd = random() * 11.9;
+	rnd = random() * 11.9f;
 	switch ( rnd ) {
 		case 0:
 			return "Gauntlet";
@@ -604,7 +604,7 @@ int BotChat_Death( bot_state_t *bs ) {
 			       bs->botdeathtype == MOD_RAILGUN ||
 			       bs->botdeathtype == MOD_BFG ||
 			       bs->botdeathtype == MOD_BFG_SPLASH ) &&
-			     random() < 0.5 ) {
+			     random() < 0.5f ) {
 
 				if ( bs->botdeathtype == MOD_GAUNTLET )
 					BotAI_BotInitialChat( bs, "death_gauntlet",
@@ -759,7 +759,7 @@ int BotChat_HitTalking( bot_state_t *bs ) {
 	if ( gametype == GT_TOURNAMENT ) return qfalse;
 	//if fast chat is off
 	if ( !bot_fastchat.integer ) {
-		if ( random() > rnd * 0.5 ) return qfalse;
+		if ( random() > rnd * 0.5f ) return qfalse;
 	}
 	if ( !BotValidChatPosition( bs ) ) return qfalse;
 	//
@@ -799,7 +799,7 @@ int BotChat_HitNoDeath( bot_state_t *bs ) {
 	if ( gametype == GT_TOURNAMENT ) return qfalse;
 	//if fast chat is off
 	if ( !bot_fastchat.integer ) {
-		if ( random() > rnd * 0.5 ) return qfalse;
+		if ( random() > rnd * 0.5f ) return qfalse;
 	}
 	if ( !BotValidChatPosition( bs ) ) return qfalse;
 	//
@@ -837,7 +837,7 @@ int BotChat_HitNoKill( bot_state_t *bs ) {
 	if ( gametype == GT_TOURNAMENT ) return qfalse;
 	//if fast chat is off
 	if ( !bot_fastchat.integer ) {
-		if ( random() > rnd * 0.5 ) return qfalse;
+		if ( random() > rnd * 0.5f ) return qfalse;
 	}
 	if ( !BotValidChatPosition( bs ) ) return qfalse;
 	//
@@ -875,10 +875,10 @@ int BotChat_Random( bot_state_t *bs ) {
 	     bs->ltgtype == LTG_RUSHBASE ) return qfalse;
 	//
 	rnd = trap_Characteristic_BFloat( bs->character, CHARACTERISTIC_CHAT_RANDOM, 0, 1 );
-	if ( random() > bs->thinktime * 0.1 ) return qfalse;
+	if ( random() > bs->thinktime * 0.1f ) return qfalse;
 	if ( !bot_fastchat.integer ) {
 		if ( random() > rnd ) return qfalse;
-		if ( random() > 0.25 ) return qfalse;
+		if ( random() > 0.25f ) return qfalse;
 	}
 	if ( BotNumActivePlayers() <= 1 ) return qfalse;
 	//
@@ -926,7 +926,7 @@ BotChatTime
 ==================
 */
 float BotChatTime( bot_state_t *bs ) {
-	return 2.0;
+	return 2.0f;
 }
 
 /*

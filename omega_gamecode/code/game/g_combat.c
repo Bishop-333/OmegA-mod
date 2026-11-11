@@ -852,8 +852,8 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 	if ( g_freeze.integer ) {
 		self->client->frozen = FROZEN_DIED;
 		self->client->freezetag_thawedBy = -1;
-		self->client->freezetag_thawed = 0.0;
-		self->client->freezetag_autoThawed = 0.0;
+		self->client->freezetag_thawed = 0.0f;
+		self->client->freezetag_autoThawed = 0.0f;
 
 		if ( meansOfDeath != MOD_LAVA && meansOfDeath != MOD_SLIME && meansOfDeath != MOD_TRIGGER_HURT && meansOfDeath != MOD_CRUSH && meansOfDeath != MOD_UNKNOWN && meansOfDeath != MOD_WATER && meansOfDeath != MOD_TARGET_LASER && meansOfDeath != MOD_TELEFRAG && meansOfDeath != MOD_JUICED ) {
 			self->client->frozen = FROZEN_ONMAP;
@@ -1328,7 +1328,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	if ( targ && targ->client && attacker->client )
 		damage = catchup_damage( damage, attacker->client->ps.persistant[PERS_SCORE], targ->client->ps.persistant[PERS_SCORE] );
 
-	if ( g_damageModifier.value > 0.01 ) {
+	if ( g_damageModifier.value > 0.01f ) {
 		damage *= g_damageModifier.value;
 	}
 
@@ -1362,7 +1362,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 		z_rel = point[2] - targ->r.currentOrigin[2] + fabs( targ->r.mins[2] );
 		z_ratio = z_rel / height;
 
-		if ( z_ratio < 0.95 ) {
+		if ( z_ratio < 0.95f ) {
 			if ( g_headshotOnly.integer ) {
 				damage = 0;
 			}
@@ -1430,7 +1430,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	}
 
 	//If vampire is enabled, gain health but not from self or teammate, cannot steal more than targ has
-	if ( g_vampire.value > 0.0 && ( targ != attacker ) && take > 0 &&
+	if ( g_vampire.value > 0.0f && ( targ != attacker ) && take > 0 &&
 	     !( OnSameTeam( targ, attacker ) ) && attacker->health > 0 && targ->health > 0 ) {
 		if ( take < targ->health )
 			attacker->health += (int)( ( (float)take ) * g_vampire.value );
@@ -1441,7 +1441,7 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 	}
 
 	if ( damage && targ->client && targ != attacker && g_damagePlums.integer && targ->health > 0 ) {
-		if ( !g_headshotOnly.integer || ( g_headshotOnly.integer && z_ratio > 0.95 ) ) {
+		if ( !g_headshotOnly.integer || ( g_headshotOnly.integer && z_ratio > 0.95f ) ) {
 			if ( mod != MOD_SHOTGUN ) {
 				DamagePlum( attacker, targ->r.currentOrigin, damage );
 			} else {
@@ -1499,12 +1499,12 @@ qboolean CanDamage( gentity_t *targ, vec3_t origin ) {
 	// use the midpoint of the bounds instead of the origin, because
 	// bmodels may have their origin is 0,0,0
 	VectorAdd( targ->r.absmin, targ->r.absmax, midpoint );
-	VectorScale( midpoint, 0.5, midpoint );
+	VectorScale( midpoint, 0.5f, midpoint );
 
 	VectorCopy( midpoint, dest );
 	trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
 
-	if ( tr.fraction == 1.0 || tr.entityNum == targ->s.number )
+	if ( tr.fraction == 1.0f || tr.entityNum == targ->s.number )
 		return qtrue;
 
 	// this should probably check in the plane of projection,
@@ -1513,7 +1513,7 @@ qboolean CanDamage( gentity_t *targ, vec3_t origin ) {
 		VectorAdd( midpoint, offsets[i], dest );
 		trap_Trace( &tr, origin, vec3_origin, vec3_origin, dest, ENTITYNUM_NONE, MASK_SOLID );
 
-		if ( tr.fraction == 1.0 || tr.entityNum == targ->s.number )
+		if ( tr.fraction == 1.0f || tr.entityNum == targ->s.number )
 			return qtrue;
 	}
 
@@ -1573,7 +1573,7 @@ qboolean G_RadiusDamage( gentity_t *self, vec3_t origin, gentity_t *attacker, fl
 		}
 
 		dist = sqrt( dist );
-		points = damage * ( 1.0 - dist / radius );
+		points = damage * ( 1.0f - dist / radius );
 
 		if ( CanDamage( ent, origin ) ) {
 			if ( LogAccuracyHit( ent, attacker ) ) {
@@ -1624,7 +1624,7 @@ qboolean G_RailJump( vec3_t origin, gentity_t *attacker ) {
 	}
 
 	dist = sqrt( dist );
-	points = damage * ( 1.0 - dist / radius );
+	points = damage * ( 1.0f - dist / radius );
 
 	if ( CanDamage( attacker, origin ) ) {
 		VectorSubtract( attacker->r.currentOrigin, origin, dir );

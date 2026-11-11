@@ -55,7 +55,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define REWARD_TIME 3000
 #define REWARD_SOUNDDELAY 1000
 
-#define PULSE_SCALE 1.5 // amount to scale up the icons when activating
+#define PULSE_SCALE 1.5f // amount to scale up the icons when activating
 
 #define MAX_STEP_CHANGE 32
 

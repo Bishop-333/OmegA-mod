@@ -41,7 +41,7 @@ void CG_PositionEntityOnTag( refEntity_t *entity, const refEntity_t *parent,
 
 	// lerp the tag
 	trap_R_LerpTag( &lerped, parentModel, parent->oldframe, parent->frame,
-	                1.0 - parent->backlerp, tagName );
+	                1.0f - parent->backlerp, tagName );
 
 	// FIXME: allow origin offsets along tag?
 	VectorCopy( parent->origin, entity->origin );
@@ -70,7 +70,7 @@ void CG_PositionRotatedEntityOnTag( refEntity_t *entity, const refEntity_t *pare
 
 	// lerp the tag
 	trap_R_LerpTag( &lerped, parentModel, parent->oldframe, parent->frame,
-	                1.0 - parent->backlerp, tagName );
+	                1.0f - parent->backlerp, tagName );
 
 	// FIXME: allow origin offsets along tag?
 	VectorCopy( parent->origin, entity->origin );
@@ -140,10 +140,10 @@ static void CG_EntityEffects( const centity_t *cent ) {
 		float i, r, g, b;
 
 		cl = cent->currentState.constantLight;
-		r = (float)( cl & 0xFF ) / 255.0;
-		g = (float)( ( cl >> 8 ) & 0xFF ) / 255.0;
-		b = (float)( ( cl >> 16 ) & 0xFF ) / 255.0;
-		i = (float)( ( cl >> 24 ) & 0xFF ) * 4.0;
+		r = (float)( cl & 0xFF ) / 255.0f;
+		g = (float)( ( cl >> 8 ) & 0xFF ) / 255.0f;
+		b = (float)( ( cl >> 16 ) & 0xFF ) / 255.0f;
+		i = (float)( ( cl >> 24 ) & 0xFF ) * 4.0f;
 		trap_R_AddLightToScene( cent->lerpOrigin, i, r, g, b );
 	}
 }
@@ -254,7 +254,7 @@ static void CG_Item( centity_t *cent ) {
 	}
 
 	// items bob up and down continuously
-	scale = 0.005 + cent->currentState.number * 0.00001;
+	scale = 0.005f + cent->currentState.number * 0.00001f;
 	modulus = 2 * M_PI * 20228 / scale;
 	cent->lerpOrigin[2] += 4 + cos( ( ( cg.time + 1000 ) % modulus ) * scale ) * 4;
 
@@ -307,7 +307,7 @@ static void CG_Item( centity_t *cent ) {
 		VectorScale( ent.axis[2], frac, ent.axis[2] );
 		ent.nonNormalizedAxes = qtrue;
 	} else {
-		frac = 1.0;
+		frac = 1.0f;
 	}
 
 	// items without glow textures need to keep a minimum light value
@@ -319,9 +319,9 @@ static void CG_Item( centity_t *cent ) {
 
 	// increase the size of the weapons when they are presented as items
 	if ( item->giType == IT_WEAPON ) {
-		VectorScale( ent.axis[0], 1.5, ent.axis[0] );
-		VectorScale( ent.axis[1], 1.5, ent.axis[1] );
-		VectorScale( ent.axis[2], 1.5, ent.axis[2] );
+		VectorScale( ent.axis[0], 1.5f, ent.axis[0] );
+		VectorScale( ent.axis[1], 1.5f, ent.axis[1] );
+		VectorScale( ent.axis[2], 1.5f, ent.axis[2] );
 		ent.nonNormalizedAxes = qtrue;
 		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
 	}
@@ -373,7 +373,7 @@ static void CG_Item( centity_t *cent ) {
 				AnglesToAxis( spinAngles, ent.axis );
 
 				// scale up if respawning
-				if ( frac != 1.0 ) {
+				if ( frac != 1.0f ) {
 					VectorScale( ent.axis[0], frac, ent.axis[0] );
 					VectorScale( ent.axis[1], frac, ent.axis[1] );
 					VectorScale( ent.axis[2], frac, ent.axis[2] );
@@ -428,7 +428,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 
 	// items bob up and down continuously
 	if ( item ) {
-		scale = 0.005 + cent->currentState.number * 0.00001;
+		scale = 0.005f + cent->currentState.number * 0.00001f;
 		modulus = 2 * M_PI * 20228 / scale;
 		cent->lerpOrigin[2] += -5 + cos( ( ( cg.time + 1000 ) % modulus ) * scale ) * 4;
 	} else {
@@ -488,7 +488,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 		VectorScale( ent.axis[2], frac, ent.axis[2] );
 		ent.nonNormalizedAxes = qtrue;
 	} else {
-		frac = 1.0;
+		frac = 1.0f;
 	}
 
 	// items without glow textures need to keep a minimum light value
@@ -500,9 +500,9 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 
 	// increase the size of the weapons when they are presented as items
 	if ( item->giType == IT_WEAPON ) {
-		VectorScale( ent.axis[0], 1.5, ent.axis[0] );
-		VectorScale( ent.axis[1], 1.5, ent.axis[1] );
-		VectorScale( ent.axis[2], 1.5, ent.axis[2] );
+		VectorScale( ent.axis[0], 1.5f, ent.axis[0] );
+		VectorScale( ent.axis[1], 1.5f, ent.axis[1] );
+		VectorScale( ent.axis[2], 1.5f, ent.axis[2] );
 		ent.nonNormalizedAxes = qtrue;
 		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
 	}
@@ -554,7 +554,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 				AnglesToAxis( spinAngles, ent.axis );
 
 				// scale up if respawning
-				if ( frac != 1.0 ) {
+				if ( frac != 1.0f ) {
 					VectorScale( ent.axis[0], frac, ent.axis[0] );
 					VectorScale( ent.axis[1], frac, ent.axis[1] );
 					VectorScale( ent.axis[2], frac, ent.axis[2] );
@@ -642,7 +642,7 @@ static void CG_Missile( centity_t *cent ) {
 
 	// spin as it moves
 	if ( s1->pos.trType != TR_STATIONARY ) {
-		RotateAroundDirection( ent.axis, ( cg.time % TMOD_004 ) / 4.0 );
+		RotateAroundDirection( ent.axis, ( cg.time % TMOD_004 ) / 4.0f );
 	} else {
 		if ( s1->weapon == WP_PROX_LAUNCHER ) {
 			AnglesToAxis( cent->lerpAngles, ent.axis );
@@ -1235,7 +1235,7 @@ void CG_AddPacketEntities( void ) {
 
 	// the auto-rotating items will all have the same axis
 	cg.autoAngles[0] = 0;
-	cg.autoAngles[1] = ( cg.time & 2047 ) * 360 / 2048.0;
+	cg.autoAngles[1] = ( cg.time & 2047 ) * 360 / 2048.0f;
 	cg.autoAngles[2] = 0;
 
 	cg.autoAnglesFast[0] = 0;

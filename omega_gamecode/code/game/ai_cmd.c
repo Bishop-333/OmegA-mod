@@ -1181,7 +1181,7 @@ static void BotMatch_CheckPoint( bot_state_t *bs, bot_match_t *match ) {
 	trap_BotMatchVariable( match, NETNAME, netname, sizeof( netname ) );
 	client = ClientFromName( netname );
 	sscanf( buf, "%f %f %f", &position[0], &position[1], &position[2] );
-	position[2] += 0.5;
+	position[2] += 0.5f;
 	areanum = BotPointAreaNum( position );
 	if ( !areanum ) {
 		if ( BotAddressedToBot( bs, match ) ) {
@@ -1484,7 +1484,7 @@ static float BotNearestVisibleItem( bot_state_t *bs, char *itemname, bot_goal_t 
 		if ( dist < bestdist ) {
 			//trace from start to end
 			BotAI_Trace( &trace, bs->eye, NULL, NULL, tmpgoal.origin, bs->client, CONTENTS_SOLID | CONTENTS_PLAYERCLIP );
-			if ( trace.fraction >= 1.0 ) {
+			if ( trace.fraction >= 1.0f ) {
 				bestdist = dist;
 				memcpy( goal, &tmpgoal, sizeof( bot_goal_t ) );
 			}

@@ -573,9 +573,9 @@ static void G_FinalizeFrozenPlayer( gentity_t *player ) {
 
 	frozen->timestamp = level.time;
 	frozen->physicsObject = qtrue;
-	frozen->physicsBounce = 0.4;
-	if ( frozen->physicsBounce < 0.0 || frozen->physicsBounce > 1.0 ) {
-		frozen->physicsBounce = 0.0;
+	frozen->physicsBounce = 0.4f;
+	if ( frozen->physicsBounce < 0.0f || frozen->physicsBounce > 1.0f ) {
+		frozen->physicsBounce = 0.0f;
 	}
 
 	frozen->s.pos.trType = TR_GRAVITY;
@@ -756,7 +756,7 @@ static void respawnRound( gentity_t *ent ) {
 	gentity_t *tent;
 
 	if ( ent->client->sess.sessionTeam != TEAM_SPECTATOR && !ent->client->isEliminated && ent->client->ps.pm_type != PM_SPECTATOR && !g_survivorsRespawn.integer ) {
-		if ( !g_freeze.integer || ( !ent->client->frozen && ent->client->freezetag_thawed < 1.0 ) ) {
+		if ( !g_freeze.integer || ( !ent->client->frozen && ent->client->freezetag_thawed < 1.0f ) ) {
 			return;
 		}
 	}
@@ -1686,7 +1686,7 @@ void ClientSpawn( gentity_t *ent ) {
 	if (
 	    (
 	        (
-	            ( G_IsElimTeamGametype() && ( !g_freeze.integer || !client->frozen || client->freezetag_thawed < 1.0 ) ) ||
+	            ( G_IsElimTeamGametype() && ( !g_freeze.integer || !client->frozen || client->freezetag_thawed < 1.0f ) ) ||
 	            ( g_gametype.integer == GT_LMS && client->isEliminated ) ) &&
 	        ( !level.intermissiontime || level.warmupTime != 0 ) ) &&
 	    ( client->sess.sessionTeam != TEAM_SPECTATOR ) ) {
@@ -1791,7 +1791,7 @@ void ClientSpawn( gentity_t *ent ) {
 	ent->client->saved.leveltime = 0;
 	//unlagged - backward reconciliation #3
 
-	respawn_inplace = ( client->frozen == FROZEN_ONMAP && client->freezetag_thawed >= 1.0 && g_freezeRespawnInplace.integer && ent->frozenPlayer && ent->frozenPlayer->frozenPlayer == ent );
+	respawn_inplace = ( client->frozen == FROZEN_ONMAP && client->freezetag_thawed >= 1.0f && g_freezeRespawnInplace.integer && ent->frozenPlayer && ent->frozenPlayer->frozenPlayer == ent );
 	// clear everything but the persistant data
 
 	ready = client->ready;

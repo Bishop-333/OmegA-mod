@@ -44,7 +44,7 @@ CalcMuzzlePointOrigin
 void CalcMuzzlePointOrigin( const gentity_t *ent, vec3_t origin, const vec3_t forward, const vec3_t right, const vec3_t up, vec3_t muzzlePoint ) {
 	VectorCopy( ent->client->ps.origin, origin );
 	origin[2] += ent->client->ps.viewheight;
-	VectorMA( origin, 14.0, forward, muzzlePoint );
+	VectorMA( origin, 14.0f, forward, muzzlePoint );
 	// snap to integer coordinates for more efficient network bandwidth usage
 	//SnapVector( muzzlePoint );
 }
@@ -99,7 +99,7 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 
 	CalcMuzzlePointOrigin( ent, muzzle_origin, forward, right, up, muzzle );
 
-	VectorMA( muzzle_origin, ( 32.0 + 14.0 ), forward, end );
+	VectorMA( muzzle_origin, ( 32.0f + 14.0f ), forward, end );
 
 	trap_Trace( &tr, muzzle_origin, NULL, NULL, end, ent->s.number, MASK_SHOT );
 	if ( tr.surfaceFlags & SURF_NOIMPACT ) {
@@ -128,7 +128,7 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 		G_AddEvent( ent, EV_POWERUP_QUAD, 0 );
 		s_quadFactor = g_quadfactor.value;
 	} else {
-		s_quadFactor = 1.0;
+		s_quadFactor = 1.0f;
 	}
 	if ( ent->client->persistantPowerup && ent->client->persistantPowerup->item && ent->client->persistantPowerup->item->giTag == PW_DOUBLER ) {
 		s_quadFactor *= 2;
@@ -177,7 +177,7 @@ void SnapVectorTowards( vec3_t v, vec3_t to ) {
 }
 //unlagged - attack prediction #3
 
-#define CHAINGUN_SPREAD 600.0
+#define CHAINGUN_SPREAD 600.0f
 #define MACHINEGUN_SPREAD 200
 #define MACHINEGUN_DAMAGE ( g_machinegunDamage.integer )
 #define MACHINEGUN_TEAM_DAMAGE ( g_machinegunTeamDamage.integer )
@@ -209,7 +209,7 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 	r = cos( r ) * Q_crandom( &seed ) * spread * 16;
 	//unlagged - attack prediction #2
 
-	VectorMA( muzzle_origin, ( 8192.0 * 16.0 ), forward, end );
+	VectorMA( muzzle_origin, ( 8192.0f * 16.0f ), forward, end );
 	VectorMA( end, r, right, end );
 	VectorMA( end, u, up, end );
 
@@ -417,7 +417,7 @@ static void ShotgunPattern( const vec3_t origin, const vec3_t origin2, int seed,
 	for ( i = 0; i < DEFAULT_SHOTGUN_COUNT; i++ ) {
 		r = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16;
 		u = Q_crandom( &seed ) * DEFAULT_SHOTGUN_SPREAD * 16;
-		VectorMA( origin, ( 8192.0 * 16.0 ), forward, end );
+		VectorMA( origin, ( 8192.0f * 16.0f ), forward, end );
 		VectorMA( end, r, right, end );
 		VectorMA( end, u, up, end );
 		if ( ShotgunPellet( origin, end, ent ) && !hitClient ) {
@@ -449,7 +449,7 @@ static void weapon_supershotgun_fire( gentity_t *ent ) {
 
 	// send shotgun blast
 	tent = G_TempEntity( muzzle, EV_SHOTGUN );
-	VectorScale( forward, 4096.0, tent->s.origin2 );
+	VectorScale( forward, 4096.0f, tent->s.origin2 );
 
 	SnapVector( tent->s.origin2 );
 	//Sago: This sound like a bad idea...
@@ -567,7 +567,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	if ( g_instantgib.integer )
 		damage = 800;
 
-	VectorMA( muzzle_origin, 8192.0, forward, end );
+	VectorMA( muzzle_origin, 8192.0f, forward, end );
 	VectorCopy( muzzle_origin, tracefrom );
 
 	//unlagged - backward reconciliation #2
@@ -588,7 +588,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 		}
 		if ( trace.entityNum >= ENTITYNUM_MAX_NORMAL ) {
 			if ( g_railThroughWalls.integer ) {
-				if ( trace.surfaceFlags & SURF_SKY || trace.fraction == 1.0 ) {
+				if ( trace.surfaceFlags & SURF_SKY || trace.fraction == 1.0f ) {
 					break;
 				} else {
 					VectorMA( trace.endpos, 1, forward, tracefrom );
@@ -763,9 +763,9 @@ void Weapon_HookThink( gentity_t *ent ) {
 		vec3_t v, oldorigin;
 
 		VectorCopy( ent->r.currentOrigin, oldorigin );
-		v[0] = ent->enemy->r.currentOrigin[0] + ( ent->enemy->r.mins[0] + ent->enemy->r.maxs[0] ) * 0.5;
-		v[1] = ent->enemy->r.currentOrigin[1] + ( ent->enemy->r.mins[1] + ent->enemy->r.maxs[1] ) * 0.5;
-		v[2] = ent->enemy->r.currentOrigin[2] + ( ent->enemy->r.mins[2] + ent->enemy->r.maxs[2] ) * 0.5;
+		v[0] = ent->enemy->r.currentOrigin[0] + ( ent->enemy->r.mins[0] + ent->enemy->r.maxs[0] ) * 0.5f;
+		v[1] = ent->enemy->r.currentOrigin[1] + ( ent->enemy->r.mins[1] + ent->enemy->r.maxs[1] ) * 0.5f;
+		v[2] = ent->enemy->r.currentOrigin[2] + ( ent->enemy->r.mins[2] + ent->enemy->r.maxs[2] ) * 0.5f;
 		SnapVectorTowards( v, oldorigin ); // save net bandwidth
 
 		G_SetOrigin( ent, v );
@@ -986,7 +986,7 @@ void FireWeapon( gentity_t *ent ) {
 	if ( ent->client->ps.powerups[PW_QUAD] ) {
 		s_quadFactor = g_quadfactor.value;
 	} else {
-		s_quadFactor = 1.0;
+		s_quadFactor = 1.0f;
 	}
 	if ( ent->client->persistantPowerup && ent->client->persistantPowerup->item && ent->client->persistantPowerup->item->giTag == PW_DOUBLER ) {
 		s_quadFactor *= 2;

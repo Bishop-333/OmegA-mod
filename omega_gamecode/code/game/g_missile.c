@@ -41,9 +41,9 @@ static void G_BounceMissile( gentity_t *ent, trace_t *trace ) {
 	VectorMA( velocity, -2 * dot, trace->plane.normal, ent->s.pos.trDelta );
 
 	if ( ent->s.eFlags & EF_BOUNCE_HALF ) {
-		VectorScale( ent->s.pos.trDelta, 0.65, ent->s.pos.trDelta );
+		VectorScale( ent->s.pos.trDelta, 0.65f, ent->s.pos.trDelta );
 		// check for stop
-		if ( trace->plane.normal[2] > 0.2 && VectorLengthSquared( ent->s.pos.trDelta ) < Square( 40 ) ) {
+		if ( trace->plane.normal[2] > 0.2f && VectorLengthSquared( ent->s.pos.trDelta ) < Square( 40 ) ) {
 			G_SetOrigin( ent, trace->endpos );
 			ent->s.time = level.time / 4;
 			return;
@@ -492,9 +492,9 @@ static void G_MissileImpact( gentity_t *ent, trace_t *trace ) {
 
 			ent->enemy = other;
 
-			v[0] = other->r.currentOrigin[0] + ( other->r.mins[0] + other->r.maxs[0] ) * 0.5;
-			v[1] = other->r.currentOrigin[1] + ( other->r.mins[1] + other->r.maxs[1] ) * 0.5;
-			v[2] = other->r.currentOrigin[2] + ( other->r.mins[2] + other->r.maxs[2] ) * 0.5;
+			v[0] = other->r.currentOrigin[0] + ( other->r.mins[0] + other->r.maxs[0] ) * 0.5f;
+			v[1] = other->r.currentOrigin[1] + ( other->r.mins[1] + other->r.maxs[1] ) * 0.5f;
+			v[2] = other->r.currentOrigin[2] + ( other->r.mins[2] + other->r.maxs[2] ) * 0.5f;
 
 			SnapVectorTowards( v, ent->s.pos.trBase ); // save net bandwidth
 		} else {
@@ -907,7 +907,7 @@ static void G_GuideMissile( gentity_t *missile ) {
 
 	VectorAdd( forward, muzzle, muzzle );
 	VectorNormalizeFast( muzzle );
-	VectorScale( muzzle, g_rocketSpeed.integer * 0.75, forward );
+	VectorScale( muzzle, g_rocketSpeed.integer * 0.75f, forward );
 	VectorCopy( forward, missile->s.pos.trDelta );
 	vectoangles( muzzle, missile->s.angles );
 	SnapVector( missile->s.pos.trDelta );

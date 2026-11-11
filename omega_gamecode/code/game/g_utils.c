@@ -245,7 +245,7 @@ void G_UseTargets( gentity_t *ent, gentity_t *activator ) {
 	}
 
 	if ( ent->targetShaderName && ent->targetShaderNewName ) {
-		float f = level.time * 0.001;
+		float f = level.time * 0.001f;
 		AddRemap( ent->targetShaderName, ent->targetShaderNewName, f );
 		trap_SetConfigstring( CS_SHADERSTATE, BuildShaderStateConfig() );
 	}

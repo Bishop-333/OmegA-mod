@@ -200,7 +200,7 @@ static void CG_DrawOldClientScore( int y, score_t *score, float *color, float fa
 			hcolor[2] = 0.7f;
 		}
 
-		hcolor[3] = fade * 0.7;
+		hcolor[3] = fade * 0.7f;
 		CG_FillRect( SB_OLD_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ), y,
 		             640 - SB_OLD_SCORELINE_X - BIGCHAR_WIDTH, BIGCHAR_HEIGHT + 1, hcolor );
 	}
@@ -309,7 +309,7 @@ static void CG_DrawClientScoreHeader( int y ) {
 	origin[0] = 90;
 	origin[1] = 0;
 	origin[2] = -10;
-	angles[YAW] = cg.time * 360 / 2048.0;
+	angles[YAW] = cg.time * 360 / 2048.0f;
 	CG_Draw3DModel( 592, 432, ICON_SIZE, ICON_SIZE, cgs.media.omegaLogoModel, 0, origin, angles );
 }
 
@@ -394,7 +394,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 	}
 
 	if ( cg.snap->ps.stats[STAT_TEAM_LOCKED] & LOCKED ) {
-		CG_DrawTinyString( 260, 92, "Teams are locked", 0.5 );
+		CG_DrawTinyString( 260, 92, "Teams are locked", 0.5f );
 	}
 
 	// highlight your position
@@ -429,7 +429,7 @@ static void CG_DrawClientScore( int y, score_t *score, float *color, float fade,
 			hcolor[2] = 0.7f;
 		}
 
-		hcolor[3] = fade * 0.5;
+		hcolor[3] = fade * 0.5f;
 		CG_FillRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ), y,
 		             640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6, BIGCHAR_HEIGHT + 11, hcolor );
 	}
@@ -544,7 +544,7 @@ static int CG_TeamScoreboard( int y, team_t team, float fade, int maxClients, in
 	int count;
 	clientInfo_t *ci;
 
-	color[0] = color[1] = color[2] = 1.0;
+	color[0] = color[1] = color[2] = 1.0f;
 	color[3] = fade;
 
 	count = 0;
@@ -604,7 +604,7 @@ qboolean CG_DrawOldScoreboard( void ) {
 
 	if ( cg.showScores || ( cg.predictedPlayerState.pm_type == PM_DEAD && !cgs.spectateOnDeath ) ||
 	     cg.predictedPlayerState.pm_type == PM_INTERMISSION ) {
-		fade = 1.0;
+		fade = 1.0f;
 		fadeColor = colorWhite;
 	} else {
 		fadeColor = CG_FadeColor( cg.scoreFadeTime, FADE_TIME );
@@ -743,7 +743,7 @@ Draw the new in-game scoreboard
 */
 qboolean CG_DrawNewScoreboard( void ) {
 	int x, y, w, i, n1, n2;
-	float fade = 0.0;
+	float fade = 0.0f;
 	float *fadeColor;
 	float color[4];
 	char *s;
@@ -751,7 +751,7 @@ qboolean CG_DrawNewScoreboard( void ) {
 	int lineHeight;
 	int topBorderSize, bottomBorderSize, leftBorderSize, rightBorderSize;
 
-	color[0] = color[1] = color[2] = 1.0;
+	color[0] = color[1] = color[2] = 1.0f;
 	color[3] = fade;
 
 	// don't draw anything if the menu or console is up
@@ -772,7 +772,7 @@ qboolean CG_DrawNewScoreboard( void ) {
 
 	if ( cg.showScores || ( cg.predictedPlayerState.pm_type == PM_DEAD && !cgs.spectateOnDeath ) ||
 	     cg.predictedPlayerState.pm_type == PM_INTERMISSION ) {
-		fade = 1.0;
+		fade = 1.0f;
 		fadeColor = colorWhite;
 	} else {
 		fadeColor = CG_FadeColor( cg.scoreFadeTime, FADE_TIME );
@@ -835,10 +835,10 @@ qboolean CG_DrawNewScoreboard( void ) {
 	// scoreboard
 	y = SB_HEADER;
 
-	color[0] = 0.0;
-	color[1] = 0.5;
-	color[2] = 1.0;
-	color[3] = 0.5;
+	color[0] = 0.0f;
+	color[1] = 0.5f;
+	color[2] = 1.0f;
+	color[3] = 0.5f;
 	CG_DrawSmallStringColor( SB_SCORE_X - ( SB_RATING_WIDTH / 2 ), y + 15, "Score", color );
 
 	if ( BG_IsCTFGametype( cgs.gametype ) ) {
@@ -873,26 +873,26 @@ qboolean CG_DrawNewScoreboard( void ) {
 		if ( cg.teamScores[0] >= cg.teamScores[1] ) {
 			n1 = CG_TeamScoreboard( y, TEAM_RED, fade, maxClients, lineHeight, qtrue );
 			CG_DrawTeamBackground( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5f, TEAM_RED );
-			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5, colorBlack );
+			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5f, colorBlack );
 			CG_TeamScoreboard( y, TEAM_RED, fade, maxClients, lineHeight, qfalse );
 			y += ( n1 * lineHeight ) + BIGCHAR_HEIGHT;
 			maxClients -= n1;
 			n2 = CG_TeamScoreboard( y, TEAM_BLUE, fade, maxClients, lineHeight, qtrue );
 			CG_DrawTeamBackground( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n2 * lineHeight + bottomBorderSize, 0.5f, TEAM_BLUE );
-			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize - 0.5, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n2 * lineHeight + bottomBorderSize + 0.5, 0.5, colorBlack );
+			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize - 0.5f, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n2 * lineHeight + bottomBorderSize + 0.5f, 0.5f, colorBlack );
 			CG_TeamScoreboard( y, TEAM_BLUE, fade, maxClients, lineHeight, qfalse );
 			y += ( n2 * lineHeight ) + BIGCHAR_HEIGHT;
 			maxClients -= n2;
 		} else {
 			n1 = CG_TeamScoreboard( y, TEAM_BLUE, fade, maxClients, lineHeight, qtrue );
 			CG_DrawTeamBackground( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5f, TEAM_BLUE );
-			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5, colorBlack );
+			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5f, colorBlack );
 			CG_TeamScoreboard( y, TEAM_BLUE, fade, maxClients, lineHeight, qfalse );
 			y += ( n1 * lineHeight ) + BIGCHAR_HEIGHT;
 			maxClients -= n1;
 			n2 = CG_TeamScoreboard( y, TEAM_RED, fade, maxClients, lineHeight, qtrue );
 			CG_DrawTeamBackground( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n2 * lineHeight + bottomBorderSize, 0.5f, TEAM_RED );
-			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize - 0.5, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n2 * lineHeight + bottomBorderSize + 0.5, 0.5, colorBlack );
+			CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize - 0.5f, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n2 * lineHeight + bottomBorderSize + 0.5f, 0.5f, colorBlack );
 			CG_TeamScoreboard( y, TEAM_RED, fade, maxClients, lineHeight, qfalse );
 			y += ( n2 * lineHeight ) + BIGCHAR_HEIGHT;
 			maxClients -= n2;
@@ -909,7 +909,7 @@ qboolean CG_DrawNewScoreboard( void ) {
 		y += lineHeight / 2;
 		n1 = CG_TeamScoreboard( y, TEAM_FREE, fade, maxClients, lineHeight, qtrue );
 		CG_DrawTeamBackground( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5f, 0 );
-		CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5, colorBlack );
+		CG_DrawRect( SB_SCORELINE_X + BIGCHAR_WIDTH + ( SB_RATING_WIDTH / 2 ) - leftBorderSize, y - topBorderSize, 640 - SB_SCORELINE_X - BIGCHAR_WIDTH * 6 + rightBorderSize, n1 * lineHeight + bottomBorderSize, 0.5f, colorBlack );
 		CG_TeamScoreboard( y, TEAM_FREE, fade, maxClients, lineHeight, qfalse );
 		y += ( n1 * lineHeight ) + BIGCHAR_HEIGHT;
 		n2 = CG_TeamScoreboard( y, TEAM_SPECTATOR, fade, maxClients - n1, lineHeight, qfalse );
@@ -954,7 +954,7 @@ static void CG_CenterGiantLine( float y, const char *string ) {
 	color[2] = 1;
 	color[3] = 1;
 
-	x = 0.5 * ( 640 - GIANT_WIDTH * CG_DrawStrlen( string ) );
+	x = 0.5f * ( 640 - GIANT_WIDTH * CG_DrawStrlen( string ) );
 
 	CG_DrawStringExt( x, y, string, color, qtrue, qtrue, GIANT_WIDTH, GIANT_HEIGHT, 0 );
 }

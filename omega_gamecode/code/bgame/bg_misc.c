@@ -1314,7 +1314,7 @@ void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result ) 
 			VectorCopy( tr->trBase, result );
 			break;
 		case TR_LINEAR:
-			deltaTime = ( atTime - tr->trTime ) * 0.001; // milliseconds to seconds
+			deltaTime = ( atTime - tr->trTime ) * 0.001f; // milliseconds to seconds
 			VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
 			break;
 		case TR_SINE:
@@ -1326,16 +1326,16 @@ void BG_EvaluateTrajectory( const trajectory_t *tr, int atTime, vec3_t result ) 
 			if ( atTime > tr->trTime + tr->trDuration ) {
 				atTime = tr->trTime + tr->trDuration;
 			}
-			deltaTime = ( atTime - tr->trTime ) * 0.001; // milliseconds to seconds
+			deltaTime = ( atTime - tr->trTime ) * 0.001f; // milliseconds to seconds
 			if ( deltaTime < 0 ) {
 				deltaTime = 0;
 			}
 			VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
 			break;
 		case TR_GRAVITY:
-			deltaTime = ( atTime - tr->trTime ) * 0.001; // milliseconds to seconds
+			deltaTime = ( atTime - tr->trTime ) * 0.001f; // milliseconds to seconds
 			VectorMA( tr->trBase, deltaTime, tr->trDelta, result );
-			result[2] -= 0.5 * DEFAULT_GRAVITY * Square( deltaTime ); // FIXME: local gravity...
+			result[2] -= 0.5f * DEFAULT_GRAVITY * Square( deltaTime ); // FIXME: local gravity...
 			break;
 		default:
 			Com_Error( ERR_DROP, "BG_EvaluateTrajectory: unknown trType: %i", tr->trTime );
@@ -1365,7 +1365,7 @@ void BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t resu
 		case TR_SINE:
 			deltaTime = ( atTime - tr->trTime ) / (float)tr->trDuration;
 			phase = cos( deltaTime * M_PI * 2 ); // derivative of sin = cos
-			phase *= 0.5;
+			phase *= 0.5f;
 			VectorScale( tr->trDelta, phase, result );
 			break;
 		case TR_LINEAR_STOP:
@@ -1376,7 +1376,7 @@ void BG_EvaluateTrajectoryDelta( const trajectory_t *tr, int atTime, vec3_t resu
 			VectorCopy( tr->trDelta, result );
 			break;
 		case TR_GRAVITY:
-			deltaTime = ( atTime - tr->trTime ) * 0.001; // milliseconds to seconds
+			deltaTime = ( atTime - tr->trTime ) * 0.001f; // milliseconds to seconds
 			VectorCopy( tr->trDelta, result );
 			result[2] -= DEFAULT_GRAVITY * deltaTime; // FIXME: local gravity...
 			break;

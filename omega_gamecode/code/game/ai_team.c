@@ -736,9 +736,9 @@ static void BotSayTeamCTFOrders( bot_state_t *bs, int numteammates, int *teammat
 			BotSayTeamOrder( bs, teammates[2] );
 			break;
 		default:
-			defenders = (int)(float)numteammates * defRatio + 0.5;
+			defenders = (int)(float)numteammates * defRatio + 0.5f;
 			if ( defenders > defMax ) defenders = defMax;
-			attackers = (int)(float)numteammates * attRatio + 0.5;
+			attackers = (int)(float)numteammates * attRatio + 0.5f;
 			if ( attackers > attMax ) attackers = attMax;
 
 			for ( i = 0; i < defenders; i++ ) {
@@ -1690,7 +1690,7 @@ void BotTeamAI( bot_state_t *bs ) {
 				if ( bs->lastflagcapture_time < FloatTime() - 240 ) {
 					bs->lastflagcapture_time = FloatTime();
 					// randomly change the CTF strategy
-					if ( random() < 0.4 ) {
+					if ( random() < 0.4f ) {
 						bs->ctfstrategy ^= CTFS_AGRESSIVE;
 						bs->teamgiveorders_time = FloatTime();
 					}
@@ -1740,7 +1740,7 @@ void BotTeamAI( bot_state_t *bs ) {
 				if ( bs->lastflagcapture_time < FloatTime() - 240 ) {
 					bs->lastflagcapture_time = FloatTime();
 					// randomly change the CTF strategy
-					if ( random() < 0.4 ) {
+					if ( random() < 0.4f ) {
 						bs->ctfstrategy ^= CTFS_AGRESSIVE;
 						bs->teamgiveorders_time = FloatTime();
 					}

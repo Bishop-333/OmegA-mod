@@ -978,7 +978,7 @@ static void CG_RegisterGraphics( void ) {
 		cgs.inlineDrawModel[i] = trap_R_RegisterModel( name );
 		trap_R_ModelBounds( cgs.inlineDrawModel[i], mins, maxs );
 		for ( j = 0; j < 3; j++ ) {
-			cgs.inlineModelMidpoints[i][j] = mins[j] + 0.5 * ( maxs[j] - mins[j] );
+			cgs.inlineModelMidpoints[i][j] = mins[j] + 0.5f * ( maxs[j] - mins[j] );
 		}
 	}
 
@@ -1162,8 +1162,8 @@ void CG_Init( int serverMessageNum, int serverCommandSequence, int clientNum ) {
 
 	// get the rendering configuration from the client system
 	trap_GetGlconfig( &cgs.glconfig );
-	cgs.screenXScale = cgs.glconfig.vidWidth / 640.0;
-	cgs.screenYScale = cgs.glconfig.vidHeight / 480.0;
+	cgs.screenXScale = cgs.glconfig.vidWidth / 640.0f;
+	cgs.screenYScale = cgs.glconfig.vidHeight / 480.0f;
 
 	// get the gamestate from the client system
 	trap_GetGameState( &cgs.gameState );

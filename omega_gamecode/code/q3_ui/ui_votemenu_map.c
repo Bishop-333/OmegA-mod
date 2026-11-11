@@ -245,7 +245,7 @@ UI_VoteMapMenu_Draw
 =================
 */
 static void UI_VoteMapMenu_Draw( void ) {
-	vec4_t bg = { 0.0, 0.0, 0.0, 0.85 };
+	vec4_t bg = { 0.0f, 0.0f, 0.0f, 0.85f };
 
 	UI_FillRect( -64, 0, 768, 480, bg );
 

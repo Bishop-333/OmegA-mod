@@ -147,7 +147,7 @@ static void Main_MenuDraw( void ) {
 	vec3_t angles;
 	float adjust;
 	float x, y, w, h;
-	vec4_t color = { 0.2, 0.2, 1.0, 1 };
+	vec4_t color = { 0.2f, 0.2f, 1.0f, 1 };
 
 	// setup the refdef
 
@@ -169,7 +169,7 @@ static void Main_MenuDraw( void ) {
 
 	adjust = 0; // JDC: Kenneth asked me to stop this 1.0 * sin( (float)uis.realtime / 1000 );
 	refdef.fov_x = 60 + adjust;
-	refdef.fov_y = 19.6875 + adjust;
+	refdef.fov_y = 19.6875f + adjust;
 
 	refdef.time = uis.realtime;
 

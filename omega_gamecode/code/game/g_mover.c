@@ -204,7 +204,7 @@ static qboolean G_CheckProxMinePosition( gentity_t *check ) {
 	vec3_t start, end;
 	trace_t tr;
 
-	VectorMA( check->s.pos.trBase, 0.125, check->movedir, start );
+	VectorMA( check->s.pos.trBase, 0.125f, check->movedir, start );
 	VectorMA( check->s.pos.trBase, 2, check->movedir, end );
 	trap_Trace( &tr, start, NULL, NULL, end, check->s.number, MASK_SOLID );
 
@@ -507,14 +507,14 @@ static void SetMoverState( gentity_t *ent, moverState_t moverState, int time ) {
 		case MOVER_1TO2:
 			VectorCopy( ent->pos1, ent->s.pos.trBase );
 			VectorSubtract( ent->pos2, ent->pos1, delta );
-			f = 1000.0 / ent->s.pos.trDuration;
+			f = 1000.0f / ent->s.pos.trDuration;
 			VectorScale( delta, f, ent->s.pos.trDelta );
 			ent->s.pos.trType = TR_LINEAR_STOP;
 			break;
 		case MOVER_2TO1:
 			VectorCopy( ent->pos2, ent->s.pos.trBase );
 			VectorSubtract( ent->pos1, ent->pos2, delta );
-			f = 1000.0 / ent->s.pos.trDuration;
+			f = 1000.0f / ent->s.pos.trDuration;
 			VectorScale( delta, f, ent->s.pos.trDelta );
 			ent->s.pos.trType = TR_LINEAR_STOP;
 			break;
@@ -823,7 +823,7 @@ static void Touch_DoorTriggerSpectator( gentity_t *ent, gentity_t *other, trace_
 		origin[axis] = doorMax + 10;
 	}
 
-	TeleportPlayer( other, origin, tv( 10000000.0, 0, 0 ) );
+	TeleportPlayer( other, origin, tv( 10000000.0f, 0, 0 ) );
 }
 
 /*
@@ -1061,11 +1061,11 @@ static void SpawnPlatTrigger( gentity_t *ent ) {
 	tmax[2] = ent->pos1[2] + ent->r.maxs[2] + 8;
 
 	if ( tmax[0] <= tmin[0] ) {
-		tmin[0] = ent->pos1[0] + ( ent->r.mins[0] + ent->r.maxs[0] ) * 0.5;
+		tmin[0] = ent->pos1[0] + ( ent->r.mins[0] + ent->r.maxs[0] ) * 0.5f;
 		tmax[0] = tmin[0] + 1;
 	}
 	if ( tmax[1] <= tmin[1] ) {
-		tmin[1] = ent->pos1[1] + ( ent->r.mins[1] + ent->r.maxs[1] ) * 0.5;
+		tmin[1] = ent->pos1[1] + ( ent->r.mins[1] + ent->r.maxs[1] ) * 0.5f;
 		tmax[1] = tmin[1] + 1;
 	}
 

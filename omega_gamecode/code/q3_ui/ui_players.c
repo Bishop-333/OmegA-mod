@@ -284,7 +284,7 @@ static void UI_PositionEntityOnTag( refEntity_t *entity, const refEntity_t *pare
 
 	// lerp the tag
 	trap_CM_LerpTag( &lerped, parentModel, parent->oldframe, parent->frame,
-	                 1.0 - parent->backlerp, tagName );
+	                 1.0f - parent->backlerp, tagName );
 
 	// FIXME: allow origin offsets along tag?
 	VectorCopy( parent->origin, entity->origin );
@@ -310,7 +310,7 @@ static void UI_PositionRotatedEntityOnTag( refEntity_t *entity, const refEntity_
 
 	// lerp the tag
 	trap_CM_LerpTag( &lerped, parentModel, parent->oldframe, parent->frame,
-	                 1.0 - parent->backlerp, tagName );
+	                 1.0f - parent->backlerp, tagName );
 
 	// FIXME: allow origin offsets along tag?
 	VectorCopy( parent->origin, entity->origin );
@@ -401,7 +401,7 @@ static void UI_RunLerpFrame( playerInfo_t *ci, lerpFrame_t *lf, int newAnimation
 	if ( lf->frameTime == lf->oldFrameTime ) {
 		lf->backlerp = 0;
 	} else {
-		lf->backlerp = 1.0 - (float)( dp_realtime - lf->oldFrameTime ) / ( lf->frameTime - lf->oldFrameTime );
+		lf->backlerp = 1.0f - (float)( dp_realtime - lf->oldFrameTime ) / ( lf->frameTime - lf->oldFrameTime );
 	}
 }
 
@@ -460,7 +460,7 @@ static void UI_SwingAngles( float destination, float swingTolerance, float clamp
 		if ( followCursor ) {
 			swing = AngleSubtract( destination, *angle );
 		} else {
-			swing = 0.0;
+			swing = 0.0f;
 		}
 		if ( swing > swingTolerance || swing < -swingTolerance ) {
 			*swinging = qtrue;
@@ -475,12 +475,12 @@ static void UI_SwingAngles( float destination, float swingTolerance, float clamp
 	// so it doesn't seem so linear
 	swing = AngleSubtract( destination, *angle );
 	scale = fabs( swing );
-	if ( scale < swingTolerance * 0.5 ) {
-		scale = 0.5;
+	if ( scale < swingTolerance * 0.5f ) {
+		scale = 0.5f;
 	} else if ( scale < swingTolerance ) {
-		scale = 1.0;
+		scale = 1.0f;
 	} else {
-		scale = 2.0;
+		scale = 2.0f;
 	}
 
 	// swing towards the destination angle
@@ -525,8 +525,8 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 		headAngles[YAW] = AngleMod( headAngles[YAW] ) + uis.realtime / 32;
 	} else if ( followCursor ) {
 		cursorPosition[0] = 175;
-		cursorPosition[1] = ( uis.cursorx - ( 640 * 0.5 ) );
-		cursorPosition[2] = ( uis.cursory - ( 480 * 0.5 ) );
+		cursorPosition[1] = ( uis.cursorx - ( 640 * 0.5f ) );
+		cursorPosition[2] = ( uis.cursory - ( 480 * 0.5f ) );
 
 		VectorClear( pi->viewAngles );
 		VectorClear( pi->moveAngles );
@@ -579,9 +579,9 @@ static void UI_PlayerAngles( playerInfo_t *pi, vec3_t legs[3], vec3_t torso[3], 
 
 	// only show a fraction of the pitch angle in the torso
 	if ( headAngles[PITCH] > 180 ) {
-		dest = ( -360 + headAngles[PITCH] ) * 0.75;
+		dest = ( -360 + headAngles[PITCH] ) * 0.75f;
 	} else {
-		dest = headAngles[PITCH] * 0.75;
+		dest = headAngles[PITCH] * 0.75f;
 	}
 	UI_SwingAngles( dest, 15, 30, 0.1f, &pi->torso.pitchAngle, &pi->torso.pitching, followCursor );
 	torsoAngles[PITCH] = pi->torso.pitchAngle;
@@ -631,7 +631,7 @@ static float UI_MachinegunSpinAngle( playerInfo_t *pi ) {
 			delta = COAST_TIME;
 		}
 
-		speed = 0.5 * ( SPIN_SPEED + (float)( COAST_TIME - delta ) / COAST_TIME );
+		speed = 0.5f * ( SPIN_SPEED + (float)( COAST_TIME - delta ) / COAST_TIME );
 		angle = pi->barrelAngle + delta * speed;
 	}
 
@@ -709,10 +709,10 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	refdef.fov_y *= ( 360 / M_PI );
 
 	// calculate distance so the player nearly fills the box
-	len = 0.65 * ( maxs[2] - mins[2] );
+	len = 0.65f * ( maxs[2] - mins[2] );
 	origin[0] = len / tan( DEG2RAD( refdef.fov_x ) * 0.5 );
-	origin[1] = 0.5 * ( mins[1] + maxs[1] );
-	origin[2] = -0.5 * ( mins[2] + maxs[2] );
+	origin[1] = 0.5f * ( mins[1] + maxs[1] );
+	origin[2] = -0.5f * ( mins[2] + maxs[2] );
 
 	refdef.time = dp_realtime;
 
@@ -953,12 +953,12 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 	origin[0] -= 100; // + = behind, - = in front
 	origin[1] += 100; // + = left, - = right
 	origin[2] += 100; // + = above, - = below
-	trap_R_AddLightToScene( origin, 500, 1.0, 1.0, 1.0 );
+	trap_R_AddLightToScene( origin, 500, 1.0f, 1.0f, 1.0f );
 
 	origin[0] -= 100;
 	origin[1] -= 100;
 	origin[2] -= 100;
-	trap_R_AddLightToScene( origin, 500, 1.0, 0.0, 0.0 );
+	trap_R_AddLightToScene( origin, 500, 1.0f, 0.0f, 0.0f );
 
 	trap_R_RenderScene( &refdef );
 }

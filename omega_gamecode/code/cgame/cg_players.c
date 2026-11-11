@@ -1320,7 +1320,7 @@ static void CG_RunLerpFrame( clientInfo_t *ci, lerpFrame_t *lf, int newAnimation
 	if ( lf->frameTime == lf->oldFrameTime ) {
 		lf->backlerp = 0;
 	} else {
-		lf->backlerp = 1.0 - (float)( cg.time - lf->oldFrameTime ) / ( lf->frameTime - lf->oldFrameTime );
+		lf->backlerp = 1.0f - (float)( cg.time - lf->oldFrameTime ) / ( lf->frameTime - lf->oldFrameTime );
 	}
 }
 
@@ -1354,7 +1354,7 @@ static void CG_PlayerAnimation( centity_t *cent, int *legsOld, int *legs, float 
 	}
 
 	if ( cent->currentState.powerups & ( 1 << PW_HASTE ) ) {
-		speedScale = 1.5;
+		speedScale = 1.5f;
 	} else {
 		speedScale = 1;
 	}
@@ -1428,12 +1428,12 @@ static void CG_SwingAngles( float destination, float swingTolerance, float clamp
 	// so it doesn't seem so linear
 	swing = AngleSubtract( destination, *angle );
 	scale = fabs( swing );
-	if ( scale < swingTolerance * 0.5 ) {
-		scale = 0.5;
+	if ( scale < swingTolerance * 0.5f ) {
+		scale = 0.5f;
 	} else if ( scale < swingTolerance ) {
-		scale = 1.0;
+		scale = 1.0f;
 	} else {
-		scale = 2.0;
+		scale = 2.0f;
 	}
 
 	// swing towards the destination angle
@@ -1476,7 +1476,7 @@ static void CG_AddPainTwitch( centity_t *cent, vec3_t torsoAngles ) {
 		return;
 	}
 
-	f = 1.0 - (float)t / PAIN_TWITCH_TIME;
+	f = 1.0f - (float)t / PAIN_TWITCH_TIME;
 
 	if ( cent->pe.painDirection ) {
 		torsoAngles[ROLL] += 20 * f;
@@ -1533,7 +1533,7 @@ static void CG_PlayerAngles( centity_t *cent, vec3_t legs[3], vec3_t torso[3], v
 		}
 	}
 	legsAngles[YAW] = headAngles[YAW] + movementOffsets[dir];
-	torsoAngles[YAW] = headAngles[YAW] + 0.25 * movementOffsets[dir];
+	torsoAngles[YAW] = headAngles[YAW] + 0.25f * movementOffsets[dir];
 
 	// torso
 	if ( cg.renderingThirdPerson && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) ) {
@@ -1961,7 +1961,7 @@ static void CG_PlayerPowerups( centity_t *cent, refEntity_t *torso ) {
 		} else if ( !( cent->currentState.number == cg.snap->ps.clientNum && cg_thirdPersonFlagSprite.integer && cg.renderingThirdPerson ) ) {
 			CG_TrailItem( cent, cgs.media.redFlagModel );
 		}
-		trap_R_AddLightToScene( cent->lerpOrigin, 200 + ( rand() & 31 ), 1.0, 0.2f, 0.2f );
+		trap_R_AddLightToScene( cent->lerpOrigin, 200 + ( rand() & 31 ), 1.0f, 0.2f, 0.2f );
 	}
 
 	// blueflag
@@ -2094,7 +2094,7 @@ static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandl
 		ent.rotation += baseAngle;
 
 		// make sure it stays the same size regardless of fov
-		ent.radius = 0.5 * radius * tan( hfov_x );
+		ent.radius = 0.5f * radius * tan( hfov_x );
 		ent.customShader = shader;
 		ent.shaderRGBA[0] = color[0] * 255;
 		ent.shaderRGBA[1] = color[1] * 255;
@@ -2154,9 +2154,9 @@ static void CG_FriendHudMarker( centity_t *cent ) {
 	size = 1.0 / tan( hfov_x ) * 150 / distance;
 
 	if ( CG_IsFrozenPlayer( cent ) ) {
-		CG_HudBorderMarker( cent->lerpOrigin, 1.0, size, cgs.media.friendShader, 270, colorCyan );
+		CG_HudBorderMarker( cent->lerpOrigin, 1.0f, size, cgs.media.friendShader, 270, colorCyan );
 	} else {
-		CG_HudBorderMarker( cent->lerpOrigin, 1.0, size, cgs.media.friendShader, 270, colorGreen );
+		CG_HudBorderMarker( cent->lerpOrigin, 1.0f, size, cgs.media.friendShader, 270, colorGreen );
 	}
 }
 
@@ -2337,7 +2337,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadow
 	trap_CM_BoxTrace( &trace, cent->lerpOrigin, end, mins, maxs, 0, MASK_PLAYERSOLID );
 
 	// no shadow if too high
-	if ( trace.fraction == 1.0 || trace.startsolid || trace.allsolid ) {
+	if ( trace.fraction == 1.0f || trace.startsolid || trace.allsolid ) {
 		return qfalse;
 	}
 
@@ -2348,7 +2348,7 @@ static qboolean CG_PlayerShadow( centity_t *cent, float alphaMult, float *shadow
 	}
 
 	// fade the shadow out with height
-	alpha = ( 1.0 - trace.fraction ) * alphaMult;
+	alpha = ( 1.0f - trace.fraction ) * alphaMult;
 
 	// add the mark as a temporary, so it goes directly to the renderer
 	// without taking a spot in the cg_marks array
@@ -2404,7 +2404,7 @@ static void CG_PlayerSplash( centity_t *cent ) {
 	// trace down to find the surface
 	trap_CM_BoxTrace( &trace, start, end, NULL, NULL, 0, ( CONTENTS_WATER | CONTENTS_SLIME | CONTENTS_LAVA ) );
 
-	if ( trace.fraction == 1.0 ) {
+	if ( trace.fraction == 1.0f ) {
 		return;
 	}
 
@@ -2497,7 +2497,7 @@ void CG_AddRefEntityWithPowerups( refEntity_t *ent, entityState_t *state, int te
 
 		if ( CG_IsFrozenPlayerState( state ) ) {
 			byte alpha_save = ent->shaderRGBA[3];
-			float thawfrac = 1.0 - (float)( state->modelindex2 >> 1 ) / 0x7f;
+			float thawfrac = 1.0f - (float)( state->modelindex2 >> 1 ) / 0x7f;
 			if ( state->modelindex2 & 1 ) {
 				ent->customShader = cgs.media.thawingShader;
 			} else {
@@ -2900,7 +2900,7 @@ void CG_Player( centity_t *cent ) {
 		VectorCopy( cent->lerpOrigin, powerup.origin );
 		powerup.origin[2] += -24 + (float)t * 80 / 500;
 		if ( t > 400 ) {
-			c = (float)( t - 400 ) * 0xff / 100.0;
+			c = (float)( t - 400 ) * 0xff / 100.0f;
 			powerup.shaderRGBA[0] = 0xff - c;
 			powerup.shaderRGBA[1] = 0xff - c;
 			powerup.shaderRGBA[2] = 0xff - c;

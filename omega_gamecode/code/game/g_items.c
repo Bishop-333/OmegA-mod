@@ -122,14 +122,14 @@ static int Pickup_Powerup( gentity_t *ent, gentity_t *other ) {
 
 			// if not facing, no sound
 			AngleVectors( client->ps.viewangles, forward, NULL, NULL );
-			if ( DotProduct( delta, forward ) < 0.4 ) {
+			if ( DotProduct( delta, forward ) < 0.4f ) {
 				continue;
 			}
 		}
 
 		// if not line of sight, no sound
 		trap_Trace( &tr, client->ps.origin, NULL, NULL, ent->s.pos.trBase, ENTITYNUM_NONE, CONTENTS_SOLID );
-		if ( tr.fraction != 1.0 ) {
+		if ( tr.fraction != 1.0f ) {
 			continue;
 		}
 
@@ -390,7 +390,7 @@ RespawnItem
 */
 void RespawnItem( gentity_t *ent ) {
 	//Don't spawn quad if quadfactor are 1.0 or less
-	if ( ent->item->giType == IT_POWERUP && ent->item->giTag == PW_QUAD && g_quadfactor.value <= 1.0 )
+	if ( ent->item->giType == IT_POWERUP && ent->item->giTag == PW_QUAD && g_quadfactor.value <= 1.0f )
 		return;
 
 	// randomly select from teamed entities
@@ -1059,7 +1059,7 @@ void G_SpawnItem( gentity_t *ent, gitem_t *item ) {
 	ent->nextthink = level.time + FRAMETIME * 2;
 	ent->think = FinishSpawningItem;
 
-	ent->physicsBounce = 0.50; // items are bouncy
+	ent->physicsBounce = 0.50f; // items are bouncy
 
 	if ( item->giType != IT_TEAM && ( g_instantgib.integer || g_weaponArena.integer || ( ( G_IsElimGametype() || g_elimination_allgametypes.integer ) && !g_elimination_items.integer ) ) ) {
 		ent->s.eFlags |= EF_NODRAW;     //Invisible in elimination
@@ -1111,7 +1111,7 @@ void G_BounceItem( gentity_t *ent, trace_t *trace ) {
 
 	// check for stop
 	if ( trace->plane.normal[2] > 0 && ent->s.pos.trDelta[2] < 40 ) {
-		trace->endpos[2] += 1.0; // make sure it is off ground
+		trace->endpos[2] += 1.0f; // make sure it is off ground
 		if ( !G_IsFrozenPlayerRemnant( ent ) ) {
 			SnapVector( trace->endpos );
 		}

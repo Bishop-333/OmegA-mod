@@ -143,7 +143,7 @@ void CG_Trace( trace_t *result, const vec3_t start, const vec3_t mins, const vec
 	trace_t t;
 
 	trap_CM_BoxTrace( &t, start, end, mins, maxs, 0, mask );
-	t.entityNum = t.fraction != 1.0 ? ENTITYNUM_WORLD : ENTITYNUM_NONE;
+	t.entityNum = t.fraction != 1.0f ? ENTITYNUM_WORLD : ENTITYNUM_NONE;
 	// check all other solid models
 	CG_ClipMoveToEntities( start, mins, maxs, end, skipNumber, mask, &t );
 

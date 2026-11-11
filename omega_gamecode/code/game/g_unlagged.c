@@ -379,7 +379,7 @@ static qboolean G_PredictPlayerSlideMove( gentity_t *ent, float frametime ) {
 		// non-axial planes
 		//
 		for ( i = 0; i < numplanes; i++ ) {
-			if ( DotProduct( trace.plane.normal, planes[i] ) > 0.99 ) {
+			if ( DotProduct( trace.plane.normal, planes[i] ) > 0.99f ) {
 				VectorAdd( trace.plane.normal, velocity, velocity );
 				break;
 			}
@@ -399,7 +399,7 @@ static qboolean G_PredictPlayerSlideMove( gentity_t *ent, float frametime ) {
 		// find a plane that it enters
 		for ( i = 0; i < numplanes; i++ ) {
 			into = DotProduct( velocity, planes[i] );
-			if ( into >= 0.1 ) {
+			if ( into >= 0.1f ) {
 				continue; // move doesn't interact with the plane
 			}
 
@@ -415,7 +415,7 @@ static qboolean G_PredictPlayerSlideMove( gentity_t *ent, float frametime ) {
 					continue;
 				}
 
-				if ( DotProduct( clipVelocity, planes[j] ) >= 0.1 ) {
+				if ( DotProduct( clipVelocity, planes[j] ) >= 0.1f ) {
 					continue; // move doesn't interact with the plane
 				}
 
@@ -445,7 +445,7 @@ static qboolean G_PredictPlayerSlideMove( gentity_t *ent, float frametime ) {
 						continue;
 					}
 
-					if ( DotProduct( clipVelocity, planes[k] ) >= 0.1 ) {
+					if ( DotProduct( clipVelocity, planes[k] ) >= 0.1f ) {
 						continue; // move doesn't interact with the plane
 					}
 
@@ -515,7 +515,7 @@ static void G_PredictPlayerStepSlideMove( gentity_t *ent, float frametime ) {
 	if ( !trace.allsolid ) {
 		VectorCopy( trace.endpos, ent->s.pos.trBase );
 	}
-	if ( trace.fraction < 1.0 ) {
+	if ( trace.fraction < 1.0f ) {
 		G_PredictPlayerClipVelocity( ent->s.pos.trDelta, trace.plane.normal, ent->s.pos.trDelta );
 	}
 }

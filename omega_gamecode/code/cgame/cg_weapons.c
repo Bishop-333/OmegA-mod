@@ -72,7 +72,7 @@ static void CG_MachineGunEjectBrass( centity_t *cent ) {
 	}
 
 	// don't inherit the full velocity, to emulate air resistance
-	VectorScale( cent->currentState.pos.trDelta, 0.75, le->pos.trDelta );
+	VectorScale( cent->currentState.pos.trDelta, 0.75f, le->pos.trDelta );
 	xvelocity[0] = velocity[0] * v[0][0] + velocity[1] * v[1][0] + velocity[2] * v[2][0];
 	xvelocity[1] = velocity[0] * v[0][1] + velocity[1] * v[1][1] + velocity[2] * v[2][1];
 	xvelocity[2] = velocity[0] * v[0][2] + velocity[1] * v[1][2] + velocity[2] * v[2][2];
@@ -81,7 +81,7 @@ static void CG_MachineGunEjectBrass( centity_t *cent ) {
 	AxisCopy( axisDefault, re->axis );
 	re->hModel = cgs.media.machinegunBrassModel;
 
-	le->bounceFactor = 0.4 * waterScale;
+	le->bounceFactor = 0.4f * waterScale;
 
 	le->angles.trType = TR_LINEAR;
 	le->angles.trTime = cg.time;
@@ -153,7 +153,7 @@ static void CG_ShotgunEjectBrass( centity_t *cent ) {
 		}
 
 		// don't inherit the full velocity, to emulate air resistance
-		VectorScale( cent->currentState.pos.trDelta, 0.675, le->pos.trDelta );
+		VectorScale( cent->currentState.pos.trDelta, 0.675f, le->pos.trDelta );
 		xvelocity[0] = velocity[0] * v[0][0] + velocity[1] * v[1][0] + velocity[2] * v[2][0];
 		xvelocity[1] = velocity[0] * v[0][1] + velocity[1] * v[1][1] + velocity[2] * v[2][1];
 		xvelocity[2] = velocity[0] * v[0][2] + velocity[1] * v[1][2] + velocity[2] * v[2][2];
@@ -274,7 +274,7 @@ void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 	le->leType = LE_FADE_RGB;
 	le->startTime = cg.time;
 	le->endTime = cg.time + cg_railTrailTime.value;
-	le->lifeRate = 1.0 / ( le->endTime - le->startTime );
+	le->lifeRate = 1.0f / ( le->endTime - le->startTime );
 
 	if ( intShaderTime )
 		re->u.intShaderTime = cg.time;
@@ -292,9 +292,9 @@ void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 	re->shaderRGBA[2] = ci->color1[2] * 255;
 	re->shaderRGBA[3] = 255;
 
-	le->color[0] = ci->color1[0] * 0.75;
-	le->color[1] = ci->color1[1] * 0.75;
-	le->color[2] = ci->color1[2] * 0.75;
+	le->color[0] = ci->color1[0] * 0.75f;
+	le->color[1] = ci->color1[1] * 0.75f;
+	le->color[2] = ci->color1[2] * 0.75f;
 	le->color[3] = 1.0f;
 
 	AxisClear( re->axis );
@@ -336,7 +336,7 @@ void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 			le->leType = LE_MOVE_SCALE_FADE;
 			le->startTime = cg.time;
 			le->endTime = cg.time + ( i >> 1 ) + cg_railTrailTime.value;
-			le->lifeRate = 1.0 / ( le->endTime - le->startTime );
+			le->lifeRate = 1.0f / ( le->endTime - le->startTime );
 
 			if ( intShaderTime )
 				re->u.intShaderTime = cg.time;
@@ -352,9 +352,9 @@ void CG_RailTrail( clientInfo_t *ci, vec3_t start, vec3_t end ) {
 			re->shaderRGBA[2] = ci->color1[2] * 255;
 			re->shaderRGBA[3] = 255;
 
-			le->color[0] = ci->color1[0] * 0.75;
-			le->color[1] = ci->color1[1] * 0.75;
-			le->color[2] = ci->color1[2] * 0.75;
+			le->color[0] = ci->color1[0] * 0.75f;
+			le->color[1] = ci->color1[1] * 0.75f;
+			le->color[2] = ci->color1[2] * 0.75f;
 			le->color[3] = 1.0f;
 
 			le->pos.trType = TR_LINEAR;
@@ -708,9 +708,9 @@ static void CG_OldPlasmaTrail( centity_t *cent, const weaponInfo_t *wi ) {
 	re->shaderRGBA[2] = wi->flashDlightColor[2] * 63;
 	re->shaderRGBA[3] = 63;
 
-	le->color[0] = wi->flashDlightColor[0] * 0.2;
-	le->color[1] = wi->flashDlightColor[1] * 0.2;
-	le->color[2] = wi->flashDlightColor[2] * 0.2;
+	le->color[0] = wi->flashDlightColor[0] * 0.2f;
+	le->color[1] = wi->flashDlightColor[1] * 0.2f;
+	le->color[2] = wi->flashDlightColor[2] * 0.2f;
 	le->color[3] = 0.25f;
 
 	le->angles.trType = TR_LINEAR;
@@ -719,7 +719,7 @@ static void CG_OldPlasmaTrail( centity_t *cent, const weaponInfo_t *wi ) {
 	le->angles.trBase[1] = rand() & 31;
 	le->angles.trBase[2] = rand() & 31;
 	le->angles.trDelta[0] = 1;
-	le->angles.trDelta[1] = 0.5;
+	le->angles.trDelta[1] = 0.5f;
 	le->angles.trDelta[2] = 0;
 }
 
@@ -834,7 +834,7 @@ void CG_RegisterWeapon( int weaponNum ) {
 	// calc midpoint for rotation
 	trap_R_ModelBounds( weaponInfo->weaponModel, mins, maxs );
 	for ( i = 0; i < 3; i++ ) {
-		weaponInfo->weaponMidpoint[i] = mins[i] + 0.5 * ( maxs[i] - mins[i] );
+		weaponInfo->weaponMidpoint[i] = mins[i] + 0.5f * ( maxs[i] - mins[i] );
 	}
 
 	weaponInfo->weaponIcon = trap_R_RegisterShader( item->icon );
@@ -1188,9 +1188,9 @@ static void CG_CalculateWeaponPosition( vec3_t origin, vec3_t angles ) {
 	// drop the weapon when landing
 	delta = cg.time - cg.landTime;
 	if ( delta < LAND_DEFLECT_TIME ) {
-		origin[2] += cg.landChange * 0.25 * delta / LAND_DEFLECT_TIME;
+		origin[2] += cg.landChange * 0.25f * delta / LAND_DEFLECT_TIME;
 	} else if ( delta < LAND_DEFLECT_TIME + LAND_RETURN_TIME ) {
-		origin[2] += cg.landChange * 0.25 *
+		origin[2] += cg.landChange * 0.25f *
 		             ( LAND_DEFLECT_TIME + LAND_RETURN_TIME - delta ) / LAND_RETURN_TIME;
 	}
 }
@@ -1242,7 +1242,7 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 					a += 360;
 				}
 
-				angle[i] = cg.refdefViewAngles[i] + a * ( 1.0 - cg_trueLightning.value );
+				angle[i] = cg.refdefViewAngles[i] + a * ( 1.0f - cg_trueLightning.value );
 				if ( angle[i] < 0 ) {
 					angle[i] += 360;
 				}
@@ -1286,7 +1286,7 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 	trap_R_AddRefEntityToScene( &beam );
 
 	// add the impact flare if it hit something
-	if ( trace.fraction < 1.0 ) {
+	if ( trace.fraction < 1.0f ) {
 		vec3_t angles;
 		vec3_t dir;
 
@@ -1310,9 +1310,9 @@ static void CG_LightningBolt( centity_t *cent, vec3_t origin ) {
 
 		// scale down crackle
 		beam.nonNormalizedAxes = qtrue;
-		VectorScale( beam.axis[0], 0.5, beam.axis[0] );
-		VectorScale( beam.axis[1], 0.5, beam.axis[1] );
-		VectorScale( beam.axis[2], 0.5, beam.axis[2] );
+		VectorScale( beam.axis[0], 0.5f, beam.axis[0] );
+		VectorScale( beam.axis[1], 0.5f, beam.axis[1] );
+		VectorScale( beam.axis[2], 0.5f, beam.axis[2] );
 		trap_R_AddRefEntityToScene( &beam );
 	}
 }
@@ -1344,7 +1344,7 @@ static void CG_SpawnRailTrail( centity_t *cent, vec3_t origin ) {
 CG_MachinegunSpinAngle
 ======================
 */
-#define SPIN_SPEED 0.9
+#define SPIN_SPEED 0.9f
 #define COAST_TIME 1000
 static float CG_MachinegunSpinAngle( centity_t *cent ) {
 	int delta;
@@ -1359,7 +1359,7 @@ static float CG_MachinegunSpinAngle( centity_t *cent ) {
 			delta = COAST_TIME;
 		}
 
-		speed = 0.5 * ( SPIN_SPEED + (float)( COAST_TIME - delta ) / COAST_TIME );
+		speed = 0.5f * ( SPIN_SPEED + (float)( COAST_TIME - delta ) / COAST_TIME );
 		angle = cent->pe.barrelAngle + delta * speed;
 	}
 
@@ -1444,9 +1444,9 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 			float f;
 
 			f = (float)cg.predictedPlayerState.weaponTime / 1500;
-			gun.shaderRGBA[0] = ci->color1[0] * 51 * ( 1.0 - f );
-			gun.shaderRGBA[1] = ci->color1[1] * 51 * ( 1.0 - f );
-			gun.shaderRGBA[2] = ci->color1[2] * 51 * ( 1.0 - f );
+			gun.shaderRGBA[0] = ci->color1[0] * 51 * ( 1.0f - f );
+			gun.shaderRGBA[1] = ci->color1[1] * 51 * ( 1.0f - f );
+			gun.shaderRGBA[2] = ci->color1[2] * 51 * ( 1.0f - f );
 		} else {
 			gun.shaderRGBA[0] = ci->color1[0] * 255;
 			gun.shaderRGBA[1] = ci->color1[1] * 255;
@@ -1473,7 +1473,7 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 	}
 
 	trap_R_LerpTag( &lerped, parent->hModel, parent->oldframe, parent->frame,
-	                1.0 - parent->backlerp, "tag_weapon" );
+	                1.0f - parent->backlerp, "tag_weapon" );
 	VectorCopy( parent->origin, gun.origin );
 
 	VectorMA( gun.origin, lerped.origin[0], parent->axis[0], gun.origin );
@@ -1585,8 +1585,8 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 			VectorMA( cg.refdef.vieworg, 14, forward, start );
 			VectorMA( cg.refdef.vieworg, 28, forward, end );
 			CG_Trace( &tr, start, NULL, NULL, end, cent->currentState.number, MASK_SHOT | CONTENTS_TRANSLUCENT );
-			if ( tr.fraction != 1.0 ) {
-				VectorMA( muzzle, -13.0 * ( 1.0 - tr.fraction ), forward, flash.origin );
+			if ( tr.fraction != 1.0f ) {
+				VectorMA( muzzle, -13.0f * ( 1.0f - tr.fraction ), forward, flash.origin );
 			} else {
 				VectorCopy( muzzle, flash.origin );
 			}
@@ -1656,7 +1656,7 @@ void CG_AddViewWeapon( playerState_t *ps ) {
 
 	// drop gun lower at higher fov
 	if ( cg_fov.integer > 90 ) {
-		fovOffset = -0.2 * ( cg_fov.integer - 90 );
+		fovOffset = -0.2f * ( cg_fov.integer - 90 );
 	} else {
 		fovOffset = 0;
 	}
@@ -1734,10 +1734,10 @@ void CG_DrawWeaponSelect( void ) {
 
 	//Elimination: Always show weapon bar
 	if ( cg_alwaysWeaponBar.integer ) {
-		realColor[0] = 1.0;
-		realColor[1] = 1.0;
-		realColor[2] = 1.0;
-		realColor[3] = 1.0;
+		realColor[0] = 1.0f;
+		realColor[1] = 1.0f;
+		realColor[2] = 1.0f;
+		realColor[3] = 1.0f;
 		color = realColor;
 	}
 
@@ -2805,17 +2805,17 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 			radius = 64;
 			light = 300;
 			isSprite = qtrue;
-			lightColor[0] = 1.0;
-			lightColor[1] = 0.75;
-			lightColor[2] = 0.0;
+			lightColor[0] = 1.0f;
+			lightColor[1] = 0.75f;
+			lightColor[2] = 0.0f;
 			// LEILEI START enhancement
 			if ( cg_leiEnhancement.integer ) {
 				// some more fireball, fireball, fireball, fire fire!
 				VectorMA( origin, 24, dir, sprOrg );
 				VectorScale( dir, 64, sprVel );
-				lightColor[0] = 0.7; // subtler explosion colors
-				lightColor[1] = 0.6;
-				lightColor[2] = 0.4;
+				lightColor[0] = 0.7f; // subtler explosion colors
+				lightColor[1] = 0.6f;
+				lightColor[2] = 0.4f;
 				VectorMA( origin, 4, dir, sprOrg );
 				VectorScale( dir, 2, sprVel );
 				VectorMA( origin, 4, dir, sprOrg );
@@ -2843,17 +2843,17 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 			radius = 64;
 			light = 300;
 			isSprite = qtrue;
-			lightColor[0] = 1.0;
-			lightColor[1] = 0.75;
-			lightColor[2] = 0.0;
+			lightColor[0] = 1.0f;
+			lightColor[1] = 0.75f;
+			lightColor[2] = 0.0f;
 			// LEILEI START enhancement
 			if ( cg_leiEnhancement.integer ) {
 				// some more fireball, fireball, fireball, fire fire!
 				VectorMA( origin, 24, dir, sprOrg );
 				VectorScale( dir, 64, sprVel );
-				lightColor[0] = 0.7; // subtler explosion colors
-				lightColor[1] = 0.6;
-				lightColor[2] = 0.4;
+				lightColor[0] = 0.7f; // subtler explosion colors
+				lightColor[1] = 0.6f;
+				lightColor[2] = 0.4f;
 				VectorMA( origin, 4, dir, sprOrg );
 				VectorScale( dir, 2, sprVel );
 				VectorMA( origin, 4, dir, sprOrg );
@@ -2881,9 +2881,9 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 			light = 300;
 			isSprite = qtrue;
 			duration = 1000;
-			lightColor[0] = 1.0;
-			lightColor[1] = 0.75;
-			lightColor[2] = 0.0;
+			lightColor[0] = 1.0f;
+			lightColor[1] = 0.75f;
+			lightColor[2] = 0.0f;
 			if ( !cg_oldRocket.integer ) {
 				// explosion sprite animation
 				VectorMA( origin, 24, dir, sprOrg );
@@ -2896,9 +2896,9 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 				// some more fireball, fireball, fireball, fire fire!
 				VectorMA( origin, 24, dir, sprOrg );
 				VectorScale( dir, 64, sprVel );
-				lightColor[0] = 0.7; // subtler explosion colors
-				lightColor[1] = 0.6;
-				lightColor[2] = 0.4;
+				lightColor[0] = 0.7f; // subtler explosion colors
+				lightColor[1] = 0.6f;
+				lightColor[2] = 0.4f;
 				VectorMA( origin, 4, dir, sprOrg );
 				VectorScale( dir, 2, sprVel );
 				VectorMA( origin, 4, dir, sprOrg );
@@ -3024,9 +3024,9 @@ void CG_MissileHitWall( int weapon, int clientNum, vec3_t origin, vec3_t dir, im
 
 		// colorize with client color
 		color = cgs.clientinfo[clientNum].color1;
-		CG_ImpactMark( mark, origin, dir, random() * 360, color[0], color[1], color[2], 1.0, alphaFade, radius, qfalse );
+		CG_ImpactMark( mark, origin, dir, random() * 360, color[0], color[1], color[2], 1.0f, alphaFade, radius, qfalse );
 	} else {
-		CG_ImpactMark( mark, origin, dir, random() * 360, 1.0, 1.0, 1.0, 1.0, alphaFade, radius, qfalse );
+		CG_ImpactMark( mark, origin, dir, random() * 360, 1.0f, 1.0f, 1.0f, 1.0f, alphaFade, radius, qfalse );
 	}
 }
 
@@ -3179,7 +3179,7 @@ static void CG_ShotgunPellet( vec3_t start, vec3_t end, int skipNum ) {
 				CG_LeiSparks( tr.endpos, tr.plane.normal, 1600, 0, 0, 2 );
 
 				if ( cg_leiEnhancement.integer ) {
-					CG_SmokePuff( tr.endpos, kapow, 0.21, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0, cgs.media.lsmkShader2 );
+					CG_SmokePuff( tr.endpos, kapow, 0.21f, 1, 1, 1, 0.9f, 1200, cg.time, 0, 0, cgs.media.lsmkShader2 );
 				}
 				// END LEILEI ENHANCEMENT
 			}
@@ -3341,9 +3341,9 @@ static void CG_Tracer( vec3_t source, vec3_t dest ) {
 
 	trap_R_AddPolyToScene( cgs.media.tracerShader, 4, verts );
 
-	midpoint[0] = ( start[0] + finish[0] ) * 0.5;
-	midpoint[1] = ( start[1] + finish[1] ) * 0.5;
-	midpoint[2] = ( start[2] + finish[2] ) * 0.5;
+	midpoint[0] = ( start[0] + finish[0] ) * 0.5f;
+	midpoint[1] = ( start[1] + finish[1] ) * 0.5f;
+	midpoint[2] = ( start[2] + finish[2] ) * 0.5f;
 
 	// add the tracer sound
 	trap_S_StartSound( midpoint, ENTITYNUM_WORLD, CHAN_AUTO, cgs.media.tracerSound );
@@ -3509,7 +3509,7 @@ void CG_Bullet( vec3_t end, int sourceEntityNum, vec3_t normal, qboolean flesh, 
 			kapew[1] = kapew[1] * ( crandom() * 65 + 37 );
 			kapew[2] = kapew[2] * ( crandom() * 65 + 37 );
 
-			CG_SmokePuff( end, kapow, 0.14, 1, 1, 1, 1.0f, 600, cg.time, 0, 0, cgs.media.lsmkShader1 );
+			CG_SmokePuff( end, kapow, 0.14f, 1, 1, 1, 1.0f, 600, cg.time, 0, 0, cgs.media.lsmkShader1 );
 		}
 		// END LEILEI ENHANCEMENT
 	}

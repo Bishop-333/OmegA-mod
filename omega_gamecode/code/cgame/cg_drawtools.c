@@ -150,9 +150,9 @@ static void CG_DrawChar( int x, int y, int width, int height, int ch ) {
 	row = ch >> 4;
 	col = ch & 15;
 
-	frow = row * 0.0625;
-	fcol = col * 0.0625;
-	size = 0.0625;
+	frow = row * 0.0625f;
+	fcol = col * 0.0625f;
+	size = 0.0625f;
 
 	trap_R_DrawStretchPic( ax, ay, aw, ah,
 	                       fcol, frow,
@@ -231,7 +231,7 @@ CG_DrawBigString
 void CG_DrawBigString( int x, int y, const char *s, float alpha ) {
 	float color[4];
 
-	color[0] = color[1] = color[2] = 1.0;
+	color[0] = color[1] = color[2] = 1.0f;
 	color[3] = alpha;
 	CG_DrawStringExt( x, y, s, color, qfalse, qtrue, BIGCHAR_WIDTH, BIGCHAR_HEIGHT, 0 );
 }
@@ -253,7 +253,7 @@ CG_DrawMediumString
 void CG_DrawMediumString( int x, int y, const char *s, float alpha ) {
 	float color[4];
 
-	color[0] = color[1] = color[2] = 1.0;
+	color[0] = color[1] = color[2] = 1.0f;
 	color[3] = alpha;
 	CG_DrawStringExt( x, y, s, color, qfalse, qtrue, MEDIUMCHAR_WIDTH, MEDIUMCHAR_HEIGHT, 0 );
 }
@@ -275,7 +275,7 @@ CG_DrawSmallString
 void CG_DrawSmallString( int x, int y, const char *s, float alpha ) {
 	float color[4];
 
-	color[0] = color[1] = color[2] = 1.0;
+	color[0] = color[1] = color[2] = 1.0f;
 	color[3] = alpha;
 	CG_DrawStringExt( x, y, s, color, qfalse, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
 }
@@ -297,7 +297,7 @@ CG_DrawTinyString
 void CG_DrawTinyString( int x, int y, const char *s, float alpha ) {
 	float color[4];
 
-	color[0] = color[1] = color[2] = 1.0;
+	color[0] = color[1] = color[2] = 1.0f;
 	color[3] = alpha;
 	CG_DrawStringExt( x, y, s, color, qfalse, qfalse, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 }
@@ -473,10 +473,10 @@ refresh window.
 static void CG_TileClearBox( int x, int y, int w, int h, qhandle_t hShader ) {
 	float s1, t1, s2, t2;
 
-	s1 = x / 64.0;
-	t1 = y / 64.0;
-	s2 = ( x + w ) / 64.0;
-	t2 = ( y + h ) / 64.0;
+	s1 = x / 64.0f;
+	t1 = y / 64.0f;
+	s2 = ( x + w ) / 64.0f;
+	t2 = ( y + h ) / 64.0f;
 	trap_R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader );
 }
 
@@ -538,9 +538,9 @@ float *CG_FadeColor( int startMsec, int totalMsec ) {
 
 	// fade out
 	if ( totalMsec - t < FADE_TIME ) {
-		color[3] = ( totalMsec - t ) * 1.0 / FADE_TIME;
+		color[3] = ( totalMsec - t ) * 1.0f / FADE_TIME;
 	} else {
-		color[3] = 1.0;
+		color[3] = 1.0f;
 	}
 	color[0] = color[1] = color[2] = 1;
 
@@ -556,21 +556,21 @@ float CG_FadeScale( int startMsec, int totalMsec ) {
 	int t;
 
 	if ( startMsec == 0 ) {
-		return 0.0;
+		return 0.0f;
 	}
 
 	t = cg.time - startMsec;
 
 	if ( t >= totalMsec ) {
-		return 0.0;
+		return 0.0f;
 	}
 
 	// scale out
 	if ( totalMsec - t < FADE_TIME ) {
-		return ( totalMsec - t ) * 1.0 / FADE_TIME;
+		return ( totalMsec - t ) * 1.0f / FADE_TIME;
 	}
 
-	return 1.0;
+	return 1.0f;
 }
 
 /*
@@ -620,22 +620,22 @@ void CG_GetColorForHealth( int health, int armor, vec4_t hcolor ) {
 	health += count;
 
 	// set the color based on health
-	hcolor[0] = 1.0;
-	hcolor[3] = 1.0;
+	hcolor[0] = 1.0f;
+	hcolor[3] = 1.0f;
 	if ( health >= 100 ) {
-		hcolor[2] = 1.0;
+		hcolor[2] = 1.0f;
 	} else if ( health < 66 ) {
 		hcolor[2] = 0;
 	} else {
-		hcolor[2] = ( health - 66 ) / 33.0;
+		hcolor[2] = ( health - 66 ) / 33.0f;
 	}
 
 	if ( health > 60 ) {
-		hcolor[1] = 1.0;
+		hcolor[1] = 1.0f;
 	} else if ( health < 30 ) {
 		hcolor[1] = 0;
 	} else {
-		hcolor[1] = ( health - 30 ) / 30.0;
+		hcolor[1] = ( health - 30 ) / 30.0f;
 	}
 }
 
@@ -859,10 +859,10 @@ UI_ProportionalSizeScale
 */
 static float UI_ProportionalSizeScale( int style ) {
 	if ( style & UI_SMALLFONT ) {
-		return 0.5;
+		return 0.5f;
 	}
 
-	return 1.00;
+	return 1.00f;
 }
 
 /*
@@ -900,18 +900,18 @@ void UI_DrawProportionalString( int x, int y, const char *str, int style, vec4_t
 	}
 
 	if ( style & UI_INVERSE ) {
-		drawcolor[0] = color[0] * 0.8;
-		drawcolor[1] = color[1] * 0.8;
-		drawcolor[2] = color[2] * 0.8;
+		drawcolor[0] = color[0] * 0.8f;
+		drawcolor[1] = color[1] * 0.8f;
+		drawcolor[2] = color[2] * 0.8f;
 		drawcolor[3] = color[3];
 		UI_DrawProportionalString2( x, y, str, drawcolor, sizeScale, cgs.media.charsetProp );
 		return;
 	}
 
 	if ( style & UI_PULSE ) {
-		drawcolor[0] = color[0] * 0.8;
-		drawcolor[1] = color[1] * 0.8;
-		drawcolor[2] = color[2] * 0.8;
+		drawcolor[0] = color[0] * 0.8f;
+		drawcolor[1] = color[1] * 0.8f;
+		drawcolor[2] = color[2] * 0.8f;
 		drawcolor[3] = color[3];
 		UI_DrawProportionalString2( x, y, str, color, sizeScale, cgs.media.charsetProp );
 

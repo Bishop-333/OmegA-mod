@@ -268,7 +268,7 @@ static void CG_OffsetThirdPersonView( void ) {
 
 	view[2] += 8;
 
-	cg.refdefViewAngles[PITCH] *= 0.5;
+	cg.refdefViewAngles[PITCH] *= 0.5f;
 
 	AngleVectors( cg.refdefViewAngles, forward, right, up );
 
@@ -305,9 +305,9 @@ static void CG_OffsetThirdPersonView( void ) {
 	if ( !cg_cameraMode.integer ) {
 		CG_Trace( &trace, cg.refdef.vieworg, mins, maxs, view, cg.predictedPlayerState.clientNum, MASK_SOLID );
 
-		if ( trace.fraction != 1.0 ) {
+		if ( trace.fraction != 1.0f ) {
 			VectorCopy( trace.endpos, view );
-			view[2] += ( 1.0 - trace.fraction ) * 32;
+			view[2] += ( 1.0f - trace.fraction ) * 32;
 			// try another trace to this position, because a tunnel may have the ceiling
 			// close enough that this is poking out
 
@@ -383,7 +383,7 @@ static void CG_OffsetFirstPersonView( void ) {
 				angles[PITCH] += ratio * cg.v_dmg_pitch;
 				angles[ROLL] += ratio * cg.v_dmg_roll;
 			} else {
-				ratio = 1.0 - ( ratio - DAMAGE_DEFLECT_TIME ) / DAMAGE_RETURN_TIME;
+				ratio = 1.0f - ( ratio - DAMAGE_DEFLECT_TIME ) / DAMAGE_RETURN_TIME;
 				if ( ratio > 0 ) {
 					angles[PITCH] += ratio * cg.v_dmg_pitch;
 					angles[ROLL] += ratio * cg.v_dmg_roll;
@@ -443,7 +443,7 @@ static void CG_OffsetFirstPersonView( void ) {
 		cg.refdef.vieworg[2] += cg.landChange * f;
 	} else if ( delta < LAND_DEFLECT_TIME + LAND_RETURN_TIME ) {
 		delta -= LAND_DEFLECT_TIME;
-		f = 1.0 - ( delta / LAND_RETURN_TIME );
+		f = 1.0f - ( delta / LAND_RETURN_TIME );
 		cg.refdef.vieworg[2] += cg.landChange * f;
 	}
 
@@ -590,7 +590,7 @@ static int CG_CalcFov( void ) {
 
 		if ( cgs.dmflags & DF_FIXED_FOV ) {
 			// dmflag to prevent wide fov for all clients
-			zoomFov = 22.5;
+			zoomFov = 22.5f;
 		} else {
 			// account for zooms
 			zoomFov = cg_zoomFov.value;
@@ -612,14 +612,14 @@ static int CG_CalcFov( void ) {
 
 		if ( cg.zoomed ) {
 			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
-			if ( f > 1.0 || !cg_zoomAnim.integer ) {
+			if ( f > 1.0f || !cg_zoomAnim.integer ) {
 				fov_x = zoomFov;
 			} else {
 				fov_x = fov_x + f * ( zoomFov - fov_x );
 			}
 		} else {
 			f = ( cg.time - cg.zoomTime ) / (float)ZOOM_TIME * cg_zoomAnimSpeed.value;
-			if ( f <= 1.0 && cg_zoomAnim.integer ) {
+			if ( f <= 1.0f && cg_zoomAnim.integer ) {
 				fov_x = zoomFov + f * ( fov_x - zoomFov );
 			}
 		}
@@ -647,7 +647,7 @@ static int CG_CalcFov( void ) {
 	if ( !cg.zoomed ) {
 		cg.zoomSensitivity = 1;
 	} else {
-		cg.zoomSensitivity = cg.refdef.fov_y / 75.0;
+		cg.zoomSensitivity = cg.refdef.fov_y / 75.0f;
 	}
 
 	return inwater;
@@ -691,7 +691,7 @@ static void CG_DamageBlendBlob( void ) {
 	ent.shaderRGBA[0] = 255;
 	ent.shaderRGBA[1] = 255;
 	ent.shaderRGBA[2] = 255;
-	ent.shaderRGBA[3] = 200 * ( 1.0 - ( (float)t / maxTime ) );
+	ent.shaderRGBA[3] = 200 * ( 1.0f - ( (float)t / maxTime ) );
 	trap_R_AddRefEntityToScene( &ent );
 }
 
@@ -741,7 +741,7 @@ static int CG_CalcViewValues( void ) {
 			cg_thirdPersonAngle.value += cg_cameraOrbit.value;
 		} else if ( trap_Key_GetCatcher() & KEYCATCH_CONSOLE && !cg.demoPlayback && cg.snap->ps.persistant[PERS_TEAM] != TEAM_SPECTATOR && !( cg.snap->ps.pm_flags & PMF_FOLLOW ) && !( cg.predictedPlayerState.stats[STAT_HEALTH] <= 0 ) && !cg_paused.integer ) {
 			cg.nextOrbitTime = cg.time;
-			cg_thirdPersonAngle.value += 0.015 * msec;
+			cg_thirdPersonAngle.value += 0.015f * msec;
 		} else {
 			cg_thirdPersonAngle.value = 0;
 		}

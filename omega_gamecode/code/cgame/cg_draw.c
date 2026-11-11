@@ -209,13 +209,13 @@ void CG_DrawHead( float x, float y, float w, float h, int clientNum, vec3_t head
 		// offset the origin y and z to center the head
 		trap_R_ModelBounds( cm, mins, maxs );
 
-		origin[2] = -0.5 * ( mins[2] + maxs[2] );
-		origin[1] = 0.5 * ( mins[1] + maxs[1] );
+		origin[2] = -0.5f * ( mins[2] + maxs[2] );
+		origin[1] = 0.5f * ( mins[1] + maxs[1] );
 
 		// calculate distance so the head nearly fills the box
 		// assume heads are taller than wide
-		len = 0.7 * ( maxs[2] - mins[2] );
-		origin[0] = len / 0.268; // len / tan( fov/2 )
+		len = 0.7f * ( maxs[2] - mins[2] );
+		origin[0] = len / 0.268f; // len / tan( fov/2 )
 
 		// allow per-model tweaking
 		VectorAdd( origin, ci->headOffset, origin );
@@ -254,15 +254,15 @@ void CG_DrawFlagModel( float x, float y, float w, float h, int team, qboolean fo
 		// offset the origin y and z to center the flag
 		trap_R_ModelBounds( cm, mins, maxs );
 
-		origin[2] = -0.5 * ( mins[2] + maxs[2] );
-		origin[1] = 0.5 * ( mins[1] + maxs[1] );
+		origin[2] = -0.5f * ( mins[2] + maxs[2] );
+		origin[1] = 0.5f * ( mins[1] + maxs[1] );
 
 		// calculate distance so the flag nearly fills the box
 		// assume heads are taller than wide
-		len = 0.55 * ( maxs[2] - mins[2] );
-		origin[0] = len / 0.268; // len / tan( fov/2 )
+		len = 0.55f * ( maxs[2] - mins[2] );
+		origin[0] = len / 0.268f; // len / tan( fov/2 )
 
-		angles[YAW] = ( cg.time % 16384 ) * 45 / 2048.0;
+		angles[YAW] = ( cg.time % 16384 ) * 45 / 2048.0f;
 
 		if ( team == TEAM_RED ) {
 			handle = cgs.media.redFlagModel;
@@ -331,7 +331,7 @@ static void CG_DrawStatusBarHead( float x ) {
 		cg.headEndPitch = 5 * cos( crandom() * M_PI );
 	}
 
-	size = ICON_SIZE * 1.25;
+	size = ICON_SIZE * 1.25f;
 
 	// if the server was frozen for a while we may have a bad head start time
 	if ( cg.headStartTime > cg.time ) {
@@ -370,7 +370,7 @@ void CG_DrawTeamBackground( int x, int y, int w, int h, float alpha, int team ) 
 		hcolor[3] = alpha;
 	} else if ( team == TEAM_BLUE ) {
 		hcolor[0] = 0;
-		hcolor[1] = 0.25;
+		hcolor[1] = 0.25f;
 		hcolor[2] = 1;
 		hcolor[3] = alpha;
 	} else {
@@ -391,20 +391,20 @@ CG_GetWeaponColors
 */
 static vec4_t weaponColors[WP_NUM_WEAPONS] =
     {
-        { 1.0, 1.0, 1.0, 1.0 }, // WP_NONE
-        { 0.0, 0.8, 1.0, 1.0 }, // WP_GAUNTLET,
-        { 1.0, 1.0, 0.0, 1.0 }, // WP_MACHINEGUN,
-        { 1.0, 0.4, 0.0, 1.0 }, // WP_SHOTGUN,
-        { 0.0, 0.6, 0.0, 1.0 }, // WP_GRENADE_LAUNCHER,
-        { 1.0, 0.0, 0.0, 1.0 }, // WP_ROCKET_LAUNCHER,
-        { 1.0, 1.0, 0.6, 1.0 }, // WP_LIGHTNING,
-        { 0.0, 1.0, 0.0, 1.0 }, // WP_RAILGUN,
-        { 1.0, 0.0, 1.0, 1.0 }, // WP_PLASMAGUN,
-        { 0.0, 0.4, 1.0, 1.0 }, // WP_BFG,
-        { 0.4, 0.6, 0.0, 1.0 }, // WP_GRAPPLING_HOOK,
-        { 1.0, 0.6, 0.6, 1.0 }, // WP_NAILGUN,
-        { 1.0, 0.6, 0.4, 1.0 }, // WP_PROX_LAUNCHER,
-        { 0.8, 0.8, 0.8, 1.0 }, // WP_CHAINGUN,
+        { 1.0f, 1.0f, 1.0f, 1.0f }, // WP_NONE
+        { 0.0f, 0.8f, 1.0f, 1.0f }, // WP_GAUNTLET,
+        { 1.0f, 1.0f, 0.0f, 1.0f }, // WP_MACHINEGUN,
+        { 1.0f, 0.4f, 0.0f, 1.0f }, // WP_SHOTGUN,
+        { 0.0f, 0.6f, 0.0f, 1.0f }, // WP_GRENADE_LAUNCHER,
+        { 1.0f, 0.0f, 0.0f, 1.0f }, // WP_ROCKET_LAUNCHER,
+        { 1.0f, 1.0f, 0.6f, 1.0f }, // WP_LIGHTNING,
+        { 0.0f, 1.0f, 0.0f, 1.0f }, // WP_RAILGUN,
+        { 1.0f, 0.0f, 1.0f, 1.0f }, // WP_PLASMAGUN,
+        { 0.0f, 0.4f, 1.0f, 1.0f }, // WP_BFG,
+        { 0.4f, 0.6f, 0.0f, 1.0f }, // WP_GRAPPLING_HOOK,
+        { 1.0f, 0.6f, 0.6f, 1.0f }, // WP_NAILGUN,
+        { 1.0f, 0.6f, 0.4f, 1.0f }, // WP_PROX_LAUNCHER,
+        { 0.8f, 0.8f, 0.8f, 1.0f }, // WP_CHAINGUN,
 };
 
 float *CG_GetWeaponColor( int weapon ) {
@@ -475,14 +475,14 @@ static void CG_DrawStatusBar( void ) {
 		origin[0] = 90;
 		origin[1] = 0;
 		origin[2] = -10;
-		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
+		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0f;
 	}
 
 	if ( ps->stats[STAT_ARMOR] ) {
 		origin[0] = 90;
 		origin[1] = 0;
 		origin[2] = -10;
-		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
+		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0f;
 		CG_Draw3DModel( 370 + CHAR_WIDTH * 3 + TEXT_ICON_SPACE, 432, ICON_SIZE, ICON_SIZE, cgs.media.armorModel, 0, origin, angles );
 	}
 
@@ -490,7 +490,7 @@ static void CG_DrawStatusBar( void ) {
 		origin[0] = 90;
 		origin[1] = 0;
 		origin[2] = -10;
-		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0;
+		angles[YAW] = ( cg.time & 2047 ) * 360 / 2048.0f;
 		if ( cg.snap->ps.persistant[PERS_TEAM] == TEAM_BLUE ) {
 			handle = cgs.media.redCubeModel;
 		} else {
@@ -640,7 +640,7 @@ static float CG_DrawAttacker( float y ) {
 		return y;
 	}
 
-	size = ICON_SIZE * 1.25;
+	size = ICON_SIZE * 1.25f;
 
 	angles[PITCH] = 0;
 	angles[YAW] = 180;
@@ -650,7 +650,7 @@ static float CG_DrawAttacker( float y ) {
 	info = CG_ConfigString( CS_PLAYERS + clientNum );
 	name = Info_ValueForKey( info, "n" );
 	y += size;
-	CG_DrawBigString( 640 - ( Q_PrintStrlen( name ) * BIGCHAR_WIDTH ), y, name, 0.5 );
+	CG_DrawBigString( 640 - ( Q_PrintStrlen( name ) * BIGCHAR_WIDTH ), y, name, 0.5f );
 
 	return y + BIGCHAR_HEIGHT + 2;
 }
@@ -747,8 +747,8 @@ static float CG_DrawFPS( float y ) {
 		s = va( "%ifps", fps );
 		w = CG_DrawStrlen( s ) * TINYCHAR_WIDTH;
 
-		color[0] = color[1] = color[2] = 1.0;
-		color[3] = 0.5;
+		color[0] = color[1] = color[2] = 1.0f;
+		color[3] = 0.5f;
 
 		CG_DrawStringExt( 635 - w, y + 2, s, color, qfalse, qtrue, TINYCHAR_WIDTH, TINYCHAR_HEIGHT, 0 );
 	}
@@ -1167,7 +1167,7 @@ static float CG_DrawTeamOverlay( float y, qboolean right, qboolean upper ) {
 		ci = cgs.clientinfo + sortedTeamPlayers[i];
 		if ( ci->infoValid && ci->team == cg.snap->ps.persistant[PERS_TEAM] ) {
 
-			hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0;
+			hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0f;
 
 			xx = x + TINYCHAR_WIDTH;
 
@@ -1342,7 +1342,7 @@ static void CG_DrawFragMsgText( char *msg, int i ) {
 
 	h = ( cgs.teamChatPos - cgs.teamLastChatPos ) * TINYCHAR_HEIGHT;
 
-	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0;
+	hcolor[0] = hcolor[1] = hcolor[2] = hcolor[3] = 1.0f;
 	trap_R_SetColor( hcolor );
 
 	CG_DrawStringExt( FRAGMSG_X, FRAGMSG_Y + ( i * TINYCHAR_HEIGHT ) - h,
@@ -1759,8 +1759,8 @@ static float CG_DrawPowerups( float y ) {
 			}
 
 			if ( cg.powerupActive == sorted[i] && cg.time - cg.powerupTime < PULSE_TIME ) {
-				f = 1.0 - ( ( (float)cg.time - cg.powerupTime ) / PULSE_TIME );
-				size = ICON_SIZE * ( 1.0 + ( PULSE_SCALE - 1.0 ) * f );
+				f = 1.0f - ( ( (float)cg.time - cg.powerupTime ) / PULSE_TIME );
+				size = ICON_SIZE * ( 1.0f + ( PULSE_SCALE - 1.0f ) * f );
 			} else {
 				size = ICON_SIZE;
 			}
@@ -1848,7 +1848,7 @@ static int CG_DrawPickupItem( int y ) {
 			offsetX = 150 * ( 1 - ( cg.time - itemPickupTime[i] ) / (float)ANIMATION_DURATION );
 		}
 
-		CG_DrawPic( 625 + offsetX, y + offsetY * ( ICON_SIZE / 4 + TINYCHAR_HEIGHT - 4 ), ICON_SIZE / 4.25, ICON_SIZE / 4.25, cg_items[value].icon );
+		CG_DrawPic( 625 + offsetX, y + offsetY * ( ICON_SIZE / 4 + TINYCHAR_HEIGHT - 4 ), ICON_SIZE / 4.25f, ICON_SIZE / 4.25f, cg_items[value].icon );
 		CG_DrawStringExt( 622 - w + offsetX, y + offsetY * ( ICON_SIZE / 4 + TINYCHAR_HEIGHT - 4 ) + 2.25, bg_itemlist[value].pickup_name, fadeColor, qfalse, qfalse, TINYCHAR_WIDTH - 1, TINYCHAR_HEIGHT + 1, 0 );
 		trap_R_SetColor( NULL );
 		offsetY++;
@@ -2000,7 +2000,7 @@ static void CG_DrawReward( void ) {
 	float x, xx, y, yy;
 	float charWidth, charHeight;
 	float iconSize;
-	float lineLength = 0.0;
+	float lineLength = 0.0f;
 	float scale;
 	char buf[32];
 
@@ -2037,7 +2037,7 @@ static void CG_DrawReward( void ) {
 		iconSize = ICON_SIZE * scale;
 		trap_R_SetColor( color );
 
-		yy = y + ( ICON_SIZE - iconSize ) / 2.0;
+		yy = y + ( ICON_SIZE - iconSize ) / 2.0f;
 		CG_DrawPic( x + 2, yy, iconSize - 4, iconSize - 4, cg.rewardShader[i] );
 		charWidth = SMALLCHAR_WIDTH * scale;
 		charHeight = SMALLCHAR_HEIGHT * scale;
@@ -2699,13 +2699,13 @@ static void CG_DrawCrosshair( void ) {
 
 	// draw the outline under the white crosshair
 	if ( hShaderOutline ) {
-		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ),
-		                       y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ),
+		trap_R_DrawStretchPic( x + cg.refdef.x + 0.5f * ( cg.refdef.width - w ),
+		                       y + cg.refdef.y + 0.5f * ( cg.refdef.height - h ),
 		                       w, h, 0, 0, 1, 1, hShaderOutline );
 	}
 
-	trap_R_DrawStretchPic( x + cg.refdef.x + 0.5 * ( cg.refdef.width - w ),
-	                       y + cg.refdef.y + 0.5 * ( cg.refdef.height - h ),
+	trap_R_DrawStretchPic( x + cg.refdef.x + 0.5f * ( cg.refdef.width - w ),
+	                       y + cg.refdef.y + 0.5f * ( cg.refdef.height - h ),
 	                       w, h, 0, 0, 1, 1, hShader );
 
 	if ( cg.lastHitTime > 0 && cg.time - cg.lastHitTime < 250 ) {
@@ -3078,15 +3078,15 @@ static qboolean CG_DrawThawing( void ) {
 	w = CG_DrawStrlen( s ) * SMALLCHAR_WIDTH;
 	CG_DrawSmallStringColor( 320 - w / 2, 350, s, colorWhite );
 
-	color[3] = 1.0;
+	color[3] = 1.0f;
 	if ( frozenState & FROZENSTATE_THAWING ) {
-		color[0] = 0.0;
-		color[1] = 1.0;
-		color[2] = 0.0;
+		color[0] = 0.0f;
+		color[1] = 1.0f;
+		color[2] = 0.0f;
 	} else {
-		color[0] = 0.0;
-		color[1] = 0.31;
-		color[2] = 1.0;
+		color[0] = 0.0f;
+		color[1] = 0.31f;
+		color[2] = 1.0f;
 	}
 
 	height = 10;
@@ -3132,17 +3132,17 @@ static void CG_DrawJetpackFuel( void ) {
 
 	color[3] = 1.0f;
 	if ( !fuel ) {
-		color[0] = 1.0;
-		color[1] = 0.0;
-		color[2] = 0.0;
+		color[0] = 1.0f;
+		color[1] = 0.0f;
+		color[2] = 0.0f;
 	} else if ( cg.predictedPlayerState.groundEntityNum != ENTITYNUM_NONE ) {
-		color[0] = 0.0;
-		color[1] = 1.0;
-		color[2] = 0.0;
+		color[0] = 0.0f;
+		color[1] = 1.0f;
+		color[2] = 0.0f;
 	} else {
-		color[0] = 1.0;
-		color[1] = 1.0;
-		color[2] = 0.0;
+		color[0] = 1.0f;
+		color[1] = 1.0f;
+		color[2] = 0.0f;
 	}
 
 	height = 10;
@@ -3264,7 +3264,7 @@ static qboolean CG_DrawFollow( void ) {
 
 	name = cgs.clientinfo[cg.snap->ps.clientNum].name;
 
-	x = 0.5 * ( 640 - SMALLCHAR_WIDTH * CG_DrawStrlen( name ) ) - SMALLCHAR_WIDTH * 3;
+	x = 0.5f * ( 640 - SMALLCHAR_WIDTH * CG_DrawStrlen( name ) ) - SMALLCHAR_WIDTH * 3;
 
 	CG_DrawStringExt( x, 40, name, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, 0 );
 

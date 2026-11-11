@@ -376,11 +376,11 @@ static void CG_GetFragmentMinsMaxs( const localEntity_t *le, vec3_t mins, vec3_t
 		// The primary point of this is to ensure
 		// that they don't half-sink into the the ground.
 		// Same for shotgun.
-		VectorSet( mins, -1, -1, -0.2 );
-		VectorSet( maxs, 1, 1, 0.2 );
+		VectorSet( mins, -1, -1, -0.2f );
+		VectorSet( maxs, 1, 1, 0.2f );
 	} else if ( le->refEntity.hModel == cgs.media.shotgunBrassModel ) {
-		VectorSet( mins, -1, -1, -0.5 );
-		VectorSet( maxs, 1, 1, 0.5 );
+		VectorSet( mins, -1, -1, -0.5f );
+		VectorSet( maxs, 1, 1, 0.5f );
 	}
 }
 
@@ -428,7 +428,7 @@ static void CG_AddFragment( localEntity_t *le ) {
 			VectorCopy( le->refEntity.origin, le->refEntity.lightingOrigin );
 			le->refEntity.renderfx |= RF_LIGHTING_ORIGIN;
 			oldZ = le->refEntity.origin[2];
-			le->refEntity.origin[2] -= 16 * ( 1.0 - (float)t / SINK_TIME );
+			le->refEntity.origin[2] -= 16 * ( 1.0f - (float)t / SINK_TIME );
 			CG_AddFragmentRefEntity( le );
 			le->refEntity.origin[2] = oldZ;
 		} else {
@@ -444,7 +444,7 @@ static void CG_AddFragment( localEntity_t *le ) {
 	CG_GetFragmentMinsMaxs( le, mins, maxs );
 	// trace a line from previous position to new position
 	CG_Trace( &trace, le->refEntity.origin, mins, maxs, newOrigin, -1, CONTENTS_SOLID );
-	if ( trace.fraction == 1.0 ) {
+	if ( trace.fraction == 1.0f ) {
 		// still in free fall
 		VectorCopy( newOrigin, le->refEntity.origin );
 
@@ -555,7 +555,7 @@ static void CG_AddGore( localEntity_t *le ) {
 
 	// trace a line from previous position to new position
 	CG_Trace( &trace, le->refEntity.origin, NULL, NULL, newOrigin, -1, CONTENTS_SOLID );
-	if ( trace.fraction == 1.0 ) {
+	if ( trace.fraction == 1.0f ) {
 		// still in free fall
 		VectorCopy( newOrigin, le->refEntity.origin );
 
@@ -643,7 +643,7 @@ static void CG_AddMoveScaleFade( localEntity_t *le ) {
 
 	if ( le->fadeInTime > le->startTime && cg.time < le->fadeInTime ) {
 		// fade / grow time
-		c = 1.0 - (float)( le->fadeInTime - cg.time ) / ( le->fadeInTime - le->startTime );
+		c = 1.0f - (float)( le->fadeInTime - cg.time ) / ( le->fadeInTime - le->startTime );
 	} else {
 		// fade / grow time
 		c = ( le->endTime - cg.time ) * le->lifeRate;
@@ -657,7 +657,7 @@ static void CG_AddMoveScaleFade( localEntity_t *le ) {
 	re->shaderRGBA[3] = le->color[3] * c;
 
 	if ( !( le->leFlags & LEF_PUFF_DONT_SCALE ) ) {
-		re->radius = le->radius * ( 1.0 - c ) + 8;
+		re->radius = le->radius * ( 1.0f - c ) + 8;
 	}
 
 	BG_EvaluateTrajectory( &le->pos, cg.time, re->origin );
@@ -706,26 +706,26 @@ static void CG_EmitPolyVerts( const refEntity_t *re ) {
 	verts[0].xyz[0] = re->origin[0] + left[0] + up[0];
 	verts[0].xyz[1] = re->origin[1] + left[1] + up[1];
 	verts[0].xyz[2] = re->origin[2] + left[2] + up[2];
-	verts[0].st[0] = 0.0;
-	verts[0].st[1] = 0.0;
+	verts[0].st[0] = 0.0f;
+	verts[0].st[1] = 0.0f;
 
 	verts[1].xyz[0] = re->origin[0] - left[0] + up[0];
 	verts[1].xyz[1] = re->origin[1] - left[1] + up[1];
 	verts[1].xyz[2] = re->origin[2] - left[2] + up[2];
-	verts[1].st[0] = 1.0;
-	verts[1].st[1] = 0.0;
+	verts[1].st[0] = 1.0f;
+	verts[1].st[1] = 0.0f;
 
 	verts[2].xyz[0] = re->origin[0] - left[0] - up[0];
 	verts[2].xyz[1] = re->origin[1] - left[1] - up[1];
 	verts[2].xyz[2] = re->origin[2] - left[2] - up[2];
-	verts[2].st[0] = 1.0;
-	verts[2].st[1] = 1.0;
+	verts[2].st[0] = 1.0f;
+	verts[2].st[1] = 1.0f;
 
 	verts[3].xyz[0] = re->origin[0] + left[0] - up[0];
 	verts[3].xyz[1] = re->origin[1] + left[1] - up[1];
 	verts[3].xyz[2] = re->origin[2] + left[2] - up[2];
-	verts[3].st[0] = 0.0;
-	verts[3].st[1] = 1.0;
+	verts[3].st[0] = 0.0f;
+	verts[3].st[1] = 1.0f;
 
 	for ( i = 0; i < 4; i++ ) {
 		verts[i].modulate[0] = re->shaderRGBA[0];
@@ -757,7 +757,7 @@ static void CG_AddScaleFade( localEntity_t *le ) {
 	c = ( le->endTime - cg.time ) * le->lifeRate;
 
 	re->shaderRGBA[3] = 0xff * c * le->color[3];
-	re->radius = le->radius * ( 1.0 - c ) + 8;
+	re->radius = le->radius * ( 1.0f - c ) + 8;
 
 	// if the view would be "inside" the sprite, kill the sprite
 	// so it doesn't add too much overdraw
@@ -794,9 +794,9 @@ static void CG_AddFallScaleFade( localEntity_t *le ) {
 
 	re->shaderRGBA[3] = 0xff * c * le->color[3];
 
-	re->origin[2] = le->pos.trBase[2] - ( 1.0 - c ) * le->pos.trDelta[2];
+	re->origin[2] = le->pos.trBase[2] - ( 1.0f - c ) * le->pos.trDelta[2];
 
-	re->radius = le->radius * ( 1.0 - c ) + 16;
+	re->radius = le->radius * ( 1.0f - c ) + 16;
 
 	// if the view would be "inside" the sprite, kill the sprite
 	// so it doesn't add too much overdraw
@@ -833,10 +833,10 @@ static void CG_AddExplosion( localEntity_t *ex ) {
 		float light;
 
 		light = (float)( cg.time - ex->startTime ) / ( ex->endTime - ex->startTime );
-		if ( light < 0.5 ) {
-			light = 1.0;
+		if ( light < 0.5f ) {
+			light = 1.0f;
 		} else {
-			light = 1.0 - ( light - 0.5 ) * 2;
+			light = 1.0f - ( light - 0.5f ) * 2;
 		}
 		light = ex->light * light;
 		trap_R_AddLightToScene( ent->origin, light, ex->lightColor[0], ex->lightColor[1], ex->lightColor[2] );
@@ -856,16 +856,16 @@ static void CG_AddSpriteExplosion( localEntity_t *le ) {
 
 	c = ( le->endTime - cg.time ) / (float)( le->endTime - le->startTime );
 	if ( c > 1 ) {
-		c = 1.0; // can happen during connection problems
+		c = 1.0f; // can happen during connection problems
 	}
 
 	re.shaderRGBA[0] = 0xff;
 	re.shaderRGBA[1] = 0xff;
 	re.shaderRGBA[2] = 0xff;
-	re.shaderRGBA[3] = 0xff * c * 0.33;
+	re.shaderRGBA[3] = 0xff * c * 0.33f;
 
 	re.reType = RT_SPRITE;
-	re.radius = 42 * ( 1.0 - c ) + 30;
+	re.radius = 42 * ( 1.0f - c ) + 30;
 
 	if ( intShaderTime )
 		trap_R_AddRefEntityToScene2( &re );
@@ -877,10 +877,10 @@ static void CG_AddSpriteExplosion( localEntity_t *le ) {
 		float light;
 
 		light = (float)( cg.time - le->startTime ) / ( le->endTime - le->startTime );
-		if ( light < 0.5 ) {
-			light = 1.0;
+		if ( light < 0.5f ) {
+			light = 1.0f;
 		} else {
-			light = 1.0 - ( light - 0.5 ) * 2;
+			light = 1.0f - ( light - 0.5f ) * 2;
 		}
 		light = le->light * light;
 		trap_R_AddLightToScene( re.origin, light, le->lightColor[0], le->lightColor[1], le->lightColor[2] );
@@ -968,7 +968,7 @@ static void CG_AddKamikaze( localEntity_t *le ) {
 
 		trap_R_AddRefEntityToScene( re );
 		// add the dlight
-		trap_R_AddLightToScene( re->origin, c * 1000.0, 1.0, 1.0, c );
+		trap_R_AddLightToScene( re->origin, c * 1000.0f, 1.0f, 1.0f, c );
 	}
 
 	if ( t > KAMI_SHOCKWAVE2_STARTTIME && t < KAMI_SHOCKWAVE2_ENDTIME ) {
@@ -1038,9 +1038,9 @@ static void CG_AddInvulnerabilityJuiced( localEntity_t *le ) {
 
 	t = cg.time - le->startTime;
 	if ( t > 3000 ) {
-		le->refEntity.axis[0][0] = (float)1.0 + 0.3 * ( t - 3000 ) / 2000;
-		le->refEntity.axis[1][1] = (float)1.0 + 0.3 * ( t - 3000 ) / 2000;
-		le->refEntity.axis[2][2] = (float)0.7 + 0.3 * ( 2000 - ( t - 3000 ) ) / 2000;
+		le->refEntity.axis[0][0] = (float)1.0 + 0.3f * ( t - 3000 ) / 2000;
+		le->refEntity.axis[1][1] = (float)1.0 + 0.3f * ( t - 3000 ) / 2000;
+		le->refEntity.axis[2][2] = (float)0.7 + 0.3f * ( 2000 - ( t - 3000 ) ) / 2000;
 	}
 	if ( t > 5000 ) {
 		vec3_t angles;
@@ -1102,7 +1102,7 @@ static void CG_AddScorePlum( localEntity_t *le ) {
 			re->shaderRGBA[0] = re->shaderRGBA[2] = 0;
 		}
 	}
-	if ( c < 0.25 )
+	if ( c < 0.25f )
 		re->shaderRGBA[3] = 0xff * 4 * c;
 	else
 		re->shaderRGBA[3] = 0xff;
@@ -1186,7 +1186,7 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 		re->shaderRGBA[1] = 0x50;
 		re->shaderRGBA[2] = 0x50;
 	}
-	if ( c < 0.25 )
+	if ( c < 0.25f )
 		re->shaderRGBA[3] = 0xff * 4 * c;
 	else
 		re->shaderRGBA[3] = 0xff;
@@ -1194,12 +1194,12 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 	if ( cg_damagePlums.integer == 2 ) {
 		re->radius = NUMBER_SIZE / 2;
 	} else {
-		re->radius = NUMBER_SIZE * 0.03 / 2;
+		re->radius = NUMBER_SIZE * 0.03f / 2;
 	}
 
-	deltaTime = ( cg.time - le->startTime ) * 0.001;
+	deltaTime = ( cg.time - le->startTime ) * 0.001f;
 	VectorCopy( le->pos.trBase, origin );
-	origin[2] += 49 - cos( c * 4.8 ) * 34;
+	origin[2] += 49 - cos( c * 4.8f ) * 34;
 
 	VectorSubtract( cg.refdef.vieworg, origin, dir );
 	CrossProduct( dir, up, vec );
@@ -1211,7 +1211,7 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 
 	if ( cg_damagePlums.integer == 2 ) {
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
-		origin[2] -= 0.5 * 12 * Square( deltaTime );
+		origin[2] -= 0.5f * 12 * Square( deltaTime );
 	} else {
 		if ( VectorLengthSquared( dir ) < Square( 0.1f ) ) {
 			VectorCopy( cg.refdef.viewaxis[0], dir );
@@ -1220,7 +1220,7 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 		}
 		VectorMA( cg.refdef.vieworg, -8, dir, origin );
 		VectorMA( origin, deltaTime, le->pos.trDelta, origin );
-		origin[2] -= 0.5 * 12 * Square( deltaTime );
+		origin[2] -= 0.5f * 12 * Square( deltaTime );
 	}
 
 	negative = qfalse;
@@ -1243,7 +1243,7 @@ static void CG_AddDamagePlum( localEntity_t *le ) {
 		if ( cg_damagePlums.integer == 2 ) {
 			VectorMA( origin, (float)( ( (float)numdigits / 2 ) - i ) * NUMBER_SIZE, vec, re->origin );
 		} else {
-			VectorMA( origin, (float)( ( (float)numdigits / 2 ) - 0.5 - i ) * NUMBER_SIZE * 0.03, vec, re->origin );
+			VectorMA( origin, (float)( ( (float)numdigits / 2 ) - 0.5f - i ) * NUMBER_SIZE * 0.03f, vec, re->origin );
 		}
 		re->customShader = cgs.media.numberShaders[digits[numdigits - 1 - i]];
 		trap_R_AddRefEntityToScene( re );

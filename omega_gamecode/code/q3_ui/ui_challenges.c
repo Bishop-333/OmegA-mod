@@ -337,7 +337,7 @@ static void UI_Challenges_Init( void ) {
 	};
 
 	//Now write the challenges
-	y = 240 - (int)( ( ( (float)challenges.numberOfEntries ) / 2.0 ) * (float)( BIGCHAR_HEIGHT + 2 ) );
+	y = 240 - (int)( ( ( (float)challenges.numberOfEntries ) / 2.0f ) * (float)( BIGCHAR_HEIGHT + 2 ) );
 	for ( i = 0; i < MAX_ENTRIES && i < challenges.numberOfEntries; i++ ) {
 		challenges.entry[i].color = color_white;
 		challenges.entry[i].generic.type = MTYPE_TEXT;
