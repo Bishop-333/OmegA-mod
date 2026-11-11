@@ -82,4 +82,4 @@ make
 ## Donate
 
 I develop in my free time. If you enjoy my mod or my engine, please consider supporting me with a donation!
-* paypal.me/fatsakura
+* https://paypal.me/fatsakura
