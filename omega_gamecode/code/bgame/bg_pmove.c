@@ -780,7 +780,7 @@ static qboolean PM_JetpackMove( void ) {
 PM_CPM_Aircontrol
 ===================
 */
-static void PM_CPM_Aircontrol( pmove_t *pm, vec3_t wishdir, float wishspeed ) {
+static void PM_CPM_Aircontrol( vec3_t wishdir, float wishspeed ) {
 	float zspeed, speed, dot, k;
 
 	// this doesn't play well with analog input
@@ -904,7 +904,7 @@ static void PM_AirMove( void ) {
 	PM_Accelerate( wishdir, wishspeed, pm_airaccelerate );
 
 	if ( pm->pmove_aircontrol ) {
-		PM_CPM_Aircontrol( pm, wishdir, wishspeed2 );
+		PM_CPM_Aircontrol( wishdir, wishspeed2 );
 	}
 
 	// we may have a ground plane that is very steep, even

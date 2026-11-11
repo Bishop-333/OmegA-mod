@@ -779,7 +779,6 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 	} else if ( p->type == P_BLEED ) {
 		vec3_t rr, ru;
 		vec3_t rotate_ang;
-		float alpha;
 
 		alpha = p->alpha;
 
@@ -836,7 +835,6 @@ static void CG_AddParticleToScene( cparticle_t *p, vec3_t org, float alpha ) {
 		verts[3].modulate[3] = 255 * alpha;
 
 	} else if ( p->type == P_FLAT_SCALEUP ) {
-		float width, height;
 		float sinR, cosR;
 
 		if ( p->color == BLOODRED )

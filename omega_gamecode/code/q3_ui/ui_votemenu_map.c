@@ -183,14 +183,14 @@ static void ResetMaplist( void ) {
 }
 
 static void Maplist_RequestNextPage( struct maplist_s *list ) {
-	int mappage;
+	int page;
 
 	if ( list->loaded_all ) {
 		return;
 	}
 
-	mappage = ( list->num_maps / MAPPAGE_NUM ) + ( ( list->num_maps % MAPPAGE_NUM == 0 ) ? 0 : 1 );
-	trap_Cmd_ExecuteText( EXEC_APPEND, va( "%s %i", getmappage_cmd, mappage ) );
+	page = ( list->num_maps / MAPPAGE_NUM ) + ( ( list->num_maps % MAPPAGE_NUM == 0 ) ? 0 : 1 );
+	trap_Cmd_ExecuteText( EXEC_APPEND, va( "%s %i", getmappage_cmd, page ) );
 
 	mappage_in_flight = 1;
 

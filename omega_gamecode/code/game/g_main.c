@@ -564,7 +564,7 @@ void G_ShutdownGame( int restart ) {
 Com_Error
 =================
 */
-void QDECL Com_Error( int level, const char *error, ... ) {
+void QDECL Com_Error( int code, const char *error, ... ) {
 	va_list argptr;
 	char text[1024];
 
@@ -1136,7 +1136,6 @@ void ExitLevel( void ) {
 				char mapnames[1024][20]; // Array of mapnames in the map pool
 				char *pointer;
 				int choice, count = 0; //The random choice from mapnames and count of mapnames
-				int i;
 				memset( &buffer, 0, sizeof( buffer ) );
 				trap_FS_Read( &buffer, sizeof( buffer ), file );
 				pointer = buffer;

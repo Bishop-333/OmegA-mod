@@ -1549,9 +1549,6 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 
 	// colorize the railgun blast
 	if ( weaponNum == WP_RAILGUN ) {
-		clientInfo_t *ci;
-
-		ci = &cgs.clientinfo[cent->currentState.clientNum];
 		flash.shaderRGBA[0] = 255 * ci->color1[0];
 		flash.shaderRGBA[1] = 255 * ci->color1[1];
 		flash.shaderRGBA[2] = 255 * ci->color1[2];
@@ -1598,9 +1595,6 @@ void CG_AddPlayerWeapon( refEntity_t *parent, playerState_t *ps, centity_t *cent
 			radius = 300 + ( rand() & 31 );
 
 		if ( weaponNum == WP_RAILGUN ) {
-			clientInfo_t *ci;
-
-			ci = &cgs.clientinfo[cent->currentState.clientNum];
 			trap_R_AddLightToScene( flash.origin, radius, ci->color1[0], ci->color1[1], ci->color1[2] );
 		} else if ( weapon->flashDlightColor[0] || weapon->flashDlightColor[1] || weapon->flashDlightColor[2] ) {
 			trap_R_AddLightToScene( flash.origin, radius, weapon->flashDlightColor[0], weapon->flashDlightColor[1], weapon->flashDlightColor[2] );

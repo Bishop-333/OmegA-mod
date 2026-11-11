@@ -906,9 +906,9 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			GibEntity( self, killer );
 		} else {
 			// normal death
-			static int i;
+			static int index;
 
-			switch ( i ) {
+			switch ( index ) {
 				case 0:
 					anim = BOTH_DEATH1;
 					break;
@@ -930,7 +930,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			self->client->ps.legsAnim = ( ( self->client->ps.legsAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
 			self->client->ps.torsoAnim = ( ( self->client->ps.torsoAnim & ANIM_TOGGLEBIT ) ^ ANIM_TOGGLEBIT ) | anim;
 
-			G_AddEvent( self, EV_DEATH1 + i, killer );
+			G_AddEvent( self, EV_DEATH1 + index, killer );
 
 			if ( meansOfDeath == MOD_HEADSHOT ) {
 				G_AddEvent( self, EV_GIB_PLAYER_HEADSHOT, 0 );
@@ -940,7 +940,7 @@ void player_die( gentity_t *self, gentity_t *inflictor, gentity_t *attacker, int
 			self->die = body_die;
 
 			// globally cycle through the different death animations
-			i = ( i + 1 ) % 3;
+			index = ( index + 1 ) % 3;
 
 			if ( self->s.eFlags & EF_KAMIKAZE ) {
 				Kamikaze_DeathTimer( self );

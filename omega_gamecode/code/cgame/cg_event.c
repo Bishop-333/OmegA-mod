@@ -249,7 +249,6 @@ static void CG_Obituary( entityState_t *ent ) {
 
 	// check for kill messages from the current clientNum
 	if ( attacker == cg.snap->ps.clientNum ) {
-		char *s;
 		const char *action = cgs.freezetag ? "froze" : "fragged";
 
 		if ( mod == MOD_HEADSHOT ) {

@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "g_local.h"
 
 static float s_quadFactor;
-static vec3_t forward, right, up;
+static vec3_t s_forward, s_right, s_up;
 static vec3_t muzzle;
 static vec3_t muzzle_origin; // for hitscan weapon trace
 
@@ -95,11 +95,11 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 	int damage;
 
 	// set aiming directions
-	AngleVectors( ent->client->ps.viewangles, forward, right, up );
+	AngleVectors( ent->client->ps.viewangles, s_forward, s_right, s_up );
 
-	CalcMuzzlePointOrigin( ent, muzzle_origin, forward, right, up, muzzle );
+	CalcMuzzlePointOrigin( ent, muzzle_origin, s_forward, s_right, s_up, muzzle );
 
-	VectorMA( muzzle_origin, ( 32.0f + 14.0f ), forward, end );
+	VectorMA( muzzle_origin, ( 32.0f + 14.0f ), s_forward, end );
 
 	trap_Trace( &tr, muzzle_origin, NULL, NULL, end, ent->s.number, MASK_SHOT );
 	if ( tr.surfaceFlags & SURF_NOIMPACT ) {
@@ -138,7 +138,7 @@ qboolean CheckGauntletAttack( gentity_t *ent ) {
 		damage = 500; //High damage in instant gib (normally enough to gib)
 	else
 		damage = g_gauntletDamage.integer * s_quadFactor;
-	G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+	G_Damage( traceEnt, ent, ent, s_forward, tr.endpos,
 	          damage, 0, MOD_GAUNTLET );
 
 	return qtrue;
@@ -209,9 +209,9 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 	r = cos( r ) * Q_crandom( &seed ) * spread * 16;
 	//unlagged - attack prediction #2
 
-	VectorMA( muzzle_origin, ( 8192.0f * 16.0f ), forward, end );
-	VectorMA( end, r, right, end );
-	VectorMA( end, u, up, end );
+	VectorMA( muzzle_origin, ( 8192.0f * 16.0f ), s_forward, end );
+	VectorMA( end, r, s_right, end );
+	VectorMA( end, u, s_up, end );
 
 	passent = ent->s.number;
 	for ( i = 0; i < 10; i++ ) {
@@ -262,7 +262,7 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 
 		if ( traceEnt->takedamage ) {
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
-				if ( G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir ) ) {
+				if ( G_InvulnerabilityEffect( traceEnt, s_forward, tr.endpos, impactpoint, bouncedir ) ) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					VectorCopy( impactpoint, muzzle );
 					// the player can hit him/herself with the bounced rail
@@ -274,11 +274,11 @@ static void Bullet_Fire( gentity_t *ent, float spread, int damage ) {
 				continue;
 			} else {
 				if ( spread == CHAINGUN_SPREAD ) {
-					G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+					G_Damage( traceEnt, ent, ent, s_forward, tr.endpos,
 					          damage, 0, MOD_CHAINGUN );
 					ent->client->accuracy[WP_CHAINGUN][1]++;
 				} else {
-					G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+					G_Damage( traceEnt, ent, ent, s_forward, tr.endpos,
 					          damage, 0, MOD_MACHINEGUN );
 					ent->client->accuracy[WP_MACHINEGUN][1]++;
 				}
@@ -304,7 +304,7 @@ BFG_Fire
 static void BFG_Fire( gentity_t *ent ) {
 	gentity_t *m;
 
-	m = fire_bfg( ent, muzzle, forward );
+	m = fire_bfg( ent, muzzle, s_forward );
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
@@ -357,7 +357,7 @@ static qboolean ShotgunPellet( const vec3_t start, const vec3_t end, gentity_t *
 			}
 			damage = DEFAULT_SHOTGUN_DAMAGE * s_quadFactor;
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
-				if ( G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir ) ) {
+				if ( G_InvulnerabilityEffect( traceEnt, s_forward, tr.endpos, impactpoint, bouncedir ) ) {
 					G_BounceProjectile( tr_start, impactpoint, bouncedir, tr_end );
 					VectorCopy( impactpoint, tr_start );
 					// the player can hit him/herself with the bounced rail
@@ -371,7 +371,7 @@ static qboolean ShotgunPellet( const vec3_t start, const vec3_t end, gentity_t *
 				if ( LogAccuracyHit( traceEnt, ent ) ) {
 					hitPlayer = qtrue;
 				}
-				G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+				G_Damage( traceEnt, ent, ent, s_forward, tr.endpos,
 				          damage, 0, MOD_SHOTGUN );
 				return hitPlayer;
 			}
@@ -449,7 +449,7 @@ static void weapon_supershotgun_fire( gentity_t *ent ) {
 
 	// send shotgun blast
 	tent = G_TempEntity( muzzle, EV_SHOTGUN );
-	VectorScale( forward, 4096.0f, tent->s.origin2 );
+	VectorScale( s_forward, 4096.0f, tent->s.origin2 );
 
 	SnapVector( tent->s.origin2 );
 	//Sago: This sound like a bad idea...
@@ -478,10 +478,10 @@ static void weapon_grenadelauncher_fire( gentity_t *ent ) {
 	gentity_t *m;
 
 	// extra vertical velocity
-	forward[2] += 0.2f;
-	VectorNormalizeFast( forward );
+	s_forward[2] += 0.2f;
+	VectorNormalizeFast( s_forward );
 
-	m = fire_grenade( ent, muzzle, forward );
+	m = fire_grenade( ent, muzzle, s_forward );
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
@@ -504,7 +504,7 @@ Weapon_RocketLauncher_Fire
 static void Weapon_RocketLauncher_Fire( gentity_t *ent ) {
 	gentity_t *m;
 
-	m = fire_rocket( ent, muzzle, forward );
+	m = fire_rocket( ent, muzzle, s_forward );
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
@@ -527,7 +527,7 @@ Weapon_Plasmagun_Fire
 static void Weapon_Plasmagun_Fire( gentity_t *ent ) {
 	gentity_t *m;
 
-	m = fire_plasma( ent, muzzle, forward );
+	m = fire_plasma( ent, muzzle, s_forward );
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
@@ -567,7 +567,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 	if ( g_instantgib.integer )
 		damage = 800;
 
-	VectorMA( muzzle_origin, 8192.0f, forward, end );
+	VectorMA( muzzle_origin, 8192.0f, s_forward, end );
 	VectorCopy( muzzle_origin, tracefrom );
 
 	//unlagged - backward reconciliation #2
@@ -591,7 +591,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 				if ( trace.surfaceFlags & SURF_SKY || trace.fraction == 1.0f ) {
 					break;
 				} else {
-					VectorMA( trace.endpos, 1, forward, tracefrom );
+					VectorMA( trace.endpos, 1, s_forward, tracefrom );
 					continue;
 				}
 			} else if ( g_railJump.integer ) {
@@ -604,7 +604,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 		traceEnt = &g_entities[trace.entityNum];
 		if ( traceEnt->takedamage ) {
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
-				if ( G_InvulnerabilityEffect( traceEnt, forward, trace.endpos, impactpoint, bouncedir ) ) {
+				if ( G_InvulnerabilityEffect( traceEnt, s_forward, trace.endpos, impactpoint, bouncedir ) ) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					// snap the endpos to integers to save net bandwidth, but nudged towards the line
 					SnapVectorTowards( trace.endpos, muzzle );
@@ -614,8 +614,8 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 					tent->s.clientNum = ent->s.clientNum;
 					VectorCopy( muzzle, tent->s.origin2 );
 					// move origin a bit to come closer to the drawn gun muzzle
-					VectorMA( tent->s.origin2, 4, right, tent->s.origin2 );
-					VectorMA( tent->s.origin2, -1, up, tent->s.origin2 );
+					VectorMA( tent->s.origin2, 4, s_right, tent->s.origin2 );
+					VectorMA( tent->s.origin2, -1, s_up, tent->s.origin2 );
 					tent->s.eventParm = 255; // don't make the explosion at the end
 					//
 					VectorCopy( impactpoint, muzzle );
@@ -626,7 +626,7 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 				if ( LogAccuracyHit( traceEnt, ent ) ) {
 					hits++;
 				}
-				G_Damage( traceEnt, ent, ent, forward, trace.endpos, damage, 0, MOD_RAILGUN );
+				G_Damage( traceEnt, ent, ent, s_forward, trace.endpos, damage, 0, MOD_RAILGUN );
 				if ( traceEnt->health <= 0 ) {
 					kills++;
 				}
@@ -667,8 +667,8 @@ static void weapon_railgun_fire( gentity_t *ent ) {
 
 	VectorCopy( muzzle, tent->s.origin2 );
 	// move origin a bit to come closer to the drawn gun muzzle
-	VectorMA( tent->s.origin2, 4, right, tent->s.origin2 );
-	VectorMA( tent->s.origin2, -1, up, tent->s.origin2 );
+	VectorMA( tent->s.origin2, 4, s_right, tent->s.origin2 );
+	VectorMA( tent->s.origin2, -1, s_up, tent->s.origin2 );
 
 	SnapVector( tent->s.origin2 );
 
@@ -733,11 +733,11 @@ Weapon_GrapplingHook_Fire
 ======================
 */
 void Weapon_GrapplingHook_Fire( gentity_t *ent ) {
-	AngleVectors( ent->client->ps.viewangles, forward, right, up );
-	CalcMuzzlePoint( ent, forward, right, up, muzzle );
+	AngleVectors( ent->client->ps.viewangles, s_forward, s_right, s_up );
+	CalcMuzzlePoint( ent, s_forward, s_right, s_up, muzzle );
 
 	if ( !ent->client->fireHeld && !ent->client->hook )
-		fire_grapple( ent, muzzle, forward );
+		fire_grapple( ent, muzzle, s_forward );
 
 	ent->client->fireHeld = qtrue;
 }
@@ -798,7 +798,7 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 
 	passent = ent->s.number;
 	for ( i = 0; i < 10; i++ ) {
-		VectorMA( muzzle_origin, LIGHTNING_RANGE, forward, end );
+		VectorMA( muzzle_origin, LIGHTNING_RANGE, s_forward, end );
 
 		//Sago: I'm not sure this should receive backward reconciliation. It is not a real instant hit weapon, it can normally be dogded
 		//unlagged - backward reconciliation #2
@@ -831,11 +831,11 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 
 		if ( traceEnt->takedamage ) {
 			if ( traceEnt->client && traceEnt->client->invulnerabilityTime > level.time ) {
-				if ( G_InvulnerabilityEffect( traceEnt, forward, tr.endpos, impactpoint, bouncedir ) ) {
+				if ( G_InvulnerabilityEffect( traceEnt, s_forward, tr.endpos, impactpoint, bouncedir ) ) {
 					G_BounceProjectile( muzzle, impactpoint, bouncedir, end );
 					VectorCopy( impactpoint, muzzle );
-					VectorSubtract( end, impactpoint, forward );
-					VectorNormalizeFast( forward );
+					VectorSubtract( end, impactpoint, s_forward );
+					VectorNormalizeFast( s_forward );
 					// the player can hit him/herself with the bounced lightning
 					passent = ENTITYNUM_NONE;
 				} else {
@@ -848,7 +848,7 @@ static void Weapon_LightningFire( gentity_t *ent ) {
 					ent->client->accuracy_hits++;
 					ent->client->accuracy[WP_LIGHTNING][1]++;
 				}
-				G_Damage( traceEnt, ent, ent, forward, tr.endpos,
+				G_Damage( traceEnt, ent, ent, s_forward, tr.endpos,
 				          damage, 0, MOD_LIGHTNING );
 			}
 		}
@@ -886,7 +886,7 @@ static void Weapon_Nailgun_Fire( gentity_t *ent ) {
 	int count;
 
 	for ( count = 0; count < NUM_NAILSHOTS; count++ ) {
-		m = fire_nail( ent, muzzle, forward, right, up );
+		m = fire_nail( ent, muzzle, s_forward, s_right, s_up );
 		m->damage *= s_quadFactor;
 		m->splashDamage *= s_quadFactor;
 	}
@@ -911,10 +911,10 @@ static void weapon_proxlauncher_fire( gentity_t *ent ) {
 	gentity_t *m;
 
 	// extra vertical velocity
-	forward[2] += 0.2f;
-	VectorNormalizeFast( forward );
+	s_forward[2] += 0.2f;
+	VectorNormalizeFast( s_forward );
 
-	m = fire_prox( ent, muzzle, forward );
+	m = fire_prox( ent, muzzle, s_forward );
 	m->damage *= s_quadFactor;
 	m->splashDamage *= s_quadFactor;
 
@@ -1007,9 +1007,9 @@ void FireWeapon( gentity_t *ent ) {
 	}
 
 	// set aiming directions
-	AngleVectors( ent->client->ps.viewangles, forward, right, up );
+	AngleVectors( ent->client->ps.viewangles, s_forward, s_right, s_up );
 
-	CalcMuzzlePointOrigin( ent, muzzle_origin, forward, right, up, muzzle );
+	CalcMuzzlePointOrigin( ent, muzzle_origin, s_forward, s_right, s_up, muzzle );
 
 	// fire the specific weapon
 	switch ( ent->s.weapon ) {

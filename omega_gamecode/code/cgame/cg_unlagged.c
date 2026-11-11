@@ -119,8 +119,6 @@ void CG_PredictWeaponEffects( centity_t *cent ) {
 
 			if ( cgs.glconfig.hardwareType != GLHW_RAGEPRO ) {
 				// ragepro can't alpha fade, so don't even bother with smoke
-				vec3_t up;
-
 				contents = trap_CM_PointContents( muzzlePoint, 0 );
 				if ( !( contents & CONTENTS_WATER ) ) {
 					VectorSet( up, 0, 0, 8 );

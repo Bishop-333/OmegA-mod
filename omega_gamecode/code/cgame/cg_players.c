@@ -2082,7 +2082,6 @@ static void CG_HudBorderMarker( vec3_t origin, float alpha, float radius, qhandl
 		vec3_t planeAxis[2];
 		float ratio;
 		float circleSz = 100;
-		float r;
 		float h1, h2;
 
 		memset( &ent, 0, sizeof( ent ) );
