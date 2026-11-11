@@ -412,7 +412,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 		}
 	}
 
-	if ( cg_simpleItems.integer && item->giType != IT_TEAM ) {
+	if ( item && cg_simpleItems.integer && item->giType != IT_TEAM ) {
 		memset( &ent, 0, sizeof( ent ) );
 		ent.reType = RT_SPRITE;
 		VectorCopy( cent->lerpOrigin, ent.origin );
@@ -438,7 +438,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	memset( &ent, 0, sizeof( ent ) );
 
 	// autorotate at one of two speeds
-	if ( item->giType == IT_HEALTH ) {
+	if ( item && item->giType == IT_HEALTH ) {
 		VectorCopy( cg.autoAnglesFast, cent->lerpAngles );
 		AxisCopy( cg.autoAxisFast, ent.axis );
 	} else if ( item ) {
@@ -454,7 +454,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	// the weapons have their origin where they attach to player
 	// models, so we need to offset them or they will rotate
 	// eccentricly
-	if ( item->giType == IT_WEAPON ) {
+	if ( item && item->giType == IT_WEAPON ) {
 		wi = &cg_weapons[item->giTag];
 		cent->lerpOrigin[0] -=
 		    wi->weaponMidpoint[0] * ent.axis[0][0] +
@@ -493,13 +493,13 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 
 	// items without glow textures need to keep a minimum light value
 	// so they are always visible
-	if ( ( item->giType == IT_WEAPON ) ||
-	     ( item->giType == IT_ARMOR ) ) {
+	if ( item && ( ( item->giType == IT_WEAPON ) ||
+	               ( item->giType == IT_ARMOR ) ) ) {
 		ent.renderfx |= RF_MINLIGHT;
 	}
 
 	// increase the size of the weapons when they are presented as items
-	if ( item->giType == IT_WEAPON ) {
+	if ( item && item->giType == IT_WEAPON ) {
 		VectorScale( ent.axis[0], 1.5f, ent.axis[0] );
 		VectorScale( ent.axis[1], 1.5f, ent.axis[1] );
 		VectorScale( ent.axis[2], 1.5f, ent.axis[2] );
@@ -507,7 +507,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 		trap_S_AddLoopingSound( cent->currentState.number, cent->lerpOrigin, vec3_origin, cgs.media.weaponHoverSound );
 	}
 
-	if ( item->giType == IT_HOLDABLE && item->giTag == HI_KAMIKAZE ) {
+	if ( item && item->giType == IT_HOLDABLE && item->giTag == HI_KAMIKAZE ) {
 		VectorScale( ent.axis[0], 2, ent.axis[0] );
 		VectorScale( ent.axis[1], 2, ent.axis[1] );
 		VectorScale( ent.axis[2], 2, ent.axis[2] );
@@ -517,7 +517,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	// add to refresh list
 	trap_R_AddRefEntityToScene( &ent );
 
-	if ( item->giType == IT_WEAPON && wi->barrelModel ) {
+	if ( item && item->giType == IT_WEAPON && wi->barrelModel ) {
 		refEntity_t barrel;
 
 		memset( &barrel, 0, sizeof( barrel ) );
@@ -537,7 +537,7 @@ void CG_Prop( centity_t *cent, clientInfo_t *ci ) {
 	}
 
 	// accompanying rings / spheres for powerups
-	if ( !cg_simpleItems.integer ) {
+	if ( item && !cg_simpleItems.integer ) {
 		vec3_t spinAngles;
 
 		VectorClear( spinAngles );

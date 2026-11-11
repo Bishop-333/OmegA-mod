@@ -266,6 +266,7 @@ BASE_CFLAGS += -Wstrict-aliasing=2 -Wmissing-format-attribute
 BASE_CFLAGS += -Wdisabled-optimization
 BASE_CFLAGS += -Werror-implicit-function-declaration
 BASE_CFLAGS += -Wimplicit-fallthrough
+BASE_CFLAGS += -Wnull-dereference
 BASE_CFLAGS += -Wshadow
 
 QVM_CFLAGS += -DPRODUCT_DATE="\"$(PRODUCT_DATE)\""
