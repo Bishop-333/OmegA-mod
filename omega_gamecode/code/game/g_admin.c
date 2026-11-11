@@ -1366,13 +1366,17 @@ int G_admin_parse_time( const char *time ) {
 			break;
 		switch ( *time++ ) {
 			case 'w':
-				num *= 7;
+				num *= 7 * 24 * 60 * 60;
+				break;
 			case 'd':
-				num *= 24;
+				num *= 24 * 60 * 60;
+				break;
 			case 'h':
-				num *= 60;
+				num *= 60 * 60;
+				break;
 			case 'm':
 				num *= 60;
+				break;
 			case 's':
 				break;
 			default:

@@ -487,9 +487,6 @@ RadioButton_Key
 static sfxHandle_t RadioButton_Key( menuradiobutton_s *rb, int key ) {
 	switch ( key ) {
 		case K_MOUSE1:
-			if ( !( rb->generic.flags & QMF_HASMOUSEFOCUS ) )
-				break;
-
 		case K_JOY1:
 		case K_JOY2:
 		case K_JOY3:
@@ -497,6 +494,9 @@ static sfxHandle_t RadioButton_Key( menuradiobutton_s *rb, int key ) {
 		case K_ENTER:
 		case K_LEFTARROW:
 		case K_RIGHTARROW:
+			if ( key == K_MOUSE1 && !( rb->generic.flags & QMF_HASMOUSEFOCUS ) )
+				break;
+
 			rb->curvalue = !rb->curvalue;
 			if ( rb->generic.callback )
 				rb->generic.callback( rb, QM_ACTIVATED );

@@ -716,9 +716,9 @@ static void GraphicsOptions_Event( void *ptr, int event ) {
 
 	switch ( ( (menucommon_s *)ptr )->id ) {
 		case ID_RATIO:
-			s_graphicsoptions.mode.curvalue = ratioToRes[s_graphicsoptions.ratio.curvalue];
-			// fall through to apply mode constraints
 		case ID_MODE:
+			if ( ( (menucommon_s *)ptr )->id == ID_RATIO )
+				s_graphicsoptions.mode.curvalue = ratioToRes[s_graphicsoptions.ratio.curvalue];
 			// clamp 3dfx video modes
 			s_graphicsoptions.ratio.curvalue = resToRatio[s_graphicsoptions.mode.curvalue];
 			break;
