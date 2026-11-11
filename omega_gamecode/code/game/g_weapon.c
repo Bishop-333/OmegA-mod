@@ -1351,7 +1351,7 @@ void Laser_Think( gentity_t *self ) {
 	trace_t tr;
 
 	//If Player Dies, You Die -> now thanks to Camouflage!
-	if ( self->parent->client->ps.pm_type == PM_DEAD ) {
+	if ( self->parent->client->ps.pm_type != PM_NORMAL || self->parent->client->lasersight != self ) {
 		G_FreeEntity( self );
 		return;
 	}
