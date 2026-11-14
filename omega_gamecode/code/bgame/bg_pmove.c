@@ -661,6 +661,7 @@ static void PM_WaterMove( void ) {
 
 		// don't decrease velocity when going up or down a slope
 		if ( pm->pmove_overbounce ) {
+			VectorNormalize( pm->ps->velocity );
 			VectorScale( pm->ps->velocity, vel, pm->ps->velocity );
 		} else if ( VectorLengthSquared( pm->ps->velocity ) > 1 ) {
 			VectorNormalizeFast( pm->ps->velocity );
@@ -1065,6 +1066,7 @@ static void PM_WalkMove( void ) {
 
 	// don't decrease velocity when going up or down a slope
 	if ( pm->pmove_overbounce ) {
+		VectorNormalize( pm->ps->velocity );
 		VectorScale( pm->ps->velocity, vel, pm->ps->velocity );
 	} else if ( VectorLengthSquared( pm->ps->velocity ) > 1 ) {
 		VectorNormalizeFast( pm->ps->velocity );
